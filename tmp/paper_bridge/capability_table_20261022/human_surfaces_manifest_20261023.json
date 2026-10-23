@@ -1,0 +1,2802 @@
+{
+ "generated": "2026-10-23T04:16:27.749147",
+ "purpose": "2-D SINGLE-MUSCLE human capability surfaces (v2 metric: coupled-DOF surfaces) for the 27-actuator capability table; single grading source of truth for BOTH rows (hand-tuned and optimized)",
+ "spec": [
+  "FIX_SPEC_20261023.md sections 1, 1b, 2",
+  "opensim_limits_checklist_20261023.md (flag layer + gates)"
+ ],
+ "supersedes": "nothing on disk - v1 1-D CSVs (human_torque_curves_20261022*.csv) stay untouched; this is the v2 surface regeneration",
+ "opensim_version": "4.4.1",
+ "python": "D:\\Anaconda\\envs\\myo\\python.exe",
+ "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\gait2392_simbody.osim",
+ "model_sha1": "b89062c763e6d8fa3d7651c0a4fd2820055d807c",
+ "map": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\Mesh_Optimization\\Routing27_v2\\actuator_map_27.json",
+ "map_sha1": "a97afffeeae85687810986273db6ba0151eba1a2",
+ "audit_csv": "D:\\GitHub\\Bipedal_Robot\\tmp\\paper_bridge\\opt_improve_20261022\\path_artifact_audit_gait2392_simbody_20261022_034030.csv",
+ "audit_csv_sha1": "47912eb6c1e858e9e62ceefe36b8a510e052c417",
+ "probe_csv_crosscheck": "D:\\GitHub\\Bipedal_Robot\\tmp\\paper_bridge\\capability_table_20261022\\probe_osim_limits_2d_20261023.csv",
+ "target_rule": {
+  "ruling": "same-named single stock muscle per actuator; no cross-muscle group sums; one anatomical muscle split into compartments keeps its own compartments (glut_max1-3, add_mag1-3); explicit rulings 5/11/15/16/24/25 (Ben 2026-10-22)",
+  "per_actuator": {
+   "1": "same-named single stock muscle (map single-member human_group)",
+   "2": "same-named single stock muscle (map single-member human_group)",
+   "3": "same-named single stock muscle (map single-member human_group)",
+   "4": "same-named single stock muscle (map single-member human_group)",
+   "5": "semimem_r ALONE - drop semiten (Ben 2026-10-22 explicit ruling)",
+   "6": "same-named single stock muscle (map single-member human_group)",
+   "7": "same-named single stock muscle (map single-member human_group)",
+   "8": "same-named single stock muscle (map single-member human_group)",
+   "9": "same-named single stock muscle (map single-member human_group)",
+   "10": "same-named single stock muscle (map single-member human_group)",
+   "11": "vas_int_r ALONE - drop vas_lat/vas_med (Ben 2026-10-22 ruling)",
+   "12": "same-named single stock muscle (map single-member human_group)",
+   "13": "same-named single stock muscle (map single-member human_group)",
+   "14": "same-named single stock muscle (map single-member human_group)",
+   "15": "tib_post_r (the real tibialis-posterior actuator; map ruling)",
+   "16": "tib_ant_r (map duplicate-name resolution: this actuator is tibialis anterior)",
+   "17": "same-named single stock muscle (map single-member human_group)",
+   "18": "same-named single stock muscle (map single-member human_group)",
+   "19": "same-named single stock muscle (map single-member human_group)",
+   "20": "same-named single stock muscle (map single-member human_group)",
+   "21": "same-named single stock muscle (map single-member human_group)",
+   "22": "same-named single stock muscle (map single-member human_group)",
+   "23": "same-named single stock muscle (map single-member human_group)",
+   "24": "glut_max1_r + glut_max2_r + glut_max3_r ONLY - one anatomical muscle the model splits into three compartments; drop every med/min compartment (Ben 2026-10-22 ruling)",
+   "25": "add_mag1_r + add_mag2_r + add_mag3_r ONLY - compartment split of one anatomical muscle; drop add_long/add_brev (Ben 2026-10-22 ruling)",
+   "26": "same-named single stock muscle (map single-member human_group)",
+   "27": "same-named single stock muscle (map single-member human_group)"
+  }
+ },
+ "surface_definition": {
+  "tau": "tau_h(theta_p, theta_s) = sum over CHOSEN muscles of computeMomentArm(about the PRIMARY dof) x Fmax; OpenSim native signs (arm = -dL/dq; tau>0 = positive coordinate direction; knee flexion NEGATIVE: vasti positive / hamstrings negative)",
+  "grid": "5x5 INCLUSIVE uniform nodes per axis over rom_table_deg (theta_i = lo + (hi-lo)*i/4); 25 cells per actuator; grading values are DIRECT OpenSim evaluations at the nodes (never interpolated); cell bin = midpoint-Voronoi interval within [lo, hi] (outer bins half-width)",
+  "area_share": "headline metric is AREA SHARE over the graded cells (see FIX_SPEC 1 phrasing style); envelope-excluded cells are removed from the denominator for BOTH rows and never counted as failures",
+  "standing_trap": "human surfaces computed on STOCK gait2392_simbody routing only; robot/BPA paths never substituted"
+ },
+ "hip_adduction_envelope": {
+  "ruling": "FIX_SPEC 1b (Ben 2026-10-23)",
+  "applies_to_actuators": [
+   24,
+   25,
+   26,
+   27
+  ],
+  "rule": "adduction max = 20 deg at flexion -15 tapering LINEARLY to +10 deg at flexion +110; abduction max from -10 deg at full extension to -60 deg at full flexion; LINEAR interpolation between extremes (supersedes the 2026-10-22 quarter-ellipse placeholder)",
+  "physical_origin": "BONE INTERFERENCE (femur-pelvis contact, per Ben) - a real anatomical/hardware constraint, not a modeling convenience",
+  "cell_rule": "cell graded iff its CENTER (p_node, s_node) is inside the closed envelope",
+  "per_actuator_excluded_cells": {
+   "24": 10,
+   "25": 10,
+   "26": 10,
+   "27": 10
+  },
+  "hip_rotation": "stays the static rom_table_deg box until Ben rules otherwise; pinned at 0 on actuator 24 (not graded anywhere)",
+  "tfl_note": "actuator 7 grades knee x hip_flexion; its hip_adduction (2nd map secondary) is PINNED AT 0, which is inside the envelope at every graded flexion, so no envelope exclusion applies to its surface"
+ },
+ "pinning_3plus_joint_routes": {
+  "1": "lumbar_rotation pinned at 0 (grades lumbar_extension x lumbar_bending)",
+  "7": "hip_adduction_r pinned at 0",
+  "20": "subtalar_angle_r pinned at 0",
+  "21": "subtalar_angle_r pinned at 0",
+  "22": "subtalar_angle_r pinned at 0",
+  "23": "subtalar_angle_r pinned at 0",
+  "24": "hip_rotation_r pinned at 0"
+ },
+ "uniarticular_class_serving": {
+  "note": "FIX_SPEC 1: the BiPam class serves uniarticular muscles over its two hinges; the five actuators whose map entry lists no secondary grade on their CLASS hinge pair",
+  "10": "knee_angle_r x hip_flexion_r (Bi_Hip thetaHipKnee)",
+  "11": "knee_angle_r x hip_flexion_r (Bi_Hip thetaHipKnee)",
+  "12": "ankle_angle_r x knee_angle_r (Calves thetaKneeAnkle; human soleus is knee-independent so its surface is flat in knee)",
+  "26": "hip_flexion_r x hip_adduction_r (Uni_Hip two-hinge pair; envelope-coupled)",
+  "27": "hip_flexion_r x hip_adduction_r (Uni_Hip; envelope-coupled)"
+ },
+ "flag_layer": {
+  "policy": "flagged cells STILL COUNT in the headline meet percentage (conservative); with-flag and without-flag numbers are BOTH reported; curves are NEVER corrected",
+  "FLAG_VIA": "ConditionalPathPoint isActive-set change inside the cell bin; 0.5-deg cross sweeps (primary swept at each secondary node and vice versa); boundary is a constant-angle line (checklist-verified)",
+  "FLAG_STEP": "adjacent-sample |d(arm)| > 2.0% of the per-muscle SURFACE-WIDE peak A* (never per-column); 0.5-deg cross sweeps",
+  "FLAG_SLACK": "any 1-deg full-box sample in the cell bin with l_mt <= tendon_slack_length",
+  "FLAG_SHORT": "any 1-deg full-box sample in the cell bin with lceN_est < 0.5 (constant-width pennation estimate, lce = sqrt((l_mt-tsl)^2 + (lo sin phi0)^2); upper bound on true fiber length when tendon is loaded)",
+  "FLAG_BONE": "NOT APPLIED - bone-penetration check TODO and not run (checklist L5); disclosed here, no flags invented",
+  "audit_caveats": "the 1-D audit of record (path_artifact_audit_...034030.csv) primary-DOF caveat strings are carried per actuator in the grading CSV column audit_caveat_1d_primary"
+ },
+ "halt_gates": {
+  "version_pin": "4.4.1 == 4.4.1: PASS",
+  "sha1_pins": "model+map+audit pins: PASS",
+  "live_wrap_sets": "empty on every chosen muscle: PASS",
+  "gate_table": "checklist section 7 hard gates: PASS",
+  "fd": "non-knee primary moment-arm FD (5% tol): PASS; knee informational per documented wrap/moving-point nonsmoothness"
+ },
+ "viewing_export": {
+  "dir": "D:\\GitHub\\Bipedal_Robot\\tmp\\paper_bridge\\capability_table_20261022\\human_surfaces_9x9_20261023",
+  "grid": "9x9 inclusive uniform nodes per axis",
+  "method": "bilinear interpolation from the 1-deg OpenSim box samples; grading values in the 5x5 CSV are direct evaluations; interpolation smooths via-point discontinuities for VIEWING only"
+ },
+ "reporting": {
+  "headline": "robot-row meet percentages computed against tau_h_Nm in the 5x5 CSV count FLAGGED cells (conservative)",
+  "without_flag_variant": "meet percentage over graded cells with no flags (denominator = n_graded_cells - n_flagged_graded_cells per actuator)",
+  "totals": {
+   "n_actuators": 27,
+   "n_cells_total": 675,
+   "n_graded_cells": 635,
+   "n_excluded_envelope_cells": 40,
+   "n_flagged_graded_cells": 126
+  }
+ },
+ "actuators": [
+  {
+   "id": 1,
+   "master_name": "Erector Spinae",
+   "chosen_muscles": [
+    "ercspn_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "lumbar_extension",
+    "primary_rom_deg": [
+     -20.0,
+     15.0
+    ],
+    "secondary": "lumbar_bending",
+    "secondary_rom_deg": [
+     -15.0,
+     15.0
+    ],
+    "pinned_at_0_deg": [
+     "lumbar_rotation"
+    ],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); lumbar_rotation (2nd map secondary) pinned at 0",
+    "map_secondary_dofs": [
+     "lumbar_bending",
+     "lumbar_rotation"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -20.0,
+     -11.25,
+     -2.5,
+     6.25,
+     15.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     -7.5,
+     0.0,
+     7.5,
+     15.0
+    ],
+    "bins_primary_deg": [
+     -20.0,
+     -15.625,
+     -6.875,
+     1.875,
+     10.625,
+     15.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     -11.25,
+     -3.75,
+     3.75,
+     11.25,
+     15.0
+    ]
+   },
+   "chosen_fmax_sum_n": 2500.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 122.560514,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "ercspn_r": 1e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "ercspn_r": {
+     "min_lmt_m": 0.12664,
+     "min_lmt_at_deg": "15;15",
+     "min_lcen_est": 0.8053,
+     "min_lcen_est_at_deg": "15;15",
+     "max_abs_arm_m": 0.04909,
+     "fmax_n": 2500.0,
+     "tsl_m": 0.03,
+     "lo_m": 0.12,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 2,
+   "master_name": "Internal Oblique",
+   "chosen_muscles": [
+    "intobl_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "lumbar_extension",
+    "primary_rom_deg": [
+     -20.0,
+     15.0
+    ],
+    "secondary": "lumbar_bending",
+    "secondary_rom_deg": [
+     -15.0,
+     15.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "lumbar_bending"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -20.0,
+     -11.25,
+     -2.5,
+     6.25,
+     15.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     -7.5,
+     0.0,
+     7.5,
+     15.0
+    ],
+    "bins_primary_deg": [
+     -20.0,
+     -15.625,
+     -6.875,
+     1.875,
+     10.625,
+     15.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     -11.25,
+     -3.75,
+     3.75,
+     11.25,
+     15.0
+    ]
+   },
+   "chosen_fmax_sum_n": 900.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 51.870934,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "intobl_r": 2e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "intobl_r": {
+     "min_lmt_m": 0.15316,
+     "min_lmt_at_deg": "-20;15",
+     "min_lcen_est": 0.5316,
+     "min_lcen_est_at_deg": "-20;15",
+     "max_abs_arm_m": 0.05768,
+     "fmax_n": 900.0,
+     "tsl_m": 0.1,
+     "lo_m": 0.1,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 3,
+   "master_name": "External Oblique",
+   "chosen_muscles": [
+    "extobl_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "lumbar_extension",
+    "primary_rom_deg": [
+     -20.0,
+     15.0
+    ],
+    "secondary": "lumbar_bending",
+    "secondary_rom_deg": [
+     -15.0,
+     15.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "lumbar_bending"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -20.0,
+     -11.25,
+     -2.5,
+     6.25,
+     15.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     -7.5,
+     0.0,
+     7.5,
+     15.0
+    ],
+    "bins_primary_deg": [
+     -20.0,
+     -15.625,
+     -6.875,
+     1.875,
+     10.625,
+     15.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     -11.25,
+     -3.75,
+     3.75,
+     11.25,
+     15.0
+    ]
+   },
+   "chosen_fmax_sum_n": 900.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 79.038713,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "extobl_r": 1e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "extobl_r": {
+     "min_lmt_m": 0.2329,
+     "min_lmt_at_deg": "-20;15",
+     "min_lcen_est": 0.7742,
+     "min_lcen_est_at_deg": "-20;15",
+     "max_abs_arm_m": 0.08782,
+     "fmax_n": 900.0,
+     "tsl_m": 0.14,
+     "lo_m": 0.12,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 4,
+   "master_name": "Bicep Femoris, Long Head",
+   "chosen_muscles": [
+    "bifemlh_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "hip_flexion_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 896.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 30.94236,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 5
+   },
+   "n_flagged_graded_cells": 5,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "bifemlh_r": 0.01019
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "bifemlh_r": {
+     "min_lmt_m": 0.35469,
+     "min_lmt_at_deg": "-118;-15",
+     "min_lcen_est": 0.2632,
+     "min_lcen_est_at_deg": "-118;-15",
+     "max_abs_arm_m": 0.03496,
+     "fmax_n": 896.0,
+     "tsl_m": 0.326,
+     "lo_m": 0.109,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 5,
+   "master_name": "Semimembranosus",
+   "chosen_muscles": [
+    "semimem_r"
+   ],
+   "target_rule_ruling": "semimem_r ALONE - drop semiten (Ben 2026-10-22 explicit ruling)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "hip_flexion_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1288.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 51.941918,
+   "flag_counts_graded_cells": {
+    "VIA": 5,
+    "STEP": 1,
+    "SLACK": 5,
+    "SHORT": 10
+   },
+   "n_flagged_graded_cells": 13,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "VIA",
+    "SLACK",
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "semimem_r": 1.15915
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)",
+   "box_stats_1deg": {
+    "semimem_r": {
+     "min_lmt_m": 0.33268,
+     "min_lmt_at_deg": "-120;-15",
+     "min_lcen_est": 0.2588,
+     "min_lcen_est_at_deg": "-80;-3",
+     "max_abs_arm_m": 0.04051,
+     "fmax_n": 1288.0,
+     "tsl_m": 0.359,
+     "lo_m": 0.08,
+     "cond_points_xml": "knee_angle_r:-32.00..10.00",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 6,
+   "master_name": "Sartorius",
+   "chosen_muscles": [
+    "sar_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "hip_flexion_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 156.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 3.086339,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "sar_r": 0.00128
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "sar_r": {
+     "min_lmt_m": 0.40457,
+     "min_lmt_at_deg": "-120;110",
+     "min_lcen_est": 0.5857,
+     "min_lcen_est_at_deg": "-120;110",
+     "max_abs_arm_m": 0.02028,
+     "fmax_n": 156.0,
+     "tsl_m": 0.1,
+     "lo_m": 0.52,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "chosen_muscles": [
+    "tfl_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [
+     "hip_adduction_r"
+    ],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); hip_adduction_r (2nd map secondary) pinned at 0 (feasible at every graded flexion under the 1b envelope: 0 is inside [abd_min, add_max] for all f)",
+    "map_secondary_dofs": [
+     "hip_flexion_r",
+     "hip_adduction_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 233.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 2.924806,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 6,
+    "SHORT": 11
+   },
+   "n_flagged_graded_cells": 11,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "SLACK",
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "tfl_r": 0.00011
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "tfl_r": {
+     "min_lmt_m": 0.39955,
+     "min_lmt_at_deg": "10;110",
+     "min_lcen_est": 0.0523,
+     "min_lcen_est_at_deg": "-106;104",
+     "max_abs_arm_m": 0.01397,
+     "fmax_n": 233.0,
+     "tsl_m": 0.425,
+     "lo_m": 0.095,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 8,
+   "master_name": "Rectus Femoris",
+   "chosen_muscles": [
+    "rect_fem_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "hip_flexion_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1169.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 58.980947,
+   "flag_counts_graded_cells": {
+    "VIA": 5,
+    "STEP": 3,
+    "SLACK": 0,
+    "SHORT": 8
+   },
+   "n_flagged_graded_cells": 13,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "VIA",
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "rect_fem_r": 0.41077
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)",
+   "box_stats_1deg": {
+    "rect_fem_r": {
+     "min_lmt_m": 0.31956,
+     "min_lmt_at_deg": "10;110",
+     "min_lcen_est": 0.121,
+     "min_lcen_est_at_deg": "10;110",
+     "max_abs_arm_m": 0.05057,
+     "fmax_n": 1169.0,
+     "tsl_m": 0.31,
+     "lo_m": 0.114,
+     "cond_points_xml": "knee_angle_r:-150.00..-83.65",
+     "n_moving_pp": 1
+    }
+   }
+  },
+  {
+   "id": 9,
+   "master_name": "Gracilis",
+   "chosen_muscles": [
+    "grac_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "hip_flexion_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 162.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 6.338885,
+   "flag_counts_graded_cells": {
+    "VIA": 5,
+    "STEP": 4,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 5,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "VIA",
+    "STEP"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "grac_r": 1.08771
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)",
+   "box_stats_1deg": {
+    "grac_r": {
+     "min_lmt_m": 0.37275,
+     "min_lmt_at_deg": "-120;2",
+     "min_lcen_est": 0.7029,
+     "min_lcen_est_at_deg": "-120;2",
+     "max_abs_arm_m": 0.03943,
+     "fmax_n": 162.0,
+     "tsl_m": 0.126,
+     "lo_m": 0.352,
+     "cond_points_xml": "knee_angle_r:-25.00..10.00",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 10,
+   "master_name": "Bicep Femoris, Short Head",
+   "chosen_muscles": [
+    "bifemsh_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "Bi_Hip class hinge pair (biPulleySpecsFromMasters.m thetaHipKnee [-15,110]x[-120,10]); map lists no secondary - the class serves the uniarticular muscle over its two hinges (FIX_SPEC 1)",
+    "map_secondary_dofs": []
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 804.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 27.058151,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "bifemsh_r": 0.00143
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "bifemsh_r": {
+     "min_lmt_m": 0.19122,
+     "min_lmt_at_deg": "-120;-15",
+     "min_lcen_est": 0.7084,
+     "min_lcen_est_at_deg": "-120;-15",
+     "max_abs_arm_m": 0.03386,
+     "fmax_n": 804.0,
+     "tsl_m": 0.089,
+     "lo_m": 0.173,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 11,
+   "master_name": "Vastus Intermedius",
+   "chosen_muscles": [
+    "vas_int_r"
+   ],
+   "target_rule_ruling": "vas_int_r ALONE - drop vas_lat/vas_med (Ben 2026-10-22 ruling)",
+   "axes": {
+    "primary": "knee_angle_r",
+    "primary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "Bi_Hip class hinge pair (biPulleySpecsFromMasters.m thetaHipKnee); map lists no secondary - class two-hinge serving (FIX_SPEC 1)",
+    "map_secondary_dofs": []
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1365.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 62.209261,
+   "flag_counts_graded_cells": {
+    "VIA": 5,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 5
+   },
+   "n_flagged_graded_cells": 10,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "VIA"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "vas_int_r": 0.39166
+   },
+   "fd_status": "informational (knee)",
+   "audit_caveat_1d_primary": "[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)",
+   "box_stats_1deg": {
+    "vas_int_r": {
+     "min_lmt_m": 0.17453,
+     "min_lmt_at_deg": "10;-12",
+     "min_lcen_est": 0.446,
+     "min_lcen_est_at_deg": "10;-12",
+     "max_abs_arm_m": 0.04872,
+     "fmax_n": 1365.0,
+     "tsl_m": 0.136,
+     "lo_m": 0.087,
+     "cond_points_xml": "knee_angle_r:-150.00..-81.36",
+     "n_moving_pp": 1
+    }
+   }
+  },
+  {
+   "id": 12,
+   "master_name": "Soleus",
+   "chosen_muscles": [
+    "soleus_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "ankle_angle_r",
+    "primary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "secondary": "knee_angle_r",
+    "secondary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "Calves class hinge pair (biPulleySpecsFromMasters.m thetaKneeAnkle); map lists no secondary - class two-hinge serving (FIX_SPEC 1); human soleus crosses only the ankle so the surface is honest-flat in knee",
+    "map_secondary_dofs": []
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "nodes_secondary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "bins_primary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ],
+    "bins_secondary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ]
+   },
+   "chosen_fmax_sum_n": 3549.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 170.523232,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 10
+   },
+   "n_flagged_graded_cells": 10,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "soleus_r": 2e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "soleus_r": {
+     "min_lmt_m": 0.25076,
+     "min_lmt_at_deg": "-50;-119",
+     "min_lcen_est": 0.4229,
+     "min_lcen_est_at_deg": "-50;-119",
+     "max_abs_arm_m": 0.04828,
+     "fmax_n": 3549.0,
+     "tsl_m": 0.25,
+     "lo_m": 0.05,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 13,
+   "master_name": "Medial Gastroocnemius",
+   "chosen_muscles": [
+    "med_gas_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "ankle_angle_r",
+    "primary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "secondary": "knee_angle_r",
+    "secondary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "knee_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "nodes_secondary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "bins_primary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ],
+    "bins_secondary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1558.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 74.175901,
+   "flag_counts_graded_cells": {
+    "VIA": 5,
+    "STEP": 0,
+    "SLACK": 5,
+    "SHORT": 14
+   },
+   "n_flagged_graded_cells": 16,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "VIA",
+    "SLACK",
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "med_gas_r": 2e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "med_gas_r": {
+     "min_lmt_m": 0.37493,
+     "min_lmt_at_deg": "-50;-120",
+     "min_lcen_est": 0.2924,
+     "min_lcen_est_at_deg": "-42;-77",
+     "max_abs_arm_m": 0.04762,
+     "fmax_n": 1558.0,
+     "tsl_m": 0.39,
+     "lo_m": 0.06,
+     "cond_points_xml": "knee_angle_r:-45.00..10.00",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 14,
+   "master_name": "Lateral Gastrocenemius",
+   "chosen_muscles": [
+    "lat_gas_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "ankle_angle_r",
+    "primary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "secondary": "knee_angle_r",
+    "secondary_rom_deg": [
+     -120.0,
+     10.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "knee_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "nodes_secondary_deg": [
+     -120.0,
+     -87.5,
+     -55.0,
+     -22.5,
+     10.0
+    ],
+    "bins_primary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ],
+    "bins_secondary_deg": [
+     -120.0,
+     -103.75,
+     -71.25,
+     -38.75,
+     -6.25,
+     10.0
+    ]
+   },
+   "chosen_fmax_sum_n": 683.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 33.284221,
+   "flag_counts_graded_cells": {
+    "VIA": 5,
+    "STEP": 0,
+    "SLACK": 3,
+    "SHORT": 14
+   },
+   "n_flagged_graded_cells": 16,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "VIA",
+    "SLACK",
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "lat_gas_r": 2e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "lat_gas_r": {
+     "min_lmt_m": 0.37217,
+     "min_lmt_at_deg": "-50;-120",
+     "min_lcen_est": 0.1392,
+     "min_lcen_est_at_deg": "-44;-96",
+     "max_abs_arm_m": 0.04874,
+     "fmax_n": 683.0,
+     "tsl_m": 0.38,
+     "lo_m": 0.064,
+     "cond_points_xml": "knee_angle_r:-45.00..10.00",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 15,
+   "master_name": "Tibialis Posterior",
+   "chosen_muscles": [
+    "tib_post_r"
+   ],
+   "target_rule_ruling": "tib_post_r (the real tibialis-posterior actuator; map ruling)",
+   "axes": {
+    "primary": "subtalar_angle_r",
+    "primary_rom_deg": [
+     -25.0,
+     35.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "ankle_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -25.0,
+     -10.0,
+     5.0,
+     20.0,
+     35.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -25.0,
+     -17.5,
+     -2.5,
+     12.5,
+     27.5,
+     35.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1588.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 34.797351,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 1,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 1,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "STEP"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "tib_post_r": 6e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "tib_post_r": {
+     "min_lmt_m": 0.32639,
+     "min_lmt_at_deg": "34;-50",
+     "min_lcen_est": 0.568,
+     "min_lcen_est_at_deg": "34;-50",
+     "max_abs_arm_m": 0.02196,
+     "fmax_n": 1588.0,
+     "tsl_m": 0.31,
+     "lo_m": 0.031,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 16,
+   "master_name": "Tibialis Posterior (duplicate name)",
+   "chosen_muscles": [
+    "tib_ant_r"
+   ],
+   "target_rule_ruling": "tib_ant_r (map duplicate-name resolution: this actuator is tibialis anterior)",
+   "axes": {
+    "primary": "ankle_angle_r",
+    "primary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "secondary": "subtalar_angle_r",
+    "secondary_rom_deg": [
+     -25.0,
+     35.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "subtalar_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "nodes_secondary_deg": [
+     -25.0,
+     -10.0,
+     5.0,
+     20.0,
+     35.0
+    ],
+    "bins_primary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ],
+    "bins_secondary_deg": [
+     -25.0,
+     -17.5,
+     -2.5,
+     12.5,
+     27.5,
+     35.0
+    ]
+   },
+   "chosen_fmax_sum_n": 905.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 39.289543,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "tib_ant_r": 1e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "tib_ant_r": {
+     "min_lmt_m": 0.28266,
+     "min_lmt_at_deg": "20;35",
+     "min_lcen_est": 0.6149,
+     "min_lcen_est_at_deg": "20;35",
+     "max_abs_arm_m": 0.0435,
+     "fmax_n": 905.0,
+     "tsl_m": 0.223,
+     "lo_m": 0.098,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 17,
+   "master_name": "Peroneus Brevis",
+   "chosen_muscles": [
+    "per_brev_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "subtalar_angle_r",
+    "primary_rom_deg": [
+     -25.0,
+     35.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "ankle_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -25.0,
+     -10.0,
+     5.0,
+     20.0,
+     35.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -25.0,
+     -17.5,
+     -2.5,
+     12.5,
+     27.5,
+     35.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 435.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 13.128197,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 3,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 3,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "STEP"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "per_brev_r": 1e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "per_brev_r": {
+     "min_lmt_m": 0.19754,
+     "min_lmt_at_deg": "-25;-16",
+     "min_lcen_est": 0.736,
+     "min_lcen_est_at_deg": "-25;-16",
+     "max_abs_arm_m": 0.03022,
+     "fmax_n": 435.0,
+     "tsl_m": 0.161,
+     "lo_m": 0.05,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 18,
+   "master_name": "Peroneus Longus",
+   "chosen_muscles": [
+    "per_long_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "subtalar_angle_r",
+    "primary_rom_deg": [
+     -25.0,
+     35.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "ankle_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -25.0,
+     -10.0,
+     5.0,
+     20.0,
+     35.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -25.0,
+     -17.5,
+     -2.5,
+     12.5,
+     27.5,
+     35.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 943.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 26.578153,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 3,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 3,
+   "n_graded_cells": 25,
+   "gate_table_expected": [
+    "STEP"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "per_long_r": 2e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "per_long_r": {
+     "min_lmt_m": 0.38011,
+     "min_lmt_at_deg": "-25;-34",
+     "min_lcen_est": 0.7373,
+     "min_lcen_est_at_deg": "-25;-34",
+     "max_abs_arm_m": 0.02854,
+     "fmax_n": 943.0,
+     "tsl_m": 0.345,
+     "lo_m": 0.049,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 19,
+   "master_name": "Peroneus Tertius",
+   "chosen_muscles": [
+    "per_tert_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "subtalar_angle_r",
+    "primary_rom_deg": [
+     -25.0,
+     35.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact",
+    "map_secondary_dofs": [
+     "ankle_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -25.0,
+     -10.0,
+     5.0,
+     20.0,
+     35.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -25.0,
+     -17.5,
+     -2.5,
+     12.5,
+     27.5,
+     35.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 180.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 5.825377,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "per_tert_r": 3e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "per_tert_r": {
+     "min_lmt_m": 0.16594,
+     "min_lmt_at_deg": "-25;20",
+     "min_lcen_est": 0.8644,
+     "min_lcen_est_at_deg": "-25;20",
+     "max_abs_arm_m": 0.03236,
+     "fmax_n": 180.0,
+     "tsl_m": 0.1,
+     "lo_m": 0.079,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "chosen_muscles": [
+    "flex_dig_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "mtp_angle_r",
+    "primary_rom_deg": [
+     -40.0,
+     40.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [
+     "subtalar_angle_r"
+    ],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); subtalar_angle_r (2nd map secondary) pinned at 0",
+    "map_secondary_dofs": [
+     "ankle_angle_r",
+     "subtalar_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -40.0,
+     -20.0,
+     0.0,
+     20.0,
+     40.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -40.0,
+     -30.0,
+     -10.0,
+     10.0,
+     30.0,
+     40.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 310.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 2.167969,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "flex_dig_r": 2e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "flex_dig_r": {
+     "min_lmt_m": 0.41683,
+     "min_lmt_at_deg": "-40;-50",
+     "min_lcen_est": 0.5097,
+     "min_lcen_est_at_deg": "-40;-50",
+     "max_abs_arm_m": 0.00704,
+     "fmax_n": 310.0,
+     "tsl_m": 0.4,
+     "lo_m": 0.034,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "chosen_muscles": [
+    "flex_hal_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "mtp_angle_r",
+    "primary_rom_deg": [
+     -40.0,
+     40.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [
+     "subtalar_angle_r"
+    ],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); subtalar_angle_r pinned at 0",
+    "map_secondary_dofs": [
+     "ankle_angle_r",
+     "subtalar_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -40.0,
+     -20.0,
+     0.0,
+     20.0,
+     40.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -40.0,
+     -30.0,
+     -10.0,
+     10.0,
+     30.0,
+     40.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 322.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 1.966008,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "flex_hal_r": 3e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "flex_hal_r": {
+     "min_lmt_m": 0.40085,
+     "min_lmt_at_deg": "-40;-50",
+     "min_lcen_est": 0.5149,
+     "min_lcen_est_at_deg": "-40;-50",
+     "max_abs_arm_m": 0.00611,
+     "fmax_n": 322.0,
+     "tsl_m": 0.38,
+     "lo_m": 0.043,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "chosen_muscles": [
+    "ext_dig_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "mtp_angle_r",
+    "primary_rom_deg": [
+     -40.0,
+     40.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [
+     "subtalar_angle_r"
+    ],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); subtalar_angle_r pinned at 0",
+    "map_secondary_dofs": [
+     "ankle_angle_r",
+     "subtalar_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -40.0,
+     -20.0,
+     0.0,
+     20.0,
+     40.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -40.0,
+     -30.0,
+     -10.0,
+     10.0,
+     30.0,
+     40.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 512.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 3.684788,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "ext_dig_r": 1e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "ext_dig_r": {
+     "min_lmt_m": 0.42321,
+     "min_lmt_at_deg": "40;20",
+     "min_lcen_est": 0.7793,
+     "min_lcen_est_at_deg": "40;20",
+     "max_abs_arm_m": 0.0072,
+     "fmax_n": 512.0,
+     "tsl_m": 0.345,
+     "lo_m": 0.102,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "chosen_muscles": [
+    "ext_hal_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "mtp_angle_r",
+    "primary_rom_deg": [
+     -40.0,
+     40.0
+    ],
+    "secondary": "ankle_angle_r",
+    "secondary_rom_deg": [
+     -50.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [
+     "subtalar_angle_r"
+    ],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); subtalar_angle_r pinned at 0",
+    "map_secondary_dofs": [
+     "ankle_angle_r",
+     "subtalar_angle_r"
+    ]
+   },
+   "envelope": {
+    "applies": false,
+    "rule": "rom_table_deg rectangle (no hip_adduction axis)",
+    "n_graded_cells": 25,
+    "n_excluded_cells": 0
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -40.0,
+     -20.0,
+     0.0,
+     20.0,
+     40.0
+    ],
+    "nodes_secondary_deg": [
+     -50.0,
+     -32.5,
+     -15.0,
+     2.5,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -40.0,
+     -30.0,
+     -10.0,
+     10.0,
+     30.0,
+     40.0
+    ],
+    "bins_secondary_deg": [
+     -50.0,
+     -41.25,
+     -23.75,
+     -6.25,
+     11.25,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 162.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 1.44653,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 0
+   },
+   "n_flagged_graded_cells": 0,
+   "n_graded_cells": 25,
+   "gate_table_expected": [],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "ext_hal_r": 1e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "ext_hal_r": {
+     "min_lmt_m": 0.38976,
+     "min_lmt_at_deg": "40;20",
+     "min_lcen_est": 0.7707,
+     "min_lcen_est_at_deg": "40;20",
+     "max_abs_arm_m": 0.00893,
+     "fmax_n": 162.0,
+     "tsl_m": 0.305,
+     "lo_m": 0.111,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 24,
+   "master_name": "Gluteus Maximus",
+   "chosen_muscles": [
+    "glut_max1_r",
+    "glut_max2_r",
+    "glut_max3_r"
+   ],
+   "target_rule_ruling": "glut_max1_r + glut_max2_r + glut_max3_r ONLY - one anatomical muscle the model splits into three compartments; drop every med/min compartment (Ben 2026-10-22 ruling)",
+   "axes": {
+    "primary": "hip_flexion_r",
+    "primary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "secondary": "hip_adduction_r",
+    "secondary_rom_deg": [
+     -45.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [
+     "hip_rotation_r"
+    ],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); hip_rotation_r (2nd map secondary) pinned at 0 (rotation stays the static rom box per FIX_SPEC 1b); adduction axis is envelope-coupled",
+    "map_secondary_dofs": [
+     "hip_adduction_r",
+     "hip_rotation_r"
+    ]
+   },
+   "envelope": {
+    "applies": true,
+    "rule": "coupled adduction envelope (FIX_SPEC 1b): add_max(f) = 20 - 10*(f+15)/125 deg, abd_min(f) = -10 - 50*(f+15)/125 deg, LINEAR in flexion f [-15,110]; cell graded iff center inside (closed)",
+    "n_graded_cells": 15,
+    "n_excluded_cells": 10
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "nodes_secondary_deg": [
+     -45.0,
+     -28.75,
+     -12.5,
+     3.75,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ],
+    "bins_secondary_deg": [
+     -45.0,
+     -36.875,
+     -20.625,
+     -4.375,
+     11.875,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1944.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 129.977737,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 3
+   },
+   "n_flagged_graded_cells": 3,
+   "n_graded_cells": 15,
+   "gate_table_expected": [
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "glut_max1_r": 1e-05,
+    "glut_max2_r": 1e-05,
+    "glut_max3_r": 3e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "glut_max1_r": {
+     "min_lmt_m": 0.164,
+     "min_lmt_at_deg": "-15;-45",
+     "min_lcen_est": 0.2882,
+     "min_lcen_est_at_deg": "-15;-45",
+     "max_abs_arm_m": 0.0531,
+     "fmax_n": 573.0,
+     "tsl_m": 0.125,
+     "lo_m": 0.142,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    },
+    "glut_max2_r": {
+     "min_lmt_m": 0.19285,
+     "min_lmt_at_deg": "-15;-36",
+     "min_lcen_est": 0.448,
+     "min_lcen_est_at_deg": "-15;-36",
+     "max_abs_arm_m": 0.0636,
+     "fmax_n": 819.0,
+     "tsl_m": 0.127,
+     "lo_m": 0.147,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    },
+    "glut_max3_r": {
+     "min_lmt_m": 0.19607,
+     "min_lmt_at_deg": "-15;20",
+     "min_lcen_est": 0.3652,
+     "min_lcen_est_at_deg": "-15;20",
+     "max_abs_arm_m": 0.08657,
+     "fmax_n": 552.0,
+     "tsl_m": 0.145,
+     "lo_m": 0.144,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 25,
+   "master_name": "Adductor Magnus",
+   "chosen_muscles": [
+    "add_mag1_r",
+    "add_mag2_r",
+    "add_mag3_r"
+   ],
+   "target_rule_ruling": "add_mag1_r + add_mag2_r + add_mag3_r ONLY - compartment split of one anatomical muscle; drop add_long/add_brev (Ben 2026-10-22 ruling)",
+   "axes": {
+    "primary": "hip_adduction_r",
+    "primary_rom_deg": [
+     -45.0,
+     20.0
+    ],
+    "secondary": "hip_flexion_r",
+    "secondary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "map primary_dof + FIRST map secondary (map ordering); exact; adduction (primary) axis is envelope-coupled",
+    "map_secondary_dofs": [
+     "hip_flexion_r"
+    ]
+   },
+   "envelope": {
+    "applies": true,
+    "rule": "coupled adduction envelope (FIX_SPEC 1b): add_max(f) = 20 - 10*(f+15)/125 deg, abd_min(f) = -10 - 50*(f+15)/125 deg, LINEAR in flexion f [-15,110]; cell graded iff center inside (closed)",
+    "n_graded_cells": 15,
+    "n_excluded_cells": 10
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -45.0,
+     -28.75,
+     -12.5,
+     3.75,
+     20.0
+    ],
+    "nodes_secondary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "bins_primary_deg": [
+     -45.0,
+     -36.875,
+     -20.625,
+     -4.375,
+     11.875,
+     20.0
+    ],
+    "bins_secondary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1212.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 79.269751,
+   "flag_counts_graded_cells": {
+    "VIA": 0,
+    "STEP": 0,
+    "SLACK": 0,
+    "SHORT": 3
+   },
+   "n_flagged_graded_cells": 3,
+   "n_graded_cells": 15,
+   "gate_table_expected": [
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "add_mag1_r": 2e-05,
+    "add_mag2_r": 3e-05,
+    "add_mag3_r": 2e-05
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "none",
+   "box_stats_1deg": {
+    "add_mag1_r": {
+     "min_lmt_m": 0.08854,
+     "min_lmt_at_deg": "20;-1",
+     "min_lcen_est": 0.3394,
+     "min_lcen_est_at_deg": "20;-1",
+     "max_abs_arm_m": 0.07742,
+     "fmax_n": 381.0,
+     "tsl_m": 0.06,
+     "lo_m": 0.087,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    },
+    "add_mag2_r": {
+     "min_lmt_m": 0.16807,
+     "min_lmt_at_deg": "20;-15",
+     "min_lcen_est": 0.4007,
+     "min_lcen_est_at_deg": "20;-15",
+     "max_abs_arm_m": 0.07581,
+     "fmax_n": 343.0,
+     "tsl_m": 0.12,
+     "lo_m": 0.121,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    },
+    "add_mag3_r": {
+     "min_lmt_m": 0.32047,
+     "min_lmt_at_deg": "20;-15",
+     "min_lcen_est": 0.5525,
+     "min_lcen_est_at_deg": "20;-15",
+     "max_abs_arm_m": 0.06572,
+     "fmax_n": 488.0,
+     "tsl_m": 0.249,
+     "lo_m": 0.131,
+     "cond_points_xml": "",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 26,
+   "master_name": "Iliacus",
+   "chosen_muscles": [
+    "iliacus_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "hip_flexion_r",
+    "primary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "secondary": "hip_adduction_r",
+    "secondary_rom_deg": [
+     -45.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "Uni_Hip class two-hinge pair hip_flexion x hip_adduction (the pair the class grades for glut_max (map first secondary) and add_mag (map only secondary)); map lists no secondary - class two-hinge serving (FIX_SPEC 1); adduction axis envelope-coupled (1b \"any hip surface that grades the adduction axis\")",
+    "map_secondary_dofs": []
+   },
+   "envelope": {
+    "applies": true,
+    "rule": "coupled adduction envelope (FIX_SPEC 1b): add_max(f) = 20 - 10*(f+15)/125 deg, abd_min(f) = -10 - 50*(f+15)/125 deg, LINEAR in flexion f [-15,110]; cell graded iff center inside (closed)",
+    "n_graded_cells": 15,
+    "n_excluded_cells": 10
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "nodes_secondary_deg": [
+     -45.0,
+     -28.75,
+     -12.5,
+     3.75,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ],
+    "bins_secondary_deg": [
+     -45.0,
+     -36.875,
+     -20.625,
+     -4.375,
+     11.875,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1073.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 47.847616,
+   "flag_counts_graded_cells": {
+    "VIA": 3,
+    "STEP": 6,
+    "SLACK": 0,
+    "SHORT": 4
+   },
+   "n_flagged_graded_cells": 7,
+   "n_graded_cells": 15,
+   "gate_table_expected": [
+    "VIA",
+    "STEP",
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "iliacus_r": 0.0004
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)",
+   "box_stats_1deg": {
+    "iliacus_r": {
+     "min_lmt_m": 0.13245,
+     "min_lmt_at_deg": "102;9",
+     "min_lcen_est": 0.3466,
+     "min_lcen_est_at_deg": "102;9",
+     "max_abs_arm_m": 0.04625,
+     "fmax_n": 1073.0,
+     "tsl_m": 0.1,
+     "lo_m": 0.1,
+     "cond_points_xml": "hip_flexion_r:-90.00..45.00",
+     "n_moving_pp": 0
+    }
+   }
+  },
+  {
+   "id": 27,
+   "master_name": "Psoas X",
+   "chosen_muscles": [
+    "psoas_r"
+   ],
+   "target_rule_ruling": "same-named single stock muscle (map single-member human_group)",
+   "axes": {
+    "primary": "hip_flexion_r",
+    "primary_rom_deg": [
+     -15.0,
+     110.0
+    ],
+    "secondary": "hip_adduction_r",
+    "secondary_rom_deg": [
+     -45.0,
+     20.0
+    ],
+    "pinned_at_0_deg": [],
+    "provenance": "Uni_Hip class two-hinge pair (see actuator 26); adduction axis envelope-coupled",
+    "map_secondary_dofs": []
+   },
+   "envelope": {
+    "applies": true,
+    "rule": "coupled adduction envelope (FIX_SPEC 1b): add_max(f) = 20 - 10*(f+15)/125 deg, abd_min(f) = -10 - 50*(f+15)/125 deg, LINEAR in flexion f [-15,110]; cell graded iff center inside (closed)",
+    "n_graded_cells": 15,
+    "n_excluded_cells": 10
+   },
+   "grid": {
+    "nodes_primary_deg": [
+     -15.0,
+     16.25,
+     47.5,
+     78.75,
+     110.0
+    ],
+    "nodes_secondary_deg": [
+     -45.0,
+     -28.75,
+     -12.5,
+     3.75,
+     20.0
+    ],
+    "bins_primary_deg": [
+     -15.0,
+     0.625,
+     31.875,
+     63.125,
+     94.375,
+     110.0
+    ],
+    "bins_secondary_deg": [
+     -45.0,
+     -36.875,
+     -20.625,
+     -4.375,
+     11.875,
+     20.0
+    ]
+   },
+   "chosen_fmax_sum_n": 1113.0,
+   "tau_h_definition": "sum over chosen muscles of computeMomentArm(about primary) x Fmax, direct OpenSim evaluation at each node",
+   "peak_abs_tau_h_Nm": 49.732654,
+   "flag_counts_graded_cells": {
+    "VIA": 3,
+    "STEP": 4,
+    "SLACK": 0,
+    "SHORT": 4
+   },
+   "n_flagged_graded_cells": 7,
+   "n_graded_cells": 15,
+   "gate_table_expected": [
+    "VIA",
+    "STEP",
+    "SHORT"
+   ],
+   "gate_table_missing": [],
+   "fd_worst_rel": {
+    "psoas_r": 0.00042
+   },
+   "fd_status": "PASS",
+   "audit_caveat_1d_primary": "[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)",
+   "box_stats_1deg": {
+    "psoas_r": {
+     "min_lmt_m": 0.18423,
+     "min_lmt_at_deg": "99;13",
+     "min_lcen_est": 0.2794,
+     "min_lcen_est_at_deg": "99;13",
+     "max_abs_arm_m": 0.04777,
+     "fmax_n": 1113.0,
+     "tsl_m": 0.16,
+     "lo_m": 0.1,
+     "cond_points_xml": "hip_flexion_r:-90.00..45.00",
+     "n_moving_pp": 0
+    }
+   }
+  }
+ ]
+}

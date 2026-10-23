@@ -1,0 +1,80 @@
+[info] Loaded model 3DGaitModel2392 from file D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim
+[warning] Couldn't find file 'treadmill.vtp'.
+[warning] Couldn't find file 'sacrum.vtp'.
+[warning] Couldn't find file 'pelvis.vtp'.
+[warning] Couldn't find file 'l_pelvis.vtp'.
+[warning] Couldn't find file 'femur_r.vtp'.
+[warning] Couldn't find file 'tibia_r.vtp'.
+[warning] Couldn't find file 'fibula.vtp'.
+[warning] Couldn't find file 'talus.vtp'.
+[warning] Couldn't find file 'foot.vtp'.
+[warning] Couldn't find file 'bofoot.vtp'.
+[warning] Couldn't find file 'femur_l.vtp'.
+[warning] Couldn't find file 'tibia_l.vtp'.
+[warning] Couldn't find file 'l_fibula.vtp'.
+[warning] Couldn't find file 'l_talus.vtp'.
+[warning] Couldn't find file 'l_foot.vtp'.
+[warning] Couldn't find file 'l_bofoot.vtp'.
+[warning] Couldn't find file 'hat_spine.vtp'.
+[warning] Couldn't find file 'hat_jaw.vtp'.
+[warning] Couldn't find file 'hat_skull.vtp'.
+[warning] Couldn't find file 'hat_ribs.vtp'.
+opensim : 4.4.1 (pinned 4.4.1)
+model   : D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim
+  sha1  : b89062c763e6d8fa3d7651c0a4fd2820055d807c
+map     : D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\actuator_map_27.json
+  sha1  : a97afffeeae85687810986273db6ba0151eba1a2
+audit pins model+map sha1: OK
+wrap halt gate: all chosen muscles have empty wrap sets
+[ 1] Erector Spinae                 lumbar_extension  x lumbar_bending    graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[ 2] Internal Oblique               lumbar_extension  x lumbar_bending    graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[ 3] External Oblique               lumbar_extension  x lumbar_bending    graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[ 4] Bicep Femoris, Long Head       knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 5  gate ok  FD informational (knee)
+[ 5] Semimembranosus                knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 5 S 1 K 5 H10  gate ok  FD informational (knee)
+[ 6] Sartorius                      knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD informational (knee)
+[ 7] Tensor Fasciae Latae           knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 0 S 0 K 6 H11  gate ok  FD informational (knee)
+[ 8] Rectus Femoris                 knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 5 S 3 K 0 H 8  gate ok  FD informational (knee)
+[ 9] Gracilis                       knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 5 S 4 K 0 H 0  gate ok  FD informational (knee)
+[10] Bicep Femoris, Short Head      knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD informational (knee)
+[11] Vastus Intermedius             knee_angle_r      x hip_flexion_r     graded 25/25 env-excl  0  flags V 5 S 0 K 0 H 5  gate ok  FD informational (knee)
+[12] Soleus                         ankle_angle_r     x knee_angle_r      graded 25/25 env-excl  0  flags V 0 S 0 K 0 H10  gate ok  FD PASS
+[13] Medial Gastroocnemius          ankle_angle_r     x knee_angle_r      graded 25/25 env-excl  0  flags V 5 S 0 K 5 H14  gate ok  FD PASS
+[14] Lateral Gastrocenemius         ankle_angle_r     x knee_angle_r      graded 25/25 env-excl  0  flags V 5 S 0 K 3 H14  gate ok  FD PASS
+[15] Tibialis Posterior             subtalar_angle_r  x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 1 K 0 H 0  gate ok  FD PASS
+[16] Tibialis Posterior (duplicate  ankle_angle_r     x subtalar_angle_r  graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[17] Peroneus Brevis                subtalar_angle_r  x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 3 K 0 H 0  gate ok  FD PASS
+[18] Peroneus Longus                subtalar_angle_r  x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 3 K 0 H 0  gate ok  FD PASS
+[19] Peroneus Tertius               subtalar_angle_r  x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[20] Flexor Digitorum Longus        mtp_angle_r       x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[21] Flexor Hallucis Longus         mtp_angle_r       x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[22] Extensor Digitorum Longus      mtp_angle_r       x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[23] Extensor Hallucis Longus       mtp_angle_r       x ankle_angle_r     graded 25/25 env-excl  0  flags V 0 S 0 K 0 H 0  gate ok  FD PASS
+[24] Gluteus Maximus                hip_flexion_r     x hip_adduction_r   graded 15/25 env-excl 10  flags V 0 S 0 K 0 H 3  gate ok  FD PASS
+[25] Adductor Magnus                hip_adduction_r   x hip_flexion_r     graded 15/25 env-excl 10  flags V 0 S 0 K 0 H 3  gate ok  FD PASS
+[26] Iliacus                        hip_flexion_r     x hip_adduction_r   graded 15/25 env-excl 10  flags V 3 S 6 K 0 H 4  gate ok  FD PASS
+[27] Psoas X                        hip_flexion_r     x hip_adduction_r   graded 15/25 env-excl 10  flags V 3 S 4 K 0 H 4  gate ok  FD PASS
+
+wrote D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\human_surfaces_5x5_grading_20261023.csv (675 cell rows)
+wrote 27 files in D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\human_surfaces_9x9_20261023
+wrote D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\human_surfaces_manifest_20261023.json
+
+flagged actuators (>=1 flagged graded cell):
+  - Bicep Femoris, Long Head
+  - Semimembranosus
+  - Tensor Fasciae Latae
+  - Rectus Femoris
+  - Gracilis
+  - Vastus Intermedius
+  - Soleus
+  - Medial Gastroocnemius
+  - Lateral Gastrocenemius
+  - Tibialis Posterior
+  - Peroneus Brevis
+  - Peroneus Longus
+  - Gluteus Maximus
+  - Adductor Magnus
+  - Iliacus
+  - Psoas X
+
+DONE (27 actuators; 635 graded cells; 126 flagged graded cells)
+EXIT=0

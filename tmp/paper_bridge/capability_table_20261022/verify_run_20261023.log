@@ -1,0 +1,44 @@
+semimem_r    identical (all fields)
+rect_fem_r   identical (all fields)
+med_gas_r    identical (all fields)
+tfl_r        identical (all fields)
+VERBATIM CHECK PASS: the 4 original routes are byte-identical.
+Built 27 specs from biPulleySpecsFromMasters_20261023
+Rolling-knee neutral center (femur coords): [-0.0041 -0.3959 0.0000] m
+
+id  spec         primary           hinge1           hinge2              Lchar   tauPkNm   neutral        ref  sign%    ok
+1   ercspn_r     lumbar_extension  lumbar_bending   lumbar_extension   0.8983    28.820   0.86992   0.86992    100  PASS
+2   intobl_r     lumbar_extension  lumbar_bending   lumbar_extension   0.2361    44.991   0.19925   0.19925    100  PASS
+3   extobl_r     lumbar_extension  lumbar_bending   lumbar_extension   0.3020    38.489   0.27443   0.27443    100  PASS
+4   bifemlh_r    knee_angle_r      hip_flexion_r    knee_angle_r       0.8475   321.778   0.74294   0.74294     60  PASS
+5   semimem_r    knee_angle_r      hip_flexion_r    knee_angle_r       0.8775    16.191   0.77142   0.77142    100  PASS
+6   sar_r        knee_angle_r      hip_flexion_r    knee_angle_r       0.9553    32.850   0.89575   0.89575     50  PASS
+7   tfl_r        knee_angle_r      hip_flexion_r    knee_angle_r       0.8708    16.139   0.84704   0.84704    100  PASS
+  WARNING rect_fem_r: sign agreement 40% (5 cells) -- check axis convention
+8   rect_fem_r   knee_angle_r      hip_flexion_r    knee_angle_r       0.7829    70.919   0.74527   0.74527     40  PASS
+  WARNING grac_r: sign agreement 40% (5 cells) -- check axis convention
+9   grac_r       knee_angle_r      hip_flexion_r    knee_angle_r       0.8536    26.071   0.74435   0.74435     40  PASS
+10  bifemsh_r    knee_angle_r      knee_angle_r     (rigid)            0.3624    49.169   0.35878   0.35878    100  PASS
+  WARNING vas_int_r: sign agreement 0% (1 cells) -- check axis convention
+11  vas_int_r    knee_angle_r      knee_angle_r     (rigid)            0.8825   175.911   0.87677   0.87677      0  PASS
+12  soleus_r     ankle_angle_r     ankle_angle_r    subtalar_angle_r   0.3754    44.925   0.35711   0.35711    100  PASS
+  WARNING med_gas_r: sign agreement 20% (5 cells) -- check axis convention
+13  med_gas_r    ankle_angle_r     knee_angle_r     ankle_angle_r      0.4632    27.238   0.44732   0.44732     20  PASS
+  WARNING lat_gas_r: sign agreement 40% (5 cells) -- check axis convention
+14  lat_gas_r    ankle_angle_r     knee_angle_r     ankle_angle_r      0.4507    25.345   0.43693   0.43693     40  PASS
+15  tib_post_r   subtalar_angle_r  ankle_angle_r    subtalar_angle_r   0.4059    31.426   0.39472   0.39472    100  PASS
+16  tib_ant_r    ankle_angle_r     ankle_angle_r    subtalar_angle_r   0.4481    52.031   0.41649   0.41649    100  PASS
+17  per_brev_r   subtalar_angle_r  ankle_angle_r    subtalar_angle_r   0.4421    14.900   0.42442   0.42442    100  PASS
+18  per_long_r   subtalar_angle_r  ankle_angle_r    subtalar_angle_r   0.5204     9.917   0.50211   0.50211    100  PASS
+19  per_tert_r   subtalar_angle_r  ankle_angle_r    subtalar_angle_r   0.4295    36.690   0.39749   0.39749    100  PASS
+20  flex_dig_r   mtp_angle_r       ankle_angle_r    mtp_angle_r        0.5589     4.634   0.55195   0.55195    100  PASS
+21  flex_hal_r   mtp_angle_r       ankle_angle_r    mtp_angle_r        0.5726     9.066   0.56362   0.56362     75  PASS
+22  ext_dig_r    mtp_angle_r       ankle_angle_r    mtp_angle_r        0.5512     6.282   0.51833   0.51833    100  PASS
+23  ext_hal_r    mtp_angle_r       ankle_angle_r    mtp_angle_r        0.5593    11.250   0.52517   0.52517    100  PASS
+24  glut_max_r   hip_flexion_r     hip_adduction_r  hip_flexion_r      0.6151    93.765   0.51347   0.51347    100  PASS
+25  add_mag_r    hip_adduction_r   hip_adduction_r  hip_flexion_r      0.5646    30.489   0.45790   0.45790    100  PASS
+26  iliacus_r    hip_flexion_r     hip_adduction_r  hip_flexion_r      0.5507    36.531   0.53629   0.53629    100  PASS
+27  psoas_r      hip_flexion_r     lumbar_extension hip_flexion_r      0.5636    54.157   0.54303   0.54303    100  PASS
+
+SANITY PASS COMPLETE: 27/27 PASS, 0 FAIL
+CSV: D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\sanity_biPulleySpecs27_20261023.csv

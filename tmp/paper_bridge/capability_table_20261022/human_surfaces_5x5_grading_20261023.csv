@@ -1,0 +1,687 @@
+# human_surfaces_5x5_grading_20261023 - 2-D SINGLE-MUSCLE human capability surfaces; SINGLE grading source of truth for BOTH capability-table rows (hand-tuned and optimized); FIX_SPEC_20261023 sections 1/1b/2; flags per opensim_limits_checklist_20261023
+# opensim_version 4.4.1 (pinned 4.4.1); python D:\Anaconda\envs\myo\python.exe
+# model D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim sha1 b89062c763e6d8fa3d7651c0a4fd2820055d807c (STOCK routing; human muscles never routed on robot/BPA paths)
+# map D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\actuator_map_27.json sha1 a97afffeeae85687810986273db6ba0151eba1a2
+# audit D:\GitHub\Bipedal_Robot\tmp\paper_bridge\opt_improve_20261022\path_artifact_audit_gait2392_simbody_20261022_034030.csv sha1 47912eb6c1e858e9e62ceefe36b8a510e052c417 (1-D caveat column source)
+# grid: 5x5 INCLUSIVE uniform nodes per axis over rom_table_deg (5 nodes per axis; 25 cells per actuator; cell value = DIRECT OpenSim evaluation at the node; cell bin = midpoint-Voronoi within the axis range)
+# tau_h_Nm = sum over chosen muscles of computeMomentArm(about PRIMARY dof) x Fmax (OpenSim native signs; arm = -dL/dq so tau>0 = positive coordinate direction; knee flexion NEGATIVE)
+# in_graded_domain=0 ONLY on hip-envelope surfaces (hip_adduction coupled to flexion; FIX_SPEC 1b): excluded cells are OUTSIDE the area denominator for BOTH rows - never counted as failures
+# flags: FLAG_VIA / FLAG_STEP (0.5-deg cross sweeps; STEP threshold 2% of per-muscle surface-wide peak) / FLAG_SLACK / FLAG_SHORT (1-deg box bins; lceN_est < 0.5); FLAGGED CELLS STILL COUNT in the headline percentage; with- and without-flag numbers are both reported; curves are NEVER corrected
+# pinned DOFs are held at 0 deg; non-surface joints of 3+-joint routes are pinned at 0 and named in pinned_dofs_at_0
+# generated 2026-10-23T04:16:27.709023
+actuator_id,master_name,chosen_muscles,primary_dof,primary_rom_lo_deg,primary_rom_hi_deg,secondary_dof,secondary_rom_lo_deg,secondary_rom_hi_deg,pinned_dofs_at_0,envelope_limited,p_node_deg,s_node_deg,in_graded_domain,tau_h_Nm,fmax_sum_n,flag_via,flag_step,flag_slack,flag_short,flags_detail,audit_caveat_1d_primary
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-20,-15,1,78.666550087,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-20,-7.5,1,80.384139255,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-20,0,1,81.787739331,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-20,7.5,1,82.867133277,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-20,15,1,83.612440243,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-11.25,-15,1,89.687628593,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-11.25,-7.5,1,91.756721590,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-11.25,0,1,93.335670063,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-11.25,7.5,1,94.400522482,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-11.25,15,1,94.925175413,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-2.5,-15,1,99.656379963,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-2.5,-7.5,1,102.117371654,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-2.5,0,1,103.908677390,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-2.5,7.5,1,104.989017309,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,-2.5,15,1,105.311701626,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,6.25,-15,1,108.365997180,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,6.25,-7.5,1,111.266336682,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,6.25,0,1,113.315043155,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,6.25,7.5,1,114.448518850,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,6.25,15,1,114.593486058,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,15,-15,1,115.576653782,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,15,-7.5,1,118.969825685,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,15,0,1,121.328712254,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,15,7.5,1,122.560513849,2500,0,0,0,0,none,none
+1,Erector Spinae,ercspn_r,lumbar_extension,-20,15,lumbar_bending,-15,15,lumbar_rotation,no,15,15,1,122.557070494,2500,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,-15,1,-39.144606706,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,-7.5,1,-42.219964268,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,0,1,-45.061236009,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,7.5,1,-47.632953930,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,15,1,-49.887909362,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,-15,1,-41.205992215,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,-7.5,1,-44.196189775,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,0,1,-46.941660573,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,7.5,1,-49.409832197,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,15,1,-51.558876127,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,-15,1,-42.160945980,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,-7.5,1,-44.990248915,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,0,1,-47.572119287,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,7.5,1,-49.877651933,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,15,1,-51.870933594,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,-15,1,-42.091843470,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,-7.5,1,-44.709448426,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,0,1,-47.086827485,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,7.5,1,-49.199493559,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,15,1,-51.017978815,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,-15,1,-41.093269151,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,-7.5,1,-43.467847779,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,0,1,-45.619502474,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,7.5,1,-47.528639895,900,0,0,0,0,none,none
+2,Internal Oblique,intobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,15,1,-49.172469921,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,-15,1,-79.038713009,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,-7.5,1,-76.138260819,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,0,1,-72.518812984,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,7.5,1,-68.165676592,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-20,15,1,-63.059155002,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,-15,1,-70.707175593,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,-7.5,1,-68.578733184,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,0,1,-65.924574507,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,7.5,1,-62.736848274,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-11.25,15,1,-59.004398963,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,-15,1,-61.857205886,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,-7.5,1,-60.443857873,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,0,1,-58.684277706,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,7.5,1,-56.578554350,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,-2.5,15,1,-54.126022733,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,-15,1,-52.567608846,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,-7.5,1,-51.824923519,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,0,1,-50.903288349,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,7.5,1,-49.810289836,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,6.25,15,1,-48.555346857,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,-15,1,-42.912883375,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,-7.5,1,-42.805234076,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,0,1,-42.675121511,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,7.5,1,-42.536316554,900,0,0,0,0,none,none
+3,External Oblique,extobl_r,lumbar_extension,-20,15,lumbar_bending,-15,15,(none),no,15,15,1,-42.406551451,900,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,-15,1,1.011911249,896,0,0,0,1,FLAG_SHORT:bifemlh_r,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,16.25,1,2.084083006,896,0,0,0,1,FLAG_SHORT:bifemlh_r,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,47.5,1,1.893567475,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,78.75,1,0.769207377,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,110,1,-0.893019177,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,-15,1,-17.485403075,896,0,0,0,1,FLAG_SHORT:bifemlh_r,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,16.25,1,-16.441676311,896,0,0,0,1,FLAG_SHORT:bifemlh_r,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,47.5,1,-16.563938990,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,78.75,1,-17.558757574,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,110,1,-18.990880124,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,-15,1,-28.892696875,896,0,0,0,1,FLAG_SHORT:bifemlh_r,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,16.25,1,-28.492397127,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,47.5,1,-28.543189738,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,78.75,1,-28.935484434,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,110,1,-29.421018184,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,-15,1,-30.477574747,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,16.25,1,-30.931277866,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,47.5,1,-30.942359945,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,78.75,1,-30.598359743,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,110,1,-29.932706195,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,-15,1,-19.546229585,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,16.25,1,-20.991885934,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,47.5,1,-20.865283211,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,78.75,1,-19.505189725,896,0,0,0,0,none,none
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,110,1,-17.344238723,896,0,0,0,0,none,none
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,-15,1,-15.186269965,1288,0,0,1,1,FLAG_SHORT:semimem_r; FLAG_SLACK:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,16.25,1,-13.507574135,1288,0,0,1,1,FLAG_SHORT:semimem_r; FLAG_SLACK:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,47.5,1,-13.659014348,1288,0,0,0,1,FLAG_SHORT:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,78.75,1,-15.228421120,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,110,1,-17.591672183,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,-15,1,-41.596223392,1288,0,0,1,1,FLAG_SHORT:semimem_r; FLAG_SLACK:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,16.25,1,-40.454018918,1288,0,0,1,1,FLAG_SHORT:semimem_r; FLAG_SLACK:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,47.5,1,-40.473483703,1288,0,0,0,1,FLAG_SHORT:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,78.75,1,-41.425875483,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,110,1,-42.823848445,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,-15,1,-51.885464026,1288,0,0,1,1,FLAG_SHORT:semimem_r; FLAG_SLACK:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,16.25,1,-51.940534255,1288,0,0,0,1,FLAG_SHORT:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,47.5,1,-51.941918033,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,78.75,1,-51.909275378,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,110,1,-51.715297646,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,-15,1,-49.005790814,1288,1,0,0,1,FLAG_SHORT:semimem_r; FLAG_VIA:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,16.25,1,-49.464576268,1288,1,0,0,1,FLAG_SHORT:semimem_r; FLAG_VIA:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,47.5,1,-49.461982457,1288,1,0,0,0,FLAG_VIA:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,78.75,1,-49.088585830,1288,1,0,0,0,FLAG_VIA:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,110,1,-48.355567333,1288,1,1,0,0,FLAG_STEP:semimem_r; FLAG_VIA:semimem_r,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,-15,1,-33.146875678,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,16.25,1,-35.013912696,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,47.5,1,-34.900892921,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,78.75,1,-33.183779823,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+5,Semimembranosus,semimem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,110,1,-30.400023999,1288,0,0,0,0,none,[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] (caveat only; curve NOT corrected)
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,-15,1,-2.898055317,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,16.25,1,-2.898055317,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,47.5,1,-2.898055317,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,78.75,1,-2.898055317,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,110,1,-2.898055317,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,-15,1,-3.086339386,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,16.25,1,-3.086339386,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,47.5,1,-3.086339386,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,78.75,1,-3.086339386,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,110,1,-3.086339386,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,-15,1,-2.341082484,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,16.25,1,-2.341082484,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,47.5,1,-2.341082484,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,78.75,1,-2.341082484,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,110,1,-2.341082484,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,-15,1,-1.154301057,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,16.25,1,-1.154301057,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,47.5,1,-1.154301057,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,78.75,1,-1.154301057,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,110,1,-1.154301057,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,-15,1,0.765708663,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,16.25,1,0.765708663,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,47.5,1,0.765708663,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,78.75,1,0.765708663,156,0,0,0,0,none,none
+6,Sartorius,sar_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,110,1,0.765708663,156,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-120,-15,1,0.027306237,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-120,16.25,1,0.027306237,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-120,47.5,1,0.027306237,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-120,78.75,1,0.027306237,233,0,0,0,1,FLAG_SHORT:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-120,110,1,0.027306237,233,0,0,1,1,FLAG_SHORT:tfl_r; FLAG_SLACK:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-87.5,-15,1,0.773922186,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-87.5,16.25,1,0.773922186,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-87.5,47.5,1,0.773922186,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-87.5,78.75,1,0.773922186,233,0,0,0,1,FLAG_SHORT:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-87.5,110,1,0.773922186,233,0,0,1,1,FLAG_SHORT:tfl_r; FLAG_SLACK:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-55,-15,1,1.652413599,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-55,16.25,1,1.652413599,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-55,47.5,1,1.652413599,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-55,78.75,1,1.652413599,233,0,0,0,1,FLAG_SHORT:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-55,110,1,1.652413599,233,0,0,1,1,FLAG_SHORT:tfl_r; FLAG_SLACK:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-22.5,-15,1,2.400447779,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-22.5,16.25,1,2.400447779,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-22.5,47.5,1,2.400447779,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-22.5,78.75,1,2.400447779,233,0,0,0,1,FLAG_SHORT:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,-22.5,110,1,2.400447779,233,0,0,1,1,FLAG_SHORT:tfl_r; FLAG_SLACK:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,10,-15,1,2.924806342,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,10,16.25,1,2.924806342,233,0,0,0,0,none,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,10,47.5,1,2.924806342,233,0,0,0,1,FLAG_SHORT:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,10,78.75,1,2.924806342,233,0,0,1,1,FLAG_SHORT:tfl_r; FLAG_SLACK:tfl_r,none
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,hip_adduction_r,no,10,110,1,2.924806342,233,0,0,1,1,FLAG_SHORT:tfl_r; FLAG_SLACK:tfl_r,none
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,-15,1,22.094973927,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,16.25,1,22.094973927,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,47.5,1,22.094973927,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,78.75,1,22.094973927,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,110,1,22.094973927,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,-15,1,32.077147522,1169,1,1,0,0,FLAG_STEP:rect_fem_r; FLAG_VIA:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,16.25,1,32.077147522,1169,1,0,0,0,FLAG_VIA:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,47.5,1,32.077147522,1169,1,0,0,0,FLAG_VIA:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,78.75,1,32.077147522,1169,1,0,0,0,FLAG_VIA:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,110,1,32.077147522,1169,1,1,0,0,FLAG_STEP:rect_fem_r; FLAG_VIA:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,-15,1,48.441854513,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,16.25,1,49.398517902,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,47.5,1,49.641315511,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,78.75,1,49.002067489,1169,0,0,0,1,FLAG_SHORT:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,110,1,47.393640312,1169,0,0,0,1,FLAG_SHORT:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,-15,1,58.737064298,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,16.25,1,58.947560283,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,47.5,1,58.980946592,1169,0,0,0,1,FLAG_SHORT:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,78.75,1,58.848808632,1169,0,0,0,1,FLAG_SHORT:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,110,1,58.352529353,1169,0,0,0,1,FLAG_SHORT:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,-15,1,43.265826864,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,16.25,1,46.072736892,1169,0,0,0,0,none,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,47.5,1,46.636323600,1169,0,0,0,1,FLAG_SHORT:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,78.75,1,44.292992074,1169,0,0,0,1,FLAG_SHORT:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+8,Rectus Femoris,rect_fem_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,110,1,39.099921824,1169,0,1,0,1,FLAG_SHORT:rect_fem_r; FLAG_STEP:rect_fem_r,[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,-15,1,-3.699119273,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,16.25,1,-3.394967803,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,47.5,1,-3.130345746,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,78.75,1,-3.013884734,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,110,1,-3.064324832,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,-15,1,-5.961192503,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,16.25,1,-5.872108087,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,47.5,1,-5.769466489,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,78.75,1,-5.715626795,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,110,1,-5.735389618,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,-15,1,-6.012046573,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,16.25,1,-6.181310454,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,47.5,1,-6.295086664,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,78.75,1,-6.338884959,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,110,1,-6.326383778,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,-15,1,-4.534101510,162,1,0,0,0,FLAG_VIA:grac_r,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,16.25,1,-4.672754065,162,1,1,0,0,FLAG_STEP:grac_r; FLAG_VIA:grac_r,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,47.5,1,-4.765187123,162,1,1,0,0,FLAG_STEP:grac_r; FLAG_VIA:grac_r,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,78.75,1,-4.799551507,162,1,1,0,0,FLAG_STEP:grac_r; FLAG_VIA:grac_r,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,110,1,-4.786233087,162,1,1,0,0,FLAG_STEP:grac_r; FLAG_VIA:grac_r,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,-15,1,-2.331541005,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,16.25,1,-2.748125588,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,47.5,1,-3.067451771,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,78.75,1,-3.195024636,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+9,Gracilis,grac_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,110,1,-3.129194474,162,0,0,0,0,none,[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,-15,1,-3.572253800,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,16.25,1,-3.572253800,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,47.5,1,-3.572253800,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,78.75,1,-3.572253800,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,110,1,-3.572253800,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,-15,1,-19.969611916,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,16.25,1,-19.969611916,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,47.5,1,-19.969611916,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,78.75,1,-19.969611916,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,110,1,-19.969611916,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,-15,1,-27.058151146,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,16.25,1,-27.058151146,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,47.5,1,-27.058151146,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,78.75,1,-27.058151146,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,110,1,-27.058151146,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,-15,1,-24.873770469,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,16.25,1,-24.873770469,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,47.5,1,-24.873770469,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,78.75,1,-24.873770469,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,110,1,-24.873770469,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,-15,1,-11.709341479,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,16.25,1,-11.709341479,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,47.5,1,-11.709341479,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,78.75,1,-11.709341479,804,0,0,0,0,none,none
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,110,1,-11.709341479,804,0,0,0,0,none,none
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,-15,1,27.928455016,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,16.25,1,27.928455016,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,47.5,1,27.928455016,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,78.75,1,27.928455016,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-120,110,1,27.928455016,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,-15,1,38.452114500,1365,1,0,0,0,FLAG_VIA:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,16.25,1,38.452114500,1365,1,0,0,0,FLAG_VIA:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,47.5,1,38.452114500,1365,1,0,0,0,FLAG_VIA:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,78.75,1,38.452114500,1365,1,0,0,0,FLAG_VIA:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-87.5,110,1,38.452114500,1365,1,0,0,0,FLAG_VIA:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,-15,1,53.024020750,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,16.25,1,53.024020750,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,47.5,1,53.024020750,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,78.75,1,53.024020750,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-55,110,1,53.024020750,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,-15,1,62.209261208,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,16.25,1,62.209261208,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,47.5,1,62.209261208,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,78.75,1,62.209261208,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,-22.5,110,1,62.209261208,1365,0,0,0,0,none,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,-15,1,50.511222246,1365,0,0,0,1,FLAG_SHORT:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,16.25,1,50.511222246,1365,0,0,0,1,FLAG_SHORT:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,47.5,1,50.511222246,1365,0,0,0,1,FLAG_SHORT:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,78.75,1,50.511222246,1365,0,0,0,1,FLAG_SHORT:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+11,Vastus Intermedius,vas_int_r,knee_angle_r,-120,10,hip_flexion_r,-15,110,(none),no,10,110,1,50.511222246,1365,0,0,0,1,FLAG_SHORT:vas_int_r,[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] (caveat only; curve NOT corrected)
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-120,1,-147.327729966,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-87.5,1,-147.327729966,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-55,1,-147.327729966,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-22.5,1,-147.327729966,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,10,1,-147.327729966,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-120,1,-167.600482576,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-87.5,1,-167.600482576,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-55,1,-167.600482576,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-22.5,1,-167.600482576,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,10,1,-167.600482576,3549,0,0,0,1,FLAG_SHORT:soleus_r,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-120,1,-170.523232456,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-87.5,1,-170.523232456,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-55,1,-170.523232456,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-22.5,1,-170.523232456,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,10,1,-170.523232456,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-120,1,-158.381989265,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-87.5,1,-158.381989265,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-55,1,-158.381989265,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-22.5,1,-158.381989265,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,10,1,-158.381989265,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-120,1,-134.077027699,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-87.5,1,-134.077027699,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-55,1,-134.077027699,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-22.5,1,-134.077027699,3549,0,0,0,0,none,none
+12,Soleus,soleus_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,10,1,-134.077027699,3549,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-120,1,-59.584698287,1558,0,0,1,1,FLAG_SHORT:med_gas_r; FLAG_SLACK:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-87.5,1,-59.173979644,1558,0,0,1,1,FLAG_SHORT:med_gas_r; FLAG_SLACK:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-55,1,-59.054617079,1558,1,0,1,1,FLAG_SHORT:med_gas_r; FLAG_SLACK:med_gas_r; FLAG_VIA:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-22.5,1,-58.557325179,1558,0,0,0,1,FLAG_SHORT:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,10,1,-58.562376037,1558,0,0,0,1,FLAG_SHORT:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-120,1,-70.482100205,1558,0,0,1,1,FLAG_SHORT:med_gas_r; FLAG_SLACK:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-87.5,1,-70.291937087,1558,0,0,1,1,FLAG_SHORT:med_gas_r; FLAG_SLACK:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-55,1,-70.241962031,1558,1,0,0,1,FLAG_SHORT:med_gas_r; FLAG_VIA:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-22.5,1,-69.935445393,1558,0,0,0,1,FLAG_SHORT:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,10,1,-69.949271611,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-120,1,-74.101746607,1558,0,0,0,1,FLAG_SHORT:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-87.5,1,-74.141406378,1558,0,0,0,1,FLAG_SHORT:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-55,1,-74.175900875,1558,1,0,0,1,FLAG_SHORT:med_gas_r; FLAG_VIA:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-22.5,1,-74.066704143,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,10,1,-74.109532386,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-120,1,-70.845000528,1558,0,0,0,1,FLAG_SHORT:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-87.5,1,-71.088466690,1558,0,0,0,1,FLAG_SHORT:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-55,1,-71.196987442,1558,1,0,0,0,FLAG_VIA:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-22.5,1,-71.275231976,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,10,1,-71.342323070,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-120,1,-61.642170913,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-87.5,1,-62.041884999,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-55,1,-62.196768563,1558,1,0,0,0,FLAG_VIA:med_gas_r,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-22.5,1,-62.443013269,1558,0,0,0,0,none,none
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,10,1,-62.511479739,1558,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-120,1,-27.278333323,683,0,0,1,1,FLAG_SHORT:lat_gas_r; FLAG_SLACK:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-87.5,1,-27.011138790,683,0,0,1,1,FLAG_SHORT:lat_gas_r; FLAG_SLACK:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-55,1,-26.837504298,683,1,0,0,1,FLAG_SHORT:lat_gas_r; FLAG_VIA:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,-22.5,1,-26.682581540,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-50,10,1,-26.660799353,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-120,1,-31.912086317,683,0,0,1,1,FLAG_SHORT:lat_gas_r; FLAG_SLACK:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-87.5,1,-31.782172395,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-55,1,-31.691777438,683,1,0,0,1,FLAG_SHORT:lat_gas_r; FLAG_VIA:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,-22.5,1,-31.616621710,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-32.5,10,1,-31.596586498,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-120,1,-33.268914168,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-87.5,1,-33.279160917,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-55,1,-33.279645995,683,1,0,0,1,FLAG_SHORT:lat_gas_r; FLAG_VIA:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,-22.5,1,-33.284221497,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,-15,10,1,-33.277619781,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-120,1,-31.566018461,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-87.5,1,-31.700975224,683,0,0,0,1,FLAG_SHORT:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-55,1,-31.783084350,683,1,0,0,0,FLAG_VIA:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,-22.5,1,-31.859030528,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,2.5,10,1,-31.865449459,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-120,1,-27.243047796,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-87.5,1,-27.476652983,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-55,1,-27.620522998,683,1,0,0,0,FLAG_VIA:lat_gas_r,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,-22.5,1,-27.754802311,683,0,0,0,0,none,none
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,-50,20,knee_angle_r,-120,10,(none),no,20,10,1,-27.765121233,683,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-50,1,34.376783681,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-32.5,1,34.142555347,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-15,1,32.813523296,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,2.5,1,30.543668003,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,20,1,27.451943249,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-50,1,33.905731612,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-32.5,1,34.797350802,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-15,1,33.856830764,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,2.5,1,31.514466711,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,20,1,28.038105103,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-50,1,29.723178775,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-32.5,1,32.712710395,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-15,1,32.543903581,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,2.5,1,30.298275797,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,20,1,26.573888891,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-50,1,18.543509561,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-32.5,1,25.623592475,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-15,1,27.303328188,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,2.5,1,25.774067592,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,20,1,22.300634433,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-50,1,-1.252914488,1588,0,1,0,0,FLAG_STEP:tib_post_r,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-32.5,1,10.477147546,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-15,1,15.898610846,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,2.5,1,16.589348770,1588,0,0,0,0,none,none
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,20,1,14.547999283,1588,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-50,-25,1,26.031113713,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-50,-10,1,25.316061720,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-50,5,1,24.169048653,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-50,20,1,22.610179448,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-50,35,1,20.666933327,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-32.5,-25,1,31.151307202,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-32.5,-10,1,30.957518115,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-32.5,5,1,29.935596259,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-32.5,20,1,28.063207558,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-32.5,35,1,25.307418843,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-15,-25,1,34.836178577,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-15,-10,1,35.427421156,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-15,5,1,34.710947312,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-15,20,1,32.594349563,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,-15,35,1,28.962485076,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,2.5,-25,1,36.390969214,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,2.5,-10,1,38.198054523,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,2.5,5,1,38.093878012,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,2.5,20,1,35.834030629,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,2.5,35,1,31.185248848,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,20,-25,1,34.522607373,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,20,-10,1,38.222902484,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,20,5,1,39.289542511,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,20,20,1,37.055427344,905,0,0,0,0,none,none
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,-50,20,subtalar_angle_r,-25,35,(none),no,20,35,1,31.109103240,905,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-50,1,0.521927408,435,0,1,0,0,FLAG_STEP:per_brev_r,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-32.5,1,-5.360148568,435,0,1,0,0,FLAG_STEP:per_brev_r,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-15,1,-10.843849453,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,2.5,1,-13.128196554,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,20,1,-12.118246854,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-50,1,-7.384553427,435,0,1,0,0,FLAG_STEP:per_brev_r,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-32.5,1,-10.307850855,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-15,1,-12.050848557,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,2.5,1,-12.807956714,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,20,1,-12.742523811,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-50,1,-9.872336818,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-32.5,1,-11.019756175,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-15,1,-11.814177250,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,2.5,1,-12.265320926,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,20,1,-12.377754087,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-50,1,-10.274168622,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-32.5,1,-10.773069219,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-15,1,-11.203179008,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,2.5,1,-11.512368687,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,20,1,-11.669800825,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-50,1,-9.955613794,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-32.5,1,-10.131498900,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-15,1,-10.352939358,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,2.5,1,-10.562306723,435,0,0,0,0,none,none
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,20,1,-10.722428208,435,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-50,1,8.058656645,943,0,1,0,0,FLAG_STEP:per_long_r,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-32.5,1,-12.826497290,943,0,1,0,0,FLAG_STEP:per_long_r,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-15,1,-25.621963928,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,2.5,1,-26.578152943,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,20,1,-23.931175608,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-50,1,-17.382795754,943,0,1,0,0,FLAG_STEP:per_long_r,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-32.5,1,-23.324446295,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-15,1,-25.805794003,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,2.5,1,-26.459651277,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,20,1,-25.881750385,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-50,1,-22.457327681,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-32.5,1,-23.891928298,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-15,1,-24.889258892,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,2.5,1,-25.388362667,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,20,1,-25.356395170,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-50,1,-22.725127431,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-32.5,1,-23.045182060,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-15,1,-23.467601800,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,2.5,1,-23.797034817,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,20,1,-23.918774035,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-50,1,-21.790879999,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-32.5,1,-21.574379633,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-15,1,-21.623027763,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,2.5,1,-21.772160737,943,0,0,0,0,none,none
+18,Peroneus Longus,per_long_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,20,1,-21.906844773,943,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-50,1,-5.825377449,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-32.5,1,-5.386478718,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,-15,1,-4.363246190,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,2.5,1,-2.640335992,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-25,20,1,-0.255278059,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-50,1,-5.194565903,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-32.5,1,-4.978156027,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,-15,1,-4.359952797,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,2.5,1,-3.225998597,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,-10,20,1,-1.440753779,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-50,1,-4.445880761,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-32.5,1,-4.408163326,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,-15,1,-4.106323790,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,2.5,1,-3.467471457,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,5,20,1,-2.364449271,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-50,1,-3.604714750,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-32.5,1,-3.719236140,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,-15,1,-3.676569051,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,2.5,1,-3.441424844,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,20,20,1,-2.946879638,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-50,1,-2.692160242,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-32.5,1,-2.940733593,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,-15,1,-3.118591041,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,2.5,1,-3.215077799,180,0,0,0,0,none,none
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,-25,35,ankle_angle_r,-50,20,(none),no,35,20,1,-3.212215425,180,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-50,1,-2.111128175,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-32.5,1,-2.111128175,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-15,1,-2.111128175,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,2.5,1,-2.111128175,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,20,1,-2.111128175,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-50,1,-2.167969107,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-32.5,1,-2.167969107,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-15,1,-2.167969107,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,2.5,1,-2.167969107,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,20,1,-2.167969107,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-50,1,-2.005657264,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-32.5,1,-2.005657264,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-15,1,-2.005657264,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,2.5,1,-2.005657264,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,20,1,-2.005657264,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-50,1,-1.725395571,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-32.5,1,-1.725395571,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-15,1,-1.725395571,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,2.5,1,-1.725395571,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,20,1,-1.725395571,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-50,1,-1.367649605,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-32.5,1,-1.367649605,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-15,1,-1.367649605,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,2.5,1,-1.367649605,310,0,0,0,0,none,none
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,20,1,-1.367649605,310,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-50,1,-0.780368257,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-32.5,1,-0.780368257,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-15,1,-0.780368257,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,2.5,1,-0.780368257,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,20,1,-0.780368257,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-50,1,-1.471585229,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-32.5,1,-1.471585229,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-15,1,-1.471585229,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,2.5,1,-1.471585229,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,20,1,-1.471585229,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-50,1,-1.863654059,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-32.5,1,-1.863654059,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-15,1,-1.863654059,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,2.5,1,-1.863654059,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,20,1,-1.863654059,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-50,1,-1.966008079,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-32.5,1,-1.966008079,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-15,1,-1.966008079,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,2.5,1,-1.966008079,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,20,1,-1.966008079,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-50,1,-1.835309377,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-32.5,1,-1.835309377,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-15,1,-1.835309377,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,2.5,1,-1.835309377,322,0,0,0,0,none,none
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,20,1,-1.835309377,322,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-50,1,1.437594253,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-32.5,1,1.437594253,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-15,1,1.437594253,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,2.5,1,1.437594253,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,20,1,1.437594253,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-50,1,2.214005064,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-32.5,1,2.214005064,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-15,1,2.214005064,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,2.5,1,2.214005064,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,20,1,2.214005064,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-50,1,2.887399049,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-32.5,1,2.887399049,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-15,1,2.887399049,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,2.5,1,2.887399049,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,20,1,2.887399049,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-50,1,3.405109502,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-32.5,1,3.405109502,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-15,1,3.405109502,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,2.5,1,3.405109502,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,20,1,3.405109502,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-50,1,3.684787721,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-32.5,1,3.684787721,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-15,1,3.684787721,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,2.5,1,3.684787721,512,0,0,0,0,none,none
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,20,1,3.684787721,512,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-50,1,0.373996532,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-32.5,1,0.373996532,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,-15,1,0.373996532,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,2.5,1,0.373996532,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-40,20,1,0.373996532,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-50,1,0.745101796,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-32.5,1,0.745101796,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,-15,1,0.745101796,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,2.5,1,0.745101796,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,-20,20,1,0.745101796,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-50,1,1.068122505,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-32.5,1,1.068122505,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,-15,1,1.068122505,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,2.5,1,1.068122505,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,0,20,1,1.068122505,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-50,1,1.313912049,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-32.5,1,1.313912049,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,-15,1,1.313912049,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,2.5,1,1.313912049,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,20,20,1,1.313912049,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-50,1,1.446530330,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-32.5,1,1.446530330,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,-15,1,1.446530330,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,2.5,1,1.446530330,162,0,0,0,0,none,none
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,-40,40,ankle_angle_r,-50,20,subtalar_angle_r,no,40,20,1,1.446530330,162,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,-15,-45,0,-38.962875794,1944,0,0,0,1,FLAG_SHORT:glut_max1_r; FLAG_SHORT:glut_max2_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,-15,-28.75,0,-68.389288467,1944,0,0,0,1,FLAG_SHORT:glut_max1_r; FLAG_SHORT:glut_max2_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,-15,-12.5,0,-94.384472753,1944,0,0,0,1,FLAG_SHORT:glut_max1_r; FLAG_SHORT:glut_max2_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,-15,3.75,1,-115.592149371,1944,0,0,0,1,FLAG_SHORT:glut_max1_r; FLAG_SHORT:glut_max2_r; FLAG_SHORT:glut_max3_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,-15,20,1,-129.977737140,1944,0,0,0,1,FLAG_SHORT:glut_max1_r; FLAG_SHORT:glut_max2_r; FLAG_SHORT:glut_max3_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,16.25,-45,0,-70.021802855,1944,0,0,0,1,FLAG_SHORT:glut_max1_r; FLAG_SHORT:glut_max2_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,16.25,-28.75,0,-85.741509434,1944,0,0,0,1,FLAG_SHORT:glut_max1_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,16.25,-12.5,1,-98.519772323,1944,0,0,0,1,FLAG_SHORT:glut_max1_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,16.25,3.75,1,-107.686801993,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,16.25,20,0,-112.335427871,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,47.5,-45,0,-71.553040743,1944,0,0,0,1,FLAG_SHORT:glut_max1_r,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,47.5,-28.75,1,-76.320753349,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,47.5,-12.5,1,-79.993257823,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,47.5,3.75,1,-82.221088057,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,47.5,20,0,-82.657597432,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,78.75,-45,1,-56.109881504,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,78.75,-28.75,1,-53.066243393,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,78.75,-12.5,1,-50.397927550,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,78.75,3.75,1,-48.069753017,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,78.75,20,0,-46.025032460,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,110,-45,1,-31.393310274,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,110,-28.75,1,-22.596344467,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,110,-12.5,1,-15.212984591,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,110,3.75,1,-9.528233788,1944,0,0,0,0,none,none
+24,Gluteus Maximus,glut_max1_r+glut_max2_r+glut_max3_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,hip_rotation_r,yes,110,20,0,-5.758077823,1944,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-45,-15,0,76.599733246,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-45,16.25,0,65.665185409,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-45,47.5,0,44.551744501,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-45,78.75,1,20.945754148,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-45,110,1,1.573800822,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-28.75,-15,0,79.269751070,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-28.75,16.25,0,70.526161976,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-28.75,47.5,1,52.805197411,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-28.75,78.75,1,33.398310299,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-28.75,110,1,17.889819279,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-12.5,-15,0,76.390169542,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-12.5,16.25,1,70.959681802,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-12.5,47.5,1,58.107114860,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-12.5,78.75,1,44.249935541,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,-12.5,110,1,33.488398508,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,3.75,-15,1,67.209346939,1212,0,0,0,1,FLAG_SHORT:add_mag1_r; FLAG_SHORT:add_mag2_r,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,3.75,16.25,1,66.161557092,1212,0,0,0,1,FLAG_SHORT:add_mag1_r; FLAG_SHORT:add_mag2_r,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,3.75,47.5,1,59.672126679,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,3.75,78.75,1,52.751283977,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,3.75,110,1,47.621862290,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,20,-15,1,51.162430084,1212,0,0,0,1,FLAG_SHORT:add_mag1_r; FLAG_SHORT:add_mag2_r,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,20,16.25,0,55.264934447,1212,0,0,0,1,FLAG_SHORT:add_mag1_r; FLAG_SHORT:add_mag2_r,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,20,47.5,0,56.602218865,1212,0,0,0,1,FLAG_SHORT:add_mag1_r,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,20,78.75,0,58.070785821,1212,0,0,0,0,none,none
+25,Adductor Magnus,add_mag1_r+add_mag2_r+add_mag3_r,hip_adduction_r,-45,20,hip_flexion_r,-15,110,(none),yes,20,110,0,59.486167003,1212,0,0,0,0,none,none
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,-45,0,23.564763748,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,-28.75,0,31.142833184,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,-12.5,0,36.328018643,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,3.75,1,38.599372877,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,20,1,37.683282859,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,-45,0,22.655790235,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,-28.75,0,32.924730423,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,-12.5,1,41.438744671,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,3.75,1,45.795280152,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,20,0,44.195708795,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,-45,0,23.413908050,1073,1,1,0,0,FLAG_STEP:iliacus_r; FLAG_VIA:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,-28.75,1,33.859627599,1073,1,1,0,0,FLAG_STEP:iliacus_r; FLAG_VIA:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,-12.5,1,42.469788869,1073,1,1,0,0,FLAG_STEP:iliacus_r; FLAG_VIA:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,3.75,1,46.924056531,1073,1,1,0,0,FLAG_STEP:iliacus_r; FLAG_VIA:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,20,0,45.459878269,1073,1,1,0,0,FLAG_STEP:iliacus_r; FLAG_VIA:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,-45,1,13.262154063,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,-28.75,1,22.797606180,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,-12.5,1,35.690601810,1073,0,0,0,1,FLAG_SHORT:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,3.75,1,47.847616238,1073,0,1,0,1,FLAG_SHORT:iliacus_r; FLAG_STEP:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,20,0,43.872206645,1073,0,1,0,1,FLAG_SHORT:iliacus_r; FLAG_STEP:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,-45,1,-5.676168081,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,-28.75,1,-9.391711517,1073,0,0,0,0,none,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,-12.5,1,-16.560617003,1073,0,1,0,1,FLAG_SHORT:iliacus_r; FLAG_STEP:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,3.75,1,-31.700982082,1073,0,1,0,1,FLAG_SHORT:iliacus_r; FLAG_STEP:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+26,Iliacus,iliacus_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,20,0,-25.130130104,1073,0,1,0,1,FLAG_SHORT:iliacus_r; FLAG_STEP:iliacus_r,[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,-45,0,24.636510703,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,-28.75,0,32.053739018,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,-12.5,0,36.996491031,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,3.75,1,38.960657490,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,-15,20,1,37.698814814,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,-45,0,24.005939388,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,-28.75,0,34.368851558,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,-12.5,1,42.759529820,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,3.75,1,46.660174319,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,16.25,20,0,44.365759789,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,-45,0,23.082616676,1113,1,1,0,0,FLAG_STEP:psoas_r; FLAG_VIA:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,-28.75,1,33.448610616,1113,1,1,0,0,FLAG_STEP:psoas_r; FLAG_VIA:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,-12.5,1,42.687011255,1113,1,1,0,0,FLAG_STEP:psoas_r; FLAG_VIA:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,3.75,1,48.410267071,1113,1,0,0,0,FLAG_VIA:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,47.5,20,0,47.934658680,1113,1,1,0,0,FLAG_STEP:psoas_r; FLAG_VIA:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,-45,1,11.715714900,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,-28.75,1,19.964380420,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,-12.5,1,32.082215339,1113,0,0,0,1,FLAG_SHORT:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,3.75,1,48.400059596,1113,0,1,0,1,FLAG_SHORT:psoas_r; FLAG_STEP:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,78.75,20,0,49.732653980,1113,0,1,0,1,FLAG_SHORT:psoas_r; FLAG_STEP:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,-45,1,-7.346055680,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,-28.75,1,-11.953339296,1113,0,0,0,0,none,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,-12.5,1,-20.312555906,1113,0,0,0,1,FLAG_SHORT:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,3.75,1,-39.996161243,1113,0,1,0,1,FLAG_SHORT:psoas_r; FLAG_STEP:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)
+27,Psoas X,psoas_r,hip_flexion_r,-15,110,hip_adduction_r,-45,20,(none),yes,110,20,0,-44.223082316,1113,0,1,0,1,FLAG_SHORT:psoas_r; FLAG_STEP:psoas_r,[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)

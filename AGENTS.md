@@ -101,6 +101,15 @@ machine, NOT staleness.
    (`*_r2.png`) + OpenSim-model isometric render staged in `Figures\30-torque\`
    (Ben dispositions wiring); Overleaf re-push staged. Verification build of record:
    ProofFinal `build_r7` (or the latest build_r* the campaign reports).
+   **DISSERTATION EDITOR PICKUP (Ben, 2026-10-23):** the flexor 20 mm
+   three-panel validation figure is in the torque paper (fig:Flx20mm,
+   `Knee_Torque_Test\ProofFinal\Main.tex` ~p.30; panel files
+   `Knee_Torque_Test\Figures\Flx20mm_{humanTarget,rigidVsCorrected,
+   meetsHuman}.eps/.pdf`; generator `tmp\paper_bridge\figscripts\
+   gen_Flx20mm_3panel_20261023.m`). Place the same three panels in diss
+   ch. 30-torque (flexor physical validation) with the paper's caption
+   numbers of record: 15 measured points −119..+5°, meet-or-exceed human
+   BFSH everywhere, margins +0.42 N·m (@−105°) to +17.0 N·m (@−14°).
 2. Design and control of bipedal humanoid robot legs with artificial muscles
    (PAMs/BPAs) controlled by a synthetic nervous system. Lab: AARL, PSU.
 3. **Xi-correction-factor program** — the design factors χ0–χ3 (candidate χ4) that
