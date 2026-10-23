@@ -50,8 +50,9 @@ function data = readserialnumbers2()
     %% Torque-guard geometry (matches Knee_Flexor_Data_20mm.m d51/ang51)
     % Defaults are the 42 cm long-tibia values -- UPDATE dLC/angLC after
     % the 51 cm flexor rig setup is measured.
-    dLC  = 320/1000;    % theta1 origin -> load-cell arm, m
-    angLC = -82.97;     % arm angle in the tibia frame, deg
+    prf = [0.085, -0.296, 0];
+    dLC  = hypot(prf(1),prf(2));    % theta1 origin -> load-cell arm, m
+    angLC = atan2d(prf(2),prf(1));     % arm angle in the tibia frame, deg
 
     %% Save settings
 
