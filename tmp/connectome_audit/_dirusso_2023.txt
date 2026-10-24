@@ -1,0 +1,1657 @@
+
+PAGE 1
+Journal of Neural
+Engineering
+       
+PAPER • OPEN ACCESS
+Investigating the roles of reflexes and central
+pattern generators in the control and modulation of
+human locomotion using a physiologically
+plausible neuromechanical model
+To cite this article: Andrea Di Russo et al 2023 J. Neural Eng. 20 066006
+ 
+View the article online for updates and enhancements.
+You may also like
+KrF excimer laser precision machining of
+hard and brittle ceramic biomaterials
+Yao-Xiong Huang, Jian-Yi Lu and Jin-Xia
+Huang
+-
+PEARLS: Discovery of Point-source
+Features within Galaxies in the North
+Ecliptic Pole Time Domain Field
+Rafael Ortiz, Rogier A. Windhorst, Seth H.
+Cohen et al.
+-
+Walking with perturbations: a guide for
+biped humans and robots
+Jacques Duysens and Arturo Forner-
+Cordero
+-
+This content was downloaded from IP address 131.252.218.94 on 08/07/2025 at 19:45
+
+PAGE 2
+J. Neural Eng. 20 (2023) 066006 https://doi.org/10.1088/1741-2552/acfdcc
+Journal of Neural Engineering
+OPEN ACCESS
+RECEIVED
+25 January 2023
+REVISED
+20 September 2023
+ACCEPTED FOR PUBLICATION
+27 September 2023
+PUBLISHED
+16 November 2023
+Original Content from
+this work may be used
+under the terms of the
+Creative Commons
+Attribution 4.0 licence.
+Any further distribution
+of this work must
+maintain attribution to
+the author(s) and the title
+of the work, journal
+citation and DOI.
+PAPER
+Investigating the roles of reflexes and central pattern generators in
+the control and modulation of human locomotion using a
+physiologically plausible neuromechanical model
+Andrea Di Russo1,4,∗, Dimitar Stanev1,4, Anushree Sabnis1, Simon M Danner2, Jessica Ausborn2,
+Stéphane Armand3 and Auke Ijspeert1
+1 BioRobotics Laboratory, EPFL, Lausanne, Switzerland
+2 Department of Neurobiology and Anatomy, College of Medicine, Drexel University, Philadelphia, PA, United States of America
+3 Kinesiology Laboratory, Geneva University Hospitals and University of Geneva, Geneva, Switzerland
+4 The two authors contributed equally.
+∗ Author to whom any correspondence should be addressed.
+E-mail: andrea.dirusso@epfl.ch
+Keywords: human locomotion, simulations, sensory feedback, central pattern generators, gait modulation
+Abstract
+Objective. Studying the neural components regulating movement in human locomotion is
+obstructed by the inability to perform invasive experimental recording in the human neural
+circuits. Neuromechanical simulations can provide insights by modeling the locomotor circuits.
+Past neuromechanical models proposed control of locomotion either driven by central pattern
+generators (CPGs) with simple sensory commands or by a purely reflex-based network regulated
+by state-machine mechanisms, which activate and deactivate reflexes depending on the detected
+gait cycle phases. However, the physiological interpretation of these state machines remains
+unclear. Here, we present a physiologically plausible model to investigate spinal control and
+modulation of human locomotion. Approach. W e propose a bio-inspired controller composed of
+two coupled CPGs that produce the rhythm and pattern, and a reflex-based network simulating
+low-level reflex pathways and Renshaw cells. This reflex network is based on leaky-integration
+neurons, and the whole system does not rely on changing reflex gains according to the gait cycle
+state. The musculoskeletal model is composed of a skeletal structure and nine muscles per leg
+generating movement in sagittal plane. Main results. Optimizing the open parameters for effort
+minimization and stability, human kinematics and muscle activation naturally emerged.
+Furthermore, when CPGs were not activated, periodic motion could not be achieved through
+optimization, suggesting the necessity of this component to generate rhythmic behavior without a
+state machine mechanism regulating reflex activation. The controller could reproduce ranges of
+speeds from 0.3 to 1.9 m s−1. The results showed that the net influence of feedback on
+motoneurons (MNs) during perturbed locomotion is predominantly inhibitory and that the CPGs
+provide the timing of MNs’ activation by exciting or inhibiting muscles in specific gait phases.
+Significance. The proposed bio-inspired controller could contribute to our understanding of
+locomotor circuits of the intact spinal cord and could be used to study neuromotor disorders.
+1. Introduction
+Limbs’ movements result from the complex inter-
+action between brain centers, the spinal cord, and
+the musculoskeletal system [ 45]. The spinal net-
+work is essential in the control, coordination, and
+modulation of locomotion [ 32]. While there is dir-
+ect evidence of a central pattern generator (CPG)
+in mammals and other vertebrates [ 1, 32], the lack
+of direct experimental access in humans means that
+there is only indirect evidence [ 39]. Furthermore,
+sensory feedback pathways may play a major role
+© 2023 The Author(s). Published by IOP Publishing Ltd
+
+PAGE 3
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+compared to other mammals, and lower vertebrates
+in humans [ 24–26, 28, 34]. Different studies sugges-
+ted that the muscle activity observed during human
+locomotion may be controlled by five locomotor
+primitives that could be generated by rhythmic neural
+circuits [14, 30]. Investigating these questions about
+the roles of different spinal components in controlling
+locomotion is challenging since we possess only par-
+tial knowledge of the interactions between the dif-
+ferent subsystems involved in this process. On top
+of that, limited experimental access complicates the
+observation of the sub-components functions lead-
+ing to difficulties in model validation. Computer sim-
+ulations are necessary and have been proven useful
+in the past to evaluate the contribution of each con-
+trol component by evaluating different models, and
+parameters [3, 18, 19, 22, 29, 41, 48].
+V arious neuromechanical models have been pro-
+posed in the past to address these questions. In 1995,
+T aga proposed a musculoskeletal system controlled
+by a neural rhythm generator (RG) composed of
+seven pairs of neural oscillators and simple sensory-
+motor signals [ 49]. Successively, in 2001, Ogihara
+and Y amazaki developed a neural controller com-
+posed of motoneurons (MNs) receiving inputs from
+a common CPG and reflexes from stretch and force
+receptors, where the spindle reflexes had inhibitory
+inputs to antagonist’s muscles [ 40]. In the context
+of locomotion controlled by CPG mechanisms, Aoi
+et al (2010) constructed a CPG model based on a
+two-layered hierarchical network composed of a RG
+and a pattern formation (PF) layer. The RG model
+produced rhythmic information using phase oscil-
+lators and was regulated by phase resetting based
+on foot-contact gait events, whereas the PF model
+generated feedforward commands composed of five
+motor primitives based on the muscle synergies ana-
+lysis performed by Ivanenko et al [3, 30]. On the
+other hand, Geyer and Herr demonstrated that the
+kinematics and muscle activation observed in human
+locomotion could be reproduced without CPG com-
+mands by relying purely on sensory feedback activ-
+ated at specific gait cycle phases [ 22]. The activa-
+tion of sensory feedback was regulated by a state-
+machine mechanism (i.e. a set of if–then–else rules)
+that enabled and disabled specific reflexes depending
+on the detection of stance or swing phases. A similar
+controller with partial modifications has then been
+proposed by Ong et al [41]. In these studies, the activ-
+ation of sensory responses in the gait cycle is regu-
+lated by a state-machine mechanism activating and
+deactivating reflexes in five gait cycle subphases. The
+necessity of including such state-machine mechan-
+isms in reflex-based controllers hints at the need for a
+more sophisticated circuit that controls the underly-
+ing reflexes. Other studies have integrated CPG com-
+mands on top of these purely sensory-based control-
+lers, showing the benefits of rhythmic circuits in gait
+modulation [19, 53].
+In this study, we propose a novel bio-inspired
+controller composed of a feedforward network
+inspired by Aoi et al consisting of two CPGs that
+produce the locomotor rhythm and patterns and
+a new physiologically plausible implementation of
+spinal reflexes based on neurophysiological studies
+in locomotion [ 54, 56] without relying on any state
+machine mechanism. This network controls nine
+muscle actuators generating torques in a previously
+assessed musculoskeletal model [17].
+The performance of this controller in replicat-
+ing the behavior of human locomotion and its mod-
+ulation are investigated and compared with previ-
+ous experimental and neuromechanical studies. In
+addition, we investigate the performance of the sens-
+ory feedback controller alone to verify whether it is
+possible to generate human walking behavior with
+a purely reflex-based controller without relying on
+state machine mechanisms and to verify the benefit
+of CPG mechanisms. Finally, we examine the con-
+tribution given by pattern generation and reflex cir-
+cuits to the MNs at slow, intermediate, and fast speeds
+performing a correlation analysis to identify possible
+parameters responsible for speed modulation. With
+these experiments, we aim to address the following
+questions:
+• What is the role of CPGs and reflex circuits in the
+generation of muscle activation in human loco-
+motion?
+• Can low-level feedback circuits produce stable
+locomotion without a CPG or state-machine?
+• Is the contribution of these two neural components
+changing with increasing of gait speed?
+Our results show that the reflex rules implemented in
+previous models [ 22, 41] could be reproduced into
+less abstract and more realistic models of neural cir-
+cuits. The insights given by the proposed controller
+suggest that spinal reflexes alone could not reproduce
+rhythmic locomotion without a state machine mech-
+anism regulating the activation of reflexes in specific
+phases of the gait cycle. CPG networks appear to play
+the role of state machines in previous models and to
+be necessary to promote muscle activation in specific
+gait cycle phases. In addition, the modulation of CPG
+frequency seems necessary to modulate step duration.
+The modulation of either reflexes, CPG network, or
+both could generate gaits in a wide speed range, high-
+lighting the high level of versatility of the neurospinal
+control of human locomotion.
+2. Methods
+This study used the Simulated Controller
+OptimizatioN Environment (SCONE) software sim-
+ulation framework [ 21]. SCONE is an open-source
+2
+
+PAGE 4
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+software performing predictive simulations of bio-
+logical motion, allowing the investigation of indi-
+vidual models and control parameters on the motion.
+T o perform a predictive simulation in SCONE, it is
+necessary to run a scenario including the following
+components:
+• A mechanical model of the system to simulate.
+• A controller that generates input for the model
+actuators.
+• An objective that describes the target task to optim-
+ize, through a weighted combination of measures
+(sub-components of the cost function).
+• An optimizer that optimizes the free parameters in
+a scenario for a specific objective.
+In this study, SCONE software was extended to imple-
+ment and optimize the new spinal model generating
+gait simulations of 10 s.
+2.1. Musculoskeletal model
+The musculoskeletal model (figure 1) has the skeletal
+structure presented by Delp et al [17] with a height
+of 1.8 m and weight of 75.16 kg. The model is con-
+strained in the sagittal plane and has a total of nine
+degrees of freedom (DoFs): a three-DoFs planar joint
+between the pelvis and the ground and three rota-
+tional DoFs per leg: hip flexion/extension, knee flex-
+ion/extension, and ankle dorsiflexion/plantarflexion.
+Three spheres per leg are used as contact models with
+the ground: one of radius 5 cm at the calcaneus and
+two of radius 2.5 cm at the toes. The musculoskeletal
+model is actuated by nine Hill-type muscle-tendon
+units per leg: gluteus maximus (GMAX), biarticu-
+lar hamstrings (HAMS), biceps femoris short head
+(BFSH), rectus femoris (RF), iliopsoas (ILPSO), vasti
+muscle group (V AS), gastrocnemius (GAS), soleus
+(SOL), and tibialis anterior (TA).
+2.2. Controller
+Muscle activation is regulated by the excitation
+provided by the MNs. The MNs are stimulated or
+inhibited by the different components of the bio-
+inspired controller: the balance controller of the trunk
+and the spinal network, composed of the CPGs and
+spinal reflexes. The balance controller and the CPGs
+are modeled at an abstract level. Indeed, the former
+provides balance inputs in specific phases of the gait
+cycle with proportional derivative (PD) controllers,
+and the latter is composed of two abstract oscillators
+generating primitive patterns. By contrast, the spinal
+reflexes are modeled more realistically at a lower level
+of abstraction and are structured in different leaky
+integrator neurons divided into three types: soma-
+tosensory neurons (SNs), interneurons (INs), and
+MNs. The overall structure of the controller is repor-
+ted in figure 2. The balance controller of the trunk
+regulates only the activation of hip muscles in spe-
+cific phases of the gait cycle, whereas CPGs and spinal
+Figure 1. Musculoskeletal model used to study human
+locomotion. The model is constrained in the sagittal
+plane and has nine DoFs: hip and knee
+flexion/extension, ankle plantar/dorsal flexion for each
+leg, and a three-DoFs planar joint between the pelvis
+and the ground. Movements are generated by the
+activation of nine muscles per leg: gluteus maximus
+(GMAX), biarticular hamstrings (HAMS), biceps
+femoris short head (BFSH), rectus femoris (RF),
+iliopsoas (ILPSO), vasti (V AS), gastrocnemius medialis
+(GAS), soleus (SOL), and tibialis anterior (TA).
+reflex controllers provide inputs to all muscles and
+are not regulated by any state-machine mechanism.
+W e chose to maintain the state machine for the bal-
+ance controller in order to simplify the balance con-
+trol since our main goal is the simulation of loco-
+motor movement. A physiological neuromechanical
+model of trunk balance control is a complex task that
+is outside the scope of this study. Muscle excitation
+is triggered by the MN output with values between
+0 and 1 since MNs can only provide excitation to
+muscle fibers and cannot have negative outputs. T o
+keep a reasonable level of abstraction and complexity,
+we will assume that the neuron’s output (correspond-
+ing to its firing rate) uoutput follows the dynamics of a
+leaky integrator:
+τ dy
+dt = −y + uinput
+uoutput = f (y) ,
+(1)
+where y is the neuronal response, uinput is the neural
+input, τ the time constant (typically 0.01), uoutput the
+output of the neuron, and f the activation function.
+The activation function used for MNs is the min–max
+operator ( f(x) = min(max(0, x), 1)), and the neural
+input is defined as:
+uinput =
+∑
+j
+wjuoutput j, (2)
+3
+
+PAGE 5
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+Figure 2. Control diagram: the bio-inspired controller is composed of the balance controller of the trunk and the spinal controller
+divided into CPGs and spinal reflexes. The balance controller aims at keeping the balance of the trunk by stimulating the hip
+muscles’ motoneurons, whereas CPGs and spinal reflexes generate rhythmic behavior stimulating all muscles’ motoneurons.
+Reflexes and CPGs are integrated by motoneurons, whereas balance inputs are summed separately. Created with BioRender.com.
+where wj is the weight associated with the jth connec-
+tion, and uoutput j the output of the jth neuron. The
+MN receives inputs from the CPGs’ network ( uCPGs)
+and the reflex circuit (ureflexes). These inputs are integ-
+rated according to equations (1) and (2):
+τ dy
+dt = −y + (uCPGs + ureflexes) ,
+moutput = f (y) (3)
+and generate the MN output moutput. ILPSO, GMAX,
+and HAMS also receive inputs from the balance con-
+troller ( ubalance). T o avoid the activity of the balance
+controller from being inhibited by the other neural
+circuits possibly preventing the correct balance of the
+trunk, ubalance is not integrated into the MN dynam-
+ics, and the final MN output for hip muscles ˜moutput
+is defined by the following equation:
+˜moutput =
+(
+ubalance + moutput
+)
++ (4)
+where moutput is the MN output resulting from the
+integration of uCPGs and ureflexes and ubalance repres-
+ents the balance controller effect on the hip muscles.
+The operator ()+ represents only the positive part of
+the selected signal. The amplitude of all components
+is regulated by the controller’s parameters tuned by
+the optimization algorithm. The muscle activation a
+responds to the excitation moutput (or ˜moutput for hip
+muscles) as defined by Thelen [ 51].
+The following sections will describe in detail how
+each neural input is computed ( ubalance, uCPGs, and
+ureflexes).
+2.2.1. Balance controller of the trunk
+The balance controller is the one proposed by Ong
+et al [41], and it is the only controller part where a
+state-machine mechanism is present. A PD control
+strategy is used to activate the hip muscles balancing
+the forward lean angle of the trunk. ILPSO, GMAX,
+and HAMS receive inputs from the balance control-
+ler during the stance phase. The excitation given by
+the balance controller to the hip MNs is described in
+equation (5).
+ubalance = kp (θ (t − tD) − θ0) + kv ˙θ (t − tD) , (5)
+where kp and kv are the proportional and derivative
+controller’s gains, and the constant θ0 is the desired
+forward lean angle regulating the proportional feed-
+back of the actual forward lean angle θ. tD represents
+the time delay, corresponding totD = 5 ms for the hip
+muscles. The balance controller has a total of nine
+parameters.
+2.2.2. CPGs
+The CPGs were implemented as two coupled oscillat-
+ors (one per side) composed of RG, and PF layers [36,
+46] inspired by the work of Aoi et al [2, 3]. Among
+the different CPGs models proposed for human loco-
+motion, we chose to take inspiration from Aoi’s
+model [3, 4] to maintain a reasonable level of abstrac-
+tion for a neural network for which the specific struc-
+ture is not yet completely clear. Furthermore, the rep-
+resentation of five locomotor synergies is supported
+by past experimental studies [ 30].
+4
+
+PAGE 6
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+The RG dictates a periodic command synchron-
+ized with the environment through afferents triggered
+by the heel-strike event. Based on Aoi’s model,
+two coupled differential equations govern the CPG
+dynamics:
+˙ϕleft = ω − γ sin
+(
+ϕleft − ϕright − π
+)
+˙ϕright = ω − γ sin
+(
+ϕright − ϕleft − π
+)
+,
+(6)
+where ϕleft/right denotes the phase of each leg, ω(t)
+is the basic angular frequency, and γ is the coupling
+constant.
+The differential equation contains events that
+reset ϕleft/right when the leg touches the ground in
+order to synchronize the CPGs’ phases with the
+environment. This is the only feedback mechanism
+present in the CPGs model, and it is described in
+equation (7):
+ϕleft/right (t)
+=
+{
+0, if the leg touches the ground
+ϕleft/right (t) otherwise,
+(7)
+In our simulations, the angular frequency ω has a
+constant value and represents one of the parameters
+under optimization.
+The pattern formation layer is composed of
+phase-dependent primitive patterns. Each pat-
+tern resembles a bell-shaped waveform with a
+defined width that can be centered around a specific
+phase value and is implemented as a raised-cosine
+function:
+p (¯ϕ; µ, σ
+)
+=
+
+
+
+1
+2
+(
+1 + cos
+(
+ϕ −µ
+σ π
+))
+, µ − σ <= ϕ < = µ + σ
+0 otherwise,
+(8)
+where ¯ϕ is the normalized gait phase, µ is the value
+corresponding to the peak of the bell shape, and σ
+is the half-width of the curve. The pattern formation
+layer is composed of five primitives of the same half-
+width and centered at different times of the gait phase
+(figure 3(a)):
+• P0: µ = 0.1, σ = 0.2
+• P1: µ = 0.3, σ = 0.2
+• P2: µ = 0.5, σ = 0.2
+• P3: µ = 0.7, σ = 0.2
+• P4: µ = 0.9, σ = 0.2.
+The choice of modeling the CPG network as the gen-
+eration of five locomotor primitives has been taken
+to have smooth and derivable shapes of CPG cir-
+cuits inputs to MN. More precisely, we took inspir-
+ation from the observations done in past experi-
+mental studies where five bell-shaped synergies act-
+ive at different phases of the gait cycle were identi-
+fied in human studies [ 30, 31]. However, it should
+be noted that those recorded synergies account for
+the overall MN activity and not just the CPG sub-
+component. Each MN receives a weighted neural
+excitation or inhibition uCPGs from all primitive
+patterns (figure 3(b)) according to the following
+equation:
+uCPGs =
+4∑
+k=0
+wm,kpk (ϕ; µk, σk) , (9)
+where wm,k is the weight parameter of the pattern k
+to the MN m to be determined through optimiza-
+tion. The total number of parameters to optimize cor-
+responds to five weights per pattern to each specific
+muscle and the oscillatory frequency. Therefore, the
+number of parameters for the CPG network is 48. The
+possible values assigned to wm,k are [−1:1].
+2.2.3. Spinal reflexes
+T o implement a physiologically realistic model of
+sensory-motor control in human locomotion, we
+model and investigate five spinal reflexes:
+• Ia afferents provide monosynaptic excitation to
+MNs innervating the same muscle and disynaptic
+inhibition mediated by Ia inhibitory INs to antag-
+onistic MNs (figure 4(a)) and model the velocity-
+dependent response to stretch [11].
+• II afferents provide disynaptic excitation to MNs
+innervating the same muscle and disynaptic inhib-
+ition to antagonistic MNs mediated by excitat-
+ory and inhibitory INs, respectively (figure 4(b)).
+This reflex models the excitatory role of group
+II afferents [ 35] responding to changes in muscle
+length during stretch.
+• Ib afferents provide disynaptic inhibition to MNs
+innervating the same muscle mediated by inhib-
+itory INs. These INs reciprocally inhibit antagon-
+istic Ib-IN (figure 4(c)). This reflex is triggered
+by the Golgi tendon organs and it is introduced
+to protect muscles when large forces are detected
+[9]. Additionally, Ib afferents provide disynaptic
+excitation to extensor MNs innervating the same
+muscle mediated by excitatory INs. These connec-
+tions model the positive force feedback reversal
+commonly observed in experimental studies [ 23,
+44, 46] (figure 4(d)).
+• Renshaw cells (RCs) are inhibitory INs provid-
+ing inhibitions to MNs and Ia-INs innervating the
+same muscle. Additionally, these cells reciprocally
+inhibit with antagonistic RCs [ 55] (figure 4(e)).
+RCs are activated by MNs innervating the same
+muscle through synaptic excitation inhibiting these
+5
+
+PAGE 7
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+Figure 3. CPG structure: (a) the CPG generates five bell-shaped primitives centered at different times of the gait cycle. (b) Each
+k-pattern stimulates all the m-motoneurons depending on the assigned weight wm,k that can be positive or negative. (a) and (b)
+Created with BioRender.com.
+MNs when a large activity is detected to prevent
+excessive muscle activation.
+The spinal sensory feedback network is composed of
+three types of leaky integrator neurons: SNs, INs, and
+MNs. Each of these neurons models the activities of
+neural populations in the physiological spinal cord.
+INs have the same properties of MNs responding to
+the dynamics described in equations ( 1) and ( 2) and
+with the same activation function f (x). SNs instead
+presents a rectifier function ( f(x) = max(0, x)) as
+activation function, and also the neural input is
+slightly different:
+uinput = r (t − ∆) , (10)
+where r(t − ∆) is the receptor function and ∆ the
+delayed value of the receptor. T ransmission delays are
+known and can be determined according to the prox-
+imity of the receptors [ 19]. The expressions of the
+receptors follow the equations:
+rIa (t) = 65/200
+√
+max (0,˜vm (t))
+rII (t) = ˜lm (t)
+rIb (t) = ˜fm (t)
+rf (t) = ˜ff (t) ,
+(11)
+where ˜vm(t)), ˜lm(t), ˜fm(t), ˜ff(t) are respectively
+the normalized quantities for contraction velocity,
+muscle length, muscle force, and cutaneous forces
+due to ground-foot contact. W e choose to consider
+the normalized quantities to be able to easily scale for
+different muscles with different values of length and
+strength. Here, the expression for rIa was inspired by
+Prochazka [43] and modified such that only length-
+ening ˜vm > 0 triggers a response while ignoring length
+and activity-dependent terms. W e deliberately simpli-
+fied these expressions because we wanted to capture
+the general trend and prevent an excessive number of
+physiological parameters. In figure 4, we present the
+primitive reflex pathways that govern the connectiv-
+ity within a single spinal cord segment. These rules
+are used to build the topological network by assum-
+ing that muscles can be categorized as agonists (A),
+antagonists (N), and extensors (E) or flexors (F).
+The relation between agonist and antagonist
+muscles defines the mutual inhibitions described in
+figures 4(a)–(c) and (e). In addition, a muscle can be
+defined as extensor or flexor. In case it is an extensor
+muscle, the additional connections of Ib disynaptic
+extensor facilitation described in figure 4(d) are
+included. Some bi-articular muscles can be con-
+sidered both extensors and flexors since they have
+different effects on different joints and the Ib disyn-
+aptic extensor facilitation is included also in this case.
+T able1 describes the relations among agonist and ant-
+agonist muscles assigned in our models. Accounting
+for all the weighted connections, the sensory feedback
+controller has a total of 183 parameters.
+Finally, figure 5 shows the whole spinal net-
+work implemented between agonist and antagon-
+ist muscles including the reflex pathways and CPGs
+inputs. On top of this network, ILPSO, GMAX,
+and HAMS also receive inputs from the balance
+controller.
+6
+
+PAGE 8
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+Figure 4. Reflex pathways. Green, blue and red stand for somatosensory (SN A/N), inter (INA/N), and motor neurons (MN A/N),
+respectively. The connection tip o stands for inhibition while < is for excitation. Subscript letters A, N, and E denote agonist,
+antagonist, and extensor muscles, respectively. The rules are repeated for all antagonist muscles. (a)–(e) Created with
+BioRender.com.
+2.3. Optimization process
+In total, the controller’s parameters are 256, account-
+ing also for 16 additional parameters regulating initial
+positions and velocities of the model’s DoFs. Because
+of the large size of the parameters’ space and the
+difficulties in obtaining a stable solution when the
+network is in an arbitrary state, the optimization
+process is divided into three steps: imitation objective,
+optimization for stability, and optimization of
+metabolic energy. In the first stage, we try
+7
+
+PAGE 9
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+T able 1.Agonist–antagonist relationship among muscles modeled. Each antagonist relationship implies the corresponding reciprocal
+inhibition of Ia, II, and Ib connections, and the reciprocal excitation connections of RC. The table specifies whether the agonist is
+considered an extensor, which includes the disynaptic excitation from Ib +, or flexor.
+Agonist–antagonist muscle relationship
+Agonist Antagonist Role
+ILPSO GMAX, HAMS Flexor
+GMAX ILPSO Extensor
+HAMS V AS, RF Extensor/flexor
+RF HAMS, BFSH Extensor/flexor
+BFSH V AS, RF Flexor
+V AS HAMS, BFSH Extensor
+GAS TA Extensor/flexor
+SOL TA Extensor
+TA GAS, SOL Flexor
+Figure 5. Spinal network between a muscle and its antagonist. The network includes reflexes driven by Ia, II, Ib afferents and
+Renshaw cells and inputs from CPGs’ patterns. Connections from patterns to motoneurons are represented by back arrows since
+these connections can be both inhibitory and excitatory. ILPSO, GMAX, and HAMS also receive inputs from the balance
+controller. Created with BioRender.com.
+determining the network’s parameters such that
+the output of neurons is within a plausible range
+and MNs’ activity resembles normal gait solu-
+tions. T o achieve this, we begin with a previously
+obtained stable gait simulation generated by a
+simpler controller [ 41]. Given that we know the
+whole state trajectories of the musculoskeletal sys-
+tem, we can compute the sensory afferent inputs
+required by the bio-inspired controller. Therefore,
+we can optimize for network parameters efficiently
+without numerically integrating the equations of the
+musculoskeletal system. W e call this step imitation
+learning because we try to imitate a simulated beha-
+vior without yet producing dynamically consistent
+stable gaits. The optimization objective is defined as
+follows:
+minimize
+⃗p
+Nt∑
+t
+Nm∑
+m
+(
+eS
+m (t) − eN
+m (t,⃗x (t) ;⃗p)
+) 2
+, (12)
+8
+
+PAGE 10
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+where eS
+m(t) denotes the target simulated excitation of
+muscle m at time t, and eN
+m the excitation of the net-
+work that depends on time t, the known state vari-
+ables ⃗x(t), and parameters ⃗p. The above parameter
+solution does not produce stable gaits if we evaluate
+the model by numerically integrating the equations of
+motion. Our initial goal was to calibrate the network
+behavior within a reasonable range of operation in
+order to avoid neuron activities that are extreme and
+always make the model fall and optimization diverge.
+In fact, the imitation is only done to obtain a first
+usable solution for further optimization.
+The second optimization aims at obtaining
+dynamically consistent stable gaits. T o do so, we start
+integrating numerically the equation of motion pro-
+ducing dynamical gaits by minimizing the distance
+between the model’s and reference’s states as already
+expressed in equation ( 12), penalizing unstable fall-
+ing solutions and solutions outside the desired range
+of speed, minimizing metabolic effort and joint limit
+torques. With this process, we aim to obtain stable
+solutions generated with our bio-inspired controller
+with physiological kinematics and muscle activation.
+The optimization is done using a CMA–ES algorithm
+with parameters λ = 40 and σ = 5 [ 27]. The cost
+function for this optimization is defined as follows:
+minimize
+⃗p
+Jmimic + Jgait + Jeffort + Jlimit + Jhead.
+(13)
+The term Jmimic, represents the model mimicking the
+reference states as expressed in equation ( 12), Jgait
+penalizes the solution where the center of mass velo-
+city is outside the [vmin, vmax] range (1.10–1.25 m s−1
+for healthy human gait at normal speed) and the fall-
+ing solutions. The model is considered to fall when
+the ratio between its center of mass height ( hCOM) to
+the initial state (hCOM,i) is smaller than a termination
+height threshold set to 0.8 ( hCOM
+hCOM,i
+< 0.8). The term
+Jeffort defines the rate of metabolic energy expenditure
+[52] normalized by the product of body mass and
+distance traveled. Jlimit is associated with joint min-
+imization of soft joint limit torques at the knee and
+ankle joints in order to avoid excessive joint angles
+[18]. Finally, Jhead helps to maintain head stability by
+minimizing horizontal and vertical head accelerations
+outside the following ranges: [−4.90 − 4.90] m s−2 in
+the vertical direction, and[−2.45 − 2.45] m s−2 in the
+horizontal direction, as previously done by Ong et al
+[41]. Concerning the weights, we assigned wmimic =
+10, wgait = 100, weffort = 1, wlimit = 0.1, and whead =
+0.25 in order to promote mainly stability and mim-
+icking. Following this optimization, we use the res-
+ulting stable solution as initial condition to find the
+optimal solution that minimizes metabolic energy. T o
+do so, we remove the mimicking component of the
+cost function and optimize for
+minimize
+⃗p
+Jgait + Jeffort + Jlimit + Jhead. (14)
+Jgait allows the stability of future explored solu-
+tions and Jeffort allows convergence toward gait effi-
+ciency. In addition, we apply external perturbations
+to the pelvis and randomized internal perturbations
+to muscle excitation to obtain more robust and stable
+gaits. The external perturbation is a force of 100 N
+applied in the forward and backward direction for
+a duration of 0.2 s respectively after 3 s and 4 s after
+the beginning of the simulation. The internal per-
+turbations are applied to sensory receptors. For each
+controller timestep, a random white Gaussian noise
+is sampled from a normal distribution with a stand-
+ard deviation of s ∗ noisep, where noisep is the propor-
+tional standard deviation of the normal distribution,
+and s is the perturbed sensory signal.
+This three-step optimization process was used
+only to find a proper local optimum to replicate
+human gait behavior with a high number of para-
+meters tuning the bio-inspired controller. However,
+once the local optimum is found, different gait beha-
+viors can be reached starting from this solution by
+only optimizing according to equation ( 14) with the
+different gait behaviors targeted by Jgait. The meth-
+odology for these simulations is explored in the fol-
+lowing section. Furthermore, we verified that similar
+solutions for a specific gait speed could be achieved
+from different initial conditions of the optimizer as
+long as this initial condition represents a combina-
+tion of parameters that has been obtained from the
+optimal solution resulting from the three optimiza-
+tion steps.
+2.4. Gait modulation
+T o study the capability of the proposed bio-inspired
+controller to reproduce different gait behaviors in
+human locomotion, we focus mainly on the mod-
+ulation of locomotor speed. In this way, we aim
+to evaluate our controller’s performance, checking
+the maximum and minimum speeds it can achieve.
+Additionally, we evaluate gait analysis and muscle
+activation for three selected solutions far from the
+extremes of the achieved speed range since very slow
+or very fast speeds are more subject to producing arti-
+facts in gait simulations. Therefore the three solutions
+selected are at 0.6 m s−1, 1.2 m s−1, and 1.6 m s−1 rep-
+resenting slow, intermediate, and fast speeds, respect-
+ively. T o do so, we modulate the optimization para-
+meters [vmin, vmax] in Jgait. Furthermore, we use the
+data acquired from our model to have possible
+insights into the contribution of CPGs and spinal
+reflexes in the neuromotor control of human loco-
+motion and gait modulation. T o do so, first, we eval-
+uate the inputs to MNs from CPGs and reflexes
+and how these affect the MNs’ output at different
+speeds. W e then performed additional optimization
+9
+
+PAGE 11
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+where either CPG parameters or reflexes paramet-
+ers were fixed to investigate the modulation capab-
+ilities of each controller component. The fixed val-
+ues of parameters are extracted from a reference solu-
+tion of the model walking at 1.17 m s −1 with 0.79 m
+of step length and 0.67 s of step duration. This solu-
+tion is the one where the optimizer converged without
+imposing any restriction on the target speed. Finally,
+we investigate which parameters majorly contribute
+to gait modulation for the three controller configur-
+ations: full control, fixed reflexes, and fixed CPGs.
+These parameters are identified through a correla-
+tion analysis with gait speed, step length, and step
+duration, where parameters that have a high level
+of positive or negative correlation with these three
+gait characteristics (above 0.80 in absolute value) are
+considered the potential major contributors to gait
+modulation [18]. The correlation analysis is conduc-
+ted over eight solutions obtained through different
+target optimizations for each of the three controller
+configurations.
+In general, the variables under investigation are:
+• Kinematic variables (measures in degrees).
+• Normalized vertical ground reaction forces
+(unitless).
+• Muscle activation (unitless and bounded between
+0 and 1).
+• Neural inputs from reflex, balance, and CPG cir-
+cuits (unitless and bounded between −2 and 2).
+• The spatiotemporal variables speed (m s −1), step
+length (m), and step duration (s).
+• The correlation coefficients (unitless and bounded
+between −1 and 1) between controller parameters
+and spatiotemporal variables.
+3. Results
+Figure 6 shows the controller’s performance. The
+averaged gait cycle shown is obtained from 6 gait
+cycles. The first cycle has been removed to allow the
+model to reach steady-state. When minimizing the
+cost function without imposing restrictions on gait
+speed, the model converges to a gait at 1.17 m s −1 of
+speed, 0.79 m step length, and 0.67 s step duration.
+Figure 6(a) shows qualitatively the different positions
+of the model’s joints through the gait cycle. The sim-
+ulated pelvis tilt, hip flexion, knee angle, and ground
+reaction forces (GRFs) shown in figure 6(b) faithfully
+represent the experimental observations from Bovi
+et al [7] illustrated by the shaded gray areas. Some
+discrepancies can be observed for the ankle angle that
+tends to have excessive dorsiflexion and lacks proper
+plantarflexion during push-off compared to experi-
+mental observations. Indeed, the ankle angle mostly
+maintains its values above the zero level of plantar-
+flexion/dorsiflexion. This likely depends on the weak
+activation of GAS and SOL observed in figure 6(c).
+These muscles maintain a peak activation of 0.3 for
+the SOL and 0.2 for the GAS. However, the simulation
+replicates the temporal activations observed in exper-
+iments from Perry and Burnfield [42] for TA, GMAX,
+V AS, GAS, SOL, and HAMS. Concerning ILPSO, the
+muscle is active also outside its time range, having
+a consistent activation also in pre-swing. The model
+converges to different behaviors compared to experi-
+mental results for BFSH and RF that are active at the
+beginning and at the end of the gait cycle, respectively,
+rather than during swing.
+3.1. Gait modulation
+By optimizing the controller’s parameters, the
+model could reproduce gaits from 0.3 to 1.9 m s −1.
+Figure 7(a) shows the modulation of gait kinemat-
+ics and GRFs at 0.6, 1.2, and 1.6 m s −1 representing
+slow, intermediate, and fast gaits, respectively. The
+averaged gait cycle in figure 7 is obtained through 5
+gait cycles for the gait at 0.6 m s −1, 7 gait cycles for
+the one at 1.2 m s −1, and 8 gait cycles for the one at
+1.6 m s−1. Also in this case, the first cycle has been
+removed to allow the model to reach steady-state. As
+speed increases, the pelvis tilt and the lean angle of the
+trunk increase in the forward direction by 8◦, and the
+hip flexion oscillates between 35 ◦ and −5 ◦ at slow
+speed and 45◦ and −3 ◦ at fast speed. Increasing amp-
+litudes of knee flexion are also observed at high speed,
+having the peak flexion in swing of 53 ◦ at 0.6 m s−1
+and 68 ◦ at 1.6 m s−1. Fast speed also presents a con-
+sistent increase of ankle plantarflexion to −3 ◦ of the
+ankle angle during ankle push-off, whereas this value
+is maintained at around 10 ◦ of ankle dorsiflexion
+at slow speed. Concerning GRFs, the characteristic
+double peak shape is very weak at 0.6 m s −1. Double
+peak amplitudes increase with the increase of speed,
+especially the first peak that shows the reaction with
+the impact with the ground during heel strike. The
+duration of the stance phase is reduced from 65%
+of the gait cycle at 0.6 m s −1 to 55% at 1.6 m s −1.
+The behaviors of kinematics and GRFs modulation
+presented resemble the ones observed experimentally
+by Bovi et al [7]. Some differences are observed with
+the level of ankle dorsiflexion since the model tends to
+converge to a high-level of dorsiflexion that can dif-
+fer from experimental data by 7 ◦ during heel strike
+and by 12 ◦ during push-off at slow and fast speeds.
+Additional differences are observed for the level of
+hip extension at slow speed and knee extension at
+high speed. In fact, Bovi et al observed that the max-
+imum hip extension decreases at low speeds, and knee
+extension during stance increases at high speeds. In
+contrast, the model reproduced increased knee flex-
+ion during stance at high speeds and a similar level
+of maximum hip extension at 0.6 m s −1 compared to
+1.2 and 1.6 m s−1.
+Muscle activity is affected by gait modulation
+mainly through the increase of activation with the
+10
+
+PAGE 12
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+Figure 6. Gait analysis of simulated gait at 1.17 m s−1. The average and 95% confidence intervals have been calculated over six gait
+cycles (a) Model position at different times of the gait cycle. (b) Kinematics and GRFs compared to experimental data [ 7]: gray
+areas report the observed experimental ranges for pelvis tilt, hip flexion, knee flexion, ankle dorsiflexion, and vertical GRFs. (c)
+Muscle activation analysis: muscle activity over a gait cycle for the nine muscles along the gait cycle. Blue curves represent the
+means of the gait signals through the gait cycles and the shaded areas the standard deviations. The activation curves are compared
+with the activation timing observed experimentally [ 42] and represented by the black horizontal bars on the top of the graphs.
+increase in speed. In figure 7(b), ILPSO, GMAX,
+HAMS, TA, and SOL are the muscles that more con-
+sistently present an increment in muscle activation.
+TA and HAMS pass from a maximum activation of
+0.2 at slow speed to 0.5 at fast speed, whereas ILPSO
+has a similar maximum activation at fast speed and a
+higher activation of 0.3 at slow speed. GMAX has the
+highest increment of muscle activation, passing from
+a maximum activity of 0.1 to 0.7. SOL also presents a
+consistent increase in its activity, passing from a value
+smaller than 0.1 at slow speed to 0.4 at fast speed.
+A lower increase is present for V AS at high speed,
+whereas no consistent variation in muscle activity can
+be observed for BFSH, RF , and GAS. Therefore, the
+increased plantarflexion with speed mainly depends
+on the increased activity of the soleus. In general,
+the activation amplitude of all muscles increases
+with speed, as observed experimentally by Cappellini
+et al [10].
+3.2. Gait modulation: CPGs and reflexes
+W e tested our controller to check whether the spinal
+connection implemented could generate rhythmic
+locomotion without the state-machine regulation or
+the presence of CPGs. With the removal of CPGs,
+the remaining parameters to optimize are 208. Even
+if the dimensional reduction could in principle sim-
+plify the convergence to a stable solution, no rhythmic
+gait could be reproduced, suggesting the need for the
+CPG networks to provide rhythm and timing in the
+absence of a state machine activating sensory feed-
+back commands at specific times of the gait cycle (as
+in previous models). The simulation resulting from
+removing CPG parameters led to the human model
+in a standing position with the right leg in front of the
+left leg. The reflexes could generate the muscle activa-
+tion necessary to maintain this position until the bal-
+ance controller failed to stabilize the trunk, causing
+the model to fall.
+11
+
+PAGE 13
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+Figure 7. Gait modulation at 0.6 (calculated over 5 gait cycles), 1.2 (calculated over 7 gait cycles), and 1.6 m s −1 (calculated over 8
+gait cycles). (a) Comparison of kinematics and GRFs among the three speeds. (b) Changing muscle activation at different speeds.
+The activation curves are compared with the activation timing observed experimentally and represented by the black horizontal
+bars on the top of the graphs.
+Dzeladini et al [19] suggested that the tuning
+of CPGs applied only to hip muscles could easily
+modulate human locomotion where other muscles
+were controlled by sensory feedback. In order to test
+this hypothesis in our model, we set to 0 the CPG
+parameters for all muscles except hip muscles and
+re-optimized the parameters according to the step
+explained in section 2.3. The resulting simulation
+showed very similar behavior to the one obtained
+without any CPG parameters, suggesting CPGs inputs
+may have an important contribution also for knee
+and ankle muscles. It should be noted that our CPG
+model provides only a rough waveform (made of
+the five primitives), while Dzeladini’s CPG provided
+a detailed waveform replicating the sensory-driven
+control signals.
+T o investigate the contribution of each controller
+component in gait modulation, we investigated the
+inputs from CPG circuits, spinal reflexes, and balance
+controller provided to the MNs. Figure 8 shows how
+these signals contribute to generating MNs inputs
+and outputs following equation ( 4). Generally, in
+the model, the net effect of the reflex circuits tends
+mainly to inhibit the MNs providing a negative stim-
+ulation through the whole gait cycle with the excep-
+tion of ILPSO and TA. Reflexes also facilitate the
+activation of V AS and GAS during swing for all the
+speed ranges and the activation of BFSH and HAMS
+at slow speeds. Instead, for each muscle, CPGs present
+specific regions of the gait cycle where they excite or
+inhibit the MNs. In this regard, CPGs prevent the
+activation of specific muscles in specific cycle phases,
+such as V AS and GAS in swing that were stimulated
+by the reflex circuits. CPGs’ patterns tend to increase
+the amplitude of inhibition or excitation with increas-
+ing speed. This is especially the case for SOL, where
+the growing muscle activation with speed is primar-
+ily due to the increased excitation from CPG cir-
+cuits. CPG activity also helps to have a consistent
+muscle activation of ILPSO in swing, but it tends
+to increase the activity at slow speed, and the lower
+muscle activity in swing is achieved by reflexes that
+inhibit ILPSO during swing at 0.6 m s −1. The bal-
+ance controller is applied only to ILPSO, GMAX, and
+HAMS, and seems to be the leading cause of HAMS
+activation since the CPGs excitation is entirely inhib-
+ited by spinal reflexes.
+Additionally, to investigate the modulation cap-
+abilities of different neural circuits, we performed
+optimizations for different target speeds by keep-
+ing fixed reflexes parameters or CPGs parameters.
+T able2 compares the achieved ranges of speed, step
+12
+
+PAGE 14
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+Figure 8. CPGs, reflexes, and balance inputs at 0.6 (calculated over 5 gait cycles), 1.2 (calculated over 7 gait cycles), and 1.6 m s −1
+(calculated over 8 gait cycles). CPGs, reflexes, and balance generate motoneurons inputs and outputs according to equation ( 4).
+The contribution of the three controller components is compared through the three speeds selected.
+T able 2.Evaluation of speed, step length, and step duration ranges
+achieved by the bio-inspired controller in three configurations:
+full control where all parameters are optimized, fixed reflexes
+where all reflexes parameters are fixed, and fixed CPGs where all
+CPGs parameters are fixed.
+Full control Fixed reflexes Fixed CPGs
+Speed (m s−1) [0.30–1.91] [0.30–1.91] [0.44–1.91]
+Step length (m) [0.23–1.08] [0.23–1.08] [0.30–1.21]
+Step duration (s) [0.53–0.84] [0.56–0.84] [0.64–0.67]
+length, and step duration for the controller optimiz-
+ing all parameters (full control), maintaining reflexes
+parameters fixed (fixed reflexes), and maintaining
+CPGs parameters fixed (fixed CPGs). The optimiz-
+ation of all parameters allows reaching wide ranges
+of speed from 0.30 to 1.86 m s−1 with small and large
+step lengths (0.23–1.08 m) and step durations (0.53–
+0.84 s). Removing reflexes parameters’ optimization
+allows reaching ranges similar to the ones obtained
+in full control. However, the missing optimization
+of CPG parameters significantly limits the control-
+ler’s capabilities to modulate step duration, passing
+from a range covering 0.53–0.84 s to 0.64–0.67 s.
+Consequently, the optimization tends to achieve slow
+or fast speeds, mainly modulating the step length
+to reach large values of 1.21 m at high speed. The
+achieved value of step length is higher than the one
+in full control because the model converges to a more
+energetically efficient gait reducing the step duration
+when all parameters are optimized. Furthermore, we
+verified that the modulation of CPG frequency alone
+is insufficient to converge to different gait behaviors.
+This result implies that the modulation of CPG fre-
+quency alone may be necessary but not sufficient to
+modulate step duration.
+3.2.1. Correlation analysis
+The correlation analysis reported in table 3 gives
+indications on which parameters had a correlation
+coefficient higher than 0.8 with the main gait charac-
+teristics and, therefore, those that could be the main
+responsible for gait modulation in the three control-
+lers configurations. Specific parameters are identified
+as:
+• Pk → M.MN for the input pattern Pk weighted
+connections to MN M.MN, where M is the muscle
+name.
+• ω for phase oscillator frequency.
+• M.Ns
+A → M.Nd
+A for parameters regulating the
+weighted synaptic connections between the source
+neuron of a specific muscle ( M.Ns
+A) and the des-
+tination neuron of the target muscle ( M.Nd
+A). N
+represents the type of neuron and can be either SN,
+IN, or MN, and A represents the type of afferent
+and can be either Ia, II, Ib, Ib +, or RC
+• M.NA.w0 is the activation offset of the neuron NA
+regulating the neuronal response.
+In full control, both reflexes and patterns’ connec-
+tions seem to contribute to gait modulation. The first
+(P0) and third (P2) patterns connections to extensor
+muscles like GMAX and SOL positively correlate with
+increasing speed and step length and decreasing step
+duration. The CPGs’ frequency (ω) has a highly con-
+sistent correlation with gait speed and step duration,
+suggesting again the direct influence of this parameter
+on gait frequency. The only reflex parameter rep-
+resenting an excitatory connection is the monosyn-
+aptic excitation of Ia afferents from TA ( TA.SNIa →
+TA.MN), having a negative correlation with speed
+and favoring increased dorsiflexion during slow gaits.
+13
+
+PAGE 15
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+T able 3.Correlations coefficients of controller’s parameters
+contributing to the modulation of speed, step length, and step
+duration in the three controller’s configurations: full control, fixed
+reflexes, and fixed CPGs.
+Full control
+Speed Step length
+Step
+duration
+P0 → GMAX.MN 0.92 0.86 −0.9
+P2 → SOL.MN 0.80 0.80 −0.87
+GAS.INIa → TA.INIa −0.82 −0.86 0.81
+GMAX.SNII.w0 0.82 0.81 −0.86
+ILPSO.INII → GMAX.MN 0.96 0.89 −0.98
+RF.INRC → HAMS.INRC 0.83 0.85 −0.8
+TA.INII → SOL.MN 0.9 0.89 −0.87
+TA.SNIa → TA.MN −0.92 −0.83 0.9
+ω 0.97 0.88 −0.98
+Fixed reflexes
+Speed Step length Step duration
+P0 → GAS.MN −0.84 −0.74 0.83
+P0 → GMAX.MN −0.83 −0.8 0.83
+P1 → SOL.MN 0.85 0.94 −0.54
+P4 → TA.MN 0.79 0.70 −0.85
+ω 0.92 0.83 −0.99
+Fixed CPGs
+Speed Step length Step duration
+GAS.INRC → TA.INIa 0.81 0.83 −0.67
+ILPSO.SNII.w0 0.91 0.91 −0.83
+TA.INIb → SOL.INIb 0.89 0.87 −0.94
+VAS.SNII → VAS.INII −0.85 −0.85 0.82
+Another relevant parameter is the length offset of
+the II SN of GMAX ( GMAX.SNII.w0) with a posit-
+ive correlation with speed and step length meaning
+a higher level of stretch is needed to activate length
+feedback from II afferents. The other reflex para-
+meters presented are inhibitory connections, which
+implies that a highly negative correlation with a gait
+characteristic (either speed, step length, or step dura-
+tion) means an increased inhibition with the increase
+of that gait characteristic. The II IN of ILPSO tends to
+decrease its inhibition to GMAX MN ( ILPSO.INII →
+GMAX.MN) when speed increases and step duration
+increases, favoring the activation of GMAX in these
+conditions. The same mechanism is involved in facil-
+itating the activation of SOL through the decreasing
+inhibition from II IN of TA ( TA.INII → SOL.MN).
+The last two reflex parameters for the controller
+in full control configuration involve the reciprocal
+inhibition mechanisms of INs and RCs. GAS’s Ia IN
+increases the inhibition to TA ’s Ia IN with increasing
+speed ( GAS.INIa → TA.INIa), enhancing the activa-
+tion of GAS itself because of the decreased inhibition
+from TA.INIa. Then, the RC of RF decreases its inhib-
+ition to the RC of HAMS ( RF.INRC → HAMS.INRC)
+with increasing speed, favoring the inhibition of
+the hamstrings muscle. Indeed, from the previous
+analysis, the increased activation of HAMS with
+speed was mainly due to the input from the balance
+controller.
+Concerning the configuration with fixed reflexes,
+CPGs’ frequency (ω) highly correlates with speed and
+step duration also in this case. Another modulator for
+step duration is the input from the fifth pattern to TA ’s
+MN (P4 → TA.MN), which indeed increases its activ-
+ation at the end of the gait cycle with increasing speed.
+The first pattern ( P0) tends to increase the inhibi-
+tion to GAS and GMAX at the very beginning of the
+gait cycle with increasing speed. Then, speed modu-
+lation through modulation of step length is enhanced
+by tuning the excitation from the second pattern (P1)
+to SOL MN ( SOL.MN) in order to increase propul-
+sion in stance.
+When CPG parameters are fixed, speed mod-
+ulation happens mainly through changes of step
+length because of the controller’s limited capability
+to modulate step duration without tuning CPGs’ fre-
+quency. The controller tends to increase step length
+by increasing the offset to enhance the length feed-
+back of ILPSO ( ILPSO.SNII.w0). II afferents are also
+involved with the decreased length feedback of V AS
+muscle with speed rising through the excitation of
+VAS.INII from VAS.SNII. The last two relevant para-
+meters concern the inhibitory connections of RCs and
+Ib afferents. The RC IN of GAS (GAS.INRC) decreases
+its inhibition to the Ia IN of TA (TA.INIa), decreasing
+the activation of GAS itself at fastest speeds. Higher
+speeds should, in principle, increase the activation
+of GAS, but in the modulation of muscle activa-
+tion, we previously observed that the optimizer tends
+to maintain the same activation level for the gast-
+rocnemius muscle during speed modulation. Finally,
+the Ib inhibitory IN of TA ( TA.INIb) decreases its
+inhibition to the Ib IN of SOL, allowing the inhibition
+of this muscle. Indeed, we previously observed that
+the increased muscle activation of soleus at higher
+speeds was not due to the input from spinal reflexes
+but primarily due to increasing excitatory inputs from
+CPGs.
+4. Discussion
+In this study, we aim to investigate the possibility
+of controlling human locomotion by relying only
+on spinal reflexes not regulated by a state machine
+mechanism and to investigate the contribution of
+both CPGs and spinal reflexes in generating loco-
+motor output. T o do so, we developed a bio-inspired
+controller composed of a balance controller, a CPG
+network, and a sensory feedback network based
+on physiological spinal reflexes maintaining a state-
+machine mechanism only for the balance of the trunk.
+The proposed controller regulated the stimulation of
+nine muscles per leg. The number of muscles was
+chosen to find a reasonable compromise between
+the controller performance and a limited number of
+14
+
+PAGE 16
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+parameters. However, the nine muscles do not rep-
+resent the minimal number of muscles to obtain a
+physiologically plausible model. Indeed, a prelimin-
+ary version of the controller has been tested with a
+musculoskeletal model actuated with seven muscles
+per leg reproducing faithful but less optimal human
+kinematics and muscle activation. The proposed con-
+troller could replicate human kinematics and GRFs
+with some limitations in the ankle angle in which
+the model converges to an excessive dorsiflexion
+behavior. Regarding muscle activation, the model
+could reproduce most of muscle activation timings
+observed experimentally, with the exception of BFSH,
+which is active outside its range in human record-
+ing. The proposed network could probably gener-
+ate muscle activation closer to physiological activity
+with additional optimizations. However, finding this
+global optimal solution remains challenging because
+of the large number of parameters.
+Many aspects of speed modulation from human
+recordings, such as the increased amplitudes of flex-
+ion/extension movements and the increased muscle
+activation with growing speed, are also matched by
+the model. Concerning the role of CPGs and spinal
+reflexes in the neural control of human movement, we
+investigated the possibility of finding stable solutions
+without relying on CPGs as suggested by previous
+neuromechanical studies [ 22, 41]. In our optimiza-
+tions, we could not find any stable rhythmic behavior
+in the absence of CPGs’ commands even if the num-
+ber of parameters to optimize significantly decreased,
+suggesting the need for the CPG network to provide
+rhythm and timing in the absence of a state machine
+activating sensory feedback commands at specific
+times of the gait cycle. Therefore, reflex-based circuits
+are always active through self-regulation by the affer-
+ents, lacking any timing information without CPGs.
+Similarly, a pure CPG network without reflexes leads
+to unstable solutions. While we cannot rule out that
+a different network topology might give rise to high-
+quality gaits, our model highlights the need for both
+types of neural mechanisms to achieve stable and nat-
+ural movements. Indeed, natural locomotor behavior
+emerges when both CPGs and spinal reflexes are act-
+ive. Our study suggests that the state-machines used
+in previous sensory-driven models [ 23, 41] could,
+in fact, be replaced by CPGs and that one of the
+main roles of CPGs, in addition to simplifying speed
+control [19], is to serve as a gating mechanism that
+ensures that reflexes do not affect muscles all the time
+but only at specific moments of the locomotor cycle.
+More specifically, the performances on gait mod-
+ulation while either reflex circuits or CPG com-
+mands were fixed, and the corresponding correla-
+tion analysis highlighted the importance of CPGs’ fre-
+quency in changing the step duration. Therefore, in
+the model, CPGs have a crucial role in determining
+gait timing. Additionally, the analysis of neural inputs
+to MNs showed that the net inputs of reflexes are
+mainly inhibitory through the gait cycle for the pro-
+posed model, except for ILPSO and TA, which glob-
+ally receive excitatory inputs. CPG patterns excite or
+inhibit MNs in specific phases of the gait cycle to allow
+or prevent muscle activation. Therefore, CPGs seem
+to be important to determine activation timing other
+than gait frequency. Such a control strategy is similar
+to the one proposed by Laquaniti et al [33] where the
+timing and magnitude of electromyography (EMG)
+activity are tuned via proprioceptive feedback and
+CPGs that control the basic rhythms and patterns of
+MN activation. However, it should be highlighted that
+the five locomotor primitives described by Ivanenko
+et al [30] and Laquaniti et al [33] were not equally
+spaced in the gait cycle phase as they are in our con-
+troller. This is because, in these studies, the primitives
+were extracted with factorization of EMG activity. Y et,
+this activity is the result of the global input received by
+muscles without being able to distinguish which input
+was coming from spinal reflexes and which one from
+CPG circuits. Therefore, we decided to simplify the
+distribution of the five primitives and equally space
+the patterns through the gait cycle since the primit-
+ives measured in experiments could hardly be gener-
+ated by the CPG commands alone. This choice still
+leads to largely reproducing the experimental activa-
+tion timing.
+The modulation of gait reflexes alone could still
+regulate muscle activation to achieve different gait
+behaviors, mainly through the modulation of step
+length. The correlation analysis highlighted the pos-
+sible parameters responsible for this behavior, such
+as the offset of II fibers regulating the level of stretch
+necessary to activate length feedback for ILPSO and
+GMAX. Indeed, increasing these parameters allowed
+larger amplitude for hip flexion/extension, promot-
+ing larger step lengths.
+In general, the proposed controller presents a
+highly redundant system where several different com-
+binations of neural inputs can generate the same
+muscle activation. The correlation analysis gave pos-
+sible insights into which parameters could be the
+most relevant in the control of gait modulation. Y et,
+given the high redundancy, a separate and more
+extensive study would be necessary. Possibly, this
+study should include a large dataset of optimizations
+and additional elements of the cost function that
+could guide toward the best combination of neural
+inputs to generate specific muscle excitation, such
+as the minimization of the total neuronal activation.
+Then, the results should ideally be validated by exper-
+imental measurements.
+Some limitations of the proposed controller
+should be considered. Because of the large number
+of parameters, finding a stable solution replicating
+human walking with the proposed controller may
+be challenging since it requires the three optimiza-
+tion stages described in section 2.3. However, once
+this solution is found, it can be used as a starting
+15
+
+PAGE 17
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+point to explore different gait behaviors by only per-
+forming the last optimization stage. In this way, we
+could reproduce a wide range of speeds comparable
+to or larger than the ones previously obtained by
+other neuromechanical controllers [ 18, 41, 47]. Y et,
+the used cost function is very sensitive to the changing
+of optimization variables. Therefore, the optimiza-
+tion method used might require a good initial guess.
+For this reason, the initial stage of the optimization
+requires the imitation objective from a previous solu-
+tion found with a different neuromechanical control-
+ler. Without these steps, there is a low probability
+that a random initialization of parameters can make
+the convergence to a stable solution. However, the
+use of the imitation objective implies that any lack
+of performance from the imitated solution in replic-
+ating human movement will probably reflect a lack
+of performance of the bio-inspired controller. This
+could be the cause of the excessive dorsiflexion beha-
+vior performed by our model since many solutions
+of the reflex-based controller proposed by Ong et al
+[41] that we used as imitation objective presented the
+excessive dorsiflexion behavior. Therefore, the proper
+choice of the initial imitation objective is crucial for
+the correct optimization of our model.
+Further considerations should also be made for
+the design of the reflex controller. In paragraph 2.2.3,
+we explained how we simplified the expressions for
+the sensory receptors to capture the general trend and
+prevent an excessive number of physiological para-
+meters. In reality, the dynamics of these receptors are
+very complex [37, 38], and there is little evidence why
+the same model identified in specific animal exper-
+iments can generalize to humans in the presence of
+dynamic movements.
+Another aspect currently not captured by our
+model is the spatial organization of muscles neural
+control in the spinal cord [ 31]. Indeed, past studies
+suggested that MN pools innervating muscles per-
+forming synergistic action are co-localized in the
+spinal cord, and nearby MN pools are likely to
+share the proprioceptive feedback from the muscles
+they innervate [ 50]. The model we propose in this
+study could potentially be extended by coding specific
+spinal segments including the facilitatory and inhib-
+itory mechanisms among synergistic and antagonist
+muscles presented in this study and having their MN
+pools located in that specific segment.
+Despite these limitations, the bio-inspired con-
+troller we propose is a promising tool for investigating
+spinal circuits in human locomotion. Indeed, we have
+already shown the insights this model could give into
+the relationship between CPGs and spinal reflexes.
+Further suggestions could be provided in investig-
+ating pathological gaits. Past studies tried reprodu-
+cing neural pathologies with neuromechanical sim-
+ulation by extending previous controllers, includ-
+ing specific connections to model the pathology in
+the desired degree of freedom [ 8]. However, the
+controller proposed could be more suitable for study-
+ing neuropathologies like hyperreflexia considering
+the effects of both excessive inputs from Ia fibers and
+the lack of reciprocal inhibition. Furthermore, fur-
+ther aspects of gait modulation regulating standing-
+to-walking transitions and acceleration and deceler-
+ation mechanisms can be investigated. Additionally,
+this controller could be used as a starting point to fur-
+ther extend the modeling of the neuromotor system
+by including the implementation of additional spinal
+neural connections like γ-MNs [20] and descending
+inputs from the brainstem and other supra spinal
+brain areas, even though this would increase even
+more the controller’s complexity and the total num-
+ber of parameters. Additionally, future implementa-
+tions could include less abstract and more realistic
+CPG models, for instance, based on more detailed
+models previously proposed for mammalian circuits
+that could potentially be taken as a reference for
+modeling human locomotion [ 5, 6, 12, 13, 15, 16].
+Additional connections between CPGs and spinal
+reflexes may be implemented, allowing SNss to inter-
+act and modulate CPGs’ patterns and CPGs’ patterns
+to interact with spinal INs other than MNs.
+5. Conclusions
+This study proposes a novel physiologically plaus-
+ible neuromechanical controller maintaining a good
+balance between complexity and realism to investig-
+ate the spinal components governing human loco-
+motion. The controller is composed of a balance con-
+troller from Ong et al [41], a CPG network inspired
+by Aoi et al [3], and a sensory feedback network
+that takes into account the main reflex connections
+in the spinal cord without being tuned by a state
+machine. The controller demonstrated the ability to
+reproduce key behaviors of human locomotion and
+its modulation in simulations. Results from optim-
+izations suggested that rhythmic locomotion could
+not be achieved with the only contribution of spinal
+reflexes without accounting for a state machine mech-
+anism. This suggests the possible need for CPG net-
+works to generate rhythmic movements by guiding
+muscle activation timing in specific phases of the
+gait cycle. The modulation of either CPGs or reflexes
+parameters or both could reproduce wide ranges of
+gait behaviors, highlighting the high level of redund-
+ancy in human locomotor control. The modulation
+of CPGs’ frequency appeared to be crucial for reg-
+ulating gait cycle duration. The proposed controller
+demonstrated to be a promising tool to provide many
+other indications on how the spinal cord may pro-
+duce locomotor outputs. Additionally, to the authors’
+knowledge, no previous neuromechanical controller
+for human locomotion modeled the human proprio-
+ceptive feedback at a low level of abstraction like
+in this model. Extensions of the proposed controller
+could potentially test if more detailed spinal networks
+16
+
+PAGE 18
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+observed in mammalian circuits [ 5, 6, 12, 13, 15, 16]
+could reproduce human biped movements in closed
+loop.
+Data availability statement
+No new data were created or analyzed in this study.
+Acknowledgments
+This work was supported by SimGait Sinergia project
+funded by the Swiss National Science Foundation,
+Grant Agreement No. 177179 ( https://p3.snf.ch/
+Project-177179).
+ORCID iDs
+Andrea Di Russo  https://orcid.org/0000-0002-
+1518-3933
+Dimitar Stanev  https://orcid.org/0000-0001-
+8545-3110
+Simon M Danner  https://orcid.org/000-0002-
+4642-7064
+Jessica Ausborn  https://orcid.org/0000-0003-
+4500-5131
+Stéphane Armand  https://orcid.org/0000-0001-
+9144-4982
+Auke Ijspeert  https://orcid.org/0000-0003-1417-
+9980
+References
+[1] Akay T 2020 Sensory feedback control of locomotor pattern
+generation in cats and mice Neuroscience 450 161–7
+[2] Aoi S et al 2013 Contributions of phase resetting and
+interlimb coordination to the adaptive control of hindlimb
+obstacle avoidance during locomotion in rats: a simulation
+study Biol. Cybern. 107 201–16
+[3] Aoi S, Ogihara N, Funato T, Sugimoto Y and T suchiya K
+2010 Evaluating functional roles of phase resetting in
+generation of adaptive human bipedal walking with a
+physiologically based model of the spinal pattern generator
+Biol. Cybern. 102 373–87
+[4] Aoi S, Ohashi T, Bamba R, Fujiki S, T amura D, Funato T,
+Senda K, Ivanenko Y and T suchiya K 2019
+Neuromusculoskeletal model that walks and runs
+across a speed range with a few motor control parameter
+changes based on the muscle synergy hypothesis Sci. Rep.
+9 1–13
+[5] Ausborn J, Shevtsova N A, Caggiano V , Danner S M and
+Rybak I A 2019 Computational modeling of brainstem
+circuits controlling locomotor frequency and gait eLife
+8 e43587
+[6] Ausborn J, Snyder A C, Shevtsova N A, Rybak I A and
+Rubin J E 2018 State-dependent rhythmogenesis and
+frequency control in a half-center locomotor CPG J.
+Neurophysiol. 119 96–117
+[7] Bovi G, Rabuffetti M, Mazzoleni P and Ferrarin M 2011 A
+multiple-task gait analysis approach: kinematic, kinetic and
+EMG reference data for healthy young and adult subjects
+Gait Posture 33 6–13
+[8] Bruel A, Ghorbel S B, Di Russo A, Stanev D, Armand S,
+Courtine G and Ijspeert A 2022 Investigation of neural and
+biomechanical impairments leading to pathological toe and
+heel gaits using neuromusculoskeletal modelling J. Physiol.
+600 2691–712
+[9] Capaday C 2001 Force-feedback during human walking
+Trends Neurosci. 24 10
+[10] Cappellini G, Ivanenko Y P , Poppele R E and Lacquaniti F
+2006 Motor patterns in human walking and running J.
+Neurophysiol. 95 3426–37
+[11] Chen H-H, Hippenmeyer S, Arber S and Frank E 2003
+Development of the monosynaptic stretch reflex circuit Curr.
+Opin. Neurobiol. 13 96–102
+[12] Cisi R R L and Kohn A F 2008 Simulation system of spinal
+cord motor nuclei and associated nerves and muscles, in a
+web-based architecture J. Comput. Neurosci. 25 520–42
+[13] Cˆoté M-P , Murray L M and Knikou M 2018 Spinal control
+of locomotion: individual neurons, their circuits and
+functions Front. Physiol. 9 784
+[14] Danner S M, Hofstoetter U S, Freundl B, Binder H, Mayr W,
+Rattay F and Minassian K 2015 Human spinal locomotor
+control is based on flexibly organized burst generators Brain
+138 577–88
+[15] Danner S M, Shevtsova N A, Frigon A and Rybak I A 2017
+Computational modeling of spinal circuits controlling limb
+coordination and gaits in quadrupeds eLife 6 e31050
+[16] Danner S M, Wilshin S D, Shevtsova N A and Rybak I A 2016
+Central control of interlimb coordination and
+speed-dependent gait expression in quadrupeds J. Physiol.
+594 6947–67
+[17] Delp S L, Peter Loan J, Hoy M G, Zajac F E, T opp E L and
+Rosen J M 1990 An interactive graphics-based model of the
+lower extremity to study orthopaedic surgical procedures
+IEEE Trans. Biomed. Eng. 37 757–67
+[18] Di Russo A, Stanev D, Armand S and Ijspeert A 2021 Sensory
+modulation of gait characteristics in human locomotion: a
+neuromusculoskeletal modeling study PLoS Comput. Biol.
+17 e1008594
+[19] Dzeladini F , van den Kieboom J and Ijspeert A 2014 The
+contribution of a central pattern generator in a reflex-based
+neuromuscular model Front. Hum. Neurosci. 8 371
+[20] Ellaway P H, T aylor A and Durbaba R 2015 Muscle spindle
+and fusimotor activity in locomotion J. Anat. 227 157–66
+[21] Geijtenbeek T 2019 Scone: open source software for
+predictive simulation of biological motion J. Open Source
+Softw. 4 1421
+[22] Geyer H and Herr H 2010 A muscle-reflex model that
+encodes principles of legged mechanics produces human
+walking dynamics and muscle activities IEEE Trans. Neural
+Syst. Rehabil. Eng. 18 263–73
+[23] Geyer H, Seyfarth A and Blickhan R 2003 Positive force
+feedback in bouncing gaits? Proc. R. Soc. B 270 2173–83
+[24] Goldberger M E 1977 Locomotor recovery after unilateral
+hindlimb deafferentation in cats Brain Res. 123 59–74
+[25] Grillner S 1975 Locomotion in vertebrates: central
+mechanisms and reflex interaction Physiol. Rev. 55 247–304
+[26] Guertin P A 2009 The mammalian central pattern generator
+for locomotion Brain Res. Rev. 62 45–56
+[27] Igel C, Hansen N and Roth S 2007 Covariance matrix
+adaptation for multi-objective optimization Evol. Comput.
+15 1–28
+[28] Ijspeert A J and Daley M A 2023 Integration of feedforward
+and feedback control in the neuromechanics of vertebrate
+locomotion: a review of experimental, simulation and
+robotic studies J. Exp. Biol. 226 jeb245784
+[29] Ijspeert A J 2008 Central pattern generators for locomotion
+control in animals and robots: a review Neural Netw.
+21 642–53
+[30] Ivanenko Y P , Poppele R E and Lacquaniti F 2004 Five basic
+muscle activation patterns account for muscle activity
+during human locomotion J. Physiol. 556 267–82
+[31] Ivanenko Y P , Poppele R E and Lacquaniti F 2006 Spinal cord
+maps of spatiotemporal alpha-motoneuron activation in
+humans walking at different speeds J. Neurophysiol.
+95 602–18
+17
+
+PAGE 19
+J. Neural Eng. 20 (2023) 066006 A Di Russo et al
+[32] Kiehn O 2006 Locomotor circuits in the mammalian spinal
+cord Annu. Rev. Neurosci. 29 279–306
+[33] Lacquaniti F , Ivanenko Y P and Zago M 2012 Patterned
+control of human locomotion J. Physiol. 590 2189–99
+[34] Lajoie Y , T easdale N, Cole J D, Burnett M, Bard C, Fleury M,
+Forget R, Paillard J and Lamarre Y 1996 Gait of a
+deafferented subject without large myelinated sensory fibers
+below the neck Neurology 47 109–15
+[35] Lundberg A, Malmgren K and Schomburg E D 1987 Reflex
+pathways from group II muscle afferents Exp. Brain Res.
+65 294–306
+[36] McCrea D A and Rybak I A 2008 Organization of
+mammalian locomotor rhythm and pattern generation Brain
+Res. Rev. 57 134–46
+[37] Mileusnic M P , Brown I E, Lan N and Loeb G E 2006
+Mathematical models of proprioceptors. I. Control and
+transduction in the muscle spindle J. Neurophysiol.
+96 1772–88
+[38] Mileusnic M P and Loeb G E 2009 Force estimation from
+ensembles of Golgi tendon organs J. Neural Eng. 6 036001
+[39] Minassian K, Hofstoetter U S, Dzeladini F , Guertin P A and
+Ijspeert A 2017 The human central pattern generator for
+locomotion: does it exist and contribute to walking?
+Neuroscientist 23 649–63
+[40] Ogihara N and Y amazaki N 2001 Generation of human
+bipedal locomotion by a bio-mimetic
+neuro-musculo-skeletal model Biol. Cybern. 84 1–11
+[41] Ong C F , Geijtenbeek T, Hicks J L and Delp S L 2019
+Predicting gait adaptations due to ankle plantarflexor muscle
+weakness and contracture using physics-based
+musculoskeletal simulations PLoS Comput. Biol.
+15 e1006993
+[42] Perry J and Burnfield J M 2010 Gait Analysis. Normal and
+Pathological Function 2nd edn (Slack)
+[43] Prochazka A 1999 Quantifying proprioception Peripheral
+and Spinal Mechanisms in the Neural Control of Movement
+(Progress in Brain Research vol 123) (Elsevier) pp 133–42
+[44] Prochazka A, Gillard D and Bennett D J 1997
+force feedback control of muscles J. Neurophysiol.
+77 3226–36
+[45] Rossignol S, Dubuc R and Gossard J-P 2006 Dynamic
+sensorimotor interactions in locomotion Physiol. Rev.
+86 89–154
+[46] Rybak I A, Shevtsova N A, Lafreniere-Roula M and
+McCrea D A 2006 Modelling spinal circuitry involved in
+locomotor pattern generation: insights from deletions
+during fictive locomotion J. Physiol. 577 617–39
+[47] Song S and Geyer H 2012 Regulating speed and generating
+large speed transitions in a neuromuscular human walking
+model 2012 IEEE Int. Conf. on Robotics and Automation
+(IEEE) pp 511–6
+[48] Song S and Geyer H 2015 A neural circuitry that emphasizes
+spinal feedback generates diverse behaviours of human
+locomotion J. Physiol. 593 3493–511
+[49] T aga G 1995 A model of the neuro-musculo-skeletal system
+for human locomotion Biol. Cybern. 73 97–111
+[50] T aitano R I, Y akovenko S and Gritsenko V 2022
+Neuromechanical coupling is reflected in the spatial
+organization of the spinal motoneuron pools bioRxiv
+Preprint pp 2022–07 (posted online 10 July 2022)
+[51] Thelen D G 2003 Adjustment of muscle mechanics model
+parameters to simulate dynamic contractions in older adults
+J. Biomech. Eng. 125 70–77
+[52] Uchida T K, Seth A, Pouya S, Dembia C L, Hicks J L and
+Delp S L 2016 Simulating ideal assistive devices to reduce the
+metabolic cost of running PLoS One 11 e0163417
+[53] V an der Noot N, Ijspeert A J and Ronsse R 2015 Biped gait
+controller for large speed variations, combining reflexes and
+a central pattern generator in a neuromuscular model 2015
+IEEE Int. Conf. on Robotics and Automation (ICRA) (IEEE)
+pp 6267–74
+[54] Windhorst U 1989 Do Renshaw cells tell spinal neurones
+how to interpret muscle spindle signals? Afferent Control of
+Posture and Locomotion (Progress in Brain Research vol 80)
+(Elsevier) pp 283–94
+[55] Windhorst U 1990 Activation of Renshaw cells Prog.
+Neurobiol. 35 135–79
+[56] Paul Zehr E and Stein R B 1999 What functions do reflexes
+serve during human locomotion? Prog. Neurobiol.
+58 185–205
+18
