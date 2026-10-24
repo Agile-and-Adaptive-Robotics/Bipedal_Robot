@@ -1,3 +1,13 @@
+# Priority 1.1 corrected and expanded with Ben's replies — 23 October 2026
+
+Ben's 2:03, 2:05, and 2:07 p.m. Overleaf replies were captured verbatim in Notes/advisor_review_20261023/ben_conversion_replies_20261023.json. They supply actual conversion problems omitted from the earlier generic prose pass: small-muscle pruning (3 per side, model/count reconciliation pending), OpenSim/ISB axis convention, patella-path representation, and the initial BPA-routed robotbody import with human muscle parameters triggering impossible-force checks. Ben additionally confirms restoration of the OpenSim/ISB frame and a ground-contact issue; the exact fixes, outcomes, and machine provenance require recovery.
+
+The self-contained **ZCODE_HANDOFF_20261023.md at repository root** and Revision_D/ZCODE_HANDOFF.md now include these replies, the added context, exact evidence-recovery questions, and required dissertation/animatlab/mujoco/matlab/neuroscience/sns-toolbox skill use and relevant plugins. Use repository-relative paths and hostname-specific AGENTS.md instructions. GLM-5.3/Flash remain the execution preference; ChatGPT Astra is the final prose preference. These files are local/uncommitted: they must be copied or synchronized by Ben to reach the other machine. No commit, push, message, or new run was performed.
+
+Correction to the earlier handoff: the advisor's examples were hypothetical, but Ben's subsequent issue list was not. It is now explicitly included rather than left as an unspecified request to discover whether any problems existed. Matrix M-126 and M-127 carry the verbatim follow-up evidence. No .tex source was changed in this handoff update, so the prior build is unaffected. Overleaf remains unchanged.
+
+---
+
 # Local prose revision D — 23 October 2026
 
 **18 targeted edits across Introduction, Background, Database, and SNS are complete locally. Overleaf is unchanged.** Ben clarified that ChatGPT Astra is his intended final prose model. No model was launched, no provider was configured, and no scheduled monitoring was restarted.
