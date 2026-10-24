@@ -1,0 +1,27 @@
+DRAFT - capability survey subsection for Main.tex (do not include this header line).
+Insert after the 27-actuator extension paragraph, before \subsection{Design Factors for Isometric Torque}.
+
+\subsection{Whole-Body Capability Against Human Torque Surfaces}\label{sec:capability_survey}
+
+The knee redesigns are graded one joint at a time against a single target curve, and the capability survey extends the grading to two joint coordinates at a time across the leg's muscle actuators. For each muscle actuator, torque and active-force capability were graded on a $5 \times 5$ grid over the two joint coordinates its routing crosses, with the hip adduction coordinate bounded by a linear envelope coupled to hip flexion. The human requirement is the torque surface of the same-named single muscle of the stock Gait2392 model on its native routing (OpenSim 4.4.1), the product of OpenSim moment arm and maximum isometric force \citep{delp_opensim_2007, seth_opensim_2018}. The robot side applies the characterized Festo force model \citep{bolen_2026} at \qty{620}{\kPa}, with the same BPA sizes on both routings. A grid cell counts toward the torque capability where the BPA torque carries the human torque's sign and its magnitude meets or exceeds the human magnitude, and toward the active-force capability where the actuator is stretched past rest and holds taut torque; the reported quantities are the shares of the graded domain's area on which each condition holds.
+
+The survey compares two routings. The hand-tuned side is the master's routing of the robot-body model \citep{morrow_optimization_2020}. The optimized side re-solves each muscle under the transmission freedoms of Section~\ref{sec:route_redesign}: BPAs are added in parallel, up to three per muscle, and the tendon is reeved over a tackle of up to three line parts per joint crossed, with the actuator sizes re-solved per configuration and the configuration chosen by a bounded per-muscle search. Nineteen of the 27 actuators carry complete graded records on both routings, and the survey is reported over those 19.
+
+Table~\ref{tab:CapabilitySurvey} gives the aggregate. The hand-tuned routing meets or exceeds the human torque over \qty{66.32}{\percent} of the graded domain and delivers active force over \qty{97.05}{\percent}, and the optimized routing covers \qty{75.30}{\percent} of the graded domain on torque and \qty{95.23}{\percent} on active force. Per actuator, the optimized routing meets or exceeds the human torque over a strictly larger share on 11 of the 19 actuators, with 3 ties and 5 actuators lower, and 5 of the 19 improve on both measures. The active-force share was already near-complete for the hand-tuned routing on most actuators, so the improvement the optimized routing buys lies almost entirely in torque coverage.
+
+\begin{table}[H]
+\caption{Whole-body capability of the hand-tuned and optimized BPA routings against single-muscle human torque surfaces, mean per-actuator share of the graded domain over the 19 muscle-actuators graded on both routings.}
+\label{tab:CapabilitySurvey}
+\begingroup
+\renewcommand{\arraystretch}{1.4}%
+\fontsize{10pt}{12pt}\selectfont
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Routing} & \textbf{Torque meets or exceeds human (\%)} & \textbf{Active force (\%)} \\
+\midrule
+Hand-tuned & 66.32 & 97.05 \\
+Optimized & 75.30 & 95.23 \\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{table}

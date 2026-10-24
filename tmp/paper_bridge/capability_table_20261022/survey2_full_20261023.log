@@ -1,0 +1,1066 @@
+Surfaces loaded: 27 actuator surface(s) from D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\human_surfaces_5x5_grading_20261023.csv
+
+================ BI PULLEY SURVEY2 (20261023) PLAN ================
+Mode          = SURVEY2 (all sites, serial)
+Budgets       = 300 evals/muscle TOTAL, 60 evals/rung, 5 rungs max, 10 min wall
+Config ladder = seed (1,1), advisor steps +1 BPA / +1 line part, cap {3,3}
+Grading       = 2-D 5x5 surfaces, domain-masked (hip envelope excluded)
+BPA size      = OLD-CODE per-muscle diameter (Size rule on PAM_Prop MIF)
+Pressure      = 620 kPa; sizes [rest; tendon] re-solved per rung
+[ 1] ercspn_r     lumbar_extension   x lumbar_bending     pri slot 2; dia 40 mm; domain 25/25; both surface dofs modeled (slots 2+1); 40 mm old-code BPA
+[ 2] intobl_r     lumbar_extension   x lumbar_bending     pri slot 2; dia 20 mm; domain 25/25; both surface dofs modeled (slots 2+1); 20 mm old-code BPA
+[ 3] extobl_r     lumbar_extension   x lumbar_bending     pri slot 2; dia 20 mm; domain 25/25; both surface dofs modeled (slots 2+1); 20 mm old-code BPA
+[ 4] bifemlh_r    knee_angle_r       x hip_flexion_r      pri slot 2; dia 20 mm; domain 25/25; both surface dofs modeled (slots 2+1); 20 mm old-code BPA
+[ 5] semimem_r    knee_angle_r       x hip_flexion_r      pri slot 2; dia 40 mm; domain 25/25; both surface dofs modeled (slots 2+1); 40 mm old-code BPA
+[ 6] sar_r        knee_angle_r       x hip_flexion_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[ 7] tfl_r        knee_angle_r       x hip_flexion_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[ 8] rect_fem_r   knee_angle_r       x hip_flexion_r      pri slot 2; dia 20 mm; domain 25/25; both surface dofs modeled (slots 2+1); 20 mm old-code BPA
+[ 9] grac_r       knee_angle_r       x hip_flexion_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[10] bifemsh_r    knee_angle_r       x hip_flexion_r      pri slot 1; dia 20 mm; domain 25/25; secondary hip_flexion_r not a class hinge: remaining joint pinned at 0, robot surface constant along that axis (same as the hand-tuned row); 20 mm old-code BPA
+[11] vas_int_r    knee_angle_r       x hip_flexion_r      pri slot 1; dia 40 mm; domain 25/25; secondary hip_flexion_r not a class hinge: remaining joint pinned at 0, robot surface constant along that axis (same as the hand-tuned row); 40 mm old-code BPA
+[12] soleus_r     ankle_angle_r      x knee_angle_r       pri slot 1; dia 40 mm; domain 25/25; secondary knee_angle_r not a class hinge: remaining joint pinned at 0, robot surface constant along that axis (same as the hand-tuned row); 40 mm old-code BPA
+[13] med_gas_r    ankle_angle_r      x knee_angle_r       pri slot 2; dia 40 mm; domain 25/25; both surface dofs modeled (slots 2+1); 40 mm old-code BPA
+[14] lat_gas_r    ankle_angle_r      x knee_angle_r       pri slot 2; dia 20 mm; domain 25/25; both surface dofs modeled (slots 2+1); 20 mm old-code BPA
+[15] tib_post_r   subtalar_angle_r   x ankle_angle_r      pri slot 2; dia 40 mm; domain 25/25; both surface dofs modeled (slots 2+1); 40 mm old-code BPA
+[16] tib_ant_r    ankle_angle_r      x subtalar_angle_r   pri slot 1; dia 20 mm; domain 25/25; both surface dofs modeled (slots 1+2); 20 mm old-code BPA
+[17] per_brev_r   subtalar_angle_r   x ankle_angle_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[18] per_long_r   subtalar_angle_r   x ankle_angle_r      pri slot 2; dia 20 mm; domain 25/25; both surface dofs modeled (slots 2+1); 20 mm old-code BPA
+[19] per_tert_r   subtalar_angle_r   x ankle_angle_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[20] flex_dig_r   mtp_angle_r        x ankle_angle_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[21] flex_hal_r   mtp_angle_r        x ankle_angle_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[22] ext_dig_r    mtp_angle_r        x ankle_angle_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[23] ext_hal_r    mtp_angle_r        x ankle_angle_r      pri slot 2; dia 10 mm; domain 25/25; both surface dofs modeled (slots 2+1); 10 mm old-code BPA
+[24] glut_max_r   hip_flexion_r      x hip_adduction_r    pri slot 2; dia 40 mm; domain 15/25; both surface dofs modeled (slots 2+1); 40 mm old-code BPA
+[25] add_mag_r    hip_adduction_r    x hip_flexion_r      pri slot 1; dia 40 mm; domain 15/25; both surface dofs modeled (slots 1+2); 40 mm old-code BPA
+[26] iliacus_r    hip_flexion_r      x hip_adduction_r    pri slot 2; dia 20 mm; domain 15/25; both surface dofs modeled (slots 2+1); 20 mm old-code BPA
+[27] psoas_r      hip_flexion_r      x hip_adduction_r    pri slot 2; dia 20 mm; domain 15/25; secondary hip_adduction_r not a class hinge: remaining joint pinned at 0, robot surface constant along that axis (same as the hand-tuned row); 20 mm old-code BPA
+====================================================================
+Build summary: 27 ready, 0 cannot-build/grade-unable/no-surface
+RESUME: 0 actuator(s) already recorded in D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey2_perMuscle_20261023.csv
+
+########## SURVEY2 ercspn_r [1] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5390 0.0500] m, score -1000.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 92.47 N*m < target 122.6 N*m (taut margin -0.2455)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.2455 vs taut margin -0.245495]
+  rung 1 best: rest 0.5390 m, tendon 0.0500 m -> meet 25/25 (100.0%), active 0/25 (0.0%), 58 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ercspn_r_nB1_G1_20261023_051731.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5390 0.0500] m, score -1000.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = converged | steps (nBPA,G) = (+0,+0) ---
+    torque OK over 25 taut feasible cell(s) (min 184.9 vs target 122.6)
+    no slack, no infeasible cells, taut torque meets target
+    [raw slack-gamed margin +0.5086 vs taut margin 0.508628]
+  rung 2 best: rest 0.5390 m, tendon 0.0500 m -> meet 25/25 (100.0%), active 0/25 (0.0%), 58 evals
+  rung 2 advisor: converged -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ercspn_r_nB2_G1_20261023_051737.mat
+  ladder converged at rung 2 (config (2,1)).
+  SITE RESULT ercspn_r: chosen (1,1), rest 0.5390 m, tendon 0.0500 m, meet 100.0%, active 0.0%, 116 evals, 0.2 min (converged)
+
+########## SURVEY2 intobl_r [2] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.0708 0.0200] m, score -40.5998
+  sign check (initial x): 19 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 6.202 N*m < target 51.87 N*m (taut margin -0.8804)
+    RoM/slack side: 1 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.880435]
+  rung 1 best: rest 0.0786 m, tendon 0.0239 m -> meet 2/25 (8.0%), active 21/25 (84.0%), 65 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_intobl_r_nB1_G1_20261023_051743.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.0708 0.0708] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 4.607 N*m < target 51.87 N*m (taut margin -0.9112)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9112 vs taut margin -0.91118]
+  rung 2 best: rest 0.0708 m, tendon 0.0708 m -> meet 0/25 (0.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_intobl_r_nB2_G2_20261023_051747.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.0708 0.0200] m, score -240.2793
+  sign check (initial x): 7 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+0,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 25.6 N*m < target 51.87 N*m (taut margin -0.5064)
+    RoM/slack side: 1 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    torque-short but nBPA = 3 already at the directive cap 3
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.506449]
+  rung 3 best: rest 0.0708 m, tendon 0.0415 m -> meet 18/25 (72.0%), active 24/25 (96.0%), 65 evals
+  rung 3 advisor: both -> steps (+0,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_intobl_r_nB3_G2_20261023_051753.mat
+
+  ===== RUNG 4 | nBPA = 3, G = 3 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.0708 0.0708] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 26.34 N*m < target 51.87 N*m (taut margin -0.4923)
+    RoM/slack side: 5 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    torque-short but nBPA = 3 already at the directive cap 3
+    RoM/slack-short but G = 3 already at the directive cap 3
+    [raw slack-gamed margin -1.0000 vs taut margin -0.492294]
+  rung 4 best: rest 0.0747 m, tendon 0.0332 m -> meet 8/25 (32.0%), active 20/25 (80.0%), 65 evals
+  rung 4 advisor: both -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_intobl_r_nB3_G3_20261023_051758.mat
+  ladder converged at rung 4 (config (3,3)).
+  SITE RESULT intobl_r: chosen (3,2), rest 0.0708 m, tendon 0.0415 m, meet 72.0%, active 96.0%, 229 evals, 0.4 min (converged)
+
+########## SURVEY2 extobl_r [3] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1812 0.0500] m, score -0.9199
+  sign check (initial x): 23 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 4.026 N*m < target 79.04 N*m (taut margin -0.9491)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9491 vs taut margin -0.949065]
+  rung 1 best: rest 0.1812 m, tendon 0.0344 m -> meet 0/25 (0.0%), active 25/25 (100.0%), 63 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_extobl_r_nB1_G1_20261023_051804.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.0906 0.0906] m, score -600.6800
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 38.29 N*m < target 79.04 N*m (taut margin -0.5155)
+    RoM/slack side: 2 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.515545]
+  rung 2 best: rest 0.0926 m, tendon 0.0867 m -> meet 19/25 (76.0%), active 16/25 (64.0%), 65 evals
+  rung 2 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_extobl_r_nB2_G1_20261023_051810.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.0906 0.0906] m, score -200.5996
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+0,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 34.84 N*m < target 79.04 N*m (taut margin -0.5592)
+    RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    torque-short but nBPA = 3 already at the directive cap 3
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.559227]
+  rung 3 best: rest 0.0916 m, tendon 0.0894 m -> meet 7/25 (28.0%), active 15/25 (60.0%), 65 evals
+  rung 3 advisor: both -> steps (+0,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_extobl_r_nB3_G2_20261023_051815.mat
+
+  ===== RUNG 4 | nBPA = 3, G = 3 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1812 0.0500] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 17.61 N*m < target 79.04 N*m (taut margin -0.7772)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.7772 vs taut margin -0.777165]
+  rung 4 best: rest 0.1812 m, tendon 0.0500 m -> meet 0/25 (0.0%), active 25/25 (100.0%), 59 evals
+  rung 4 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_extobl_r_nB3_G3_20261023_051821.mat
+  ladder converged at rung 4 (config (3,3)).
+  SITE RESULT extobl_r: chosen (2,1), rest 0.0926 m, tendon 0.0867 m, meet 76.0%, active 64.0%, 252 evals, 0.4 min (converged)
+
+########## SURVEY2 bifemlh_r [4] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7628 0.0200] m, score -601.0000
+  sign check (initial x): 23 taut domain cells with |tau_h| > 1 N*m, 74% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 3.615 N*m < target 30.94 N*m (taut margin -0.8832)
+    RoM/slack side: 1 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.883156]
+  rung 1 best: rest 0.7472 m, tendon 0.0200 m -> meet 16/25 (64.0%), active 24/25 (96.0%), 47 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_bifemlh_r_nB1_G1_20261023_051825.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7628 0.0200] m, score -641.0000
+  sign check (initial x): 23 taut domain cells with |tau_h| > 1 N*m, 74% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 3.415 N*m < target 30.94 N*m (taut margin -0.8896)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.8896 vs taut margin -0.889624]
+  rung 2 best: rest 0.7628 m, tendon 0.0200 m -> meet 16/25 (64.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_bifemlh_r_nB2_G2_20261023_051828.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7628 0.0200] m, score -641.0000
+  sign check (initial x): 23 taut domain cells with |tau_h| > 1 N*m, 74% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 5.122 N*m < target 30.94 N*m (taut margin -0.8345)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.8345 vs taut margin -0.834456]
+  rung 3 best: rest 0.7628 m, tendon 0.0200 m -> meet 16/25 (64.0%), active 25/25 (100.0%), 34 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_bifemlh_r_nB3_G2_20261023_051831.mat
+  ladder converged at rung 3 (config (3,2)).
+  SITE RESULT bifemlh_r: chosen (2,2), rest 0.7628 m, tendon 0.0200 m, meet 64.0%, active 100.0%, 115 evals, 0.2 min (converged)
+
+########## SURVEY2 semimem_r [5] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7897 0.0200] m, score -201.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 12.15 N*m < target 51.94 N*m (taut margin -0.7662)
+    RoM/slack side: 5 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.766152]
+  rung 1 best: rest 0.4147 m, tendon 0.0200 m -> meet 7/25 (28.0%), active 0/25 (0.0%), 52 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_semimem_r_nB1_G1_20261023_051836.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5265 0.0500] m, score -239.9998
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 13.44 N*m < target 51.94 N*m (taut margin -0.7412)
+    RoM/slack side: 5 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.741227]
+  rung 2 best: rest 0.4015 m, tendon 0.0344 m -> meet 8/25 (32.0%), active 0/25 (0.0%), 65 evals
+  rung 2 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_semimem_r_nB2_G2_20261023_051842.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 3 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5265 0.0500] m, score -239.9998
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 5.372 N*m < target 51.94 N*m (taut margin -0.8966)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.8966 vs taut margin -0.896573]
+  rung 3 best: rest 0.5265 m, tendon 0.2062 m -> meet 6/25 (24.0%), active 20/25 (80.0%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_semimem_r_nB3_G3_20261023_051849.mat
+  ladder converged at rung 3 (config (3,3)).
+  SITE RESULT semimem_r: chosen (2,2), rest 0.4015 m, tendon 0.0344 m, meet 32.0%, active 0.0%, 182 evals, 0.3 min (converged)
+
+########## SURVEY2 sar_r [6] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.8598 0.0200] m, score -401.0000
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 50% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.9762 N*m < target 3.086 N*m (taut margin -0.6837)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.6837 vs taut margin -0.683688]
+  rung 1 best: rest 0.8598 m, tendon 0.0200 m -> meet 10/25 (40.0%), active 25/25 (100.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_sar_r_nB1_G1_20261023_051852.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.8598 0.0200] m, score -521.0000
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 50% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 1.952 N*m < target 3.086 N*m (taut margin -0.3674)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.3674 vs taut margin -0.367386]
+  rung 2 best: rest 0.8598 m, tendon 0.0200 m -> meet 13/25 (52.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_sar_r_nB2_G1_20261023_051855.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.8598 0.0200] m, score -561.0000
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 50% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = converged | steps (nBPA,G) = (+0,+0) ---
+    torque OK over 25 taut feasible cell(s) (min 3.342 vs target 3.086)
+    no slack, no infeasible cells, taut torque meets target
+    [raw slack-gamed margin +0.0829 vs taut margin 0.0829327]
+  rung 3 best: rest 0.8442 m, tendon 0.0200 m -> meet 15/25 (60.0%), active 25/25 (100.0%), 47 evals
+  rung 3 advisor: converged -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_sar_r_nB3_G1_20261023_051859.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT sar_r: chosen (3,1), rest 0.8442 m, tendon 0.0200 m, meet 60.0%, active 100.0%, 115 evals, 0.2 min (converged)
+
+########## SURVEY2 tfl_r [7] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7837 0.0200] m, score -41.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.4691 N*m < target 2.925 N*m (taut margin -0.8396)
+    RoM/slack side: 9 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.839623]
+  rung 1 best: rest 0.7212 m, tendon 0.0200 m -> meet 4/25 (16.0%), active 16/25 (64.0%), 49 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tfl_r_nB1_G1_20261023_051903.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7837 0.0200] m, score -81.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.515 N*m < target 2.925 N*m (taut margin -0.8239)
+    RoM/slack side: 2 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.823934]
+  rung 2 best: rest 0.7212 m, tendon 0.0522 m -> meet 8/25 (32.0%), active 23/25 (92.0%), 65 evals
+  rung 2 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tfl_r_nB2_G2_20261023_051908.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 3 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7837 0.0200] m, score -121.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.5544 N*m < target 2.925 N*m (taut margin -0.8105)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.8105 vs taut margin -0.810457]
+  rung 3 best: rest 0.7524 m, tendon 0.0278 m -> meet 10/25 (40.0%), active 25/25 (100.0%), 63 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tfl_r_nB3_G3_20261023_051914.mat
+  ladder converged at rung 3 (config (3,3)).
+  SITE RESULT tfl_r: chosen (3,3), rest 0.7524 m, tendon 0.0278 m, meet 40.0%, active 100.0%, 177 evals, 0.2 min (converged)
+
+########## SURVEY2 rect_fem_r [8] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7046 0.0200] m, score -80.7998
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.4756 N*m < target 58.98 N*m (taut margin -0.9919)
+    RoM/slack side: 6 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    RoM/slack side: 2 of 25 cells infeasible (travel demand > KMAX*Rest)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.991937]
+  rung 1 best: rest 0.6421 m, tendon 0.0278 m -> meet 3/25 (12.0%), active 16/25 (64.0%), 64 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_rect_fem_r_nB1_G1_20261023_051918.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7046 0.0200] m, score -121.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 2.44 N*m < target 58.98 N*m (taut margin -0.9586)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9586 vs taut margin -0.958633]
+  rung 2 best: rest 0.6733 m, tendon 0.0278 m -> meet 4/25 (16.0%), active 24/25 (96.0%), 62 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_rect_fem_r_nB2_G2_20261023_051924.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7046 0.0200] m, score -161.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 3.783 N*m < target 58.98 N*m (taut margin -0.9359)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.9359 vs taut margin -0.935859]
+  rung 3 best: rest 0.6733 m, tendon 0.0249 m -> meet 6/25 (24.0%), active 24/25 (96.0%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_rect_fem_r_nB3_G2_20261023_051930.mat
+  ladder converged at rung 3 (config (3,2)).
+  SITE RESULT rect_fem_r: chosen (3,2), rest 0.6733 m, tendon 0.0249 m, meet 24.0%, active 96.0%, 191 evals, 0.3 min (converged)
+
+########## SURVEY2 grac_r [9] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7682 0.0200] m, score -201.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 1.278 N*m < target 6.339 N*m (taut margin -0.7984)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.7984 vs taut margin -0.798353]
+  rung 1 best: rest 0.7682 m, tendon 0.0200 m -> meet 5/25 (20.0%), active 25/25 (100.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_grac_r_nB1_G1_20261023_051933.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7682 0.0200] m, score -241.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 2.556 N*m < target 6.339 N*m (taut margin -0.5967)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.5967 vs taut margin -0.596713]
+  rung 2 best: rest 0.7682 m, tendon 0.0200 m -> meet 6/25 (24.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_grac_r_nB2_G1_20261023_051936.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7682 0.0200] m, score -361.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 3.835 N*m < target 6.339 N*m (taut margin -0.3951)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.3951 vs taut margin -0.395082]
+  rung 3 best: rest 0.7682 m, tendon 0.0200 m -> meet 9/25 (36.0%), active 25/25 (100.0%), 34 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_grac_r_nB3_G1_20261023_051939.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT grac_r: chosen (3,1), rest 0.7682 m, tendon 0.0200 m, meet 36.0%, active 100.0%, 102 evals, 0.2 min (converged)
+
+########## SURVEY2 bifemsh_r [10] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2174 0.0500] m, score -400.3994
+  sign check (initial x): 10 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 9.403 N*m < target 27.06 N*m (taut margin -0.6525)
+    RoM/slack side: 5 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.652507]
+  rung 1 best: rest 0.2174 m, tendon 0.0734 m -> meet 20/25 (80.0%), active 20/25 (80.0%), 64 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_bifemsh_r_nB1_G1_20261023_051943.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3261 0.0200] m, score -201.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 7.474 N*m < target 27.06 N*m (taut margin -0.7238)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.7238 vs taut margin -0.723796]
+  rung 2 best: rest 0.2636 m, tendon 0.0513 m -> meet 20/25 (80.0%), active 25/25 (100.0%), 64 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_bifemsh_r_nB2_G2_20261023_051949.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3261 0.0200] m, score -601.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 12.25 N*m < target 27.06 N*m (taut margin -0.5472)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.5472 vs taut margin -0.547198]
+  rung 3 best: rest 0.2871 m, tendon 0.0200 m -> meet 25/25 (100.0%), active 25/25 (100.0%), 53 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_bifemsh_r_nB3_G2_20261023_051953.mat
+  ladder converged at rung 3 (config (3,2)).
+  SITE RESULT bifemsh_r: chosen (3,2), rest 0.2871 m, tendon 0.0200 m, meet 100.0%, active 100.0%, 181 evals, 0.2 min (converged)
+
+########## SURVEY2 vas_int_r [11] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7943 0.0200] m, score -201.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 20% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 32.05 N*m < target 62.21 N*m (taut margin -0.4848)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.4848 vs taut margin -0.484791]
+  rung 1 best: rest 0.7943 m, tendon 0.0200 m -> meet 5/25 (20.0%), active 25/25 (100.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_vas_int_r_nB1_G1_20261023_051957.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.7943 0.0200] m, score -201.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 20% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = converged | steps (nBPA,G) = (+0,+0) ---
+    torque OK over 25 taut feasible cell(s) (min 64.1 vs target 62.21)
+    no slack, no infeasible cells, taut torque meets target
+    [raw slack-gamed margin +0.0303 vs taut margin 0.030319]
+  rung 2 best: rest 0.7943 m, tendon 0.0200 m -> meet 5/25 (20.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: converged -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_vas_int_r_nB2_G1_20261023_052000.mat
+  ladder converged at rung 2 (config (2,1)).
+  SITE RESULT vas_int_r: chosen (1,1), rest 0.7943 m, tendon 0.0200 m, meet 20.0%, active 100.0%, 68 evals, 0.1 min (converged)
+
+########## SURVEY2 soleus_r [12] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2234 0.0500] m, score -400.3996
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 54.8 N*m < target 170.5 N*m (taut margin -0.6786)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.6786 vs taut margin -0.678636]
+  rung 1 best: rest 0.2234 m, tendon 0.0734 m -> meet 15/25 (60.0%), active 20/25 (80.0%), 65 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_soleus_r_nB1_G1_20261023_052006.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2234 0.0500] m, score -600.3996
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 147.6 N*m < target 170.5 N*m (taut margin -0.1344)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.1344 vs taut margin -0.134443]
+  rung 2 best: rest 0.2234 m, tendon 0.0676 m -> meet 25/25 (100.0%), active 20/25 (80.0%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_soleus_r_nB2_G1_20261023_052012.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2234 0.0500] m, score -600.3996
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 163.4 N*m < target 170.5 N*m (taut margin -0.0421)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.0421 vs taut margin -0.0420655]
+  rung 3 best: rest 0.2234 m, tendon 0.0734 m -> meet 25/25 (100.0%), active 20/25 (80.0%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_soleus_r_nB3_G1_20261023_052017.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT soleus_r: chosen (2,1), rest 0.2234 m, tendon 0.0676 m, meet 100.0%, active 80.0%, 195 evals, 0.3 min (converged)
+
+########## SURVEY2 med_gas_r [13] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4169 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 32% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.02017 N*m < target 74.18 N*m (taut margin -0.9997)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9997 vs taut margin -0.999728]
+  rung 1 best: rest 0.4169 m, tendon 0.0200 m -> meet 0/25 (0.0%), active 25/25 (100.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_med_gas_r_nB1_G1_20261023_052021.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1390 0.0200] m, score -40.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 32% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.3012 N*m < target 74.18 N*m (taut margin -0.9959)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9959 vs taut margin -0.99594]
+  rung 2 best: rest 0.1390 m, tendon 0.0200 m -> meet 1/25 (4.0%), active 0/25 (0.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_med_gas_r_nB2_G1_20261023_052025.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1390 0.0200] m, score -200.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 32% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.4517 N*m < target 74.18 N*m (taut margin -0.9939)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.9939 vs taut margin -0.993911]
+  rung 3 best: rest 0.1390 m, tendon 0.0200 m -> meet 5/25 (20.0%), active 0/25 (0.0%), 34 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_med_gas_r_nB3_G1_20261023_052028.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT med_gas_r: chosen (3,1), rest 0.1390 m, tendon 0.0200 m, meet 20.0%, active 0.0%, 102 evals, 0.2 min (converged)
+
+########## SURVEY2 lat_gas_r [14] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4056 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.1237 N*m < target 33.28 N*m (taut margin -0.9963)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9963 vs taut margin -0.996282]
+  rung 1 best: rest 0.4056 m, tendon 0.0200 m -> meet 0/25 (0.0%), active 25/25 (100.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_lat_gas_r_nB1_G1_20261023_052031.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4056 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.2475 N*m < target 33.28 N*m (taut margin -0.9926)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9926 vs taut margin -0.992565]
+  rung 2 best: rest 0.4056 m, tendon 0.0200 m -> meet 0/25 (0.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_lat_gas_r_nB2_G1_20261023_052035.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2704 0.0500] m, score -80.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 40% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 1.444 N*m < target 33.28 N*m (taut margin -0.9566)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.9566 vs taut margin -0.95663]
+  rung 3 best: rest 0.2743 m, tendon 0.0266 m -> meet 5/25 (20.0%), active 0/25 (0.0%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_lat_gas_r_nB3_G1_20261023_052041.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT lat_gas_r: chosen (3,1), rest 0.2743 m, tendon 0.0266 m, meet 20.0%, active 0.0%, 133 evals, 0.2 min (converged)
+
+########## SURVEY2 tib_post_r [15] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2435 0.0500] m, score -920.0000
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 96% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 33.44 N*m < target 34.8 N*m (taut margin -0.0391)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.0391 vs taut margin -0.0391105]
+  rung 1 best: rest 0.2435 m, tendon 0.1125 m -> meet 24/25 (96.0%), active 25/25 (100.0%), 56 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tib_post_r_nB1_G1_20261023_052046.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3653 0.0200] m, score -961.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 96% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = converged | steps (nBPA,G) = (+0,+0) ---
+    torque OK over 25 taut feasible cell(s) (min 53.16 vs target 34.8)
+    no slack, no infeasible cells, taut torque meets target
+    [raw slack-gamed margin +0.5278 vs taut margin 0.527782]
+  rung 2 best: rest 0.3653 m, tendon 0.0200 m -> meet 24/25 (96.0%), active 25/25 (100.0%), 33 evals
+  rung 2 advisor: converged -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tib_post_r_nB2_G1_20261023_052049.mat
+  ladder converged at rung 2 (config (2,1)).
+  SITE RESULT tib_post_r: chosen (1,1), rest 0.2435 m, tendon 0.1125 m, meet 96.0%, active 100.0%, 89 evals, 0.1 min (converged)
+
+########## SURVEY2 tib_ant_r [16] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2689 0.0500] m, score -400.3995
+  sign check (initial x): 13 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 21.03 N*m < target 39.29 N*m (taut margin -0.4647)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.4647 vs taut margin -0.464664]
+  rung 1 best: rest 0.2689 m, tendon 0.0720 m -> meet 14/25 (56.0%), active 20/25 (80.0%), 65 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tib_ant_r_nB1_G1_20261023_052055.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2689 0.0500] m, score -560.3996
+  sign check (initial x): 14 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 32.84 N*m < target 39.29 N*m (taut margin -0.1642)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.1642 vs taut margin -0.164218]
+  rung 2 best: rest 0.2689 m, tendon 0.0891 m -> meet 25/25 (100.0%), active 25/25 (100.0%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tib_ant_r_nB2_G1_20261023_052101.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4033 0.0200] m, score -601.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = converged | steps (nBPA,G) = (+0,+0) ---
+    torque OK over 25 taut feasible cell(s) (min 54.51 vs target 39.29)
+    no slack, no infeasible cells, taut torque meets target
+    [raw slack-gamed margin +0.3873 vs taut margin 0.387287]
+  rung 3 best: rest 0.3408 m, tendon 0.0200 m -> meet 25/25 (100.0%), active 25/25 (100.0%), 50 evals
+  rung 3 advisor: converged -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_tib_ant_r_nB3_G1_20261023_052105.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT tib_ant_r: chosen (2,1), rest 0.2689 m, tendon 0.0891 m, meet 100.0%, active 100.0%, 180 evals, 0.3 min (converged)
+
+########## SURVEY2 per_brev_r [17] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3979 0.0200] m, score -1.0000
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 4.761 N*m < target 13.13 N*m (taut margin -0.6373)
+    RoM/slack side: 19 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.637327]
+  rung 1 best: rest 0.3276 m, tendon 0.0249 m -> meet 2/25 (8.0%), active 6/25 (24.0%), 65 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_brev_r_nB1_G1_20261023_052109.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3979 0.0200] m, score -1.0000
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 1.993 N*m < target 13.13 N*m (taut margin -0.8482)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.8482 vs taut margin -0.848226]
+  rung 2 best: rest 0.3979 m, tendon 0.0200 m -> meet 0/25 (0.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_brev_r_nB2_G2_20261023_052112.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3979 0.0200] m, score -1.0000
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 5.735 N*m < target 13.13 N*m (taut margin -0.5631)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.5631 vs taut margin -0.563146]
+  rung 3 best: rest 0.3588 m, tendon 0.0200 m -> meet 22/25 (88.0%), active 25/25 (100.0%), 54 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_brev_r_nB3_G2_20261023_052117.mat
+  ladder converged at rung 3 (config (3,2)).
+  SITE RESULT per_brev_r: chosen (3,2), rest 0.3588 m, tendon 0.0200 m, meet 88.0%, active 100.0%, 153 evals, 0.2 min (converged)
+
+########## SURVEY2 per_long_r [18] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4684 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 96% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 2.684 N*m < target 26.58 N*m (taut margin -0.8990)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.8990 vs taut margin -0.899005]
+  rung 1 best: rest 0.4059 m, tendon 0.0356 m -> meet 1/25 (4.0%), active 25/25 (100.0%), 65 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_long_r_nB1_G1_20261023_052123.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4684 0.0200] m, score -41.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 96% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 6.374 N*m < target 26.58 N*m (taut margin -0.7602)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.7602 vs taut margin -0.760176]
+  rung 2 best: rest 0.3903 m, tendon 0.0317 m -> meet 15/25 (60.0%), active 21/25 (84.0%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_long_r_nB2_G1_20261023_052128.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4684 0.0200] m, score -201.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 96% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 8.92 N*m < target 26.58 N*m (taut margin -0.6644)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.6644 vs taut margin -0.664385]
+  rung 3 best: rest 0.4059 m, tendon 0.0239 m -> meet 20/25 (80.0%), active 25/25 (100.0%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_long_r_nB3_G1_20261023_052134.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT per_long_r: chosen (3,1), rest 0.4059 m, tendon 0.0239 m, meet 80.0%, active 100.0%, 195 evals, 0.3 min (converged)
+
+########## SURVEY2 per_tert_r [19] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3865 0.0200] m, score -121.0000
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.2047 N*m < target 5.825 N*m (taut margin -0.9649)
+    RoM/slack side: 1 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.964863]
+  rung 1 best: rest 0.3240 m, tendon 0.0395 m -> meet 20/25 (80.0%), active 24/25 (96.0%), 65 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_tert_r_nB1_G1_20261023_052139.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3865 0.0200] m, score -321.0000
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.2634 N*m < target 5.825 N*m (taut margin -0.9548)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9548 vs taut margin -0.954785]
+  rung 2 best: rest 0.3553 m, tendon 0.0200 m -> meet 23/25 (92.0%), active 25/25 (100.0%), 49 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_tert_r_nB2_G2_20261023_052144.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3865 0.0200] m, score -841.0000
+  sign check (initial x): 24 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.3951 N*m < target 5.825 N*m (taut margin -0.9322)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.9322 vs taut margin -0.932178]
+  rung 3 best: rest 0.3553 m, tendon 0.0200 m -> meet 24/25 (96.0%), active 25/25 (100.0%), 49 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_per_tert_r_nB3_G2_20261023_052148.mat
+  ladder converged at rung 3 (config (3,2)).
+  SITE RESULT per_tert_r: chosen (3,2), rest 0.3553 m, tendon 0.0200 m, meet 96.0%, active 100.0%, 163 evals, 0.2 min (converged)
+
+########## SURVEY2 flex_dig_r [20] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5030 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.8673 N*m < target 2.168 N*m (taut margin -0.6000)
+    RoM/slack side: 5 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.599952]
+  rung 1 best: rest 0.4718 m, tendon 0.0242 m -> meet 14/25 (56.0%), active 20/25 (80.0%), 65 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_flex_dig_r_nB1_G1_20261023_052153.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5030 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.8836 N*m < target 2.168 N*m (taut margin -0.5924)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.5924 vs taut margin -0.592413]
+  rung 2 best: rest 0.4718 m, tendon 0.0303 m -> meet 17/25 (68.0%), active 25/25 (100.0%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_flex_dig_r_nB2_G2_20261023_052157.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5030 0.0200] m, score -761.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 1.32 N*m < target 2.168 N*m (taut margin -0.3912)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.3912 vs taut margin -0.391161]
+  rung 3 best: rest 0.4825 m, tendon 0.0200 m -> meet 24/25 (96.0%), active 25/25 (100.0%), 58 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_flex_dig_r_nB3_G2_20261023_052202.mat
+  ladder converged at rung 3 (config (3,2)).
+  SITE RESULT flex_dig_r: chosen (3,2), rest 0.4825 m, tendon 0.0200 m, meet 96.0%, active 100.0%, 188 evals, 0.2 min (converged)
+
+########## SURVEY2 flex_hal_r [21] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5153 0.0200] m, score -401.0000
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 75% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.2513 N*m < target 1.966 N*m (taut margin -0.8722)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.8722 vs taut margin -0.872199]
+  rung 1 best: rest 0.4919 m, tendon 0.0239 m -> meet 12/25 (48.0%), active 25/25 (100.0%), 65 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_flex_hal_r_nB1_G1_20261023_052208.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5153 0.0200] m, score -601.0000
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 75% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.388 N*m < target 1.966 N*m (taut margin -0.8027)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.8027 vs taut margin -0.802657]
+  rung 2 best: rest 0.5153 m, tendon 0.0200 m -> meet 15/25 (60.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_flex_hal_r_nB2_G1_20261023_052211.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5153 0.0200] m, score -601.0000
+  sign check (initial x): 20 taut domain cells with |tau_h| > 1 N*m, 75% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.5819 N*m < target 1.966 N*m (taut margin -0.7040)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.7040 vs taut margin -0.703997]
+  rung 3 best: rest 0.5153 m, tendon 0.0200 m -> meet 15/25 (60.0%), active 25/25 (100.0%), 34 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_flex_hal_r_nB3_G1_20261023_052213.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT flex_hal_r: chosen (2,1), rest 0.5153 m, tendon 0.0200 m, meet 60.0%, active 100.0%, 133 evals, 0.2 min (converged)
+
+########## SURVEY2 ext_dig_r [22] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4961 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.3045 N*m < target 3.685 N*m (taut margin -0.9174)
+    RoM/slack side: 2 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.917359]
+  rung 1 best: rest 0.4336 m, tendon 0.0522 m -> meet 2/25 (8.0%), active 22/25 (88.0%), 65 evals
+  rung 1 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ext_dig_r_nB1_G1_20261023_052219.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4961 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.4495 N*m < target 3.685 N*m (taut margin -0.8780)
+    RoM/slack side: 4 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.878007]
+  rung 2 best: rest 0.4648 m, tendon 0.0200 m -> meet 3/25 (12.0%), active 21/25 (84.0%), 49 evals
+  rung 2 advisor: both -> steps (+1,+1)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ext_dig_r_nB2_G2_20261023_052223.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 3 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4961 0.0200] m, score -1.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.4743 N*m < target 3.685 N*m (taut margin -0.8713)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.8713 vs taut margin -0.871283]
+  rung 3 best: rest 0.4648 m, tendon 0.0239 m -> meet 3/25 (12.0%), active 24/25 (96.0%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ext_dig_r_nB3_G3_20261023_052228.mat
+  ladder converged at rung 3 (config (3,3)).
+  SITE RESULT ext_dig_r: chosen (3,3), rest 0.4648 m, tendon 0.0239 m, meet 12.0%, active 96.0%, 179 evals, 0.2 min (converged)
+
+########## SURVEY2 ext_hal_r [23] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5033 0.0200] m, score -801.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.05374 N*m < target 1.447 N*m (taut margin -0.9628)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9628 vs taut margin -0.962847]
+  rung 1 best: rest 0.5033 m, tendon 0.0200 m -> meet 20/25 (80.0%), active 25/25 (100.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ext_hal_r_nB1_G1_20261023_052231.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5033 0.0200] m, score -801.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.1075 N*m < target 1.447 N*m (taut margin -0.9257)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9257 vs taut margin -0.925697]
+  rung 2 best: rest 0.5033 m, tendon 0.0200 m -> meet 20/25 (80.0%), active 25/25 (100.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ext_hal_r_nB2_G1_20261023_052234.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.5033 0.0200] m, score -801.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 0.2215 N*m < target 1.447 N*m (taut margin -0.8469)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.8469 vs taut margin -0.84685]
+  rung 3 best: rest 0.4799 m, tendon 0.0200 m -> meet 22/25 (88.0%), active 25/25 (100.0%), 53 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_ext_hal_r_nB3_G1_20261023_052239.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT ext_hal_r: chosen (3,1), rest 0.4799 m, tendon 0.0200 m, meet 88.0%, active 100.0%, 121 evals, 0.2 min (converged)
+
+########## SURVEY2 glut_max_r [24] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1845 0.0200] m, score -466.6667
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 53% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 4.239 N*m < target 130 N*m (taut margin -0.9674)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9674 vs taut margin -0.96739]
+  rung 1 best: rest 0.1845 m, tendon 0.0200 m -> meet 7/15 (46.7%), active 0/15 (0.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_glut_max_r_nB1_G1_20261023_052243.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3691 0.0500] m, score -466.9333
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 53% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 3.391 N*m < target 130 N*m (taut margin -0.9739)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9739 vs taut margin -0.973911]
+  rung 2 best: rest 0.3691 m, tendon 0.0891 m -> meet 7/15 (46.7%), active 9/15 (60.0%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_glut_max_r_nB2_G1_20261023_052250.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1845 0.0200] m, score -533.3333
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 53% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 12.71 N*m < target 130 N*m (taut margin -0.9022)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.9022 vs taut margin -0.902191]
+  rung 3 best: rest 0.1845 m, tendon 0.0200 m -> meet 8/15 (53.3%), active 0/15 (0.0%), 34 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_glut_max_r_nB3_G1_20261023_052254.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT glut_max_r: chosen (3,1), rest 0.1845 m, tendon 0.0200 m, meet 53.3%, active 0.0%, 133 evals, 0.2 min (converged)
+
+########## SURVEY2 add_mag_r [25] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1694 0.0200] m, score -133.3333
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 73% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 4.635 N*m < target 70.96 N*m (taut margin -0.9347)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9961 vs taut margin -0.934681]
+  rung 1 best: rest 0.1694 m, tendon 0.0200 m -> meet 2/15 (13.3%), active 0/15 (0.0%), 34 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_add_mag_r_nB1_G1_20261023_052257.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1694 0.0200] m, score -533.3333
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 73% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 9.269 N*m < target 70.96 N*m (taut margin -0.8694)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9923 vs taut margin -0.869376]
+  rung 2 best: rest 0.1694 m, tendon 0.0200 m -> meet 8/15 (53.3%), active 0/15 (0.0%), 34 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_add_mag_r_nB2_G1_20261023_052301.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.1694 0.0200] m, score -600.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 73% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 13.9 N*m < target 70.96 N*m (taut margin -0.8041)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.9884 vs taut margin -0.804086]
+  rung 3 best: rest 0.1694 m, tendon 0.0200 m -> meet 9/15 (60.0%), active 0/15 (0.0%), 34 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_add_mag_r_nB3_G1_20261023_052305.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT add_mag_r: chosen (3,1), rest 0.1694 m, tendon 0.0200 m, meet 60.0%, active 0.0%, 102 evals, 0.2 min (converged)
+
+########## SURVEY2 iliacus_r [26] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4956 0.0200] m, score -1.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 4.622 N*m < target 47.85 N*m (taut margin -0.9034)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.903397]
+  rung 1 best: rest 0.4331 m, tendon 0.0376 m -> meet 5/15 (33.3%), active 13/15 (86.7%), 65 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_iliacus_r_nB1_G1_20261023_052310.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4956 0.0200] m, score -334.3333
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 8.302 N*m < target 47.85 N*m (taut margin -0.8265)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.8265 vs taut margin -0.826482]
+  rung 2 best: rest 0.4331 m, tendon 0.0434 m -> meet 10/15 (66.7%), active 14/15 (93.3%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_iliacus_r_nB2_G1_20261023_052315.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4956 0.0200] m, score -601.0000
+  sign check (initial x): 15 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 13.39 N*m < target 47.85 N*m (taut margin -0.7201)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -1.0000 vs taut margin -0.720132]
+  rung 3 best: rest 0.4331 m, tendon 0.0395 m -> meet 12/15 (80.0%), active 13/15 (86.7%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_iliacus_r_nB3_G1_20261023_052321.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT iliacus_r: chosen (3,1), rest 0.4331 m, tendon 0.0395 m, meet 80.0%, active 86.7%, 195 evals, 0.3 min (converged)
+
+########## SURVEY2 psoas_r [27] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3327 0.0500] m, score -333.3331
+  sign check (initial x): 11 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 7.294 N*m < target 48.41 N*m (taut margin -0.8493)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.8493 vs taut margin -0.849337]
+  rung 1 best: rest 0.3327 m, tendon 0.0949 m -> meet 6/15 (40.0%), active 13/15 (86.7%), 65 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_psoas_r_nB1_G1_20261023_052326.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3327 0.0500] m, score -599.9997
+  sign check (initial x): 11 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 14.25 N*m < target 48.41 N*m (taut margin -0.7057)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.7057 vs taut margin -0.705741]
+  rung 2 best: rest 0.3327 m, tendon 0.0969 m -> meet 11/15 (73.3%), active 13/15 (86.7%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_psoas_r_nB2_G1_20261023_052332.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.3327 0.0500] m, score -666.6664
+  sign check (initial x): 11 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 21.36 N*m < target 48.41 N*m (taut margin -0.5588)
+    torque-short but nBPA = 3 already at the directive cap 3
+    [raw slack-gamed margin -0.5588 vs taut margin -0.55881]
+  rung 3 best: rest 0.3327 m, tendon 0.0969 m -> meet 13/15 (86.7%), active 13/15 (86.7%), 65 evals
+  rung 3 advisor: torque_short -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey2_psoas_r_nB3_G1_20261023_052338.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT psoas_r: chosen (3,1), rest 0.3327 m, tendon 0.0969 m, meet 86.7%, active 86.7%, 195 evals, 0.3 min (converged)
+
+Survey2 complete. Driver CSVs:
+  D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey2_perMuscle_20261023.csv
+  D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey2_ladder_20261023.csv

@@ -1,0 +1,33 @@
+# hand-tuned metrics, 2-D re-grade 20261023 (FIX_SPEC_20261023 sections 1/1b/5)
+# surfaces: human_surfaces_5x5_grading_20261023.csv (5x5 two-DOF grading grid; single source of truth for both rows)
+# robot: old-code routing (Connor-corrected, Connor's six section scripts verbatim) + old-code BPA sizes at 620 kPa
+# meet/active per cell = v1/optimized-row booleans; area share over in_graded_domain cells only (hip-envelope cells excluded from denominator)
+# unflagged = in-domain cells with no via/step/slack/short flag; suspect+note carried over VERBATIM from hand_tuned_metrics_20261022.csv
+muscle,source,primary_dof,secondary_dof,cells_domain,cells_excluded,cells_flagged_in_domain,meetPct,activePct,meetPct_unflagged,activePct_unflagged,suspect,note
+"Erector Spinae",connor-corrected,lumbar_extension,lumbar_bending,25,0,0,100.0000,100.0000,100.0000,100.0000,no,"Connor routing keeps 3 of Ben's 9 points (p7 wr1 wr2; Ben full: p7 wr1-wr7 b2); retained values match Ben; Ben hand-set rest 0.7428 m not in Connor flow (Size output used)"
+"Internal Oblique",connor-corrected,lumbar_extension,lumbar_bending,25,0,0,92.0000,96.0000,92.0000,96.0000,no,"values match Ben"
+"External Oblique",connor-corrected,lumbar_extension,lumbar_bending,25,0,0,96.0000,96.0000,96.0000,96.0000,no,"values match Ben"
+"Bicep Femoris, Long Head",connor-corrected,knee_angle_r,hip_flexion_r,25,0,5,84.0000,100.0000,90.0000,100.0000,no,"values match Ben"
+"Semimembranosus",connor-corrected,knee_angle_r,hip_flexion_r,25,0,13,48.0000,96.0000,50.0000,91.6667,no,"Connor applies knee transform to twr1 where Ben's inline formula applies hip (Connor corrected kinematics); values match Ben"
+"Sartorius",connor-corrected,knee_angle_r,hip_flexion_r,25,0,0,36.0000,96.0000,36.0000,96.0000,yes,"VALUE MISMATCH: col2 vs Ben sar_wr1: Connor [[0.091 -0.105 0.037]] Ben [[0.091 -0.105 0.038]]; col7 vs Ben t6: Connor [[0.038 -0.382 -0.004]] Ben [[0.038 -0.382 0.004]]"
+"Tensor Fasciae Latae",connor-corrected,knee_angle_r,hip_flexion_r,25,0,11,40.0000,100.0000,35.7143,100.0000,no,"values match Ben"
+"Rectus Femoris",connor-corrected,knee_angle_r,hip_flexion_r,25,0,13,76.0000,96.0000,75.0000,91.6667,no,"static points match Ben; patella point via fcn3/fcn4 identical to Ben's MovePoints.mat fcns"
+"Gracilis",connor-corrected,knee_angle_r,hip_flexion_r,25,0,5,20.0000,100.0000,25.0000,100.0000,yes,"origin differs from Ben p8; Connor y z equal rect_fem origin p10's (likely transcription slip); VALUE MISMATCH: col1 vs Ben p8: Connor [[-0.074 0.125 0.079]] Ben [[-0.074 -0.119 0.028]]"
+"Bicep Femoris, Short Head",connor-corrected,knee_angle_r,hip_flexion_r,25,0,0,100.0000,100.0000,100.0000,100.0000,yes,"VALUE MISMATCH: col3 vs Ben twr3: Connor [[-0.023 -0.056 0.029]] Ben [[-0.023 -0.056 0.034]]"
+"Vastus Intermedius",connor-corrected,knee_angle_r,hip_flexion_r,25,0,10,80.0000,80.0000,66.6667,66.6667,no,"static points match Ben; patella point via fcn7/fcn8 identical to Ben's MovePoints.mat fcns"
+"Soleus",connor-corrected,ankle_angle_r,knee_angle_r,25,0,10,80.0000,80.0000,66.6667,66.6667,no,"values match Ben"
+"Medial Gastroocnemius",connor-corrected,ankle_angle_r,knee_angle_r,25,0,16,100.0000,100.0000,100.0000,100.0000,no,"values match Ben"
+"Lateral Gastrocenemius",connor-corrected,ankle_angle_r,knee_angle_r,25,0,16,100.0000,100.0000,100.0000,100.0000,no,"values match Ben"
+"Tibialis Posterior",connor-corrected,subtalar_angle_r,ankle_angle_r,25,0,1,88.0000,96.0000,87.5000,95.8333,yes,"MIF 3549 = map master_mif_n but Ben PAM_Prop has tib_post_mif 1588 (map documents 3549 as soleus copy-paste artifact; same 40 mm diameter either way); routing values match Ben"
+"Tibialis Posterior (duplicate name)",connor-corrected,ankle_angle_r,subtalar_angle_r,25,0,0,100.0000,100.0000,100.0000,100.0000,no,"Connor names the muscle Tibialis Posterior (duplicate-name bug documented in map; MIF 905 and route identify tib_ant); values match Ben"
+"Peroneus Brevis",connor-corrected,subtalar_angle_r,ankle_angle_r,25,0,3,12.0000,96.0000,9.0909,95.4545,no,"values match Ben"
+"Peroneus Longus",connor-corrected,subtalar_angle_r,ankle_angle_r,25,0,3,36.0000,96.0000,31.8182,95.4545,yes,"VALUE MISMATCH: col1 vs Ben t2: Connor [[0.005 -0.062 0.047]] Ben [[0.006 -0.062 0.047]]; col5 vs Ben per_long_wr4: Connor [[0.048 0.011 0.028]] Ben [[0.068 0.011 0.028]]"
+"Peroneus Tertius",connor-corrected,subtalar_angle_r,ankle_angle_r,25,0,0,80.0000,96.0000,80.0000,96.0000,yes,"three components differ from Ben (values appear shuffled between t2/per_tert_wr1/a2); VALUE MISMATCH: col1 vs Ben t2: Connor [[0.006 -0.062 0.079]] Ben [[0.006 -0.062 0.047]]; col2 vs Ben per_tert_wr1: Connor [[0.023 -0.407 0.022]] Ben [[0.023 -0.407 0.016]]; col3 vs Ben a2: Connor [[0.079 0.016 0.034]] Ben [[0.079 0.022 0.034]]"
+"Flexor Digitorum Longus",connor-corrected,mtp_angle_r,ankle_angle_r,25,0,0,80.0000,100.0000,80.0000,100.0000,no,"values match Ben"
+"Flexor Hallucis Longus",connor-corrected,mtp_angle_r,ankle_angle_r,25,0,0,40.0000,100.0000,40.0000,100.0000,no,"Connor passes Axis1 instead of Axis2 (both [3 1 3]; numerically identical); values match Ben"
+"Extensor Digitorum Longus",connor-corrected,mtp_angle_r,ankle_angle_r,25,0,0,40.0000,96.0000,40.0000,96.0000,yes,"VALUE MISMATCH: col5 vs Ben ext_dig_wr4: Connor [[0.005 0.005 0.015]] Ben [[0 0.005 0.015]]"
+"Extensor Hallucis Longus",connor-corrected,mtp_angle_r,ankle_angle_r,25,0,0,96.0000,96.0000,96.0000,96.0000,no,"values match Ben"
+"Gluteus Maximus",connor-corrected,hip_flexion_r,hip_adduction_r,15,10,3,100.0000,100.0000,100.0000,100.0000,no,"values match Ben"
+"Adductor Magnus",connor-corrected,hip_adduction_r,hip_flexion_r,15,10,3,93.3333,93.3333,91.6667,91.6667,yes,"Location columns 2 and 3 both equal add_mag_wr2; Ben routing uses add_mag_wr1 then add_mag_wr2 (wr1 absent; likely transcription slip); VALUE MISMATCH: col2 vs Ben add_mag_wr1: Connor [[-0.059 -0.108 -0.03]] Ben [[-0.136 -0.093 0.059]]"
+"Iliacus",connor-corrected,hip_flexion_r,hip_adduction_r,15,10,7,73.3333,100.0000,100.0000,100.0000,no,"values match Ben"
+"Psoas X",connor-corrected,hip_flexion_r,hip_adduction_r,15,10,7,66.6667,100.0000,87.5000,100.0000,yes,"PLocation undefined-variable slip (values = Location4; map: presumed Location4); b1/wr1 frame roles swapped vs Ben's inline formula; point values match Ben"
