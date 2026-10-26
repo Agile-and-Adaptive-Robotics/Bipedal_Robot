@@ -50,12 +50,19 @@ def run(tag, **over):
     heelF = np.array(log["heelF"]); rgE = np.array(log["rgE"])
     com = np.array(log["com"]); tilt = np.array(log["tilt"])
     finite = bool(log["finite"]); fall_t = log["fall_t"]
+    # RAW LOG per condition (2026-10-26 correction round: preserve evidence)
+    np.savez(os.path.join(HERE, f"rawlog_{tag}.npz"), t=t, q=q,
+             heelF=heelF, toeF=np.array(log["toeF"]), rgE=rgE,
+             com=com, tilt=tilt)
     return dict(tag=tag, t=t, q=q, heelF=heelF, rgE=rgE, com=com,
                 tilt=tilt, finite=finite, fall_t=fall_t)
 
 
-def cycles(heelF, t, thr=20.0, merge=0.45):
-    f = heelF[:, 0]
+def cycles(heelF, t, side=0, thr=20.0, merge=0.45):
+    """Primary heel-strike cycles of ONE foot: side=0 left, side=1 right.
+    (2026-10-26 fix: the committed version hardcoded column 0 for both
+    sides, so every stored 'R' count duplicated the left; corrected.)"""
+    f = np.nan_to_num(heelF[:, side])
     on = f > thr
     st = t[1:][on[1:] & ~on[:-1]]
     m = []
@@ -87,13 +94,18 @@ dels = {
 }
 del_results = {}
 for name, over in dels.items():
-    r = run("del", **over)
+    r = run("del_" + name.replace(" ", "_").replace("(", "").replace(")", ""), **over)
     del_results[name] = dict(
-        cycL=cycles(r["heelF"], r["t"]),
-        cycR=cycles(np.nan_to_num(r["heelF"]), r["t"]),
+        cycL=cycles(r["heelF"], r["t"], side=0),
+        cycR=cycles(r["heelF"], r["t"], side=1),
         finite=r["finite"], fell=r["fall_t"] is not None,
-        kneeL_deg=float(np.degrees(r["q"][:, 0]).max() -
-                        np.degrees(r["q"][:, 0]).min()) if r["finite"] else 0,
+        # 2026-10-26 fix: knee columns are 1 and 4 (JNTS order
+        # hip,knee,ankle per side); the committed version stored column 0
+        # (the HIP range) under a knee label.
+        kneeL_deg=float(r["q"][:, 1].max() - r["q"][:, 1].min())
+        if r["finite"] else 0,
+        kneeR_deg=float(r["q"][:, 4].max() - r["q"][:, 4].min())
+        if r["finite"] else 0,
         last_t=float(r["t"][-1]))
     print(f"  DEL {name:26s} cycL {del_results[name]['cycL']:3d} "
           f"cycR {del_results[name]['cycR']:3d} "
@@ -152,9 +164,9 @@ for ax, key, lab in ((axes[1, 0], "push_fwd", "(D) push forward"),
 axf = axes[1, 2]
 axf.axis("off")
 rows = [("pathway removed", "L cyc", "R cyc", "fell")]
-ctrl_c = cycles(runs["control"]["heelF"], runs["control"]["t"])
-rows.append(("control", str(ctrl_c), str(cycles(
-    np.nan_to_num(runs["control"]["heelF"]), runs["control"]["t"])), "no"))
+ctrl_cL = cycles(runs["control"]["heelF"], runs["control"]["t"], side=0)
+ctrl_cR = cycles(runs["control"]["heelF"], runs["control"]["t"], side=1)
+rows.append(("control", str(ctrl_cL), str(ctrl_cR), "no"))
 for name, d in del_results.items():
     rows.append((name, str(d["cycL"]), str(d["cycR"]),
                  "yes" if d["fell"] else "no"))
