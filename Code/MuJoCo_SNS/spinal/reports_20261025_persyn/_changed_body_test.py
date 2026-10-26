@@ -32,6 +32,8 @@ for p in (WEAN, HERE):
     if p not in sys.path:
         sys.path.insert(0, p)
 import _w2l_wean_eval as EV  # noqa: E402
+import test_w2l_ground as _T  # noqa: E402
+_T.KV.update({k: float(v) for k, v in json.load(open(os.path.join(HERE, "round_w25.json"), encoding="utf-8"))["params"].items()})  # true winner keys resident in KV so EV forwards them
 
 # --- monkeypatch: scale leg masses at model load, controller untouched ---
 SCALE = {"factor": 1.0, "groups": ()}      # set per condition

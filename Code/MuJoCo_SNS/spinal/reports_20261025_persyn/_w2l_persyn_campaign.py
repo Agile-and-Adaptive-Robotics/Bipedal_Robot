@@ -36,7 +36,7 @@ for p in (WEAN, HERE):
         sys.path.insert(0, p)
 
 import _w2l_wean_eval as EV       # noqa: E402
-import optuna                     # noqa: E402
+import optuna  # noqa: E402  # (campaign driver import-time use only)
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 EV.T.KV["net"] = "bilateralrg2"
@@ -92,6 +92,13 @@ ANCHORS = dict(
     ctn_amp=4.0, cref=50.0, ibnA=1.0,
 )
 SEEDS = [ANCHORS]   # seed 1 = Ben's literal values, every key individual
+
+# 2026-10-26 forwarding fix: make every searched key KV-resident so EV
+# forwards it (the original campaign lost 55 of 61 keys to the KV filter;
+# the runner now forwards any W2L_GAINS-named KV key into the build).
+import test_w2l_ground as _T
+for _k in SPACE:
+    _T.KV.setdefault(_k, float(ANCHORS[_k]))
 
 
 def knobs_of(wsup: float, p: dict, dur: float) -> dict:

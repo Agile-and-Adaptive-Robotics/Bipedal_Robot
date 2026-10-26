@@ -308,6 +308,16 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
             ia_inh=0.4 * KV["s_ia"],
             ia_mutual=0.5 * KV["s_ia"],
             aff_HC_excite=0.08 * KV["s_aff_hc"])
+        # PER-TARGET / PER-SYNAPSE keys (2026-10-26 forwarding fix): any
+        # KV key that names a W2L_GAINS entry directly (pf_mn_*, rc_*,
+        # heel_*, ia_*, ii_*, ib_*, contact families not mapped above)
+        # goes straight into gains. Before this fix such keys sat unused
+        # in KV (the 2026-10-25 persyn campaign's 55 per-synapse dims and
+        # the Ia/Renshaw/heel 'deletions' were no-ops). Absent from KV =
+        # builder anchor = bit-identical to every prior default build.
+        for _gk in B.W2L_GAINS:
+            if _gk in KV and _gk not in gains:
+                gains[_gk] = float(KV[_gk])
         # presynaptic window (2026-10-20): only inject NON-default keys so
         # the default gains dict (and therefore the compiled net) is
         # EXACTLY the pre-knob build (bit-identical).
