@@ -1,0 +1,101 @@
+{
+  "condition": "P1b_rgflexor_2p1",
+  "edits": [
+    {
+      "edit": "SetSimEnd",
+      "to": "True"
+    },
+    {
+      "edit": "SimEndTime",
+      "to": 10.1
+    },
+    {
+      "edit": "chart StartTime 0.5->0",
+      "count": 1
+    },
+    {
+      "edit": "chart StartTime 4->0",
+      "count": 1
+    },
+    {
+      "edit": "chart EndTime 5->10",
+      "count": 1
+    },
+    {
+      "edit": "chart EndTime 9->10",
+      "count": 1
+    },
+    {
+      "edit": "chart EndTime 7->10",
+      "count": 0
+    },
+    {
+      "edit": "CollectInterval 5e-5->1ms",
+      "count": 2
+    },
+    {
+      "stim": "P1b RG_Stin->LH_RG F +2nA 2.0-2.1 (paper-exact)",
+      "tag": "Enabled",
+      "value": "True"
+    },
+    {
+      "stim": "P1b RG_Stin->LH_RG F +2nA 2.0-2.1 (paper-exact)",
+      "tag": "TargetNodeID",
+      "value": "e8db7e8f-a8c6-48a9-9cf4-854a6dc8320e"
+    },
+    {
+      "stim": "P1b RG_Stin->LH_RG F +2nA 2.0-2.1 (paper-exact)",
+      "tag": "CurrentOn",
+      "value": "2e-009"
+    },
+    {
+      "stim": "P1b RG_Stin->LH_RG F +2nA 2.0-2.1 (paper-exact)",
+      "tag": "EndTime",
+      "value": "2.1"
+    },
+    {
+      "chart_col": "LH_RG_E",
+      "target": "a888264c-bb2d-4bd6-ac77-6a4b8aa01656"
+    },
+    {
+      "chart_col": "LH_RG_F",
+      "target": "e8db7e8f-a8c6-48a9-9cf4-854a6dc8320e"
+    },
+    {
+      "chart_col": "RH_RG_E",
+      "target": "f4e3d85c-ee37-4d67-9b02-364ab2bf4312"
+    },
+    {
+      "chart_col": "RH_RG_F",
+      "target": "9cb74e31-f734-4406-8a4f-a8e7480b9562"
+    },
+    {
+      "chart_col": "LH_KneeMN_E",
+      "target": "c509c3d8-9eaa-45ea-8f3b-5cd5ebd90a8e"
+    },
+    {
+      "chart_col": "LH_KneeMN_F",
+      "target": "0b330b26-116d-4822-9d3b-dd92323e728e"
+    },
+    {
+      "chart_col": "RH_KneeMN_E",
+      "target": "8bb35257-34a6-4160-a310-cc373dcd75e1"
+    },
+    {
+      "chart_col": "RH_KneeMN_F",
+      "target": "6af1a488-c7c4-4321-a8e9-819b06405aea"
+    },
+    {
+      "chart_col": "LH_KAPF_E",
+      "target": "d5c975ac-38b5-4bcc-bb2c-544a07b7ffea"
+    },
+    {
+      "chart_col": "LH_KAPF_F",
+      "target": "48ad42ce-c0d2-4f3d-9024-f274243476b1"
+    },
+    {
+      "chart_col": "LH_HipPF_E",
+      "target": "9186cdbe-91ad-48e2-bde7-ed6fbb2ec3b3"
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+ "pre_registration": "CHANGED-BODY TEST (Ben's ruling, 2026-10-26): freeze the tuned neural\ncontroller, perturb the BIOMECHANICS (leg-segment masses scaled +/-%,\nmass+inertia together), and check the same conductances still walk. This\nreplaces the parameter nudge test as the acceptance bar (the literature's\ntest: Deng torque perturbations, Shinohara belt levels/holes, Di Russo\npushes \u2014 all with frozen controllers).\n\nPRE-REGISTERED PREDICTIONS (written BEFORE this ran, per the 2026-10-26\npost-hoc correction discipline):\n  P1: the w25 winner survives +/-10% leg-mass scaling in at least 5 of 6\n      conditions (mass shifts swing timing smoothly; the nudge failures\n      were direct conductance-timing disruptions).\n  P2: at +/-20%, distal-only (tibia+foot+toe) survives more often than\n      femur-only (distal mass changes swing period less than proximal).\n  P3: failures, if any, are the same phase-drift mode, not falls.\n\nConditions: femur +/-10/20%; distal (tibia+foot+toe) +/-10/20%; all-leg\n+/-10%. Winner params FROZEN from round_w25.json at wsup=0.25.\n",
+ "rows": [
+  {
+   "cond": "femur+10",
+   "factor": 1.1,
+   "groups": [
+    "femur"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 32,
+   "cycR": 38,
+   "phase": 0.5200856451600435,
+   "tilt": 68.57610084602834,
+   "pelz": 0.8989488657154516
+  },
+  {
+   "cond": "femur-10",
+   "factor": 0.9,
+   "groups": [
+    "femur"
+   ],
+   "survive": true,
+   "obj": 82.3680916340177,
+   "cycL": 34,
+   "cycR": 34,
+   "phase": 0.41054778993666086,
+   "tilt": 33.15553700401437,
+   "pelz": 0.9006278408384518
+  },
+  {
+   "cond": "femur+20",
+   "factor": 1.2,
+   "groups": [
+    "femur"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 35,
+   "cycR": 34,
+   "phase": 0.5199430199430215,
+   "tilt": 65.39475523011471,
+   "pelz": 0.8985262741205198
+  },
+  {
+   "cond": "femur-20",
+   "factor": 0.8,
+   "groups": [
+    "femur"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 33,
+   "cycR": 33,
+   "phase": 0.38403041825095063,
+   "tilt": 51.54956569911929,
+   "pelz": 0.9007968901393382
+  },
+  {
+   "cond": "distal+10",
+   "factor": 1.1,
+   "groups": [
+    "distal"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 32,
+   "cycR": 33,
+   "phase": 0.5102857122057189,
+   "tilt": 51.70326968351439,
+   "pelz": 0.9009051669590219
+  },
+  {
+   "cond": "distal-10",
+   "factor": 0.9,
+   "groups": [
+    "distal"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 37,
+   "cycR": 33,
+   "phase": 0.5131791285637434,
+   "tilt": 66.01887456017731,
+   "pelz": 0.9008987102935853
+  },
+  {
+   "cond": "distal+20",
+   "factor": 1.2,
+   "groups": [
+    "distal"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 37,
+   "cycR": 33,
+   "phase": 0.4835566382460419,
+   "tilt": 63.464783672927936,
+   "pelz": 0.898110075938341
+  },
+  {
+   "cond": "distal-20",
+   "factor": 0.8,
+   "groups": [
+    "distal"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 34,
+   "cycR": 38,
+   "phase": 0.2557528194161438,
+   "tilt": 60.92776212638397,
+   "pelz": 0.8997109610572727
+  },
+  {
+   "cond": "allleg+10",
+   "factor": 1.1,
+   "groups": [
+    "femur",
+    "distal"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 34,
+   "cycR": 34,
+   "phase": 0.4477455489846366,
+   "tilt": 62.218936795011764,
+   "pelz": 0.9006278126713915
+  },
+  {
+   "cond": "allleg-10",
+   "factor": 0.9,
+   "groups": [
+    "femur",
+    "distal"
+   ],
+   "survive": false,
+   "obj": -100.0,
+   "cycL": 35,
+   "cycR": 33,
+   "phase": 0.394934333958725,
+   "tilt": 53.403975208255886,
+   "pelz": 0.9011392047918987
+  }
+ ],
+ "survived": 1,
+ "of": 10,
+ "winner": "round_w25",
+ "wsup": 0.25
+}
