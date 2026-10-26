@@ -1,0 +1,29 @@
+Traceback (most recent call last):
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\graphviz\backend\execute.py", line 78, in run_check
+    proc = subprocess.run(cmd, **kwargs)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\subprocess.py", line 503, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\subprocess.py", line 971, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\subprocess.py", line 1456, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+FileNotFoundError: [WinError 2] The system cannot find the file specified
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\sns_tutorials\tutorial1_run.py", line 69, in <module>
+    render(net)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\sns_toolbox\renderer.py", line 122, in render
+    graph.render(view=True, cleanup=True)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\graphviz\_tools.py", line 185, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\graphviz\rendering.py", line 122, in render
+    rendered = self._render(*args, **kwargs)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\graphviz\_tools.py", line 185, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\graphviz\backend\rendering.py", line 326, in render
+    execute.run_check(cmd,
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\graphviz\backend\execute.py", line 81, in run_check
+    raise ExecutableNotFound(cmd) from e
+graphviz.backend.execute.ExecutableNotFound: failed to execute WindowsPath('dot'), make sure the Graphviz executables are on your systems' PATH

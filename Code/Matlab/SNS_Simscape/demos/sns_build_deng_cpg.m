@@ -9,16 +9,25 @@
 %                            GNa 1.5 uS, ENa 50 mV, m: S 0.2 / E -40 / K 1,
 %                            h: S -0.6 / E -60 / K 0.5, tau_h FIXED 350 ms)
 %   demos\SNS_Deng_RG.slx    RG layer: HC_ext/HC_flx + IN-laminated mutual
-%                            inhibition (HC -2.749-> IN -2.749-> HC, Esyn
-%                            -40/-70 mV, window -60..-25); I_stim inport;
-%                            V_ext/V_flx outports
+%                            inhibition; I_stim inport; V_ext/V_flx outports
 %   demos\SNS_Deng_PF.slx    PF layer: hip pair + knee/ankle pair, same
-%                            construction; RG->PF weak exc 0.1 uS (window
-%                            -60..-40); V_RG_ext/V_RG_flx inports; 4 V outs
+%                            construction; RG->PF weak exc; 2 in / 4 out
 %   demos\SNS_Deng_CPGDemo.slx   ONE 10 nA 1 ms pulse (t=0.1 s) -> 20 s
-%                            continuous run + hip MNs (PF->MN 2.565/3.632
-%                            uS, Esyn -10, window -60..-50, MN Vrest -100)
-%                            + Deng Fig 6B activation map
+%                            continuous run + hip MNs + Deng Fig 6B map
+%
+% 2026-10-24 MIGRATION (ZCode, EB475WS4): the trio predates the
+% 2026-09-22 one-input-synapse redesign of SNS_Library and was never
+% migrated - it wired a Vpost sense line into synapse port 2 (removed in
+% the redesign; this is the 'pair1_s1/2' invalid-object failure) and
+% routed synapse outputs to neuron PORT 1 (Iapp). This builder now:
+%   - wires presyn V -> synapse/1 (the only input), synapse out [g; g*Esyn]
+%     -> postsynaptic cell's syn port (the 2026-09-22 architecture);
+%   - gives HCNeuron its own syn1..syn4 ports with internal summation
+%     Isyn = sum(g*Esyn) - V*sum(g), matching SNS_Library neurons.
+% Every synapse is an individual block with its OWN mask value - per-
+% target conductances (Ben, 2026-10-24), no family collapse; values below
+% are the documented Nourse/Deng defaults until per-connection paper
+% values replace them.
 %
 % tau_h note: sns_toolbox's tau_h(V) collapses at depolarized V and
 % QUENCHES this circuit (verified deng_cpg_ode.py); Animatlab's port uses
@@ -28,6 +37,20 @@
 here = fileparts(mfilename('fullpath'));
 root = fileparts(here);                       % SNS_Simscape
 addpath(root);
+
+% Per-target synapse conductances (uS) - individually editable (Ben's
+% 2026-10-24 ruling: one strength per connection, never per family).
+% Sources: Nourse 2023 Tables A4-A7 for the lamination; the PF->MN values
+% UPDATED 2026-10-25 to the PAPER'S OWN PROJECT (Deng 2019 ModelDB 264844,
+% K_A synergy.aproj mine: dev\deng2019_mine_20261025.json - type-level
+% conductances; the project's per-instance values are the untouched 0.5 uS
+% GUI default, see check_deng2019_instances_20261025.py).
+DENG_SYN = struct();
+DENG_SYN.hc_to_in  = 2.749;   % HC -> IN excitation (paper RG_Excite 2.749e-6 S)
+DENG_SYN.in_to_hc  = 2.749;   % IN -> HC inhibition (paper RG_Inhibit 2.749e-6 S)
+DENG_SYN.rg_to_pf  = 0.1;     % RG -> PF weak excitation (Nourse A7)
+DENG_SYN.pf_to_mn_ext = 2.6563;% PF hip ext -> MN (paper HipZ Ext MN Excite)
+DENG_SYN.pf_to_mn_flx = 3.6325;% PF hip flx -> MN (paper HipZ Flx MN Excite)
 
 DENG_HC_PARAMS = { ...
     'Cm',   'Membrane capacitance Cm (nF)', '5'; ...
@@ -41,6 +64,7 @@ DENG_HC_PARAMS = { ...
     'Sh',   'h-gate slope Sh', '-0.6'; ...
     'Eh',   'h-gate midpoint Eh (mV)', '-60'; ...
     'Kh',   'h-gate exponent Kh', '0.5'; ...
+    'hPowExp', 'h exponent in I_Na (Deng: 0.5; toolbox Tutorial-8 semantics: 1)', '0.5'; ...
     'tauH', 'h-gate time constant tauH (ms), FIXED', '350'; ...
     'h0',   'initial h (h_inf(Vrest) = 0.6667)', '0.6666667'};
 
@@ -58,15 +82,23 @@ add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 40 160 1
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
-% --- membrane ---
+% --- ports: Iin (1, nA) + syn1..syn4 (2..5, [g; g*Esyn]) ; V out (1) ---
 add_block('simulink/Sources/In1', [blk '/Iin'], 'Port', '1', 'Position', [25 63 55 77]);
+for sp = 1:4
+    add_block('simulink/Sources/In1', [blk '/syn' num2str(sp)], ...
+        'Port', num2str(sp + 1), 'Position', [25 200 + 44 * sp 55 214 + 44 * sp]);
+    add_block('simulink/Signal Routing/Demux', [blk '/dem' num2str(sp)], ...
+        'Outputs', '2', 'Position', [95 196 + 44 * sp 100 222 + 44 * sp]);
+    add_line(blk, ['syn' num2str(sp) '/1'], ['dem' num2str(sp) '/1'], 'autorouting', 'on');
+end
+% --- membrane ---
 add_block('simulink/Sources/Constant', [blk '/Vrest_c'], 'Value', 'Vrest', 'Position', [90 170 120 200]);
 add_block('simulink/Math Operations/Sum', [blk '/leak'], 'Inputs', '-+', 'Position', [160 110 190 140]);
 add_block('simulink/Math Operations/Gain', [blk '/Gm_g'], 'Gain', 'Gm', 'Position', [220 110 250 140]);
-add_block('simulink/Math Operations/Sum', [blk '/dVsum'], 'Inputs', '+++', 'Position', [290 60 320 120]);
-add_block('simulink/Math Operations/Gain', [blk '/memb'], 'Gain', '1000/Cm', 'Position', [350 60 380 100]);
-add_block('simulink/Continuous/Integrator', [blk '/Vint'], 'InitialCondition', 'Vrest', 'Position', [410 56 440 104]);
-add_block('simulink/Sinks/Out1', [blk '/V_mV'], 'Port', '1', 'Position', [720 66 750 94]);
+add_block('simulink/Math Operations/Sum', [blk '/dVsum'], 'Inputs', '++++', 'Position', [330 60 360 120]);
+add_block('simulink/Math Operations/Gain', [blk '/memb'], 'Gain', '1000/Cm', 'Position', [390 60 420 100]);
+add_block('simulink/Continuous/Integrator', [blk '/Vint'], 'InitialCondition', 'Vrest', 'Position', [450 56 480 104]);
+add_block('simulink/Sinks/Out1', [blk '/V_mV'], 'Port', '1', 'Position', [760 66 790 94]);
 % --- m gate (instantaneous): m = 1/(1 + Km*exp(Sm*(Em-V))) ---
 add_block('simulink/Sources/Constant', [blk '/Em_c'], 'Value', 'Em', 'Position', [90 230 120 260]);
 add_block('simulink/Math Operations/Sum', [blk '/mArg'], 'Inputs', '+-', 'Position', [160 210 190 240]);
@@ -92,11 +124,16 @@ add_block('simulink/Continuous/Integrator', [blk '/hint'], 'InitialCondition', '
 add_block('simulink/Sources/Constant', [blk '/ENa_c'], 'Value', 'ENa', 'Position', [400 180 430 210]);
 add_block('simulink/Math Operations/Sum', [blk '/naDrive'], 'Inputs', '+-', 'Position', [460 150 490 180]);
 add_block('simulink/Math Operations/Math Function', [blk '/hPow'], 'Operator', 'pow', 'Position', [520 330 550 360]);
-add_block('simulink/Sources/Constant', [blk '/Kh_c'], 'Value', 'Kh', 'Position', [520 390 550 420]);
+add_block('simulink/Sources/Constant', [blk '/hExp_c'], 'Value', 'hPowExp', 'Position', [520 390 550 420]);
 add_block('simulink/Math Operations/Product', [blk '/naProd'], 'Inputs', '3', 'Position', [600 140 630 200]);
 add_block('simulink/Math Operations/Gain', [blk '/GNa_g'], 'Gain', 'GNa', 'Position', [650 150 680 180]);
+% --- synaptic summation: Isyn = sum(g*Esyn) - V*sum(g) over syn1..syn4 ---
+add_block('simulink/Math Operations/Sum', [blk '/gEsum'], 'Inputs', '++++', 'Position', [200 430 230 470]);
+add_block('simulink/Math Operations/Sum', [blk '/gsum'],  'Inputs', '++++', 'Position', [200 500 230 540]);
+add_block('simulink/Math Operations/Product', [blk '/gv'], 'Inputs', '2', 'Position', [300 505 330 545]);
+add_block('simulink/Math Operations/Sum', [blk '/isyn'], 'Inputs', '+-', 'Position', [390 465 420 505]);
 
-% wiring
+% wiring: membrane + gates (unchanged from the pre-migration build)
 add_line(blk, 'Iin/1', 'dVsum/1');
 add_line(blk, 'Vint/1', 'leak/1');
 add_line(blk, 'Vrest_c/1', 'leak/2');
@@ -130,23 +167,34 @@ add_line(blk, 'invTauH/1', 'hint/1');
 add_line(blk, 'ENa_c/1', 'naDrive/1');
 add_line(blk, 'mInv/1', 'naProd/1');
 add_line(blk, 'hint/1', 'hPow/1');
-add_line(blk, 'Kh_c/1', 'hPow/2');
+add_line(blk, 'hExp_c/1', 'hPow/2');
 add_line(blk, 'hPow/1', 'naProd/2');
 add_line(blk, 'naDrive/1', 'naProd/3');
 add_line(blk, 'naProd/1', 'GNa_g/1');
+% wiring: synapse summation
+for sp = 1:4
+    add_line(blk, ['dem' num2str(sp) '/2'], ['gEsum/' num2str(sp)], 'autorouting', 'on');
+    add_line(blk, ['dem' num2str(sp) '/1'], ['gsum/' num2str(sp)], 'autorouting', 'on');
+end
+add_line(blk, 'gsum/1', 'gv/1');
+add_line(blk, 'Vint/1', 'gv/2');
+add_line(blk, 'gEsum/1', 'isyn/1');
+add_line(blk, 'gv/1', 'isyn/2');
+add_line(blk, 'isyn/1', 'dVsum/4');
 
 m = Simulink.Mask.create(blk);
 m.Description = ['Deng/Nourse persistent-Na half-center neuron (Tables A4/A5).' newline ...
-    'Cm dV/dt = Gm(Vrest-V) + Iin + GNa*m*h^K*(ENa-V); m instantaneous,' newline ...
+    'Cm dV/dt = Gm(Vrest-V) + Iin + Isyn + GNa*m*h^K*(ENa-V); m instantaneous,' newline ...
     'dh/dt = (h_inf - h)/tauH with tauH FIXED (Animatlab interpretation).' newline ...
-    'Nourse 2023 defaults reproduce the rat hindlimb RG half-center.'];
+    'syn1..syn4 take the 2-wide [g; g*Esyn] signals; Isyn = sum(g*Esyn) - V*sum(g).' newline ...
+    'Unconnected syn ports ground to zero. Nourse 2023 defaults.'];
 for k = 1:size(DENG_HC_PARAMS, 1)
     m.addParameter('Name', DENG_HC_PARAMS{k, 1}, 'Type', 'edit', ...
         'Prompt', DENG_HC_PARAMS{k, 2}, 'Value', DENG_HC_PARAMS{k, 3});
 end
 set_param(blk, 'MaskIconFrame', 'off');
 save_system(lib);
-fprintf('built SNS_Deng_Library.slx (HCNeuron)\n');
+fprintf('built SNS_Deng_Library.slx (HCNeuron, 2026-10-22-architecture syn ports)\n');
 
 %% ============ 2) RG layer ==============================================
 build_hc_layer('SNS_Deng_RG', fullfile(here, 'SNS_Deng_RG.slx'), ...
@@ -167,6 +215,7 @@ end
 new_system(mdl);
 load_system('SNS_Deng_RG');
 load_system('SNS_Deng_PF');
+set_param(mdl, 'UnconnectedInputMsg', 'none');
 add_block('simulink/Ports & Subsystems/Model', [mdl '/RG'], ...
           'ModelFile', 'SNS_Deng_RG.slx', 'Position', [300 100 400 200]);
 add_block('simulink/Ports & Subsystems/Model', [mdl '/PF'], ...
@@ -178,8 +227,10 @@ add_block('simulink/Sources/Pulse Generator', [mdl '/kick'], ...
 add_line(mdl, 'kick/1', 'RG/1');
 add_line(mdl, 'RG/1', 'PF/1');
 add_line(mdl, 'RG/2', 'PF/2');
-% hip MNs + Deng Fig 6B activation map
-mn_specs = {'MN_hip_ext', 2.565, 1; 'MN_hip_flx', 3.632, 2};
+% hip MNs + Deng Fig 6B activation map (one-input synapse architecture:
+% PF V -> syn/1; syn out -> MN syn1 (port 2); MN Iapp stays grounded)
+mn_specs = {'MN_hip_ext', DENG_SYN.pf_to_mn_ext, 1; ...
+            'MN_hip_flx', DENG_SYN.pf_to_mn_flx, 2};
 for c = 1:size(mn_specs, 1)
     nm = mn_specs{c, 1};
     y0 = 40 + 120 * (c - 1);
@@ -195,8 +246,7 @@ for c = 1:size(mn_specs, 1)
         'Expression', '1/(1+exp(0.1532*(-70-u)))-0.01', ...
         'Position', [920 y0 1010 y0 + 40]);
     add_line(mdl, sprintf('PF/%d', mn_specs{c, 3}), sprintf('syn_%s/1', nm));
-    add_line(mdl, [nm '/1'], sprintf('syn_%s/2', nm));
-    add_line(mdl, sprintf('syn_%s/1', nm), [nm '/1']);
+    add_line(mdl, sprintf('syn_%s/1', nm), sprintf('%s/2', nm));
     add_line(mdl, [nm '/1'], sprintf('act_%s/1', nm));
 end
 % logging
@@ -217,9 +267,10 @@ fprintf('built demos/SNS_Deng_CPGDemo.slx (one 10 nA/1 ms pulse, 20 s)\n');
 
 %% ============ local functions ==========================================
 function build_hc_layer(name, slxPath, jointSpecs)
-% One model with a half-center pair per joint spec.
-% jointSpecs: {{'', 'stim'}}  -> RG layer (names HC_*/IN_*, I_stim inport)
-%             {{'hip'}, {'ka'}} -> PF layer (names hip_HC_* etc., RG inports)
+% One model with a half-center pair per joint spec, wired in the
+% 2026-09-22 one-input-synapse architecture.
+% jointSpecs: {{'', 'stim'}}  -> RG layer (I_stim inport)
+%             {{'hip'}, {'ka'}} -> PF layer (RG inports)
 here = fileparts(mfilename('fullpath'));
 root = fileparts(here);
 if bdIsLoaded(name), close_system(name, 0); end
@@ -227,9 +278,11 @@ if exist(slxPath, 'file'), delete(slxPath); end
 new_system(name);
 load_system('SNS_Deng_Library');
 load_system('SNS_Library');
+set_param(name, 'UnconnectedInputMsg', 'none');
 
 isRG = numel(jointSpecs{1}) > 1 && strcmp(jointSpecs{1}{2}, 'stim');
 WIN = {'-60', '35'};                          % HC<->IN window -60..-25
+HC2IN = 2.749;  IN2HC = 2.749;  RG2PF = 0.1;  % per-target defaults
 
 for s = 1:numel(jointSpecs)
     j = jointSpecs{s}{1};
@@ -247,38 +300,34 @@ for s = 1:numel(jointSpecs)
               [name '/pair' num2str(s) '_IN_flx'], ...
         'Vrest', '-60', 'Gm', '1', 'Cm', '5', 'Thr', WIN{1}, 'Slope', WIN{2}, ...
         'Position', [440 y + 150 540 y + 250]);
-    % HC->IN exc and IN->HC inh
-    synspecs = {'s1', 'HC_ext', 'IN_ext', '-40'; 's2', 'IN_ext', 'HC_flx', '-70'; ...
-                's3', 'HC_flx', 'IN_flx', '-40'; 's4', 'IN_flx', 'HC_ext', '-70'};
+    % synapses: q1 HC_ext->IN_ext (exc), q2 IN_ext->HC_flx (inh),
+    %           q3 HC_flx->IN_flx (exc), q4 IN_flx->HC_ext (inh).
+    % one-input architecture: presyn V -> syn/1; syn out -> postsyn syn port.
+    % HC syn1 (port 2) = the IN inhibition; HC syn2 (port 3) = RG drive (PF).
+    % IN syn1 (port 2) = the HC excitation.
+    synspecs = {'s1', 'HC_ext', 'IN_ext', '-40', HC2IN; ...
+                's2', 'IN_ext', 'HC_flx', '-70', IN2HC; ...
+                's3', 'HC_flx', 'IN_flx', '-40', HC2IN; ...
+                's4', 'IN_flx', 'HC_ext', '-70', IN2HC};
     for q = 1:4
         sb = sprintf('pair%d_%s', s, synspecs{q, 1});
         add_block('SNS_Library/NonSpikingSynapse', [name '/' sb], ...
-            'gmax', '2.749', 'Esyn', synspecs{q, 4}, ...
+            'gmax', num2str(synspecs{q, 5}), 'Esyn', synspecs{q, 4}, ...
             'ThrPre', WIN{1}, 'SlopePre', WIN{2}, ...
             'Position', [300 y + (q - 1) * 55 360 y + (q - 1) * 55 + 40]);
-        add_line(name, ['pair' num2str(s) '_' synspecs{q, 2} '/1'], [sb '/1']);
-        add_line(name, ['pair' num2str(s) '_' synspecs{q, 3} '/1'], [sb '/2']);
-        % s2/s4 (IN->HC) route through the HC current Sums, not directly
-        if q == 1 || q == 3
-            add_line(name, [sb '/1'], ['pair' num2str(s) '_' synspecs{q, 3} '/1']);
-        end
+        add_line(name, ['pair' num2str(s) '_' synspecs{q, 2} '/1'], [sb '/1'], ...
+                 'autorouting', 'on');
+        % postsynaptic target port: INs take it on syn1 (port 2); HCs on
+        % syn1 (port 2) as their only within-layer input.
+        add_line(name, [sb '/1'], ...
+                 ['pair' num2str(s) '_' synspecs{q, 3} '/2'], 'autorouting', 'on');
     end
-    % merge all currents into each HC (Sum -> Iin)
-    add_block('simulink/Math Operations/Sum', ...
-              [name '/pair' num2str(s) '_sum_ext'], 'Inputs', '++', ...
-              'Position', [590 y + 260 615 y + 290]);
-    add_block('simulink/Math Operations/Sum', ...
-              [name '/pair' num2str(s) '_sum_flx'], 'Inputs', '++', ...
-              'Position', [590 y + 300 615 y + 330]);
-    add_line(name, ['pair' num2str(s) '_s4/1'], ['pair' num2str(s) '_sum_ext/1']);
-    add_line(name, ['pair' num2str(s) '_s2/1'], ['pair' num2str(s) '_sum_flx/1']);
-    add_line(name, ['pair' num2str(s) '_sum_ext/1'], ['pair' num2str(s) '_HC_ext/1']);
-    add_line(name, ['pair' num2str(s) '_sum_flx/1'], ['pair' num2str(s) '_HC_flx/1']);
-    % stimulus (RG) or RG-drive synapses (PF)
+    % stimulus (RG) or RG-drive synapses (PF), into Iin / HC syn2
     if isRG
         add_block('simulink/Sources/In1', [name '/I_stim'], 'Port', '1', ...
                   'Position', [500 y + 300 530 y + 330]);
-        add_line(name, 'I_stim/1', ['pair' num2str(s) '_sum_ext/2']);
+        add_line(name, 'I_stim/1', ['pair' num2str(s) '_HC_ext/1'], ...
+                 'autorouting', 'on');
         extName = 'HC_ext'; flxName = 'HC_flx';
     else
         if s == 1     % RG-drive inports exist once for the whole PF layer
@@ -291,12 +340,12 @@ for s = 1:numel(jointSpecs)
             if half == 1, rh = 'ext'; srcp = 'V_RG_ext'; else, rh = 'flx'; srcp = 'V_RG_flx'; end
             sb = ['pair' num2str(s) '_s_RG_' rh];
             add_block('SNS_Library/NonSpikingSynapse', [name '/' sb], ...
-                'gmax', '0.1', 'Esyn', '-40', 'ThrPre', '-60', 'SlopePre', '20', ...
+                'gmax', num2str(RG2PF), 'Esyn', '-40', 'ThrPre', '-60', ...
+                'SlopePre', '20', ...
                 'Position', [100 y + 250 * (half - 1) 160 y + 310 * (half - 1) + 60]);
-            add_line(name, [srcp '/1'], [sb '/1']);
-            add_line(name, ['pair' num2str(s) '_HC_' rh '/1'], [sb '/2']);
+            add_line(name, [srcp '/1'], [sb '/1'], 'autorouting', 'on');
             add_line(name, [sb '/1'], ...
-                     ['pair' num2str(s) '_sum_' rh '/2']);
+                     ['pair' num2str(s) '_HC_' rh '/3'], 'autorouting', 'on');
         end
         extName = [j '_HC_ext']; flxName = [j '_HC_flx'];
     end
@@ -305,11 +354,13 @@ for s = 1:numel(jointSpecs)
               'Port', num2str(2 * s - 1), 'Position', [800 y 830 y + 30]);
     add_block('simulink/Sinks/Out1', [name '/V_' flxName], ...
               'Port', num2str(2 * s), 'Position', [800 y + 150 830 y + 180]);
-    add_line(name, ['pair' num2str(s) '_HC_ext/1'], ['V_' extName '/1']);
-    add_line(name, ['pair' num2str(s) '_HC_flx/1'], ['V_' flxName '/1']);
+    add_line(name, ['pair' num2str(s) '_HC_ext/1'], ['V_' extName '/1'], ...
+             'autorouting', 'on');
+    add_line(name, ['pair' num2str(s) '_HC_flx/1'], ['V_' flxName '/1'], ...
+             'autorouting', 'on');
 end
 set_param(name, 'SolverType', 'Fixed-step', 'Solver', 'ode1', ...
-          'FixedStep', '1e-4');
+          'FixedStep', '1e-4', 'UnconnectedInputMsg', 'none');
 save_system(name, slxPath);
 close_system(name, 0);
 end
