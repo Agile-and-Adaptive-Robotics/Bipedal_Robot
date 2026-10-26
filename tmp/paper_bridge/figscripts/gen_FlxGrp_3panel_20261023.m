@@ -207,17 +207,33 @@ scatter(bpab(i).Aexp, bpab(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
 scatter(angle_data(mask), torque_data(mask), sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
     'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none', 'DisplayName','Measured < 620 kPa');
 set(gca, sty{:});
-lgB = legend('Location','southwest'); lgB.FontSize = 8;
+lgB = legend('Location','northeast'); lgB.FontSize = 8; lgB.Color = 'w'; lgB.Box = 'on';
 
 % (C) 20 mm 56 cm redesigned route: corrected + measured vs human
 axT(3) = nexttile(3); hold on
-plot(humanAngle, TorqueHz, ':', 'Color', c8, 'LineWidth', 4)
-plot(phiD, TqCorr, '-', 'Color', c5, 'LineWidth', 2.5)
+plot(humanAngle, TorqueHz, ':', 'Color', c8, 'LineWidth', 4, ...
+    'DisplayName','Human model (max)');
+plot(phiD, TqCorr, '-', 'Color', c5, 'LineWidth', 2.5, ...
+    'DisplayName','Corrected model');
 scatter(K_deg, TorqueZ56, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-    'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none')
+    'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', ...
+    'DisplayName','Measured');
 set(gca, sty{:});
-yC = [TqCorr(:); TorqueHz(:); TorqueZ56(:)];
-axT(3).YLim = [floor(min(yC)/5)*5 - 5, 5];
+% Ben 2026-10-26: panel C axes scaled the SAME as panel B (both 20 mm
+% flexor curves against the same human target): one shared y-range and
+% x-range across B and C.
+tmpRP = torque_data(mask);
+yBC = [bpab(2).M_p(:); bpau(2).M_p(:); tmpRP(:); ...
+       Bifemsh_T(:); TorqueHz(:); TqCorr(:); TorqueZ56(:)];
+yLo = floor(min(yBC)/10)*10 - 5;
+axT(2).YLim = [yLo, 5];
+axT(3).YLim = [yLo, 5];
+tmpX = [phiD(:); K_deg(:); humanAngle(:); bpab(2).Ak(:); bpau(2).Ak(:)];
+xLo = max(min(tmpX), -125);
+xHi = min(max(tmpX), 10);
+axT(2).XLim = [xLo, xHi];
+axT(3).XLim = [xLo, xHi];
+lgC = legend('Location','southwest'); lgC.FontSize = 8;
 
 ylabel(t, '\bf Torque, N\cdotm'); xlabel(t, '\bf \theta_{k} , \circ');
 

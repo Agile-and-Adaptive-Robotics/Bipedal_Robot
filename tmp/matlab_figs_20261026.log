@@ -1,0 +1,122 @@
+[Warning: Variable 'XiUsed' not found.] 
+[> In Knee_Extensor_20mm (line 59)
+In run (line 112)
+In journal_figs_20261026 (line 13)] 
+The algorithm will be calculating Torque at 100 different joint positions.
+Initial tendon = 0.040000 m
+Initial geometry-dependent tendon maximum = 0.059648 m
+p5 release: hardcoded -89.80 deg, derived -89.80 deg
+p4 release: hardcoded -55.66 deg, derived -55.66 deg
+p6 release: hardcoded -47.78 deg, derived -47.78 deg
+p7 release: hardcoded -20.20 deg, derived -20.20 deg
+p3 release: hardcoded +6.06 deg, derived +6.06 deg
+p8 release: hardcoded +7.37 deg, derived +7.37 deg
+p7 active anywhere (hardcoded: yes until wall lift-off): 1
+The algorithm will be calculating Torque at 100 different joint positions.
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+
+Loaded optimized extensor design:
+p1     = [0.040000 0.137000 0.000000] m
+pEnd   = [0.034420 -0.197096 0.000000] m
+rest   = 0.827738 m
+tendon = 0.036841 m
+kmax   = 0.616665 m
+minimum torque margin = +0.050249 (+5.02%)
+
+Adjusted route (clip-on tibia part):
+tendon = 0.092490 m (baseline 0.036841 m)
+p6 = [0.11632 0.01504] m, theta 26.566 -> 7.367 deg
+p7 = [0.13132 -0.01897] m
+p8 = [0.12704 -0.04787] m
+p3 clip: none
+p3:p5 unchanged (femur-chain repair did not fire)
+p2: repeats its neighbor from -21.52 deg on
+p3: repeats its neighbor from -54.34 deg on
+p4: repeats its neighbor from -89.80 deg on
+p5: repeats its neighbor from -110.81 deg on
+p6: repeats its neighbor from -18.89 deg on
+p7: active through the full RoM
+p8: active through the full RoM
+adj minimum torque margin = +0.397737 (+39.77%)
+ExtTest20mm_2 Torque actual (adjoint, d = 0.2599 m, ang = -1.76 deg):
+50.5028	51.1732	47.1236	50.4992	32.5183	29.0224	35.9028	48.7059	38.9060	
+
+Pressure back-calculation (optimized extensor, rest = 0.8277 m, Dia = 20 mm; baseline vs adj route):
+angle_deg   target_Nm   kPa_base   kPa_adj   status_base / status_adj
+  -120.0       28.72     229.4     274.5   ok / ok
+  -113.4       30.52     243.7     269.1   ok / ok
+  -106.9       31.92     257.5     279.4   ok / ok
+  -100.3       33.07     271.6     291.7   ok / ok
+   -93.7       35.88     295.3     313.8   ok / ok
+   -87.2       38.43     321.5     336.8   ok / ok
+   -80.6       40.48     345.0     356.1   ok / ok
+   -74.0       41.71     366.2     374.3   ok / ok
+   -67.5       42.58     387.9     394.2   ok / ok
+   -60.9       45.38     424.5     430.1   ok / ok
+   -54.3       47.82     465.1     462.5   ok / ok
+   -47.8       49.51     507.9     469.8   ok / ok
+   -41.2       50.28     535.3     476.9   ok / ok
+   -34.6       50.22     559.7     484.8   ok / ok
+   -28.1       49.50     582.1     494.7   ok / ok
+   -21.5       47.19     592.6     501.0   ok / ok
+   -14.9       43.53     590.0     495.0   ok / ok
+    -8.4       38.76     573.3     487.3   ok / ok
+    -1.8       35.86     578.5     500.9   ok / ok
+     4.7       28.34     532.8     494.9   ok / ok
+max required pressure: baseline 596.6 kPa, adj 507.2 kPa
+Full table: Ext_20mm_pressure_for_human_torque.csv (in cwd)
+DONE_extensor_journal_fig
+The algorithm will be calculating Torque at 100 different joint positions.
+Stiffness from the result mat XiUsed: Xi0=0.00393737, Xi1=39978.7, Xi2=14733.8, Xi3=0.158289
+FlxTest20mm_56cm Torque actual (adjoint, d = 0.3386 m, ang = -73.71 deg):
+-27.9669	-16.7251	-26.2177	-23.9138	-23.5638	-27.6211	-33.5442	-6.2356	-3.4681	-26.6234	-20.2059	-23.3109	-8.8676	-33.3459	-37.7425	
+
+Pressure back-calculation (optimized flexor pair, rest = 0.5615 m, Dia = 20 mm):
+angle_deg   target_Nm     kPa   status
+  -120.0       -2.46   476.8   ok
+  -113.4       -5.13   505.8   ok
+  -106.9       -7.74   513.0   ok
+  -100.3      -10.27   505.0   ok
+   -93.7      -12.66   486.9   ok
+   -87.2      -14.89   462.5   ok
+   -80.6      -16.92   434.7   ok
+   -74.0      -18.71   405.8   ok
+   -67.5      -20.26   377.1   ok
+   -60.9      -21.52   349.8   ok
+   -54.3      -22.47   324.0   ok
+   -47.8      -23.01   299.4   ok
+   -41.2      -23.16   276.1   ok
+   -34.6      -22.99   254.1   ok
+   -28.1      -22.67   233.0   ok
+   -21.5      -22.14   211.2   ok
+   -14.9      -21.01   185.0   ok
+    -8.4      -18.57   146.9   ok
+    -1.8      -15.76    97.1   ok
+     4.7      -12.96    33.2   ok
+Full table: Flx_20mm_pressure_for_human_torque.csv (in cwd)
+BPA 2 route: p1{2} = [-0.125000 0.135000 -0.005851] m (femur), pEnd{2} = [-0.018725 -0.032692 -0.038964] m (t1); wrap active at home pose = 0
+
+ans = 
+
+  Figure (11: Knee bones and muscle routes - animation) with properties:
+
+      Number: 11
+        Name: 'Knee bones and muscle routes - animation'
+       Color: [1 1 1]
+    Position: [1100 235 1085 654]
+       Units: 'pixels'
+
+  Use GET to show all properties
+
+DONE_journal_figs
+Panel C pair torque at 620 kPa: corrected [min max] = [-91.91 -6.64] N*m
+Panel C: meet-or-exceed 15 of 15; smallest margin +0.42 N*m at -105.0 deg
+{Error using vertcat
+Dimensions of arrays being concatenated are not consistent.
+
+Error in gen_FlxGrp_3panel_20261023 (line 225)
+yBC = [bpab(2).M_p(:); bpau(2).M_p(:); torque_data(mask); ...
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+ERROR: MATLAB error Exit Status: 0x00000001
