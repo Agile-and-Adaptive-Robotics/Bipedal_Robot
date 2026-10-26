@@ -1,0 +1,42 @@
+Proposed caption (new figure; suggested label fig:deng_original_perturbation;
+placement in Section~\ref{sec:preliminary_sim_results}, after the P01
+paragraph; the ready-to-use figure environment is patches/P03).
+
+REV 2 (2026-10-26, supervisor M1/M2): siunitx units; dashed-line sentence
+correct for all panels including (D).
+
+Response of the archived Deng two-layer-CPG AnimatLab project to the
+published stimulation protocol, in its original engine. In every panel the
+blue trace is the unperturbed baseline and the red trace is the stimulated
+run; the shaded band marks \SIrange{2}{2.5}{\second}, and the dashed line
+marks \qty{2.1}{\second}, the paper-exact stimulus end (the stimulus in
+panels (A)--(C) ends there, while the local knee-level stimulus in panel (D)
+is held for the full band).
+(A)~Left rhythm-generator flexor population: the \qty{2}{\nano\ampere}
+rhythm-generator stimulus triggers an additional short burst beginning at
+stimulus onset (\qty{2.000}{\second}, against \qty{2.433}{\second} in the
+baseline). (B)~Left rhythm-generator extensor population, same run: the
+extensor rhythm continues through the stimulus (early onset at
+\qty{2.124}{\second}, against \qty{2.589}{\second} baseline) and recovers its
+period. (C)~Left rhythm-generator extensor population with the same current
+applied instead at the knee pattern-formation flexor: the trace is
+indistinguishable from baseline (post-stimulus phase
+$-\qty{2.3 \pm 2.4}{\percent}$). (D)~Left knee extensor motoneuron when the
+knee pattern-formation flexor is held for the full \qty{0.5}{\second} window:
+the local effect appears (in-window mean \qty{22.3}{\milli\volt} below
+baseline), while panel (C) shows the rhythm generator unaffected. Voltages
+are neuron membrane voltages clipped at \qty{0}{\milli\volt} by the
+integrate-and-fire element; positive current is depolarizing.
+
+Panel descriptions for review:
+- (A) demonstrates the rapid short step at stimulus onset.
+- (B) demonstrates phase reset with rhythm continuation (no burst suppression).
+- (C) demonstrates the antagonist-only predecessor behavior: a knee
+  pattern-formation stimulus does not reach the rhythm generator.
+- (D) demonstrates the same local stimulus does act at its own joint when
+  held longer, separating the local pathway from the rhythm generator.
+
+Generator + data: make_figure_review_20261026.py over the saved chart files
+deng_rg_mn.txt in Code/MuJoCo_SNS/spinal/reports_20261026_dengoriginal/
+run_B0_baseline, run_P1b_rgflexor_2p1, run_P2b_kneepfflexor_2p1,
+run_P2_kneepfflexor (1 ms samples, volts converted to mV).

@@ -1,0 +1,13 @@
+% P03 (OPTIONAL) — proposed figure environment for the new figure, IF the figure is
+% accepted. Placement: Section sec:preliminary_sim_results, immediately after the P01
+% paragraph. Asset ships as figures/deng_original_perturbation_20261026.pdf; the
+% suggested label is fig:deng_original_perturbation. Width follows the chapter's
+% existing single-column figure usage; adjust to match the file's convention.
+% REV 2 (2026-10-26): added per supervisor M5 (mechanical completeness).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\textwidth]{deng_original_perturbation_20261026.pdf}
+\caption[Response of the archived Deng project to the published stimulation protocol]{Response of the archived Deng two-layer-CPG AnimatLab project to the published stimulation protocol, in its original engine. Blue: unperturbed baseline; red: stimulated run; shaded band: \SIrange{2}{2.5}{\second}; dashed line: \qty{2.1}{\second}, the paper-exact stimulus end. (\textbf{A})~Left rhythm-generator flexor under the \qty{2}{\nano\ampere} rhythm-generator stimulus: an additional short burst begins at stimulus onset (\qty{2.000}{\second}, against \qty{2.433}{\second} baseline). (\textbf{B})~Left rhythm-generator extensor, same run: the rhythm continues through the stimulus (early onset \qty{2.124}{\second}, against \qty{2.589}{\second} baseline) and recovers its period. (\textbf{C})~Left rhythm-generator extensor with the same current applied at the knee pattern-formation flexor: indistinguishable from baseline (post-stimulus phase $-\qty{2.3 \pm 2.4}{\percent}$). (\textbf{D})~Left knee extensor motoneuron when the knee pattern-formation flexor is held for the full \qty{0.5}{\second} window: the local in-window suppression (\qty{22.3}{\milli\volt} below baseline mean) appears while the rhythm generator in (\textbf{C}) is unaffected. Voltages are membrane voltages clipped at \qty{0}{\milli\volt} by the integrate-and-fire element; positive current is depolarizing.}
+\label{fig:deng_original_perturbation}
+\end{figure}

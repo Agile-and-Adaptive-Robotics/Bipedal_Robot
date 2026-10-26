@@ -1,3 +1,13 @@
+# Three-batch review: reconciled packet, 26 October 2026
+
+Reviewed EB475WS4, easteregg2, and easteregg2_2. Delivery: `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/REVIEW_INBOX/REVIEWED_20261026/REVIEW_DECISIONS.md`. Use its bounded patches and application map; do not apply the incoming batches verbatim. `ZCODE_REPAIR_NOTES.md` identifies held figures and exact repairs. `REVIEWED_FRAGMENTS.pdf` is the standalone proof, not a chapter replacement.
+
+Approved tools framing retained (Researchers; Gait2392 second). Corrected stale W2L necessity/mass claims, scoped the contact/Ib ablation, repaired the original-engine Deng figure from preserved raw charts, completed a separate publisher-verified bibliography fragment, and corrected torque panel lettering/label handling. Knee CPG figure is held because the plotted interval does not show the claimed cycle. Knee-reflex and loaded-arm graphics need clipping/annotation repairs. Repeated failures and ownership are recorded in the packet's self-scoring matrix. Prior invalidated counts/no-op deletions remain invalidated.
+
+Fragment proof compiles cleanly; external chapter references are explicitly mocked. No Overleaf edits, active chapter replacements, bibliography rewrites, model runs, commits, pushes, or messages to ZCode were performed. Application must reconcile the live text, advisor comments, and Ben's tracked deletions first.
+
+---
+
 # Review delivery location
 
 Send proposed .tex fragments, figures, and REVIEW.md in a new machine/batch folder under `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/REVIEW_INBOX/`. Read its README.md and use REVIEW_TEMPLATE.md. Do not overwrite reviewed Revision_E chapters or make whole-chapter Overleaf replacements. P01 now starts with “Researchers,” with Gait2392 models second. No external message was sent by this update.

@@ -1,0 +1,61 @@
+% P01_sns_demo_figures.tex — PROPOSED INSERTIONS (not applied).
+% Baseline snapshot: Revision_D\chapters\60-sns.tex as committed
+% (2026-10-26 pull incl. the easteregg2 polish pass). Overleaf is the
+% application baseline: re-verify anchors against live Overleaf before
+% application. Insertion point 1: immediately after the figure
+% environment closing \label{fig:simulink_reflex_topology} (ch. 60-sns,
+% sec:sns_simulink_demos). Insertion point 2: after \label{fig:w2l_perturbation}'s
+% figure environment (sec:w2l_perturbation).
+% ---------------- INSERTION 1 (after fig:simulink_reflex_topology) ----
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_kneereflex_v4.pdf}
+\caption[Knee reflex demo: response, mechanism, and pathway]{Knee reflex
+demo. (A)~Knee flexion response of the Simulink circuit (solid) against
+an independent numpy implementation of the same equations (dashed);
+both settle near $43.5^\circ$, maximum deviation $3.6^\circ$.
+(B)~Sagittal leg model with antagonist BPA actuators routed outside the
+limb silhouette. (C)~Reflex pathways: Ia stretch excitation, Ib
+autogenic inhibition, and reciprocal Ia inhibition; excitatory
+(triangle) and inhibitory (filled circle) markers sit at the
+postsynaptic ending, and afferent feedback is drawn dashed.}
+\label{fig:sns_demo_kneereflex}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_kneecpg_v4.pdf}
+\caption[CPG-driven knee demo: cyclic response and neural
+architecture]{CPG-driven knee demo. (A)~Cyclic knee flexion over a 2~s
+window; the full run sweeps $10$--$48^\circ$. (B)~Leg motion across one
+cycle; flexion swings the shank posteriorly. (C)~Architecture
+(rhythm generator $\rightarrow$ pattern formation $\rightarrow$
+motoneurons $\rightarrow$ BPA actuators) above the half-center core
+with mutual inhibition and weak cross-excitation (dotted).}
+\label{fig:sns_demo_kneecpg}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_beer_v4.pdf}
+\caption[Beer-cup load reflex: posture, response, and pathway]{Beer-cup
+load reflex. (B1)~Start posture: humerus vertical, forearm level,
+empty cup. (B2)~End posture with the full cup; biceps and triceps BPAs
+run along the upper arm. (A)~Forearm elevation ($0^\circ$ = level,
+negative = below level): with reflexes active the glass is held
+$2.0^\circ$ below level versus $7.8^\circ$ with reflexes disabled, a
+$3.9\times$ increase in apparent stiffness. (C)~Reflex pathway with
+markers at the postsynaptic endings.}
+\label{fig:sns_demo_beer}
+\end{figure}
+% ---------------- INSERTION 2 (after fig:w2l_perturbation) -----------
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{ablation_pair_metrics_20261026.pdf}
+\caption[Feedback ablation at fixed tuning]{Feedback ablation at fixed
+tuning. With identical drives and conductances, removing the
+harness-exposed contact and Ib feedback channels collapses stepping
+from 33/28 leg cycles and 1.16~m of forward progress (intact) to 1/0
+cycles and 0.09~m (ablated) over 30~s.}
+\label{fig:sns_ablation_pair}
+\end{figure}

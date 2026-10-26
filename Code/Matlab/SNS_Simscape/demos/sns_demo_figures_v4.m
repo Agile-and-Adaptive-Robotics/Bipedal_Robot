@@ -201,6 +201,7 @@ text(ax, 0.02, 0.74, 'autogenic (Ib, inh)', 'FontSize', 8, 'Color', [0 0.45 0.74
 text(ax, 0.02, 0.40, 'reciprocal (Ia, inh)', 'FontSize', 8, 'Color', [0 0.45 0.74]);
 title(ax, 'C  Reflex pathway', 'FontWeight', 'bold');
 exportgraphics(fig, fname, 'Resolution', 300);
+exportgraphics(fig, strrep(fname, '.png', '.pdf'));
 close(fig);
 fprintf('wrote %s (twin settle %.2f deg, max dev %.2f deg)\n', fname, vv(end), d);
 end
@@ -277,6 +278,7 @@ text(ax, 0.50, 0.335, 'weak cross-excitation', 'HorizontalAlignment', 'center', 
     'FontSize', 7.5);
 title(ax, 'C  Architecture + half-center core', 'FontWeight', 'bold');
 exportgraphics(fig, fname, 'Resolution', 300);
+exportgraphics(fig, strrep(fname, '.png', '.pdf'));
 close(fig);
 fprintf('wrote %s (period %.4f s)\n', fname, per);
 end
@@ -353,6 +355,7 @@ text(ax, 0.02, 0.95, 'feedback = blue dashed; markers at the' , 'FontSize', 7.5,
 text(ax, 0.02, 0.90, 'postsynaptic ending', 'FontSize', 7.5, 'Color', [0 0.45 0.74]);
 title(ax, 'C  Reflex pathway', 'FontWeight', 'bold');
 exportgraphics(fig, fname, 'Resolution', 300);
+exportgraphics(fig, strrep(fname, '.png', '.pdf'));
 close(fig);
 fprintf('wrote %s (ON %.3f deg, OFF %.3f deg)\n', fname, v1(end), v2(end));
 end
