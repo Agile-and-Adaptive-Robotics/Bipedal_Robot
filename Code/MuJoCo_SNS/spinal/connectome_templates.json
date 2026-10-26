@@ -26191,20 +26191,6 @@
     "grp": "in_R"
    },
    {
-    "type": "IN-IaIN",
-    "label": "IaIN_R",
-    "x": 500,
-    "y": 470,
-    "grp": "in_R"
-   },
-   {
-    "type": "IN-LBIN",
-    "label": "LBIN_R",
-    "x": 390,
-    "y": 540,
-    "grp": "in_R"
-   },
-   {
     "type": "SN-Ia",
     "label": "Ia_hip_R",
     "x": 130,
@@ -26265,27 +26251,6 @@
     "label": "Ib_ankle_R",
     "x": 130,
     "y": 626,
-    "grp": "aff_R"
-   },
-   {
-    "type": "IN-Ib+",
-    "label": "IBEXC_R",
-    "x": 390,
-    "y": 600,
-    "grp": "in_R"
-   },
-   {
-    "type": "SN-heel",
-    "label": "heel_R",
-    "x": 40,
-    "y": 560,
-    "grp": "aff_R"
-   },
-   {
-    "type": "SN-toe",
-    "label": "toe_R",
-    "x": 40,
-    "y": 620,
     "grp": "aff_R"
    },
    {
@@ -26996,20 +26961,6 @@
     "grp": "in_L"
    },
    {
-    "type": "IN-IaIN",
-    "label": "IaIN_L",
-    "x": 1450,
-    "y": 470,
-    "grp": "in_L"
-   },
-   {
-    "type": "IN-LBIN",
-    "label": "LBIN_L",
-    "x": 1340,
-    "y": 540,
-    "grp": "in_L"
-   },
-   {
     "type": "SN-Ia",
     "label": "Ia_hip_L",
     "x": 1080,
@@ -27073,39 +27024,11 @@
     "grp": "aff_L"
    },
    {
-    "type": "IN-Ib+",
-    "label": "IBEXC_L",
-    "x": 1340,
-    "y": 600,
-    "grp": "in_L"
-   },
-   {
-    "type": "SN-heel",
-    "label": "heel_L",
-    "x": 990,
-    "y": 560,
-    "grp": "aff_L"
-   },
-   {
-    "type": "SN-toe",
-    "label": "toe_L",
-    "x": 990,
-    "y": 620,
-    "grp": "aff_L"
-   },
-   {
     "type": "RC",
     "label": "RC_L",
     "x": 1680,
     "y": 420,
     "grp": "in_L"
-   },
-   {
-    "type": "IN-C",
-    "label": "PM T=1.79 ws=0.12",
-    "x": 490,
-    "y": 640,
-    "grp": "drive"
    }
   ],
   "edges": [
@@ -27113,14 +27036,14 @@
     "from": "DRIVE",
     "to": "RG_E_R",
     "sign": "exc",
-    "gain": 1.699,
+    "gain": 1.8,
     "tag": "desc_e"
    },
    {
     "from": "DRIVE",
     "to": "RG_F_R",
     "sign": "exc",
-    "gain": 0.996,
+    "gain": 1.03,
     "tag": "desc_f"
    },
    {
@@ -27162,7 +27085,7 @@
     "from": "c1_R",
     "to": "RG_F_L",
     "sign": "inh",
-    "gain": 0.498,
+    "gain": 0.0,
     "tag": "c1_gain"
    },
    {
@@ -27176,42 +27099,42 @@
     "from": "V3_R",
     "to": "RG_E_L",
     "sign": "exc",
-    "gain": 0.095,
+    "gain": 0.0,
     "tag": "v3_gain"
    },
    {
     "from": "V3_R",
     "to": "InE_L",
     "sign": "exc",
-    "gain": 0.095,
+    "gain": 0.0,
     "tag": "v3_to_contraInE"
    },
    {
     "from": "RG_E_R",
     "to": "PF_E1_R",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "rg_to_pf"
    },
    {
     "from": "RG_E_R",
     "to": "PF_E2_R",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "e2_pf"
    },
    {
     "from": "RG_F_R",
     "to": "PF_F1_R",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "rg_to_pf"
    },
    {
     "from": "RG_F_R",
     "to": "PF_F2_R",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "rg_to_pf"
    },
    {
@@ -27337,8 +27260,8 @@
     "from": "POSTURE",
     "to": "MN_med_gas_R",
     "sign": "exc",
-    "gain": 0.026,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.08,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_lat_gas_R",
@@ -27358,8 +27281,8 @@
     "from": "POSTURE",
     "to": "MN_lat_gas_R",
     "sign": "exc",
-    "gain": 0.026,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.08,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_soleus_R",
@@ -27379,8 +27302,8 @@
     "from": "POSTURE",
     "to": "MN_soleus_R",
     "sign": "exc",
-    "gain": 0.182,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.55,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_tib_post_R",
@@ -27400,8 +27323,8 @@
     "from": "POSTURE",
     "to": "MN_tib_post_R",
     "sign": "exc",
-    "gain": 0.116,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.35,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_flex_dig_R",
@@ -27421,8 +27344,8 @@
     "from": "POSTURE",
     "to": "MN_flex_dig_R",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_flex_hal_R",
@@ -27442,8 +27365,8 @@
     "from": "POSTURE",
     "to": "MN_flex_hal_R",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_per_brev_R",
@@ -27463,8 +27386,8 @@
     "from": "POSTURE",
     "to": "MN_per_brev_R",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_per_long_R",
@@ -27484,8 +27407,8 @@
     "from": "POSTURE",
     "to": "MN_per_long_R",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_per_tert_R",
@@ -27505,8 +27428,8 @@
     "from": "POSTURE",
     "to": "MN_per_tert_R",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_glut_med1_R",
@@ -28272,97 +28195,6 @@
     "tag": "f1_gate"
    },
    {
-    "from": "KINH_R",
-    "to": "MN_med_gas_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_lat_gas_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_soleus_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_tib_post_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_flex_dig_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_flex_hal_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_per_brev_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_per_long_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_R",
-    "to": "MN_per_tert_R",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "PF_F1_R",
-    "to": "KINH_L",
-    "sign": "exc",
-    "gain": 1.425,
-    "tag": "contra_kinh"
-   },
-   {
-    "from": "IaIN_R",
-    "to": "MN_glut_max1_R",
-    "sign": "inh",
-    "gain": 0.825,
-    "tag": "ia_in"
-   },
-   {
-    "from": "IaIN_R",
-    "to": "MN_psoas_R",
-    "sign": "inh",
-    "gain": 0.825,
-    "tag": "ia_in"
-   },
-   {
-    "from": "LBIN_R",
-    "to": "RG_E_R",
-    "sign": "exc",
-    "gain": 0.674,
-    "tag": "ib_rge"
-   },
-   {
     "from": "Ia_hip_R",
     "to": "MN_glut_max1_R",
     "sign": "exc",
@@ -28378,31 +28210,38 @@
    },
    {
     "from": "Ia_hip_R",
-    "to": "IaIN_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ia_to_iaIN"
+    "to": "MN_psoas_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
+   },
+   {
+    "from": "Ia_hip_R",
+    "to": "MN_glut_max1_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
    },
    {
     "from": "II_hip_R",
-    "to": "RG_F_R",
+    "to": "MN_glut_max1_R",
     "sign": "exc",
-    "gain": 0.384,
-    "tag": "ii_f_central"
-   },
-   {
-    "from": "II_hip_R",
-    "to": "RG_E_R",
-    "sign": "exc",
-    "gain": 0.093,
-    "tag": "ii_e_central"
+    "gain": 0.3,
+    "tag": "ii_aff_legacy"
    },
    {
     "from": "Ib_hip_R",
-    "to": "LBIN_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_LBIN"
+    "to": "MN_glut_max1_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
+   },
+   {
+    "from": "Ib_hip_R",
+    "to": "MN_psoas_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
    },
    {
     "from": "Ia_knee_R",
@@ -28420,31 +28259,38 @@
    },
    {
     "from": "Ia_knee_R",
-    "to": "IaIN_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ia_to_iaIN"
+    "to": "MN_semimem_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
+   },
+   {
+    "from": "Ia_knee_R",
+    "to": "MN_vas_lat_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
    },
    {
     "from": "II_knee_R",
-    "to": "RG_F_R",
+    "to": "MN_vas_lat_R",
     "sign": "exc",
-    "gain": 0.384,
-    "tag": "ii_f_central"
-   },
-   {
-    "from": "II_knee_R",
-    "to": "RG_E_R",
-    "sign": "exc",
-    "gain": 0.093,
-    "tag": "ii_e_central"
+    "gain": 0.3,
+    "tag": "ii_aff_legacy"
    },
    {
     "from": "Ib_knee_R",
-    "to": "LBIN_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_LBIN"
+    "to": "MN_vas_lat_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
+   },
+   {
+    "from": "Ib_knee_R",
+    "to": "MN_semimem_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
    },
    {
     "from": "Ia_ankle_R",
@@ -28462,87 +28308,38 @@
    },
    {
     "from": "Ia_ankle_R",
-    "to": "IaIN_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ia_to_iaIN"
-   },
-   {
-    "from": "II_ankle_R",
-    "to": "RG_F_R",
-    "sign": "exc",
-    "gain": 0.384,
-    "tag": "ii_f_central"
-   },
-   {
-    "from": "II_ankle_R",
-    "to": "RG_E_R",
-    "sign": "exc",
-    "gain": 0.093,
-    "tag": "ii_e_central"
-   },
-   {
-    "from": "Ib_ankle_R",
-    "to": "LBIN_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_LBIN"
-   },
-   {
-    "from": "Ia_hip_R",
-    "to": "RG_F_R",
-    "sign": "exc",
-    "gain": 0.399,
-    "tag": "ia_f_central"
-   },
-   {
-    "from": "Ib_ankle_R",
-    "to": "IBEXC_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_IBEXC"
-   },
-   {
-    "from": "RG_E_R",
-    "to": "IBEXC_R",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "stance_gate"
-   },
-   {
-    "from": "IBEXC_R",
-    "to": "MN_soleus_R",
-    "sign": "exc",
+    "to": "MN_tib_ant_R",
+    "sign": "inh",
     "gain": 0.5,
-    "tag": "ib_reversal"
+    "tag": "ia_recip_direct_legacy"
    },
    {
-    "from": "V3_R",
-    "to": "IBEXC_R",
-    "sign": "exc",
-    "gain": 0.878,
-    "tag": "v3_to_ibexc"
+    "from": "Ia_ankle_R",
+    "to": "MN_soleus_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
    },
    {
-    "from": "heel_R",
-    "to": "RG_E_R",
-    "sign": "exc",
-    "gain": 0.375,
-    "tag": "heel_rge"
-   },
-   {
-    "from": "toe_R",
-    "to": "RG_E_R",
-    "sign": "exc",
-    "gain": 0.146,
-    "tag": "toe_rge"
-   },
-   {
-    "from": "heel_R",
+    "from": "II_ankle_R",
     "to": "MN_soleus_R",
     "sign": "exc",
-    "gain": 0.814,
-    "tag": "contact_onset"
+    "gain": 0.3,
+    "tag": "ii_aff_legacy"
+   },
+   {
+    "from": "Ib_ankle_R",
+    "to": "MN_soleus_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
+   },
+   {
+    "from": "Ib_ankle_R",
+    "to": "MN_tib_ant_R",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
    },
    {
     "from": "MN_vas_lat_R",
@@ -28576,14 +28373,14 @@
     "from": "DRIVE",
     "to": "RG_E_L",
     "sign": "exc",
-    "gain": 1.699,
+    "gain": 1.8,
     "tag": "desc_e"
    },
    {
     "from": "DRIVE",
     "to": "RG_F_L",
     "sign": "exc",
-    "gain": 0.996,
+    "gain": 1.03,
     "tag": "desc_f"
    },
    {
@@ -28625,7 +28422,7 @@
     "from": "c1_L",
     "to": "RG_F_R",
     "sign": "inh",
-    "gain": 0.498,
+    "gain": 0.0,
     "tag": "c1_gain"
    },
    {
@@ -28639,42 +28436,42 @@
     "from": "V3_L",
     "to": "RG_E_R",
     "sign": "exc",
-    "gain": 0.095,
+    "gain": 0.0,
     "tag": "v3_gain"
    },
    {
     "from": "V3_L",
     "to": "InE_R",
     "sign": "exc",
-    "gain": 0.095,
+    "gain": 0.0,
     "tag": "v3_to_contraInE"
    },
    {
     "from": "RG_E_L",
     "to": "PF_E1_L",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "rg_to_pf"
    },
    {
     "from": "RG_E_L",
     "to": "PF_E2_L",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "e2_pf"
    },
    {
     "from": "RG_F_L",
     "to": "PF_F1_L",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "rg_to_pf"
    },
    {
     "from": "RG_F_L",
     "to": "PF_F2_L",
     "sign": "exc",
-    "gain": 2.601,
+    "gain": 2.233,
     "tag": "rg_to_pf"
    },
    {
@@ -28800,8 +28597,8 @@
     "from": "POSTURE",
     "to": "MN_med_gas_L",
     "sign": "exc",
-    "gain": 0.026,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.08,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_lat_gas_L",
@@ -28821,8 +28618,8 @@
     "from": "POSTURE",
     "to": "MN_lat_gas_L",
     "sign": "exc",
-    "gain": 0.026,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.08,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_soleus_L",
@@ -28842,8 +28639,8 @@
     "from": "POSTURE",
     "to": "MN_soleus_L",
     "sign": "exc",
-    "gain": 0.182,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.55,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_tib_post_L",
@@ -28863,8 +28660,8 @@
     "from": "POSTURE",
     "to": "MN_tib_post_L",
     "sign": "exc",
-    "gain": 0.116,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.35,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_flex_dig_L",
@@ -28884,8 +28681,8 @@
     "from": "POSTURE",
     "to": "MN_flex_dig_L",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_flex_hal_L",
@@ -28905,8 +28702,8 @@
     "from": "POSTURE",
     "to": "MN_flex_hal_L",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_per_brev_L",
@@ -28926,8 +28723,8 @@
     "from": "POSTURE",
     "to": "MN_per_brev_L",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_per_long_L",
@@ -28947,8 +28744,8 @@
     "from": "POSTURE",
     "to": "MN_per_long_L",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_per_tert_L",
@@ -28968,8 +28765,8 @@
     "from": "POSTURE",
     "to": "MN_per_tert_L",
     "sign": "exc",
-    "gain": 0.05,
-    "tag": "POSTURE_OVERRIDE*trim"
+    "gain": 0.15,
+    "tag": "POSTURE_OVERRIDE"
    },
    {
     "from": "MN_glut_med1_L",
@@ -29735,97 +29532,6 @@
     "tag": "f1_gate"
    },
    {
-    "from": "KINH_L",
-    "to": "MN_med_gas_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_lat_gas_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_soleus_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_tib_post_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_flex_dig_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_flex_hal_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_per_brev_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_per_long_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "KINH_L",
-    "to": "MN_per_tert_L",
-    "sign": "inh",
-    "gain": 0.929,
-    "tag": "f1_anklepf_inh"
-   },
-   {
-    "from": "PF_F1_L",
-    "to": "KINH_R",
-    "sign": "exc",
-    "gain": 1.425,
-    "tag": "contra_kinh"
-   },
-   {
-    "from": "IaIN_L",
-    "to": "MN_glut_max1_L",
-    "sign": "inh",
-    "gain": 0.825,
-    "tag": "ia_in"
-   },
-   {
-    "from": "IaIN_L",
-    "to": "MN_psoas_L",
-    "sign": "inh",
-    "gain": 0.825,
-    "tag": "ia_in"
-   },
-   {
-    "from": "LBIN_L",
-    "to": "RG_E_L",
-    "sign": "exc",
-    "gain": 0.674,
-    "tag": "ib_rge"
-   },
-   {
     "from": "Ia_hip_L",
     "to": "MN_glut_max1_L",
     "sign": "exc",
@@ -29841,31 +29547,38 @@
    },
    {
     "from": "Ia_hip_L",
-    "to": "IaIN_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ia_to_iaIN"
+    "to": "MN_psoas_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
+   },
+   {
+    "from": "Ia_hip_L",
+    "to": "MN_glut_max1_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
    },
    {
     "from": "II_hip_L",
-    "to": "RG_F_L",
+    "to": "MN_glut_max1_L",
     "sign": "exc",
-    "gain": 0.384,
-    "tag": "ii_f_central"
-   },
-   {
-    "from": "II_hip_L",
-    "to": "RG_E_L",
-    "sign": "exc",
-    "gain": 0.093,
-    "tag": "ii_e_central"
+    "gain": 0.3,
+    "tag": "ii_aff_legacy"
    },
    {
     "from": "Ib_hip_L",
-    "to": "LBIN_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_LBIN"
+    "to": "MN_glut_max1_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
+   },
+   {
+    "from": "Ib_hip_L",
+    "to": "MN_psoas_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
    },
    {
     "from": "Ia_knee_L",
@@ -29883,31 +29596,38 @@
    },
    {
     "from": "Ia_knee_L",
-    "to": "IaIN_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ia_to_iaIN"
+    "to": "MN_semimem_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
+   },
+   {
+    "from": "Ia_knee_L",
+    "to": "MN_vas_lat_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
    },
    {
     "from": "II_knee_L",
-    "to": "RG_F_L",
+    "to": "MN_vas_lat_L",
     "sign": "exc",
-    "gain": 0.384,
-    "tag": "ii_f_central"
-   },
-   {
-    "from": "II_knee_L",
-    "to": "RG_E_L",
-    "sign": "exc",
-    "gain": 0.093,
-    "tag": "ii_e_central"
+    "gain": 0.3,
+    "tag": "ii_aff_legacy"
    },
    {
     "from": "Ib_knee_L",
-    "to": "LBIN_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_LBIN"
+    "to": "MN_vas_lat_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
+   },
+   {
+    "from": "Ib_knee_L",
+    "to": "MN_semimem_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
    },
    {
     "from": "Ia_ankle_L",
@@ -29925,87 +29645,38 @@
    },
    {
     "from": "Ia_ankle_L",
-    "to": "IaIN_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ia_to_iaIN"
-   },
-   {
-    "from": "II_ankle_L",
-    "to": "RG_F_L",
-    "sign": "exc",
-    "gain": 0.384,
-    "tag": "ii_f_central"
-   },
-   {
-    "from": "II_ankle_L",
-    "to": "RG_E_L",
-    "sign": "exc",
-    "gain": 0.093,
-    "tag": "ii_e_central"
-   },
-   {
-    "from": "Ib_ankle_L",
-    "to": "LBIN_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_LBIN"
-   },
-   {
-    "from": "Ia_hip_L",
-    "to": "RG_F_L",
-    "sign": "exc",
-    "gain": 0.399,
-    "tag": "ia_f_central"
-   },
-   {
-    "from": "Ib_ankle_L",
-    "to": "IBEXC_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "ib_to_IBEXC"
-   },
-   {
-    "from": "RG_E_L",
-    "to": "IBEXC_L",
-    "sign": "exc",
-    "gain": 1.0,
-    "tag": "stance_gate"
-   },
-   {
-    "from": "IBEXC_L",
-    "to": "MN_soleus_L",
-    "sign": "exc",
+    "to": "MN_tib_ant_L",
+    "sign": "inh",
     "gain": 0.5,
-    "tag": "ib_reversal"
+    "tag": "ia_recip_direct_legacy"
    },
    {
-    "from": "V3_L",
-    "to": "IBEXC_L",
-    "sign": "exc",
-    "gain": 0.878,
-    "tag": "v3_to_ibexc"
+    "from": "Ia_ankle_L",
+    "to": "MN_soleus_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ia_recip_direct_legacy"
    },
    {
-    "from": "heel_L",
-    "to": "RG_E_L",
-    "sign": "exc",
-    "gain": 0.375,
-    "tag": "heel_rge"
-   },
-   {
-    "from": "toe_L",
-    "to": "RG_E_L",
-    "sign": "exc",
-    "gain": 0.146,
-    "tag": "toe_rge"
-   },
-   {
-    "from": "heel_L",
+    "from": "II_ankle_L",
     "to": "MN_soleus_L",
     "sign": "exc",
-    "gain": 0.814,
-    "tag": "contact_onset"
+    "gain": 0.3,
+    "tag": "ii_aff_legacy"
+   },
+   {
+    "from": "Ib_ankle_L",
+    "to": "MN_soleus_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
+   },
+   {
+    "from": "Ib_ankle_L",
+    "to": "MN_tib_ant_L",
+    "sign": "inh",
+    "gain": 0.5,
+    "tag": "ib_auto_direct_legacy"
    },
    {
     "from": "MN_vas_lat_L",
@@ -30034,20 +29705,6 @@
     "sign": "inh",
     "gain": 0.5,
     "tag": "renshaw"
-   },
-   {
-    "from": "PM T=1.79 ws=0.12",
-    "to": "RG_E_R",
-    "sign": "exc",
-    "gain": 0.365,
-    "tag": "pm_gain"
-   },
-   {
-    "from": "PM T=1.79 ws=0.12",
-    "to": "RG_E_L",
-    "sign": "exc",
-    "gain": 0.365,
-    "tag": "pm_gain"
    }
   ],
   "_note": "curriculum stage 3: ground (current pre-s3k family)",
@@ -303011,7 +302668,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "V3 Commissural Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF ext",
@@ -303019,7 +302678,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG flx",
@@ -303027,7 +302688,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF ext",
@@ -303035,7 +302698,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG flx",
@@ -303043,7 +302708,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG to RG Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip MN ext",
@@ -303051,7 +302718,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF ext",
@@ -303059,7 +302728,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank ext Ib",
@@ -303067,7 +302738,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx Ib",
@@ -303075,7 +302748,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_flx_Excite",
-    "aproj_gmax": 1e-06
+    "aproj_gmax": 1e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx Ib",
@@ -303083,7 +302758,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_flx_Excite",
-    "aproj_gmax": 1e-06
+    "aproj_gmax": 1e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN flx RE",
@@ -303091,7 +302768,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx Ia",
@@ -303099,7 +302778,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF ext",
@@ -303107,7 +302788,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF ext IN",
@@ -303115,7 +302798,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee ext Ib",
@@ -303123,7 +302808,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank flx Ib",
@@ -303131,7 +302818,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_flx_Excite",
-    "aproj_gmax": 1e-06
+    "aproj_gmax": 1e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN flx",
@@ -303139,7 +302828,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG flx IN",
@@ -303147,7 +302838,9 @@
     "sign": "inh",
     "tag": "rg_laminate",
     "aproj_type": "RG Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF flx",
@@ -303155,7 +302848,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN ext RE",
@@ -303163,7 +302858,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG ext",
@@ -303171,7 +302868,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG to RG Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip ext Ia",
@@ -303179,7 +302878,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG ext",
@@ -303187,7 +302888,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG flx",
@@ -303195,7 +302898,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN ext RE",
@@ -303203,7 +302908,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF ext",
@@ -303211,7 +302918,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN ext",
@@ -303219,7 +302928,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF flx IN",
@@ -303227,7 +302938,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank ext Ia",
@@ -303235,7 +302948,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF ext",
@@ -303243,7 +302958,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN ext",
@@ -303251,7 +302968,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip ext Ib",
@@ -303259,7 +302978,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN ext RE",
@@ -303267,7 +302988,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx Ia",
@@ -303275,7 +302998,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L heel contact",
@@ -303283,7 +303008,9 @@
     "sign": "exc",
     "tag": "contact_ank",
     "aproj_type": "Heel_Ipsi_AnkMNext_Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF flx",
@@ -303291,7 +303018,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN ext RE",
@@ -303299,7 +303028,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN ext RE",
@@ -303307,7 +303038,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank ext Ia",
@@ -303315,7 +303048,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip ext Ia",
@@ -303323,7 +303058,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN flx RE",
@@ -303331,7 +303068,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx Ib",
@@ -303339,7 +303078,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_flx_Excite",
-    "aproj_gmax": 1e-06
+    "aproj_gmax": 1e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank ext Ia IN",
@@ -303347,7 +303088,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx Ia IN",
@@ -303355,7 +303098,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip MN ext RE",
@@ -303363,7 +303108,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN flx RE",
@@ -303371,7 +303118,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN flx RE",
@@ -303379,7 +303128,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank ext Ia",
@@ -303387,7 +303138,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF flx",
@@ -303395,7 +303148,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN flx RE",
@@ -303403,7 +303158,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN ext RE",
@@ -303411,7 +303168,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF flx",
@@ -303419,7 +303178,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN flx RE",
@@ -303427,7 +303188,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank flx Ia IN",
@@ -303435,7 +303198,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank flx Ia",
@@ -303443,7 +303208,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx Ia IN",
@@ -303451,7 +303218,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF flx",
@@ -303459,7 +303228,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN ext RE",
@@ -303467,7 +303238,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF ext",
@@ -303475,7 +303248,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee ext Ia IN",
@@ -303483,7 +303258,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF flx IN",
@@ -303491,7 +303268,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF flx",
@@ -303499,7 +303278,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF flx",
@@ -303507,7 +303288,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF flx",
@@ -303515,7 +303298,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN flx RE",
@@ -303523,7 +303308,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF flx",
@@ -303531,7 +303318,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN flx",
@@ -303539,7 +303328,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx Ia IN",
@@ -303547,7 +303338,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee ext Ia",
@@ -303555,7 +303348,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF flx",
@@ -303563,7 +303358,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank flx Ia",
@@ -303571,7 +303368,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN flx RE",
@@ -303579,7 +303378,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R heel contact",
@@ -303587,7 +303388,9 @@
     "sign": "exc",
     "tag": "contact_contra_flex",
     "aproj_type": "Heel_Contra_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx Ia",
@@ -303595,7 +303398,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF ext",
@@ -303603,7 +303408,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee ext Ia",
@@ -303611,7 +303418,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN flx",
@@ -303619,7 +303428,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF ext IN",
@@ -303627,7 +303438,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L toe contact",
@@ -303635,7 +303448,9 @@
     "sign": "exc",
     "tag": "contact_ank",
     "aproj_type": "Toe_Ipsi_AnkMNext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank flx Ia IN",
@@ -303643,7 +303458,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee ext Ia IN",
@@ -303651,7 +303468,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF flx",
@@ -303659,7 +303478,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee ext Ia",
@@ -303667,7 +303488,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF ext",
@@ -303675,7 +303498,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R heel contact",
@@ -303683,7 +303508,9 @@
     "sign": "exc",
     "tag": "contact_ank",
     "aproj_type": "Heel_Ipsi_AnkMNext_Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank ext Ia",
@@ -303691,7 +303518,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip PF flx IN",
@@ -303699,7 +303528,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN ext RE",
@@ -303707,7 +303538,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R toe contact",
@@ -303715,7 +303548,9 @@
     "sign": "exc",
     "tag": "contact_ank",
     "aproj_type": "Toe_Ipsi_AnkMNext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx Ia",
@@ -303723,7 +303558,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN ext RE",
@@ -303731,7 +303568,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank flx Ib",
@@ -303739,7 +303578,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_flx_Excite",
-    "aproj_gmax": 1e-06
+    "aproj_gmax": 1e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx Ia",
@@ -303747,7 +303588,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip MN ext RE",
@@ -303755,7 +303598,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF flx",
@@ -303763,7 +303608,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip ext Ia IN",
@@ -303771,7 +303618,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx Ia",
@@ -303779,7 +303628,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip ext Ia",
@@ -303787,7 +303638,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx Ia IN",
@@ -303795,7 +303648,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG ext IN",
@@ -303803,7 +303658,9 @@
     "sign": "inh",
     "tag": "rg_laminate",
     "aproj_type": "RG Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank ext Ib",
@@ -303811,7 +303668,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN ext RE",
@@ -303819,7 +303678,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG ext",
@@ -303827,7 +303688,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF ext IN",
@@ -303835,7 +303698,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN flx RE",
@@ -303843,7 +303708,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN ext",
@@ -303851,7 +303718,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN flx",
@@ -303859,7 +303728,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank flx Ia",
@@ -303867,7 +303738,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN flx RE",
@@ -303875,7 +303748,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG ext",
@@ -303883,7 +303758,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN ext RE",
@@ -303891,7 +303768,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF ext",
@@ -303899,7 +303778,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN ext RE",
@@ -303907,7 +303788,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN ext RE",
@@ -303915,7 +303798,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee MN flx RE",
@@ -303923,7 +303808,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN ext RE",
@@ -303931,7 +303818,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L heel contact",
@@ -303939,7 +303828,9 @@
     "sign": "exc",
     "tag": "contact_contra_flex",
     "aproj_type": "Heel_Contra_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF ext",
@@ -303947,7 +303838,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN flx RE",
@@ -303955,7 +303848,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN ext",
@@ -303963,7 +303858,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip MN flx RE",
@@ -303971,7 +303868,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip MN ext",
@@ -303979,7 +303878,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG ext",
@@ -303987,7 +303888,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG ext IN",
@@ -303995,7 +303898,9 @@
     "sign": "inh",
     "tag": "rg_laminate",
     "aproj_type": "RG Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG flx",
@@ -304003,7 +303908,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG flx IN",
@@ -304011,7 +303918,9 @@
     "sign": "inh",
     "tag": "rg_laminate",
     "aproj_type": "RG Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG ext",
@@ -304019,7 +303928,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG to RG Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG flx",
@@ -304027,7 +303938,9 @@
     "sign": "exc",
     "tag": "rg_laminate",
     "aproj_type": "RG to RG Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG ext",
@@ -304035,7 +303948,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG ext",
@@ -304043,7 +303958,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG flx",
@@ -304051,7 +303968,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG flx",
@@ -304059,7 +303978,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG flx",
@@ -304067,7 +303988,9 @@
     "sign": "exc",
     "tag": "comm_c1",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L c1",
@@ -304075,7 +303998,9 @@
     "sign": "inh",
     "tag": "c1_SynAmp2.749",
     "aproj_type": "RG Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG flx",
@@ -304083,7 +304008,9 @@
     "sign": "exc",
     "tag": "comm_c1",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R c1",
@@ -304091,7 +304018,9 @@
     "sign": "inh",
     "tag": "c1_SynAmp2.749",
     "aproj_type": "RG Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG ext",
@@ -304099,7 +304028,9 @@
     "sign": "exc",
     "tag": "comm_v3",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L V3",
@@ -304107,7 +304038,9 @@
     "sign": "exc",
     "tag": "v3_to_contra_InE",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "1.5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R RG ext",
@@ -304115,7 +304048,9 @@
     "sign": "exc",
     "tag": "comm_v3",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R V3",
@@ -304123,7 +304058,9 @@
     "sign": "exc",
     "tag": "v3_to_contra_InE",
     "aproj_type": "RG Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "1.5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx Ia",
@@ -304131,7 +304068,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_HipFlx_to_HipPFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx Ia",
@@ -304139,7 +304078,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_HipFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx Ia",
@@ -304147,7 +304088,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_HipFlx_to_HipPFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx Ia",
@@ -304155,7 +304098,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_HipFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx Ia",
@@ -304163,7 +304108,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_KneeFlx_to_KneePFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx Ia",
@@ -304171,7 +304118,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_KneeFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx Ia",
@@ -304179,7 +304128,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_KneeFlx_to_KneePFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx Ia",
@@ -304187,7 +304138,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ia_KneeFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip ext Ib",
@@ -304195,7 +304148,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_HipExt_to_HipPFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip ext Ib",
@@ -304203,7 +304158,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_HipExt_to_RGext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip ext Ib",
@@ -304211,7 +304168,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_HipExt_to_HipPFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip ext Ib",
@@ -304219,7 +304178,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_HipExt_to_RGext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee ext Ib",
@@ -304227,7 +304188,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_KneeExt_to_KneePFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee ext Ib",
@@ -304235,7 +304198,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_KneeExt_to_RGext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee ext Ib",
@@ -304243,7 +304208,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_KneeExt_to_KneePFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee ext Ib",
@@ -304251,7 +304218,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "Ib_KneeExt_to_RGext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx II",
@@ -304259,7 +304228,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_HipFlx_to_HipPFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx II",
@@ -304267,7 +304238,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_HipFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx II",
@@ -304275,7 +304248,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_HipFlx_to_HipPFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip flx II",
@@ -304283,7 +304258,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_HipFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx II",
@@ -304291,7 +304268,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_KneeFlx_to_KneePFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx II",
@@ -304299,7 +304278,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_KneeFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx II",
@@ -304307,7 +304288,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_KneeFlx_to_KneePFflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee flx II",
@@ -304315,7 +304298,9 @@
     "sign": "exc",
     "tag": "aff_HC_excite",
     "aproj_type": "II_KneeFlx_to_RGflx_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L heel contact",
@@ -304323,7 +304308,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_RGext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L heel contact",
@@ -304331,7 +304318,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_HipPFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L heel contact",
@@ -304339,7 +304328,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_KneePFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L heel contact",
@@ -304347,7 +304338,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_HipMNext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L heel contact",
@@ -304355,7 +304348,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_KneeMNext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R heel contact",
@@ -304363,7 +304358,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_RGext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R heel contact",
@@ -304371,7 +304368,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_HipPFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R heel contact",
@@ -304379,7 +304378,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_KneePFext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R heel contact",
@@ -304387,7 +304388,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_HipMNext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R heel contact",
@@ -304395,7 +304398,9 @@
     "sign": "exc",
     "tag": "contact_hc",
     "aproj_type": "Heel_Ipsi_KneeMNext_Excite",
-    "aproj_gmax": 1e-08
+    "aproj_gmax": 1e-08,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF flx IN",
@@ -304403,7 +304408,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx Ib",
@@ -304411,7 +304418,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_flx_Excite",
-    "aproj_gmax": 1e-06
+    "aproj_gmax": 1e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF ext",
@@ -304419,7 +304428,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip MN flx",
@@ -304427,7 +304438,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF ext",
@@ -304435,7 +304448,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip ext Ib",
@@ -304443,7 +304458,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee ext Ib",
@@ -304451,7 +304468,9 @@
     "sign": "exc",
     "tag": "ib_auto",
     "aproj_type": "Hip_Ib_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN flx RE",
@@ -304459,7 +304478,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip MN flx RE",
@@ -304467,7 +304488,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip ext Ia IN",
@@ -304475,7 +304498,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF flx",
@@ -304483,7 +304508,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L RG flx",
@@ -304491,7 +304518,9 @@
     "sign": "exc",
     "tag": "pf_drive",
     "aproj_type": "RG to PF Excite",
-    "aproj_gmax": 1e-07
+    "aproj_gmax": 1e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF ext",
@@ -304499,7 +304528,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee ext Ia",
@@ -304507,7 +304538,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF ext IN",
@@ -304515,7 +304548,9 @@
     "sign": "inh",
     "tag": "pf_cross",
     "aproj_type": "PF Inhibit",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip flx Ia",
@@ -304523,7 +304558,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF ext",
@@ -304531,7 +304568,9 @@
     "sign": "exc",
     "tag": "pf_cross",
     "aproj_type": "PF Excite",
-    "aproj_gmax": 2.749e-06
+    "aproj_gmax": 2.749e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Ank MN flx",
@@ -304539,7 +304578,9 @@
     "sign": "exc",
     "tag": "rc_own",
     "aproj_type": "MN to RE Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip MN ext RE",
@@ -304547,7 +304588,9 @@
     "sign": "inh",
     "tag": "rc_own",
     "aproj_type": "RE to MN Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN flx RE",
@@ -304555,7 +304598,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Knee PF flx",
@@ -304563,7 +304608,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Hip ext Ia",
@@ -304571,7 +304618,9 @@
     "sign": "inh",
     "tag": "ia_recip",
     "aproj_type": "Ia to MN Inhibit",
-    "aproj_gmax": 2e-06
+    "aproj_gmax": 2e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF flx",
@@ -304579,7 +304628,9 @@
     "sign": "exc",
     "tag": "other",
     "aproj_type": "PF to Ia Excite",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee PF ext",
@@ -304587,7 +304638,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee MN ext RE",
@@ -304595,7 +304648,9 @@
     "sign": "inh",
     "tag": "other",
     "aproj_type": "RE to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN flx RE",
@@ -304603,7 +304658,9 @@
     "sign": "inh",
     "tag": "rc_mutual",
     "aproj_type": "RE to RE Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank flx Ia",
@@ -304611,7 +304668,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Knee flx Ia",
@@ -304619,7 +304678,9 @@
     "sign": "inh",
     "tag": "ia_mutual",
     "aproj_type": "Ia to Ia Inhibit",
-    "aproj_gmax": 5e-07
+    "aproj_gmax": 5e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank ext Ia IN",
@@ -304627,7 +304688,9 @@
     "sign": "exc",
     "tag": "ia_recip",
     "aproj_type": "Hip_Ia_ext_Excite",
-    "aproj_gmax": 5.9e-07
+    "aproj_gmax": 5.9e-07,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "L Hip PF flx",
@@ -304635,7 +304698,9 @@
     "sign": "exc",
     "tag": "pf_to_mn",
     "aproj_type": "PF to MN Excite",
-    "aproj_gmax": 5e-06
+    "aproj_gmax": 5e-06,
+    "synamp": "5e-007",
+    "delay_ms": "0"
    },
    {
     "from": "R Ank MN flx",

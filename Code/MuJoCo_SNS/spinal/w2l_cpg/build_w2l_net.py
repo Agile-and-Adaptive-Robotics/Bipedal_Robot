@@ -235,6 +235,53 @@ W2L_GAINS = dict(
     # 0.478 - tune from there).
     ra_contact=0.08,
     sa_contact=0.08,
+    # ---- PER-TARGET AFFERENT/CONTACT CLASSES (2026-10-25, Ben's ruling:
+    # "Knee and Ankle Ia feedback is a different class for each target it
+    # reaches, same with Hip Ia, etc. etc." - the aproj's dedicated
+    # per-connection synapse types, previously COLLAPSED to one family
+    # value each). Every key below anchors at its family's historical
+    # value EXACTLY, so a default build is BIT-IDENTICAL to the collapsed
+    # one; overriding a key re-strengthens only that (kind, joint, target)
+    # class. L/R share values (symmetry). _gain() resolves these from the
+    # edge's source kind/joint + target node type.
+    # Ia/II/Ib -> RG or PF (the aff_HC_excite family, anchor 0.08):
+    ia_hip_rg=0.08, ia_hip_pf=0.08,
+    ia_knee_rg=0.08, ia_knee_pf=0.08,
+    ia_ank_rg=0.08, ia_ank_pf=0.08,
+    ii_hip_rg=0.08, ii_hip_pf=0.08,
+    ii_knee_rg=0.08, ii_knee_pf=0.08,
+    ib_hip_rg=0.08, ib_hip_pf=0.08,
+    ib_knee_rg=0.08, ib_knee_pf=0.08,
+    # Ia reciprocal chain per joint (ia_recip family; sn 0.6 / mn 0.4):
+    ia_hip_sn=0.6, ia_hip_mn=0.4,
+    ia_knee_sn=0.6, ia_knee_mn=0.4,
+    ia_ank_sn=0.6, ia_ank_mn=0.4,
+    # Ia-IN mutual inhibition per joint (anchor 0.5):
+    ia_hip_mutual=0.5, ia_knee_mutual=0.5, ia_ank_mutual=0.5,
+    # Ib autogenic MN per joint (anchor 0.5):
+    ib_hip_mn=0.5, ib_knee_mn=0.5, ib_ank_mn=0.5,
+    # Heel cascade PER TARGET (contact_hc family, anchor 0.08):
+    heel_rg=0.08, heel_hip_pf=0.08, heel_knee_pf=0.08,
+    heel_hip_mn=0.08, heel_knee_mn=0.08,
+    # ---- PER-SYNAPSE POOL CONDUCTANCES (2026-10-25 ruling: individual
+    # conductances per synapse, family collapse OVERRIDDEN). One value per
+    # MN pool (hip/knee/ankle x ext/flx), L/R SHARED by symmetry (Ben's
+    # own reduction). Anchored at the former family values so a default
+    # build is BIT-IDENTICAL; override a single pool's value freely.
+    # Seeds for the search: Shinohara Table B.3 per-MN PF->MN pattern;
+    # instance synamp from the 2026-10-25 re-mine where non-default.
+    pf_mn_hipext=2.0, pf_mn_hipflx=2.0,
+    pf_mn_kneeext=2.0, pf_mn_kneeflx=2.0,
+    pf_mn_ankext=2.0, pf_mn_ankflx=2.0,
+    rc_own_hipext=1.0, rc_own_hipflx=1.0,
+    rc_own_kneeext=1.0, rc_own_kneeflx=1.0,
+    rc_own_ankext=1.0, rc_own_ankflx=1.0,
+    rc_inh_hipext=0.5, rc_inh_hipflx=0.5,
+    rc_inh_kneeext=0.5, rc_inh_kneeflx=0.5,
+    rc_inh_ankext=0.5, rc_inh_ankflx=0.5,
+    rc_mut_hipext=0.5, rc_mut_hipflx=0.5,
+    rc_mut_kneeext=0.5, rc_mut_kneeflx=0.5,
+    rc_mut_ankext=0.5, rc_mut_ankflx=0.5,
 )
 
 # template node type -> membrane tau key
@@ -522,9 +569,79 @@ class W2LNet:
         return float(self.G.get(f"{family}_presyn_hi",
                                 self.G.get("presyn_hi", SYN_E_HI)))
 
+    @staticmethod
+    def _pool(label: str):
+        """MN/RE pool key from a node label ('R Knee MN ext' -> 'kneeext')."""
+        low = label.lower()
+        joint = ("hip" if "hip" in low else
+                 "knee" if "knee" in low else
+                 "ank" if "ank" in low else None)
+        dirn = "ext" if ("ext" in low and "flx" not in low) else \
+               ("flx" if "flx" in low else None)
+        return f"{joint}{dirn}" if joint and dirn else None
+
+    # ---- per-target class resolution (2026-10-25, Ben's ruling): map an
+    # afferent/contact edge to its (kind, joint, target) class key. Returns
+    # None when the edge does not belong to a per-target family.
+    def _pt_class(self, tag: str, e: dict, n_types: dict, sign: str = ""):
+        src, dst = e["from"], e["to"]
+        joint = ("hip" if "Hip" in src else
+                 "knee" if "Knee" in src else
+                 "ank" if "Ank" in src else None)
+        t_src = n_types[src]
+        t_dst = n_types[dst]
+        if tag == "aff_HC_excite":
+            kind = {"SN-Ia": "ia", "SN-II": "ii", "SN-Ib": "ib"}.get(t_src)
+            if kind and t_dst.startswith("HC-"):
+                return f"{kind}_{joint}_{'rg' if 'RG' in t_dst else 'pf'}"
+        elif tag == "ia_recip":
+            if t_src == "SN-Ia" and t_dst == "MN":
+                return f"ia_{joint}_mn"      # reciprocal inhib on antag MN
+            if (t_src, t_dst) in (("IN-IaIN", "SN-Ia"),
+                                  ("SN-Ia", "IN-IaIN")):
+                return f"ia_{joint}_sn"      # sensor->IN front-end chain
+        elif tag == "ia_mutual":
+            if t_src in ("SN-Ia", "IN-IaIN") and t_dst in ("SN-Ia", "IN-IaIN"):
+                return f"ia_{joint}_mutual"
+        elif tag == "ib_auto":
+            if t_src == "SN-Ib" and t_dst == "MN":
+                return f"ib_{joint}_mn"
+        elif tag == "contact_hc":
+            if "RG" in dst:
+                return "heel_rg"
+            low = dst.lower()
+            if "pf" in low:
+                return "heel_hip_pf" if "hip" in low else "heel_knee_pf"
+            if "mn" in low:
+                return "heel_hip_mn" if "hip" in low else "heel_knee_mn"
+        # PER-SYNAPSE POOL classes (2026-10-25 ruling): every MN input and
+        # Renshaw connection carries its pool's individual conductance.
+        elif tag == "pf_to_mn":
+            if t_dst == "MN":
+                return f"pf_mn_{self._pool(dst)}"
+        elif tag == "rc_own":
+            if sign == "exc" and t_src == "MN":        # MN -> its RC
+                return f"rc_own_{self._pool(src)}"
+            if sign == "inh" and t_dst == "MN":        # RC -> its MN
+                return f"rc_inh_{self._pool(dst)}"
+            if sign == "inh":                          # RC -> Ia chain etc.
+                p = self._pool(src)
+                return f"rc_inh_{p}" if p else None
+        elif tag == "rc_mutual":
+            p = self._pool(dst) or self._pool(src)
+            return f"rc_mut_{p}" if p else None
+        return None
+
     def _gain(self, tag: str, sign: str, e: dict, n_types: dict) -> float:
         """Template (tag, sign) -> toolbox conductance (see W2L_GAINS)."""
         G = self.G
+        # per-target classes FIRST (Ben 2026-10-25: no collapsing); every
+        # key exists in W2L_GAINS at its family's anchor value, so the
+        # default build is bit-identical and overrides re-strengthen only
+        # the one (kind, joint, target) class.
+        pt = self._pt_class(tag, e, n_types, sign)
+        if pt is not None:
+            return G[pt]
         if tag == "rg_laminate":
             if n_types[e["from"]] in ("HC-RG-E", "HC-RG-F") and \
                     n_types[e["to"]] in ("HC-RG-E", "HC-RG-F"):
