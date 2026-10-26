@@ -1,3 +1,33 @@
+# Review delivery location
+
+Send proposed .tex fragments, figures, and REVIEW.md in a new machine/batch folder under `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/REVIEW_INBOX/`. Read its README.md and use REVIEW_TEMPLATE.md. Do not overwrite reviewed Revision_E chapters or make whole-chapter Overleaf replacements. P01 now starts with “Researchers,” with Gait2392 models second. No external message was sent by this update.
+
+---
+
+# P01 author confirmation — coupled CAD assembly
+
+Ben confirms the SolidWorks-derived robot assembly with a neural controller and BPAs using his force model; its saved model is on the temporarily unavailable laptop. Include it as an author-confirmed contribution. P01 uses representative proof-of-concept examples, not exhaustive results for every tool. Do not block the prose on further experiments or ask Ben again for this artifact now. Rybak is Python. Details: Revision_E/review/targeted_reconciliation/tools_inventory/AUTHOR_CONFIRMATION.md.
+
+---
+
+# Application rule — targeted patches, not chapter replacement
+
+The live Overleaf document is the baseline. Do not upload/paste Revision E chapter files wholesale: they lack current tracked deletions, changes, and comment anchors. Use `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/review/targeted_reconciliation/OVERLEAF_TARGETED_PATCHES.md`. It contains exact-text replacements, comment/date evidence, and the current table/deletion decisions. Ben’s deleted sentence must stay deleted. Supply modeling evidence separately from prose patches; do not launch parallel chapter rewrites. No Overleaf changes or inter-agent messages were made by this reconciliation.
+
+---
+
+# Author correction — original controller identity
+
+Figure 6.1(B) must remain Ben’s supplied original Connor–Ben shared-RG controller (`connor_ben_shared_rg_original.png`). The per-side RG split, RG/PF feedback, and foot-contact feedback were Ben’s later extensions. Do not replace the original diagram with `2layerImprove.png` again. The subsection heading is “Block Programming Neural Pathways.” Conversion repairs are consolidated in E Appendix D.1, with a main-text cross-reference. See E/review/figure61_correction/CORRECTIONS.md.
+
+---
+
+# Latest follow-up — Revision E
+
+Read the updated `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/ZCODE_HANDOFF.md` first. Remote forwarding repair and new logs are preserved; commissural necessity is withdrawn, Ib removal gives 0/0, and 9/10 corrected mass cases fail tilt. Campaign/fresh-process input registration still needs checking before any new search. Hunt/Fletcher libraries were not supplied; Ben does not want to request them. Earlier handoffs below are historical.
+
+---
+
 # Priority update — Revision E
 
 Read `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/ZCODE_HANDOFF.md` first. It supersedes earlier SNS evidence assumptions: 55/61 winner keys are dropped in the fetched code; right-side deletion counts duplicate the left. Recover any newer easteregg2 implementation before repairing or replaying. Do not start a larger search before effective-parameter and actual-deletion checks.

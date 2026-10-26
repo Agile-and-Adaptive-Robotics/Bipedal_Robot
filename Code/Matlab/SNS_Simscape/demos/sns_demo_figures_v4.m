@@ -314,21 +314,25 @@ sagOFF = rad2deg(runs(2).th.Data(end));
 draw_arm(ax, sagON, 0.5, 0.35);
 text(ax, -0.36, 0.08, sprintf('end: full cup, sag %.1f° (ON)', sagON), 'FontSize', 8.5);
 title(ax, 'B2  Full cup (end)', 'FontWeight', 'bold');
-% Panel 3: kinematics ON vs OFF with final annotations (verify + display)
+% Panel 3: kinematics ON vs OFF, ELEVATION convention (negative = below
+% level) so the physically higher glass plots HIGHER (Ben 2026-10-26:
+% positive-up sag read as "OFF raises the glass"). ON = -2.0 deg sits
+% above OFF = -7.8 deg; more droop = lower line = lower glass.
 ax = nexttile(tl);
-t1 = runs(1).th.Time(:); v1 = rad2deg(runs(1).th.Data(:));
-t2 = runs(2).th.Time(:); v2 = rad2deg(runs(2).th.Data(:));
+t1 = runs(1).th.Time(:); v1 = -rad2deg(runs(1).th.Data(:));
+t2 = runs(2).th.Time(:); v2 = -rad2deg(runs(2).th.Data(:));
 hold(ax, 'on'); grid(ax, 'on');
 plot(ax, t1, v1, 'Color', [0.00 0.45 0.74], 'LineWidth', 1.8);
 plot(ax, t2, v2, 'Color', [0.55 0.55 0.55], 'LineStyle', '--', 'LineWidth', 1.6);
-text(ax, t1(end) + 0.15, v1(end), sprintf('  ON %.2f°', v1(end)), 'FontSize', 9, ...
-    'Color', [0.00 0.45 0.74]);
-text(ax, t2(end) + 0.15, v2(end), sprintf('  OFF %.2f°', v2(end)), 'FontSize', 9, ...
-    'Color', [0.35 0.35 0.35]);
-ylim(ax, [0 ceil(max(v2) * 1.25)]);
-xlabel(ax, 'time (s)'); ylabel(ax, 'sag \theta (deg)');
-title(ax, sprintf('A  Sag: reflex ON %.2f° vs OFF %.2f° (%.1fx stiffer)', ...
-    v1(end), v2(end), v2(end) / max(v1(end), 0.01)), 'FontWeight', 'bold');
+text(ax, t1(end) + 0.15, v1(end), sprintf('  ON %.2f° (glass held higher)', v1(end)), ...
+    'FontSize', 9, 'Color', [0.00 0.45 0.74]);
+text(ax, t2(end) + 0.15, v2(end), sprintf('  OFF %.2f° (droops)', v2(end)), ...
+    'FontSize', 9, 'Color', [0.35 0.35 0.35]);
+yline(ax, 0, 'k:', 'level');
+ylim(ax, [floor(min(v2) * 1.25) 1]);
+xlabel(ax, 'time (s)'); ylabel(ax, 'forearm elevation (deg; 0 = level)');
+title(ax, sprintf('A  Sag: ON droops %.2f° vs OFF %.2f° (%.1fx stiffer)', ...
+    abs(v1(end)), abs(v2(end)), abs(v2(end) / v1(end))), 'FontWeight', 'bold');
 % Panel 4: pathway, markers at ENDS, color-coded feedback vs efferent
 ax = nexttile(tl); axis(ax, 'equal'); axis(ax, 'off'); hold(ax, 'on');
 xlim(ax, [0 1]); ylim(ax, [0 1]);

@@ -1,0 +1,775 @@
+[
+  {
+    "id": "M-015",
+    "file": "15-background.tex",
+    "line": 176,
+    "text": "\\caption[Rybak two-level locomotor CPG concept]{Two-level CPG: rhythm generation (RG), pattern formation (PF), motor output, and afferent feedback. Reproduced from \\citet[Fig.~1]{rybak_modelling_2006}.}",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:45 am",
+        "text": "This figure is confusing and probably not needed,"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I removed the confusing graphical abstract and retained the figures that support specific comparisons in the text."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): \\begin{figure}[htbp]",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Prior Ben reply reports removal of the confusing graphical abstract. Current retained schematics have explicit captions; no further figure was deleted. Exact original figure anchor remains uncertain.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-017",
+    "file": "15-background.tex",
+    "line": 99,
+    "text": "Moment arms relate muscle force to joint torque. For a fixed-axis joint, the signed moment arm is $r_{\\mathrm{m}}=\\hat{\\mathbf{a}}\\cdot(\\mathbf{r}\\times\\hat{\\mathbf{u}})$, where $\\hat{\\mathbf{a}}$ is the joint-axis direction, $\\mathbf{r}$ locates a point on the muscle's line of action relative to the joint, and $\\hat{\\mathbf{u}}$ is the force direction \\citep{brand_model_1982}. The tendon-excursion method instead evaluates the sensitivity of musculotendon length to the joint coordinate, with sign determined by the coordinate and force conventions \\citep{menegaldo_moment_2004}. For multiarticular muscles, the result also depends on adjacent-joint configurations \\citep{zajac_determining_1989, young_analyzing_2019}. OpenSim uses length sensitivities, so the reference moment arms in this dissertation are properties of the Gait2392-derived geometry \\citep{delp_opensim_2007, seth_opensim_2018}. Chapter~\\ref{ch:torque} compares the robot's resulting torque predictions with test-stand measurements.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:50 am",
+        "text": "huh?"
+      },
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:50 am",
+        "text": "definitions are stressed?"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I replaced the unclear terminology with a signed fixed-axis moment-arm definition and a separate explanation of OpenSim\u2019s coordinate-length sensitivities."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): stressed",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Verified the earlier replacement: signed fixed-axis moment arm and tendon-excursion definition are stated directly; ambiguous \u201cstressed\u201d wording is absent.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-018",
+    "file": "15-background.tex",
+    "line": 101,
+    "text": "Knee modeling requires particular care because the instantaneous center of rotation changes with flexion. Four-bar descriptions reproduce this behavior through linkage geometry \\citep{romero_four-bar_2020, steele_biomimetic_2018}. Gait2392 instead prescribes planar translations as functions of knee flexion \\citep{yamaguchi_planar_1989}. These different kinematics produce different moment arms for the same nominal attachment locations. Joint-coordinate conventions must therefore be stated consistently when comparing models and measurements \\citep{wu_isb_2002}. Gait2392 provides the human reference in this dissertation, while Steele's four-bar mechanism supplies the physical robot knee.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:52 am",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I removed the repository digression and rewrote this explanation around the mechanics and the Gait2392 model."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): written against",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Verified the explicit distinction between prescribed Gait2392 knee kinematics and the four-bar robot knee; ambiguous \u201cwritten against\u201d phrasing is absent.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-026",
+    "file": "15-background.tex",
+    "line": 97,
+    "text": "Designing a biomimetic leg requires a quantitative benchmark of human muscle--joint behavior. This dissertation uses OpenSim \\citep{delp_opensim_2007, seth_opensim_2011, seth_opensim_2018} and the Gait2392 model, named for its 23 degrees of freedom and 92 musculotendon actuators. Gait2392 descends from the interactive lower-extremity model of \\citet{delp_interactive_1990} and includes musculoskeletal geometry from \\citet{hoy_musculoskeletal_1990} and planar knee kinematics from \\citet{yamaguchi_planar_1989}; related lower-limb models of the same family are characterized and validated by \\citet{arnold_model_2010}. Muscle moment arms, force-generating properties, and functional roles in such models have been characterized extensively \\citep{zajac_determining_1989, brand_model_1982, menegaldo_moment_2004, millard_flexing_2013, sherman_what_2013, suderman_moving_2012}, and standard reporting conventions for kinematics and joint mechanics are established by the International Society of Biomechanics \\citep{wu_for_1995, wu_isb_2002, wu_isb_2005, derrick_isb_2020}.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 8:42 am",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Verified that the Simulation Tools paragraph describes OpenSim geometry and torque analysis directly, rather than a repository digression.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-048",
+    "file": "15-background.tex",
+    "line": 234,
+    "text": "Figure~\\ref{fig:decerebrate_cat} documents the animal preparation behind many foundational spinal-locomotion experiments \\citep{brown_intrinsic_1911, decerebrate_cat_footage}. In this preparation, the forebrain is disconnected by a brainstem transection while spinal and brainstem circuits continue to produce motor activity. The image is included to make the experimental context visible alongside the circuit schematics. Robotic and computational models can support preliminary intervention tests, but their relevance to these biological preparations depends on reproducing the observations being studied.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 8:56 am",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Replaced the accounting metaphor with the literal purpose of the biological-preparation figure and scoped model relevance to validation.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-050",
+    "file": "15-background.tex",
+    "line": 232,
+    "text": "The experiments this research program is designed to enable, including deleting a muscle from a limb, blocking a sensory pathway, lesioning part of a rhythm generator, and applying tonic stimulation to spinal circuits, cannot be performed on healthy humans. Invasive intervention on the human neuromuscular system is limited to clinical populations, is tightly constrained by ethics review, and permits neither the within-subject control nor the reversibility that neuromechanical hypotheses demand. The same experiments in animals also carry real moral cost, and their justification is governed by the Three Rs framework: replacement of animal subjects with non-animal methods, reduction of the numbers required, and refinement of the remaining procedures \\citep{russell_principles_1959, tannenbaum_russell_2015}. Robotic and computational models allow proposed neural interventions to be tested under controlled conditions before corresponding animal experiments are considered. The same model and initial conditions can be reused across interventions to isolate the effect of a changed pathway. Repeating a model does not create independent biological subjects, and its relevance to animal experiments depends on validation against biological observations.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 8:56 am",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Retained the earlier explicit explanation of repeated controlled model interventions and its warning that repeated models are not independent biological subjects.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-074",
+    "file": "50-database.tex",
+    "line": 17,
+    "text": "\\caption[SADb citation-neighborhood view]{Paper-only citation view focused on Grillner (1985). Soma size represents citation count; axes show year and citation count. Triangles mark 57 papers in the corpus that cite Grillner (1985); circles mark 13 papers cited by Grillner (1985). Gray papers connect through one of those neighbors rather than directly to the selected paper. The panels distinguish incoming citations from the selected paper's references.}",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:26 am",
+        "text": "I don't really understand this. Also, be clear about what a paper cites, vs what cites the paper"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Rewrote the caption to state exactly which papers cite Grillner and which papers Grillner cites; retained counts 57 and 13.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-082",
+    "file": "50-database.tex",
+    "line": 25,
+    "text": "Records were retained when they reported measurements from sensory afferents, investigated feedback in locomotion or posture, or modeled a sensory pathway relevant to those tasks. Here, a sensory pathway means the route by which a sensory signal influences neural activity or motor output, such as force feedback from a muscle influencing the transition from stance to swing. Reviews helped organize the subject and locate primary evidence. Duplicate records and material outside this scope were archived. Classification used a consistent set of tags for the experimental preparation and afferent class, allowing papers that used different terminology to be retrieved together. Each mechanism summary was based on the available source text, using the abstract when full text was unavailable.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:22 am",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Explained inclusion, archive decisions, and consistent classification tags without vocabulary shorthand.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-083",
+    "file": "50-database.tex",
+    "line": 25,
+    "text": "Records were retained when they reported measurements from sensory afferents, investigated feedback in locomotion or posture, or modeled a sensory pathway relevant to those tasks. Here, a sensory pathway means the route by which a sensory signal influences neural activity or motor output, such as force feedback from a muscle influencing the transition from stance to swing. Reviews helped organize the subject and locate primary evidence. Duplicate records and material outside this scope were archived. Classification used a consistent set of tags for the experimental preparation and afferent class, allowing papers that used different terminology to be retrieved together. Each mechanism summary was based on the available source text, using the abstract when full text was unavailable.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:22 am",
+        "text": "huh?"
+      },
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:22 am",
+        "text": "sensory feedback pathway?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Defined a sensory pathway as a sensory signal influencing neural activity or motor output, with the stance/swing example.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-092",
+    "file": "50-database.tex",
+    "line": 8,
+    "text": "When I began this work, the project lacked a structured resource linking measured afferent properties and feedback pathways to the evidence needed for robot-controller design. Relevant findings were dispersed across species, preparations, tasks, and primary papers. Reviews organized parts of this evidence \\citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}, but selecting a feedback rule still required recovering its experimental conditions and separating measurements from modeling assumptions. I built the SADb to connect those findings to their sources, afferent classes, and pathway roles so that controller choices could be traced to the evidence and remaining unknowns could be identified.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 11:16 am",
+        "text": "After this sentence, define the gap in knowledge and what you did to fill it."
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I put the knowledge gap immediately after introducing SADb: the project lacked a structured, source-linked account of afferent measurements and pathways for selecting feedback rules. The next sentences explain how SADb addresses it."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): literature",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Verified that the resource gap and the source-linked collection built to address it are stated in the chapter opening.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-101",
+    "file": "60-sns.tex",
+    "line": 8,
+    "text": "For a course project in ME 610: Neuromechanical Modeling, Morrow and I combined the bipedal mechanics of \\citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \\citet{deng_neuromechanical_2019} in AnimatLab \\citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The initial controller used one rhythm generator (RG) to control both sides, with separate pattern-formation (PF) groups for each leg: one for the hip and one for the knee and ankle. The shared RG layer contained four neurons. We added afferent feedback at the motoneuron (MN) level. Figure~\\ref{fig:animatlab_model_architecture}(A) shows the mechanical model, and Figure~\\ref{fig:animatlab_model_architecture}(B) shows the original shared-RG controller that Morrow and I built.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:49 am",
+        "text": "for each leg?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Retained Ben\u2019s per-leg PF organization, shared four-neuron RG, and MN-feedback clarification.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-102",
+    "file": "60-sns.tex",
+    "line": 8,
+    "text": "For a course project in ME 610: Neuromechanical Modeling, Morrow and I combined the bipedal mechanics of \\citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \\citet{deng_neuromechanical_2019} in AnimatLab \\citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The initial controller used one rhythm generator (RG) to control both sides, with separate pattern-formation (PF) groups for each leg: one for the hip and one for the knee and ankle. The shared RG layer contained four neurons. We added afferent feedback at the motoneuron (MN) level. Figure~\\ref{fig:animatlab_model_architecture}(A) shows the mechanical model, and Figure~\\ref{fig:animatlab_model_architecture}(B) shows the original shared-RG controller that Morrow and I built.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:49 am",
+        "text": "We?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Retained \u201cWe added\u201d for the collaborative feedback work.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-103",
+    "file": "60-sns.tex",
+    "line": 10,
+    "text": "We adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking. This suspended result concerns the original shared-RG controller in Figure~\\ref{fig:animatlab_model_architecture}(B).",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:50 am",
+        "text": "We?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Used collaborative attribution for hand tuning.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-104",
+    "file": "60-sns.tex",
+    "line": 10,
+    "text": "We adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking. This suspended result concerns the original shared-RG controller in Figure~\\ref{fig:animatlab_model_architecture}(B).",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:51 am",
+        "text": "Huh? Just delete all this?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Kept the concrete suspended-motion outcome and its support limit; removed build-order shorthand from the main rationale.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-105",
+    "file": "60-sns.tex",
+    "line": 12,
+    "text": "Years later, I split the shared RG into one RG for each side and connected them through commissural pathways. I also extended sensory feedback to the RG and PF layers and added foot-contact feedback. This later bilateral-RG extension is referred to here as the Walker Two-Layer (W2L) model; it is distinct from the original controller shown in Figure~\\ref{fig:animatlab_model_architecture}(B). Section~\\ref{sec:w2l_perturbation} reports its coupled-model tests; further circuit schematics and implementation records are provided in Appendix~\\ref{app:simulation_verification}.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:52 am",
+        "text": "Results? Lessons?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Linked bilateral circuit construction directly to the subsection reporting its coupled tests.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-106",
+    "file": "60-sns.tex",
+    "line": 14,
+    "text": "The suspended motion left an important question unresolved: could the controller maintain coordinated activity when the model contacted the ground and had to support load? Answering it required control over the amount and direction of mechanical support, access to sensory and motor signals, and repeatable changes to the controller or body. Those requirements motivated the framework developed here. The Li-derived W2L walker, the Gait2392 human model, and the BPA-routed robot model are distinct mechanical models; a result obtained with one is identified accordingly.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:52 am",
+        "text": "huh?"
+      },
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:11 am",
+        "text": "This paragraph confuses me."
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Stated the unresolved loading/contact question and why adjustable support and recorded feedback were needed.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-114",
+    "file": "60-sns.tex",
+    "line": 29,
+    "text": "The project lacked a tested way to connect its neural controllers to the human reference and artificial-muscle models and evaluate them under comparable conditions. The missing capability was more specific than generating rhythmic joint motion. I needed to choose a controller, define the mechanical model and sensory inputs, specify how the body was supported, and measure what changed after a controlled intervention. Without those controls, an improvement in motion could not be assigned to neural feedback, muscle mechanics, or external support.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:19 am",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Replaced the five-system inventory with the concrete experimental capability gap.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-120",
+    "file": "60-sns.tex",
+    "line": 31,
+    "text": "I addressed this gap by connecting OpenSim-derived models to MuJoCo and SNS-Toolbox, implementing a BPA-force calculation, and adding procedures for support, stimulation, perturbation, and parameter search. On the human reference model, alternative neural organizations can be evaluated against the same mechanical description. Separate W2L and BPA-actuated models extend the workflow to different bodies and actuators. The SNS-Simscape library provides graphical circuit construction and component demonstrations in MATLAB. These environments serve different parts of the work; importing a mechanism into Simscape is a separate achievement from controlling it with the demonstrated circuits.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:21 am",
+        "text": "need a better word"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Used \u201cframework,\u201d model conversion, force calculation, and named experimental controls in place of vague systems terminology.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-121",
+    "file": "60-sns.tex",
+    "line": 31,
+    "text": "I addressed this gap by connecting OpenSim-derived models to MuJoCo and SNS-Toolbox, implementing a BPA-force calculation, and adding procedures for support, stimulation, perturbation, and parameter search. On the human reference model, alternative neural organizations can be evaluated against the same mechanical description. Separate W2L and BPA-actuated models extend the workflow to different bodies and actuators. The SNS-Simscape library provides graphical circuit construction and component demonstrations in MATLAB. These environments serve different parts of the work; importing a mechanism into Simscape is a separate achievement from controlling it with the demonstrated circuits.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:21 am",
+        "text": "*"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Reviewed the same formerly awkward inventory as connected prose.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-122",
+    "file": "60-sns.tex",
+    "line": 35,
+    "text": "Existing tools supply the components of this framework. OpenSim provides musculoskeletal geometry, MyoConverter translates that geometry to MuJoCo, and SNS-Toolbox supplies neuron and synapse models \\citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. MuJoCo supports scripted dynamics, contact, and repeated evaluations; the version used here models rigid tendons. Simulink supplies graphical circuit assembly, and Simscape Multibody supplies mechanical imports, including CAD-derived mechanisms. AnimatLab contains the original walker and reference circuits. My contribution connects these components through the model conversions, actuator calculations, circuit implementations, and tests described below.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:26 am",
+        "text": "This all still feels a bit awkward."
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Explained the distinct roles of OpenSim, MyoConverter, MuJoCo, SNS-Toolbox, Simulink, Simscape, and AnimatLab.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-124",
+    "file": "60-sns.tex",
+    "line": 43,
+    "text": "My first conversion attempt used the robot model, which combined BPA routing on the Gait2392 skeleton with unchanged human muscle parameters. MyoConverter's muscle-equilibrium checks rejected infeasible combinations of routed length and muscle parameters. I therefore separated conversion of the human reference from reconstruction of the robot routing. This distinction matters because an error caused by an artificial-actuator route should not be interpreted as a property of the original human model.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:28 am",
+        "text": "I don't really know what this means"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Explained the actual robot-first conversion failure and the human-reference/robot-routing distinction.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-125",
+    "file": "60-sns.tex",
+    "line": 45,
+    "text": "The human-model conversion also required specific repairs. Three small hip rotators per side, the quadratus femoris, gemelli, and piriformis, were disabled at model load. The converted model retains 92 actuator entries, but these six contribute no force. The model retains the OpenSim and International Society of Biomechanics coordinate convention; frame transformations and individual-actuator tests check that joint motion and torque directions have the intended signs.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:28 am",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Retained concrete small-muscle, frame, patella-path, and contact repairs, rather than an unexplained audit claim.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-126",
+    "file": "60-sns.tex",
+    "line": 47,
+    "text": "The source represents patella motion through muscle insertion locations that vary with knee angle. In the converted model, limits on the joints representing these moving path points conflicted with their coupling constraints. Removing those conflicting limits allowed the coupled path points to follow their prescribed trajectories. The rectus femoris path also required a patella-tracking via point to restore its knee-extension action. Explicit collision pairs introduced unwanted contacts, so contact was restricted to the foot--ground pairs. The anatomical joint limits also had to be re-enabled; these driver joints were treated separately from the coupled path-point joints. Passive joint torques supplemented the joint behavior. These repairs explain why conversion needed checks beyond successful loading: a model could load while producing an incorrect torque direction or unintended contact force.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:31 am",
+        "text": "I feel like this all seems to imply that there were problems. Perhaps if you are more specific here, that would clarify. Example You ran MyoConverter and half hte origin points were wrong and needed to be corrected. The joint orientations were left hand instead of right hand. I dunno. Either there were problems, and it is a good thing you checked and fixed them. Or there weren't and it feels weird that you are calling out you created an 'audit' system."
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Retained actual fixes supplied by Ben and recovered from source; advisor\u2019s hypothetical examples are not treated as events.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-127",
+    "file": "60-sns.tex",
+    "line": 51,
+    "text": "For the BPA-routed robot model, an actuator-force calculation connects the neural and mechanical simulations. It takes the simulated muscle length and pressure as inputs and evaluates the quasi-static force model from Chapter~\\ref{ch:muscles}; the resulting force acts along the simulated actuator path. This calculation does not include valve or pressure dynamics. Length, velocity, force, and foot-contact signals return to the controller through sensory channels. The correction terms of Chapter~\\ref{ch:torque} do not by themselves establish that transferred routing and compliance are correct in a dynamic model; those properties require separate checks.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:32 am",
+        "text": "What BPA interface? Non seq"
+      }
+    ],
+    "ben_replies": [],
+    "original_highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "original_anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "treatment": "Specified inputs (length, pressure), Chapter 3 force calculation, applied force, sensory return, and omitted pressure dynamics.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-129",
+    "file": "60-sns.tex",
+    "line": 4,
+    "text": "The actuator and torque models of Chapters~\\ref{ch:muscles} and~\\ref{ch:torque} describe actuator force and joint torque. Studying neural control requires connecting those mechanics to a synthetic nervous system (SNS). This chapter develops a simulation framework in which neural controllers can drive the Gait2392 musculoskeletal model and separate BPA-actuated models, receive sensory feedback, and be tested under specified support and disturbance conditions. Its purpose is to make controller behavior measurable as neural organization, actuator mechanics, and mechanical support are changed. The contribution is the implemented framework and its demonstrated tests; unsupported walking remains an open control problem.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 11:48 am",
+        "text": "So many details and I don't understand what the goal is. What is the gap in knowledge? What did you do to fill it?"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:09 pm",
+        "text": "Gaps: Gait2392_simbody with CPG in Mujoco-SNS Toolbox\n- Gait2392_robotbody (BPAs and BPA routing) with CPG\n- Block-programming on a fast physics simulator (Animatlab no longer supported)\n- Robot solidworks assembly with BPAs from Matlab and a neural controller\n- Li walker with Deng neural controller and foot contact feedback."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I rebuilt the opening around the Li/Deng AnimatLab walker and my interconnected left/right RG extension. It then identifies the five missing model/controller combinations in my earlier reply and explains the tools and verification needed to investigate them. Detailed supporting results are in Appendix D."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): Two definitions cover most of the neuroscience vocabulary used below. First, the locomotor controller is a two-level central pattern generator: a rhythm generator sets the timing of the step cycle, and a pattern-formation layer shapes that timing into phase-appropriate activation of antagonist muscle groups \\citep{rybak_modelling_2006}. Each leg's rhythm generator is a pair of mutually inhibiting antagonist populations, one extensor and one flexor, so that only one is strongly active at a time. Second, in the non-spiking (graded) formulation used for most of this work, each neuron is electrically a nonlinear RC circuit: synaptic current charges a membrane capacitance through a leak conductance, and the resulting membrane voltage, tens of millivolts, is both the neuron's state and its output \\citep{nourse_sns_2023}. Graded chemical synapses couple these units: a depolarized presynaptic cell opens a conductance in the postsynaptic membrane whose sign makes the connection excitatory or inhibitory. The sensory channels that close the loop are the muscle afferents, Ia signaling muscle length and velocity, Ib signaling muscle force, and group II signaling length, together with heel and toe contact sensors.",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Stated the chapter\u2019s purpose and implemented contribution in the opening paragraph.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-130",
+    "file": "60-sns.tex",
+    "line": 33,
+    "text": "The framework is evaluated at three levels. Circuit tests ask whether a controller produces the intended neural response. Interface tests ask whether activation, muscle force, and sensory measurements pass correctly between the neural and mechanical models. Coupled tests ask how the resulting motion changes with support, sensory pathways, or disturbances. The results below demonstrate each level within a stated scope. They establish a working basis for controlled neuromechanical experiments while identifying the balance, model-transfer, and controller-tuning problems that remain.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:45 pm",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I removed the build-order shorthand. The opening now connects the bilateral AnimatLab construction to the missing interfaces and the verification each new tool provides."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): the reflex-based and learned alternatives \\citep{geyer_musclereflex_2010, song_deep_2021} are treated there.",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Explained circuit, interface, and coupled-model tests in terms of the questions they answer.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-131",
+    "file": "60-sns.tex",
+    "line": 35,
+    "text": "Existing tools supply the components of this framework. OpenSim provides musculoskeletal geometry, MyoConverter translates that geometry to MuJoCo, and SNS-Toolbox supplies neuron and synapse models \\citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. MuJoCo supports scripted dynamics, contact, and repeated evaluations; the version used here models rigid tendons. Simulink supplies graphical circuit assembly, and Simscape Multibody supplies mechanical imports, including CAD-derived mechanisms. AnimatLab contains the original walker and reference circuits. My contribution connects these components through the model conversions, actuator calculations, circuit implementations, and tests described below.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:49 pm",
+        "text": "why would we need several?"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:04 pm",
+        "text": "Well, Mujoco doesn't have as good of a physics engine as HYFYDY, for example, and is limited to rigid tendons. Python also is harder to use because it is code without a GUI. Simscape multibody allows for importing parts from solidworks. Some sort of block-programming language like Simulink is a natural choice for building our style of connectome. Mujoco-SNS Toolbox allows for real-time control and computer in the loop commands."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I now explain the complementary needs: scripted neural/mechanical coupling, graphical neural construction, and SolidWorks/MATLAB integration. The capability table separates demonstrated interfaces from unfinished combinations, and the text states the relevant simulator limitations."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): built in any of several simulation engines",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Explained why environments are complementary; graphical imports are distinguished from controlled coupled models.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-132",
+    "file": "60-sns.tex",
+    "line": 29,
+    "text": "The project lacked a tested way to connect its neural controllers to the human reference and artificial-muscle models and evaluate them under comparable conditions. The missing capability was more specific than generating rhythmic joint motion. I needed to choose a controller, define the mechanical model and sensory inputs, specify how the body was supported, and measure what changed after a controlled intervention. Without those controls, an improvement in motion could not be assigned to neural feedback, muscle mechanics, or external support.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:53 pm",
+        "text": "This is all super awkward. You need to identify the gap in knowledge and how you fill that gap in knowledge. Much of what you wrote here should be saved for discussion, where you talk about the implications of the work."
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:00 pm",
+        "text": "I thought that was for research hypothesis not for \"here are some tools we made\"."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I put the knowledge gaps before the new tools and kept the main results to representative verification. Broader sweeps and supported-walker results are in Appendix D; future integration belongs in the Discussion chapter."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): answer",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Placed the gap and implementation before the methods; kept implications in Capabilities and Remaining Limits.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-133",
+    "file": "60-sns.tex",
+    "line": 162,
+    "text": "The framework addresses the project's model-integration gap by making neural control, muscle mechanics, sensory return, and support conditions explicit and adjustable. It connects the Gait2392 reference model to neural controllers, provides force calculations for BPA-actuated models, and supplies procedures for staged tuning and controlled interventions. Graphical circuit construction in Simulink complements the scripted evaluations. These capabilities allow a controller to be examined at the circuit, interface, and coupled-model levels before a whole-model result is interpreted.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:59 pm",
+        "text": "I don't understand the connection."
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I rewrote the transition to connect the identified modeling gaps to the specific neural/mechanical interfaces developed."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): verification-first approach",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Connected the delivered interfaces to the specific experiments they enable.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-134",
+    "file": "60-sns.tex",
+    "line": 74,
+    "text": "\\caption[Simulation-to-robot pipeline]{Model conversion, closed-loop simulation, and proposed hardware deployment. Solid simulation interfaces connect neural activation to BPA force and return afferent signals. The embedded valve-control and network-evaluation system is future work (Chapter~\\ref{ch:futurework}).}",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:00 pm",
+        "text": "Overlapping text in figure"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I replaced the pipeline schematic with the corrected vector figure, with separated columns and labels."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): \\begin{figure}[htbp]",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Retained the previously corrected pipeline asset; checked rendered caption/placement, with no replacement figure introduced.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-135",
+    "file": "60-sns.tex",
+    "line": 55,
+    "text": "The MuJoCo simulations allow mechanical support to be specified independently of the neural controller. A virtual harness applies forces and torques to the body: it can hold the model above the ground, lower it into contact, retain vertical support, or constrain selected directions of translation and rotation. These settings represent different experimental conditions. Suspended motion tests whether the controller and actuators can move the limbs, whereas supported ground contact adds loading and sensory feedback. Progression with retained support is reported separately from unsupported walking.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:02 pm",
+        "text": "huh?"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I removed the unexplained inventory and retained the interface\u2019s purpose, its demonstrated check, and its limitation."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): build order",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Defined support, curriculum, stimulation, mechanical perturbation, recorded outputs, and search role directly.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-136",
+    "file": "60-sns.tex",
+    "line": 35,
+    "text": "Existing tools supply the components of this framework. OpenSim provides musculoskeletal geometry, MyoConverter translates that geometry to MuJoCo, and SNS-Toolbox supplies neuron and synapse models \\citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. MuJoCo supports scripted dynamics, contact, and repeated evaluations; the version used here models rigid tendons. Simulink supplies graphical circuit assembly, and Simscape Multibody supplies mechanical imports, including CAD-derived mechanisms. AnimatLab contains the original walker and reference circuits. My contribution connects these components through the model conversions, actuator calculations, circuit implementations, and tests described below.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:08 pm",
+        "text": "Wait, that is all you are saying about the other tools? It is hard for the reader to understand the limitations and gaps without a deeper description of them."
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I expanded the explanation of the environments\u2019 capabilities and limitations and added a table showing which interfaces are demonstrated and which combinations remain incomplete."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): \\subsection{New Tools}\\label{sec:sns_new_tools}",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Expanded operational purpose in the support/search subsection while retaining the roles and limits of existing tools.",
+    "status": "Editorial treatment supplied; human clarity review pending",
+    "draft_score": 2,
+    "acceptance_score": 0
+  },
+  {
+    "id": "M-137",
+    "file": "60-sns.tex",
+    "line": 35,
+    "text": "Existing tools supply the components of this framework. OpenSim provides musculoskeletal geometry, MyoConverter translates that geometry to MuJoCo, and SNS-Toolbox supplies neuron and synapse models \\citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. MuJoCo supports scripted dynamics, contact, and repeated evaluations; the version used here models rigid tendons. Simulink supplies graphical circuit assembly, and Simscape Multibody supplies mechanical imports, including CAD-derived mechanisms. AnimatLab contains the original walker and reference circuits. My contribution connects these components through the model conversions, actuator calculations, circuit implementations, and tests described below.",
+    "advisor_comments": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:11 pm",
+        "text": "Did you compare and discuss against the libraries myself and Fletcher made here?"
+      }
+    ],
+    "ben_replies": [
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:00 pm",
+        "text": "No. You've never encouraged us to use Simulink."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I removed the Hunt/Young library comparison because those citations do not establish a shared neuromechanical Simulink library. The section now describes the implemented blocks and matched-circuit verification directly. A comparison with the specific libraries you mean still requires checking those libraries."
+      }
+    ],
+    "original_highlight": "Historical exact highlight (22 Oct. capture): Simulink blocks",
+    "original_anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "treatment": "Libraries were never supplied; Ben does not want to request them. No comparison or universal novelty claim is invented.",
+    "status": "Unavailable comparison; no request to Ben",
+    "draft_score": 2,
+    "acceptance_score": 0
+  }
+]

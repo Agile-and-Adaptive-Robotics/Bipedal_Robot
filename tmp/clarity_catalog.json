@@ -1,0 +1,630 @@
+[
+  {
+    "id": "M-015",
+    "file": "15-background.tex",
+    "line": 160,
+    "section": "2.5 Neural Control of Locomotion: Central Pattern Generators",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): \\begin{figure}[htbp]",
+    "context": "The two-level organization is the field's current working architecture, and its models account for specific observations beyond the deletions that motivated the split: the genetically identified interneuron classes mapped onto the model \\citep{rybak_organization_2015} and the organization of circuits controlling two-joint muscles \\citep{shevtsova_modeling_2016}, a convergence problem a robot muscle routed across two joints also presents. Coupling such circuits to musculoskeletal models shows how afferent feedback shapes CPG output \\citep{markin_afferent_2010} and how biomechanics and sensory feedback regularize the behavior of different CPG architectures \\citep{deng_biomechanical_2022}. Physiologically plausible models of human locomotion use the same machinery to dissect the relative contributions of reflexes and CPGs, with locomotor primitives, Ia, II, and Ib pathways, and Renshaw cells represented explicitly \\citep{dirusso_investigating_2023}, and recent models address interlimb coordination under abrupt perturbations such as the sudden loss of ground support \\citep{shinohara_mechanisms_2025}. How this architecture is expressed as simulable circuit models is the subject of Section~\\ref{sec:bg_compneuro}; the locomotor controller developed in Chapter~\\ref{ch:sns} is built directly on this two-level organization.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:45 am",
+        "text": "This figure is confusing and probably not needed,"
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I removed the confusing graphical abstract and retained the figures that support specific comparisons in the text."
+      }
+    ]
+  },
+  {
+    "id": "M-017",
+    "file": "15-background.tex",
+    "line": 160,
+    "section": "2.5 Neural Control of Locomotion: Central Pattern Generators",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): stressed",
+    "context": "The two-level organization is the field's current working architecture, and its models account for specific observations beyond the deletions that motivated the split: the genetically identified interneuron classes mapped onto the model \\citep{rybak_organization_2015} and the organization of circuits controlling two-joint muscles \\citep{shevtsova_modeling_2016}, a convergence problem a robot muscle routed across two joints also presents. Coupling such circuits to musculoskeletal models shows how afferent feedback shapes CPG output \\citep{markin_afferent_2010} and how biomechanics and sensory feedback regularize the behavior of different CPG architectures \\citep{deng_biomechanical_2022}. Physiologically plausible models of human locomotion use the same machinery to dissect the relative contributions of reflexes and CPGs, with locomotor primitives, Ia, II, and Ib pathways, and Renshaw cells represented explicitly \\citep{dirusso_investigating_2023}, and recent models address interlimb coordination under abrupt perturbations such as the sudden loss of ground support \\citep{shinohara_mechanisms_2025}. How this architecture is expressed as simulable circuit models is the subject of Section~\\ref{sec:bg_compneuro}; the locomotor controller developed in Chapter~\\ref{ch:sns} is built directly on this two-level organization.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:50 am",
+        "text": "huh?"
+      },
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:50 am",
+        "text": "definitions are stressed?"
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I replaced the unclear terminology with a signed fixed-axis moment-arm definition and a separate explanation of OpenSim\u2019s coordinate-length sensitivities."
+      }
+    ]
+  },
+  {
+    "id": "M-018",
+    "file": "15-background.tex",
+    "line": 160,
+    "section": "2.5 Neural Control of Locomotion: Central Pattern Generators",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): written against",
+    "context": "The two-level organization is the field's current working architecture, and its models account for specific observations beyond the deletions that motivated the split: the genetically identified interneuron classes mapped onto the model \\citep{rybak_organization_2015} and the organization of circuits controlling two-joint muscles \\citep{shevtsova_modeling_2016}, a convergence problem a robot muscle routed across two joints also presents. Coupling such circuits to musculoskeletal models shows how afferent feedback shapes CPG output \\citep{markin_afferent_2010} and how biomechanics and sensory feedback regularize the behavior of different CPG architectures \\citep{deng_biomechanical_2022}. Physiologically plausible models of human locomotion use the same machinery to dissect the relative contributions of reflexes and CPGs, with locomotor primitives, Ia, II, and Ib pathways, and Renshaw cells represented explicitly \\citep{dirusso_investigating_2023}, and recent models address interlimb coordination under abrupt perturbations such as the sudden loss of ground support \\citep{shinohara_mechanisms_2025}. How this architecture is expressed as simulable circuit models is the subject of Section~\\ref{sec:bg_compneuro}; the locomotor controller developed in Chapter~\\ref{ch:sns} is built directly on this two-level organization.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "22 October, 10:52 am",
+        "text": "huh?"
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I removed the repository digression and rewrote this explanation around the mechanics and the Gait2392 model."
+      }
+    ]
+  },
+  {
+    "id": "M-026",
+    "file": "15-background.tex",
+    "line": 204,
+    "section": "2.9 Neuromechanical Simulation",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "Neuromechanical simulation, the coupling of a musculoskeletal model to a model of the neural controller that drives it, has advanced along three partially overlapping lines. The first line embeds reflex physiology directly into the controller. The muscle-reflex walking model of \\citet{geyer_musclereflex_2010} demonstrated that positive force, length, and velocity feedback around each muscle, organized with simple interlimb coordination, is sufficient to produce self-stabilizing human-like walking dynamics and realistic muscle activations without any central pattern generator. That model became the reference point for a generation of reflex-based neuromechanical controllers, including the cat hindlimb models of Section~\\ref{sec:bg_compneuro} \\citep{markin_afferent_2010, shevtsova_modeling_2016} and their extensions. Hybrid work makes the complementarity of the two strategies explicit: \\citet{haeufle_benefit_2018} combined feed-forward muscle activations with neuronal reflex feedback in simulated human walking and found that the robustness benefit of each depends on which muscle carries it.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 8:42 am",
+        "text": "huh?"
+      }
+    ]
+  },
+  {
+    "id": "M-048",
+    "file": "15-background.tex",
+    "line": 230,
+    "section": "2.10 Testing Neuromechanical Hypotheses on Robots: The Ethical Case",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "The experiments this research program is designed to enable, including deleting a muscle from a limb, blocking a sensory pathway, lesioning part of a rhythm generator, and applying tonic stimulation to spinal circuits, cannot be performed on healthy humans. Invasive intervention on the human neuromuscular system is limited to clinical populations, is tightly constrained by ethics review, and permits neither the within-subject control nor the reversibility that neuromechanical hypotheses demand. The same experiments in animals also carry real moral cost, and their justification is governed by the Three Rs framework: replacement of animal subjects with non-animal methods, reduction of the numbers required, and refinement of the remaining procedures \\citep{russell_principles_1959, tannenbaum_russell_2015}. A robot that implements a validated neuromechanical hypothesis is precisely such a replacement method: every deletion, lesion, and stimulation experiment that runs on the synthetic nervous system is an experiment that does not require a living subject, and the robot population can be duplicated exactly, so that ``subjects'' are statistically identical across conditions, an experimental repeatability no breeding colony can offer. The failure modes of these experiments damage hardware, not tissue.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 8:56 am",
+        "text": "huh?"
+      }
+    ]
+  },
+  {
+    "id": "M-050",
+    "file": "15-background.tex",
+    "line": 230,
+    "section": "2.10 Testing Neuromechanical Hypotheses on Robots: The Ethical Case",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "The experiments this research program is designed to enable, including deleting a muscle from a limb, blocking a sensory pathway, lesioning part of a rhythm generator, and applying tonic stimulation to spinal circuits, cannot be performed on healthy humans. Invasive intervention on the human neuromuscular system is limited to clinical populations, is tightly constrained by ethics review, and permits neither the within-subject control nor the reversibility that neuromechanical hypotheses demand. The same experiments in animals also carry real moral cost, and their justification is governed by the Three Rs framework: replacement of animal subjects with non-animal methods, reduction of the numbers required, and refinement of the remaining procedures \\citep{russell_principles_1959, tannenbaum_russell_2015}. A robot that implements a validated neuromechanical hypothesis is precisely such a replacement method: every deletion, lesion, and stimulation experiment that runs on the synthetic nervous system is an experiment that does not require a living subject, and the robot population can be duplicated exactly, so that ``subjects'' are statistically identical across conditions, an experimental repeatability no breeding colony can offer. The failure modes of these experiments damage hardware, not tissue.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 8:56 am",
+        "text": "huh?"
+      }
+    ]
+  },
+  {
+    "id": "M-074",
+    "file": "50-database.tex",
+    "line": 17,
+    "section": "5.1 The Resource",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "\\caption[SADb citation-neighborhood view]{Paper-only citation view focused on Grillner (1985). Soma size represents citation count; axes show year and citation count. Triangles mark 57 in-corpus citers, and circles 13 cited papers. Second-degree papers are gray. The panels identify the selected paper and its connections.}",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:26 am",
+        "text": "I don't really understand this. Also, be clear about what a paper cites, vs what cites the paper"
+      }
+    ]
+  },
+  {
+    "id": "M-082",
+    "file": "50-database.tex",
+    "line": 25,
+    "section": "5.2 Curation Methods",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "Records were retained when they reported sensory-afferent measurements, investigated feedback in locomotion or posture, or modeled a relevant sensory pathway. Reviews were retained as sources for organizing and locating that evidence. Duplicate records and material outside this feedback scope were removed from the working base and placed in an archive. Classification used controlled vocabularies for preparations and afferent classes. Each mechanism summary was grounded in available source text, using the abstract when full text was unavailable. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:22 am",
+        "text": "huh?"
+      }
+    ]
+  },
+  {
+    "id": "M-083",
+    "file": "50-database.tex",
+    "line": 25,
+    "section": "5.2 Curation Methods",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "Records were retained when they reported sensory-afferent measurements, investigated feedback in locomotion or posture, or modeled a relevant sensory pathway. Reviews were retained as sources for organizing and locating that evidence. Duplicate records and material outside this feedback scope were removed from the working base and placed in an archive. Classification used controlled vocabularies for preparations and afferent classes. Each mechanism summary was grounded in available source text, using the abstract when full text was unavailable. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:22 am",
+        "text": "huh?"
+      },
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:22 am",
+        "text": "sensory feedback pathway?"
+      }
+    ]
+  },
+  {
+    "id": "M-092",
+    "file": "50-database.tex",
+    "line": 52,
+    "section": "5.4.2 Discussion / Further improvement and work",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): literature",
+    "context": "The present corpus is uneven. Its afferent classifications cover only part of the retained literature, and the depth of the mammalian locomotor material should not be taken as equal coverage of vestibular, visual, or other sensory systems. The application makes the curated papers easier to inspect and compare; additional curation and experimental interpretation remain necessary for extending the robot's sensory system.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 11:16 am",
+        "text": "After this sentence, define the gap in knowledge and what you did to fill it."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I put the knowledge gap immediately after introducing SADb: the project lacked a structured, source-linked account of afferent measurements and pathways for selecting feedback rules. The next sentences explain how SADb addresses it."
+      }
+    ]
+  },
+  {
+    "id": "M-101",
+    "file": "60-sns.tex",
+    "line": 8,
+    "section": "6.1 The AnimatLab Bipedal Walker",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "For a course project in ME 610: Neuromechanical Modeling, Morrow and I combined the bipedal mechanics of \\citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \\citet{deng_neuromechanical_2019} in AnimatLab \\citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The initial controller used one rhythm generator (RG) to control both sides, with a separate pattern-formation layer. I added afferent feedback and heel- and toe-contact signals during the subsequent development. Figure~\\ref{fig:animatlab_model_architecture} shows the model and controller organization.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:49 am",
+        "text": "for each leg?"
+      }
+    ]
+  },
+  {
+    "id": "M-102",
+    "file": "60-sns.tex",
+    "line": 8,
+    "section": "6.1 The AnimatLab Bipedal Walker",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "For a course project in ME 610: Neuromechanical Modeling, Morrow and I combined the bipedal mechanics of \\citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \\citet{deng_neuromechanical_2019} in AnimatLab \\citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The initial controller used one rhythm generator (RG) to control both sides, with a separate pattern-formation layer. I added afferent feedback and heel- and toe-contact signals during the subsequent development. Figure~\\ref{fig:animatlab_model_architecture} shows the model and controller organization.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:49 am",
+        "text": "We?"
+      }
+    ]
+  },
+  {
+    "id": "M-103",
+    "file": "60-sns.tex",
+    "line": 10,
+    "section": "6.1 The AnimatLab Bipedal Walker",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "I adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking. This suspended stepping result preceded the later feedback and bilateral-RG extensions; it does not demonstrate walking with those additions.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:50 am",
+        "text": "We?"
+      }
+    ]
+  },
+  {
+    "id": "M-104",
+    "file": "60-sns.tex",
+    "line": 10,
+    "section": "6.1 The AnimatLab Bipedal Walker",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "I adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking. This suspended stepping result preceded the later feedback and bilateral-RG extensions; it does not demonstrate walking with those additions.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:51 am",
+        "text": "Huh? Just delete all this?"
+      }
+    ]
+  },
+  {
+    "id": "M-105",
+    "file": "60-sns.tex",
+    "line": 12,
+    "section": "6.1 The AnimatLab Bipedal Walker",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "I subsequently expanded the neural model into left- and right-side circuits with interconnected rhythm generators (RGs). I constructed the right-side subsystems from the left-side organization and linked the two RGs through commissural pathways. This later model is referred to as the Walker Two-Layer (W2L) model. Further circuit schematics and implementation records are provided in Appendix~\\ref{app:simulation_verification}.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:52 am",
+        "text": "Results? Lessons?"
+      }
+    ]
+  },
+  {
+    "id": "M-106",
+    "file": "60-sns.tex",
+    "line": 14,
+    "section": "6.1 The AnimatLab Bipedal Walker",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "The missing step was a tested link between spinal neural circuits and the human-scale and BPA-actuated mechanical models needed to study this robot, including the many joint degrees of freedom and 92 musculotendon actuators represented in Gait2392. Air stepping in the combined AnimatLab model did not establish how the same controller would behave with human musculotendon mechanics, robot BPA routing, or ground-contact feedback. I therefore needed models and tests that could separate the effects of the circuit, actuator mechanics, and numerical implementation.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 10:52 am",
+        "text": "huh?"
+      },
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:11 am",
+        "text": "This paragraph confuses me."
+      }
+    ]
+  },
+  {
+    "id": "M-114",
+    "file": "60-sns.tex",
+    "line": 27,
+    "section": "6.2 Knowledge Gaps and the New Tools",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "I developed several software tools to aid in the development of a human-mimetic robot driven by a neural model of control. To do this, I built the following five systems. 1) I adapted the Gait2392 human model in OpenSIM to an equivalent model in the physics simulator MuJoCo. I then connected it to the SNS-Toolbox and tested it with a CPG controller. 2) I developed a simulated BPA-routed robot counterpart to the Gait2392 Model, also coupled to a CPG controller. 3) I combined the Li walker and Deng neural model with foot-contact feedback and tested it... 4) I built a graphical neural construction coupled to a maintained mechanical simulator; 5) I coupled the SolidWorks robot assembly to MATLAB BPA models and a neural controller. These tools enable controlled comparisons of neural organization across biological and artificial actuation. I developed the specific converted models, actuator interfaces, graphical-library elements, and circuit implementations below to build and test those connections. The capability table identifies the connections demonstrated and those still incomplete.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:19 am",
+        "text": "huh?"
+      }
+    ]
+  },
+  {
+    "id": "M-120",
+    "file": "60-sns.tex",
+    "line": 27,
+    "section": "6.2 Knowledge Gaps and the New Tools",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "I developed several software tools to aid in the development of a human-mimetic robot driven by a neural model of control. To do this, I built the following five systems. 1) I adapted the Gait2392 human model in OpenSIM to an equivalent model in the physics simulator MuJoCo. I then connected it to the SNS-Toolbox and tested it with a CPG controller. 2) I developed a simulated BPA-routed robot counterpart to the Gait2392 Model, also coupled to a CPG controller. 3) I combined the Li walker and Deng neural model with foot-contact feedback and tested it... 4) I built a graphical neural construction coupled to a maintained mechanical simulator; 5) I coupled the SolidWorks robot assembly to MATLAB BPA models and a neural controller. These tools enable controlled comparisons of neural organization across biological and artificial actuation. I developed the specific converted models, actuator interfaces, graphical-library elements, and circuit implementations below to build and test those connections. The capability table identifies the connections demonstrated and those still incomplete.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:21 am",
+        "text": "need a better word"
+      }
+    ]
+  },
+  {
+    "id": "M-121",
+    "file": "60-sns.tex",
+    "line": 27,
+    "section": "6.2 Knowledge Gaps and the New Tools",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "I developed several software tools to aid in the development of a human-mimetic robot driven by a neural model of control. To do this, I built the following five systems. 1) I adapted the Gait2392 human model in OpenSIM to an equivalent model in the physics simulator MuJoCo. I then connected it to the SNS-Toolbox and tested it with a CPG controller. 2) I developed a simulated BPA-routed robot counterpart to the Gait2392 Model, also coupled to a CPG controller. 3) I combined the Li walker and Deng neural model with foot-contact feedback and tested it... 4) I built a graphical neural construction coupled to a maintained mechanical simulator; 5) I coupled the SolidWorks robot assembly to MATLAB BPA models and a neural controller. These tools enable controlled comparisons of neural organization across biological and artificial actuation. I developed the specific converted models, actuator interfaces, graphical-library elements, and circuit implementations below to build and test those connections. The capability table identifies the connections demonstrated and those still incomplete.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:21 am",
+        "text": "*"
+      }
+    ]
+  },
+  {
+    "id": "M-122",
+    "file": "60-sns.tex",
+    "line": 29,
+    "section": "6.2 Knowledge Gaps and the New Tools",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "Existing software supplied separate parts of the solution. OpenSim supplied musculoskeletal geometry, MyoConverter translated it to MuJoCo, and SNS-Toolbox supplied neuron and synapse models \\citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. The MuJoCo version used here supports scripted simulation and parameter searches but uses rigid tendons; its Python interface does not provide the block-based circuit assembly needed for this workflow. Simulink supplies that graphical construction, while Simscape Multibody imports mechanical geometry, including SolidWorks-derived mechanisms. AnimatLab retains the reference controllers but is unsupported, relies on an older physics engine, and ran these simulations slowly. The tools connect these complementary environments and use matched tests to check what transfers between them.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:26 am",
+        "text": "This all still feels a bit awkward."
+      }
+    ]
+  },
+  {
+    "id": "M-124",
+    "file": "60-sns.tex",
+    "line": 53,
+    "section": "6.3.1 Software Tools / Model Conversion and Actuator Coupling",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "MyoConverter supplies the initial OpenSim-to-MuJoCo translation. I added repair and audit steps for the custom muscle paths and joint conventions, then coupled the converted model to an SNS-Toolbox controller. The converted model carries 92 muscle-tendon actuators. Geometry comparisons against the source and individual-actuator tests check that the conversion preserves the intended attachment paths and torque directions. The neural and mechanical models exchange signals at a \\qty{2}{\\milli\\second} step.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:28 am",
+        "text": "I don't really know what this means"
+      }
+    ]
+  },
+  {
+    "id": "M-125",
+    "file": "60-sns.tex",
+    "line": 53,
+    "section": "6.3.1 Software Tools / Model Conversion and Actuator Coupling",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "MyoConverter supplies the initial OpenSim-to-MuJoCo translation. I added repair and audit steps for the custom muscle paths and joint conventions, then coupled the converted model to an SNS-Toolbox controller. The converted model carries 92 muscle-tendon actuators. Geometry comparisons against the source and individual-actuator tests check that the conversion preserves the intended attachment paths and torque directions. The neural and mechanical models exchange signals at a \\qty{2}{\\milli\\second} step.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:28 am",
+        "text": "huh?"
+      }
+    ]
+  },
+  {
+    "id": "M-126",
+    "file": "60-sns.tex",
+    "line": 53,
+    "section": "6.3.1 Software Tools / Model Conversion and Actuator Coupling",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "MyoConverter supplies the initial OpenSim-to-MuJoCo translation. I added repair and audit steps for the custom muscle paths and joint conventions, then coupled the converted model to an SNS-Toolbox controller. The converted model carries 92 muscle-tendon actuators. Geometry comparisons against the source and individual-actuator tests check that the conversion preserves the intended attachment paths and torque directions. The neural and mechanical models exchange signals at a \\qty{2}{\\milli\\second} step.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:31 am",
+        "text": "I feel like this all seems to imply that there were problems. Perhaps if you are more specific here, that would clarify. Example You ran MyoConverter and half hte origin points were wrong and needed to be corrected. The joint orientations were left hand instead of right hand. I dunno. Either there were problems, and it is a good thing you checked and fixed them. Or there weren't and it feels weird that you are calling out you created an 'audit' system."
+      }
+    ]
+  },
+  {
+    "id": "M-127",
+    "file": "60-sns.tex",
+    "line": 55,
+    "section": "6.3.1 Software Tools / Model Conversion and Actuator Coupling",
+    "anchor_status": "Current review start mapped to frozen source; highlight end unavailable",
+    "highlight": "Not exposed by current review UI; source line below is context, not an exact highlight.",
+    "context": "The BPA interface evaluates the quasi-static actuator force model from Chapter~\\ref{ch:muscles} using the simulated muscle length and pressure. It provides an actuator model for controller development, rather than a simulation of valve and pressure dynamics. The controller receives length, velocity, force, and contact signals through the corresponding sensory channels. The correction terms of Chapter~\\ref{ch:torque} do not by themselves verify the transferred routing or compliance of a dynamic model; these require separate checks.",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "23 October, 11:32 am",
+        "text": "What BPA interface? Non seq"
+      }
+    ]
+  },
+  {
+    "id": "M-129",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): Two definitions cover most of the neuroscience vocabulary used below. First, the locomotor controller is a two-level central pattern generator: a rhythm generator sets the timing of the step cycle, and a pattern-formation layer shapes that timing into phase-appropriate activation of antagonist muscle groups \\citep{rybak_modelling_2006}. Each leg's rhythm generator is a pair of mutually inhibiting antagonist populations, one extensor and one flexor, so that only one is strongly active at a time. Second, in the non-spiking (graded) formulation used for most of this work, each neuron is electrically a nonlinear RC circuit: synaptic current charges a membrane capacitance through a leak conductance, and the resulting membrane voltage, tens of millivolts, is both the neuron's state and its output \\citep{nourse_sns_2023}. Graded chemical synapses couple these units: a depolarized presynaptic cell opens a conductance in the postsynaptic membrane whose sign makes the connection excitatory or inhibitory. The sensory channels that close the loop are the muscle afferents, Ia signaling muscle length and velocity, Ib signaling muscle force, and group II signaling length, together with heel and toe contact sensors.",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 11:48 am",
+        "text": "So many details and I don't understand what the goal is. What is the gap in knowledge? What did you do to fill it?"
+      },
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:09 pm",
+        "text": "Gaps: Gait2392_simbody with CPG in Mujoco-SNS Toolbox\n- Gait2392_robotbody (BPAs and BPA routing) with CPG\n- Block-programming on a fast physics simulator (Animatlab no longer supported)\n- Robot solidworks assembly with BPAs from Matlab and a neural controller\n- Li walker with Deng neural controller and foot contact feedback."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I rebuilt the opening around the Li/Deng AnimatLab walker and my interconnected left/right RG extension. It then identifies the five missing model/controller combinations in my earlier reply and explains the tools and verification needed to investigate them. Detailed supporting results are in Appendix D."
+      }
+    ]
+  },
+  {
+    "id": "M-130",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): the reflex-based and learned alternatives \\citep{geyer_musclereflex_2010, song_deep_2021} are treated there.",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:45 pm",
+        "text": "huh?"
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I removed the build-order shorthand. The opening now connects the bilateral AnimatLab construction to the missing interfaces and the verification each new tool provides."
+      }
+    ]
+  },
+  {
+    "id": "M-131",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): built in any of several simulation engines",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:49 pm",
+        "text": "why would we need several?"
+      },
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:04 pm",
+        "text": "Well, Mujoco doesn't have as good of a physics engine as HYFYDY, for example, and is limited to rigid tendons. Python also is harder to use because it is code without a GUI. Simscape multibody allows for importing parts from solidworks. Some sort of block-programming language like Simulink is a natural choice for building our style of connectome. Mujoco-SNS Toolbox allows for real-time control and computer in the loop commands."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I now explain the complementary needs: scripted neural/mechanical coupling, graphical neural construction, and SolidWorks/MATLAB integration. The capability table separates demonstrated interfaces from unfinished combinations, and the text states the relevant simulator limitations."
+      }
+    ]
+  },
+  {
+    "id": "M-132",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): answer",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:53 pm",
+        "text": "This is all super awkward. You need to identify the gap in knowledge and how you fill that gap in knowledge. Much of what you wrote here should be saved for discussion, where you talk about the implications of the work."
+      },
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:00 pm",
+        "text": "I thought that was for research hypothesis not for \"here are some tools we made\"."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I put the knowledge gaps before the new tools and kept the main results to representative verification. Broader sweeps and supported-walker results are in Appendix D; future integration belongs in the Discussion chapter."
+      }
+    ]
+  },
+  {
+    "id": "M-133",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): verification-first approach",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 12:59 pm",
+        "text": "I don't understand the connection."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I rewrote the transition to connect the identified modeling gaps to the specific neural/mechanical interfaces developed."
+      }
+    ]
+  },
+  {
+    "id": "M-134",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): \\begin{figure}[htbp]",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:00 pm",
+        "text": "Overlapping text in figure"
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I replaced the pipeline schematic with the corrected vector figure, with separated columns and labels."
+      }
+    ]
+  },
+  {
+    "id": "M-135",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): build order",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:02 pm",
+        "text": "huh?"
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:27 am",
+        "text": "I removed the unexplained inventory and retained the interface\u2019s purpose, its demonstrated check, and its limitation."
+      }
+    ]
+  },
+  {
+    "id": "M-136",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): \\subsection{New Tools}\\label{sec:sns_new_tools}",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:08 pm",
+        "text": "Wait, that is all you are saying about the other tools? It is hard for the reader to understand the limitations and gaps without a deeper description of them."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I expanded the explanation of the environments\u2019 capabilities and limitations and added a table showing which interfaces are demonstrated and which combinations remain incomplete."
+      }
+    ]
+  },
+  {
+    "id": "M-137",
+    "file": "60-sns.tex",
+    "line": 117,
+    "section": "6.5 Capabilities and Remaining Limits",
+    "anchor_status": "Collapsed at end of replaced file; current original location unavailable",
+    "highlight": "Historical exact highlight (22 Oct. capture): Simulink blocks",
+    "context": "The next step is to use these interfaces and tests to improve weight-bearing control and then evaluate transfer to hardware. Chapter~\\ref{ch:futurework} discusses those extensions. ",
+    "messages": [
+      {
+        "author": "ajh26",
+        "date": "21 October, 1:11 pm",
+        "text": "Did you compare and discuss against the libraries myself and Fletcher made here?"
+      },
+      {
+        "author": "bbolen83",
+        "date": "21 October, 2:00 pm",
+        "text": "No. You've never encouraged us to use Simulink."
+      },
+      {
+        "author": "bbolen83",
+        "date": "23 October, 6:21 am",
+        "text": "I removed the Hunt/Young library comparison because those citations do not establish a shared neuromechanical Simulink library. The section now describes the implemented blocks and matched-circuit verification directly. A comparison with the specific libraries you mean still requires checking those libraries."
+      }
+    ]
+  }
+]

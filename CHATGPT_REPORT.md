@@ -1,3 +1,45 @@
+# P01 author confirmation — coupled CAD assembly
+
+Ben confirms the SolidWorks-derived robot assembly with a neural controller and BPAs using his force model; its saved model is on the temporarily unavailable laptop. Include it as an author-confirmed contribution. P01 uses representative proof-of-concept examples, not exhaustive results for every tool. Do not block the prose on further experiments or ask Ben again for this artifact now. Rybak is Python. Details: Revision_E/review/targeted_reconciliation/tools_inventory/AUTHOR_CONFIRMATION.md.
+
+---
+
+# P01 reframed: tools created and representative demonstrations
+
+Ben rejected the incomplete-work framing. The current P01 fragments list delivered model/tool contributions and functional-verification/proof-of-concept demonstrations, with credit to the reused packages. Evidence and naming boundaries are in Revision_E/review/targeted_reconciliation/tools_inventory/TOOLS_AND_DEMONSTRATIONS.md. The paragraph and capability table are paired targeted replacements, not chapter uploads. No Overleaf edits or new model runs were made.
+
+---
+
+# Application rule — targeted patches, not chapter replacement
+
+The live Overleaf document is the baseline. Do not upload/paste Revision E chapter files wholesale: they lack current tracked deletions, changes, and comment anchors. Use `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/review/targeted_reconciliation/OVERLEAF_TARGETED_PATCHES.md`. It contains exact-text replacements, comment/date evidence, and the current table/deletion decisions. Ben’s deleted sentence must stay deleted. Supply modeling evidence separately from prose patches; do not launch parallel chapter rewrites. No Overleaf changes or inter-agent messages were made by this reconciliation.
+
+---
+
+# Figure 6.1 and MyoConverter detail correction — 26 October 2026
+
+Revision E now contains Ben’s supplied original Connor–Ben shared-RG diagram as labeled Figure 6.1(B), with the mechanical walker labeled (A). Later per-side RG and RG/PF/contact-feedback changes are attributed to Ben and distinguished from the original model. The heading is exactly “Block Programming Neural Pathways.” New Appendix D.1 consolidates the conversion repairs; the main summary and existing Appendix A force comparisons remain. Details and line evidence: `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/review/figure61_correction/CORRECTIONS.md`. Editable chapter and appendix sources remain in Revision_E/chapters. No Overleaf edits, commits, or pushes.
+
+---
+
+# Revision E submission clarity pass — 26 October 2026
+
+The local PDF now leads with the concrete SNS framework: Gait2392 and separate BPA models, neural-controller alternatives, adjustable simulated harnesses, staged tuning, neural stimuli, external perturbations, recorded responses, and bounded Optuna searches. It makes no solver-superiority or global-optimum claim. Existing results, including posture failures and the scoped Ib finding, remain qualified.
+
+Seventeen principal prose changes across six chapters align the Introduction, Background, Database, SNS, Discussion, and Conclusion. The recorded clarity-related comments have line-based treatments in `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/review/clarity_pass/comment_compliance.json`; `CLARITY_PASS.md` is the readable review. Earlier texts are preserved. Acceptance remains for Ben/advisor to judge. No Overleaf changes, model runs, commits, or pushes.
+
+---
+
+# Revision E follow-up — corrected remote evidence, 26 October 2026
+
+The latest E supersedes the earlier “corrected evidence unavailable” status below. Read-only easteregg2 retrieval and independent raw-log recount confirm corrected control 17/16, commissural deletion 13/12, and Ib deletion 0/0. The runner forwarding repair changes the operating point; it does not retroactively make the old six-field search a per-synapse optimization. Nine of ten corrected mass-change cases fail tilt, and both push conditions exceed the 45° fall threshold. E now states those limits and restores the corrected figure.
+
+Rybak's selected neural-behavior tests (13/13) are included with activity-based-reduction caveats. Deng and Di Russo experiment-level reproduction remains open. The human wean removes added hand drive, not all descending drive or all feedback. Ben does not want to request the never-supplied Hunt/Fletcher libraries; that is no longer an outstanding request to him.
+
+Updated source, PDF, report, handoff, snapshot hashes, independent count audit, and self-scoring matrix are under `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/`. Earlier versions are preserved in its review folder. No Overleaf edits, remote edits, new model runs, commits, pushes, or external messages.
+
+---
+
 # Revision E — SNS review, 26 October 2026
 
 Built the local Revision E SNS chapter against fetched commit `a988508a`. **Critical finding:** 55 of 61 per-target winner fields are discarded by the committed evaluator, and the runner does not forward them. The perturbation figure also duplicates left-heel counts into its right column; several nominal deletions are not applied. These are implementation/evidence issues, not just wording issues. A newer easteregg2 source may differ and needs recovery with its outputs.

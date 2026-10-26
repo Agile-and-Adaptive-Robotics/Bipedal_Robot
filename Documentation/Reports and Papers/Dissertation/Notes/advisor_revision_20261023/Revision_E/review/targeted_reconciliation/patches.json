@@ -1,0 +1,34 @@
+[
+  {
+    "id": "P00",
+    "action": "KEEP DELETED; no new text",
+    "comment": "ajh26, 23 October 10:51 am: Huh? Just delete all this?; Ben 26 October 5:20 am: deleted",
+    "old": " This suspended stepping result preceded the later feedback and bilateral-RG extensions; it does not demonstrate walking with those additions.",
+    "new": "",
+    "status": "Deletion verified live. Do not restore this sentence or a paraphrase. Retain the rest of the outcome paragraph unless Ben directs otherwise."
+  },
+  {
+    "id": "P01",
+    "action": "Paired paragraph-and-table replacement: list tools created and relevant demonstrations",
+    "comment": "ajh26, 23 October 11:21 am: need a better word; second marker *",
+    "old": "Whole current paragraph beginning I developed several software tools through the capability-table sentence, plus the table environment labeled tab:sns_capability.",
+    "new": "Researchers studying neuromechanical control need a reusable way to assemble neural controllers with human musculoskeletal and artificial-muscle models and evaluate their behavior under specified support, stimulation, and perturbation conditions. I addressed this need by developing the following models and tools from the existing simulation packages:\n\\begin{enumerate}\n    \\item A custom Li--Deng walker and controller, developed in AnimatLab and implemented in MuJoCo with SNS-Toolbox, with matched implementations of its contact-driven neural core in NumPy and Simulink.\n    \\item Gait2392-based neuromechanical models with alternative neural controllers, and a robot counterpart with BPA routing and the actuator-force model from Chapter~\\ref{ch:muscles}.\n    \\item The SNS-Simscape block library and GUI for block programming neural pathways, including sensory, neuron, synapse, activation, and custom BPA-force blocks, together with coupled reflex and CPG demonstrations.\n    \\item A SolidWorks-derived robot assembly in Simscape Multibody coupled to a neural controller and BPA actuators using the force model from Chapter~\\ref{ch:muscles}.\n    \\item Integration of SNS-Simscape controllers with MuJoCo through the existing MathWorks bidirectional bridge, and model-import tools for bringing musculoskeletal and CAD-derived mechanisms into the MATLAB environment.\n    \\item An automated curriculum and experiment workflow that combines staged parameter searches with adjustable support, neural stimuli, pathway interventions, mechanical perturbations, and recorded neural and mechanical outputs.\n    \\item Implementations of literature-derived circuits and selected spiking-neuron counterparts for comparing neural mechanisms and coding assumptions.\n\\end{enumerate}\nOpenSim, MuJoCo, SNS-Toolbox, Optuna, Simulink, and the MathWorks bridge provide the underlying software; the contributions here are the model implementations, custom blocks, integrations, and evaluation procedures. Table~\\ref{tab:sns_capability} presents selected functional-verification tests and proof-of-concept demonstrations illustrating the capabilities of this toolset.\n",
+    "status": "Author-confirmed coupled CAD assembly included. Representative demonstrations illustrate the toolset; exhaustive per-tool results are not required."
+  },
+  {
+    "id": "P02",
+    "action": "Replace only item 4 wording; retain Ben\u2019s block-programming description",
+    "comment": "Ben 26 October 2:21 am tracked change and 5:15 am reply to huh?",
+    "old": "I built a GUI for block-programming neural controllers that were attached mechanical models",
+    "new": "I built a GUI for block-programming neural controllers coupled to mechanical models",
+    "status": "Exact current text read live; grammar/coupling wording only."
+  },
+  {
+    "id": "P03",
+    "action": "Rename only the subsection title; preserve label",
+    "comment": "Ben\u2019s explicit heading instruction in chat",
+    "old": "\\subsection{Graphical Circuit Construction}\\label{sec:sns_new_tools}",
+    "new": "\\subsection{Block Programming Neural Pathways}\\label{sec:sns_new_tools}",
+    "status": "Exact current heading read live. Preserve the existing label and comments."
+  }
+]
