@@ -1,3 +1,13 @@
+# Revision E — SNS review, 26 October 2026
+
+Built the local Revision E SNS chapter against fetched commit `a988508a`. **Critical finding:** 55 of 61 per-target winner fields are discarded by the committed evaluator, and the runner does not forward them. The perturbation figure also duplicates left-heel counts into its right column; several nominal deletions are not applied. These are implementation/evidence issues, not just wording issues. A newer easteregg2 source may differ and needs recovery with its outputs.
+
+Revision E replaces the confusing five-task capability table with gaps, reasons, tests, results, and limits in prose. It incorporates Ben's 26 October per-leg PF / shared four-neuron RG clarification and MN-feedback wording, recent Simulink tests, recorded mass-change outcomes, failed conductance robustness probes, and the negative Di Russo stability search. The defective perturbation figure is explicitly excluded and its source retained. Historical review scores and Ben's replies are preserved. Clarity is still pending Ben/advisor acceptance.
+
+Files: `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/Revision_E_local.pdf`, `REPORT.md`, `ZCODE_HANDOFF.md`, and `review/self_scoring_matrix.json`. The report includes exact section/line/text evidence, source hashes, numerical changes, and build results. Overleaf was read only; no commit, push, new modeling run, or external message was made. Other chapters are the Revision D baseline.
+
+---
+
 # Priority 1.1 corrected and expanded with Ben's replies — 23 October 2026
 
 Ben's 2:03, 2:05, and 2:07 p.m. Overleaf replies were captured verbatim in Notes/advisor_review_20261023/ben_conversion_replies_20261023.json. They supply actual conversion problems omitted from the earlier generic prose pass: small-muscle pruning (3 per side, model/count reconciliation pending), OpenSim/ISB axis convention, patella-path representation, and the initial BPA-routed robotbody import with human muscle parameters triggering impossible-force checks. Ben additionally confirms restoration of the OpenSim/ISB frame and a ground-contact issue; the exact fixes, outcomes, and machine provenance require recovery.

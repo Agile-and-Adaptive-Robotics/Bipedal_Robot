@@ -1,3 +1,9 @@
+# Priority update — Revision E
+
+Read `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/Revision_E/ZCODE_HANDOFF.md` first. It supersedes earlier SNS evidence assumptions: 55/61 winner keys are dropped in the fetched code; right-side deletion counts duplicate the left. Recover any newer easteregg2 implementation before repairing or replaying. Do not start a larger search before effective-parameter and actual-deletion checks.
+
+---
+
 # ZCode handoff: evidence and integration work after the local prose pass
 
 Read CHATGPT_REPORT.md first. Ben authorized local editing and asked for this handoff; Overleaf remains read-only. Do not upload or replace chapters from this folder without a new live-source comparison. Do not commit or push. This working copy is Revision_D; its changed chapters are Introduction, Background, Database, and SNS. Use review/changes.json and changes.diff to merge targeted edits, not whole files. Frozen before copies are in review/before.

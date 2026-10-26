@@ -1,0 +1,6 @@
+ with (B/f'pass_{i+1}.log').open('w',encoding='utf-8') as log:r=subprocess.run(command,cwd=cwd,env=env,stdout=log,stderr=subprocess.STDOUT)
+ print('pass',i+1,r.returncode,flush=True)
+ if r.returncode: raise RuntimeError('Build failed: '+str(B))
+log=(B/'main.log').read_text(errors='replace')
+result={'build':str(B),'errors':len(re.findall(r'^!',log,re.M)),'undefined_references':len(re.findall(r'undefined references|Reference .* undefined|Citation .* undefined',log)),'missing_figures':len(re.findall(r'File .* not found',log)),'pages':re.findall(r'Output written on .*?\((\d+) pages',log,re.S),'overfull_boxes':len(re.findall(r'Overfull \\hbox',log))}
+(D/'review/build_result.json').write_text(json.dumps(result,indent=2),encoding='utf-8');print(json.dumps(result),flush=True)
