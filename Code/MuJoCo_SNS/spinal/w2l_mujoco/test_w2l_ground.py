@@ -183,7 +183,36 @@ KV = dict(phase="both", dur_stand=12.0, dur_walk=20.0,
           # (nan = inherit the globals).
           presyn_lo=0.0, presyn_hi=5.0,
           contact_presyn_lo=float("nan"),
-          contact_presyn_hi=float("nan"))
+          contact_presyn_hi=float("nan"),
+          # ---- 2026-10-24 (Batch BW Tier 2, Ben's conductance-class ask):
+          # SYNAPSE-CLASS scale factors over W2L_GAINS's remaining
+          # documented classes (the ch_*/comm knobs already cover the
+          # contact + commissural classes). 1.0 = the documented anchor
+          # value EXACTLY = default build BIT-IDENTICAL; signs and
+          # topology are never touched (scale only). Anchors cited in
+          # build_w2l_net.W2L_GAINS.
+          s_rg_lam=1.0,      # rg_laminate 4.0 (laminated RG mutual inhib)
+          s_rg_exc=1.0,      # rg_direct_exc 0.5 (escape-mode HC<->HC)
+          s_pf_drive=1.0,    # pf_drive 2.4 (RG -> PF half-centers)
+          s_pf_cross=1.0,    # pf_cross 4.0 (PF reciprocal inhibition)
+          s_pf_mn=1.0,       # pf_to_mn 2.0 (PF -> MN)
+          s_rc=1.0,          # rc_own_exc 1.0 + rc_inh 0.5 (Deng-A6 Renshaw)
+          s_ia=1.0,          # ia_sn_exc 0.6 + ia_inh 0.4 + ia_mutual 0.5
+          s_aff_hc=1.0,      # aff_HC_excite 0.08 (weak afferent->HC chain)
+          # ---- 2026-10-25 (Ben's harness directive): sagittal-plane
+          # constraint multiplier on the lateral leash + roll/yaw lock
+          # (see the rig block). <=1 = historical rig = BIT-IDENTICAL;
+          # the campaign default is 50 (stiff lateral, locked roll/yaw,
+          # pitch + fore-aft free).
+          sagittal=0.0,
+          # stimulus-to-network window (Deng-poster panels; 0 = off)
+          stimN=0.0, stimT=8.0, stimDur=1.0,
+          # ---- 2026-10-25 (Ben's wean directive): weight-support
+          # fraction carried by the harness (the drop protocol's
+          # feedforward channel; already a documented knob -- restated
+          # here because the campaign weans IT, not drive).
+          )
+_WSUP_DEFAULT = 0.7
 for arg in sys.argv[1:]:
     if arg.startswith("--") and "=" in arg:
         k, v = arg[2:].split("=", 1)
@@ -264,6 +293,21 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                      contact_contra_flex=KV["ch_contra"],
                      c1_inh=3.0 * KV["comm"],
                      v3_weak=0.08 * KV["comm"])
+        # Batch BW Tier 2 (2026-10-24): the remaining synapse-class scales.
+        # At the KV defaults (1.0) every product equals its W2L_GAINS
+        # anchor exactly, so the default compiled net is BIT-IDENTICAL.
+        gains.update(
+            rg_laminate=4.0 * KV["s_rg_lam"],
+            rg_direct_exc=0.5 * KV["s_rg_exc"],
+            pf_drive=2.4 * KV["s_pf_drive"],
+            pf_cross=4.0 * KV["s_pf_cross"],
+            pf_to_mn=2.0 * KV["s_pf_mn"],
+            rc_own_exc=1.0 * KV["s_rc"],
+            rc_inh=0.5 * KV["s_rc"],
+            ia_sn_exc=0.6 * KV["s_ia"],
+            ia_inh=0.4 * KV["s_ia"],
+            ia_mutual=0.5 * KV["s_ia"],
+            aff_HC_excite=0.08 * KV["s_aff_hc"])
         # presynaptic window (2026-10-20): only inject NON-default keys so
         # the default gains dict (and therefore the compiled net) is
         # EXACTLY the pre-knob build (bit-identical).
@@ -502,6 +546,13 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                 u[itE[1]] = te[1]
                 u[itF[0]] = tf[0]
                 u[itF[1]] = tf[1]
+            # STIMULUS-TO-NETWORK hook (2026-10-26, Deng-poster panels):
+            # windowed inhibitory tonic stimulus on the rhythm layer
+            # (subtract from both RG-E drive ports). Default 0 = off =
+            # bit-identical. stimT seconds in, stimDur seconds long.
+            if KV["stimN"] > 0.0 and KV["stimT"] <= t < KV["stimT"] + KV["stimDur"]:
+                u[itE[0]] = max(0.0, u[itE[0]] - KV["stimN"])
+                u[itE[1]] = max(0.0, u[itE[1]] - KV["stimN"])
             # i_a (2026-10-16 sweep fix): NEVER shadow the physics loop
             # index i -- the audit-stage `for i, a_cur in i_alpha` rebind
             # corrupted every even-index log entry AND silently disabled
@@ -605,18 +656,28 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                         (1.0 - a) * float(d.subtree_com[0][0])
                 com = anchor["com"]
                 dv = d.subtree_com[0] - com
+                # SAGITTAL HARNESS (2026-10-25, Ben's directive: the
+                # virtual harness "takes up weight and constrains to
+                # sagittal plane"): KV["sagittal"] = S multiplies the
+                # LATERAL leash stiffness and locks roll+yaw (pitch and
+                # fore-aft stay at protocol strength so walking remains
+                # honest). 0/1 = historical rig = BIT-IDENTICAL.
+                _sag = float(KV["sagittal"])
+                _sag = 1.0 if _sag <= 1.0 else _sag
                 F = np.zeros(3)
                 F[0] = -S_now * K0_XY * dv[0]
-                F[1] = -S_now * K0_XY * dv[1]
+                F[1] = -S_now * (K0_XY * _sag) * dv[1]
                 rv = rotvec_deg(d.xmat[body_root].reshape(3, 3),
                                 anchor["R0"])
                 T = -S_now * K0_ROT * rv
+                T[0] *= _sag      # roll lock
+                T[2] *= _sag      # yaw lock (pitch free = sagittal tilt)
                 if rv_prev is not None and i > 0:
                     T -= S_now * 2.0 * np.sqrt(K0_ROT * I_EFF) * \
                         (rv - rv_prev) / DT_PHY
                 rv_prev = rv
                 F[:2] -= S_now * 2.0 * np.sqrt(K0_XY * M_EFF) * \
-                    np.array([d.qvel[0], d.qvel[1]])
+                    np.array([d.qvel[0], d.qvel[1] * np.sqrt(_sag)])
                 d.xfrc_applied[body_root, 0] += F[0]
                 d.xfrc_applied[body_root, 1] += F[1]
                 d.xfrc_applied[body_root, 3:] = T

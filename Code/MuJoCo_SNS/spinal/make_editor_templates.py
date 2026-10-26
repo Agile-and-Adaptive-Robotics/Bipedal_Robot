@@ -8,6 +8,10 @@ Sources (all read-only):
     spinal\\w2l_equivalent_draft.json -> 'w2l'
   - BilateralRG documented transform of w2l (tools/SESSION_NOTES_20260916.md)
                                       -> 'bilateralrg'
+  - w2l_cpg\\make_bilateralrg2.py mines Ben's corrected 2026-10-18
+    Walker_2_Layer_CPG_BilateralRG.aproj into the sidecar directly
+                                      -> 'bilateralrg2' (carried through
+    below so a full regen cannot drop it; rerun that miner to regenerate)
   - %TEMP%\\tpl_li.json (subagent mine of Li Model walk tester rearranged.aproj)
                                       -> 'li'
   - spinal\\best_walk_params_v9/v10.json + curriculum_stage1/2/3.json +
@@ -1719,6 +1723,21 @@ def main():
     pruned_sch = make_schematic(json.loads(json.dumps(pruned)), 'walker')
     pruned_sch['_note'] = pruned['_note'] +         ' [STRUCTURE: subsystem schematic like walker_s3k.]'
     out['walker_s3k_pruned'] = pruned_sch
+
+    # bilateralrg2: canonical generator is w2l_cpg/make_bilateralrg2.py,
+    # which mines Ben's corrected 2026-10-18 aproj and writes the sidecar
+    # key directly. A full regen here must NOT drop it (that asymmetry was
+    # the 2026-10-24 arbitration finding: sidecar had it, the HTML embed
+    # did not). Carry the existing key through untouched; the w2l_cpg
+    # miner stays the only thing that regenerates it. (Batch BW Tier 1.)
+    _sidecar = os.path.join(HERE, 'connectome_templates.json')
+    if os.path.exists(_sidecar):
+        _prev = json.load(open(_sidecar, encoding='utf-8'))
+        if 'bilateralrg2' in _prev:
+            out['bilateralrg2'] = _prev['bilateralrg2']
+        else:
+            print('WARN: no bilateralrg2 in sidecar - run '
+                  'w2l_cpg/make_bilateralrg2.py to generate it')
 
     for nm, spec in out.items():
         errs += validate(nm, spec)

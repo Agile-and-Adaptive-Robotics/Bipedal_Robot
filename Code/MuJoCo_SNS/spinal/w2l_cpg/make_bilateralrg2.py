@@ -113,12 +113,22 @@ def mine_aproj(path: Path) -> dict:
         if not (_txt(lk, "ClassName") or "").endswith("Synapse"):
             continue
         t = syn_types.get(_txt(lk, "SynapticTypeID"), {})
+        # PER-INSTANCE values (2026-10-25 ruling pt4: mines record
+        # per-instance SynAmp per edge). The instance's own
+        # SynapticConductance is the RUNTIME strength (Li-model-verified);
+        # the type's gmax is creation-time prefill only.
+        inst_sc = lk.find("SynapticConductance")
+        inst_cd = lk.find("ConductionDelay")
         edges.append({
             "src_guid": _txt(lk, "OriginID"),
             "dst_guid": _txt(lk, "DestinationID"),
             "type": t.get("name"),
             "eref": t.get("eref"),
             "gmax": t.get("gmax"),
+            "synamp_instance": (inst_sc.attrib.get("Actual")
+                                if inst_sc is not None else None),
+            "delay_ms": (inst_cd.attrib.get("Actual")
+                         if inst_cd is not None else None),
         })
     return {"nodes": list(nodes.values()), "edges": edges,
             "syn_types": {v["name"]: v for v in syn_types.values()}}
@@ -291,9 +301,12 @@ def main() -> int:
         dst = label.get(e["dst_guid"]) or by_guid[e["dst_guid"]]["name"]
         st = stype_by_name[e["type"]]
         tag, sign = edge_tag(src, dst, e["type"], st)
-        edges.append({"from": src, "to": dst, "sign": sign, "tag": tag,
-                      "aproj_type": e["type"],
-                      "aproj_gmax": e["gmax"]})
+        ent = {"from": src, "to": dst, "sign": sign, "tag": tag,
+               "aproj_type": e["type"],
+               "aproj_gmax": e["gmax"],
+               "synamp": e.get("synamp_instance"),
+               "delay_ms": e.get("delay_ms")}
+        edges.append(ent)
     for e in old_tpl["edges"]:
         if e["tag"] in ("mn_to_muscle",) or e["from"].startswith("Stimulus"):
             edges.append(e)
