@@ -1,0 +1,869 @@
+- main:
+  - navigation "Project actions":
+    - link "Overleaf logo":
+      - /url: /project
+      - generic "Overleaf logo"
+    - menubar:
+      - button "File"
+      - button "Edit"
+      - button "Insert"
+      - button "View"
+      - button "Format"
+      - button "Help"
+    - button "Project title options":
+      - generic: Design Factors for Isometric Robotic Knee Torque
+      - generic: keyboard_arrow_down
+    - status
+    - button "b":
+      - generic: b
+    - button "b":
+      - generic: b
+    - button "History":
+      - generic: history
+      - text: History
+    - button "Layout options":
+      - generic: space_dashboard
+      - text: Layout
+    - button "Share":
+      - generic: person_add
+      - text: Share
+  - navigation "Sidebar":
+    - tablist:
+      - tab "File tree":
+        - generic: description
+        - generic: File tree
+      - tab "Project search":
+        - generic: search
+        - generic: Project search
+      - tab "Integrations":
+        - generic: integration_instructions
+        - generic: Integrations
+      - tab "Review panel" [selected]:
+        - generic: rate_review
+        - generic: Review panel
+      - tab "Chat":
+        - generic: forum
+        - generic: Chat
+      - tab "AI assistant":
+        - generic: AI assistant
+      - navigation "Help and editor settings":
+        - button "Help":
+          - generic: help
+        - button "Settings":
+          - generic: settings
+  - region "Editor":
+    - heading "Review" [level=4]
+    - button "Resolved comments":
+      - generic: inbox
+    - button "Close":
+      - generic: close
+    - tablist:
+      - tab "‎Main.tex Close" [selected]:
+        - generic: description
+        - generic: ‎Main.tex
+        - button "Close":
+          - generic: close
+      - tab "‎FrontiersinHarvard.cls Close":
+        - generic: description
+        - generic: ‎FrontiersinHarvard.cls
+        - button "Close":
+          - generic: close
+    - toolbar "Editor tools":
+      - button "Ask the AI assistant about this file"
+      - generic "Undo/Redo actions":
+        - button "Undo":
+          - generic: undo
+          - generic: Undo
+        - button "Redo":
+          - generic: redo
+          - generic: Redo
+      - generic "Text formatting":
+        - button "Section heading level":
+          - generic: text_fields
+          - generic: expand_more
+      - generic "Text style":
+        - button "Bold":
+          - generic: format_bold
+          - generic: Bold
+        - button "Italic":
+          - generic: format_italic
+          - generic: Italic
+      - generic "Insert math and symbols":
+        - button "Insert math":
+          - generic: calculate
+        - button "Insert symbol": Ω
+      - generic "Insert misc (links, citations, cross-references, figures, tables)":
+        - button "Insert link":
+          - generic: add_link
+          - generic: Insert link
+        - button "Add comment":
+          - generic: add_comment
+          - generic: Add comment
+        - button "Insert cross reference":
+          - generic: sell
+          - generic: Insert cross reference
+      - generic "List and indentation"
+      - button "More editor toolbar items":
+        - generic: more_horiz
+      - generic "Code and visual editor switch":
+        - group "Editor mode.":
+          - generic: Editor mode.
+          - radio "Code" [checked]
+          - generic: Code
+          - radio "Visual"
+          - generic: Visual
+      - button "Reviewing":
+        - generic: rate_review
+        - generic: keyboard_arrow_down
+      - button "Search file":
+        - generic: search
+        - generic: Search file
+    - generic: "current match. The correction terms enter the prediction through the implicit balance of Equation~\\eqref{eq:complianceforcebalance}, and no instrument measures them directly, so they were identified by global optimization against measured torque. Candidates are judged simultaneously on the root mean square error (RMSE), the fraction of variance unexplained (FVU, the residual sum of squares divided by the total sum of squares of the measured torque about its mean, so that $R^{2} = 1 - \\mathrm{FVU}$), and the maximum absolute residual, each computed between measured and predicted isometric torque over the tested range of motion; FVU is the primary criterion because it is scale-free and comparable across tests with different torque scales, while the maximum residual is the phase-sensitive worst case. The solver was an elitist on line 300."
+    - generic: "1"
+    - generic: "2"
+    - generic: "3"
+    - generic: "4"
+    - generic: "5"
+    - generic: "6"
+    - generic: "7"
+    - generic: "8"
+    - generic: "9"
+    - generic: "10"
+    - generic: "11"
+    - generic: "12"
+    - generic: "13"
+    - generic: "14"
+    - generic: "15"
+    - generic: "16"
+    - generic: "17"
+    - generic: "18"
+    - generic: "19"
+    - generic: "20"
+    - generic: "21"
+    - generic: "22"
+    - generic: "23"
+    - generic: "24"
+    - generic: "25"
+    - generic: "26"
+    - generic: "27"
+    - generic: "28"
+    - generic: "29"
+    - generic: "30"
+    - generic: "31"
+    - generic: "32"
+    - generic: "33"
+    - generic: "34"
+    - generic: "35"
+    - generic: "36"
+    - generic: "37"
+    - generic: "38"
+    - generic: "39"
+    - generic: "40"
+    - generic: "41"
+    - generic: "42"
+    - generic: "43"
+    - generic: "44"
+    - generic: "45"
+    - generic: "46"
+    - generic: "47"
+    - generic: "48"
+    - generic: "49"
+    - generic: "50"
+    - generic: "51"
+    - generic: "52"
+    - generic: "53"
+    - generic: "54"
+    - generic: "55"
+    - generic: "56"
+    - textbox "Source Editor editing":
+      - generic: "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+      - generic: "% This is just an example/guide for you to refer to when submitting manuscripts to Frontiers, it is not mandatory to use Frontiers .cls files nor frontiers.tex %"
+      - generic: "% This will only generate the Manuscript, the final article will be typeset by Frontiers after acceptance."
+      - generic: "% %"
+      - generic: "% %"
+      - generic: "% When submitting your files, remember to upload this *tex file, the pdf generated with it, the *bib file (if bibliography is not within the *tex) and all the figures."
+      - generic: "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+      - generic: "%%% Version 3.4 Generated 2018/06/15 %%%"
+      - generic: "%%% You will need to have the following packages installed: datetime, fmtcount, etoolbox, fcprefix, which are normally inlcuded in WinEdt. %%%"
+      - generic: "%%% In http://www.ctan.org/ you can find the packages and how to install them, if necessary. %%%"
+      - generic: "%%% NB logo1.jpg is required in the path in order to correctly compile front page header %%%"
+      - generic: "\\documentclass[utf8]{FrontiersinHarvard} % for articles in journals using the Harvard Referencing Style (Author-Date), for Frontiers Reference Styles by Journal: https://zendesk.frontiersin.org/hc/en-us/articles/360017860337-Frontiers-Reference-Styles-by-Journal"
+      - generic: "\\usepackage{url,hyperref,lineno,microtype}"
+      - generic: "\\usepackage{xr}"
+      - generic: "\\usepackage{amssymb}"
+      - generic: "\\usepackage{amsmath, bm}"
+      - generic: "\\usepackage{mathabx}"
+      - generic: "\\usepackage{siunitx}"
+      - generic: \let\DeclareUSUnit\DeclareSIUnit
+      - generic: \let\US\SI
+      - generic: "\\DeclareUSUnit\\inch{in}"
+      - generic: "\\DeclareUSUnit\\ft{ft}"
+      - generic: "\\providecommand{\\abs}[1]{\\lvert#1\\rvert}"
+      - generic: "\\providecommand{\\norm}[1]{\\lVert#1\\rVert}"
+      - generic: "\\usepackage{graphicx}"
+      - generic: "\\graphicspath{{../}} % figures live in Knee_Torque_Test/Figures (Ben's structure); on Overleaf Figures/ sits beside Main.tex"
+      - generic: "\\usepackage{caption}"
+      - generic: "\\usepackage{tabularx}"
+      - generic: "\\usepackage{booktabs}"
+      - generic: "\\usepackage{multirow}"
+      - generic: "\\usepackage{float}"
+      - generic: "\\usepackage{array}"
+      - generic: "\\usepackage[onehalfspacing]{setspace}"
+      - generic: "\\usepackage{rotating}"
+      - generic: "\\renewcommand{\\arraystretch}{2} % Increase row height (default is 1.0)"
+      - generic: \linenumbers
+      - generic: "\\externaldocument{frontiers_SupplementaryMaterial}"
+      - generic: "% Leave a blank line between paragraphs instead of using \\\\"
+      - generic: "\\def\\keyFont{\\fontsize{8}{11}\\helveticabold }"
+      - generic: "\\def\\firstAuthorLast{Bolen {et~al.}} %use et al only if is more than 1 author"
+      - generic: "\\def\\Authors{Ben Bolen\\,$^{1,*}$, Lindie Burgess\\,$^{1}$, Connor Morrow\\,$^{1}$, and Alex Hunt\\,$^{1}$}"
+      - generic: "% Affiliations should be keyed to the author's name with superscript numbers and be listed as follows: Laboratory, Institute, Department, Organization, City, State abbreviation (USA, Canada, Australia), and Country (without detailed address information such as city zip codes or street names)."
+      - generic: "% If one of the authors has a change of address, list the new address below the correspondence details using a superscript symbol and use the same symbol to indicate the author in the author list."
+      - generic: "\\def\\Address{$^{1}$Agile and Adaptive Robotics Laboratory, Portland State University, Department of Mechanical and Materials Engineering, Portland, OR, USA }"
+      - generic: "% The Corresponding Author should be marked with an asterisk"
+      - generic: "% Provide the exact contact address (this time including street name and city zip code) and email of the corresponding author"
+      - generic: "%\\def\\corrAuthor{Ben Bolen, Portland State University, Department of Mechanical and Materials Engineering, 1930 SW 4th Ave., Portland, OR, 97207, USA}"
+    - tabpanel "Overview":
+      - button "BolenFrontiers22.bib 1":
+        - generic: keyboard_arrow_down
+        - text: BolenFrontiers22.bib
+        - generic: "1"
+      - button "bbolen83 14 April, 3:40 pm Added:":
+        - generic: bbolen83
+        - generic: 14 April, 3:40 pm
+        - generic: add_circle
+        - text: "Added:"
+        - insertion
+      - button "Main.tex 30":
+        - generic: keyboard_arrow_down
+        - text: Main.tex
+        - generic: "30"
+      - 'button "bbolen83 26 October, 3:00 pm Changed: The correction terms enter the prediction through ... show more to The correction terms were identified by global opt... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 3:00 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: The correction terms enter the prediction through ...
+          - button "show more":
+            - generic: show more
+        - text: to
+        - generic: The correction terms were identified by global opt...
+        - button "show more":
+          - generic: show more
+      - button "bbolen83 26 October, 2:32 pm Resolve comment More options This is incorrect in the values and which tests were training and validation. The whole paragraph is incorrect. show less Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:32 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: This is incorrect in the values and which tests were training and validation. The whole paragraph is incorrect.
+        - button "show less":
+          - generic: show less
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:30 pm Resolve comment More options I don't think Hunt Equation was calculated correctly here. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:30 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I don't think Hunt Equation was calculated correctly here.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:29 pm Resolve comment More options Leaves the page and is rotated the wrong way. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:29 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Leaves the page and is rotated the wrong way.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:31 pm Resolve comment More options This is all incorrect Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:31 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: This is all incorrect
+        - textbox "Reply":
+          - generic: Reply
+      - 'button "bbolen83 26 October, 2:28 pm Resolve comment More options There''s no /Chi_{4} lol XD bbolen83 26 October, 2:44 pm More options Make a 2x2 panel figure with the legend in the last panel. Title panels 10 mm, 20 mm, 20 mm. Reply"':
+        - generic: bbolen83
+        - generic: 26 October, 2:28 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: "There's no /Chi_{4} lol XD"
+        - generic: bbolen83
+        - generic: 26 October, 2:44 pm
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Make a 2x2 panel figure with the legend in the last panel. Title panels 10 mm, 20 mm, 20 mm.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:27 pm Resolve comment More options Candidate to move to supplementary material if we are over the Figure/Table limit. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:27 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Candidate to move to supplementary material if we are over the Figure/Table limit.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:26 pm Resolve comment More options Too big for page. Should probably have a femur and tibia shape in there to make it less confusing. We could reduce the amount of panels shown. show less Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:26 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Too big for page. Should probably have a femur and tibia shape in there to make it less confusing. We could reduce the amount of panels shown.
+        - button "show less":
+          - generic: show less
+        - textbox "Reply":
+          - generic: Reply
+      - 'button "bbolen83 26 October, 2:21 pm Changed: is to was"':
+        - generic: bbolen83
+        - generic: 26 October, 2:21 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: is
+        - text: to was
+      - button:
+        - generic: bbolen83
+        - generic: 26 October, 2:20 pm
+        - generic: delete
+        - text: "Deleted:"
+        - deletion:
+          - text: "The knee-flexor run quantifies what the mono-pulley freedom is worth at unity gain. As a uniarticular knee flexor, the biceps femoris short head is exactly the site the mono-pulley variant serves, and the run converged to a collision-feasible layout with zero bound violations, both actuators of the rig reeved over a single tackle of one line part, so the gain was 1 and no force multiplication was engaged; the run therefore measures the redirect baseline, not the transmission trade. Even the redirect alone deepened the peak predicted flexion torque from \\qty{81.23}{\\newton\\meter} on the direct route to \\qty{85.74}{\\newton\\meter} on the same knee-axis measure, \\qty{85.56}{\\newton\\meter} on the insertion-side measure after the tackle's force loss, a gain of \\qty{4.51}{\\newton\\meter} or \\qty{5.6}{\\percent}, while holding the off-axis torque to at most \\qty{0.803}{\\newton\\meter}, under \\qty{1}{\\percent} of the peak. The direct and pulley runs optimize different objective functions, so their objective values, 74.47 and 0.08465, are not commensurable; the torque comparison, not the objective comparison, is the meaningful one. That comparison should still be read as the value of the added routing freedom in this pair of runs rather than as an isolated pulley effect, since no run at fixed objective separates the pulley's contribution. The predicted peaks of the direct and pulley routes exceed the human flexor scale of \\qty{23.16}{\\newton\\meter} by factors of 3.51 and 3.70, and the torque-for-range exchange that a reeved tackle buys is quantified by the doctrine re-solves of the batch analysis that follows."
+          - button "show less":
+            - generic: show less
+      - button "bbolen83 26 October, 2:18 pm Resolve comment More options Don't use \"holds\". Call it data measurements. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:18 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Don't use "holds". Call it data measurements.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:18 pm Resolve comment More options This figure got replaced with an incorrect one. The blue dots are where the back-calculated yellow dots should be. show less Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:18 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: This figure got replaced with an incorrect one. The blue dots are where the back-calculated yellow dots should be.
+        - button "show less":
+          - generic: show less
+        - textbox "Reply":
+          - generic: Reply
+      - 'button "bbolen83 26 October, 2:12 pm Changed: The route should keep $\\varepsilon^{*}$ high through the functional range, because the wrapping loss of Equation~(\\ref{eq:deltaL}) scales with $(1 - \\varepsilon^{*})^{2}$ and therefore grows exactly where an under-contracted actuator is weakest. show less to For a given $l_{0}$,"':
+        - generic: bbolen83
+        - generic: 26 October, 2:12 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - text: "The route should keep $\\varepsilon^{*}$ high through the functional range, because the wrapping loss of Equation~(\\ref{eq:deltaL}) scales with $(1 - \\varepsilon^{*})^{2}$ and therefore grows exactly where an under-contracted actuator is weakest."
+          - button "show less":
+            - generic: show less
+        - text: "to For a given $l_{0}$,"
+      - 'button "bbolen83 26 October, 2:12 pm Changed: M to m"':
+        - generic: bbolen83
+        - generic: 26 October, 2:12 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: M
+        - text: to m
+      - 'button "bbolen83 26 October, 2:13 pm Changed: budget to allowance"':
+        - generic: bbolen83
+        - generic: 26 October, 2:13 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: budget
+        - text: to allowance
+      - 'button "bbolen83 26 October, 2:13 pm Added: This increased moment arm comes at a cost to biomimcry. show less"':
+        - generic: bbolen83
+        - generic: 26 October, 2:13 pm
+        - generic: add_circle
+        - text: "Added:"
+        - insertion:
+          - text: This increased moment arm comes at a cost to biomimcry.
+          - button "show less":
+            - generic: show less
+      - 'button "bbolen83 26 October, 2:15 pm Changed: filament to filament"':
+        - generic: bbolen83
+        - generic: 26 October, 2:15 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: filament
+        - text: to filament
+      - button:
+        - generic: bbolen83
+        - generic: 26 October, 1:55 pm
+        - generic: delete
+        - text: "Deleted:"
+        - deletion:
+          - text: "The redesign results carry caveats that bound their use. The flexor redesign solves its second actuator's endpoints from the first by the mirrored-endpoint rule rather than optimizing the two routes independently, so the mirror symmetry is built into the design; freeing the second route's endpoints is the next design refinement. All redesign solutions are optimizer-stage: they have not been propagated into the simulation models, and the physical validation rests on sparse isometric holds, six points on the extensor cam route and fifteen on the flexor route, rather than dense sweeps of either configuration. The stiffness pair itself was selected by an external design requirement rather than uniquely identified, because the pinned-flexor data admit a family of near-equivalent pairs; an independent stiffness measurement of the test stands would close that non-identifiability and either confirm or replace the adopted pair. The wrapping factor $\\chi_{3}$ was identified on the $\\diameter$\\qty{10}{\\mm} extensor family and applied unchanged to the $\\diameter$\\qty{20}{\\mm} redesigns, so its transfer across actuator diameters is untested. On the characterization side, the fictive-strain formulation inherits the conclusion of our force characterization that the unloaded \\qty{620}{\\kPa} contraction $\\varepsilon_{620}$ should be recorded for each actuator used on a robot \\citep{bolen_2026}, since every correction term is normalized by it. The whole-body extension identified its own next steps: the route-builder assembly failure needs a fix before the twelve terminated routes can be rebuilt, and the two torque-short feasible routes need either larger actuators or relaxed corridors."
+          - button "show less":
+            - generic: show less
+      - 'button "bbolen83 26 October, 1:56 pm Changed: One scope statement, finally, belongs with these caveats: t show less to T"':
+        - generic: bbolen83
+        - generic: 26 October, 1:56 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - text: "One scope statement, finally, belongs with these caveats: t"
+          - button "show less":
+            - generic: show less
+        - text: to T
+      - 'button "bbolen83 26 October, 1:56 pm Changed: ese to is"':
+        - generic: bbolen83
+        - generic: 26 October, 1:56 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: ese
+        - text: to is
+      - 'button "bbolen83 26 October, 1:56 pm Changed: s to , these knee configurations,"':
+        - generic: bbolen83
+        - generic: 26 October, 1:56 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: s
+        - text: to , these knee configurations,
+      - 'button "bbolen83 26 October, 1:57 pm Changed: is to ese"':
+        - generic: bbolen83
+        - generic: 26 October, 1:57 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: is
+        - text: to ese
+      - 'button "bbolen83 26 October, 1:57 pm Changed: y, and o to ies. O"':
+        - generic: bbolen83
+        - generic: 26 October, 1:57 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: y, and o
+        - text: to ies. O
+      - 'button "bbolen83 26 October, 2:02 pm Changed: sizes to types"':
+        - generic: bbolen83
+        - generic: 26 October, 2:02 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: sizes
+        - text: to types
+      - 'button "bbolen83 26 October, 2:02 pm Added: Isometric torque testing has yielded important design factors for roboticists seeking to design biomimetic humanoid robots. Additional testing such as isokinetic and isotonic that are frequently used in in human dynamometer testing may yield equally as important insights. show less"':
+        - generic: bbolen83
+        - generic: 26 October, 2:02 pm
+        - generic: add_circle
+        - text: "Added:"
+        - insertion:
+          - text: Isometric torque testing has yielded important design factors for roboticists seeking to design biomimetic humanoid robots. Additional testing such as isokinetic and isotonic that are frequently used in in human dynamometer testing may yield equally as important insights.
+          - button "show less":
+            - generic: show less
+      - 'button "bbolen83 26 October, 2:09 pm Changed: asked what a to started with an improved"':
+        - generic: bbolen83
+        - generic: 26 October, 2:09 pm
+        - generic: edit
+        - text: "Changed:"
+        - deletion: asked what a
+        - text: to started with an improved
+      - 'button "bbolen83 26 October, 2:09 pm Added: force-length-pressure model and"':
+        - generic: bbolen83
+        - generic: 26 October, 2:09 pm
+        - generic: add_circle
+        - text: "Added:"
+        - insertion: force-length-pressure model and
+      - 'button "ajh26 6 May, 12:01 pm Deleted: s/a theX_0K_1K_2X_{0}KX_{0}"':
+        - generic: ajh26
+        - generic: 6 May, 12:01 pm
+        - generic: delete
+        - text: "Deleted:"
+        - deletion: "s/a theX_0K_1K_2X_{0}KX_{0}"
+      - button "ajh26 6 May, 12:06 pm Resolve comment More options how does the shorter length result in this? Reply":
+        - generic: ajh26
+        - generic: 6 May, 12:06 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: how does the shorter length result in this?
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 6 May, 12:08 pm Resolve comment More options Can this be connected with Jon's work? Reply":
+        - generic: ajh26
+        - generic: 6 May, 12:08 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Can this be connected with Jon's work?
+        - textbox "Reply":
+          - generic: Reply
+      - button "latexmkrc 1":
+        - generic: keyboard_arrow_down
+        - text: latexmkrc
+        - generic: "1"
+      - button:
+        - generic: bbolen83
+        - generic: 7 November, 2:38 pm
+        - generic: add_circle
+        - text: "Added:"
+        - insertion:
+          - text: "# This shows how to use the xr package with latexmk. # John Collins 2023-03-29 # # The xr package (\"a system for eXternal References\") is used by a document # to make references to sections, equations, etc in other external # documents. # The definitions in this file enable latexmk to apply latexmk to # automatically update an external document whenever its .tex file changes, # so that the references in the main document stay up to date. # Notes: # 1. This version is defined to put the files from the compilations of # the external documents into a defined subdirectory, to segregate # potentially many generated files from the main document # directories. # 2. But for latexmk's custom dependency mechanism to be used, as here, # the aux file from compilation of a subdocument must be generated in # the same directory as the corresponding source .tex file. So the # .aux file is copied. # 3. It is assumed that the external documents are to be compiled by # pdflatex. This can be changed, of course, by changing the '-pdf' # option given to the invoked latexmk to whatever is needed. # 4. An ideal implementation would also ensure that recompilation of an # external document also happens whenever any of its other source # files changes. But this is not done in the present version, and # would probably entail either the use of internal latexmk variables # or extra enhancements to latexmk. # 5. The code uses subroutines copy and fileparse that are loaded by # latexmk from the Perl packages File::Copy and File::Basename. # 6. It also uses some not-yet-documented features of latexmk: an array # variable @file_not_found and subroutines popd, pushd, and # rdb_add_generated. #-------------------- # Configurable choices for compilation of external documents # Subdirectory for output files from compilation of external documents: $sub_doc_output = 'output-subdoc'; # Options to supply to latexmk for compilation of external documents: @sub_doc_options = (); push @sub_doc_options, '-pdf'; # Use pdflatex for compilation of external documents. # Replace '-pdf' by '-pdfdvi', 'pdfxe', or 'pdflua' if needed. #-------------------- # Add a pattern for xr's log-file message about missing files to latexmk's # list. Latexmk's variable @file_not_found is not yet documented. # This line isn't necessary for v. 4.80 or later of latexmk. push @file_not_found, '^No file\\\\s*(.+)\\s*$'; add_cus_dep( 'tex', 'aux', 0, 'makeexternaldocument' ); sub makeexternaldocument { if ( $root_filename ne $_[0] ) { my ($base_name, $path) = fileparse( $_[0] ); pushd $path; my $return = system \"latexmk\", @sub_doc_options, \"-aux-directory=$sub_doc_output\", \"-output-directory=$sub_doc_output\", $base_name; if ( ($sub_doc_output ne '') && ($sub_doc_output ne '.') ) { # In this case, .aux file generated by pdflatex isn't in same # directory as the .tex file. # Therefore: # 1. Actual generated aux file must be listed as produced by this # rule, so that latexmk deals with dependencies correctly. # (Problem to overcome: If $sub_dir_output is same as $aux_dir # for the main document, xr may read the .aux file in the # aux_dir rather than the one the cus dep is assumed by latexmk # to produce, which is in the same directory as the .tex source # file for this custom dependency.) # Use not-yet-documented latexmk subroutine rdb_add_generated # to do this: # 2. A copy of the .aux file must be in same directory as .tex file # to satisfy latexmk's definition of a custom dependency. rdb_add_generated( \"$sub_doc_output/$base_name.aux\" ); copy \"$sub_doc_output/$base_name.aux\", \".\"; } popd; return $return; } }"
+          - button "show less":
+            - generic: show less
+    - tablist:
+      - tab "Current file":
+        - generic: description
+        - text: Current file
+      - tab "Overview" [selected]:
+        - generic: list
+        - text: Overview
+    - search:
+      - textbox "Find":
+        - /placeholder: Search for
+        - text: "The correction terms enter the prediction through the implicit balance of Equation~\\eqref{eq:complianceforcebalance}, and no instrument measures them directly, so they were identified by global optimization against measured torque. Candidates are judged simultaneously on the root mean square error (RMSE), the fraction of variance unexplained (FVU, the residual sum of squares divided by the total sum of squares of the measured torque about its mean, so that $R^{2} = 1 - \\mathrm{FVU}$), and the maximum absolute residual, each computed between measured and predicted isometric torque over the tested range of motion; FVU is the primary criterion because it is scale-free and comparable across tests with different torque scales, while the maximum residual is the phase-sensitive worst case."
+      - generic "Match case": Aa
+      - generic "Regular expression": "[.*]"
+      - generic "Whole word": W
+      - generic "Within selection":
+        - generic: format_align_left
+      - textbox "Replace":
+        - /placeholder: Replace with
+      - checkbox "Match case"
+      - checkbox "Regular expression"
+      - checkbox "Whole word"
+      - checkbox "Within selection"
+      - button "previous":
+        - generic: keyboard_arrow_up
+        - generic: previous
+      - button "next":
+        - generic: keyboard_arrow_down
+        - generic: next
+      - button "Search all project files":
+        - generic: manage_search
+        - generic: Search all project files
+      - status: 0 of 0
+      - button "Replace":
+        - generic: Replace
+      - button "Replace All":
+        - generic: Replace All
+      - button "Close"
+  - separator:
+    - generic "Resize":
+      - button "Click to hide the PDF":
+        - generic: chevron_right
+      - button "Go to code location in PDF":
+        - generic: arrow_right_alt
+      - 'button "Go to PDF location in code (Tip: double click on the PDF for best results)"':
+        - generic: arrow_left_alt
+  - region "PDF preview":
+    - toolbar "PDF":
+      - button "Recompile":
+        - generic: Recompile
+      - button "Toggle compile options menu":
+        - generic: expand_more
+      - button "Back to PDF":
+        - generic: Back to PDF
+    - tabpanel:
+      - generic "Page ⁨1⁩"
+      - generic "Page ⁨2⁩"
+      - generic "Page ⁨3⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque A hybrid torque calculation, which combines measured muscle lengths and moment arms with modeled 71 actuator force, isolated kinematic error from force error before any parameter was fitted. 72 Our analysis resulted in (1) a corrected torque model whose constant length offset ( χ 0 ), lumped attachment 73 stiffness ( χ 1 and χ 2 ), and fictive-strain wrapping loss ( χ 3 ) cut held-out prediction error by two thirds or 74 more on the pinned-knee test families and carry to the biomimetic knee without refitting; (2) a two-stage 75 multiobjective identification that holds one stiffness pair consistent across both knees and both actuators, 76 validates it on held-out resting lengths and on the biomimetic knee, and selects the adopted set by an 77 external design requirement; and (3) redesigned attachment routes, each driven by two 20 mm BPAs, 78
+        - text: that meet or exceed human isometric knee-torque targets from OpenSim musculoskeletal models (Seth
+        - link "Seth":
+          - /url: "#cite.seth_opensim_2018"
+        - text: "79"
+        - link:
+          - /url: "#cite.seth_opensim_2018"
+        - text: et al., 2018; Delp et al., 1990) with a required
+        - link "1990":
+          - /url: "#cite.delp_interactive_1990"
+        - text: 5 % margin at every angle, together with the first hardware
+        - text: "80"
+        - link "et al.":
+          - /url: "#cite.seth_opensim_2018"
+        - link "2018":
+          - /url: "#cite.seth_opensim_2018"
+        - link "Delp et al.":
+          - /url: "#cite.delp_interactive_1990"
+        - text: "torque measurements of the redesigned extensor route. Throughout, the wrapping loss is expressed through 81 fictive strain: the excess contraction the force model must see beyond the actuator’s physical contraction, 82 normalized by the unloaded 620 kPa contraction ε 620 of the free actuator. Together, the corrected model 83 and the redesign pipeline let a designer predict isometric joint torque, correct it against hardware, and route 84 the actuators to a human-derived target on the first design iteration. 85 2 METHODS AND MATERIALS 2.1 Overview 86 Isometric knee torque is the product of the force an actuator develops and the moment arm of its line 87 of action about the joint axis, and the force itself is set by the actuator’s effective length through the 88 force model. Each link in that chain is a design quantity: the attachment routing fixes the moment arm, 89 the resting length and attachment compliance set the effective contraction, and wrapping over the joint 90 removes usable length. We built two knee test stands, measured isometric torque across each joint’s 91 range of motion with 10 mm and 20 mm Festo braided pneumatic actuators (BPAs) in flexor and extensor 92 configurations, and compared the measurements against the original rigid-body model, the improved 93 actuator force characterization alone, and the corrected model developed here. A hybrid calculation isolated 94 the error sources, a multiobjective identification produced the correction terms, and the corrected model 95 then drove a redesign of the attachment routes against human isometric torque targets. 96 2.2 Actuator Force Model 97"
+        - text: The actuator force model is fully described in Bolen et al. (2026) and is reproduced here only as far as
+        - link "Bolen et al.":
+          - /url: "#cite.bolen_2026"
+        - link "2026":
+          - /url: "#cite.bolen_2026"
+        - text: 98 the torque model requires. The contraction ε of a BPA is 99 ε “ p l 0 ´ l m q l 0 (1) where l 0 is the uninflated resting length measured from hose clamp to hose clamp and l m is the current 100 muscle length. The unloaded contraction at 620 kPa is 101 ε 620 “ p l 0 ´ l 620 q l 0 (2) where l 620 is the actuator length at 620 kPa with no external load, and the relative contraction is 102 ε ˚ “ ε ε 620 (3) Frontiers 3
+      - generic "Page ⁨4⁩":
+        - text: "Bolen et al. Design Factors for Isometric Robotic Knee Torque The pair p ε 620 , ε ˚ q is the strain basis of this work: every length-based correction introduced below is 103 expressed in ε 620 -normalized units. The normalized isometric force is 104 F ˚ p ε ˚ , P ˚ q “ $ & % c 0 ¨ ` exp p´ c 1 ¨ ε ˚ q ´ 1 ˘ ` P ˚ ¨ exp ` ´ c 2 p ε ˚ q 2 ˘ where positive 0 otherwise, (4) that is, the normalized force is the value of the bracketed expression where that expression is positive and 105 zero elsewhere, where P ˚ is pressure normalized by 620 kPa and the diameter-dependent coefficients c 0 , 106 c 1 , and c 2"
+        - link "Bolen et al.":
+          - /url: "#cite.bolen_2026"
+        - link "2026":
+          - /url: "#cite.bolen_2026"
+        - text: "are tabulated in Bolen et al. (2026) (p. 10). The maximum force is 107 F max p l 0 , P q “ a 1 P arctan ` a 2 P p l 0 ´ 0 . 0075 q ˘ (5) with l 0 in meters, a fixed 7 . 5 mm"
+        - text: end-contact offset, and coefficients tabulated in Bolen et al. (2026) (p. 7);
+        - link "Bolen et al.":
+          - /url: "#cite.bolen_2026"
+        - link "2026":
+          - /url: "#cite.bolen_2026"
+        - text: 108 at the 620 kPa system ceiling, F max p l 0 , 620 kPa q “ F 620 p l 0 q . The isometric force is the composition 109 F p ε ˚ , P ˚ , l 0 q “ F ˚ p ε ˚ , P ˚ q ¨ F 620 p l 0 q (6) 2.3 Robot Leg Model and Knee Test Stands 110
+        - text: The robot leg consists of a knee joint, femur, tibia, BPA assemblies, and artificial tendons (Figure 1
+        - link "1":
+          - /url: "#figure.caption.1"
+        - text: A–C ). 111 The artificial bones were 3D printed in Onyx, carbon fiber, and high-strength high-temperature fiberglass, 112 with machined links for the knee mechanism, and the tendons are Shimano bicycle brake cable. The leg 113 geometry and dimensions derive from bone scans of a 6 ft ( 1 . 83 m
+        - text: ) tall person (Bolen and Hunt, 2019;
+        - link "Bolen and Hunt":
+          - /url: "#cite.bolen_determination_2019"
+        - link "2019":
+          - /url: "#cite.bolen_determination_2019"
+        - text: "114"
+        - text: Seth et al., 2018; Delp et al., 1990, 2007).
+        - link "Delp et al.":
+          - /url: "#cite.delp_interactive_1990"
+        - link "1990":
+          - /url: "#cite.delp_interactive_1990"
+        - link "2007":
+          - /url: "#cite.delp_opensim_2007"
+        - text: "115"
+        - link "Seth et al.":
+          - /url: "#cite.seth_opensim_2018"
+        - link "2018":
+          - /url: "#cite.seth_opensim_2018"
+        - text: Frontiers 4
+      - generic "Page ⁨5⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque
+        - generic: A)
+        - generic: B)
+        - generic: θ
+        - generic: Test jig assembly mounting locations
+        - generic: Load cell
+        - generic: BPA
+        - generic: Tibia
+        - generic: Femur
+        - generic: Swing arm
+        - generic: Winch cable
+        - generic: Winch housing
+        - generic: Knee joint
+        - generic: C)
+        - text: "Figure 1. (A) CAD solid model assembly of the revolute joint knee in the test stand. (B) 1-DoF pinned- joint robot knee in the test apparatus with important components labeled; the leg is shown with 30 degrees of flexion, i.e. θ k “ ´ 30 °. (C) Picture from isometric torque testing. The setup shows the revolute knee configured for a test of the extensor BPA, with the knee flexed at θ k “ ´ 120 °; note the compressed shape of the inflated BPA on the knee at this high degree of flexion. Two knee joints were tested: a pure revolute joint, and a biomimetic joint whose four-bar linkage 116"
+        - text: translates the instantaneous center of rotation (ICR) as the knee rotates (Steele, 2018; Steele et al., 2017,
+        - link "Steele":
+          - /url: "#cite.steele_biomimetic_2018"
+        - link "2018":
+          - /url: "#cite.steele_biomimetic_2018"
+        - link "Steele et al.":
+          - /url: "#cite.steele_development_2017"
+        - link "2017":
+          - /url: "#cite.steele_development_2017"
+        - text: 117 2018), moving it posteriorly in X and distally in Y in the femur frame, except briefly proximally near
+        - text: "118"
+        - link "2018":
+          - /url: "#cite.steele_biomimetic_2018-1"
+        - text: Frontiers 5
+      - generic "Page ⁨6⁩"
+      - generic "Page ⁨7⁩"
+      - generic "Page ⁨8⁩"
+      - generic "Page ⁨9⁩"
+      - generic "Page ⁨10⁩"
+      - generic "Page ⁨11⁩"
+      - generic "Page ⁨12⁩"
+      - generic "Page ⁨13⁩"
+      - generic "Page ⁨14⁩"
+      - generic "Page ⁨15⁩"
+      - generic "Page ⁨16⁩"
+      - generic "Page ⁨17⁩"
+      - generic "Page ⁨18⁩"
+      - generic "Page ⁨19⁩"
+      - generic "Page ⁨20⁩"
+      - generic "Page ⁨21⁩"
+      - generic "Page ⁨22⁩"
+      - generic "Page ⁨23⁩"
+      - generic "Page ⁨24⁩"
+      - generic "Page ⁨25⁩"
+      - generic "Page ⁨26⁩"
+      - generic "Page ⁨27⁩"
+      - generic "Page ⁨28⁩"
+      - generic "Page ⁨29⁩"
+      - generic "Page ⁨30⁩"
+      - generic "Page ⁨31⁩"
+      - generic "Page ⁨32⁩"
+      - generic "Page ⁨33⁩"
+      - generic "Page ⁨34⁩"
+      - generic "Page ⁨35⁩"
+    - tablist:
+      - tab "All logs 27":
+        - text: All logs
+        - generic: "27"
+      - tab "Errors 0":
+        - text: Errors
+        - generic: "0"
+      - tab "Warnings 20" [active] [selected]:
+        - text: Warnings
+        - generic: "20"
+      - tab "Info 7":
+        - text: Info
+        - generic: "7"
+    - 'generic "Log entry with level: warning"':
+      - button "Collapse":
+        - generic: expand_more
+        - 'heading "Label `fig:extensor_misalign'' multiply defined." [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+      - generic: "You have used the same label more than once. Check that each \\label{...} labels only one item."
+      - link "Learn more":
+        - /url: https://www.overleaf.com/learn/Errors/There_were_multiply-defined_labels
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OT1/cmr/m/n'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OML/cmm/m/it'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OMS/cmsy/m/n'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OT1/cmr/bx/n'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OML/cmm/b/it'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OMS/cmsy/b/n'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `U/matha/m/n'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `U/mathb/m/n'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `U/mathx/m/n'' in size <7.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OT1/cmr/m/n'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OML/cmm/m/it'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OMS/cmsy/m/n'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OT1/cmr/bx/n'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OML/cmm/b/it'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `OMS/cmsy/b/n'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `U/matha/m/n'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `U/mathb/m/n'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - 'heading "Font shape `U/mathx/m/n'' in size <5.5> not available" [level=3]'
+        - generic: ‪./Main.tex‬
+      - button "Suggest fix":
+    - 'generic "Log entry with level: warning"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Size substitutions with differences" [level=3]
+        - generic: ‪./output.bbl‬
+      - button "Suggest fix":
+    - button "Clear cached files":
+      - generic: delete
+      - generic: Clear cached files
+    - button "Other logs and files"
+- button "Close overlay"
+- button "Close overlay"
+- button "Close overlay"
