@@ -1,3 +1,73 @@
+<!-- ETHICS_CLOSING_20261026_START -->
+# Follow-up: ethical-case paragraph closing
+
+Ben requested a replacement for “The failure modes of these experiments damage hardware, not tissue.” Applied a one-sentence tracked replacement in live `15-background.tex`, Section `sec:bg_ethics`, local snapshot line 230:
+
+> Robotic models therefore offer both experimental repeatability and a way to reduce reliance on the invasive animal preparations that established many of the neural mechanisms studied here.
+
+The replacement closes the paragraph around repeatability and reduced reliance on invasive animal preparations, then leads into the next paragraph's discussion of how those preparations appear in circuit schematics. It makes no claim that animal use has already been quantitatively reduced. No numbers, citations, other prose, comments, or existing tracked-change dispositions were changed. Exact whole-file comparison passed. Overleaf Errors 0 / Warnings 0. Full local build `build_astra_05` passed with no errors, undefined references, or missing figures; existing overflow messages remain.
+
+Before/after source and exact replacement: `LIVE_ASTRA_20261026/followup_ethics_closing/`.
+<!-- ETHICS_CLOSING_20261026_END -->
+
+---
+
+<!-- CAT_TRANSITION_20261026_START -->
+# Follow-up: transition from cat schematics to experimental procedures
+
+Updated 2026-10-26T13:56:48-07:00. Ben asked that the paragraph transition explain how apparently normal or happy-looking cat schematics differ from the experimental preparation. Applied in live Overleaf, `15-background.tex`, Section `sec:bg_ethics`, local snapshot line 232.
+
+Restructured the first paragraph around the schematic's appearance, the brainstem-transection preparation, the archival figure, and the specific meaning of replacement. It describes the impression a drawing can give without claiming to know the animal's emotional state. Retained the existing source keys for the preparation and footage; removed the unsupported “almost exclusively in schematic” generalization and the vague accounting/counterweight wording.
+
+New first paragraph:
+
+> Schematics of decerebrate-cat locomotion emphasize the neural circuits under study, but often leave the surgical preparation out of view. A simplified drawing of a walking cat can make the animal appear intact, alert, or even contented. That appearance should not be confused with the condition of the experimental animal: a brainstem transection has disconnected the forebrain, while neural circuits below the transection can still generate treadmill stepping \citep{brown_intrinsic_1911, severin_1967}. Figure~\ref{fig:decerebrate_cat}, taken from archival footage, shows the physical preparation behind the circuit diagrams \citep{decerebrate_cat_footage}. This distinction makes the ethical meaning of replacement concrete: the robotic experiments discussed here are intended to reproduce selected neural mechanisms without repeating these invasive preparations in living animals.
+
+New opening of the next paragraph:
+
+> The contrast between an intact animal and the experimental preparation is particularly clear in publicly available teaching footage.
+
+The rest of the procedural paragraph, the figure, its caption, and the citations remain as they were in the freshly captured live source. Two exact text selections were replaced in Reviewing mode. Whole-file readback confirms these were the only changes. No comments resolved or tracked changes accepted/rejected. Overleaf recompile: Errors 0 / Warnings 0. Local full build `build_astra_04` completed with no errors, undefined references, or missing figures; existing overflow messages remain.
+
+Before/after source and exact replacements: `LIVE_ASTRA_20261026/followup_cat_transition/`.
+<!-- CAT_TRANSITION_20261026_END -->
+
+---
+
+# Follow-up clarity correction: feed-forward and feedback control
+
+Applied in live Overleaf, `15-background.tex`, Section `sec:bg_neuromech`, local snapshot line 204. Ben identified the sentence beginning “Hybrid work makes the complementarity…” as unclear. Replaced that sentence with three explicit sentences:
+
+> \citet{haeufle_benefit_2018} combined pre-recorded muscle activation patterns (feed-forward control) with sensory reflex responses (feedback control) in a simulated human walking model. They tested whether the model could keep walking after an unexpected drop in ground height. The benefit of combining the signals depended on the muscle being controlled and on the proportion of activation supplied by each signal.
+
+The revision identifies the two signals, defines the step-down test, and states what the muscle-dependent finding means. It was verified against the [original paper](https://www.frontiersin.org/journals/computational-neuroscience/articles/10.3389/fncom.2018.00080/full). The same citation key is retained; no numerical result was added or altered. Whole-file readback confirms this was the only content change in the chapter. Applied in Reviewing mode; no comments resolved or tracked changes accepted/rejected.
+
+Verification: Overleaf Errors 0 / Warnings 0. Full local build `LIVE_ASTRA_20261026/revised_project/build_astra_03/` passed all four compilation steps with no errors, undefined references, or missing figures. Existing overflow messages remain. Before/after source, the exact replacement, and a screenshot are in `LIVE_ASTRA_20261026/followup_hybrid/`.
+
+---
+
+<!-- LIVE_ASTRA_20261026_START -->
+# Live Overleaf revision — completed 26 October 2026
+
+Ben explicitly authorized live editing. Applied **24 bounded text replacements plus the detailed conversion-appendix insertion**, and uploaded two reviewed figures. Changed chapters: introduction, background (one consistency paragraph), SNS, overall discussion, conclusion, and Appendix D. **The peer-reviewed isometric-force chapter was not edited.**
+
+The SNS chapter now states the knowledge gap, names the created tools, and explains what the selected demonstrations establish. “Researchers” and Gait2392-second ordering are applied. The tools table is explicitly referenced. Figure 6.1 has visible A/B labels and the correct Connor–Ben shared-RG diagram. The conversion account incorporates Ben's robotbody/small-muscle explanation. The appendix now explains the Python Rybak resetting/non-resetting mechanism.
+
+All edits were made in Reviewing mode. Existing tracked changes were not accepted/rejected; comments were not resolved, and no replies were posted. Ben's deleted suspended-stepping qualifier remains deleted. Whole-file readback verified all six edited files against the prepared text.
+
+**Verification:** full local build passed with zero errors, undefined references, and missing figures. Final Overleaf compile showed Errors 0 and Warnings 0. Its 268-page PDF is saved. Box-overflow messages remain; the record does not certify every page or every advisor thread as polished.
+
+Delivery folder: `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/LIVE_ASTRA_20261026/`
+- `APPLIED_REVISIONS.md`: exact patch purposes, current local line anchors, advisor/Ben response matrix, evidence, and remaining limits.
+- `Dissertation_Overleaf_revised.pdf`: final live compiled PDF.
+- `LIVE_CHANGES.diff`, `before/`, `after/`, `FINAL_VERIFICATION.json`: source and verification record.
+- `overleaf_revised_gap.png`: live browser confirmation.
+
+Do not reapply the old incoming batches or replace whole chapters. The new Deng and additional W2L perturbation proposals remain separate; the held CPG/other figure repairs were not imported. No simulations, commits, pushes, or outgoing ZCode messages were performed.
+<!-- LIVE_ASTRA_20261026_END -->
+
+---
+
 # Three-batch review: reconciled packet, 26 October 2026
 
 Reviewed EB475WS4, easteregg2, and easteregg2_2. Delivery: `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/REVIEW_INBOX/REVIEWED_20261026/REVIEW_DECISIONS.md`. Use its bounded patches and application map; do not apply the incoming batches verbatim. `ZCODE_REPAIR_NOTES.md` identifies held figures and exact repairs. `REVIEWED_FRAGMENTS.pdf` is the standalone proof, not a chapter replacement.

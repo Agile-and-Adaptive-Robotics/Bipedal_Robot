@@ -1,0 +1,1650 @@
+- main:
+  - navigation "Project actions":
+    - link "Overleaf logo":
+      - /url: /project
+      - generic "Overleaf logo"
+    - menubar:
+      - button "File"
+      - button "Edit"
+      - button "Insert"
+      - button "View"
+      - button "Format"
+      - button "Help"
+    - button "Project title options":
+      - generic: Bolen-Dissertation
+      - generic: keyboard_arrow_down
+    - status
+    - button "b":
+      - generic: b
+    - button "b":
+      - generic: b
+    - button "History":
+      - generic: history
+      - text: History
+    - button "Layout options":
+      - generic: space_dashboard
+      - text: Layout
+    - button "Share":
+      - generic: person_add
+      - text: Share
+  - navigation "Sidebar":
+    - tablist:
+      - tab "File tree":
+        - generic: description
+        - generic: File tree
+      - tab "Project search":
+        - generic: search
+        - generic: Project search
+      - tab "Integrations":
+        - generic: integration_instructions
+        - generic: Integrations
+      - tab "Review panel" [selected]:
+        - generic: rate_review
+        - generic: Review panel
+      - tab "Chat":
+        - generic: forum
+        - generic: Chat
+      - tab "AI assistant":
+        - generic: AI assistant
+      - navigation "Help and editor settings":
+        - button "Help":
+          - generic: help
+        - button "Settings":
+          - generic: settings
+  - region "Editor":
+    - heading "Review" [level=4]
+    - button "Resolved comments":
+      - generic: inbox
+    - button "Close":
+      - generic: close
+    - tablist:
+      - tab "‎main.tex Close":
+        - generic: description
+        - generic: ‎main.tex
+        - button "Close":
+          - generic: close
+      - tab "‎thesis.bib Close":
+        - generic: book_5
+        - generic: ‎thesis.bib
+        - button "Close":
+          - generic: close
+      - tab "‎70-overall.tex Close":
+        - generic: description
+        - generic: ‎70-overall.tex
+        - button "Close":
+          - generic: close
+      - tab "‎80-conclusion.tex Close":
+        - generic: description
+        - generic: ‎80-conclusion.tex
+        - button "Close":
+          - generic: close
+      - tab "‎60-sns.tex Close":
+        - generic: description
+        - generic: ‎60-sns.tex
+        - button "Close":
+          - generic: close
+      - tab "‎06-ack.tex Close":
+        - generic: description
+        - generic: ‎06-ack.tex
+        - button "Close":
+          - generic: close
+      - tab "‎route_geometry_ext20mm_20260925.alt.txt Close":
+        - generic: description
+        - generic: ‎route_geometry_ext20mm_20260925.alt.txt
+        - button "Close":
+          - generic: close
+      - tab "‎15-background.tex Close" [selected]:
+        - generic: description
+        - generic: ‎15-background.tex
+        - button "Close":
+          - generic: close
+      - tab "‎20-muscles.tex Close":
+        - generic: description
+        - generic: ‎20-muscles.tex
+        - button "Close":
+          - generic: close
+      - tab "‎mujoco_render_provenance.json Close":
+        - generic: description
+        - generic: ‎mujoco_render_provenance.json
+        - button "Close":
+          - generic: close
+      - tab "‎simulink_knee_reflex_arranged.pdf Close":
+        - generic: image
+        - generic: ‎simulink_knee_reflex_arranged.pdf
+        - button "Close":
+          - generic: close
+      - tab "‎simulink_knee_reflex_arranged.png Close":
+        - generic: image
+        - generic: ‎simulink_knee_reflex_arranged.png
+        - button "Close":
+          - generic: close
+      - tab "‎simulink_knee_spiking_twin_alt.txt Close":
+        - generic: description
+        - generic: ‎simulink_knee_spiking_twin_alt.txt
+        - button "Close":
+          - generic: close
+      - tab "‎simulink_knee_spiking_twin.png Close":
+        - generic: image
+        - generic: ‎simulink_knee_spiking_twin.png
+        - button "Close":
+          - generic: close
+      - tab "‎simulink_neuron_detail.png Close":
+        - generic: image
+        - generic: ‎simulink_neuron_detail.png
+        - button "Close":
+          - generic: close
+      - tab "‎simulink_sns_library_grid.pdf Close":
+        - generic: image
+        - generic: ‎simulink_sns_library_grid.pdf
+        - button "Close":
+          - generic: close
+      - tab "‎simulink_sns_library_grid.png Close":
+        - generic: image
+        - generic: ‎simulink_sns_library_grid.png
+        - button "Close":
+          - generic: close
+      - tab "‎SNS_function_subnetworks.pdf Close":
+        - generic: image
+        - generic: ‎SNS_function_subnetworks.pdf
+        - button "Close":
+          - generic: close
+      - tab "‎spiking_mirror_ground_gait_alt.txt Close":
+        - generic: description
+        - generic: ‎spiking_mirror_ground_gait_alt.txt
+        - button "Close":
+          - generic: close
+      - tab "‎spiking_mirror_ground_gait.png Close":
+        - generic: image
+        - generic: ‎spiking_mirror_ground_gait.png
+        - button "Close":
+          - generic: close
+      - tab "‎spiking_mirror_rhythm_alt.txt Close":
+        - generic: description
+        - generic: ‎spiking_mirror_rhythm_alt.txt
+        - button "Close":
+          - generic: close
+      - tab "‎spiking_mirror_rhythm.png Close":
+        - generic: image
+        - generic: ‎spiking_mirror_rhythm.png
+        - button "Close":
+          - generic: close
+      - tab "‎circuit_core_alt.txt Close":
+        - generic: description
+        - generic: ‎circuit_core_alt.txt
+        - button "Close":
+          - generic: close
+      - tab "‎circuit_full_alt.txt Close":
+        - generic: description
+        - generic: ‎circuit_full_alt.txt
+        - button "Close":
+          - generic: close
+      - tab "‎BolenFrontiers22.bib Close":
+        - generic: book_5
+        - generic: ‎BolenFrontiers22.bib
+        - button "Close":
+          - generic: close
+      - tab "‎10-introduction.tex Close":
+        - generic: description
+        - generic: ‎10-introduction.tex
+        - button "Close":
+          - generic: close
+      - tab "‎50-database.tex Close":
+        - generic: description
+        - generic: ‎50-database.tex
+        - button "Close":
+          - generic: close
+      - tab "‎92-AppendixA.tex Close":
+        - generic: description
+        - generic: ‎92-AppendixA.tex
+        - button "Close":
+          - generic: close
+      - tab "‎94-AppendixC.tex Close":
+        - generic: description
+        - generic: ‎94-AppendixC.tex
+        - button "Close":
+          - generic: close
+      - tab "‎30-torque.tex Close":
+        - generic: description
+        - generic: ‎30-torque.tex
+        - button "Close":
+          - generic: close
+      - tab "‎90-bib.tex Close":
+        - generic: description
+        - generic: ‎90-bib.tex
+        - button "Close":
+          - generic: close
+      - tab "‎95-AppendixD.tex Close":
+        - generic: description
+        - generic: ‎95-AppendixD.tex
+        - button "Close":
+          - generic: close
+      - tab "‎96-AppendixE.tex Close":
+        - generic: description
+        - generic: ‎96-AppendixE.tex
+        - button "Close":
+          - generic: close
+    - toolbar "Editor tools":
+      - button "Ask the AI assistant about this file"
+      - generic "Undo/Redo actions":
+        - button "Undo":
+          - generic: undo
+          - generic: Undo
+        - button "Redo":
+          - generic: redo
+          - generic: Redo
+      - generic "Text formatting":
+        - button "Section heading level":
+          - generic: text_fields
+          - generic: expand_more
+      - generic "Text style":
+        - button "Bold":
+          - generic: format_bold
+          - generic: Bold
+        - button "Italic":
+          - generic: format_italic
+          - generic: Italic
+      - generic "Insert math and symbols":
+        - button "Insert math":
+          - generic: calculate
+        - button "Insert symbol": Ω
+      - generic "Insert misc (links, citations, cross-references, figures, tables)":
+        - button "Insert link":
+          - generic: add_link
+          - generic: Insert link
+      - generic "List and indentation"
+      - button "More editor toolbar items":
+        - generic: more_horiz
+      - generic "Code and visual editor switch":
+        - group "Editor mode.":
+          - generic: Editor mode.
+          - radio "Code" [checked]
+          - generic: Code
+          - radio "Visual"
+          - generic: Visual
+      - button "Reviewing":
+        - generic: rate_review
+        - generic: keyboard_arrow_down
+      - button "Search file":
+        - generic: search
+        - generic: Search file
+    - generic: current match. breeding colony can offer. Robotic models therefore offer both experimental repeatability and a way to reduce reliance on line 230.
+    - generic: "214"
+    - generic: "215"
+    - generic: "216"
+    - generic: "217"
+    - generic: "218"
+    - generic: "219"
+    - generic: "220"
+    - generic: "221"
+    - generic: "222"
+    - generic: "223"
+    - generic: "224"
+    - generic: "225"
+    - generic: "226"
+    - generic: "227"
+    - generic: "228"
+    - generic: "229"
+    - generic: "230"
+    - generic: "231"
+    - generic: "232"
+    - generic: "233"
+    - generic: "234"
+    - generic: "235"
+    - generic: "236"
+    - generic: "237"
+    - generic: "238"
+    - generic: "239"
+    - generic: "240"
+    - generic: ▾
+    - generic: ▾
+    - textbox "Source Editor editing":
+      - text: "OpenSim \\citep{delp_opensim_2007, seth_opensim_2018}, distributed through the SimTK (Simulation Toolkit) repository, provides the biomechanical modeling side: musculoskeletal models with detailed bone geometry, muscle routing, and force-generating properties, along with tools for analyzing moment arms and isometric torque. These models are approximations with known limits rather than exact anatomies: muscle paths are interpolations over discrete attachment and wrapping data"
+      - text: "\\citep{bolen_bipedal_2019}. Their geometry is accurate for a purpose, namely moment arms and torque predictions over the functional range of motion, and that is the standard against which the robot model of this program is compared."
+      - generic: "The same SimTK infrastructure hosts SCONE, an open-source package for predictive simulation and optimization of neuromuscular control of biological motion \\citep{geijtenbeek_scone_2019}."
+      - generic: "AnimatLab \\citep{cofer_animatlab_2010} provides a graphical environment in which physical bodies and synthetic neural systems are constructed and co-simulated; the AARL's prior walker (Section~\\ref{sec:prior_walker}) was built in it."
+      - generic: "MuJoCo \\citep{todorov_mujoco_2012} provides the physics-engine side: fast, accurate simulation of rigid-body dynamics with contacts, along with muscle-like actuators that include activation dynamics."
+      - text: MyoConverter bridges the biomechanical and physics-engine worlds by converting OpenSim musculoskeletal models to
+      - generic: MuJoCo
+      - text: "format with optimized muscle kinematics and kinetics \\citep{caggiano_myosuite_2022, wang_myosim_2022}."
+      - generic: "SNS Toolbox \\citep{nourse_sns_2023}"
+      - text: I used these tools to develop a
+      - text: robotic
+      - text: "OpenSim leg model, convert it to MuJoCo, and couple it to a synthetic nervous system, a pipeline assembled and evaluated in Chapter~\\ref{ch:sns}. This new neuromechanical model can simulate very quickly"
+      - text: ": a single overnight run can sweep thousands of parameter combinations or execute hundreds of simulated gait cycles per condition."
+      - text: T
+      - text: hroughput that no human-subject or animal protocol could match.
+      - text: This new model
+      - text: transforms lesion and stimulation studies from bespoke demonstrations into statistically powered experiments.
+      - generic: "\\section{Testing Neuromechanical Hypotheses on Robots: The Ethical Case}\\label{sec:bg_ethics}"
+      - text: The experiments this research program is designed to enable, including deleting a muscle from a limb, blocking a sensory pathway,
+      - generic: lesioning
+      - text: "part of a rhythm generator, and applying tonic stimulation to spinal circuits, cannot be performed on healthy humans. Invasive intervention on the human neuromuscular system is limited to clinical populations, is tightly constrained by ethics review, and permits neither the within-subject control nor the reversibility that neuromechanical hypotheses demand. The same experiments in animals also carry real moral cost, and their justification is governed by the Three Rs framework: replacement of animal subjects with non-animal methods, reduction of the numbers required, and refinement of the remaining procedures \\citep{russell_principles_1959, tannenbaum_russell_2015}. A robot that implements a validated neuromechanical hypothesis is precisely such a replacement method: every deletion, lesion, and stimulation experiment that runs on the synthetic nervous system is an experiment that does not require a living subject, and the robot population can be duplicated exactly, so that ``subjects'' are statistically identical across conditions, an experimental repeatability"
+      - text: no breeding colony can offer.
+      - generic: Robotic models therefore offer both experimental repeatability and a way to reduce reliance on the invasive animal preparations that established many of the neural mechanisms studied here.
+      - generic: Schematics
+      - text: of
+      - generic: decerebrate-cat locomotion
+      - text: emphasize the neural circuits
+      - generic: under study
+      - text: ", but often leave the surgical preparation out of view. A simplified drawing of a walking cat can make the animal appear intact, alert, or even contented."
+      - generic: That
+      - text: "appearance should not be confused with the condition of the experimental animal: a"
+      - generic: brainstem
+      - generic: transection has disconnected the forebrain,
+      - generic: while
+      - generic: "neural circuits below the transection can still generate treadmill stepping \\citep{brown_intrinsic_1911, severin_1967}. Figure~\\ref{fig:decerebrate_cat}, taken from"
+      - generic: archival
+      - generic: "footage, shows the physical preparation behind the circuit diagrams \\citep{decerebrate_cat_footage}. This distinction makes the ethical meaning of replacement concrete: the robotic experiments discussed here are intended, in part, to reproduce selected neural mechanisms without repeating these invasive preparations in living animals."
+      - generic: "\\begin{figure}[htbp]"
+      - generic: \centering
+      - generic: "\\includegraphics[width=0.82\\textwidth]{decerebrate_cat_colorized.png}"
+      - generic: "% ALT TEXT: A cat held in a stereotactic head holder with skull clamps and a"
+      - generic: "% fixation pin beside the eye orbit stands on a moving treadmill belt in a"
+      - generic: "% laboratory, supported by rigging, walking."
+      - generic: "\\caption[Decerebrate-cat treadmill experiment]{Restored and colorized frame from archival footage of a decerebrate-cat treadmill experiment \\citep{decerebrate_cat_footage}.}"
+    - tabpanel "Current file":
+      - 'button "bbolen83 26 October, 1:29 pm Accept change Reject change Added: CPG"':
+        - generic: bbolen83
+        - generic: 26 October, 1:29 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion: CPG
+      - 'button "bbolen83 26 October, 1:29 pm Accept change Reject change Deleted: field''s"':
+        - generic: bbolen83
+        - generic: 26 October, 1:29 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: delete
+        - text: "Deleted:"
+        - deletion: field's
+      - 'button "bbolen83 26 October, 1:48 pm Accept change Reject change Changed: Hybrid work makes the complementarity of the two s... show more to \\citet{haeufle_benefit_2018} combined pre-recorded... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 1:48 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: Hybrid work makes the complementarity of the two s...
+          - button "show more":
+            - generic: show more
+        - text: to
+        - generic: "\\citet{haeufle_benefit_2018} combined pre-recorded..."
+        - button "show more":
+          - generic: show more
+      - 'button "bbolen83 26 October, 10:37 am Accept change Reject change Changed: The third line, in which this dissertation sits, i... show more to The third line, in which this dissertation sits, u... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 10:37 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: The third line, in which this dissertation sits, i...
+          - button "show more":
+            - generic: show more
+        - text: to
+        - generic: The third line, in which this dissertation sits, u...
+        - button "show more":
+          - generic: show more
+      - 'button "ajh26 23 October, 8:43 am Accept change Reject change Changed: ing to s"':
+        - generic: ajh26
+        - generic: 23 October, 8:43 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: ing
+        - text: to s
+      - 'button "ajh26 23 October, 8:44 am Accept change Reject change Added: elaborate"':
+        - generic: ajh26
+        - generic: 23 October, 8:44 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion: elaborate
+      - 'button "ajh26 23 October, 8:44 am Accept change Reject change Changed: too elaborate to integrate by hand, joined to to and complex"':
+        - generic: ajh26
+        - generic: 23 October, 8:44 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: too elaborate to integrate by hand, joined to
+        - text: to and complex
+      - 'button "ajh26 23 October, 8:44 am Accept change Reject change Changed: too large to wire by hand. to ."':
+        - generic: ajh26
+        - generic: 23 October, 8:44 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: too large to wire by hand.
+        - text: to .
+      - 'button "ajh26 23 October, 8:45 am Accept change Reject change Deleted: , and the ones adjacent to it in the same ecosyste... show more"':
+        - generic: ajh26
+        - generic: 23 October, 8:45 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: delete
+        - text: "Deleted:"
+        - deletion:
+          - generic: ", and the ones adjacent to it in the same ecosyste..."
+          - button "show more":
+            - generic: show more
+      - 'button "ajh26 23 October, 8:46 am Accept change Reject change Deleted: , and near the ends of a joint''s range the routed ... show more"':
+        - generic: ajh26
+        - generic: 23 October, 8:46 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: delete
+        - text: "Deleted:"
+        - deletion:
+          - generic: ", and near the ends of a joint's range the routed ..."
+          - button "show more":
+            - generic: show more
+      - button "ajh26 23 October, 8:47 am Accept change Reject change Added:":
+        - generic: ajh26
+        - generic: 23 October, 8:47 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion
+      - button "ajh26 23 October, 8:47 am Accept change Reject change Added:":
+        - generic: ajh26
+        - generic: 23 October, 8:47 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion
+      - button "ajh26 23 October, 8:47 am Accept change Reject change Added:":
+        - generic: ajh26
+        - generic: 23 October, 8:47 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion
+      - button "ajh26 23 October, 8:47 am Accept change Reject change Added:":
+        - generic: ajh26
+        - generic: 23 October, 8:47 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion
+      - 'button "ajh26 23 October, 8:47 am Accept change Reject change Changed: Combined with the SNS-Toolbox''s MuJoCo backend \\ci... show more to SNS Toolbox \\citep{nourse_sns_2023}"':
+        - generic: ajh26
+        - generic: 23 October, 8:47 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: Combined with the SNS-Toolbox's MuJoCo backend \ci...
+          - button "show more":
+            - generic: show more
+        - text: "to SNS Toolbox \\citep{nourse_sns_2023}"
+      - 'button "ajh26 23 October, 8:48 am Accept change Reject change Changed: convert the laboratory''s to develop a"':
+        - generic: ajh26
+        - generic: 23 October, 8:48 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: convert the laboratory's
+        - text: to develop a
+      - 'button "ajh26 23 October, 8:49 am Accept change Reject change Changed: modified to robotic"':
+        - generic: ajh26
+        - generic: 23 October, 8:49 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: modified
+        - text: to robotic
+      - 'button "ajh26 23 October, 8:49 am Accept change Reject change Added: , convert it"':
+        - generic: ajh26
+        - generic: 23 October, 8:49 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion: ", convert it"
+      - 'button "ajh26 23 October, 8:49 am Accept change Reject change Added: ,"':
+        - generic: ajh26
+        - generic: 23 October, 8:49 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion: ","
+      - 'button "ajh26 23 October, 8:49 am Accept change Reject change Changed: Simulation speed is the practical enabler to This new neuromechanical model can simulate very q... show more"':
+        - generic: ajh26
+        - generic: 23 October, 8:49 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: Simulation speed is the practical enabler
+        - text: to
+        - generic: This new neuromechanical model can simulate very q...
+        - button "show more":
+          - generic: show more
+      - 'button "ajh26 23 October, 8:50 am Accept change Reject change Changed: , to ."':
+        - generic: ajh26
+        - generic: 23 October, 8:50 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: ","
+        - text: to .
+      - 'button "ajh26 23 October, 8:50 am Accept change Reject change Changed: t to T"':
+        - generic: ajh26
+        - generic: 23 October, 8:50 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: t
+        - text: to T
+      - 'button "ajh26 23 October, 8:50 am Accept change Reject change Changed: , to ."':
+        - generic: ajh26
+        - generic: 23 October, 8:50 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: ","
+        - text: to .
+      - 'button "ajh26 23 October, 8:50 am Accept change Reject change Changed: and that to This new model"':
+        - generic: ajh26
+        - generic: 23 October, 8:50 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: and that
+        - text: to This new model
+      - 'button "bbolen83 23 October, 9:27 am Accept change Reject change Changed: form of reduction to n experimental repeatability"':
+        - generic: bbolen83
+        - generic: 23 October, 9:27 am
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: form of reduction
+        - text: to n experimental repeatability
+      - 'button "bbolen83 26 October, 2:02 pm Accept change Reject change Changed: Refinement follows as well: the failure modes of t... show more to Robotic models therefore offer both experimental r... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 2:02 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: "Refinement follows as well: the failure modes of t..."
+          - button "show more":
+            - generic: show more
+        - text: to
+        - generic: Robotic models therefore offer both experimental r...
+        - button "show more":
+          - generic: show more
+      - 'button "bbolen83 26 October, 1:55 pm Accept change Reject change Changed: Figure~\\ref{fig:decerebrate_cat} shows what that a... show more to Schematics of decerebrate-cat locomotion emphasize... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 1:55 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: "Figure~\\ref{fig:decerebrate_cat} shows what that a..."
+          - button "show more":
+            - generic: show more
+        - text: to
+        - generic: Schematics of decerebrate-cat locomotion emphasize...
+        - button "show more":
+          - generic: show more
+      - 'button "bbolen83 26 October, 1:55 pm Accept change Reject change Changed: The procedures behind that record are documented i... show more to The contrast between an intact animal and the expe... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 1:55 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: The procedures behind that record are documented i...
+          - button "show more":
+            - generic: show more
+        - text: to
+        - generic: The contrast between an intact animal and the expe...
+        - button "show more":
+          - generic: show more
+      - button "ajh26 22 October, 10:50 am Resolve comment More options huh? ajh26 22 October, 10:50 am More options definitions are stressed? bbolen83 23 October, 6:27 am More options I replaced the unclear terminology with a signed fixed-axis moment-arm definition and a separate explanation of OpenSim’s coordinate-length sensitivities. show less Reply":
+        - generic: ajh26
+        - generic: 22 October, 10:50 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: huh?
+        - generic: ajh26
+        - generic: 22 October, 10:50 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: definitions are stressed?
+        - generic: bbolen83
+        - generic: 23 October, 6:27 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I replaced the unclear terminology with a signed fixed-axis moment-arm definition and a separate explanation of OpenSim’s coordinate-length sensitivities.
+        - button "show less":
+          - generic: show less
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 22 October, 10:52 am Resolve comment More options huh? bbolen83 23 October, 6:27 am More options I removed the repository digression and rewrote this explanation around the mechanics and the Gait23... show more Reply":
+        - generic: ajh26
+        - generic: 22 October, 10:52 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: huh?
+        - generic: bbolen83
+        - generic: 23 October, 6:27 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - generic: I removed the repository digression and rewrote this explanation around the mechanics and the Gait23...
+        - button "show more":
+          - generic: show more
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 22 October, 10:53 am Resolve comment More options I'm now a little lost...which method does 2392 use? bbolen83 23 October, 6:21 am More options I clarified the Gait2392 knee kinematics and distinguished OpenSim’s coordinate-length sensitivity c... show more Reply":
+        - generic: ajh26
+        - generic: 22 October, 10:53 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I'm now a little lost...which method does 2392 use?
+        - generic: bbolen83
+        - generic: 23 October, 6:21 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - generic: I clarified the Gait2392 knee kinematics and distinguished OpenSim’s coordinate-length sensitivity c...
+        - button "show more":
+          - generic: show more
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 22 October, 10:53 am Resolve comment More options I assume the 23 corresponds to the DoF. What about the 92? bbolen83 23 October, 6:21 am More options I now define Gait2392 as a model with 23 degrees of freedom and 92 musculotendon actuators. Reply":
+        - generic: ajh26
+        - generic: 22 October, 10:53 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I assume the 23 corresponds to the DoF. What about the 92?
+        - generic: bbolen83
+        - generic: 23 October, 6:21 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I now define Gait2392 as a model with 23 degrees of freedom and 92 musculotendon actuators.
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 22 October, 11:49 am Resolve comment More options non seq bbolen83 23 October, 6:27 am More options I shortened the geometry explanation and stated what the accompanying figures compare. Reply":
+        - generic: ajh26
+        - generic: 22 October, 11:49 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: non seq
+        - generic: bbolen83
+        - generic: 23 October, 6:27 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I shortened the geometry explanation and stated what the accompanying figures compare.
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 22 October, 11:56 am Resolve comment More options I feel like this is jumping all over the place bbolen83 23 October, 6:27 am More options I reorganized this passage around the prior model, the human/robot comparison, and the subsequent pl... show more Reply":
+        - generic: ajh26
+        - generic: 22 October, 11:56 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I feel like this is jumping all over the place
+        - generic: bbolen83
+        - generic: 23 October, 6:27 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - generic: I reorganized this passage around the prior model, the human/robot comparison, and the subsequent pl...
+        - button "show more":
+          - generic: show more
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 22 October, 11:57 am Resolve comment More options what comparison was made? You don't say bbolen83 23 October, 6:21 am More options I now state the human-versus-robot comparison and the role of the subsequent attachment-placement optimization explicitly. show less Reply":
+        - generic: ajh26
+        - generic: 22 October, 11:57 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: what comparison was made? You don't say
+        - generic: bbolen83
+        - generic: 23 October, 6:21 am
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I now state the human-versus-robot comparison and the role of the subsequent attachment-placement optimization explicitly.
+        - button "show less":
+          - generic: show less
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 23 October, 8:42 am Resolve comment More options huh? bbolen83 26 October, 1:50 pm More options Fixed it. Reply":
+        - generic: ajh26
+        - generic: 23 October, 8:42 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: huh?
+        - generic: bbolen83
+        - generic: 26 October, 1:50 pm
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Fixed it.
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 23 October, 8:56 am Resolve comment More options Non seq Reply":
+        - generic: ajh26
+        - generic: 23 October, 8:56 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Non seq
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 23 October, 8:56 am Resolve comment More options huh? Reply":
+        - generic: ajh26
+        - generic: 23 October, 8:56 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: huh?
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 23 October, 8:56 am Resolve comment More options huh? Reply":
+        - generic: ajh26
+        - generic: 23 October, 8:56 am
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: huh?
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 1:42 pm Resolve comment More options Figure would be better in torque chapter, or just cut out. There should be two bodie connective and ... show more Reply":
+        - generic: bbolen83
+        - generic: 26 October, 1:42 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - generic: Figure would be better in torque chapter, or just cut out. There should be two bodie connective and ...
+        - button "show more":
+          - generic: show more
+        - textbox "Reply":
+          - generic: Reply
+    - tablist:
+      - tab "Current file" [selected]:
+        - generic: description
+        - text: Current file
+      - tab "Overview":
+        - generic: list
+        - text: Overview
+  - separator:
+    - generic "Resize":
+      - button "Click to hide the PDF":
+        - generic: chevron_right
+      - button "Go to code location in PDF":
+        - generic: arrow_right_alt
+      - 'button "Go to PDF location in code (Tip: double click on the PDF for best results)"':
+        - generic: arrow_left_alt
+  - region "PDF preview":
+    - toolbar "PDF":
+      - button "Recompile":
+        - generic: Recompile
+      - button "Toggle compile options menu":
+        - generic: expand_more
+      - button "Back to PDF":
+        - generic: Back to PDF
+    - tabpanel:
+      - generic "Page ⁨1⁩":
+        - generic: "Tools to Design a Biomimetic Humanoid Robot Actuated by Pneumatic Artificial Muscles and a Synthetic Neural Network by Ben Bolen A dissertation submitted in partial fulfillment of the requirements for the degree of Doctor of Philosophy in Mechanical Engineering Dissertation Committee: Alexander Hunt, Chair Bin Jiang Radhika Reddy David Turcic Portland State University 2026"
+      - generic "Page ⁨2⁩"
+      - generic "Page ⁨3⁩"
+      - generic "Page ⁨4⁩"
+      - generic "Page ⁨5⁩"
+      - generic "Page ⁨6⁩"
+      - generic "Page ⁨7⁩"
+      - generic "Page ⁨8⁩"
+      - generic "Page ⁨9⁩"
+      - generic "Page ⁨10⁩"
+      - generic "Page ⁨11⁩"
+      - generic "Page ⁨12⁩"
+      - generic "Page ⁨13⁩"
+      - generic "Page ⁨14⁩"
+      - generic "Page ⁨15⁩"
+      - generic "Page ⁨16⁩"
+      - generic "Page ⁨17⁩"
+      - generic "Page ⁨18⁩"
+      - generic "Page ⁨19⁩"
+      - generic "Page ⁨20⁩"
+      - generic "Page ⁨21⁩"
+      - generic "Page ⁨22⁩"
+      - generic "Page ⁨23⁩"
+      - generic "Page ⁨24⁩"
+      - generic "Page ⁨25⁩"
+      - generic "Page ⁨26⁩"
+      - generic "Page ⁨27⁩"
+      - generic "Page ⁨28⁩"
+      - generic "Page ⁨29⁩"
+      - generic "Page ⁨30⁩"
+      - generic "Page ⁨31⁩"
+      - generic "Page ⁨32⁩"
+      - generic "Page ⁨33⁩"
+      - generic "Page ⁨34⁩"
+      - generic "Page ⁨35⁩"
+      - generic "Page ⁨36⁩"
+      - generic "Page ⁨37⁩"
+      - generic "Page ⁨38⁩"
+      - generic "Page ⁨39⁩"
+      - generic "Page ⁨40⁩"
+      - generic "Page ⁨41⁩"
+      - generic "Page ⁨42⁩"
+      - generic "Page ⁨43⁩"
+      - generic "Page ⁨44⁩"
+      - generic "Page ⁨45⁩"
+      - generic "Page ⁨46⁩"
+      - generic "Page ⁨47⁩"
+      - generic "Page ⁨48⁩"
+      - generic "Page ⁨49⁩"
+      - generic "Page ⁨50⁩"
+      - generic "Page ⁨51⁩":
+        - text: "31 2.9.1 Simulation Tools All three lines depend on a software substrate that is itself part of the method: elaborate musculoskeletal geometry and complex neural models. The tools used in this dissertation"
+        - text: are the following.
+        - link "Delp et al.":
+          - /url: "#cite.delp_opensim_2007"
+        - link "2007":
+          - /url: "#cite.delp_opensim_2007"
+        - link "Seth et al.":
+          - /url: "#cite.seth_opensim_2018"
+        - link "2018":
+          - /url: "#cite.seth_opensim_2018"
+        - text: "OpenSim [Delp et al., 2007, Seth et al., 2018], distributed through the SimTK (Simulation Toolkit) repository, provides the biomechanical modeling side: musculoskeletal models with detailed bone geometry, muscle routing, and force-generating properties, along with tools for analyzing moment arms and isometric torque. These models are approximations with known limits rather than exact anatomies: muscle paths are interpolations over"
+        - text: discrete attachment and wrapping data [Bolen, 2019]. Their geometry is accurate for a
+        - link "Bolen":
+          - /url: "#cite.bolen_bipedal_2019"
+        - link "2019":
+          - /url: "#cite.bolen_bipedal_2019"
+        - text: purpose, namely moment arms and torque predictions over the functional range of motion, and that is the standard against which the robot model of this program is compared. The same SimTK infrastructure hosts SCONE, an open-source package for predictive
+        - text: simulation and optimization of neuromuscular control of biological motion [Geijtenbeek,
+        - link "Geijtenbeek":
+          - /url: "#cite.geijtenbeek_scone_2019"
+        - link "2019":
+          - /url: "#cite.geijtenbeek_scone_2019"
+        - text: 2019].
+        - link "Cofer et al.":
+          - /url: "#cite.cofer_animatlab_2010"
+        - link "2010":
+          - /url: "#cite.cofer_animatlab_2010"
+        - text: AnimatLab [Cofer et al., 2010] provides a graphical environment in which physical bodies and synthetic neural systems are constructed and co-simulated; the AARL’s prior
+        - text: walker (Section 6.1) was built in it.
+        - link "6.1":
+          - /url: "#section.6.1"
+        - link "Todorov et al.":
+          - /url: "#cite.todorov_mujoco_2012"
+        - link "2012":
+          - /url: "#cite.todorov_mujoco_2012"
+        - text: "MuJoCo [Todorov et al., 2012] provides the physics-engine side: fast, accurate simula- tion of rigid-body dynamics with contacts, along with muscle-like actuators that include activation dynamics. MyoConverter bridges the biomechanical and physics-engine worlds by converting"
+      - generic "Page ⁨52⁩":
+        - text: "32"
+        - text: OpenSim musculoskeletal models to MuJoCo format with optimized muscle kinematics
+        - link "Caggiano et al.":
+          - /url: "#cite.caggiano_myosuite_2022"
+        - text: and kinetics [Caggiano et al., 2022, Wang et al., 2022].
+        - link "2022":
+          - /url: "#cite.caggiano_myosuite_2022"
+        - link "Wang et al.":
+          - /url: "#cite.wang_myosim_2022"
+        - link "2022":
+          - /url: "#cite.wang_myosim_2022"
+        - text: SNS Toolbox [Nourse et al., 2023]
+        - link "Nourse et al.":
+          - /url: "#cite.nourse_sns_2023"
+        - link "2023":
+          - /url: "#cite.nourse_sns_2023"
+        - text: I used these tools to develop a robotic OpenSim leg model, convert it to MuJoCo, and
+        - text: couple it to a synthetic nervous system, a pipeline assembled and evaluated in Chapter 6.
+        - link "6":
+          - /url: "#chapter.6"
+        - text: "This new neuromechanical model can simulate very quickly: a single overnight run can sweep thousands of parameter combinations or execute hundreds of simulated gait cycles per condition. Throughput that no human-subject or animal protocol could match. This new model transforms lesion and stimulation studies from bespoke demonstrations into statistically powered experiments. 2.10 Testing Neuromechanical Hypotheses on Robots: The Ethical Case The experiments this research program is designed to enable, including deleting a muscle from a limb, blocking a sensory pathway, lesioning part of a rhythm generator, and apply- ing tonic stimulation to spinal circuits, cannot be performed on healthy humans. Invasive intervention on the human neuromuscular system is limited to clinical populations, is tightly constrained by ethics review, and permits neither the within-subject control nor the reversibility that neuromechanical hypotheses demand. The same experiments in animals also carry real moral cost, and their justification is governed by the Three Rs framework: replacement of animal subjects with non-animal methods, reduction of the"
+        - text: numbers required, and refinement of the remaining procedures [Russell and Burch, 1959,
+        - link "Russell and Burch":
+          - /url: "#cite.russell_principles_1959"
+        - link "1959":
+          - /url: "#cite.russell_principles_1959"
+        - link "Tannenbaum and Bennett":
+          - /url: "#cite.tannenbaum_russell_2015"
+        - link "2015":
+          - /url: "#cite.tannenbaum_russell_2015"
+        - text: Tannenbaum and Bennett, 2015]. A robot that implements a validated neuromechanical
+      - generic "Page ⁨53⁩":
+        - text: "33 hypothesis is precisely such a replacement method: every deletion, lesion, and stimula- tion experiment that runs on the synthetic nervous system is an experiment that does not require a living subject, and the robot population can be duplicated exactly, so that “subjects” are statistically identical across conditions, an experimental repeatability no breeding colony can offer. Robotic models therefore offer both experimental repeatability and a way to reduce reliance on the invasive animal preparations that established many of the neural mechanisms studied here. Schematics of decerebrate-cat locomotion emphasize the neural circuits under study, but often leave the surgical preparation out of view. A simplified drawing of a walking cat can make the animal appear intact, alert, or even contented. That appearance should not be confused with the condition of the experimental animal: a brainstem transection has"
+        - text: disconnected the forebrain, while neural circuits below the transection can still generate
+        - link "Brown":
+          - /url: "#cite.brown_intrinsic_1911"
+        - link "1911":
+          - /url: "#cite.brown_intrinsic_1911"
+        - link "Severin et al.":
+          - /url: "#cite.severin_1967"
+        - text: treadmill stepping [Brown, 1911, Severin et al., 1967]. Figure 2.10, taken from archival
+        - link "1967":
+          - /url: "#cite.severin_1967"
+        - link "2.10":
+          - /url: "#figure.caption.14"
+        - text: footage, shows the physical preparation behind the circuit diagrams [WhiteCoatWaste,
+        - link "WhiteCoatWaste":
+          - /url: "#cite.decerebrate_cat_footage"
+        - link "n.d.":
+          - /url: "#cite.decerebrate_cat_footage"
+        - text: "n.d.]. This distinction makes the ethical meaning of replacement concrete: the robotic experiments discussed here are intended, in part, to reproduce selected neural mechanisms without repeating these invasive preparations in living animals. The contrast between an intact animal and the experimental preparation is particularly clear in publicly available teaching footage. A 50 min classroom recording posted by the UTHealth Houston School of Dentistry first shows an intact cat playing with its handler, righting itself when lowered and placing its paws accurately on the edge of a"
+        - text: table, and then documents the decerebration performed for the class [UTHealth Houston
+        - link "UTHealth Houston":
+          - /url: "#cite.utherst_decerebrate_2025"
+        - link "School of Dentistry":
+          - /url: "#cite.utherst_decerebrate_2025"
+        - link "2025":
+          - /url: "#cite.utherst_decerebrate_2025"
+        - text: "School of Dentistry, 2025]: the animal is anesthetized with open-drop ether, more than"
+      - generic "Page ⁨54⁩":
+        - text: "34 Figure 2.10: Restored and colorized frame from archival footage of a decerebrate-cat"
+        - text: treadmill experiment [WhiteCoatWaste, n.d.].
+        - link "WhiteCoatWaste":
+          - /url: "#cite.decerebrate_cat_footage"
+        - link "n.d.":
+          - /url: "#cite.decerebrate_cat_footage"
+      - generic "Page ⁨55⁩"
+      - generic "Page ⁨56⁩"
+      - generic "Page ⁨57⁩"
+      - generic "Page ⁨58⁩"
+      - generic "Page ⁨59⁩"
+      - generic "Page ⁨60⁩"
+      - generic "Page ⁨61⁩"
+      - generic "Page ⁨62⁩"
+      - generic "Page ⁨63⁩"
+      - generic "Page ⁨64⁩"
+      - generic "Page ⁨65⁩"
+      - generic "Page ⁨66⁩"
+      - generic "Page ⁨67⁩"
+      - generic "Page ⁨68⁩"
+      - generic "Page ⁨69⁩"
+      - generic "Page ⁨70⁩"
+      - generic "Page ⁨71⁩"
+      - generic "Page ⁨72⁩"
+      - generic "Page ⁨73⁩"
+      - generic "Page ⁨74⁩"
+      - generic "Page ⁨75⁩"
+      - generic "Page ⁨76⁩"
+      - generic "Page ⁨77⁩"
+      - generic "Page ⁨78⁩"
+      - generic "Page ⁨79⁩"
+      - generic "Page ⁨80⁩"
+      - generic "Page ⁨81⁩"
+      - generic "Page ⁨82⁩"
+      - generic "Page ⁨83⁩"
+      - generic "Page ⁨84⁩"
+      - generic "Page ⁨85⁩"
+      - generic "Page ⁨86⁩"
+      - generic "Page ⁨87⁩"
+      - generic "Page ⁨88⁩"
+      - generic "Page ⁨89⁩"
+      - generic "Page ⁨90⁩"
+      - generic "Page ⁨91⁩"
+      - generic "Page ⁨92⁩"
+      - generic "Page ⁨93⁩"
+      - generic "Page ⁨94⁩"
+      - generic "Page ⁨95⁩"
+      - generic "Page ⁨96⁩"
+      - generic "Page ⁨97⁩"
+      - generic "Page ⁨98⁩"
+      - generic "Page ⁨99⁩"
+      - generic "Page ⁨100⁩"
+      - generic "Page ⁨101⁩"
+      - generic "Page ⁨102⁩"
+      - generic "Page ⁨103⁩"
+      - generic "Page ⁨104⁩"
+      - generic "Page ⁨105⁩"
+      - generic "Page ⁨106⁩"
+      - generic "Page ⁨107⁩"
+      - generic "Page ⁨108⁩"
+      - generic "Page ⁨109⁩"
+      - generic "Page ⁨110⁩"
+      - generic "Page ⁨111⁩"
+      - generic "Page ⁨112⁩"
+      - generic "Page ⁨113⁩"
+      - generic "Page ⁨114⁩"
+      - generic "Page ⁨115⁩"
+      - generic "Page ⁨116⁩"
+      - generic "Page ⁨117⁩"
+      - generic "Page ⁨118⁩"
+      - generic "Page ⁨119⁩"
+      - generic "Page ⁨120⁩"
+      - generic "Page ⁨121⁩"
+      - generic "Page ⁨122⁩"
+      - generic "Page ⁨123⁩"
+      - generic "Page ⁨124⁩"
+      - generic "Page ⁨125⁩"
+      - generic "Page ⁨126⁩"
+      - generic "Page ⁨127⁩"
+      - generic "Page ⁨128⁩"
+      - generic "Page ⁨129⁩"
+      - generic "Page ⁨130⁩"
+      - generic "Page ⁨131⁩"
+      - generic "Page ⁨132⁩"
+      - generic "Page ⁨133⁩"
+      - generic "Page ⁨134⁩"
+      - generic "Page ⁨135⁩"
+      - generic "Page ⁨136⁩"
+      - generic "Page ⁨137⁩"
+      - generic "Page ⁨138⁩"
+      - generic "Page ⁨139⁩"
+      - generic "Page ⁨140⁩"
+      - generic "Page ⁨141⁩"
+      - generic "Page ⁨142⁩"
+      - generic "Page ⁨143⁩"
+      - generic "Page ⁨144⁩"
+      - generic "Page ⁨145⁩"
+      - generic "Page ⁨146⁩"
+      - generic "Page ⁨147⁩"
+      - generic "Page ⁨148⁩"
+      - generic "Page ⁨149⁩"
+      - generic "Page ⁨150⁩"
+      - generic "Page ⁨151⁩"
+      - generic "Page ⁨152⁩"
+      - generic "Page ⁨153⁩"
+      - generic "Page ⁨154⁩"
+      - generic "Page ⁨155⁩"
+      - generic "Page ⁨156⁩"
+      - generic "Page ⁨157⁩"
+      - generic "Page ⁨158⁩"
+      - generic "Page ⁨159⁩"
+      - generic "Page ⁨160⁩"
+      - generic "Page ⁨161⁩"
+      - generic "Page ⁨162⁩"
+      - generic "Page ⁨163⁩"
+      - generic "Page ⁨164⁩"
+      - generic "Page ⁨165⁩"
+      - generic "Page ⁨166⁩"
+      - generic "Page ⁨167⁩"
+      - generic "Page ⁨168⁩"
+      - generic "Page ⁨169⁩"
+      - generic "Page ⁨170⁩"
+      - generic "Page ⁨171⁩"
+      - generic "Page ⁨172⁩"
+      - generic "Page ⁨173⁩"
+      - generic "Page ⁨174⁩"
+      - generic "Page ⁨175⁩"
+      - generic "Page ⁨176⁩"
+      - generic "Page ⁨177⁩"
+      - generic "Page ⁨178⁩"
+      - generic "Page ⁨179⁩"
+      - generic "Page ⁨180⁩"
+      - generic "Page ⁨181⁩"
+      - generic "Page ⁨182⁩"
+      - generic "Page ⁨183⁩"
+      - generic "Page ⁨184⁩"
+      - generic "Page ⁨185⁩"
+      - generic "Page ⁨186⁩"
+      - generic "Page ⁨187⁩"
+      - generic "Page ⁨188⁩"
+      - generic "Page ⁨189⁩"
+      - generic "Page ⁨190⁩"
+      - generic "Page ⁨191⁩"
+      - generic "Page ⁨192⁩"
+      - generic "Page ⁨193⁩"
+      - generic "Page ⁨194⁩"
+      - generic "Page ⁨195⁩"
+      - generic "Page ⁨196⁩"
+      - generic "Page ⁨197⁩"
+      - generic "Page ⁨198⁩"
+      - generic "Page ⁨199⁩"
+      - generic "Page ⁨200⁩"
+      - generic "Page ⁨201⁩"
+      - generic "Page ⁨202⁩"
+      - generic "Page ⁨203⁩"
+      - generic "Page ⁨204⁩"
+      - generic "Page ⁨205⁩"
+      - generic "Page ⁨206⁩"
+      - generic "Page ⁨207⁩"
+      - generic "Page ⁨208⁩"
+      - generic "Page ⁨209⁩"
+      - generic "Page ⁨210⁩"
+      - generic "Page ⁨211⁩"
+      - generic "Page ⁨212⁩"
+      - generic "Page ⁨213⁩"
+      - generic "Page ⁨214⁩"
+      - generic "Page ⁨215⁩"
+      - generic "Page ⁨216⁩"
+      - generic "Page ⁨217⁩"
+      - generic "Page ⁨218⁩"
+      - generic "Page ⁨219⁩"
+      - generic "Page ⁨220⁩"
+      - generic "Page ⁨221⁩"
+      - generic "Page ⁨222⁩"
+      - generic "Page ⁨223⁩"
+      - generic "Page ⁨224⁩"
+      - generic "Page ⁨225⁩"
+      - generic "Page ⁨226⁩"
+      - generic "Page ⁨227⁩"
+      - generic "Page ⁨228⁩"
+      - generic "Page ⁨229⁩"
+      - generic "Page ⁨230⁩"
+      - generic "Page ⁨231⁩"
+      - generic "Page ⁨232⁩"
+      - generic "Page ⁨233⁩"
+      - generic "Page ⁨234⁩"
+      - generic "Page ⁨235⁩"
+      - generic "Page ⁨236⁩"
+      - generic "Page ⁨237⁩"
+      - generic "Page ⁨238⁩"
+      - generic "Page ⁨239⁩"
+      - generic "Page ⁨240⁩"
+      - generic "Page ⁨241⁩"
+      - generic "Page ⁨242⁩"
+      - generic "Page ⁨243⁩"
+      - generic "Page ⁨244⁩"
+      - generic "Page ⁨245⁩"
+      - generic "Page ⁨246⁩"
+      - generic "Page ⁨247⁩"
+      - generic "Page ⁨248⁩"
+      - generic "Page ⁨249⁩"
+      - generic "Page ⁨250⁩"
+      - generic "Page ⁨251⁩"
+      - generic "Page ⁨252⁩"
+      - generic "Page ⁨253⁩"
+      - generic "Page ⁨254⁩"
+      - generic "Page ⁨255⁩"
+      - generic "Page ⁨256⁩"
+      - generic "Page ⁨257⁩"
+      - generic "Page ⁨258⁩"
+      - generic "Page ⁨259⁩"
+      - generic "Page ⁨260⁩"
+      - generic "Page ⁨261⁩"
+      - generic "Page ⁨262⁩"
+      - generic "Page ⁨263⁩"
+      - generic "Page ⁨264⁩"
+      - generic "Page ⁨265⁩"
+      - generic "Page ⁨266⁩"
+      - generic "Page ⁨267⁩"
+    - tablist:
+      - tab "All logs 44" [selected]:
+        - text: All logs
+        - generic: "44"
+      - tab "Errors 0":
+        - text: Errors
+        - generic: "0"
+      - tab "Warnings 0":
+        - text: Warnings
+        - generic: "0"
+      - tab "Info 44":
+        - text: Info
+        - generic: "44"
+    - 'generic "Log entry with level: typesetting"':
+      - button "Collapse":
+        - generic: expand_more
+        - heading "Overfull \\hbox (4.87337pt too wide) in paragraph at lines 33--33" [level=3]
+        - generic: ‪./output.lof, 33‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (25.60219pt too wide) in paragraph at lines 34--34" [level=3]
+        - generic: ‪./output.lof, 34‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (3.85944pt too wide) in paragraph at lines 329--330" [level=3]
+        - generic: ‪./chapters/20-muscles.tex, 329‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (3.04857pt too wide) in paragraph at lines 341--342" [level=3]
+        - generic: ‪./chapters/30-torque.tex, 341‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 1264) in paragraph at lines 114--120" [level=3]
+        - generic: ‪./output.bbl, 114‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 5711) in paragraph at lines 524--533" [level=3]
+        - generic: ‪./output.bbl, 524‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (295.93526pt too wide) in paragraph at lines 1147--1156" [level=3]
+        - generic: ‪./output.bbl, 1147‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (28.06737pt too wide) in paragraph at lines 32--53" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 32‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (8.79031pt too wide) in paragraph at lines 32--53" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 32‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (5.37099pt too wide) in paragraph at lines 177--178" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 177‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (65.42706pt too wide) in paragraph at lines 184--186" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 184‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (35.2388pt too wide) in paragraph at lines 196--198" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 196‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (94.36024pt too wide) in paragraph at lines 202--203" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 202‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (70.91875pt too wide) in paragraph at lines 4--5" [level=3]
+        - generic: ‪./chapters/93-AppendixB.tex, 4‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 1701) in paragraph at lines 21--21" [level=3]
+        - generic: ‪./chapters/93-AppendixB.tex, 21‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (1.13043pt too wide) in paragraph at lines 74--75" [level=3]
+        - generic: ‪./chapters/93-AppendixB.tex, 74‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (217.48453pt too wide) in paragraph at lines 74--75" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 74‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 10000) in paragraph at lines 87--87" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 87‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 1478) in paragraph at lines 87--87" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 87‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (2.59323pt too wide) in paragraph at lines 89--100" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 89‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (66.94695pt too wide) in paragraph at lines 112--113" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 112‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (87.52748pt too wide) in paragraph at lines 117--133" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 117‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 10000) in paragraph at lines 150--150" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 150‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 10000) in paragraph at lines 151--151" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 151‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 10000) in paragraph at lines 152--152" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 152‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 6125) in paragraph at lines 152--152" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 152‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (166.43893pt too wide) in paragraph at lines 167--182" [level=3]
+        - generic: ‪./chapters/92-AppendixA.tex, 167‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (22.8447pt too wide) in paragraph at lines 12--14" [level=3]
+        - generic: ‪./chapters/94-AppendixC.tex, 12‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (0.66867pt too wide) in paragraph at lines 15--16" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 15‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 5563) in paragraph at lines 18--18" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 18‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 4859) in paragraph at lines 72--72" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 72‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (30.3383pt too wide) in paragraph at lines 131--143" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 131‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (23.16434pt too wide) in paragraph at lines 153--155" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 153‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (111.30437pt too wide) in paragraph at lines 159--171" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 159‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (220.59038pt too wide) in paragraph at lines 178--186" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 178‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (75.14642pt too wide) in paragraph at lines 188--189" [level=3]
+        - generic: ‪/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/omsppl.fd, 188‬
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Overfull \\hbox (70.72154pt too wide) in paragraph at lines 214--232" [level=3]
+        - generic: ‪./chapters/94-AppendixC.tex, 214‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 6961) in paragraph at lines 59--59" [level=3]
+        - generic: ‪./chapters/96-AppendixE.tex, 59‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 10000) in paragraph at lines 59--59" [level=3]
+        - generic: ‪./chapters/96-AppendixE.tex, 59‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 1577) in paragraph at lines 59--59" [level=3]
+        - generic: ‪./chapters/96-AppendixE.tex, 59‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 1168) in paragraph at lines 59--59" [level=3]
+        - generic: ‪./chapters/96-AppendixE.tex, 59‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 3049) in paragraph at lines 59--59" [level=3]
+        - generic: ‪./chapters/96-AppendixE.tex, 59‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 1728) in paragraph at lines 59--59" [level=3]
+        - generic: ‪./chapters/96-AppendixE.tex, 59‬
+      - button "Go to code location":
+        - generic: my_location
+    - 'generic "Log entry with level: typesetting"':
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Underfull \\hbox (badness 3482) in paragraph at lines 59--59" [level=3]
+        - generic: ‪./chapters/96-AppendixE.tex, 59‬
+      - button "Go to code location":
+        - generic: my_location
+    - generic "Raw logs from the LaTeX compiler":
+      - button "Expand":
+        - generic: chevron_right
+        - heading "Raw logs" [level=3]
+    - button "Clear cached files":
+      - generic: delete
+      - generic: Clear cached files
+    - button "Other logs and files"
+- button "Close overlay"
+- button "Close overlay"
+- button "Close overlay"
+- tooltip "Go to code location in PDF":
+  - generic: Go to code location in PDF

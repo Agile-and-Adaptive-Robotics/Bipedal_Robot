@@ -1,3 +1,9 @@
+# Live Overleaf edits now applied — 26 October 2026
+
+Ben authorized the live revision. Read `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/LIVE_ASTRA_20261026/APPLIED_REVISIONS.md` before further edits. The latest live source snapshots are in that folder's `after/`; do not overwrite them with Revision E or reapply incoming batches. Knowledge-gap/contribution revisions, the corrected Figure 6.1, contact/Ib-ablation example, and conversion appendix are now live. Further proposals remain bounded and must be reconciled against this state. Existing comments and tracked changes were retained.
+
+---
+
 # Three-batch review: reconciled packet, 26 October 2026
 
 Reviewed EB475WS4, easteregg2, and easteregg2_2. Delivery: `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261023/REVIEW_INBOX/REVIEWED_20261026/REVIEW_DECISIONS.md`. Use its bounded patches and application map; do not apply the incoming batches verbatim. `ZCODE_REPAIR_NOTES.md` identifies held figures and exact repairs. `REVIEWED_FRAGMENTS.pdf` is the standalone proof, not a chapter replacement.

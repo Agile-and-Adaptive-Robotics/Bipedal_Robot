@@ -1,0 +1,876 @@
+- main:
+  - navigation "Project actions":
+    - link "Overleaf logo":
+      - /url: /project
+      - generic "Overleaf logo"
+    - menubar:
+      - button "File"
+      - button "Edit"
+      - button "Insert"
+      - button "View"
+      - button "Format"
+      - button "Help"
+    - button "Project title options":
+      - generic: Design Factors for Isometric Robotic Knee Torque
+      - generic: keyboard_arrow_down
+    - status
+    - button "b":
+      - generic: b
+    - button "b":
+      - generic: b
+    - button "History":
+      - generic: history
+      - text: History
+    - button "Layout options":
+      - generic: space_dashboard
+      - text: Layout
+    - button "Share":
+      - generic: person_add
+      - text: Share
+  - navigation "Sidebar":
+    - tablist:
+      - tab "File tree":
+        - generic: description
+        - generic: File tree
+      - tab "Project search":
+        - generic: search
+        - generic: Project search
+      - tab "Integrations":
+        - generic: integration_instructions
+        - generic: Integrations
+      - tab "Review panel" [selected]:
+        - generic: rate_review
+        - generic: Review panel
+      - tab "Chat":
+        - generic: forum
+        - generic: Chat
+      - tab "AI assistant":
+        - generic: AI assistant
+      - navigation "Help and editor settings":
+        - button "Help":
+          - generic: help
+        - button "Settings":
+          - generic: settings
+  - region "Editor":
+    - heading "Review" [level=4]
+    - button "Resolved comments":
+      - generic: inbox
+    - button "Close":
+      - generic: close
+    - tablist:
+      - tab "‎Main.tex Close" [selected]:
+        - generic: description
+        - generic: ‎Main.tex
+        - button "Close":
+          - generic: close
+      - tab "‎FrontiersinHarvard.cls Close":
+        - generic: description
+        - generic: ‎FrontiersinHarvard.cls
+        - button "Close":
+          - generic: close
+    - toolbar "Editor tools":
+      - button "Ask the AI assistant about this file"
+      - generic "Undo/Redo actions":
+        - button "Undo":
+          - generic: undo
+          - generic: Undo
+        - button "Redo":
+          - generic: redo
+          - generic: Redo
+      - generic "Text formatting":
+        - button "Section heading level":
+          - generic: text_fields
+          - generic: expand_more
+      - generic "Text style":
+        - button "Bold":
+          - generic: format_bold
+          - generic: Bold
+        - button "Italic":
+          - generic: format_italic
+          - generic: Italic
+      - generic "Insert math and symbols":
+        - button "Insert math":
+          - generic: calculate
+        - button "Insert symbol": Ω
+      - generic "Insert misc (links, citations, cross-references, figures, tables)":
+        - button "Insert link":
+          - generic: add_link
+          - generic: Insert link
+        - button "Add comment":
+          - generic: add_comment
+          - generic: Add comment
+        - button "Insert cross reference":
+          - generic: sell
+          - generic: Insert cross reference
+      - generic "List and indentation"
+      - button "More editor toolbar items":
+        - generic: more_horiz
+      - generic "Code and visual editor switch":
+        - group "Editor mode.":
+          - generic: Editor mode.
+          - radio "Code" [checked]
+          - generic: Code
+          - radio "Visual"
+          - generic: Visual
+      - button "Reviewing":
+        - generic: rate_review
+        - generic: keyboard_arrow_down
+      - button "Search file":
+        - generic: search
+        - generic: Search file
+    - generic: Selection deleted
+    - generic: "1"
+    - generic: "2"
+    - generic: "3"
+    - generic: "4"
+    - generic: "5"
+    - generic: "6"
+    - generic: "7"
+    - generic: "8"
+    - generic: "9"
+    - generic: "10"
+    - generic: "11"
+    - generic: "12"
+    - generic: "13"
+    - generic: "14"
+    - generic: "15"
+    - generic: "16"
+    - generic: "17"
+    - generic: "18"
+    - generic: "19"
+    - generic: "20"
+    - generic: "21"
+    - generic: "22"
+    - generic: "23"
+    - generic: "24"
+    - generic: "25"
+    - generic: "26"
+    - generic: "27"
+    - generic: "28"
+    - generic: "29"
+    - generic: "30"
+    - generic: "31"
+    - generic: "32"
+    - generic: "33"
+    - generic: "34"
+    - generic: "35"
+    - generic: "36"
+    - generic: "37"
+    - generic: "38"
+    - generic: "39"
+    - generic: "40"
+    - generic: "41"
+    - generic: "42"
+    - generic: "43"
+    - generic: "44"
+    - generic: "45"
+    - generic: "46"
+    - textbox "Source Editor editing" [active]:
+      - generic: "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+      - generic: "% This is just an example/guide for you to refer to when submitting manuscripts to Frontiers, it is not mandatory to use Frontiers .cls files nor frontiers.tex %"
+      - generic: "% This will only generate the Manuscript, the final article will be typeset by Frontiers after acceptance."
+      - generic: "% %"
+      - generic: "% %"
+      - generic: "% When submitting your files, remember to upload this *tex file, the pdf generated with it, the *bib file (if bibliography is not within the *tex) and all the figures."
+      - generic: "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+      - generic: "%%% Version 3.4 Generated 2018/06/15 %%%"
+      - generic: "%%% You will need to have the following packages installed: datetime, fmtcount, etoolbox, fcprefix, which are normally inlcuded in WinEdt. %%%"
+      - generic: "%%% In http://www.ctan.org/ you can find the packages and how to install them, if necessary. %%%"
+      - generic: "%%% NB logo1.jpg is required in the path in order to correctly compile front page header %%%"
+      - generic: "\\documentclass[utf8]{FrontiersinHarvard} % for articles in journals using the Harvard Referencing Style (Author-Date), for Frontiers Reference Styles by Journal: https://zendesk.frontiersin.org/hc/en-us/articles/360017860337-Frontiers-Reference-Styles-by-Journal"
+      - generic: "\\usepackage{url,hyperref,lineno,microtype}"
+      - generic: "\\usepackage{xr}"
+      - generic: "\\usepackage{amssymb}"
+      - generic: "\\usepackage{amsmath, bm}"
+      - generic: "\\usepackage{mathabx}"
+      - generic: "\\usepackage{siunitx}"
+      - generic: \let\DeclareUSUnit\DeclareSIUnit
+      - generic: \let\US\SI
+      - generic: "\\DeclareUSUnit\\inch{in}"
+      - generic: "\\DeclareUSUnit\\ft{ft}"
+      - generic: "\\providecommand{\\abs}[1]{\\lvert#1\\rvert}"
+      - generic: "\\providecommand{\\norm}[1]{\\lVert#1\\rVert}"
+      - generic: "\\usepackage{graphicx}"
+      - generic: "\\graphicspath{{../}} % figures live in Knee_Torque_Test/Figures (Ben's structure); on Overleaf Figures/ sits beside Main.tex"
+      - generic: "\\usepackage{caption}"
+      - generic: "\\usepackage{tabularx}"
+      - generic: "\\usepackage{booktabs}"
+      - generic: "\\usepackage{multirow}"
+      - generic: "\\usepackage{float}"
+      - generic: "\\usepackage{array}"
+      - generic: "\\usepackage[onehalfspacing]{setspace}"
+      - generic: "\\usepackage{rotating}"
+      - generic: "\\renewcommand{\\arraystretch}{2} % Increase row height (default is 1.0)"
+      - generic: \linenumbers
+      - generic: "\\externaldocument{frontiers_SupplementaryMaterial}"
+      - generic: "% Leave a blank line between paragraphs instead of using \\\\"
+      - generic: "\\def\\keyFont{\\fontsize{8}{11}\\helveticabold }"
+      - generic: "\\def\\firstAuthorLast{Bolen {et~al.}} %use et al only if is more than 1 author"
+    - tabpanel "Current file":
+      - 'button "bbolen83 26 October, 2:21 pm Accept change Reject change Changed: is to was"':
+        - generic: bbolen83
+        - generic: 26 October, 2:21 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: is
+        - text: to was
+      - 'button "bbolen83 26 October, 2:20 pm Accept change Reject change Deleted: The knee-flexor run quantifies what the mono-pul... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 2:20 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: delete
+        - text: "Deleted:"
+        - deletion:
+          - generic: The knee-flexor run quantifies what the mono-pul...
+          - button "show more":
+            - generic: show more
+      - 'button "bbolen83 26 October, 2:12 pm Accept change Reject change Changed: The route should keep $\\varepsilon^{*}$ high throu... show more to For a given $l_{0}$,"':
+        - generic: bbolen83
+        - generic: 26 October, 2:12 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: "The route should keep $\\varepsilon^{*}$ high throu..."
+          - button "show more":
+            - generic: show more
+        - text: "to For a given $l_{0}$,"
+      - 'button "bbolen83 26 October, 2:12 pm Accept change Reject change Changed: M to m"':
+        - generic: bbolen83
+        - generic: 26 October, 2:12 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: M
+        - text: to m
+      - 'button "bbolen83 26 October, 2:13 pm Accept change Reject change Changed: budget to allowance"':
+        - generic: bbolen83
+        - generic: 26 October, 2:13 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: budget
+        - text: to allowance
+      - 'button "bbolen83 26 October, 2:13 pm Accept change Reject change Added: This increased moment arm comes at a cost to biom... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 2:13 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion:
+          - generic: This increased moment arm comes at a cost to biom...
+          - button "show more":
+            - generic: show more
+      - 'button "bbolen83 26 October, 2:15 pm Accept change Reject change Changed: filament to filament"':
+        - generic: bbolen83
+        - generic: 26 October, 2:15 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: filament
+        - text: to filament
+      - 'button "bbolen83 26 October, 1:55 pm Accept change Reject change Deleted: The redesign results carry caveats that bound thei... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 1:55 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: delete
+        - text: "Deleted:"
+        - deletion:
+          - generic: The redesign results carry caveats that bound thei...
+          - button "show more":
+            - generic: show more
+      - 'button "bbolen83 26 October, 1:56 pm Accept change Reject change Changed: One scope statement, finally, belongs with these c... show more to T"':
+        - generic: bbolen83
+        - generic: 26 October, 1:56 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion:
+          - generic: One scope statement, finally, belongs with these c...
+          - button "show more":
+            - generic: show more
+        - text: to T
+      - 'button "bbolen83 26 October, 1:56 pm Accept change Reject change Changed: ese to is"':
+        - generic: bbolen83
+        - generic: 26 October, 1:56 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: ese
+        - text: to is
+      - 'button "bbolen83 26 October, 1:56 pm Accept change Reject change Changed: s to , these knee configurations,"':
+        - generic: bbolen83
+        - generic: 26 October, 1:56 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: s
+        - text: to , these knee configurations,
+      - 'button "bbolen83 26 October, 1:57 pm Accept change Reject change Changed: is to ese"':
+        - generic: bbolen83
+        - generic: 26 October, 1:57 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: is
+        - text: to ese
+      - 'button "bbolen83 26 October, 1:57 pm Accept change Reject change Changed: y, and o to ies. O"':
+        - generic: bbolen83
+        - generic: 26 October, 1:57 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: y, and o
+        - text: to ies. O
+      - 'button "bbolen83 26 October, 2:02 pm Accept change Reject change Changed: sizes to types"':
+        - generic: bbolen83
+        - generic: 26 October, 2:02 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: sizes
+        - text: to types
+      - 'button "bbolen83 26 October, 2:02 pm Accept change Reject change Added: Isometric torque testing has yielded important ... show more"':
+        - generic: bbolen83
+        - generic: 26 October, 2:02 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion:
+          - generic: Isometric torque testing has yielded important ...
+          - button "show more":
+            - generic: show more
+      - 'button "bbolen83 26 October, 2:09 pm Accept change Reject change Changed: asked what a to started with an improved"':
+        - generic: bbolen83
+        - generic: 26 October, 2:09 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: edit
+        - text: "Changed:"
+        - deletion: asked what a
+        - text: to started with an improved
+      - 'button "bbolen83 26 October, 2:09 pm Accept change Reject change Added: force-length-pressure model and"':
+        - generic: bbolen83
+        - generic: 26 October, 2:09 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: add_circle
+        - text: "Added:"
+        - insertion: force-length-pressure model and
+      - 'button "ajh26 6 May, 12:01 pm Accept change Reject change Deleted: s/a theX_0K_1K_2X_{0}KX_{0}"':
+        - generic: ajh26
+        - generic: 6 May, 12:01 pm
+        - button "Accept change":
+          - generic: check
+          - generic: Accept change
+        - button "Reject change":
+          - generic: close
+          - generic: Reject change
+        - generic: delete
+        - text: "Deleted:"
+        - deletion: "s/a theX_0K_1K_2X_{0}KX_{0}"
+      - button "ajh26 6 May, 12:06 pm Resolve comment More options how does the shorter length result in this? Reply":
+        - generic: ajh26
+        - generic: 6 May, 12:06 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: how does the shorter length result in this?
+        - textbox "Reply":
+          - generic: Reply
+      - button "ajh26 6 May, 12:08 pm Resolve comment More options Can this be connected with Jon's work? Reply":
+        - generic: ajh26
+        - generic: 6 May, 12:08 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Can this be connected with Jon's work?
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:18 pm Resolve comment More options This figure got replaced with an incorrect one. The blue dots are where the back-calculated yellow d... show more Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:18 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - generic: This figure got replaced with an incorrect one. The blue dots are where the back-calculated yellow d...
+        - button "show more":
+          - generic: show more
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:18 pm Resolve comment More options Don't use \"holds\". Call it data measurements. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:18 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Don't use "holds". Call it data measurements.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:26 pm Resolve comment More options Too big for page. Should probably have a femur and tibia shape in there to make it less confusing. W... show more Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:26 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - generic: Too big for page. Should probably have a femur and tibia shape in there to make it less confusing. W...
+        - button "show more":
+          - generic: show more
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:27 pm Resolve comment More options Candidate to move to supplementary material if we are over the Figure/Table limit. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:27 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Candidate to move to supplementary material if we are over the Figure/Table limit.
+        - textbox "Reply":
+          - generic: Reply
+      - 'button "bbolen83 26 October, 2:28 pm Resolve comment More options There''s no /Chi_{4} lol XD bbolen83 26 October, 2:44 pm More options Make a 2x2 panel figure with the legend in the last panel. Title panels 10 mm, 20 mm, 20 mm. Reply"':
+        - generic: bbolen83
+        - generic: 26 October, 2:28 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: "There's no /Chi_{4} lol XD"
+        - generic: bbolen83
+        - generic: 26 October, 2:44 pm
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Make a 2x2 panel figure with the legend in the last panel. Title panels 10 mm, 20 mm, 20 mm.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:29 pm Resolve comment More options Leaves the page and is rotated the wrong way. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:29 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: Leaves the page and is rotated the wrong way.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:30 pm Resolve comment More options I don't think Hunt Equation was calculated correctly here. Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:30 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: I don't think Hunt Equation was calculated correctly here.
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:31 pm Resolve comment More options This is all incorrect Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:31 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - text: This is all incorrect
+        - textbox "Reply":
+          - generic: Reply
+      - button "bbolen83 26 October, 2:32 pm Resolve comment More options This is incorrect in the values and which tests were training and validation. The whole paragraph is... show more Reply":
+        - generic: bbolen83
+        - generic: 26 October, 2:32 pm
+        - button "Resolve comment":
+          - generic: check
+          - generic: Resolve comment
+        - button "More options":
+          - generic: more_vert
+          - generic: More options
+        - generic: This is incorrect in the values and which tests were training and validation. The whole paragraph is...
+        - button "show more":
+          - generic: show more
+        - textbox "Reply":
+          - generic: Reply
+    - tablist:
+      - tab "Current file" [selected]:
+        - generic: description
+        - text: Current file
+      - tab "Overview":
+        - generic: list
+        - text: Overview
+  - separator:
+    - generic "Resize":
+      - button "Click to hide the PDF":
+        - generic: chevron_right
+      - button "Go to code location in PDF":
+        - generic: arrow_right_alt
+      - 'button "Go to PDF location in code (Tip: double click on the PDF for best results)"':
+        - generic: arrow_left_alt
+  - region "PDF preview":
+    - toolbar "PDF":
+      - button "Recompile":
+        - generic: Recompile
+      - button "Toggle compile options menu":
+        - generic: expand_more
+      - button "View logs":
+        - generic: description
+        - generic: "20"
+      - link "Download PDF":
+        - /url: /download/project/622e9536b8ea1e0a7f167cf5/build/1a17a170d65-2b31d188d2fba282/output/output.pdf?compileGroup=priority&clsiserverid=clsi-pre-emp-regional-premium-c4d-wmjl&enable_pdf_caching=true&popupDownload=true&editorId=4814cd78-b885-4732-92cb-0f07a820cdb8
+        - generic: download
+      - button "Invert PDF preview colors":
+        - generic: invert_colors
+      - button "Previous page":
+        - generic: keyboard_arrow_up
+      - button "Next page":
+        - generic: keyboard_arrow_down
+      - textbox "Page 5, Current Page": "5"
+      - generic: / 35
+      - button "Zoom out":
+        - generic: remove
+      - button "Zoom in":
+        - generic: add
+      - button "PDF zoom level": 99%
+    - tabpanel:
+      - generic "Page ⁨1⁩"
+      - generic "Page ⁨2⁩"
+      - generic "Page ⁨3⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque A hybrid torque calculation, which combines measured muscle lengths and moment arms with modeled 71 actuator force, isolated kinematic error from force error before any parameter was fitted. 72 Our analysis resulted in (1) a corrected torque model whose constant length offset ( χ 0 ), lumped attachment 73 stiffness ( χ 1 and χ 2 ), and fictive-strain wrapping loss ( χ 3 ) cut held-out prediction error by two thirds or 74 more on the pinned-knee test families and carry to the biomimetic knee without refitting; (2) a two-stage 75 multiobjective identification that holds one stiffness pair consistent across both knees and both actuators, 76 validates it on held-out resting lengths and on the biomimetic knee, and selects the adopted set by an 77 external design requirement; and (3) redesigned attachment routes, each driven by two 20 mm BPAs, 78
+        - text: that meet or exceed human isometric knee-torque targets from OpenSim musculoskeletal models (Seth
+        - link "Seth":
+          - /url: "#cite.seth_opensim_2018"
+        - text: "79"
+        - link:
+          - /url: "#cite.seth_opensim_2018"
+        - text: et al., 2018; Delp et al., 1990) with a required
+        - link "1990":
+          - /url: "#cite.delp_interactive_1990"
+        - text: 5 % margin at every angle, together with the first hardware
+        - text: "80"
+        - link "et al.":
+          - /url: "#cite.seth_opensim_2018"
+        - link "2018":
+          - /url: "#cite.seth_opensim_2018"
+        - link "Delp et al.":
+          - /url: "#cite.delp_interactive_1990"
+        - text: "torque measurements of the redesigned extensor route. Throughout, the wrapping loss is expressed through 81 fictive strain: the excess contraction the force model must see beyond the actuator’s physical contraction, 82 normalized by the unloaded 620 kPa contraction ε 620 of the free actuator. Together, the corrected model 83 and the redesign pipeline let a designer predict isometric joint torque, correct it against hardware, and route 84 the actuators to a human-derived target on the first design iteration. 85 2 METHODS AND MATERIALS 2.1 Overview 86 Isometric knee torque is the product of the force an actuator develops and the moment arm of its line 87 of action about the joint axis, and the force itself is set by the actuator’s effective length through the 88 force model. Each link in that chain is a design quantity: the attachment routing fixes the moment arm, 89 the resting length and attachment compliance set the effective contraction, and wrapping over the joint 90 removes usable length. We built two knee test stands, measured isometric torque across each joint’s 91 range of motion with 10 mm and 20 mm Festo braided pneumatic actuators (BPAs) in flexor and extensor 92 configurations, and compared the measurements against the original rigid-body model, the improved 93 actuator force characterization alone, and the corrected model developed here. A hybrid calculation isolated 94 the error sources, a multiobjective identification produced the correction terms, and the corrected model 95 then drove a redesign of the attachment routes against human isometric torque targets. 96 2.2 Actuator Force Model 97"
+        - text: The actuator force model is fully described in Bolen et al. (2026) and is reproduced here only as far as
+        - link "Bolen et al.":
+          - /url: "#cite.bolen_2026"
+        - link "2026":
+          - /url: "#cite.bolen_2026"
+        - text: 98 the torque model requires. The contraction ε of a BPA is 99 ε “ p l 0 ´ l m q l 0 (1) where l 0 is the uninflated resting length measured from hose clamp to hose clamp and l m is the current 100 muscle length. The unloaded contraction at 620 kPa is 101 ε 620 “ p l 0 ´ l 620 q l 0 (2) where l 620 is the actuator length at 620 kPa with no external load, and the relative contraction is 102 ε ˚ “ ε ε 620 (3) Frontiers 3
+      - generic "Page ⁨4⁩":
+        - text: "Bolen et al. Design Factors for Isometric Robotic Knee Torque The pair p ε 620 , ε ˚ q is the strain basis of this work: every length-based correction introduced below is 103 expressed in ε 620 -normalized units. The normalized isometric force is 104 F ˚ p ε ˚ , P ˚ q “ $ & % c 0 ¨ ` exp p´ c 1 ¨ ε ˚ q ´ 1 ˘ ` P ˚ ¨ exp ` ´ c 2 p ε ˚ q 2 ˘ where positive 0 otherwise, (4) that is, the normalized force is the value of the bracketed expression where that expression is positive and 105 zero elsewhere, where P ˚ is pressure normalized by 620 kPa and the diameter-dependent coefficients c 0 , 106 c 1 , and c 2"
+        - link "Bolen et al.":
+          - /url: "#cite.bolen_2026"
+        - link "2026":
+          - /url: "#cite.bolen_2026"
+        - text: "are tabulated in Bolen et al. (2026) (p. 10). The maximum force is 107 F max p l 0 , P q “ a 1 P arctan ` a 2 P p l 0 ´ 0 . 0075 q ˘ (5) with l 0 in meters, a fixed 7 . 5 mm"
+        - text: end-contact offset, and coefficients tabulated in Bolen et al. (2026) (p. 7);
+        - link "Bolen et al.":
+          - /url: "#cite.bolen_2026"
+        - link "2026":
+          - /url: "#cite.bolen_2026"
+        - text: 108 at the 620 kPa system ceiling, F max p l 0 , 620 kPa q “ F 620 p l 0 q . The isometric force is the composition 109 F p ε ˚ , P ˚ , l 0 q “ F ˚ p ε ˚ , P ˚ q ¨ F 620 p l 0 q (6) 2.3 Robot Leg Model and Knee Test Stands 110
+        - text: The robot leg consists of a knee joint, femur, tibia, BPA assemblies, and artificial tendons (Figure 1
+        - link "1":
+          - /url: "#figure.caption.1"
+        - text: A–C ). 111 The artificial bones were 3D printed in Onyx, carbon fiber, and high-strength high-temperature fiberglass, 112 with machined links for the knee mechanism, and the tendons are Shimano bicycle brake cable. The leg 113 geometry and dimensions derive from bone scans of a 6 ft ( 1 . 83 m
+        - text: ) tall person (Bolen and Hunt, 2019;
+        - link "Bolen and Hunt":
+          - /url: "#cite.bolen_determination_2019"
+        - link "2019":
+          - /url: "#cite.bolen_determination_2019"
+        - text: "114"
+        - text: Seth et al., 2018; Delp et al., 1990, 2007).
+        - link "Delp et al.":
+          - /url: "#cite.delp_interactive_1990"
+        - link "1990":
+          - /url: "#cite.delp_interactive_1990"
+        - link "2007":
+          - /url: "#cite.delp_opensim_2007"
+        - text: "115"
+        - link "Seth et al.":
+          - /url: "#cite.seth_opensim_2018"
+        - link "2018":
+          - /url: "#cite.seth_opensim_2018"
+        - text: Frontiers 4
+      - generic "Page ⁨5⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque
+        - generic: A)
+        - generic: B)
+        - generic: θ
+        - generic: Test jig assembly mounting locations
+        - generic: Load cell
+        - generic: BPA
+        - generic: Tibia
+        - generic: Femur
+        - generic: Swing arm
+        - generic: Winch cable
+        - generic: Winch housing
+        - generic: Knee joint
+        - generic: C)
+        - text: "Figure 1. (A) CAD solid model assembly of the revolute joint knee in the test stand. (B) 1-DoF pinned- joint robot knee in the test apparatus with important components labeled; the leg is shown with 30 degrees of flexion, i.e. θ k “ ´ 30 °. (C) Picture from isometric torque testing. The setup shows the revolute knee configured for a test of the extensor BPA, with the knee flexed at θ k “ ´ 120 °; note the compressed shape of the inflated BPA on the knee at this high degree of flexion. Two knee joints were tested: a pure revolute joint, and a biomimetic joint whose four-bar linkage 116"
+        - text: translates the instantaneous center of rotation (ICR) as the knee rotates (Steele, 2018; Steele et al., 2017,
+        - link "Steele":
+          - /url: "#cite.steele_biomimetic_2018"
+        - link "2018":
+          - /url: "#cite.steele_biomimetic_2018"
+        - link "Steele et al.":
+          - /url: "#cite.steele_development_2017"
+        - link "2017":
+          - /url: "#cite.steele_development_2017"
+        - text: 117 2018), moving it posteriorly in X and distally in Y in the femur frame, except briefly proximally near
+        - text: "118"
+        - link "2018":
+          - /url: "#cite.steele_biomimetic_2018-1"
+        - text: Frontiers 5
+      - generic "Page ⁨6⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque
+        - text: full flexion, much as the human knee does (Bolen and Hunt, 2019). Reference coordinate frames follow
+        - link "2019":
+          - /url: "#cite.bolen_determination_2019"
+        - text: "119"
+        - link "Bolen and Hunt":
+          - /url: "#cite.bolen_determination_2019"
+        - text: Wu and Cavanagh (1995); Wu et al. (2002), and Figure 2 shows the measured ICR migration. Both joints
+        - link "2":
+          - /url: "#figure.caption.2"
+        - text: "120"
+        - link "Wu and Cavanagh":
+          - /url: "#cite.wu_for_1995"
+        - link "1995":
+          - /url: "#cite.wu_for_1995"
+        - link "Wu et al.":
+          - /url: "#cite.wu_isb_2002"
+        - link "2002":
+          - /url: "#cite.wu_isb_2002"
+        - text: share the same rotation center in the femur frame at θ k “ 0 °, each was driven by an antagonistic flexor and 121 extensor, and θ k is negative in flexion throughout this work. 122
+        - generic: X (m) -0.01 0 0.01 0.02 0.03 0.04 Y (m) 0 0.005 0.01 0.015 0.02 0.025 0.03 0.035 Distance from θ 1
+        - text: Figure 2. ICR for the biomimetic robot knee as a function of knee angle, measured from θ 1 on the tibia. The plot is overlaid on a model of the knee at θ k “ 0 ˝ (solid line) and ´ 60 ˝ and ´ 120 ˝ (dotted dash lines). White circles represent measured points in ´ 15 ˝ increments from ´ 150 ˝ to ´ 15 ˝ , in ´ 5 ˝ increments from ´ 15 ˝ to 0 ˝ , and then at 2 ˝ , 5 ˝ , and 10 ˝ . Each stand was tested with I 10 mm Festo BPAs in both configurations, and the biomimetic knee also 123 with a I 20 mm BPA. Each actuator was pinned at its origin on the femur, with the far end either pinned at 124
+        - text: the tibial insertion or attached there through an artificial tendon. Bolen and Hunt (2019); Morrow et al.
+        - link "Bolen and Hunt":
+          - /url: "#cite.bolen_determination_2019"
+        - link "2019":
+          - /url: "#cite.bolen_determination_2019"
+        - link "Morrow et al.":
+          - /url: "#cite.morrow_optimization_2020"
+        - text: 125 (2020) give full details of the modeled robot and its torque calculation.
+        - text: "126"
+        - link "2020":
+          - /url: "#cite.morrow_optimization_2020"
+        - text: Frontiers 6
+      - generic "Page ⁨7⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque 2.4 Equipment and Data Collection 127 A test jig was built to collect knee torque at set knee angles over the range of motion. The stand frame is 128 made of 80/20 1515 series extruded aluminum. The femur is fixed to the frame while the knee rotates the 129 tibia, with the joint axis co-axial with gravity to eliminate gravitational torque. A force sensor connects the 130 tibia to a swing arm tied to a winch with 3/16-inch Kevlar rope (Quality Nylon Rope) routed over idler 131 pulleys. At each measured θ k the winch was locked and the BPA was inflated and then deflated, keeping the 132 measurement as isometric as possible. Because the sensor and its rope load path tie the tibia to the locked 133 winch, the sensor reading is the tension that holds the tibia at the set angle. The measured knee torque at 134 each angle is that tension multiplied by the perpendicular distance from the knee axis to the rope’s line of 135
+        - text: action at its tibial attachment, the measured counterpart of the scalar reduction of Equation (10), with the
+        - link "10":
+          - /url: "#equation.2.10"
+        - text: "136 attachment geometry and the sensor-line angle recorded at each test position. 137 Force was collected with one of two sensors: a MODERN STEP 300 kg digital crane scale, or a CALT 138 DYLY-103 100 kg S-shaped load cell used with an HX711 load-cell amplifier. Pressure was measured 139 with a Freescale MPX5700 GP 5 V pressure sensor. Supply pressure was controlled by two regulators 140 in series, a Parker 20R113GC ( 0 ψ to 120 ψ ) and a Husky HDA72200, and air was delivered through a 141 Festo VTUG-10 valve manifold. Pressure and load-cell data were sent to MATLAB through a Sparkfun 142 BlackBoard C (Arduino Uno style) microcontroller. Lengths were measured with a tape measure, with a 143 flexible string marking the axial length of the BPA when its curvature was sufficient, and angles with a 144 Medigauge digital goniometer or MALENOO analog goniometers of 6 in , 8 in and 12 in lengths. 145 2.5 Hybrid Torque Calculation 146 Torque about the knee is the moment of the actuator force about the ICR. Two vectors enter it: the 147 position vector d from the ICR to the point of force application, and the force vector F “ ∥ F ∥ ˆ u along the 148 line of action. The moment arm is the perpendicular distance from the joint axis to the line of action, 149 r “ ∥ d ˆ ˆ u ∥ (7) the same quantity computed from the vectors or measured with a tape measure. In the model it follows the 150 projection method of Young et al. (2019): the scalar moment arm about the joint axis ˆ z k (the knee-frame Z"
+        - text: "151"
+        - link "Young et al.":
+          - /url: "#cite.young_analyzing_2019"
+        - link "2019":
+          - /url: "#cite.young_analyzing_2019"
+        - text: axis) is 152 r k “ p proj,xy ¨ p f ˆ ˆ z k ∥ p f ˆ ˆ z k ∥ (8) where p f is the three-dimensional free muscle segment vector, the segment whose endpoints ride on 153 different bodies and whose in-plane component sets the line of action, and p proj,xy is the position vector 154 from the joint-axis origin to the point of force application, projected onto the plane normal to the joint axis. 155 The ratio term is the in-plane unit normal to the projected line of action, so the product is the perpendicular 156 distance of Equation (7), computed in the tibial body frame.
+        - text: "157"
+        - link "7":
+          - /url: "#equation.2.7"
+        - text: The hybrid torque calculation localizes disagreement between the model and the measurements. The 158 classical moment is the cross product 159 m “ d ˆ F (9) and its scalar component about the joint axis, written M z , reduces through the moment arm to the ordinary 160 product 161 M z “ r F (10) Frontiers 7
+      - generic "Page ⁨8⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque
+        - text: The hybrid method replaces the model-predicted moment arm of Equation (8) and the model-predicted
+        - link "8":
+          - /url: "#equation.2.8"
+        - text: "162 muscle length with measured counterparts: r is measured directly as the perpendicular distance from the 163 knee axis to the line of action, and F follows from the measured P , l 0 , l 620 , and l m through the force model 164 of Section 2.2, which separates kinematic error from force error. This calculation is also referred to as the"
+        - text: "165"
+        - link "2.2":
+          - /url: "#subsection.2.2"
+        - text: "back-calculated torque; the two names denote the same quantity and are used interchangeably in this paper. 166 2.6 Improved Torque Model: Length Offset and Bracket Compliance 167 Measured muscle lengths were consistently shorter than predicted at all joint angles, and the shortfall 168 persisted at ε ˚ “ 1 with F “ 0 , indicating a constant rather than a load-dependent offset. The corrected 169 muscle length is therefore 170 l m “ l LM T ´ 2 l f itting ´ χ 0 (11) where l LM T is the musculotendon path length from origin to insertion, l f itting is the end-cap length 171 ( 25 . 4 mm per end), and χ 0 is the constant length offset. 172 As the actuator develops force, the compliant attachments deform, changing the effective BPA length 173 and, through it, the force. The combined compliance is modeled with Hooke’s law in a local bracket 174 frame at each attachment. The frame is constructed by two rotations from the vector joining the bracket 175"
+        - text: "reference point to the BPA attachment point (Figure 3): a rotation through"
+        - link "3":
+          - /url: "#figure.caption.3"
+        - text: θ z about the fixed space-frame 176 axis ˆ z s aligns an intermediate axis with the sagittal-plane projection of the attachment point, and a rotation 177 through ´ θ y about the current ˆ y axis, which points posteriorly in the primary cantilever bending direction, 178 aligns the bracket axis ˆ x br with the full three-dimensional point vector. The orientation and homogeneous 179 transform are 180 R sb “ R z p θ z q R y p θ y q T , T sb “ » — — – R sb p br 0 T 1 fi ffi ffi fl . (12) Figure 4 shows the bracket frame for each test configuration.
+        - text: "181"
+        - link "4":
+          - /url: "#figure.caption.4"
+        - text: Frontiers 8
+      - generic "Page ⁨9⁩":
+        - generic: "Bolen et al. Design Factors for Isometric Robotic Knee Torque ̂ x s ̂ y s ̂ x 1 ̂ z 1 =̂ z s p sag A / B p A / B sagittal plane θ z (A) First rotation: ̂ x 1 targets the sagittal projection ̂ x 1 ̂ z 1 ̂ x br ̂ y br =̂ y 1 ̂ z br p sag A / B p A / B − θ y (B) Second rotation: ̂ x br targets p A / B Figure 3. Two-rotation construction of the bracket frame from the attachment point p A or p B . (A) Rotation through θ z about the fixed ˆ z s axis aligns the intermediate axis ˆ x 1 with the point’s sagittal-plane projection. (B) Rotation through ´ θ y about the current ˆ y 1 “ ˆ y br axis aligns the final bracket axis ˆ x br with the full point vector. Frontiers 9"
+      - generic "Page ⁨10⁩":
+        - text: Bolen et al. Design Factors for Isometric Robotic Knee Torque
+        - generic: (A)
+        - generic: (C)
+        - generic: (B)
+        - generic: (D)
+        - generic: Y br
+        - generic: X br
+        - generic: Y br
+        - generic: Y br
+        - generic: Y br
+        - generic: Y br
+        - generic: X br
+        - generic: X br
+        - generic: X br
+        - generic: X br
+        - text: "Figure 4. Bracket frame orientations for: (A) flexor configuration on the pinned knee, (B) extensor configuration on the pinned knee, (C) flexor and extensor configurations on the biomimetic knee with I 10 mm BPAs, and (D) flexor configuration on the biomimetic knee with the I 20 mm BPA. In this frame the bracket is modeled as three independent linear springs, and the identified stiffness array 182 is y-symmetric, 183 K br “ » — — — — — — – χ 1 0 0 0 χ 2 0 0 0 χ 1 fi ffi ffi ffi ffi ffi ffi fl (13) with χ 1 the effective stiffness in the x br and z br directions and χ 2 the effective bending stiffness along 184 the cantilever direction y br . The symmetry makes the compliance prediction independent of the frame 185"
+        - text: "convention: the pitch-only and two-rotation constructions of Figure 3 differ by a rotation about"
+        - link "3":
+          - /url: "#figure.caption.3"
+        - text: ˆ y br , and a 186 diagonal stiffness array is invariant under that rotation exactly when the two stiffnesses in its plane are 187 equal. 188 Only the deflection component along the line of action changes the actuator’s effective length. With the 189 force in the bracket frame written F ˆ u , where ˆ u is the BPA force direction, the deflection K ´ 1 br F ˆ u projects 190 onto the line of action as 191 δ br “ F ˆ u T K ´ 1 br ˆ u (14) so the bracket presents the scalar stiffness 192 k ˆ u,br “ F δ br “ ´ ˆ u T K ´ 1 br ˆ u ¯ ´ 1 (15) Frontiers 10
+      - generic "Page ⁨11⁩":
+        - text: "Bolen et al. Design Factors for Isometric Robotic Knee Torque along the force path. An artificial tendon is modeled as an axial spring of stiffness k ten “ nA c E { L ten , 193 with n “ 2 parallel cable strands (six for the I 20 mm assembly), cable cross-sectional area A c “ 194 1 . 51 ˆ 10 ´ 6 m 2 , and modulus E “ 193 GPa . Bracket deflection and tendon stretch both shorten the 195 effective BPA length under the same force, so their scalar compliances add in series: 196 k eq “ ˆ 1 k ˆ u,br ` 1 k ten ˙ ´ 1 (16) The compliance displacement shortens the actuator, so the active length entering the force model is 197 l m p δ q “ l p 0 q m ´ δ (17) where l p 0 q m"
+        - link "11":
+          - /url: "#equation.2.11"
+        - text: "is the initial length of Equation (11). Because the force depends on contraction, and the 198 contraction on the compliance displacement, δ is the root of the implicit balance 199 F 620 p l 0 q F ˚ p ε ˚ p δ q , P ˚ q ´ k eq δ “ 0 (18) solved by bracketed scalar root-finding between zero deflection and the deflection that would bring the 200 actuator to its maximum usable contraction, with δ “ 0 returned when the residual shows no sign change 201 across that interval. The solved force gives the vector bracket deflection, which updates the attachment 202 location; the routed length, force direction, moment arm, and torque are recalculated at the deflected 203 geometry. The stiffness terms are effective parameters for the attachment system as a whole, absorbing the 204 printed brackets, the bone fixtures, and the winch cable, and they are identified from torque rather than 205 measured on any component in isolation. 206 Both ends of the actuator path can be compliant: the insertion-side bracket together with a second, 207 origin-side bracket. Each bracket j develops a three-dimensional deflection η br,j along its local frame basis, 208 of which only the projection along the corresponding force direction ˆ u j changes the actuator length, and 209 the two projections act in series with the tendon elongation: 210 η br,j “ 3 ÿ i “ 1 η i,j ˆ e p j q i , δ br,j “ ˆ u T j η br,j , j P t 1 , 2 u , δ series “ δ br, 1 ` δ tendon ` δ br, 2 . (19) 2.7 Fictive Strain and Wrapping Loss 211 The extensor configuration required one further correction, with a different physical origin than the 212 compliance terms. As the knee flexes, the extensor BPA bends over the front of the joint, and part of 213 the actuator follows the joint surface instead of a straight line. Bent this way, the BPA behaves like a 214 beam: the pressurized wall on the inside of the bend carries less tension than the wall on the outside, and 215 part of the wrapped arc length stops contributing usable contraction, so the actuator behaves as if it were 216 more contracted than it physically is. We call this excess fictive strain: the additional contraction the force 217 model must see to reproduce the observed force, beyond the actuator’s physical contraction, expressed in 218 Frontiers 11"
+      - generic "Page ⁨12⁩":
+        - text: "Bolen et al. Design Factors for Isometric Robotic Knee Torque ε 620 -normalized units. A wrapping-loss term χ 3 scales the length that this fictive strain removes: 219 ∆ l “ # χ 3 R | θ wrap ´ θ k | ζ 2 θ k ď θ wrap 0 θ k ě θ wrap (20) where ∆ l is the change in usable length of the BPA, R is the wrapping radius, | θ wrap ´ θ k | is the angle 220 through which the BPA is bent once contact begins, and θ wrap , the knee flexion angle at which the BPA 221 starts to bend over the joint, is determined from solid modeling. The factor ζ is the additive complement to 222 the relative contraction, 223 ζ “ 1 ´ ε ˚ (21) so the wrapping loss vanishes at full contraction and grows quadratically toward resting length. Combining 224"
+        - text: Equations (21) and (20) with the offset of Equation (11) yields the fully corrected muscle length
+        - link "11":
+          - /url: "#equation.2.11"
+        - text: "225"
+        - link "21":
+          - /url: "#equation.2.21"
+        - link "20":
+          - /url: "#equation.2.20"
+        - text: l m “ l LM T ´ 2 l f itting ´ χ 0 ´ ∆ l (22) 2.8 Identification Procedure 226
+        - text: The correction terms enter the prediction through the implicit balance of Equation (18), and no instrument
+        - link "18":
+          - /url: "#equation.2.18"
+        - text: 227 measures them directly, so they were identified by global optimization against measured torque. Candidates 228 are judged simultaneously on the root mean square error (RMSE), the fraction of variance unexplained 229 (FVU, the residual sum of squares divided by the total sum of squares of the measured torque about its 230 mean, so that R 2 “ 1 ´ FVU ), and the maximum absolute residual, each computed between measured 231 and predicted isometric torque over the tested range of motion; FVU is the primary criterion because it 232 is scale-free and comparable across tests with different torque scales, while the maximum residual is the 233 phase-sensitive worst case. The solver was an elitist nondominated-sorting genetic algorithm (gamultiobj 234 in MATLAB, RRID:SCR 001622) with adaptive-feasible mutation, scattered crossover at a fraction of 0.8, 235 and a Pareto fraction of 0.35; each member of the returned Pareto front is scored on the reserved validation 236 test, and the adopted solution is the member whose validation goodness of fit lies closest to its training-set 237 fit. Where a family of members validates nearly equally well, as the flexor stiffness pairs do, the external 238
+        - text: redesign requirement of Section 4.3 selects among them.
+        - link "4.3":
+          - /url: "#subsection.4.3"
+        - text: "239 The identification proceeded in two stages. The flexor stage fits the two-bracket model p χ 0 , χ 1 , χ 2 q 240 across the four pinned-knee flexor tests, with the l 0 “ 48 . 5 cm and 41 . 0 cm tests in training and the 241 l 0 “ 45 . 7 cm and 40 . 6 cm tendon tests held out for validation. It evolved a population of 150 for up to 242 600 generations, terminating early once the relative change in the spread of the Pareto front fell below 243 4 ˆ 10 ´ 3 . The extensor stage locks p χ 1 , χ 2 q to a member of the flexor Pareto front, enforcing a single 244 stiffness pair across configurations, and solves only the extensor-specific terms p χ 0 , χ 3 q on a six-test pool 245 of the pinned-extensor campaign, at resting lengths of 40 . 0 cm plain and with tendon, 43 . 6 cm , 43 . 2 cm 246 with tendon, 45 . 7 cm , and 46 . 5 cm , with the 43 . 6 cm , 43 . 2 cm -tendon, and 45 . 7 cm tests in training and the 247 40 . 0 cm plain, 40 . 0 cm -tendon, and 46 . 5 cm tests held out for validation, and the extensor offset allowed 248 negative values. The refit used a population of 50 for up to 150 generations at a spread tolerance of 1 ˆ 10 ´ 3 . 249 Both stages searched a normalized space, with length offsets in centimeters and stiffnesses on a base-ten 250 logarithmic scale, so that the genetic search samples the decade-spanning stiffness bounds uniformly. The 251 flexor bounds were χ 0 P r 0 , 20 s mm , χ 1 P r 3 ˆ 10 4 , 10 6 s N m ´ 1 , and χ 2 P r 5 ˆ 10 3 , 2 ˆ 10 4 s N m ´ 1 ; the 252 extensor refit searched χ 0 P r´ 20 , ` 5 s mm and χ 3 P r 0 , 1 s with the stiffness pair locked. The initial flexor 253 population was drawn from χ 0 P r 5 , 15 s mm , χ 1 P r 5 ˆ 10 4 , 5 ˆ 10 5 s , and χ 2 P r 7 ˆ 10 3 , 1 . 5 ˆ 10 4 s N m ´ 1 . 254 Frontiers 12"
+      - generic "Page ⁨13⁩"
+      - generic "Page ⁨14⁩"
+      - generic "Page ⁨15⁩"
+      - generic "Page ⁨16⁩"
+      - generic "Page ⁨17⁩"
+      - generic "Page ⁨18⁩"
+      - generic "Page ⁨19⁩"
+      - generic "Page ⁨20⁩"
+      - generic "Page ⁨21⁩"
+      - generic "Page ⁨22⁩"
+      - generic "Page ⁨23⁩"
+      - generic "Page ⁨24⁩"
+      - generic "Page ⁨25⁩"
+      - generic "Page ⁨26⁩"
+      - generic "Page ⁨27⁩"
+      - generic "Page ⁨28⁩"
+      - generic "Page ⁨29⁩"
+      - generic "Page ⁨30⁩"
+      - generic "Page ⁨31⁩"
+      - generic "Page ⁨32⁩"
+      - generic "Page ⁨33⁩"
+      - generic "Page ⁨34⁩"
+      - generic "Page ⁨35⁩"
+- button "Close overlay"
+- button "Close overlay"
+- button "Close overlay"
