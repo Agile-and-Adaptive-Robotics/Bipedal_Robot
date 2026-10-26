@@ -1,0 +1,38 @@
+=== SNS_Simscape desktop capability pass | host EB475WS4 | 25.1.0.2973910 (R2025a) Update 1 | part b ===
+cwd: D:\Github\Bipedal_Robot\Code\Matlab\SNS_Simscape
+--- STEP sns_build_deng_cpg ---
+[Warning: The model name 'SNS_Deng_Library' is shadowing another name in the MATLAB workspace or path. Type "which -all SNS_Deng_Library" at the command line to find the other uses
+of this name. You should change the name of the model to avoid problems.] 
+[> In sns_build_deng_cpg (line 53)
+In run (line 112)
+In run_desktop_capability_20261024>step (line 80)
+In run_desktop_capability_20261024 (line 43)] 
+built SNS_Deng_Library.slx (HCNeuron)
+STEP sns_build_deng_cpg FAIL (13.4 s): Invalid Simulink object name: 'pair1_s1/2'.
+--- STEP sns_run_deng_demo ---
+STEP sns_run_deng_demo FAIL (3.2 s): Model "SNS_Deng_CPGDemo" uses a fixed-step solver and must reference only models that use fixed-step solvers, but Model block "SNS_Deng_RG" references model "SNS_Deng_CPGDemo/RG" that uses a variable-step solver. Solver "Type" settings must be compatible throughout the model hierarchy. 
+--- STEP sns_build_from_json ---
+JSON: 410 neurons, 1392 synapses, 376 inputs, 92 MN outputs
+saved D:\Github\Bipedal_Robot\Code\Matlab\SNS_Simscape\results\SNS_SpinalNetwork.slx (146 SynSum junctions for >6-synapse neurons)
+smoke run 0.1 s OK (zero input)
+STEP sns_build_from_json OK (52.6 s)
+--- STEP sns_verify_from_json ---
+NETWORK VERIFY (DRIVE=2.5 nA): PASS | Euler-2ms Simulink vs numpy: all-410-at-t=0.3s max dev 4.201e-06 mV at RG_F_l; 9-cell traces t<=0.3 s max dev 4.198e-06 mV; V_DRIVE(0.3)=2.379259947 mV (Euler exact 2.379259947)
+STEP sns_verify_from_json OK (36.0 s)
+--- STEP sns_build_winner_slice ---
+STEP sns_build_winner_slice FAIL (0.0 s): SNS_Library_R2025a.slx not found
+--- STEP sns_run_winner_slice ---
+Model 'SNS_Library_R2025a' was exported from R2025b to R2025a. To find blocks that were removed during the export operation, <a href="matlab:slexportprevious.utils.displayReplacedBlocks('SNS_Library_R2025a')">click here</a>. Save the model to remove this notification.
+CHECK A base: cycles=5 period=1.7285 duty=0.316 v=[5.028,5.745] | RG_F duty=0.630 v=[-2.610,-1.959]
+CHECK A PASS (targets: 5 cyc, 1.7285 s, duty 0.315, vmax 5.75)
+CHECK B gamma x4: cycles=5 period=1.7155 duty=0.662 v=[-0.234,7.067]
+CHECK B PASS (numpy target: duty 0.643, vmin -0.204 - the rhythm is MODULATED by the GAMMA hand-drive knob)
+CHECK C MN_vas mean: a0.5=2.055 a1=2.247 a2=2.591 mV
+CHECK C PASS (slice-ref targets 2.055 / 2.591; full-net ref 2.902 / 3.424 for the 46-pool Renshaw network) - the ALPHA knob sets MN-pool level without touching the rhythm
+CHECK D cycle 2.1: cycles=5 period=2.1005 duty=0.321
+CHECK D PASS (heel/toe afferent resets entrain the RG 1:1 to the contact cadence)
+=== WINNER SLICE VERIFICATION: ALL CHECKS PASS ===
+STEP sns_run_winner_slice OK (24.2 s)
+--- mex C compiler setup ---
+MEX configured to use 'MinGW64 Compiler (C)' for C language compilation.
+MEX_C_SETUP OK

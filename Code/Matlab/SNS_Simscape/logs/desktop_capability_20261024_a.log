@@ -1,0 +1,54 @@
+=== SNS_Simscape desktop capability pass | host EB475WS4 | 25.1.0.2973910 (R2025a) Update 1 | part a ===
+cwd: D:\Github\Bipedal_Robot\Code\Matlab\SNS_Simscape
+--- installed Simulink/Simscape products ---
+Simscape | 25.1
+Simscape Electrical | 25.1
+Simscape Multibody | 25.1
+Simulink | 25.1
+Simulink Check | 25.1
+Simulink Coder | 25.1
+Simulink Control Design | 25.1
+Simulink Coverage | 25.1
+Simulink Design Optimization | 25.1
+Simulink Desktop Real-Time | 25.1
+Simulink Real-Time | 25.1
+Simulink Report Generator | 25.1
+--- STEP sns_build_library ---
+SNS_Library.slx saved with 8 library blocks (2026-09-22 architecture).
+STEP sns_build_library OK (39.2 s)
+--- STEP sns_build_actuators ---
+SNS_Library.slx: added BPA_10mm/BPA_20mm/BPA_40mm + BioMuscle (11 blocks total).
+STEP sns_build_actuators OK (1.0 s)
+--- STEP sns_test_actuators ---
+SNS_Library.slx: added BPA_10mm/BPA_20mm/BPA_40mm + BioMuscle (11 blocks total).
+BPA_10mm: length-ramp max |err| = 0 N  (Fmax ref 395.8 N)
+BPA_20mm: length-ramp max |err| = 0 N  (Fmax ref 1148.3 N)
+BPA_40mm: length-ramp max |err| = 0 N  (Fmax ref 6000.0 N)
+BPA_10mm: pressure-sweep max |err| = 4.434e-11 N
+BPA_20mm: pressure-sweep max |err| = 4.929e-10 N
+BPA_40mm: pressure-sweep max |err| = 3.747e-10 N
+BioMuscle isometric (lambda=1, A=1): F = 1000.00 N (expect 1000)
+BioMuscle concentric (v=5 l_opt/s): F = 166.67 N (expect 166.67)
+BioMuscle passive (lambda=1.3, A=0): F = 119.20 N (expect 119.20)
+DONE. Overall BPA max err 4.929e-10 N; BioMuscle max err 1.421e-14 N
+ACTUATOR VALIDATION PASSED
+STEP sns_test_actuators OK (12.5 s)
+--- STEP sns_units_test_2n ---
+UNITS TEST 2-NEURON: PASS | max|dV_A| 6.07e-04 mV, max|dV_B| 1.22e-04 mV (tol 1e-2 mV); Simulink V_A(end) 5.00000, V_B(end) 1.84465 mV
+STEP sns_units_test_2n OK (1.7 s)
+--- STEP sns_build_demo ---
+KneeReflexDemo.slx built (2026-09-22 architecture).
+STEP sns_build_demo OK (1.4 s)
+--- STEP sns_run_demo ---
+STEP sns_run_demo FAIL (0.2 s): Error due to multiple causes.
+--- STEP sns_build_cpg_demo ---
+BPACPGLegDemo.slx built (2026-09-22 architecture).
+STEP sns_build_cpg_demo OK (0.6 s)
+--- STEP sns_run_cpg_demo ---
+STEP sns_run_cpg_demo FAIL (0.3 s): Error due to multiple causes.
+--- STEP sns_build_beer_demo ---
+beer equilibrium: Fmax 1148.3 N, Ftri0 82.7 N, Fbi0 75.9 N -> A_bi0 0.392 (P 243 kPa), A_tri0 0.400 (P 248 kPa)
+BeerCupReflexDemo.slx built (biceps + triceps, equilibrium start).
+STEP sns_build_beer_demo OK (1.0 s)
+--- STEP sns_run_beer_demo ---
+STEP sns_run_beer_demo FAIL (0.4 s): Error due to multiple causes.
