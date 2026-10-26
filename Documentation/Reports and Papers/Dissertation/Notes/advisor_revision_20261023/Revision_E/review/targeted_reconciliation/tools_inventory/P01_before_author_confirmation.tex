@@ -1,0 +1,10 @@
+The missing capability in this project was a reusable way to assemble neural controllers with the human musculoskeletal reference and artificial-muscle models, then evaluate their behavior under specified support, stimulation, and perturbation conditions. I addressed it by developing the following models and tools from the existing simulation packages:
+\begin{enumerate}
+    \item A custom Li--Deng walker and controller, developed in AnimatLab and implemented in MuJoCo with SNS-Toolbox, with matched implementations of its contact-driven neural core in NumPy and Simulink.
+    \item The SNS-Simscape block library and GUI for block programming neural pathways, including sensory, neuron, synapse, activation, and custom BPA-force blocks, together with coupled reflex and CPG demonstrations.
+    \item Gait2392-based neuromechanical models with alternative neural controllers, and a robot counterpart with BPA routing and the actuator-force model from Chapter~\ref{ch:muscles}.
+    \item Integration of SNS-Simscape controllers with MuJoCo through the existing MathWorks bidirectional bridge, and model-import tools for bringing musculoskeletal and CAD-derived mechanisms into the MATLAB environment.
+    \item An automated curriculum and experiment workflow that combines staged parameter searches with adjustable support, neural stimuli, pathway interventions, mechanical perturbations, and recorded neural and mechanical outputs.
+    \item Implementations of literature-derived circuits and selected spiking-neuron counterparts for comparing neural mechanisms and coding assumptions.
+\end{enumerate}
+OpenSim, MuJoCo, SNS-Toolbox, Optuna, Simulink, and the MathWorks bridge provide the underlying software; the contributions here are the model implementations, custom blocks, integrations, and evaluation procedures. Table~\ref{tab:sns_capability} summarizes representative functional-verification tests and proof-of-concept demonstrations of these tools.

@@ -1,0 +1,11 @@
+--- before/60-sns.tex
++++ after/60-sns.tex
+@@ -7,7 +7,7 @@
+ 
+ For a course project in ME 610: Neuromechanical Modeling, Morrow and I combined the bipedal mechanics of \citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \citet{deng_neuromechanical_2019} in AnimatLab \citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The initial controller used one rhythm generator (RG) to control both sides, with separate pattern-formation (PF) groups for each leg: one for the hip and one for the knee and ankle. The shared RG layer contained four neurons. We added afferent feedback at the motoneuron (MN) level. Figure~\ref{fig:animatlab_model_architecture}(A) shows the mechanical model, and Figure~\ref{fig:animatlab_model_architecture}(B) shows the original shared-RG controller that Morrow and I built.
+ 
+-We adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking. This suspended result concerns the original shared-RG controller in Figure~\ref{fig:animatlab_model_architecture}(B).
++We adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking.
+ 
+ Years later, I split the shared RG into one RG for each side and connected them through commissural pathways. I also extended sensory feedback to the RG and PF layers and added foot-contact feedback. This later bilateral-RG extension is referred to here as the Walker Two-Layer (W2L) model; it is distinct from the original controller shown in Figure~\ref{fig:animatlab_model_architecture}(B). Section~\ref{sec:w2l_perturbation} reports its coupled-model tests; further circuit schematics and implementation records are provided in Appendix~\ref{app:simulation_verification}.
+ 
