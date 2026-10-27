@@ -197,7 +197,29 @@ def run(W, dur=30.0, wsup=0.7, omega=2 * np.pi / 1.1, gamma=1.0, gscale=0.1, gai
                     target = ref_q[idx, rc] + frac * \
                         (ref_q[idx + 1, rc] - ref_q[idx, rc])
                     data.qpos[rc] = target
-            data.qvel[:] = 0.0  # no velocity during replay
+            # compute velocity from the reference (finite difference)
+            # CRITICAL FIX 2026-10-26: releasing with zero velocity makes
+            # the walker fall from a dead stop; it needs walking momentum
+            ref_dt = ref_t[idx + 1] - ref_t[idx]
+            for jn, col in ref_cols.items():
+                sjid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, jn)
+                if sjid >= 0 and jn not in P.LOCK_JOINTS:
+                    qadr = model.jnt_qposadr[sjid]
+                    dofadr = model.jnt_dofadr[sjid]
+                    vel = (ref_q[idx + 1, col] - ref_q[idx, col]) / ref_dt
+                    if dofadr < data.qvel.shape[0]:
+                        data.qvel[dofadr] = vel
+            # root velocity (columns 0-6: 3 translational + angular via
+            # quaternion; approximate with translational finite diff)
+            root_dof = model.jnt_dofadr[mujoco.mj_name2id(
+                model, mujoco.mjtObj.mjOBJ_JOINT, "root")] \
+                if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT,
+                                     "root") >= 0 else 0
+            for rc in range(min(3, ref_q.shape[1])):
+                dof = root_dof + rc
+                if dof < data.qvel.shape[0]:
+                    vel = (ref_q[idx + 1, rc] - ref_q[idx, rc]) / ref_dt
+                    data.qvel[dof] = vel
             mujoco.mj_forward(model, data)
 
         # ---- SENSORS (same for replay and free phases) ----
@@ -251,9 +273,16 @@ def run(W, dur=30.0, wsup=0.7, omega=2 * np.pi / 1.1, gamma=1.0, gscale=0.1, gai
 
         # ---- STEP ----
         if i < n_replay:
-            # during replay, don't step physics (kinematics are imposed);
-            # just advance time (the controller state updates above)
-            pass
+            # during replay: step physics (lets actuator activation build
+            # up from ctrl), THEN snap qpos back to the reference (so the
+            # kinematics stay on-track while the internal actuator state
+            # evolves). Without mj_step during replay, data.act stays at 0
+            # and the muscles have no force at the release transition.
+            qpos_ref = data.qpos.copy()
+            mujoco.mj_step(model, data)
+            data.qpos[:] = qpos_ref
+            data.qvel[:] = 0.0
+            mujoco.mj_forward(model, data)
         else:
             mujoco.mj_step(model, data)
             if not np.isfinite(data.qpos).all():

@@ -736,6 +736,13 @@ class W2LNet:
         # Deng semantics; see module docstring + SNS_NumpyFixedTau)
         self.compiled.__class__ = SNS_NumpyFixedTau
         assert self.compiled.V.shape[0] == len(self.idx), "index mismatch"
+        import os
+        backend = os.environ.get("AARL_W2L_BACKEND", "reference")
+        if backend == "exact_fast":
+            from exact_fast_eval import ExactFastForward
+            self.compiled = ExactFastForward(self.compiled)
+        elif backend != "reference":
+            raise ValueError(f"Unsupported AARL_W2L_BACKEND: {backend}")
         return self.compiled
 
     def step(self, input_currents: np.ndarray) -> np.ndarray:

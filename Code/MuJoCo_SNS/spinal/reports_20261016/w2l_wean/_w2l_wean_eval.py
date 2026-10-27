@@ -124,6 +124,17 @@ def _j(x):
 def evaluate(knobs: dict, tag: str = "", csv_path: str | None = None,
              want_log: bool = False) -> dict:
     """One walk-phase run. knobs keys = test_w2l_ground KV names."""
+    # Register supported conductances at the evaluation boundary, including
+    # fresh-process verification (which does not import the search driver).
+    if str(T.KV.get("net")) == "bilateralrg2":
+        sys.path.insert(0, os.path.join(T.HERE, "..", "w2l_cpg"))
+        import build_w2l_net as B
+        for key in knobs:
+            if key in B.W2L_GAINS:
+                T.KV.setdefault(key, float(B.W2L_GAINS[key]))
+    unknown = set(knobs) - set(T.KV) - {"dscale"}
+    if unknown:
+        raise ValueError(f"Unsupported evaluation knobs: {sorted(unknown)}")
     kv = {k: float(v) for k, v in knobs.items()
           if k in T.KV and k != "phase"}
     T.KV.update(kv)

@@ -1,0 +1,11 @@
+--- D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\ProofFinal\chapters\94-AppendixC.tex (session start)
++++ D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\ProofFinal\chapters\94-AppendixC.tex
+@@ -146,7 +146,7 @@
+ 
+ Every configuration models bracket compliance as a diagonal Hooke-law spring in the bracket frame, $\mathbf{K}_{br} = \operatorname{diag}(k_{1}, k_{2}, k_{3})$ newtons per meter. The scalar compliance along the force path and its series combinations are
+ \begin{equation}
+-    c_{b} = \hat{\mathbf{u}}\,\mathbf{K}_{br}^{-1}\hat{\mathbf{u}}^{\top},
++    c_{b} = \hat{\mathbf{u}}^{\top}\mathbf{K}_{br}^{-1}\hat{\mathbf{u}},
+     \qquad
+     c_{\text{eff}} = c_{b} + c_{\text{ten}} \;(+\,c_{b2}\ \text{for the second bracket}),
+     \label{eq:app_compliance}

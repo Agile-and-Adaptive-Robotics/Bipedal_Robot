@@ -1,0 +1,255 @@
+[
+  {
+    "route_pair": "add_mag2",
+    "method": "minimum squared x/y attachment offsets; same correction on mirrored sides",
+    "maximum_point_displacement_m": 0.01555241137013839,
+    "before_moment_arms_m": [
+      0.01628120610116838,
+      0.01655046753332799
+    ],
+    "after_moment_arms_m": [
+      -0.0034735159476449035,
+      -0.003254423252993126
+    ],
+    "constraints": [
+      {
+        "coordinate": "hip_r",
+        "expected_source_m": -0.016272116264965646,
+        "required_signed_minimum_m": 0.0032544232529931293
+      },
+      {
+        "coordinate": "hip_l",
+        "expected_source_m": -0.016272116264965646,
+        "required_signed_minimum_m": 0.0032544232529931293
+      }
+    ],
+    "points": [
+      {
+        "id": "add_mag2_r_00",
+        "body": "pelvis",
+        "adjustment_m": [
+          -0.015483418080941159,
+          -0.0014633058315999161,
+          0.0
+        ]
+      },
+      {
+        "id": "add_mag2_r_01",
+        "body": "thigh_r",
+        "adjustment_m": [
+          0.0034912098600734065,
+          0.0003122268894446107,
+          0.0
+        ]
+      },
+      {
+        "id": "add_mag2_l_00",
+        "body": "pelvis",
+        "adjustment_m": [
+          -0.015483418080941159,
+          -0.0014633058315999161,
+          0.0
+        ]
+      },
+      {
+        "id": "add_mag2_l_01",
+        "body": "thigh_l",
+        "adjustment_m": [
+          0.0034912098600734065,
+          0.0003122268894446107,
+          0.0
+        ]
+      }
+    ]
+  },
+  {
+    "route_pair": "grac",
+    "method": "minimum squared x/y attachment offsets; same correction on mirrored sides",
+    "maximum_point_displacement_m": 0.0210044437744665,
+    "before_moment_arms_m": [
+      0.031013518091420632,
+      0.019001187088252706,
+      0.03130763726718999,
+      0.01966538603654952
+    ],
+    "after_moment_arms_m": [
+      -0.0017451799079888902,
+      0.01900118329448552,
+      -0.0014999999999620768,
+      0.01966538327267449
+    ],
+    "constraints": [
+      {
+        "coordinate": "hip_r",
+        "expected_source_m": -0.0044058875471382,
+        "required_signed_minimum_m": 0.0015
+      },
+      {
+        "coordinate": "knee_r",
+        "expected_source_m": 0.023744086352940955,
+        "required_signed_minimum_m": 0.004748817270588191
+      },
+      {
+        "coordinate": "hip_l",
+        "expected_source_m": -0.0044058875471382,
+        "required_signed_minimum_m": 0.0015
+      },
+      {
+        "coordinate": "knee_l",
+        "expected_source_m": 0.023744086352940955,
+        "required_signed_minimum_m": 0.004748817270588191
+      }
+    ],
+    "points": [
+      {
+        "id": "grac_r_00",
+        "body": "pelvis",
+        "adjustment_m": [
+          -0.020924020153440914,
+          -0.0018363112190266215,
+          0.0
+        ]
+      },
+      {
+        "id": "grac_r_01",
+        "body": "thigh_r",
+        "adjustment_m": [
+          0.006606391275807832,
+          0.0005782498120340227,
+          0.0
+        ]
+      },
+      {
+        "id": "grac_r_02",
+        "body": "thigh_r",
+        "adjustment_m": [
+          -7.451540901193323e-09,
+          -7.454664902144916e-09,
+          0.0
+        ]
+      },
+      {
+        "id": "grac_r_03",
+        "body": "shank_r",
+        "adjustment_m": [
+          -7.455714410279467e-09,
+          -7.448306780015043e-09,
+          0.0
+        ]
+      },
+      {
+        "id": "grac_l_00",
+        "body": "pelvis",
+        "adjustment_m": [
+          -0.020924020153440914,
+          -0.0018363112190266215,
+          0.0
+        ]
+      },
+      {
+        "id": "grac_l_01",
+        "body": "thigh_l",
+        "adjustment_m": [
+          0.006606391275807832,
+          0.0005782498120340227,
+          0.0
+        ]
+      },
+      {
+        "id": "grac_l_02",
+        "body": "thigh_l",
+        "adjustment_m": [
+          -7.451540901193323e-09,
+          -7.454664902144916e-09,
+          0.0
+        ]
+      },
+      {
+        "id": "grac_l_03",
+        "body": "shank_l",
+        "adjustment_m": [
+          -7.455714410279467e-09,
+          -7.448306780015043e-09,
+          0.0
+        ]
+      }
+    ]
+  },
+  {
+    "route_pair": "semimem",
+    "method": "minimum squared x/y attachment offsets; same correction on mirrored sides",
+    "maximum_point_displacement_m": 0.01810319778148811,
+    "before_moment_arms_m": [
+      -0.029202484674098174,
+      0.0004316712915457509,
+      -0.02778852313185713,
+      -0.009724405548388604
+    ],
+    "after_moment_arms_m": [
+      -0.0258592789287653,
+      0.01576557816321589,
+      -0.02446764240252996,
+      0.005621216048978231
+    ],
+    "constraints": [
+      {
+        "coordinate": "hip_r",
+        "expected_source_m": -0.06161669827946634,
+        "required_signed_minimum_m": 0.01232333965589327
+      },
+      {
+        "coordinate": "knee_r",
+        "expected_source_m": 0.028106080244891175,
+        "required_signed_minimum_m": 0.005621216048978236
+      },
+      {
+        "coordinate": "hip_l",
+        "expected_source_m": -0.06161669827946634,
+        "required_signed_minimum_m": 0.01232333965589327
+      },
+      {
+        "coordinate": "knee_l",
+        "expected_source_m": 0.028106080244891175,
+        "required_signed_minimum_m": 0.005621216048978236
+      }
+    ],
+    "points": [
+      {
+        "id": "semimem_r_00",
+        "body": "pelvis",
+        "adjustment_m": [
+          0.004568725707790457,
+          0.0005211064764121966,
+          0.0
+        ]
+      },
+      {
+        "id": "semimem_r_01",
+        "body": "shank_r",
+        "adjustment_m": [
+          0.01798691325555494,
+          0.0020485901134238748,
+          0.0
+        ]
+      },
+      {
+        "id": "semimem_l_00",
+        "body": "pelvis",
+        "adjustment_m": [
+          0.004568725707790457,
+          0.0005211064764121966,
+          0.0
+        ]
+      },
+      {
+        "id": "semimem_l_01",
+        "body": "shank_l",
+        "adjustment_m": [
+          0.01798691325555494,
+          0.0020485901134238748,
+          0.0
+        ]
+      }
+    ]
+  }
+]

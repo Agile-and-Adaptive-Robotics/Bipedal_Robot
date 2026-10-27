@@ -1,0 +1,48 @@
+--- D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Knee_Torque_Test\ProofFinal\frontiers_SupplementaryMaterial.tex (session start)
++++ D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Knee_Torque_Test\ProofFinal\frontiers_SupplementaryMaterial.tex
+@@ -9,6 +9,7 @@
+ 
+ \documentclass[utf8]{frontiers_suppmat} % for all articles
+ \usepackage{amssymb}
++\usepackage{mathabx}
+ \usepackage{amsmath, bm}
+ \usepackage{siunitx}
+ \usepackage{url,hyperref,lineno,microtype}
+@@ -40,14 +41,14 @@
+ \subsection{Tables}
+ 
+ \begin{table}[htbp]
+-\caption{Comparison of pre- and post-optimization torque prediction fits for BPAs in flexor and extensor configurations on the pinned and biomimetic knees. GoF metrics are RMSE ($N \cdot m$), FVU, and maximum residual ($N \cdot m$).}
++\caption{Historical single-bracket torque-prediction fits, preceding the adopted two-stage identification, for BPAs in flexor and extensor configurations on the pinned and biomimetic knees. GoF metrics are RMSE ($N \cdot m$), FVU, and maximum residual ($N \cdot m$).}
+ \label{tab:TorqueFit}
+ \resizebox{\textwidth}{!}
+ {%
+ \begin{tabular}{|cc|l|l|lll|lll|}
+ \hline
+ \multicolumn{2}{|l|}{\multirow{2}{*}{\textbf{Configuration}}} &
+-  \multirow{2}{*}{\textbf{$\phi$}} &
++  \multirow{2}{*}{\textbf{$\diameter$}} &
+   \multirow{2}{*}{\textbf{$l_{rest}$, cm}} &
+   \multicolumn{3}{c|}{\textbf{Pre-optimization}} &
+   \multicolumn{3}{c|}{\textbf{Optimized}} \\ \cline{5-10} 
+@@ -266,4 +267,20 @@
+ 
+ \bibliography{BolenFrontiers22}
+ 
++\subsection{Bracket Reference Frames}
++
++\begin{figure}[htbp]
++\begin{center}
++\includegraphics[height=0.62\textheight]{Figures/xiFrameTransform.pdf}
++\end{center}
++\caption{Two-rotation construction of the bracket frame from the attachment point $\mathbf{p}_{A}$, the femur-side muscle origin, or $\mathbf{p}_{B}$, the tibial insertion. \textbf{(A)} Rotation through $\theta_z$ about the fixed $\hat{\mathbf{z}}_{s}$ axis aligns the intermediate axis $\hat{\mathbf{x}}_{1}$ with the point's sagittal-plane projection. \textbf{(B)} Rotation through $-\theta_y$ about the current $\hat{\mathbf{y}}_{1}=\hat{\mathbf{y}}_{br}$ axis aligns the final bracket axis $\hat{\mathbf{x}}_{br}$ with the full point vector.}\label{fig:xiFrameTransform}
++\end{figure}
++
++\begin{figure}[htbp]
++\begin{center}
++\includegraphics[width=1\textwidth]{Figures/bktFrame.pdf}
++\end{center}
++\caption{Bracket frame orientations for: \textbf{(A)} flexor configuration on the pinned knee, \textbf{(B)} extensor configuration on the pinned knee, \textbf{(C)} flexor and extensor configurations on the biomimetic knee with $\diameter$\qty{10}{\mm} BPAs, and \textbf{(D)} flexor configuration on the biomimetic knee with the $\diameter$\qty{20}{\mm} BPA.}\label{fig:bktFrame}
++\end{figure}
++
+ \end{document}

@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="AH001 four-bar lower body">
+  <compiler angle="radian" inertiafromgeom="auto" meshdir="meshes" />
+  <option timestep="0.002" integrator="implicitfast" gravity="0 -9.81 0" solver="Newton" iterations="100" jacobian="dense" />
+  <visual>
+    <global offwidth="1200" offheight="1000" />
+    <headlight ambient=".6 .6 .6" diffuse=".6 .6 .6" />
+  </visual>
+  <asset>
+    <mesh name="pelvis_00" file="pelvis_00.stl" />
+    <mesh name="pelvis_01" file="pelvis_01.stl" />
+    <mesh name="pelvis_02" file="pelvis_02.stl" />
+    <mesh name="back_r_00" file="back_r_00.stl" />
+    <mesh name="thigh_l_00" file="thigh_l_00.stl" />
+    <mesh name="thigh_l_01" file="thigh_l_01.stl" />
+    <mesh name="front_r_00" file="front_r_00.stl" />
+    <mesh name="shank_r_00" file="shank_r_00.stl" />
+    <mesh name="front_l_00" file="front_l_00.stl" />
+    <mesh name="back_l_00" file="back_l_00.stl" />
+    <mesh name="shank_l_00" file="shank_l_00.stl" />
+    <mesh name="thigh_r_00" file="thigh_r_00.stl" />
+    <mesh name="thigh_r_01" file="thigh_r_01.stl" />
+    <mesh name="foot_r_00" file="foot_r_00.stl" />
+    <mesh name="foot_l_00" file="foot_l_00.stl" />
+  </asset>
+  <worldbody>
+    <light pos="0 3 2" dir="0 -1 0" />
+    <geom name="ground" type="plane" quat=".7071067811865476 -.7071067811865476 0 0" size="3 3 .1" contype="2" conaffinity="1" rgba=".85 .85 .85 1" />
+    <body name="pelvis" pos="0 0.94579760213953645 0">
+      <freejoint name="root" />
+      <body name="thigh_r" pos="-0.061043984572223972 -0.049509447059738795 0.064999999999999988">
+        <joint name="thigh_r_joint" type="ball" damping="1" armature="0" />
+        <body name="back_r" pos="0.035131884574180566 -0.45563682494473146 0.05675832161499747">
+          <joint name="back_r_joint" type="hinge" damping=".15" armature="0" axis="0 -1.1102230246251565e-16 -1" />
+          <body name="shank_r" pos="-0.04056196844092276 -0.023244122186043548 -0.031000000000000319">
+            <joint name="shank_r_joint" type="hinge" damping=".15" armature="0" axis="2.0539125955565396e-15 1.6653345369377348e-16 -1" />
+            <inertial mass="0.3728116768140501" pos="-0.016599201329018973 -0.10980516660081174 -0.0064435669617622648" fullinertia="0.003814206135982782 0.00048281145286569556 0.004205284880491442 -0.0011724188588160542 -9.7167008829268845e-06 -2.9675622053029715e-05" />
+            <geom name="shank_r_00_cad" type="mesh" mesh="shank_r_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+            <body name="foot_r" pos="-0.08058292338752851 -0.31387591099248346 -0.013568653856787016">
+              <inertial mass="0.5247929879115335" pos="0.050887046556475815 -0.064261623549292005 0.00089728085451584207" fullinertia="0.00067234437589205908 0.0026495140223346909 0.0028747265493502048 0.00062010817332582577 -5.4686469964191083e-05 1.3119633903591628e-05" />
+              <geom name="foot_r_00_cad" type="mesh" mesh="foot_r_00" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+            </body>
+          </body>
+          <inertial mass="0.01249462557416818" pos="-0.010190465840423477 -0.0058387324349582492 -0.028137730169172745" fullinertia="1.8436649861435256e-06 3.5224868619122069e-06 3.6171251883834797e-06 -1.4327413033799083e-06 -7.3995999527253195e-07 -4.2422547959298288e-07" />
+          <geom name="back_r_00_cad" type="mesh" mesh="back_r_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+        </body>
+        <body name="front_r" pos="0.01735188457418059 -0.44039682494473148 -0.017241703385002513">
+          <joint name="front_r_joint" type="hinge" damping=".15" armature="0" axis="0 0 1" />
+          <inertial mass="0.013025342374168185" pos="0.0040662276111129575 -0.012812713633207184 0.028374575757583967" fullinertia="4.8754141166966066e-06 1.4378882359933022e-06 4.5267998174349413e-06 1.2133035394903039e-06 -2.9542856223259008e-07 9.3066947103499839e-07" />
+          <geom name="front_r_00_cad" type="mesh" mesh="front_r_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+        </body>
+        <inertial mass="0.6562646327126397" pos="0.028025927809675388 -0.27438558231077187 0.029527184949351887" fullinertia="0.01648591964063513 0.00040766663906728281 0.016370448041248733 0.00068315946276136874 5.1298738085416399e-06 -0.00074449629616044424" />
+        <geom name="thigh_r_00_cad" type="mesh" mesh="thigh_r_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+        <geom name="thigh_r_01_cad" type="mesh" mesh="thigh_r_01" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+      </body>
+      <body name="thigh_l" pos="-0.061043984572223965 -0.049509447059738795 -0.065000000000000016">
+        <joint name="thigh_l_joint" type="ball" damping="1" armature="0" />
+        <body name="back_l" pos="0.035131884574171886 -0.45563682494472801 -0.056758321614996318">
+          <joint name="back_l_joint" type="hinge" damping=".15" armature="0" axis="0 0 1" />
+          <body name="shank_l" pos="-0.042647033370564219 -0.019151841809324277 0.036900000000001709">
+            <joint name="shank_l_joint" type="hinge" damping=".15" armature="0" axis="-1.7208456881689926e-15 -2.55351295663786e-15 -1" />
+            <inertial mass="0.3728115701926304" pos="-0.031510693803855919 -0.10648835891723951 0.00044356447193712178" fullinertia="0.0034327299944294596 0.00086429214509377847 0.0042052892837151738 -0.0015811086417745754 1.3696998441328468e-05 2.8061452597424231e-05" />
+            <geom name="shank_l_00_cad" type="mesh" mesh="shank_l_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+            <body name="foot_l" pos="-0.12289387609137054 -0.29984794682384297 0.0075686485576649809">
+              <inertial mass="0.5247929879115335" pos="0.050887046556475815 -0.064261623549292005 -0.00089728085451584207" fullinertia="0.00067234437589205908 0.0026495140223346909 0.0028747265493502048 0.00062010817332582577 5.4686469964191083e-05 -1.3119633903591628e-05" />
+              <geom name="foot_l_00_cad" type="mesh" mesh="foot_l_00" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+            </body>
+          </body>
+          <inertial mass="0.01249462557416818" pos="-0.01071468272144134 -0.0048119972440191505 0.028137730169168637" fullinertia="1.5799587161037049e-06 3.7859013473813223e-06 3.6168334038111823e-06 -1.2408601668141219e-06 7.7793472554918193e-07 3.4933525924543371e-07" />
+          <geom name="back_l_00_cad" type="mesh" mesh="back_l_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+        </body>
+        <body name="front_l" pos="0.017351884574171882 -0.44039682494472793 0.017241703385003623">
+          <joint name="front_l_joint" type="hinge" damping=".15" armature="0" axis="0 -1.1102230246251565e-16 -1" />
+          <inertial mass="0.013025342374168185" pos="0.0030490009485867609 -0.013092064033309148 -0.028374575757585299" fullinertia="5.0441148801660315e-06 1.2692042778129651e-06 4.5268166227242394e-06 9.2940862293397335e-07 2.2144285847422648e-07 -9.509975319945697e-07" />
+          <geom name="front_l_00_cad" type="mesh" mesh="front_l_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+        </body>
+        <inertial mass="0.6562521668190106" pos="0.028025720058928137 -0.27438308961312313 -0.029527193315700473" fullinertia="0.016485796473453888 0.00040766630161067832 0.016370338557527626 0.00068314303671628094 -5.1325215458172886e-06 0.00074448774548598854" />
+        <geom name="thigh_l_00_cad" type="mesh" mesh="thigh_l_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+        <geom name="thigh_l_01_cad" type="mesh" mesh="thigh_l_01" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+      </body>
+      <inertial mass="2.1978978622323857" pos="-0.078796991107286066 0.0012808169841764449 -1.7911951924109649e-05" fullinertia="0.0193833305658541 0.015632386768814861 0.0096309085030433679 0.0010292285821547193 9.8826382390934501e-08 -4.7025359667262347e-06" />
+      <geom name="pelvis_00_cad" type="mesh" mesh="pelvis_00" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+      <geom name="pelvis_01_cad" type="mesh" mesh="pelvis_01" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+      <geom name="pelvis_02_cad" type="mesh" mesh="pelvis_02" contype="0" conaffinity="0" friction=".8 .005 .0001" rgba=".25 .3 .35 1" />
+      <body name="lumbar_torso" pos="-0.16 0.10000000000000001 0">
+        <joint name="lumbar_ball" type="ball" limited="false" damping="2.0" stiffness="0" armature="0" frictionloss="0" />
+        <geom name="spine_bar" type="box" pos="0 0.125 0" size="0.01 0.125 0.01" mass="0.12000000000000001" contype="0" conaffinity="0" rgba="0.25 0.25 0.25 1" />
+        <geom name="torso_payload" type="sphere" pos="0.10000000000000001 0.074999999999999997 0" size="0.1" mass="34.76166808975477" contype="0" conaffinity="0" rgba="0.65 0.65 0.7 0.65" />
+        <site name="spine_top" pos="0 0.25 0" size="0.005" />
+      </body>
+      <body name="ilium_payload" pos="-0.16 0.10000000000000001 0">
+        <geom name="ilium_payload_mass" type="sphere" pos="0.10000000000000001 0 0" size="0.1" mass="34.76166808975477" contype="0" conaffinity="0" rgba=".5 .65 .7 .4" />
+      </body>
+    </body>
+  </worldbody>
+  <equality>
+    <connect name="knee_loop_r" body1="front_r" body2="shank_r" anchor="0.015559928132625134 -0.04902497181527371 0.036900024999998615" solref=".01 1" />
+    <connect name="knee_loop_l" body1="front_l" body2="shank_l" anchor="0.011665590231712056 -0.050094642722977867 -0.031000024999999168" solref=".01 1" />
+  </equality>
+</mujoco>

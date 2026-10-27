@@ -1,0 +1,155 @@
+--- Documentation\Reports and Papers\Knee_Torque_Test\ProofFinal\frontiers_SupplementaryMaterial.tex (session start)
++++ Documentation\Reports and Papers\Knee_Torque_Test\ProofFinal\frontiers_SupplementaryMaterial.tex
+@@ -9,9 +9,12 @@
+ 
+ \documentclass[utf8]{frontiers_suppmat} % for all articles
+ \usepackage{amssymb}
++\usepackage{mathabx}
+ \usepackage{amsmath, bm}
+ \usepackage{siunitx}
+ \usepackage{url,hyperref,lineno,microtype}
++\usepackage{xr}
++\externaldocument{Main}
+ \let\DeclareUSUnit\DeclareSIUnit
+ \let\US\SI
+ \DeclareUSUnit\inch{in}
+@@ -21,6 +24,7 @@
+ \graphicspath{{../}}
+ \usepackage{caption}
+ \usepackage{tabularx}
++\usepackage{booktabs}
+ \usepackage{multirow}
+ \usepackage{array}
+ \usepackage[onehalfspacing]{setspace}
+@@ -40,14 +44,14 @@
+ \subsection{Tables}
+ 
+ \begin{table}[htbp]
+-\caption{Comparison of pre- and post-optimization torque prediction fits for BPAs in flexor and extensor configurations on the pinned and biomimetic knees. GoF metrics are RMSE ($N \cdot m$), FVU, and maximum residual ($N \cdot m$).}
++\caption{Historical single-bracket torque-prediction fits, preceding the adopted two-stage identification, for BPAs in flexor and extensor configurations on the pinned and biomimetic knees. GoF metrics are RMSE ($N \cdot m$), FVU, and maximum residual ($N \cdot m$).}
+ \label{tab:TorqueFit}
+ \resizebox{\textwidth}{!}
+ {%
+ \begin{tabular}{|cc|l|l|lll|lll|}
+ \hline
+ \multicolumn{2}{|l|}{\multirow{2}{*}{\textbf{Configuration}}} &
+-  \multirow{2}{*}{\textbf{$\phi$}} &
++  \multirow{2}{*}{\textbf{$\diameter$}} &
+   \multirow{2}{*}{\textbf{$l_{rest}$, cm}} &
+   \multicolumn{3}{c|}{\textbf{Pre-optimization}} &
+   \multicolumn{3}{c|}{\textbf{Optimized}} \\ \cline{5-10} 
+@@ -218,7 +222,7 @@
+ \end{table}
+ 
+ \begin{table}[htbp]
+-\caption{Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The flexor design routes two BPAs on mirrored paths: the second BPA keeps the $z$-mirrored distal endpoint while both origins sit off the same side of the knee, and each route carries one tibial wrap point placed at the BPA centerline standoff from the tibial surface while contact is active. The extensor design is the clip-on-cam route; the liftoff column lists the knee angle above which each contact leaves the path as the knee extends, with all contacts engaged at maximum flexion.}
++\caption{Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The flexor design uses a staggered pair of BPA paths: the second BPA keeps the $z$-mirrored distal endpoint while both origins sit off the same side of the knee, and each route carries one tibial wrap point placed at the BPA centerline standoff from the tibial surface while contact is active. The extensor design is the clip-on-cam route; the liftoff column lists the knee angle above which each contact leaves the path as the knee extends, with all contacts engaged at maximum flexion.}
+ \label{tab:RouteRedesign20}
+ \centering
+ \small
+@@ -266,4 +270,105 @@
+ 
+ \bibliography{BolenFrontiers22}
+ 
++
++
++
++
++
++
++
++
++\subsection{Contact and Release Angles of the Wrapped Route}\label{app:contact_release}
++
++The route-elimination rule that schedules the wrapped extensor route is a route-topology state machine rather than a shortest-path solver: the fully flexed route carries every candidate contact, and each contact is released at the first more-extended knee angle at which the straight chord between its surviving neighbors can replace it without entering the exclusion envelopes. This section states the calculation in generic terms, so that it applies to any wrapped actuator route on a rotating joint pair; the extensor route of Table~\ref{tab:RouteRedesign20} gives the cam-route example; its release schedule follows the same rule on the cam geometry.
++
++The route is stored as a fixed number of rows $p_{1},\ldots,p_{9}$: rows $p_{1}$ through $p_{5}$ are femur-frame points, rows $p_{6}$ through $p_{9}$ are tibia-frame points, and the segment from $p_{5}$ to $p_{6}$ crosses from one body frame into the other. The endpoints $p_{1}$ and $p_{9}$ are the actuator origin and insertion, and they are always active. Each interior row is either active, a genuine wrap contact, or eliminated; an eliminated femur-side row repeats the preceding active femur row, and an eliminated tibia-side row repeats the neighboring active tibia row, so the route keeps a fixed size and its segment chain crosses the joint exactly once. Let $\mathcal{A}(\theta_{\mathbf{k}}) \subseteq \{2,\ldots,8\}$ denote the active interior rows at knee angle $\theta_{\mathbf{k}}$. The sweep over the design grid, here 100 poses from $\ang{-120}$ to $\ang{+10}$ at a spacing of \qty{1.31}{\degree}, proceeds from full flexion toward extension, each pose inherits the active set of the previous pose, and rows are only ever removed, so $\mathcal{A}$ shrinks monotonically as the knee extends.
++
++At every pose, every active interior row is tested between its nearest active anchors,
++\begin{equation}
++i^{-}_{j} = \max\{i < j : i \in \mathcal{A} \cup \{1\}\}, \qquad
++i^{+}_{j} = \min\{i > j : i \in \mathcal{A} \cup \{9\}\},
++\label{eq:app_anchors}
++\end{equation}
++with the anchors expressed in the candidate's native frame through the per-angle joint transforms. Write $A$, $B$, and $C$ for the planar, sagittal positions of $p_{i^{-}_{j}}$, $p_{i^{+}_{j}}$, and $p_{j}$, and let $s(x, y)$ denote the signed angle from vector $x$ to vector $y$, positive counterclockwise, evaluated as a single $\operatorname{atan2}$ of the planar cross product and the dot product so that no principal-value seam can corrupt the comparison. The elimination margin of row $j$ is
++\begin{equation}
++\mu_{j}(\theta_{\mathbf{k}}) =
++\begin{cases}
++s\!\left(C - A,\; B - A\right), & j \leq 5,\\[4pt]
++s\!\left(A - B,\; C - B\right), & j \geq 6,
++\end{cases}
++\label{eq:app_elim_margin}
++\end{equation}
++a signed angle between the through-contact leg and the bypass chord, measured in the native wrap sense of the candidate's side of the crossing segment; the two cases differ only in that sense of rotation, because the femur-side contacts turn the route one way around the distal femur and the tibia-side contacts turn it the opposite way around the proximal tibia. The rotation rule releases the contact once the margin turns positive, the orientation at which the chord, rather than the contact, provides the outer boundary of the route on that side. The gate is opened slightly early,
++\begin{equation}
++\mu_{j}(\theta_{\mathbf{k}}) > -\Delta, \qquad \Delta = \qty{1.5}{\degree},
++\label{eq:app_rotation_gate}
++\end{equation}
++as a release hysteresis: in the last poses before the contact becomes collinear with its chord, the computed moment arm of the wrapping segment collapses, and releasing the contact slightly before that orientation, with the collision gate below still controlling validity, removes the artifact without changing the route family.
++
++Opening the rotation gate is necessary but not sufficient. A removal additionally requires the straight bypass chord $\overline{AB}$ to clear the exclusion envelopes of the candidate's side,
++\begin{equation}
++\operatorname{dist}\!\left(\overline{AB}_{\mathrm{trim}},\, \mathcal{E}_{j}\right) \;\geq\; g, \qquad g = \qty{0.5}{\mm},
++\label{eq:app_bypass_gate}
++\end{equation}
++where $\operatorname{dist}$ is the planar clearance between the trimmed chord and the envelope and tangency is allowed. The chord is trimmed by \qty{2}{\mm} at each end, capped at \qty{45}{\percent} of its length, because a legitimate contact departs from the clearance boundary itself. On the femur side the envelopes $\mathcal{E}_{j}$ are the femoral-cylinder clearance circle, the condyle clearance polygon, and the femoral-wall span; on the tibia side they are the two tibial-cylinder clearance circles and the wall band between them. Every envelope is the normal offset of a bone profile by the fully inflated BPA radius $R_{\mathrm{BPA}}$,
++\begin{equation}
++\mathbf{q}(\vartheta) = \mathbf{e}(\vartheta) + R_{\mathrm{BPA}}\,\hat{\mathbf{n}}(\vartheta),
++\label{eq:app_offset_curve}
++\end{equation}
++where $\mathbf{e}(\vartheta)$ traces the physical profile and $\hat{\mathbf{n}}(\vartheta)$ is its outward normal; the offset curve shares the tangent of the physical profile, its radius of curvature is $\rho(\vartheta) = \rho_{\mathrm{phys}}(\vartheta) + R_{\mathrm{BPA}}$, and the candidate contact positions themselves are seeded at tangent points of this curve. Because the envelopes are drawn at the fully inflated radius while the routed BPA is contracted at the release angles, each envelope radius may be relaxed by $\rho = \qty{3}{\mm}$ inside the gate, floored at the bone profile plus \qty{0.5}{\mm}; a rotation-gate opening that still fails the relaxed collision gate indicates that the seed placement, not the gate, must move.
++
++At the first pose of the sweep, full flexion, the seed route is settled to a fixpoint: every contact whose two gates already open there is removed, and removals repeat until no further gate opens, so that the sweep starts from a valid topology; a colinearity guard may additionally remove a seed contact that starts the sweep already aligned with its neighbors, and its tolerance is zero in the design of record, so every seed row of Table~\ref{tab:RouteRedesign20} starts active. At every later pose at most one contact is released: if several rows open both gates in the same pose, the row with the largest elimination margin, the one whose rotation rule is most decisively open, is released first, and the remaining rows are retested at the next pose. The release angle of row $j$ is recorded as the first grid pose at which the row is inactive. The activation angle is read from the same record with the sweep reversed, as the last pose at which the row is active, which is the pose at which the contact re-engages when the route is driven from extension toward flexion.
++
++The same active-set record drives the geometric bend measure that scales the fictive-strain wrapping loss of Equations~\eqref{eq:deltaL} and~\eqref{eq:x3} inside the stiffness-aware force balance. Each wrap family, the femoral-cylinder contact, the femoral-condyle curve, the tibial contact curve, and the crossing-point curve at the ICR, contributes an arc length over its effective radius, and the total
++\begin{equation}
++b(\theta_{\mathbf{k}}) = \sum_{f} R_{f}(\theta_{\mathbf{k}})\, \alpha_{f}(\theta_{\mathbf{k}})
++\label{eq:app_bend_measure}
++\end{equation}
++is the bend signal handed to the force model. Each family's turn angle $\alpha_{f}$ ramps with knee angle between the two route-state events that bound it, holding zero before the first event and its plateau after the second, so the topology state and the bending signal are two readings of one record. The formulation is joint-agnostic: it requires only a fixed route representation with one crossing segment, per-angle transforms between the two body frames, and clearance envelopes on each side, so it carries unchanged to the other wrapped routes of this program.
++
++
++\clearpage
++\subsection{Configuration-Survey Coordinates and Actuator Sizes}
++
++\begin{table}[htbp]
++\centering
++\caption{Degrees of freedom and nominal BPA sizes in the 27-site configuration survey. Diameter follows the inherited robot sizing rule and is retained on the updated side. At nominal \qty{40}{\mm} sites, the baseline instead uses four parallel \qty{20}{\mm} BPAs; other baseline sites use one actuator of the listed diameter. The two coordinate columns identify the graded surface, rather than every coordinate a multiarticular route could cross.}
++\label{tab:survey_dofs_sizes}
++\begingroup\small\renewcommand{\arraystretch}{1.1}
++\begin{tabular}{@{}lllll@{}}
++\toprule
++\textbf{Site} & \textbf{Primary DoF} & \textbf{Secondary DoF} & \textbf{Dia. (mm)} & \textbf{Baseline (mm)} \\
++\midrule
++ercspn\_r & lumbar ext. & lumbar bend. & 40 & 4$\times$20 \\
++intobl\_r & lumbar ext. & lumbar bend. & 20 & 1$\times$20 \\
++extobl\_r & lumbar ext. & lumbar bend. & 20 & 1$\times$20 \\
++bifemlh\_r & knee & hip flex. & 20 & 1$\times$20 \\
++semimem\_r & knee & hip flex. & 40 & 4$\times$20 \\
++sar\_r & knee & hip flex. & 10 & 1$\times$10 \\
++tfl\_r & knee & hip flex. & 10 & 1$\times$10 \\
++rect\_fem\_r & knee & hip flex. & 20 & 1$\times$20 \\
++grac\_r & knee & hip flex. & 10 & 1$\times$10 \\
++bifemsh\_r & knee & hip flex. & 20 & 1$\times$20 \\
++vas\_int\_r & knee & hip flex. & 40 & 4$\times$20 \\
++soleus\_r & ankle & knee & 40 & 4$\times$20 \\
++med\_gas\_r & ankle & knee & 40 & 4$\times$20 \\
++lat\_gas\_r & ankle & knee & 20 & 1$\times$20 \\
++tib\_post\_r & subtalar & ankle & 40 & 4$\times$20 \\
++tib\_ant\_r & ankle & subtalar & 20 & 1$\times$20 \\
++per\_brev\_r & subtalar & ankle & 10 & 1$\times$10 \\
++per\_long\_r & subtalar & ankle & 20 & 1$\times$20 \\
++per\_tert\_r & subtalar & ankle & 10 & 1$\times$10 \\
++flex\_dig\_r & MTP & ankle & 10 & 1$\times$10 \\
++flex\_hal\_r & MTP & ankle & 10 & 1$\times$10 \\
++ext\_dig\_r & MTP & ankle & 10 & 1$\times$10 \\
++ext\_hal\_r & MTP & ankle & 10 & 1$\times$10 \\
++glut\_max\_r & hip flex. & hip add. & 40 & 4$\times$20 \\
++add\_mag\_r & hip add. & hip flex. & 40 & 4$\times$20 \\
++iliacus\_r & hip flex. & hip add. & 20 & 1$\times$20 \\
++psoas\_r & hip flex. & hip add. & 20 & 1$\times$20 \\
++\bottomrule
++\end{tabular}
++\endgroup
++\end{table}
+ \end{document}
