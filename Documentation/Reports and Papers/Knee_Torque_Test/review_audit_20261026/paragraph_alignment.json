@@ -1,0 +1,758 @@
+[
+  {
+    "paper_line": 1,
+    "dissertation_line": 4,
+    "similarity": 0.0,
+    "paper_excerpt": "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n% This is just an exampl",
+    "dissertation_excerpt": "{\\doublespacing\\normalsize\\upshape\n\\noindent Publication note: This chapter is the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scha"
+  },
+  {
+    "paper_line": 9,
+    "dissertation_line": 95,
+    "similarity": 0.0,
+    "paper_excerpt": "%%% Version 3.4 Generated 2018/06/15 %%%\n%%% You will need to have the following packages installed: datetime, fmtcount, etoolbox, fcprefix, which are normally inlcuded in WinEdt. ",
+    "dissertation_excerpt": "where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{fitting}$ is the length of the end caps, and $\\chi_{0}$ is a constant length offset."
+  },
+  {
+    "paper_line": 14,
+    "dissertation_line": 187,
+    "similarity": 0.136,
+    "paper_excerpt": "\\documentclass[utf8]{FrontiersinHarvard} % for articles in journals using the Harvard Referencing Style (Author-Date), for Frontiers Reference Styles by Journal: https://zendesk.fr",
+    "dissertation_excerpt": "For the diagonal stiffness matrix in Eq. \\ref{eq:bktstiffness}, Eq. \\ref{eq:bktdeflection} is equivalent to the component-wise expression"
+  },
+  {
+    "paper_line": 16,
+    "dissertation_line": 1,
+    "similarity": 0.087,
+    "paper_excerpt": "\\usepackage{url,hyperref,lineno,microtype}\n\\usepackage{xr}\n\\usepackage{amssymb}\n\\usepackage{amsmath, bm}\n\\usepackage{mathabx}\n\\usepackage{siunitx}\n\\let\\DeclareUSUnit\\DeclareSIUnit\n",
+    "dissertation_excerpt": "\\chapter{Isometric Knee Torque}\\label{ch:torque}\\label{ch:results}\n\\graphicspath{{../Figures/30-torque/}{figs/30-torque/}}"
+  },
+  {
+    "paper_line": 43,
+    "dissertation_line": 38,
+    "similarity": 0.122,
+    "paper_excerpt": "% Leave a blank line between paragraphs instead of using \\\\\n\\def\\keyFont{\\fontsize{8}{11}\\helveticabold }",
+    "dissertation_excerpt": "\\begin{equation}\n    r = \\norm{\\mathbf{d} \\times \\hat{\\mathbf{u}}}\n    \\label{eq:momentarm_def}\n\\end{equation}"
+  },
+  {
+    "paper_line": 48,
+    "dissertation_line": 51,
+    "similarity": 0.174,
+    "paper_excerpt": "\\def\\Authors{Ben Bolen\\,$^{1,*}$, Lindie Burgess\\,$^{1}$, Connor Morrow\\,$^{1}$, and Alex Hunt\\,$^{1}$}\n% Affiliations should be keyed to the author's name with superscript numbers",
+    "dissertation_excerpt": "Details of the existing model and the torque calculation methodology in the modeled robot are given by \\citet{bolen_determination_2019, morrow_optimization_2020}."
+  },
+  {
+    "paper_line": 52,
+    "dissertation_line": 51,
+    "similarity": 0.201,
+    "paper_excerpt": "\\def\\Address{$^{1}$Agile and Adaptive Robotics Laboratory, Portland State University, Department of Mechanical and Materials Engineering, Portland, OR, USA }\n% The Corresponding Au",
+    "dissertation_excerpt": "Details of the existing model and the torque calculation methodology in the modeled robot are given by \\citet{bolen_determination_2019, morrow_optimization_2020}."
+  },
+  {
+    "paper_line": 57,
+    "dissertation_line": 38,
+    "similarity": 0.225,
+    "paper_excerpt": "\\def\\corrAuthor{Ben Bolen \\\\ Portland State University \\\\ Department of Mechanical and Materials Engineering \\\\ PO Box 751 \\\\ Portland, OR, 97207-0751, USA}",
+    "dissertation_excerpt": "\\begin{equation}\n    r = \\norm{\\mathbf{d} \\times \\hat{\\mathbf{u}}}\n    \\label{eq:momentarm_def}\n\\end{equation}"
+  },
+  {
+    "paper_line": 68,
+    "dissertation_line": 1,
+    "similarity": 0.359,
+    "paper_excerpt": "\\title[Design Factors for Isometric Robotic Knee Torque]{Design Factors for Isometric Robotic Knee Torque Using Braided Pneumatic Actuators}",
+    "dissertation_excerpt": "\\chapter{Isometric Knee Torque}\\label{ch:torque}\\label{ch:results}\n\\graphicspath{{../Figures/30-torque/}{figs/30-torque/}}"
+  },
+  {
+    "paper_line": 70,
+    "dissertation_line": 194,
+    "similarity": 0.012,
+    "paper_excerpt": "\\author[\\firstAuthorLast ]{\\Authors} %This field will be automatically populated\n\\address{} %This field will be automatically populated\n\\correspondance{} %This field will be automa",
+    "dissertation_excerpt": "Although $\\boldsymbol{\\epsilon}_{br}$ is a three-dimensional deflection vector, the BPA force model depends on the scalar change in effective BPA length ($\\delta$). Therefore, only"
+  },
+  {
+    "paper_line": 78,
+    "dissertation_line": 548,
+    "similarity": 0.038,
+    "paper_excerpt": "%%% Leave the Abstract empty if your article does not require one, please see the Summary Table for full details.\n\\section{}\nArtificial muscles such as braided pneumatic actuators ",
+    "dissertation_excerpt": "This subsection records the quantitative outcomes of the redesigned routes on the Gait2392-derived robot-body model, whose muscle force and torque targets define the redesign objec"
+  },
+  {
+    "paper_line": 82,
+    "dissertation_line": 34,
+    "similarity": 0.046,
+    "paper_excerpt": "\\tiny\n \\keyFont{ \\section{Keywords:}\nBraided Pneumatic Actuator, Artificial Muscle, Isometric Torque, Moment Arm, System Identification, Actuator Routing, Biomimetic Robotics, Knee",
+    "dissertation_excerpt": "In the pinned knee joint, uniarticular knee extensor and knee flexor are used to actuate the joint. Each knee joint type was tested with a single $\\diameter$\\qty{10}{\\mm} Festo BPA"
+  },
+  {
+    "paper_line": 90,
+    "dissertation_line": 591,
+    "similarity": 0.023,
+    "paper_excerpt": "Musculoskeletal robots built on biological design principles are experimental platforms for motor-control questions that are impractical or unethical to study in human subjects, fr",
+    "dissertation_excerpt": "A subsequent transmission study re-solved actuator sizes for each tackle configuration at five anatomical muscle sites. A two-BPA pair through a two-part tackle preserves net actua"
+  },
+  {
+    "paper_line": 92,
+    "dissertation_line": 97,
+    "similarity": 0.041,
+    "paper_excerpt": "No actuator family reproduces muscle exactly, and each alternative trades something away. Geared electric motors dominate position control, but they place mass and reflected inerti",
+    "dissertation_excerpt": "Additionally, as the muscles produce more force, compliant components in the limb segments and attachment hardware deform. This deformation changes the effective braided pneumatic "
+  },
+  {
+    "paper_line": 94,
+    "dissertation_line": 512,
+    "similarity": 0.052,
+    "paper_excerpt": "For BPAs, the force side of the design problem is well characterized: we have published closed-form equations for the maximum force and the isometric force of \\qtylist{10;20}{\\mm} ",
+    "dissertation_excerpt": "The modeling of extensor BPA paths that wrap around the knee joint is an approximation with inherent error (Fig. \\ref{fig:Ext_passthru}). When the moment arm is short, small change"
+  },
+  {
+    "paper_line": 96,
+    "dissertation_line": 82,
+    "similarity": 0.04,
+    "paper_excerpt": "Torque modeling for braided actuators has consequently concentrated on the force law and on placement. \\citet{chou_measurement_1996} derived the static force relation of McKibben m",
+    "dissertation_excerpt": "The classical kinematic torque model assumed rigid links and inextensible muscle paths. Data collected during the first flexor experiments (Section~\\ref{sec:results_torque}) showed"
+  },
+  {
+    "paper_line": 98,
+    "dissertation_line": 34,
+    "similarity": 0.043,
+    "paper_excerpt": "The present work treats these mispredictions as identifiable design factors, not residual noise. We measured isometric knee torque on two test stands: a robot leg with a pinned rev",
+    "dissertation_excerpt": "In the pinned knee joint, uniarticular knee extensor and knee flexor are used to actuate the joint. Each knee joint type was tested with a single $\\diameter$\\qty{10}{\\mm} Festo BPA"
+  },
+  {
+    "paper_line": 100,
+    "dissertation_line": 548,
+    "similarity": 0.045,
+    "paper_excerpt": "Our analysis resulted in (1) a corrected torque model whose constant length offset ($\\chi_0$), lumped attachment stiffness ($\\chi_1$ and $\\chi_2$), and fictive-strain wrapping loss",
+    "dissertation_excerpt": "This subsection records the quantitative outcomes of the redesigned routes on the Gait2392-derived robot-body model, whose muscle force and torque targets define the redesign objec"
+  },
+  {
+    "paper_line": 107,
+    "dissertation_line": 320,
+    "similarity": 0.058,
+    "paper_excerpt": "Isometric knee torque is the product of the force an actuator develops and the moment arm of its line of action about the joint axis, and the force itself is set by the actuator's ",
+    "dissertation_excerpt": "Two families of optimization problem underpin the results of this dissertation and the design framework built on them. The first is the identification of the correction terms of Se"
+  },
+  {
+    "paper_line": 111,
+    "dissertation_line": 324,
+    "similarity": 0.05,
+    "paper_excerpt": "The actuator force model is fully described in \\citet{bolen_2026} and is reproduced here only as far as the torque model requires. The contraction $\\varepsilon$ of a BPA is\n\\begin{",
+    "dissertation_excerpt": "The route redesign replaces the multiobjective formulation with a single scalar cost assembled from weighted penalty terms, because the route prediction (contact activation, wrappi"
+  },
+  {
+    "paper_line": 147,
+    "dissertation_line": 14,
+    "similarity": 0.444,
+    "paper_excerpt": "The robot leg consists of a knee joint, femur, tibia, BPA assemblies, and artificial tendons (Figure~\\ref{fig:testJigs}\\textbf{A--C}). The artificial bones were 3D printed in Onyx,",
+    "dissertation_excerpt": "The primary components of the robot leg are the knee joint, femur, tibia, BPA assemblies, and artificial tendons (Fig. \\ref{fig:testJigs}\\textbf{A--C}). The artificial bone compone"
+  },
+  {
+    "paper_line": 149,
+    "dissertation_line": 16,
+    "similarity": 0.889,
+    "paper_excerpt": "\\begin{figure}[H]\n    \\begin{center}\n    \\includegraphics[width=0.9\\textwidth]{Figures/testJigs.pdf}\n    \\end{center}\n    \\caption{\\textbf{(A)} CAD solid model assembly of the revo",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n    \\begin{center}\n    \\includegraphics[width=0.73\\textwidth]{testJigs_reviewed.pdf}\n    \\end{center}\n    \\caption{\\textbf{(A)} CAD solid model assembly of the"
+  },
+  {
+    "paper_line": 156,
+    "dissertation_line": 25,
+    "similarity": 0.154,
+    "paper_excerpt": "Two knee joints were tested: a pure revolute joint, and a biomimetic joint whose four-bar linkage translates the instantaneous center of rotation (ICR) as the knee rotates \\citep{s",
+    "dissertation_excerpt": "Details on the biomimetic robot knee used in this study can be found in \\citep{steele_biomimetic_2018,steele_development_2017,steele_biomimetic_2018-1}. In brief, this 1-DoF joint "
+  },
+  {
+    "paper_line": 158,
+    "dissertation_line": 27,
+    "similarity": 0.769,
+    "paper_excerpt": "\\begin{figure}[H]\n    \\begin{center}\n    \\includegraphics[width=0.8\\textwidth]{Figures/KneeICR.eps}\n    \\end{center}\n    \\caption{ICR for the biomimetic robot knee as a function of",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n    \\begin{center}\n    \\includegraphics[width=0.8\\textwidth]{KneeICR.eps}\n    \\end{center}\n    \\caption{ICR for biomimetic robot knee as a function of knee ang"
+  },
+  {
+    "paper_line": 165,
+    "dissertation_line": 51,
+    "similarity": 0.356,
+    "paper_excerpt": "Each stand was tested with $\\diameter$\\qty{10}{\\mm} Festo BPAs in both configurations, and the biomimetic knee also with a $\\diameter$\\qty{20}{\\mm} BPA. Each actuator was pinned at",
+    "dissertation_excerpt": "Details of the existing model and the torque calculation methodology in the modeled robot are given by \\citet{bolen_determination_2019, morrow_optimization_2020}."
+  },
+  {
+    "paper_line": 169,
+    "dissertation_line": 56,
+    "similarity": 0.284,
+    "paper_excerpt": "A test jig was built to collect knee torque at set knee angles over the range of motion. The stand frame is made of 80/20 1515 series extruded aluminum. The femur is fixed to the f",
+    "dissertation_excerpt": "A test jig was built to collect knee torque measurements at different knee angles over its range of motion. The test stand frame is made predominantly out of 80/20 1515 series extr"
+  },
+  {
+    "paper_line": 171,
+    "dissertation_line": 58,
+    "similarity": 0.459,
+    "paper_excerpt": "Force was collected with one of two sensors: a MODERN STEP \\qty{300}{\\kilo\\gram} digital crane scale, or a CALT DYLY-103 \\qty{100}{\\kilo\\gram} S-shaped load cell used with an HX711",
+    "dissertation_excerpt": "Force data was collected using one of two different sensors. The first is a MODERN STEP $\\qty{300}{\\kilo\\gram}$ digital crane scale. The second force sensor is a CALT DYLY-103 $\\qt"
+  },
+  {
+    "paper_line": 175,
+    "dissertation_line": 36,
+    "similarity": 0.2,
+    "paper_excerpt": "Torque about the knee is the moment of the actuator force about the ICR. Two vectors enter it: the position vector $\\mathbf{d}$ from the ICR to the point of force application, and ",
+    "dissertation_excerpt": "Torque about the knee is generated by the moment of the BPA force about the joint's instantaneous center of rotation (ICR). Two vectors enter that moment: the position vector $\\mat"
+  },
+  {
+    "paper_line": 186,
+    "dissertation_line": 78,
+    "similarity": 0.092,
+    "paper_excerpt": "The hybrid torque calculation localizes disagreement between the model and the measurements. The classical moment is the cross product\n\\begin{equation}\n    \\mathbf{m} = \\mathbf{d} ",
+    "dissertation_excerpt": "where $r$ is the scalar moment arm of Eq.~\\eqref{eq:momentarm_def}, here measured directly with a tape measure as the perpendicular distance from the knee axis to the actuator's li"
+  },
+  {
+    "paper_line": 198,
+    "dissertation_line": 95,
+    "similarity": 0.399,
+    "paper_excerpt": "Measured muscle lengths were consistently shorter than predicted at all joint angles, and the shortfall persisted at $\\varepsilon^{*} = 1$ with $F = 0$, indicating a constant rathe",
+    "dissertation_excerpt": "where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{fitting}$ is the length of the end caps, and $\\chi_{0}$ is a constant length offset."
+  },
+  {
+    "paper_line": 205,
+    "dissertation_line": 101,
+    "similarity": 0.041,
+    "paper_excerpt": "As the actuator develops force, the compliant attachments deform, changing the effective BPA length and, through it, the force. The combined compliance is modeled with Hooke's law ",
+    "dissertation_excerpt": "For the two-rotation evaluator, the bracket frame was constructed from the vector joining the bracket origin to attachment point $\\mathbf{p}_{A}$ or $\\mathbf{p}_{B}$. The first rot"
+  },
+  {
+    "paper_line": 218,
+    "dissertation_line": 114,
+    "similarity": 0.832,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[height=0.62\\textheight]{Figures/xiFrameTransform.pdf}\n\\end{center}\n\\caption{Two-rotation construction of the bracket frame from th",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\centering\n\\includegraphics[height=0.72\\textheight]{xiFrameTransform.pdf}\n% ALT TEXT: Two vertically stacked diagrams construct the local bracket frame.\n% Pane"
+  },
+  {
+    "paper_line": 225,
+    "dissertation_line": 126,
+    "similarity": 0.986,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{Figures/bktFrame.pdf}\n\\end{center}\n\\caption{Bracket frame orientations for: \\textbf{(A)} flexor configuration o",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{bktFrame.pdf}\n\\end{center}\n\\caption{Bracket frame orientations for: \\textbf{(A)} flexor configuration on the"
+  },
+  {
+    "paper_line": 232,
+    "dissertation_line": 139,
+    "similarity": 0.125,
+    "paper_excerpt": "In this frame the bracket is modeled as three independent linear springs, and the identified stiffness array is y-symmetric,\n\\begin{equation}\n\\mathbf{K}_{br} =\n\\begin{bmatrix}\n\\chi",
+    "dissertation_excerpt": "These three principal stiffnesses are not independent in this model, and the reason follows from the frame construction itself. The first rotation of Eq.~\\eqref{eq:bracket_frame_tr"
+  },
+  {
+    "paper_line": 244,
+    "dissertation_line": 228,
+    "similarity": 0.176,
+    "paper_excerpt": "Only the deflection component along the line of action changes the actuator's effective length. With the force in the bracket frame written $F\\,\\hat{\\mathbf{u}}$, where $\\hat{\\math",
+    "dissertation_excerpt": "Here $k_{eq}$ is the series sum of every compliant element in the actuator path, and the bracket-only case is the special case with no tendon. When the BPA attaches directly to the"
+  },
+  {
+    "paper_line": 259,
+    "dissertation_line": 250,
+    "similarity": 0.051,
+    "paper_excerpt": "The compliance displacement shortens the actuator, so the active length entering the force model is\n\\begin{equation} l_m(\\delta) = l_m^{(0)} - \\delta\n\\label{eq:activelengthcorrecte",
+    "dissertation_excerpt": "The root is found with a bracketed scalar solver (\\texttt{fzero} in MATLAB) on the physically admissible interval between zero deflection and the deflection that would bring the ac"
+  },
+  {
+    "paper_line": 269,
+    "dissertation_line": 256,
+    "similarity": 0.02,
+    "paper_excerpt": "Both ends of the actuator path can be compliant: the insertion-side bracket together with a second, origin-side bracket. Each bracket $j$ develops a three-dimensional deflection $\\",
+    "dissertation_excerpt": "\\begin{equation}\n\\begin{aligned}\n\\boldsymbol{\\eta}_{br,j} &= \\sum_{i=1}^{3}\\eta_{i,j}\\hat{\\mathbf{e}}_i^{(j)},\\\\\n\\delta_{br,j} &= \\hat{\\mathbf{u}}_j^T\\boldsymbol{\\eta}_{br,j}, \\qqu"
+  },
+  {
+    "paper_line": 281,
+    "dissertation_line": 281,
+    "similarity": 0.543,
+    "paper_excerpt": "The extensor configuration required one further correction, with a different physical origin than the compliance terms. As the knee flexes, the extensor BPA bends over the front of",
+    "dissertation_excerpt": "The extensor configuration required one further correction, for a loss with a different physical origin than the compliance terms. As the knee flexes, the extensor BPA bends over t"
+  },
+  {
+    "paper_line": 300,
+    "dissertation_line": 310,
+    "similarity": 0.274,
+    "paper_excerpt": "The correction terms enter the prediction through the implicit balance of Equation~\\eqref{eq:complianceforcebalance}, and no instrument measures them directly, so they were identif",
+    "dissertation_excerpt": "The goodness-of-fit metrics used to judge the optimization results are the root mean square error (RMSE), the fraction of variance unexplained (FVU), and the maximum absolute resid"
+  },
+  {
+    "paper_line": 302,
+    "dissertation_line": 322,
+    "similarity": 0.089,
+    "paper_excerpt": "The identification proceeded in two stages. The flexor stage fits the two-bracket model $(\\chi_{0}, \\chi_{1}, \\chi_{2})$ across the four pinned-knee flexor tests, with the $l_{0}=\\",
+    "dissertation_excerpt": "The correction-term identification is a genuine multiobjective problem: candidate parameter sets are judged simultaneously on RMSE, FVU, and maximum absolute residual (Section~\\ref"
+  },
+  {
+    "paper_line": 306,
+    "dissertation_line": 324,
+    "similarity": 0.266,
+    "paper_excerpt": "With the correction terms fixed, the attachment routes themselves become design variables, and their best values are the ones that make the redesigned routes meet or exceed human k",
+    "dissertation_excerpt": "The route redesign replaces the multiobjective formulation with a single scalar cost assembled from weighted penalty terms, because the route prediction (contact activation, wrappi"
+  },
+  {
+    "paper_line": 308,
+    "dissertation_line": 324,
+    "similarity": 0.373,
+    "paper_excerpt": "The design variables are the BPA origin $\\mathbf{p}_{1}$, the insertion $\\mathbf{p}_{\\mathrm{end}}$, the resting length, and the tendon length. Because the route prediction (contac",
+    "dissertation_excerpt": "The route redesign replaces the multiobjective formulation with a single scalar cost assembled from weighted penalty terms, because the route prediction (contact activation, wrappi"
+  },
+  {
+    "paper_line": 315,
+    "dissertation_line": 331,
+    "similarity": 0.404,
+    "paper_excerpt": "Each run began with a sanity evaluation of the seed design, then executed a surrogate-assisted global solver under per-configuration evaluation budgets of 3,000 evaluations for the",
+    "dissertation_excerpt": "The solution pipeline is common to both configurations. Each run begins with a full sanity evaluation of the seed design and a small smoke test of the solver setup, then executes \\"
+  },
+  {
+    "paper_line": 317,
+    "dissertation_line": 548,
+    "similarity": 0.025,
+    "paper_excerpt": "Three variants extend the search space. In the cam variant, the tibial-side route points trace a cam profile, so the routing geometry itself is shaped rather than only its endpoint",
+    "dissertation_excerpt": "This subsection records the quantitative outcomes of the redesigned routes on the Gait2392-derived robot-body model, whose muscle force and torque targets define the redesign objec"
+  },
+  {
+    "paper_line": 322,
+    "dissertation_line": 337,
+    "similarity": 0.264,
+    "paper_excerpt": "With the actuator force model characterized at the actuator level, we applied the same model to predict isometric torque about the knee on both test stands (Section~\\ref{sec:robot_",
+    "dissertation_excerpt": "With the actuator force model validated at the actuator level, the same model was used to predict isometric torque about the knee joint for the test stands described in Sections~\\r"
+  },
+  {
+    "paper_line": 326,
+    "dissertation_line": 341,
+    "similarity": 0.547,
+    "paper_excerpt": "Figure~\\ref{fig:FlxPin} shows the measured flexor torque on the pinned knee next to the pre-optimization prediction series and the corrected prediction at the adopted terms for the",
+    "dissertation_excerpt": "Figure~\\ref{fig:FlxPin_preopt} shows the measured flexor torque on the pinned knee next to the pre-optimization prediction series for the four cross-validation tests. Both pre-opti"
+  },
+  {
+    "paper_line": 328,
+    "dissertation_line": 375,
+    "similarity": 0.966,
+    "paper_excerpt": "The initial identification, fitted on the $l_{0}=\\qty{48.5}{\\cm}$ test, yielded a length offset $\\chi_{0} = \\qty{11.9}{\\mm}$ and effective stiffnesses $\\chi_{1} = \\qty{102}{\\kilo\\n",
+    "dissertation_excerpt": "The initial identification, fitted on the $l_{0}=\\qty{48.5}{\\cm}$ test, yielded a length offset $\\chi_{0} = \\qty{11.9}{\\mm}$ and effective stiffnesses $\\chi_{1} = \\qty{102}{\\kN\\per"
+  },
+  {
+    "paper_line": 330,
+    "dissertation_line": 343,
+    "similarity": 0.716,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=0.8\\textwidth]{Figures/FlxPin_allmodels_20261023.eps}\n\\end{center}\n\\caption{Pre-optimization and optimized pinned-knee torqu",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=0.9\\textwidth]{FlxPin_preopt.eps}\n\\end{center}\n\\caption{Pre-optimization pinned-knee torque versus knee angle for the fou"
+  },
+  {
+    "paper_line": 337,
+    "dissertation_line": 352,
+    "similarity": 0.485,
+    "paper_excerpt": "\\begin{sidewaystable}[p]\n\\caption{Pinned-knee flexor torque-prediction goodness of fit per test, before and after optimization: the Hunt-equation rigid-body prediction, the unoptim",
+    "dissertation_excerpt": "\\begin{table}[H]\n\\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\\ref{fig"
+  },
+  {
+    "paper_line": 366,
+    "dissertation_line": 416,
+    "similarity": 0.087,
+    "paper_excerpt": "Two features of the pinned-extensor measurements shaped the extensor identification. First, the measured torque crossed zero at a more extended angle than the prediction, indicatin",
+    "dissertation_excerpt": "When the new stiffness and length offset model was used to predict torque for the knee extensor, measured torque was slightly higher than the original rigid-body model predicts for"
+  },
+  {
+    "paper_line": 368,
+    "dissertation_line": 425,
+    "similarity": 0.513,
+    "paper_excerpt": "The stiffness pair was held at the flexor-identified values, and the initial extensor identification added two extensor-specific terms: $\\chi_{0} = \\qty{-10.9}{\\mm}$ and $\\chi_{3} ",
+    "dissertation_excerpt": "Results are shown in Fig. \\ref{fig:ExtPin_group}. The initial identification was fitted in cross-validated rounds over the \\qty{48.0}{\\cm}, \\qty{45.7}{\\cm}, and \\qty{41.5}{\\cm} act"
+  },
+  {
+    "paper_line": 370,
+    "dissertation_line": 418,
+    "similarity": 0.911,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=1.0\\textwidth]{Figures/ExtPin_group.eps}\n\\end{center}\n\\caption{Pinned-knee torque versus knee angle for the extensor BPAs: t",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{ExtPin_group.eps}\n\\end{center}\n\\caption{Pinned-knee torque versus knee angle for the extensor BPAs: the six "
+  },
+  {
+    "paper_line": 377,
+    "dissertation_line": 431,
+    "similarity": 0.999,
+    "paper_excerpt": "\\begin{table}[H]\n\\caption{Pinned-knee extensor torque-prediction goodness of fit, at the adopted correction terms with the effective-stiffness pair locked to the flexor-identified ",
+    "dissertation_excerpt": "\\begin{table}[H]\n\\caption{Pinned-knee extensor torque-prediction goodness of fit, at the adopted correction terms with the effective-stiffness pair locked to the flexor-identified "
+  },
+  {
+    "paper_line": 407,
+    "dissertation_line": 484,
+    "similarity": 0.179,
+    "paper_excerpt": "We tested the extensor configuration on the biomimetic knee with a $\\diameter$\\qty{10}{\\mm} BPA at $l_{0}=\\qty{51.8}{\\cm}$. The measured torque fell well below both the original pr",
+    "dissertation_excerpt": "Fig.~\\ref{fig:FlxGrp} shows the biomimetic-knee flexor measurements with the flexor terms carried over unchanged from the pinned-knee identification; the bracket frame for the $\\di"
+  },
+  {
+    "paper_line": 409,
+    "dissertation_line": 467,
+    "similarity": 0.205,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=0.9\\textwidth]{Figures/Ext10mm_52cm_20261023.eps}\n\\end{center}\n\\caption{Biomimetic 2-DoF robot leg in the extensor test conf",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{Ext10mm_52cm.eps}\n\\end{center}\n\\caption{Measured versus expected isometric torque results using a $\\diameter"
+  },
+  {
+    "paper_line": 418,
+    "dissertation_line": 484,
+    "similarity": 0.812,
+    "paper_excerpt": "Figure~\\ref{fig:FlxGrp} shows the biomimetic-knee flexor measurements with the flexor terms carried over unchanged from the pinned-knee identification. Panel \\textbf{A} presents th",
+    "dissertation_excerpt": "Fig.~\\ref{fig:FlxGrp} shows the biomimetic-knee flexor measurements with the flexor terms carried over unchanged from the pinned-knee identification; the bracket frame for the $\\di"
+  },
+  {
+    "paper_line": 420,
+    "dissertation_line": 486,
+    "similarity": 0.651,
+    "paper_excerpt": "The torque of the single $\\diameter$\\qty{20}{\\mm} flexor actuator of panel \\textbf{B} did not exceed the magnitude of the maximum human isometric flexion torque \\citep{delp_interac",
+    "dissertation_excerpt": "The torque of the single $\\diameter$\\qty{20}{\\mm} flexor actuator of panel \\textbf{B} did not exceed the magnitude of the maximum human isometric flexion torque between \\ang{60} an"
+  },
+  {
+    "paper_line": 422,
+    "dissertation_line": 595,
+    "similarity": 0.105,
+    "paper_excerpt": "The redesigned flexor route was then validated physically on the same stand with the two $\\diameter$\\qty{20}{\\mm} actuators of the design of record at $l_{0}=\\qty{56.2}{\\cm}$ (Figu",
+    "dissertation_excerpt": "The redesigned cam-extensor route was tested at nine isometric holds, and the two-BPA flexor route at fifteen holds. Both test sets span knee angles from \\ang{-119} to \\ang{5}. The"
+  },
+  {
+    "paper_line": 424,
+    "dissertation_line": 488,
+    "similarity": 0.782,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=1.0\\textwidth]{Figures/FlxGrp_20261023.eps}\n\\end{center}\n\\caption{Biomimetic-knee torque versus knee angle for the flexor BP",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=0.72\\textwidth]{FlxGrp.eps}\n\\par\\smallskip\n\\begin{minipage}[t]{0.30\\textwidth}\\vspace{0pt}\\centering\n{\\textbf{(C)}}\\par\\s"
+  },
+  {
+    "paper_line": 437,
+    "dissertation_line": 508,
+    "similarity": 0.169,
+    "paper_excerpt": "The improved BPA force characterization removes part of the torque-prediction error, but only part (Figure~\\ref{fig:FlxPin}). The remainder traces to the test system itself. The is",
+    "dissertation_excerpt": "Our improved BPA characterization predicts torque more accurately than the original BPA model (see Fig.~\\ref{fig:FlxPin_preopt}). This only accounts for part of the error. Many fac"
+  },
+  {
+    "paper_line": 439,
+    "dissertation_line": 512,
+    "similarity": 0.306,
+    "paper_excerpt": "The modeling of extensor paths that wrap around the knee is an approximation with inherent error, and the test-stand geometry amplifies it. When the moment arm is short, small chan",
+    "dissertation_excerpt": "The modeling of extensor BPA paths that wrap around the knee joint is an approximation with inherent error (Fig. \\ref{fig:Ext_passthru}). When the moment arm is short, small change"
+  },
+  {
+    "paper_line": 441,
+    "dissertation_line": 512,
+    "similarity": 0.195,
+    "paper_excerpt": "The pinned extensor tests exposed one further error source, with a signature distinct from compliance. Figure~\\ref{fig:ExtPin_group} shows a deviation between measured and original",
+    "dissertation_excerpt": "The modeling of extensor BPA paths that wrap around the knee joint is an approximation with inherent error (Fig. \\ref{fig:Ext_passthru}). When the moment arm is short, small change"
+  },
+  {
+    "paper_line": 443,
+    "dissertation_line": 517,
+    "similarity": 0.097,
+    "paper_excerpt": "Working from the simple pinned knee to the complex biomimetic one isolated each of these mechanisms in turn. The products of that progression, a predictor for bending and axial com",
+    "dissertation_excerpt": "The nonlinear biomimetic robotic system presented here replaces rigid-body simplifications commonly used in other robotic and biomechanical systems. Instead, progressing from simpl"
+  },
+  {
+    "paper_line": 445,
+    "dissertation_line": 546,
+    "similarity": 0.467,
+    "paper_excerpt": "\\subsection{Two-Stage Re-Identification and the Adopted Correction Terms}\\label{sec:adopted_identification}",
+    "dissertation_excerpt": "\\subsubsection{Redesigned-Route Results on the Gait2392 Robot-Body Model}\\label{sec:route_redesign_results}"
+  },
+  {
+    "paper_line": 447,
+    "dissertation_line": 526,
+    "similarity": 0.525,
+    "paper_excerpt": "The coefficients quoted in the Results belong to the initial single-bracket identification (Section~\\ref{sec:identification}). Re-identifying the correction terms over the full tes",
+    "dissertation_excerpt": "The coefficient values reported with the results figures belong to the initial single-bracket identification. Re-identifying the correction terms over the full test sets with the t"
+  },
+  {
+    "paper_line": 449,
+    "dissertation_line": 431,
+    "similarity": 0.19,
+    "paper_excerpt": "\\begin{table}[H]\n\\caption{Adopted correction terms of the two-stage identification; the extensor refit locked the effective-stiffness pair $(\\chi_{1}, \\chi_{2})$ to the flexor-iden",
+    "dissertation_excerpt": "\\begin{table}[H]\n\\caption{Pinned-knee extensor torque-prediction goodness of fit, at the adopted correction terms with the effective-stiffness pair locked to the flexor-identified "
+  },
+  {
+    "paper_line": 466,
+    "dissertation_line": 281,
+    "similarity": 0.026,
+    "paper_excerpt": "Each term has a direct physical reading. The offsets $\\chi_{0}$ correct the effective muscle length by a constant, and the flexor and extensor offsets carry opposite signs, as the ",
+    "dissertation_excerpt": "The extensor configuration required one further correction, for a loss with a different physical origin than the compliance terms. As the knee flexes, the extensor BPA bends over t"
+  },
+  {
+    "paper_line": 468,
+    "dissertation_line": 410,
+    "similarity": 0.281,
+    "paper_excerpt": "Tables~\\ref{tab:FlxPinGof} and \\ref{tab:ExtPinGof} quantify what the corrections buy. On the pinned-flexor set, the corrected model reduces the training-mean RMSE, over the $l_{0}=",
+    "dissertation_excerpt": "The \\qty{47.9}{\\cm} flexor test was not used in identification and is evaluated separately in Appendix~\\ref{app:model_geometry}. Table~\\ref{tab:FlxPinGof} completes this comparison"
+  },
+  {
+    "paper_line": 470,
+    "dissertation_line": 322,
+    "similarity": 0.165,
+    "paper_excerpt": "The solver assignment follows the problem. The identification retains the genetic multiobjective solver, an elitist nondominated-sorting genetic algorithm, because the Pareto front",
+    "dissertation_excerpt": "The correction-term identification is a genuine multiobjective problem: candidate parameter sets are judged simultaneously on RMSE, FVU, and maximum absolute residual (Section~\\ref"
+  },
+  {
+    "paper_line": 474,
+    "dissertation_line": 548,
+    "similarity": 0.162,
+    "paper_excerpt": "The redesign addresses the single-actuator shortfall documented in the Results: one BPA per route does not reach the human flexor envelope through the mid-flexion range. Every rede",
+    "dissertation_excerpt": "This subsection records the quantitative outcomes of the redesigned routes on the Gait2392-derived robot-body model, whose muscle force and torque targets define the redesign objec"
+  },
+  {
+    "paper_line": 476,
+    "dissertation_line": 126,
+    "similarity": 0.175,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=1.0\\textwidth]{Figures/RouteVariants_20261020.eps}\n\\end{center}\n\\caption{Predicted knee-axis torque of the redesigned route ",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{bktFrame.pdf}\n\\end{center}\n\\caption{Bracket frame orientations for: \\textbf{(A)} flexor configuration on the"
+  },
+  {
+    "paper_line": 483,
+    "dissertation_line": 550,
+    "similarity": 0.758,
+    "paper_excerpt": "The direct extensor route exceeds the human envelope in magnitude at every angle, with zero shortfall points. Across the design range, the predicted two-BPA torque spans \\qty{35.45",
+    "dissertation_excerpt": "The direct extensor route exceeds the human envelope in magnitude at every angle, with zero shortfall points: across the design range the predicted two-BPA extensor torque spans \\q"
+  },
+  {
+    "paper_line": 485,
+    "dissertation_line": 418,
+    "similarity": 0.11,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=1.0\\textwidth]{Figures/ExtensorRoute_redesigned.eps}\n\\end{center}\n\\caption{Route geometry of the cam extensor design of reco",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{ExtPin_group.eps}\n\\end{center}\n\\caption{Pinned-knee torque versus knee angle for the extensor BPAs: the six "
+  },
+  {
+    "paper_line": 492,
+    "dissertation_line": 570,
+    "similarity": 0.115,
+    "paper_excerpt": "The extensor route was then redesigned once more by allowing the tibial-side route points to trace a cam profile, and this cam redesign is the current extensor design. The cam conv",
+    "dissertation_excerpt": "Allowing the tibial-side route points to trace a cam profile produced the current extensor design (Figure~\\ref{fig:ExtensorRoute_redesigned}). The final cam geometry includes the o"
+  },
+  {
+    "paper_line": 494,
+    "dissertation_line": 572,
+    "similarity": 0.39,
+    "paper_excerpt": "The flexor redesign was a two-BPA mirrored-route solution rather than a single shared route. The first actuator's route is carried directly as design variables, its origin on the f",
+    "dissertation_excerpt": "The flexor route, built from two separately evaluated BPA paths, meets the flexor torque target with a minimum margin fraction of 0.0501 against the required 0.05. Its predicted kn"
+  },
+  {
+    "paper_line": 496,
+    "dissertation_line": 548,
+    "similarity": 0.032,
+    "paper_excerpt": "The bi-pulley machinery was then applied as a batch over five anatomical muscle sites of the robot-body model's leg, covering both halves of the pulley doctrine: three uniarticular",
+    "dissertation_excerpt": "This subsection records the quantitative outcomes of the redesigned routes on the Gait2392-derived robot-body model, whose muscle force and torque targets define the redesign objec"
+  },
+  {
+    "paper_line": 498,
+    "dissertation_line": 572,
+    "similarity": 0.044,
+    "paper_excerpt": "The re-solves show the exchange operating in the direction the doctrine intends: at matched net force, the meeting range against the human requirement grows with the tackle's trave",
+    "dissertation_excerpt": "The flexor route, built from two separately evaluated BPA paths, meets the flexor torque target with a minimum margin fraction of 0.0501 against the required 0.05. Its predicted kn"
+  },
+  {
+    "paper_line": 500,
+    "dissertation_line": 488,
+    "similarity": 0.053,
+    "paper_excerpt": "Physical validation of the redesigned extensor route is under way on the rebuilt cam route with the \\qty{20}{\\mm} actuator, and the first full angle sweep is complete. An initial t",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=0.72\\textwidth]{FlxGrp.eps}\n\\par\\smallskip\n\\begin{minipage}[t]{0.30\\textwidth}\\vspace{0pt}\\centering\n{\\textbf{(C)}}\\par\\s"
+  },
+  {
+    "paper_line": 502,
+    "dissertation_line": 599,
+    "similarity": 0.053,
+    "paper_excerpt": "The pressures alone already read against the design. The deep-flexion hold at \\ang{-119} was carried at \\qty{256}{\\kPa}, at the low end of the cam design's predicted \\qtyrange{269}",
+    "dissertation_excerpt": "\\begin{figure}[p]\n\\centering\n\\includegraphics[width=0.97\\textwidth]{extensor_20mm_physical.png}\n\\caption[Physical tests of the cam-extensor route]{Cam-extensor tests. Blue points a"
+  },
+  {
+    "paper_line": 504,
+    "dissertation_line": 606,
+    "similarity": 0.061,
+    "paper_excerpt": "With the reaction-point constants entered, the six holds reduce to knee-extension torques of \\qty{30.24}{\\newton\\meter} at \\ang{-119}, \\qty{37.98}{\\newton\\meter} at \\ang{-61}, \\qty",
+    "dissertation_excerpt": "\\begin{figure}[p]\n\\centering\n\\includegraphics[width=0.97\\textwidth]{flexor_20mm_physical.png}\n\\caption[Physical tests of the redesigned flexor route]{Two-BPA flexor tests with \\qty"
+  },
+  {
+    "paper_line": 506,
+    "dissertation_line": 467,
+    "similarity": 0.269,
+    "paper_excerpt": "\\begin{figure}[H]\n\\begin{center}\n\\includegraphics[width=0.7\\textwidth]{Figures/Ext20mm_cam_20261023.eps}\n\\end{center}\n\\caption{Physical validation of the redesigned extensor route:",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{Ext10mm_52cm.eps}\n\\end{center}\n\\caption{Measured versus expected isometric torque results using a $\\diameter"
+  },
+  {
+    "paper_line": 513,
+    "dissertation_line": 544,
+    "similarity": 0.064,
+    "paper_excerpt": "The same pipeline was extended from the knee to all 27 muscle-actuators of the robot-body model, and we report that extension as a status rather than a completed result. The first ",
+    "dissertation_excerpt": "The route redesign built on these values addresses the single-muscle shortfall at high flexion angles documented in Section~\\ref{sec:results_torque}: each configuration now carries"
+  },
+  {
+    "paper_line": 517,
+    "dissertation_line": 324,
+    "similarity": 0.07,
+    "paper_excerpt": "The knee redesigns are graded one joint at a time against a single target curve, and the capability survey extends the grading to two joint coordinates at a time across the leg's m",
+    "dissertation_excerpt": "The route redesign replaces the multiobjective formulation with a single scalar cost assembled from weighted penalty terms, because the route prediction (contact activation, wrappi"
+  },
+  {
+    "paper_line": 519,
+    "dissertation_line": 337,
+    "similarity": 0.076,
+    "paper_excerpt": "The survey compares two routings. The hand-tuned routing is the original master's-project layout of the robot-body model \\citep{morrow_optimization_2020}. The optimized routing re-",
+    "dissertation_excerpt": "With the actuator force model validated at the actuator level, the same model was used to predict isometric torque about the knee joint for the test stands described in Sections~\\r"
+  },
+  {
+    "paper_line": 521,
+    "dissertation_line": 429,
+    "similarity": 0.202,
+    "paper_excerpt": "Table~\\ref{tab:CapabilitySurvey} gives the aggregate. The hand-tuned routing meets or exceeds the human torque over \\qty{66.32}{\\percent} of the graded domain and delivers active f",
+    "dissertation_excerpt": "Table~\\ref{tab:ExtPinGof} gives the per-test extensor fit, including training and validation means. The earlier cross-configuration fit is retained in Appendix~\\ref{sec:app_torque_"
+  },
+  {
+    "paper_line": 523,
+    "dissertation_line": 352,
+    "similarity": 0.187,
+    "paper_excerpt": "\\begin{table}[H]\n\\caption{Whole-body capability of the hand-tuned and optimized BPA routings against single-muscle human torque surfaces, mean per-actuator share of the graded doma",
+    "dissertation_excerpt": "\\begin{table}[H]\n\\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\\ref{fig"
+  },
+  {
+    "paper_line": 542,
+    "dissertation_line": 512,
+    "similarity": 0.06,
+    "paper_excerpt": "Read as a design problem, isometric torque about a BPA-actuated joint factors into three quantities the designer controls: the moment arm $r$, the normalized contraction $\\varepsil",
+    "dissertation_excerpt": "The modeling of extensor BPA paths that wrap around the knee joint is an approximation with inherent error (Fig. \\ref{fig:Ext_passthru}). When the moment arm is short, small change"
+  },
+  {
+    "paper_line": 544,
+    "dissertation_line": 84,
+    "similarity": 0.024,
+    "paper_excerpt": "These factors situate our work among musculoskeletal robot legs. Multifilament muscle routing has produced human-scale lower limbs \\citep{kurumaya_musculoskeletal_2016}, anthropomo",
+    "dissertation_excerpt": "These corrections are deliberately formulated to be identified from experiment rather than derived analytically, because the physical effects they represent are distributed and not"
+  },
+  {
+    "paper_line": 546,
+    "dissertation_line": 244,
+    "similarity": 0.047,
+    "paper_excerpt": "The correction family also complements the BPA force-modeling literature. Static models of the actuator in isolation, from the classical McKibben analyses \\citep{chou_measurement_1",
+    "dissertation_excerpt": "For a specified set of correction parameters, the following calculation solves the attachment-compliance displacement at each knee angle; it is distinct from the optimization that "
+  },
+  {
+    "paper_line": 550,
+    "dissertation_line": 141,
+    "similarity": 0.042,
+    "paper_excerpt": "The correction terms are identified for this test stand, these knee configurations, and these actuator families. Other joints or actuator types should repeat the two-stage procedur",
+    "dissertation_excerpt": "The change of notation that follows is deliberate. The symbols $k_{x}$, $k_{y}$, and $k_{z}$ name the stiffness components of the general bracket-frame array, Eq.~\\eqref{eq:bktstif"
+  },
+  {
+    "paper_line": 552,
+    "dissertation_line": 508,
+    "similarity": 0.034,
+    "paper_excerpt": "Isometric torque testing has yielded important design factors for roboticists seeking to design biomimetic humanoid robots. Additional testing such as isokinetic and isotonic that ",
+    "dissertation_excerpt": "Our improved BPA characterization predicts torque more accurately than the original BPA model (see Fig.~\\ref{fig:FlxPin_preopt}). This only accounts for part of the error. Many fac"
+  },
+  {
+    "paper_line": 556,
+    "dissertation_line": 375,
+    "similarity": 0.031,
+    "paper_excerpt": "This work started with an improved braided pneumatic actuator force-length-pressure model and actually delivers about a joint, and answered with a corrected torque model and the de",
+    "dissertation_excerpt": "The initial identification, fitted on the $l_{0}=\\qty{48.5}{\\cm}$ test, yielded a length offset $\\chi_{0} = \\qty{11.9}{\\mm}$ and effective stiffnesses $\\chi_{1} = \\qty{102}{\\kN\\per"
+  },
+  {
+    "paper_line": 558,
+    "dissertation_line": 143,
+    "similarity": 0.324,
+    "paper_excerpt": "\\section*{Resource Identification Initiative}\n\\begin{itemize}\n    \\item MATLAB (RRID:SCR\\_001622)\n    \\item OpenSim (RRID:SCR\\_002683)\n    \\item Arduino UNO (RRID:SCR\\_017284)\n\\end",
+    "dissertation_excerpt": "\\begin{equation}\n\\mathbf{K}_{br} = \n\\begin{bmatrix}\n\\chi_{1} & 0   & 0 \\\\\n0   & \\chi_{2} & 0 \\\\\n0   & 0   & \\chi_{1} \\\\\n\\end{bmatrix}\n\\label{eq:bktstiffness}\n\\end{equation}"
+  },
+  {
+    "paper_line": 565,
+    "dissertation_line": 4,
+    "similarity": 0.0,
+    "paper_excerpt": "%To take part in the Resource Identification Initiative, please use the corresponding catalog number and RRID in your current manuscript. For more information about the project and",
+    "dissertation_excerpt": "{\\doublespacing\\normalsize\\upshape\n\\noindent Publication note: This chapter is the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scha"
+  },
+  {
+    "paper_line": 568,
+    "dissertation_line": 546,
+    "similarity": 0.206,
+    "paper_excerpt": "\\section*{Conflict of Interest Statement}\nThe authors declare no conflicts of interest. The funders had no role in the design of the study; in the collection, analysis, or interpre",
+    "dissertation_excerpt": "\\subsubsection{Redesigned-Route Results on the Gait2392 Robot-Body Model}\\label{sec:route_redesign_results}"
+  },
+  {
+    "paper_line": 571,
+    "dissertation_line": 51,
+    "similarity": 0.194,
+    "paper_excerpt": "\\section*{Author Contributions}\nConceptualization, B.B. and C.M.; Methodology, B.B., C.M., and A.H.; Software, B.B., C.M., and L.B.; Validation, B.B. and A.H.; Formal Analysis, B.B",
+    "dissertation_excerpt": "Details of the existing model and the torque calculation methodology in the modeled robot are given by \\citet{bolen_determination_2019, morrow_optimization_2020}."
+  },
+  {
+    "paper_line": 574,
+    "dissertation_line": 160,
+    "similarity": 0.048,
+    "paper_excerpt": "\\section*{Funding}\nResearch for this article was funded by the Department of Mechanical and Materials Engineering at Portland State University, the National Science Foundation (NSF",
+    "dissertation_excerpt": "The force applied to the bracket was expressed in the bracket frame as $\\mathbf{F}_{br}$. This force vector can be written in terms of its magnitude and unit direction as"
+  },
+  {
+    "paper_line": 577,
+    "dissertation_line": 4,
+    "similarity": 0.0,
+    "paper_excerpt": "%Details of all funding sources should be provided, including grant numbers if applicable. Please ensure to add all necessary funding information, as after publication this is no l",
+    "dissertation_excerpt": "{\\doublespacing\\normalsize\\upshape\n\\noindent Publication note: This chapter is the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scha"
+  },
+  {
+    "paper_line": 579,
+    "dissertation_line": 510,
+    "similarity": 0.035,
+    "paper_excerpt": "\\section*{Acknowledgments}\nThe authors would like to acknowledge the contribution of Alex Steele, who designed the initial biomimetic 4-bar knee linkage we used for the test. He ga",
+    "dissertation_excerpt": "Simplifying and testing the model revealed deficiencies in our previous analysis. The isometric system is not rigid. There is compliance in the winch cable, artificial tendons, and"
+  },
+  {
+    "paper_line": 583,
+    "dissertation_line": 337,
+    "similarity": 0.02,
+    "paper_excerpt": "\\section*{Supplemental Data}\nSupplemental Data includes a figure for the test setup. \n \n %\\href{http://home.frontiersin.org/about/author-guidelines#SupplementaryMaterial}{Supplemen",
+    "dissertation_excerpt": "With the actuator force model validated at the actuator level, the same model was used to predict isometric torque about the knee joint for the test stands described in Sections~\\r"
+  },
+  {
+    "paper_line": 588,
+    "dissertation_line": 95,
+    "similarity": 0.275,
+    "paper_excerpt": "\\section*{Data Availability Statement}\nThe data sets are available from the authors upon reasonable request.",
+    "dissertation_excerpt": "where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{fitting}$ is the length of the end caps, and $\\chi_{0}$ is a constant length offset."
+  },
+  {
+    "paper_line": 593,
+    "dissertation_line": 508,
+    "similarity": 0.0,
+    "paper_excerpt": "% Please see the availability of data guidelines for more information, at https://www.frontiersin.org/about/author-guidelines#AvailabilityofData",
+    "dissertation_excerpt": "Our improved BPA characterization predicts torque more accurately than the original BPA model (see Fig.~\\ref{fig:FlxPin_preopt}). This only accounts for part of the error. Many fac"
+  },
+  {
+    "paper_line": 595,
+    "dissertation_line": 508,
+    "similarity": 0.036,
+    "paper_excerpt": "\\bibliographystyle{Frontiers-Harvard} %  Many Frontiers journals use the Harvard referencing system (Author-Date), to find the style and resources by journal: https://zendesk.front",
+    "dissertation_excerpt": "Our improved BPA characterization predicts torque more accurately than the original BPA model (see Fig.~\\ref{fig:FlxPin_preopt}). This only accounts for part of the error. Many fac"
+  },
+  {
+    "paper_line": 599,
+    "dissertation_line": 126,
+    "similarity": 0.0,
+    "paper_excerpt": "%%% Make sure to upload the bib file along with the tex file and PDF\n%%% Please see the test.bib file for some examples of references",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\begin{center}\n\\includegraphics[width=1\\textwidth]{bktFrame.pdf}\n\\end{center}\n\\caption{Bracket frame orientations for: \\textbf{(A)} flexor configuration on the"
+  },
+  {
+    "paper_line": 605,
+    "dissertation_line": 14,
+    "similarity": 0.0,
+    "paper_excerpt": "%%% Please be aware that for original research articles we only permit a combined number of 15 figures and tables, one figure with multiple subfigures will count as only one figure",
+    "dissertation_excerpt": "The primary components of the robot leg are the knee joint, femur, tibia, BPA assemblies, and artificial tendons (Fig. \\ref{fig:testJigs}\\textbf{A--C}). The artificial bone compone"
+  },
+  {
+    "paper_line": 611,
+    "dissertation_line": 526,
+    "similarity": 0.0,
+    "paper_excerpt": "%Frontiers requires figures to be submitted individually, in the same order as they are referred to in the manuscript. Figures will then be automatically embedded at the bottom of ",
+    "dissertation_excerpt": "The coefficient values reported with the results figures belong to the initial single-bracket identification. Re-identifying the correction terms over the full test sets with the t"
+  },
+  {
+    "paper_line": 613,
+    "dissertation_line": 114,
+    "similarity": 0.0,
+    "paper_excerpt": "%%% If you are submitting a figure with subfigures please combine these into one image file with part labels integrated.\n%%% If you don't add the figures in the LaTeX files, please",
+    "dissertation_excerpt": "\\begin{figure}[htbp]\n\\centering\n\\includegraphics[height=0.72\\textheight]{xiFrameTransform.pdf}\n% ALT TEXT: Two vertically stacked diagrams construct the local bracket frame.\n% Pane"
+  },
+  {
+    "paper_line": 620,
+    "dissertation_line": 4,
+    "similarity": 0.0,
+    "paper_excerpt": "%Tables should be inserted at the end of the manuscript. Please build your table directly in LaTeX.Tables provided as jpeg/tiff files will not be accepted. Please note that very la",
+    "dissertation_excerpt": "{\\doublespacing\\normalsize\\upshape\n\\noindent Publication note: This chapter is the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scha"
+  }
+]
