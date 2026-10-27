@@ -1,3 +1,10 @@
+# Torque-paper comparison and GoF follow-up
+
+Created `Documentation/Reports and Papers/Knee_Torque_Test/ChatGPT_reportTorque.md`. It inventories all 31 initial active paper review items, all 13 dissertation torque review items, nine current Ben paper comment threads, and the complete 272-thread resolved archive (74 substantive Ben messages). It maps comments to snapshot source lines/labels and records the actionable differences, including six versus nine cam-extensor measurements and conflicting biomimetic-extensor GoF values.
+
+Ben confirmed `fig:FlxGrp` should use a 2×2 grid: 10 mm, 20 mm, 20 mm, and legend tile. Detailed local ZCode instructions are in `Knee_Torque_Test/review_audit_20261026/ZCODE_REPLOT_REQUESTS.md`; no message was sent and no plot was regenerated.
+
+Ben additionally authorized GoF prose improvements in both documents and clarified that the metrics have a combined effect rather than a one-to-one mapping to error types. Those two bounded passages were revised live, with exact whole-file readback checks and a saved diff. No scientific values, figures, or review dispositions were changed. Paper live compile: 0 errors, 20 remaining duplicate-label/font warnings. Dissertation live compile status is recorded with the audit evidence.
 <!-- TWO_SESSION_UPDATE_20261027_START -->
 # ChatGPT sessions: 26–27 October 2026
 
