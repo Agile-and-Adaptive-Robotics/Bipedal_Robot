@@ -14,6 +14,7 @@ os.environ['CONDA_PREFIX']=str(Path(sys.executable).parent)
 os.environ.pop('AARL_NET',None)
 import numpy as np
 import mujoco
+from scipy.optimize import lsq_linear
 
 HERE=Path(__file__).resolve().parent
 SPINAL=HERE.parent/'spinal'
@@ -50,15 +51,29 @@ def rotation_error(quaternion):
 
 
 def allocate(matrix,target,initial,iterations=80):
-    # Matrix is reduced by the equality-constraint nullspace. Projected gradient
-    # respects each nonnegative reference capacity and warm starts every solve.
-    h=matrix@matrix.T
-    lipschitz=max(float(np.linalg.eigvalsh(h)[-1]),1.)+.01
-    x=initial.copy()
-    for _ in range(iterations):
-        gradient=matrix.T@(matrix@x-target)+.01*x
-        x=np.clip(x-gradient/lipschitz,0.,1.)
-    return x
+    # Exact bounded allocation avoids ill-conditioning between large hip
+    # capacities and small knee moment arms. Omit welded-joint columns.
+    enabled=np.linalg.norm(matrix,axis=0)>1e-7
+    result=np.zeros(matrix.shape[1])
+    active=matrix[:,enabled]
+    augmented=np.vstack((active,.03*np.eye(active.shape[1])))
+    rhs=np.r_[target,np.zeros(active.shape[1])]
+    solution=lsq_linear(augmented,rhs,bounds=(0.,1.),method='bvls',tol=1e-7,max_iter=100)
+    if solution.status<=0:raise RuntimeError('Muscle force allocation failed: '+solution.message)
+    result[enabled]=solution.x
+    return result
+
+def motor_target_current(compiled,mn,desired,tau=.005):
+    # Engineering MN current clamp: cancel the instantaneous background synaptic
+    # current and impose a 30 ms membrane target. RG timing and afferent-central
+    # interactions remain active; this is explicitly a hybrid control mode.
+    voltage=compiled.V
+    gmax=compiled.g_max_non[mn]
+    span=compiled.e_hi[mn]-compiled.e_lo[mn]
+    conductance=np.clip(gmax*(voltage[None,:]-compiled.e_lo[mn])/np.where(span==0,1.,span),0,gmax)
+    synaptic=np.sum(conductance*compiled.del_e[mn],axis=1)-voltage[mn]*np.sum(conductance,axis=1)
+    correction=(compiled.dt/tau)/compiled.time_factor_membrane[mn]*(params.E_HI*desired-voltage[mn])
+    return compiled.g_m[mn]*(voltage[mn]-compiled.V_rest[mn])-compiled.i_b[mn]-synaptic+correction
 
 
 def run(args):
@@ -135,12 +150,12 @@ def run(args):
             desired_activation=allocate(matrix,null.T@desired_torque[6:],desired_activation)
         if step==0:
             net.compiled.V[mn]=params.E_HI*desired_activation
-            for _ in range(500):
+            for _ in range(100):
                 actual=np.clip(net.compiled.V[mn]/params.E_HI,0.,1.)
                 integral=np.clip(integral+(desired_activation-actual)*model.opt.timestep,-1.,1.)
-                warm_post=params.E_HI*desired_activation+30*(desired_activation-actual)+60*integral
+                warm_post=motor_target_current(net.compiled,mn,desired_activation,args.motor_tau)
                 currents[:]=0
-                for i,name in enumerate(acts):currents[ports['POST_'+name]]=float(np.clip(warm_post[i],-100,100))
+                for i,name in enumerate(acts):currents[ports['POST_'+name]]=float(warm_post[i])
                 currents[ports['POSTURE']]=.15
                 net.step(currents)
             data.act[:]=np.clip(net.compiled.V[mn]/params.E_HI,0.,1.)
@@ -150,9 +165,9 @@ def run(args):
         actual_activation=np.clip(net.compiled.V[mn]/params.E_HI,0.,1.)
         currents[:]=0
         integral=np.clip(integral+(desired_activation-actual_activation)*model.opt.timestep,-1.,1.)
-        post=params.E_HI*desired_activation+30*(desired_activation-actual_activation)+60*integral
+        post=motor_target_current(net.compiled,mn,desired_activation,args.motor_tau)
         for i,name in enumerate(acts):
-            currents[ports['POST_'+name]]=float(np.clip(post[i],-100,100))
+            currents[ports['POST_'+name]]=float(post[i])
             tid=route_ids[i]
             currents[ports['Ia_'+name]]=max(0.,.3*dynamic.velocities[tid]/.3)
             currents[ports['II_'+name]]=max(0.,.3*(data.ten_length[tid]-length0[i])/max(.1*length0[i],.01))
@@ -165,6 +180,7 @@ def run(args):
                 if name in ports:currents[ports[name]]=min(2.,loads[si,part]/200.)
         net.step(currents)
         data.ctrl[:]=np.clip(net.compiled.V[mn]/params.E_HI,0.,1.)
+        if args.diagnostic_direct:data.ctrl[:]=desired_activation
         # Support is an explicit external pelvis rig. It never applies joint
         # torques or cancels gravity on the muscles/limbs.
         force=np.array([-args.horizontal_stiffness*(data.qpos[0]-root_x)-30*data.qvel[0],
@@ -185,6 +201,7 @@ def run(args):
         if any(w.number for w in data.warning):failed='MuJoCo numerical warning';break
         if data.qpos[1]<root_height-.3:failed='pelvis height failure';break
         if np.linalg.norm(rotation_error(data.qpos[3:7]))>np.deg2rad(60):failed='pelvis tilt failure';break
+        if np.linalg.norm(rotation_error(data.qpos[model.jnt_qposadr[torso]:model.jnt_qposadr[torso]+4]))>np.deg2rad(60):failed='lumbar posture failure';break
     arrays={key:np.array(value) for key,value in log.items()}
     args.output.parent.mkdir(parents=True,exist_ok=True)
     np.savez_compressed(args.output.with_suffix('.npz'),**arrays)
@@ -203,9 +220,10 @@ def run(args):
         mean_support_fraction=float(arrays['rig_force'][:,1].mean()/weight),nominal_support_fraction=args.support,
         mean_rig_torque_Nm=np.mean(np.abs(arrays['rig_torque']),axis=0).tolist(),
         mean_ground_load_N=np.mean(arrays['contact_loads'].sum(axis=2),axis=0).tolist(),
+        diagnostic_direct_control=args.diagnostic_direct,motor_target_tau_s=args.motor_tau,
         neural_parameters=dict(c1_gain=.15,v3_gain=0,heel_rge=.15,toe_rge=.05),
         force_model='30 ms first-order reference tension, capped by existing 27-actuator map MIFs; not calibrated BPA hardware',
-        controller='Layered SNS with Ia/II/Ib/contact inputs, descending postural torque allocation, and RG-driven stepping references',
+        controller='Layered SNS with Ia/II/Ib/contact inputs, descending postural torque allocation, compensated 30 ms MN target currents, and RG-driven stepping references',
         status='Supported neural-control diagnostic; walking classification requires trajectory/contact review')
     args.output.with_suffix('.json').write_text(json.dumps(summary,indent=2))
     print(json.dumps(summary,indent=2),flush=True)
@@ -221,5 +239,7 @@ if __name__=='__main__':
     parser.add_argument('--horizontal-stiffness',type=float,default=20.)
     parser.add_argument('--knee-amplitude',type=float,default=.3)
     parser.add_argument('--backend',choices=['reference','exact_fast'],default='exact_fast')
+    parser.add_argument('--motor-tau',type=float,default=.005)
+    parser.add_argument('--diagnostic-direct',action='store_true',help='Diagnostic only: bypass neural motor output; never count as neural control success')
     parser.add_argument('--output',type=Path,default=HERE/'runs/neural_stand')
     run(parser.parse_args())

@@ -1,3 +1,60 @@
+<!-- TWO_SESSION_UPDATE_20261027_START -->
+# ChatGPT sessions: 26–27 October 2026
+
+Updated 27 October 2026, 14:32 Pacific, on **easteregg2**. Ben's final session numbering is **Session 1 = Complete MuJoCo Neural Tasks** and **Session 2 = Review dissertation and torque paper**. Session 2 prepared this consolidated entry from its own work, Session 1's saved recovery report, and Session 1's latest visible progress messages. Session 1 is still active; its progress statements below are a dated snapshot, not a declaration that its task is finished. Earlier 26 October entries below remain intact and retain their original attribution and verification records.
+
+## Session 2 — dissertation and torque-paper review
+
+### Completed on 27 October
+
+- Restored the paper's bracket-deflection development: force components, compliance matrix, displacement, projection, effective stiffness, and brackets/tendon in series. Restored contact/release calculations in the supplement and their main-text pointer.
+- Created separate vector schematics for correction-factor projection and BPA bending across a flexed knee. The latter shows the actuator, attachments, tendon, radius, and full alpha contact angle. These appear as dissertation Figures 4.5/4.6 and paper Figures 5/6. PDF, SVG, PNG, and alternative-text assets are saved in both figure trees, with a reproducible generator.
+- Renamed the dissertation subsection to “Identification of the Torque-Model Correction Terms.” Removed obsolete 48.0/47.9 cm exception language from the adopted identification account while preserving the historical inventory in Appendix C. Corrected stiffness/frame descriptions against executable evaluators; adopted parameters and fold selections were preserved.
+- Corrected the Morrow/Bolen placement objective's sign and normalization against `Code/Matlab/Mesh_Optimization/costFunctionKnee.m`, added its penalty/weight/meaning table, and moved its citation out of Background into the torque-methods account. Retained the subsequent stiffness-aware cost evolution. Corrected interpretation of identification metrics, root-finding tolerance, and empirical bending losses.
+- Reconciled the capability comparison with the saved 27-site CSV: cell coverage 37.28%/65.19%, axis means 38.39%/66.17%, mean torque-ratio scores −1.93/−3.63, and 23 improvements/four ties. Clarified transmission/sizing changes, baseline diameter substitutions, and wrong-sign torque scores. Added the 27-site DoF/diameter inventory to Appendix C and the supplement.
+- Corrected the actuator-count conclusion: no saved tested combination meets all five angles; the best saved three-BPA/two-part-tackle case meets four. Removed the unsupported causal +4.51 N·m redirect claim. Did not restore the rejected 40.2 N·m clause or apply the stale Revision_C attachment swap. **pA remains origin; pB remains insertion.** Measurements, fitted parameters, and result mats were not altered, and no optimization was rerun.
+- Corrected abstract/conclusion and validation descriptions, including 15 flexor and nine extensor measured points. Retained **17 main-paper display items (12 figures, five tables)** under Ben's instruction to consolidate later if needed. Repaired affected table pagination, oversized figures/tables, and the paper's empty template ending.
+- Built and visually checked the affected local outputs: **paper 41 pages**, **supplement eight pages**, and **dissertation 320 pages**. Final local builds have no errors, undefined references/citations, duplicate labels, or oversized floats; inherited font/typesetting warnings remain. This verifies the reviewed torque material and targeted layout repairs, not every claim in every dissertation chapter.
+- Uploaded changed sources and schematic PDFs to both Overleaf projects and recompiled. The [torque paper](https://www.overleaf.com/project/622e9536b8ea1e0a7f167cf5) compiles with **zero errors and zero undefined-reference warnings**; 19 font-substitution warnings remain. Refreshed its uploaded auxiliary files so supplementary references resolve, and left `Main.tex` selected. The supplement's independent live build was not separately verified; its eight-page local build was verified.
+- The [dissertation](https://www.overleaf.com/project/644dc82bcd6a5481e3c3a8bb) compiles with **zero errors** after adding the live `figs/30-torque/` search path to Appendix C. Existing live Appendix E content was preserved. Existing comments and tracked-change dispositions were preserved. Native screen control stopped at Ben's request; subsequent checks used the Chrome extension.
+
+### Outstanding / deferred
+
+- The live dissertation still defines `fig:sadb_explorer`, `tab:sadb_afferents`, and `tab:sadb_pathways` in both Chapter 5 and Appendix E. These produce three duplicate-label warnings plus the summary warning and can misdirect references. They were explained to Ben but **have not been fixed**. The local review build lacks that extra live appendix content, so its clean label check does not clear the live conflicts.
+- Consolidating the paper's 17 display items is deferred. Remaining font/typesetting warnings have not all been eliminated. No full dissertation-wide scientific audit was claimed.
+- No commits or pushes were made. Existing ZCode and unrelated session changes were preserved for Ben's review.
+
+Evidence and commit-review map: `Documentation/Reports and Papers/Knee_Torque_Test/CHATGPT_REVIEW_20261027.md`. Per-source diffs, verification data, and upload archive: `Documentation/Reports and Papers/Knee_Torque_Test/Review_20261027/`. Local builds: `Knee_Torque_Test/build_review_20261027/` and `Dissertation/ProofFinal/build_r12_torque_review_20261027/`. Figure generator: `Knee_Torque_Test/Figures/Figure components/draw_torque_schematics_20261027.py`. Source snapshots and Overleaf confirmation images: `tmp/torque_review_20261027/`. All these paths are under `Documentation/Reports and Papers/` except the explicitly named root `tmp/` path.
+
+## Session 1 — MuJoCo/neural-model recovery and CAD robot
+
+### Completed and recorded in the recovery report
+
+- Repaired W2L gain registration so saved effective settings reach the compiled network; unknown settings now fail explicitly. Audited 56 effective conductance dimensions and three runtime sensor dimensions, excluding two inert saved settings.
+- Verified supported stepping in fresh processes. Trial 458 produced 28 left/21 right contact events, median phase 0.496063, 2.246231 m displacement, and 0.091786 m/s fitted speed over the report's analysis interval. Four independent replays matched; both reported candidates passed their separate 12-condition perturbation checks. These are **supported stepping**, with a vertical harness still active even at `wsup=0`; they do not establish harness-free or physiological walking.
+- Added an exact W2L neural backend with full-trajectory parity. Its isolated neural step improved by 1.425×; this is not a whole-simulation speedup claim. Rejected the previous sparse backend's closed-loop parity. A separately compiled Di Russo-inspired adaptation matched its own equations, without establishing equivalence to the original author's controller.
+- Recovered the original Di Russo repository, custom SCONE fork, model, and parameter structure. Corrected the previous source attribution and identified the original reduced nine-active-coordinate/18-muscle Thelen model. Rejected the surrogate search's somersault candidate as walking and stopped that optimization route.
+- Regenerated W2L perturbation/feedback panels with effective settings and recorded their interpretation limits. Imported the AH001 CAD geometry, preserved both four-bar knees, added the adjustable lumbar hinge/spine/payload, and mechanically verified a 75 kg model. The source CAD was opened read-only and not saved during that recorded import.
+
+Evidence: `Code/MuJoCo_SNS/spinal/reports_20261027_codex/REPORT.md`, its verification JSON files, and `ZCODE_HANDOFF.md`; CAD build and mechanical checks: `Code/MuJoCo_SNS/robot_torso/README.md` and its audit files. That saved recovery report describes an earlier 92-route scaffold; the newer work below supersedes that scaffold's route-count and frozen-point status.
+
+### In progress at this update
+
+Session 1's latest visible messages report correcting the coordinate frame to **x anterior, y superior, z right**, refreshing Ben's knee pose, and using the robotbody 27-actuator-per-side selection mirrored left (**54 selected actuators**). They report no reversed neutral actions after attachment corrections (largest shift about 21 mm), moving-point functions matching OpenSim numerically, and conditional gates passing source checks. These are Session 1's current progress reports; Session 2 has not independently rerun those checks.
+
+The SNS network is now reported to drive actuator forces. Initial supported tests collapsed rather than balanced; Session 1 replaced the force allocator with a bounded solver and is testing standing before assessing stepping. Small length jumps at semitendinosus conditional-guide switches remain flagged in the full source-route audit; those routes are outside the selected 27-actuator map. **Supported balance and neural locomotion of the new CAD robot are not yet demonstrated.** Foot integration and the final routing/controller verification remain part of that active work.
+
+### Still incomplete / blocked
+
+- **Di Russo walking replication is incomplete.** Native original-controller replay requires the author's custom SegmentalController runtime, absent from the installed environment; the original-model baseline remains outstanding.
+- **Actual CAD robot neural locomotion is incomplete**, despite verified mechanics and the newer active coupling work.
+- **Task 3 has not been launched**, pending the requested completion of tasks 2 and 5. Earlier recovery notes and handoff prompts are evidence of preparation, not completion.
+- Session 1's recorded recovery work made no commits, pushes, or dissertation edits. Subsequent changes are still active and should be reviewed against its next saved report before committing.
+
+<!-- TWO_SESSION_UPDATE_20261027_END -->
+
+---
+
 <!-- ETHICS_CLOSING_20261026_START -->
 # Follow-up: ethical-case paragraph closing
 
@@ -7735,3 +7792,147 @@ Latest local review PDF: `Revision_C/Revision_C_user_sweep_20261023.pdf`. Clean 
 ## U14 + U21 ZCode pass — 2026-10-23
 
 Both ZCode-owned items are done locally against the fresh Overleaf ZIP (downloaded 08:25, extracted to tmp/overleaf_live_20261023). U14: panel (C) added to Fig. 4.11 (measured torque magnitude vs human BFSH across the 15-hold RoM, paper numbers of record re-verified by re-running the generator). U21: bridge attribution/direction stated, the 92-actuator run corrected to open-loop, and the Table 6.1 imports row now carries the ankle-rigid limit; all other table claims verified against campaign records with no correction needed. Supervisor four-gate GO. Local verification build 256 pp, 0 errors, 0 undefined refs; renders of printed pages 101/122/129 checked. NOTHING uploaded; no comments resolved; no commits or pushes. Full record: Notes/advisor_revision_20261022/Revision_C/review/u14u21_20261023/REPORT.md.
+
+
+<!-- SESSION_1_SIMULATION_RECOVERY_20261027_START -->
+## Session 1 simulation recovery update
+
+Reporting window: 26–27 October 2026. Updated 27 October 2026 on **easteregg2**.
+Repository root: **`D:\GitHub\Bipedal_Robot`**. Python:
+**`D:\Anaconda\envs\myo\python.exe`**. Paths below are relative to that repository
+root unless given in full. This block records Session 1's simulation work;
+Session 2's entries and the existing advisor/dissertation record are preserved.
+
+### Verified W2L recovery and speed changes
+
+- Corrected gain registration at the evaluator boundary, where the previous
+  fresh-process verification discarded per-target settings. Unknown settings
+  now raise an error rather than disappearing silently.
+- Recovered trial 458 with all effective settings delivered. Its 30 s trajectory
+  has 28 left and 21 right contact events, median phase 0.496063, forward
+  displacement 2.246231 m, and fitted speed 0.091786 m/s. Four independent
+  replays match exactly. All 12 fresh-process perturbations of the saved numeric
+  settings by ±1%, excluding the fixed horizon, pass the supported-stepping gate.
+- Audited 56 effective conductance classes and three sensor dimensions. Two
+  saved settings have no corresponding edges. These are conductance classes,
+  not 56 independently tuned anatomical synapses.
+- The support ladder reaches nominal `wsup=0`, but the PD harness still carries
+  about 16.76% of body weight. No harness-free walking claim is supported.
+- Replaced the unsafe sparse-equivalence claim with an exact backend that
+  preserves reduction order. Full 30 s traces match the reference exactly;
+  isolated neural-step speed improves 1.425×. Independent processes use one
+  BLAS thread each. The old FastTrial physics loop remains unsuitable.
+- Re-ran perturbation panels with effective gains. Commissural deletion fails
+  bilateral stepping; removing all feedback fails the contact-phase gate while
+  cycling persists. These are supported W2L adaptation experiments, not an
+  original Deng replication.
+
+Evidence: `Code\MuJoCo_SNS\spinal\reports_20261027_codex\REPORT.md`,
+`verification.json`, `full_basin_results.json`, `speed_parity_exact_fast.json`,
+`perturbation_results.json`, and `w2l_verified_config.json` in that folder.
+
+### Di Russo replication
+
+Found the original author repository, `DiRussoAndrea/Spinal_controller`, and
+custom `simgait/SCONE` fork. The previously cited neumovelab repository is a
+comparative reimplementation. The original model is the reduced planar
+`gait9dof18musc_Thelen_20170320.osim`, with nine active coordinates and 18 Thelen
+muscles. It initializes locally in OpenSim 4.4.1. The optimized parameter file
+contains 256 parameters, now inventoried.
+
+Corrected multiple equation, sensor, and initialization errors in the existing
+Di Russo-inspired adaptation. Its compiled neural implementation matches its
+corrected Python equations, but that does not establish equivalence to the
+author's controller. A 960-trial duration/speed search selected a somersault;
+the candidate is rejected as walking. Further optimization of that surrogate
+was stopped. Published walking remains unreplicated, and the original custom
+SegmentalController runtime is not available locally.
+
+Original sources are staged at `tmp\codex_dirusso_original\` and
+`tmp\codex_simgait_scone\`. Evidence and rejected-result plots are in
+`Code\MuJoCo_SNS\spinal\reports_20261027_codex\`.
+
+### Actual robot geometry and corrected conventions
+
+- Refreshed the open `10_AH_001.SLDASM` after Ben adjusted the left knee.
+  Preserved both four-bar knees and both spherical hips. Current joint anchors
+  meet within numerical precision. Source CAD was not saved by Session 1.
+- Corrected Session 1's earlier frame mistake. The current robot pipeline uses
+  **x anterior, y superior, and z right**, including gravity, ground plane,
+  geometry, inertia, and muscle geometry. A pelvis-part datum transform removes
+  the assembly's global repositioning while retaining the knee adjustment.
+- Ben superseded the lumbar hinge with a **ball-and-socket joint**. The spine
+  remains a rigid 0.25 m bar. Payload center is 100 mm anterior and 75 mm above
+  the joint. The current model splits the balancing payload equally between
+  torso and a rigid pelvis/ilium load.
+- Loaded `Solid_Models\Prospective_Parts\Ty Ankle Foot\Foot and Ankle Design,
+  Newest (7-17-20)\Foot Ankle.SLDASM`: all 22 components resolved with no open
+  errors or warnings. Exported the geometry, mirrored it for the opposite side,
+  and welded all foot internal joints and the ankle attachment to each shank.
+- Total mass remains 75 kg: 5.356664 kg CAD lower body with feet, 0.12 kg spine,
+  and 69.523336 kg balancing payload. Each payload portion is 34.761668 kg.
+  Neutral torso extension demand is 34.1012 N·m. Printed parts use solid Onyx;
+  hardware densities and the 20 mm square spine cross-section remain engineering
+  assumptions rather than measured hardware properties.
+
+The current model is `Code\MuJoCo_SNS\robot_torso\ah001_neural.xml`.
+Earlier z-up routing files, including `opensim_routes.json` and
+`ah001_with_opensim_routes.xml`, are superseded and must not be used as the
+current robot model. Legacy converted human/W2L models were not globally
+rotated; their verified baselines remain separate.
+
+### Robotbody routes and neural control
+
+The source is now **`Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_robotbody.osim`**,
+using its right-side routes and explicit left mirrors. The existing
+`Code\Matlab\Mesh_Optimization\Routing27_v2\actuator_map_27.json` selects
+**27 actuators per side, 54 total**. No new hip-muscle consolidation was performed.
+The full source inventory retains other route definitions for auditing; they
+are not additional robot actuators.
+
+Moving path points use exact piecewise cubic functions exported from OpenSim,
+including derivative and endpoint checks. Conditional membership updates at
+runtime. Complete path Jacobians include moving-guide terms in force and
+velocity calculations. Checks cover 492 source function evaluations, 25 native
+conditional checks, and 75 constrained poses. Function errors are below
+1.4 × 10⁻¹⁷ m, and full path-derivative errors are below 1.4 × 10⁻⁹ m.
+
+The updated audit reports **zero reversed neutral sagittal actions**. Mirrored
+attachment corrections for adductor magnus 2, gracilis, and semimembranosus are
+recorded explicitly; maximum point shifts are 15.6, 21.0, and 18.1 mm. The
+previous TFL reversal clears with the refreshed CAD pose. Conditional switching
+of unselected semitendinosus routes has small length jumps after retargeting;
+those routes are not actuators in the 27-per-side model and remain flagged.
+
+Constructed a **262-neuron, 230-input SNS controller** driving the 54 actuator
+controls, with Ia/II/Ib and contact inputs, postural force allocation, and
+RG-driven stepping references. Reference tensions have a 30 ms activation
+filter and the existing 27-actuator map's MIF caps, including 2500 N for each
+erector. These are simulated reference capacities, not a calibrated BPA force
+model. The latest test mode uses explicitly compensated MN target currents;
+it is a hybrid controller, not a faithful Deng circuit replication.
+
+**Current control status: constructed and executing, but balance and locomotion
+are not yet verified.** Initial tests collapsed or lost posture. Subsequent
+five-second runs remained finite, but included large joint excursions, near-full
+actual harness support, and a failed trunk posture. Duration alone does not make
+them successful standing or walking. Controller debugging continues. Task 3's
+`s3k`, `w2lvar`, and `syn6` campaign has not been launched.
+
+Current evidence: `Code\MuJoCo_SNS\robot_torso\robotbody_routes.json`,
+`robotbody_source_inventory.json`, `route_sign_corrections.json`,
+`dynamic_route_verification.json`, `run_neural_robot.py`, and `runs\`.
+Fresh CAD/foot inventories are in
+`Code\MuJoCo_SNS\spinal\reports_20261027_robot_control\`.
+
+### Scope and next steps
+
+Continue controller diagnostics, verify supported standing before stepping,
+check exact-backend trajectory parity on this new network, and inspect contact
+and support forces before classifying any result. Revise ZCode prompts to name
+easteregg2 and provide full paths, environment, and runnable commands. No
+commits, pushes, outgoing ZCode messages, or dissertation source edits were
+made in this simulation-recovery work. This Session 1 block is additive; it does
+not replace Session 2's work or resolve advisor comment threads.
+<!-- SESSION_1_SIMULATION_RECOVERY_20261027_END -->
+
