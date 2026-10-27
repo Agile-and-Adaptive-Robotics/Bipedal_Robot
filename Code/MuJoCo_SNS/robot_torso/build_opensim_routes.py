@@ -12,7 +12,7 @@ from add_torso import values
 HERE=Path(__file__).resolve().parent
 
 
-def build(specification,output):
+def build(specification,output,include_reference=False):
     configuration=json.loads(Path(specification).read_text())
     tree=ET.parse(HERE/'ah001_with_torso.xml')
     root=tree.getroot()
@@ -27,7 +27,8 @@ def build(specification,output):
     bodies={x.get('name'):x for x in root.findall('.//body')}
     tendons=ET.SubElement(root,'tendon')
     actuators=ET.SubElement(root,'actuator')
-    for route in configuration['routes']:
+    routes_used=[r for r in configuration['routes'] if include_reference or r.get('actuator_assignment') is not None]
+    for route in routes_used:
         enabled=[]
         for point in route['points']:
             if point['body'] not in bodies:
@@ -67,7 +68,7 @@ def build(specification,output):
     rank=int(np.sum(singular>1e-8))
     nullspace=vh[rank:].T
     route_audits=[]
-    for index,route in enumerate(configuration['routes']):
+    for index,route in enumerate(routes_used):
         analytic=-data.ten_J[index].copy()
         projected=analytic@nullspace
         route_audits.append(dict(name=route['name'],length_m=float(data.ten_length[index]),
@@ -77,7 +78,7 @@ def build(specification,output):
                                  mechanical_status='no joint leverage' if np.linalg.norm(projected)<1e-10 else 'has joint leverage; sign/range audit required'))
     output=Path(output)
     output.with_suffix('.audit.json').write_text(json.dumps(dict(model=str(output),routes=route_audits,
-        count=model.nu,no_joint_leverage=sum(x['effective_moment_norm_m']<1e-10 for x in route_audits),
+        actuator_count=model.nu,tendon_count=model.ntendon,no_joint_leverage=sum(x['effective_moment_norm_m']<1e-10 for x in route_audits),
         total_mass_kg=float(model.body_mass.sum()),loop_rank=rank,
         dynamic_path_policy=configuration['dynamic_path_policy'],force_policy=configuration['force_policy']),indent=2))
     print(json.dumps(dict(model=str(output),routes=model.nu,total_mass_kg=float(model.body_mass.sum()),
@@ -88,5 +89,6 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--routes',type=Path,default=HERE/'robotbody_routes.json')
     parser.add_argument('--output',type=Path,default=HERE/'ah001_neural.xml')
+    parser.add_argument('--include-reference-routes',action='store_true',help='Include the other 38 passive source routes for complete audits')
     args=parser.parse_args()
-    build(args.routes,args.output)
+    build(args.routes,args.output,args.include_reference_routes)

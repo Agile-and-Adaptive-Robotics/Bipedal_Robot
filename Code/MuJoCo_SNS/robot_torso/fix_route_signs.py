@@ -19,7 +19,7 @@ def main():
     backup=HERE.parent/'spinal/reports_20261027_robot_control/robotbody_routes_before_sign_fixes.json'
     backup.write_text(json.dumps(configuration,indent=2))
     routes={r['name']:r for r in configuration['routes']}
-    model=mujoco.MjModel.from_xml_path(str(HERE/'ah001_neural.xml'));dynamic=DynamicRoutes(model,configuration)
+    model=mujoco.MjModel.from_xml_path(str(HERE/'ah001_routes_audit.xml'));dynamic=DynamicRoutes(model,configuration)
     neutral=pose(model,dynamic,'hip','r',0.)
     tangents={}
     for kind in ('hip','knee'):

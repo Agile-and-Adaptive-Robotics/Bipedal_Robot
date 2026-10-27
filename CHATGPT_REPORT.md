@@ -7912,12 +7912,35 @@ erector. These are simulated reference capacities, not a calibrated BPA force
 model. The latest test mode uses explicitly compensated MN target currents;
 it is a hybrid controller, not a faithful Deng circuit replication.
 
-**Current control status: constructed and executing, but balance and locomotion
-are not yet verified.** Initial tests collapsed or lost posture. Subsequent
-five-second runs remained finite, but included large joint excursions, near-full
-actual harness support, and a failed trunk posture. Duration alone does not make
-them successful standing or walking. Controller debugging continues. Task 3's
-`s3k`, `w2lvar`, and `syn6` campaign has not been launched.
+**Current control status: a 20-second supported crouched-stance test is verified;
+locomotion remains unverified.** Initial tests collapsed or lost posture. After
+correcting force allocation, motor-neuron tracking, and the explicit support rig,
+the final five seconds of the successful stance run had knee excursions of
+1.35° right and 0.95° left, maximum pelvis tilt of 3.92°, and maximum lumbar
+rotation of 0.58°. Mean foot loads were 17.63 N right and 21.61 N left. Actual
+vertical rig support averaged **94.68% of body weight** in that interval, with
+angular stabilization also active. This establishes supported postural control,
+not independent balance or harness-free standing. Disabling all muscle forces
+under the same support settings caused lumbar failure after 0.202 seconds.
+
+The reference and exact accelerated neural backends produced **bit-identical
+complete 20-second stance trajectories**, including positions, velocities,
+activation, force, contact, route, and neural logs. Evidence is in
+`Code\MuJoCo_SNS\robot_torso\controller_assessment.json` and
+`runs\stand_20s_reference.*` / `runs\stand_20s_exact.*`. A replay image and
+animation are `robot_torso\neural_stance.png` and `neural_stance.gif`.
+
+The original stepping drive latched rather than oscillated. A separate rhythm
+probe found bilateral oscillation at drive 3.0, and the corresponding supported
+robot run completed 20 seconds without a numerical or posture failure. Its
+whole-run forward displacement was 0.446 m, and mean actual vertical support
+was 93.74% of body weight. These totals include settling and do **not** establish
+alternating gait or locomotion; contact, phase, and displacement after stepping
+onset still require assessment. Reducing vertical rig stiffness from 800 to
+300 N/m failed the pelvis-height gate after 4.352 seconds, before stepping
+onset. These runs are `runs\step_drive3.*` and
+`runs\step_drive3_lower_rig.*`. Task 3's `s3k`, `w2lvar`, and `syn6` campaign
+has not been launched.
 
 Current evidence: `Code\MuJoCo_SNS\robot_torso\robotbody_routes.json`,
 `robotbody_source_inventory.json`, `route_sign_corrections.json`,
@@ -7927,10 +7950,13 @@ Fresh CAD/foot inventories are in
 
 ### Scope and next steps
 
-Continue controller diagnostics, verify supported standing before stepping,
-check exact-backend trajectory parity on this new network, and inspect contact
-and support forces before classifying any result. Revise ZCode prompts to name
-easteregg2 and provide full paths, environment, and runnable commands. No
+Continue stepping diagnostics and inspect contact, phase, and support forces
+before classifying locomotion. Supported stance and complete-trajectory backend
+parity are now verified within the assistance conditions stated above. Updated
+ZCode prompts name easteregg2 and provide full paths, environment, and runnable
+commands in
+`Code\MuJoCo_SNS\spinal\reports_20261027_robot_control\ZCODE_PROMPTS_SESSION1.md`.
+No
 commits, pushes, outgoing ZCode messages, or dissertation source edits were
 made in this simulation-recovery work. This Session 1 block is additive; it does
 not replace Session 2's work or resolve advisor comment threads.

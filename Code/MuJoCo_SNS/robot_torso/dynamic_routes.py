@@ -25,7 +25,10 @@ def spline_value_derivative(x,knots,coefficients,endpoints):
 class DynamicRoutes:
     def __init__(self,model,configuration):
         self.model=model
-        self.routes=configuration['routes']
+        self.routes=[]
+        for route in configuration['routes']:
+            if mujoco.mj_name2id(model,mujoco.mjtObj.mjOBJ_TENDON,route['name'])>=0:self.routes.append(route)
+            elif route.get('actuator_assignment') is not None:raise ValueError('Missing assigned actuator route '+route['name'])
         self.coordinate_gradients={}
         self.qpos_terms={}
         for side in ('r','l'):

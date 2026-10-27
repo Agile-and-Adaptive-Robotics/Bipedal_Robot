@@ -18,21 +18,23 @@ def main():
             source = Path(directory) / 'lower.xml'
             output = Path(directory) / 'with_torso.xml'
             source.write_text('<mujoco><compiler angle="%s"/>'
-                              '<option gravity="0 0 -9.81"/>'
+                              '<option gravity="0 -9.81 0"/>'
                               '<worldbody><body name="pelvis">'
                               '<geom type="box" size=".1 .1 .1" mass="5"/>'
                               '</body></worldbody></mujoco>' % angle)
             audit = add_torso(source, output, 'pelvis', [0, 0, .1])
             assert np.isclose(audit['spine_mass_kg'], .12)
             assert np.isclose(audit['payload_mass_kg'], 69.88)
-            expected = 69.88 * 9.81 * .1
-            assert np.isclose(abs(audit['lumbar_gravity_compensation_Nm']), expected)
+            expected = 69.88 * .5 * 9.81 * .1
+            assert np.allclose(audit['lumbar_gravity_compensation_Nm'],[0,0,expected])
             model = mujoco.MjModel.from_xml_path(str(output))
-            assert np.allclose(model.jnt_range[0], np.deg2rad([-30, 30]))
+            assert model.jnt_type[0]==int(mujoco.mjtJoint.mjJNT_BALL)
+            assert np.isclose(audit['torso_payload_mass_kg'],34.94)
+            assert np.isclose(audit['ilium_payload_mass_kg'],34.94)
             results[angle] = audit
     path = Path(__file__).with_name('verification.json')
     path.write_text(json.dumps(results, indent=2))
-    print('PASS: degree/radian sources, 75 kg mass balance, and analytic lumbar torque %.6f Nm' % expected)
+    print('PASS: degree/radian sources, y-up frame, lumbar ball joint, split 75 kg mass, and analytic lumbar torque %.6f Nm' % expected)
 
 
 if __name__ == '__main__':

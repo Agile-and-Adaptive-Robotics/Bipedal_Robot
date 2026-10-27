@@ -146,7 +146,12 @@ def main():
         properties[name] = dict(mass_kg=mass, center_of_mass=center.tolist(), inertia_com=tensor.tolist(), mesh_bounds=bounds)
     from foot_geometry import add_feet
     foot_audit=add_feet(root,bodies,origins,properties,AUDIT,HERE)
+    for side in ('r','l'):links.append(dict(parent='shank_'+side,child='foot_'+side,kind='fixed',axis=np.zeros(3)))
     pelvis.set('pos',values([0,-.0002-min(x['mesh_bounds'][0][1] for x in foot_audit.values()),0]))
+    from robot_kinematics import camera_axes
+    camera_position=np.array([1.25,1.25,1.65]);target_position=np.array([-.06,.64,0.])
+    camera_rotation=camera_axes(camera_position,target_position)
+    ET.SubElement(world,'camera',name='isb_preview',pos=values(camera_position),xyaxes=values(camera_rotation[:,:2].T.reshape(-1)))
     equality = ET.SubElement(root,'equality')
     for closure in closures:
         # Verified against compiled eq_data: anchor is local to body1.
@@ -198,7 +203,7 @@ def main():
             target=child if index==len(axes)-1 else child+'_axis%d' % index
             if target != child:
                 ET.SubElement(urdf,'link',name=target)
-            joint=ET.SubElement(urdf,'joint',name=child+'_passive_%d' % index,type='continuous')
+            joint=ET.SubElement(urdf,'joint',name=child+'_passive_%d' % index,type='fixed' if item['kind']=='fixed' else 'continuous')
             ET.SubElement(joint,'parent',link=parent)
             ET.SubElement(joint,'child',link=target)
             ET.SubElement(joint,'origin',xyz=values(position if index==0 else [0,0,0]),rpy='0 0 0')

@@ -335,6 +335,12 @@ machine, NOT staleness.
 
 ## Standing conventions
 
+- **Robot anatomical frame (Ben, 2026-10-27): x anterior, y superior, z right,
+  matching OpenSim/ISB. New MuJoCo robot models use gravity [0,-9.81,0] and a
+  y-up ground plane. Normalize CAD assembly placement through the pelvis datum;
+  never reinterpret an arbitrary assembly rotation as anatomical axes. Older
+  converted model baselines may use z-up and require explicit frame adapters.
+  AH001 lumbar joint is ball-and-socket with a rigid 0.25 m spine, not a hinge.**
 - Execute Ben's directives verbatim; ambiguities get asked, not inferred. Every
   revision pass ends with verification + a per-directive compliance check.
 - No silent deletions or number changes anywhere in the dissertation; every number

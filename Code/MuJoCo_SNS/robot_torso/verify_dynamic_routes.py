@@ -38,7 +38,7 @@ def main():
                     assert bool(native_point.isActive(state))==(lo<=value<=hi);condition_checks+=1
                 coordinates.get(name).setValue(state,0.,False)
     assert maximum_function_error<1e-10
-    model=mujoco.MjModel.from_xml_path(str(HERE/'ah001_neural.xml'));dynamic=DynamicRoutes(model,config)
+    model=mujoco.MjModel.from_xml_path(str(HERE/'ah001_routes_audit.xml'));dynamic=DynamicRoutes(model,config)
     results={};maximum_derivative_error=0.;switch_counts={};boundary_events=[]
     for kind,side,limit in [('hip','r',30),('hip','l',30),('knee','r',35),('knee','l',35),('lumbar','r',20)]:
         label=kind if kind=='lumbar' else kind+'_'+side;samples=[]

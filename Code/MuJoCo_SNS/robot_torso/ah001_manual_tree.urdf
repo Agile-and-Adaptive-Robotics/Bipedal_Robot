@@ -256,4 +256,18 @@
     <axis xyz="0 -1.1102230246251565e-16 -1" />
     <limit effort="0" velocity="0" />
   </joint>
+  <joint name="foot_r_passive_0" type="fixed">
+    <parent link="shank_r" />
+    <child link="foot_r" />
+    <origin xyz="-0.08058292338752851 -0.31387591099248346 -0.013568653856787016" rpy="0 0 0" />
+    <axis xyz="0 0 0" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="foot_l_passive_0" type="fixed">
+    <parent link="shank_l" />
+    <child link="foot_l" />
+    <origin xyz="-0.12289387609137054 -0.29984794682384297 0.0075686485576649809" rpy="0 0 0" />
+    <axis xyz="0 0 0" />
+    <limit effort="0" velocity="0" />
+  </joint>
 </robot>

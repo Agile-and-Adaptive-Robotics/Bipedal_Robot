@@ -1,0 +1,50 @@
+{
+  "machine": "easteregg2",
+  "mode": "stand",
+  "backend": "exact_fast",
+  "duration_simulated_s": 0.20200000000000015,
+  "requested_duration_s": 10.0,
+  "wall_s": 0.3387325999792665,
+  "failed": "lumbar posture failure",
+  "finite": true,
+  "neuron_count": 262,
+  "neural_inputs": 230,
+  "actuators": 54,
+  "active_force_actuators": 0,
+  "maximum_control": 0.0,
+  "pelvis_height_min_m": 0.9457976021395365,
+  "mean_neural_tracking_error": 0.02838891563209859,
+  "maximum_lumbar_rotation_deg": 59.22365557093845,
+  "pelvis_forward_displacement_m": -0.008249109429469945,
+  "knee_range_deg": [
+    9.359909062364705,
+    16.128494795347468
+  ],
+  "mean_support_fraction": 0.782259102229688,
+  "nominal_support_fraction": 0.8,
+  "mean_rig_torque_Nm": [
+    0.06424177276547847,
+    0.04570680120566143,
+    6.26011650667267
+  ],
+  "mean_ground_load_N": [
+    1.5004521017710029,
+    0.2764600806502807
+  ],
+  "diagnostic_direct_control": false,
+  "motor_target_tau_s": 0.005,
+  "rig_angular_stiffness_Nm_rad": 300.0,
+  "rig_angular_damping_Nms_rad": 60.0,
+  "frontal_hip_guide_stiffness_Nm_rad": 0.0,
+  "muscles_disabled": true,
+  "vertical_rig_stiffness_N_m": 800.0,
+  "neural_parameters": {
+    "c1_gain": 0.15,
+    "v3_gain": 0,
+    "heel_rge": 0.15,
+    "toe_rge": 0.05
+  },
+  "force_model": "30 ms first-order reference tension, capped by existing 27-actuator map MIFs; not calibrated BPA hardware",
+  "controller": "Layered SNS with Ia/II/Ib/contact inputs, descending postural torque allocation, compensated MN target currents, and RG-driven stepping references",
+  "status": "Supported neural-control diagnostic; walking classification requires trajectory/contact review"
+}
