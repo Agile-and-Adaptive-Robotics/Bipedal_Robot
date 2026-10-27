@@ -222,3 +222,26 @@ the parallel pool for the optimization loop. The controller in
 `spinal\dirusso_gait2392\controller.py` has the same structure (leaky
 integrators on per-muscle state vectors) and can be compiled the same
 way.
+
+## CURRENT STATUS (end of 2026-10-26 session)
+
+WORKING NOW:
+- parallel_eval.py: 10 workers, ~1.2 trials/s (correct, wraps run_phase)
+- fast_eval.py SparseForward: bit-identical, 2.1x neural speedup
+- numba_trial.py neural_step: 5.4 µs/step (19x), bit-identical
+
+NEEDS DEBUGGING before production use:
+- FastTrial.run() full loop: runs at 15x real time but the walker
+  falls (pelvis drops, no heel strikes). Root cause: the simplified
+  harness lacks the drop-protocol timing (hold 3s in air, lower 1s,
+  settle 0.4s, then walk). The real test_w2l_ground.run_phase has
+  this staged protocol; FastTrial starts walking immediately.
+  Fix: add the hold/lower/settle phases before enabling drive and
+  contact encoding. Until then, use parallel_eval.py (which wraps
+  the proven run_phase).
+
+PRACTICAL SPEEDUP AVAILABLE TODAY:
+- 10-worker parallel pool: ~1.2 trials/s (vs 0.22 sequential)
+- 500-trial campaign: ~7 minutes (vs ~42 minutes)
+- Combined with numba neural step once FastTrial is debugged:
+  projected ~11 trials/s, 500 trials in ~45 seconds.

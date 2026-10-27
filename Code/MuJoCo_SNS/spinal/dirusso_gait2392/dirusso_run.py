@@ -112,20 +112,45 @@ def load_model():
 
 
 def run(W, dur=30.0, wsup=0.7, omega=2 * np.pi / 1.1, gamma=1.0, gscale=0.1, gains_in=None,
-        out="dirusso_run.npz"):
+        out="dirusso_run.npz", replay_s=2.0):
+    """One trial. If replay_s > 0, the first replay_s seconds impose the
+    reference walking kinematics (bsolve qpos) to build up neural state
+    before releasing into free simulation (Di Russo's bootstrap)."""
     model = load_model()
     data = mujoco.MjData(model)
     ids, geoms, pelvis, tilt_adr, tx_adr = P.index_maps(model, mujoco)
     mujoco.mj_resetDataKeyframe(model, data, 0)
-    # the equality locks target 0; the keyframe carries nonzero values on
-    # the locked joints -> constraint explosion at step 1 unless zeroed
     for j in P.LOCK_JOINTS:
         jid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, j)
         data.qpos[model.jnt_qposadr[jid]] = 0.0
         data.qvel[model.jnt_dofadr[jid]] = 0.0
     mujoco.mj_forward(model, data)
-    # her p.10 pre-optimization rule: bound the unoptimized network into a
-    # reasonable operating range (reflex chains at gscale until searched)
+
+    # ---- REPLAY REFERENCE (bsolve kinematics for the sagittal joints) ----
+    ref = np.load(BSOLVE, allow_pickle=True)
+    ref_t, ref_q = ref["t"], ref["qpos"]
+    ref_acts, ref_names = ref["acts"], list(ref["act_names"])
+    # find the qpos column indices for the sagittal joints in the FULL model
+    SAGITTAL = ("pelvis_tilt", "pelvis_tx", "pelvis_ty",
+                "hip_flexion_r", "knee_angle_r", "ankle_angle_r", "mtp_angle_r",
+                "hip_flexion_l", "knee_angle_l", "ankle_angle_l", "mtp_angle_l")
+    # the bsolve qpos is from the full (unlocked) model; find cols by joint
+    # order: root(7) then joints in model order — the first 7 are the root
+    # freejoint (3 trans + 4 quat). Columns 7+ map to model joints.
+    # From the earlier check: col 8=hip_flexion_r, 11=knee_angle_r, etc.
+    # We use a simpler approach: look up by joint name.
+    full_model = mujoco.MjModel.from_xml_path(XML)
+    ref_cols = {}
+    for jn in SAGITTAL:
+        jid = mujoco.mj_name2id(full_model, mujoco.mjtObj.mjOBJ_JOINT, jn)
+        if jid >= 0:
+            ref_cols[jn] = full_model.jnt_qposadr[jid]
+    # also the root free-joint qpos (columns 0-6)
+    root_jadr = full_model.jnt_qposadr[mujoco.mj_name2id(
+        full_model, mujoco.mjtObj.mjOBJ_JOINT, "root")] \
+        if mujoco.mj_name2id(full_model, mujoco.mjtObj.mjOBJ_JOINT, "root") >= 0 \
+        else 0
+
     gains = {k: (v if np.isscalar(v) else v * gscale)
              for k, v in C.default_gains().items()}
     gains["ff"] = 1.0
@@ -137,7 +162,6 @@ def run(W, dur=30.0, wsup=0.7, omega=2 * np.pi / 1.1, gamma=1.0, gscale=0.1, gai
     weight = -g * model.body_mass.sum()
     dt = model.opt.timestep
     n = int(dur / dt)
-    # per-group length ranges from actuator_lengthrange
     lr = {}
     for (m, s), aid in ids.items():
         lo = model.actuator_lengthrange[aid[0]]
@@ -145,10 +169,60 @@ def run(W, dur=30.0, wsup=0.7, omega=2 * np.pi / 1.1, gamma=1.0, gscale=0.1, gai
     log = {k: np.zeros(n) for k in
            ("t", "hL", "hR", "tL", "tR", "z", "x", "tilt", "cycleL", "cycleR")}
     heel_prev = {"L": 20.1, "R": 20.1}
-    lprev = {k: None for k in ids}
     strikes = {"L": [], "R": []}
+
+    n_replay = int(replay_s / dt) if replay_s > 0 else 0
     for i in range(n):
         t = i * dt
+
+        # ---- REPLAY PHASE: impose reference kinematics ----
+        if i < n_replay:
+            # find the reference frame (loop the 2-second reference)
+            ref_time = (t % (ref_t[-1] - ref_t[0] + ref_t[1] - ref_t[0]))
+            idx = np.searchsorted(ref_t, ref_time + ref_t[0]) - 1
+            idx = np.clip(idx, 0, len(ref_t) - 2)
+            frac = (ref_time + ref_t[0] - ref_t[idx]) / \
+                (ref_t[idx + 1] - ref_t[idx])
+            # interpolate reference qpos
+            for jn, col in ref_cols.items():
+                # find the corresponding joint in the sagittal model
+                sjid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, jn)
+                if sjid >= 0 and jn not in P.LOCK_JOINTS:
+                    target = ref_q[idx, col] + frac * \
+                        (ref_q[idx + 1, col] - ref_q[idx, col])
+                    data.qpos[model.jnt_qposadr[sjid]] = target
+            # root position from reference
+            for rc in range(min(7, ref_q.shape[1])):
+                if rc < data.qpos.shape[0]:
+                    target = ref_q[idx, rc] + frac * \
+                        (ref_q[idx + 1, rc] - ref_q[idx, rc])
+                    data.qpos[rc] = target
+            # compute velocity from the reference (finite difference)
+            # CRITICAL FIX 2026-10-26: releasing with zero velocity makes
+            # the walker fall from a dead stop; it needs walking momentum
+            ref_dt = ref_t[idx + 1] - ref_t[idx]
+            for jn, col in ref_cols.items():
+                sjid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, jn)
+                if sjid >= 0 and jn not in P.LOCK_JOINTS:
+                    qadr = model.jnt_qposadr[sjid]
+                    dofadr = model.jnt_dofadr[sjid]
+                    vel = (ref_q[idx + 1, col] - ref_q[idx, col]) / ref_dt
+                    if dofadr < data.qvel.shape[0]:
+                        data.qvel[dofadr] = vel
+            # root velocity (columns 0-6: 3 translational + angular via
+            # quaternion; approximate with translational finite diff)
+            root_dof = model.jnt_dofadr[mujoco.mj_name2id(
+                model, mujoco.mjtObj.mjOBJ_JOINT, "root")] \
+                if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT,
+                                     "root") >= 0 else 0
+            for rc in range(min(3, ref_q.shape[1])):
+                dof = root_dof + rc
+                if dof < data.qvel.shape[0]:
+                    vel = (ref_q[idx + 1, rc] - ref_q[idx, rc]) / ref_dt
+                    data.qvel[dof] = vel
+            mujoco.mj_forward(model, data)
+
+        # ---- SENSORS (same for replay and free phases) ----
         sens = {}
         heel_now = {}
         for s in ("L", "R"):
@@ -176,6 +250,7 @@ def run(W, dur=30.0, wsup=0.7, omega=2 * np.pi / 1.1, gamma=1.0, gscale=0.1, gai
             if hs:
                 strikes[s].append(t)
             log[f"cycle{s}"][i] = len(strikes[s])
+
         tilt = data.qpos[tilt_adr]
         exc = ctrl.step(sens, {s: heel_now[s] > 20.0 and
                          (not strikes[s] or t - strikes[s][-1] > 0.45)
@@ -184,16 +259,36 @@ def run(W, dur=30.0, wsup=0.7, omega=2 * np.pi / 1.1, gamma=1.0, gscale=0.1, gai
             for m in C.MUSCLES:
                 for a in ids[(m, s)]:
                     data.ctrl[a] = exc[si, C.MIDX[m]]
-        # vertical weight-support harness (adaptation knob; her sim: none).
-        # Settle device: full support for 0.6 s while tone builds.
+
+        # ---- HARNESS ----
         data.xfrc_applied[:] = 0.0
-        data.xfrc_applied[pelvis, 2] = (wsup if t > 0.6 else 1.0) * weight
+        if i < n_replay:
+            data.xfrc_applied[pelvis, 2] = 1.0 * weight  # full support during replay
+        else:
+            t_free = t - replay_s
+            data.xfrc_applied[pelvis, 2] = (wsup if t_free > 0.6 else 1.0) * weight
+
         log["t"][i], log["z"][i], log["x"][i], log["tilt"][i] = \
             t, data.xpos[pelvis, 2], data.qpos[tx_adr], tilt
-        mujoco.mj_step(model, data)
-        if not np.isfinite(data.qpos).all():
-            print(f"NON-FINITE at t={t:.2f}")
-            break
+
+        # ---- STEP ----
+        if i < n_replay:
+            # during replay: step physics (lets actuator activation build
+            # up from ctrl), THEN snap qpos back to the reference (so the
+            # kinematics stay on-track while the internal actuator state
+            # evolves). Without mj_step during replay, data.act stays at 0
+            # and the muscles have no force at the release transition.
+            qpos_ref = data.qpos.copy()
+            mujoco.mj_step(model, data)
+            data.qpos[:] = qpos_ref
+            data.qvel[:] = 0.0
+            mujoco.mj_forward(model, data)
+        else:
+            mujoco.mj_step(model, data)
+            if not np.isfinite(data.qpos).all():
+                print(f"NON-FINITE at t={t:.2f}")
+                break
+
     np.savez(os.path.join(HERE, out), W=W, **log)
     return log, strikes
 

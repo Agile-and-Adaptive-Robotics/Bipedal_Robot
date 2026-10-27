@@ -1,0 +1,204 @@
+--- D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Knee_Torque_Test\ProofFinal\Main.tex (session start)
++++ D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Knee_Torque_Test\ProofFinal\Main.tex
+@@ -202,7 +202,7 @@
+ \end{equation}
+ where $l_{LMT}$ is the musculotendon path length from origin to insertion, $l_{fitting}$ is the end-cap length (\qty{25.4}{\mm} per end), and $\chi_{0}$ is the constant length offset.
+ 
+-As the actuator develops force, the compliant attachments deform, changing the effective BPA length and, through it, the force. The combined compliance is modeled with Hooke's law in a local bracket frame at each attachment. The frame is constructed by two rotations from the vector joining the bracket reference point to the BPA attachment point, $\mathbf{p}_{A}$ at the femur-side muscle origin or $\mathbf{p}_{B}$ at the tibial insertion (Figure~\ref{fig:xiFrameTransform}): a rotation through $\theta_z$ about the fixed space-frame axis $\hat{\mathbf{z}}_{s}$ aligns an intermediate axis with the sagittal-plane projection of the attachment point, and a rotation through $-\theta_y$ about the current $\hat{\mathbf{y}}$ axis, which points posteriorly in the primary cantilever bending direction, aligns the bracket axis $\hat{\mathbf{x}}_{br}$ with the full three-dimensional point vector. The orientation and homogeneous transform are
++As the actuator develops force, the compliant attachments deform, changing the effective BPA length and, through it, the force. The combined compliance is modeled with Hooke's law in a local bracket frame at each attachment. The two-rotation frame is constructed from the vector joining the bracket reference point to the BPA attachment point, $\mathbf{p}_{A}$ at the femur-side muscle origin or $\mathbf{p}_{B}$ at the tibial insertion (Supplementary Figure~\ref{fig:xiFrameTransform}): a rotation through $\theta_z$ about the fixed space-frame axis $\hat{\mathbf{z}}_{s}$ aligns an intermediate axis with the sagittal-plane projection of the attachment point, and a rotation through $-\theta_y$ about the current $\hat{\mathbf{y}}$ axis, which points posteriorly in the primary cantilever bending direction, aligns the bracket axis $\hat{\mathbf{x}}_{br}$ with the full three-dimensional point vector. The orientation and homogeneous transform are
+ \begin{equation}
+ \mathbf{R}_{sb}=\mathbf{R}_z(\theta_z)\mathbf{R}_y(\theta_y)^T,
+ \qquad
+@@ -213,23 +213,11 @@
+ \end{bmatrix}.
+ \label{eq:bracket_frame_transform}
+ \end{equation}
+-Figure~\ref{fig:bktFrame} shows the bracket frame for each test configuration.
+-
+-\begin{figure}[H]
+-\begin{center}
+-\includegraphics[height=0.62\textheight]{Figures/xiFrameTransform.pdf}
+-\end{center}
+-\caption{Two-rotation construction of the bracket frame from the attachment point $\mathbf{p}_{A}$, the femur-side muscle origin, or $\mathbf{p}_{B}$, the tibial insertion. \textbf{(A)} Rotation through $\theta_z$ about the fixed $\hat{\mathbf{z}}_{s}$ axis aligns the intermediate axis $\hat{\mathbf{x}}_{1}$ with the point's sagittal-plane projection. \textbf{(B)} Rotation through $-\theta_y$ about the current $\hat{\mathbf{y}}_{1}=\hat{\mathbf{y}}_{br}$ axis aligns the final bracket axis $\hat{\mathbf{x}}_{br}$ with the full point vector.}\label{fig:xiFrameTransform}
+-\end{figure}
+-
+-\begin{figure}[H]
+-\begin{center}
+-\includegraphics[width=1\textwidth]{Figures/bktFrame.pdf}
+-\end{center}
+-\caption{Bracket frame orientations for: \textbf{(A)} flexor configuration on the pinned knee, \textbf{(B)} extensor configuration on the pinned knee, \textbf{(C)} flexor and extensor configurations on the biomimetic knee with $\diameter$\qty{10}{\mm} BPAs, and \textbf{(D)} flexor configuration on the biomimetic knee with the $\diameter$\qty{20}{\mm} BPA.}\label{fig:bktFrame}
+-\end{figure}
+-
+-In this frame the bracket is modeled as three independent linear springs, and the identified stiffness array is y-symmetric,
++Supplementary Figure~\ref{fig:bktFrame} shows the bracket frame for each test configuration.
++
++
++
++In each local frame the bracket is modeled as three independent linear springs. For the pinned-flexor insertion bracket, the identified stiffness assignment is
+ \begin{equation}
+ \mathbf{K}_{br} =
+ \begin{bmatrix}
+@@ -239,9 +227,32 @@
+ \end{bmatrix}
+ \label{eq:bktstiffness}
+ \end{equation}
+-with $\chi_{1}$ the effective stiffness in the $x_{br}$ and $z_{br}$ directions and $\chi_{2}$ the effective bending stiffness along the cantilever direction $y_{br}$. The symmetry makes the compliance prediction independent of the frame convention: the pitch-only and two-rotation constructions of Figure~\ref{fig:xiFrameTransform} differ by a rotation about $\hat{\mathbf{y}}_{br}$, and a diagonal stiffness array is invariant under that rotation exactly when the two stiffnesses in its plane are equal.
+-
+-Only the deflection component along the line of action changes the actuator's effective length. With the force in the bracket frame written $F\,\hat{\mathbf{u}}$, where $\hat{\mathbf{u}}$ is the BPA force direction, the deflection $\mathbf{K}_{br}^{-1}F\,\hat{\mathbf{u}}$ projects onto the line of action as
++with $\chi_{1}$ assigned to $x_{br}$ and $z_{br}$, and $\chi_{2}$ to $y_{br}$. The stiffness pair is shared across configurations, but its axis assignment follows the hardware model: the pinned-flexor origin bracket uses $\operatorname{diag}(\chi_1,\chi_1,\chi_2)$, the pinned extensor and biomimetic flexor use $\operatorname{diag}(\chi_1,\chi_2,\chi_2)$, and the biomimetic extensor uses Equation~\eqref{eq:bktstiffness}. The flexor evaluator constructs both bracket frames with the first rotation alone; the pinned-extensor evaluator uses the two-rotation construction. A rotation about $y_{br}$ leaves a stiffness matrix unchanged only when its $x_{br}$ and $z_{br}$ stiffnesses are equal. Frame independence therefore applies to Equation~\eqref{eq:bktstiffness}, not to every assignment.
++
++The local force vector is the force magnitude times its unit direction,
++\begin{equation}
++\mathbf{F}_{br}=F\hat{\mathbf{u}}, \qquad \hat{\mathbf{u}}=[u_x,u_y,u_z]^T.
++\label{eq:bktforcevector}
++\end{equation}
++Hooke's law relates this force to the bracket displacement vector:
++\begin{equation}
++\mathbf{F}_{br}=\mathbf{K}_{br}\boldsymbol{\eta}_{br},\qquad
++\boldsymbol{\eta}_{br}=\mathbf{C}_{br}\mathbf{F}_{br},\qquad
++\mathbf{C}_{br}=\mathbf{K}_{br}^{-1}.
++\label{eq:bktdeflection}
++\end{equation}
++For the insertion-bracket assignment of Equation~\eqref{eq:bktstiffness}, this gives
++\begin{equation}
++\boldsymbol{\eta}_{br}=F
++\begin{bmatrix}u_x/\chi_1\\u_y/\chi_2\\u_z/\chi_1\end{bmatrix}.
++\label{eq:bktcomponentdeflection}
++\end{equation}
++The displacement need not be parallel to the force. Only its projection along the local line of action contributes to the scalar shortening used in the force balance (Figure~\ref{fig:xiProjection}):
++\begin{equation}
++\delta_{br}=\hat{\mathbf{u}}^T\boldsymbol{\eta}_{br}.
++\label{eq:bktprojecteddeflection}
++\end{equation}
++Substitution of Equation~\eqref{eq:bktdeflection} gives
+ \begin{equation}
+ \delta_{br} = F\, \hat{\mathbf{u}}^{T} \, \mathbf{K}_{br}^{-1} \, \hat{\mathbf{u}}
+ \label{eq:bktprojectedcompliance}
+@@ -256,6 +267,13 @@
+ \label{eq:equivalentstiffness}
+ \end{equation}
+ 
++This reduction assumes quasi-static tensile loading, linear translational springs, and additive displacements along the force path. The direction is held fixed during the scalar solve, then updated with the displaced attachments; rotational compliance and force--moment coupling are not modeled. With a second compliant bracket, the same reduction gives
++\begin{equation}
++k_{eq}^{-1}=\sum_j\hat{\mathbf{u}}_j^T\mathbf{K}_{br,j}^{-1}\hat{\mathbf{u}}_j+k_{ten}^{-1},
++\label{eq:two_bracket_stiffness}
++\end{equation}
++where the tendon term is omitted for a direct attachment. All unit directions and stiffness matrices in a projection are expressed in the same local frame.
++
+ The compliance displacement shortens the actuator, so the active length entering the force model is
+ \begin{equation} l_m(\delta) = l_m^{(0)} - \delta
+ \label{eq:activelengthcorrected}
+@@ -266,7 +284,7 @@
+ \end{equation}
+ solved by bracketed scalar root-finding between zero deflection and the deflection that would bring the actuator to its maximum usable contraction, with $\delta = 0$ returned when the residual shows no sign change across that interval. The solved force gives the vector bracket deflection, which updates the attachment location; the routed length, force direction, moment arm, and torque are recalculated at the deflected geometry. The stiffness terms are effective parameters for the attachment system as a whole, absorbing the printed brackets, the bone fixtures, and the winch cable, and they are identified from torque rather than measured on any component in isolation.
+ 
+-Both ends of the actuator path can be compliant: the insertion-side bracket together with a second, origin-side bracket. Each bracket $j$ develops a three-dimensional deflection $\boldsymbol{\eta}_{br,j}$ along its local frame basis, of which only the projection along the corresponding force direction $\hat{\mathbf{u}}_j$ changes the actuator length, and the two projections act in series with the tendon elongation:
++Figure~\ref{fig:xiProjection} shows how both ends of the actuator path can be compliant: the insertion-side bracket together with a second, origin-side bracket. Each bracket $j$ develops a three-dimensional deflection $\boldsymbol{\eta}_{br,j}$ along its local frame basis, of which only the projection along the corresponding force direction $\hat{\mathbf{u}}_j$ changes the actuator length, and the two projections act in series with the tendon elongation:
+ \begin{equation}
+ \begin{aligned}
+ \boldsymbol{\eta}_{br,j} &= \sum_{i=1}^{3}\eta_{i,j}\hat{\mathbf{e}}_i^{(j)},\\
+@@ -276,9 +294,16 @@
+ \label{eq:bracket_series_projection}
+ \end{equation}
+ 
++\begin{figure}[htbp]
++\centering
++\includegraphics[width=\textwidth]{Figures/xiProjection_review.pdf}
++\caption[Compliance projections along the force path]{Local bracket displacement $\boldsymbol{\eta}_{br,j}$ and its projection $\delta_{br,j}$ along the force direction $\hat{\mathbf{u}}_j$. The inset shows that an anisotropic bracket can deflect off the force axis. The two projected bracket displacements and the tendon elongation add to the actuator shortening. Displacements are exaggerated for clarity.}
++\label{fig:xiProjection}
++\end{figure}
++
+ \subsection{Fictive Strain and Wrapping Loss}\label{sec:fictive_contraction}
+ 
+-The extensor configuration required one further correction, with a different physical origin than the compliance terms. As the knee flexes, the extensor BPA bends over the front of the joint, and part of the actuator follows the joint surface instead of a straight line. Bent this way, the BPA behaves like a beam: the pressurized wall on the inside of the bend carries less tension than the wall on the outside, and part of the wrapped arc length stops contributing usable contraction, so the actuator behaves as if it were more contracted than it physically is. We call this excess fictive strain: the additional contraction the force model must see to reproduce the observed force, beyond the actuator's physical contraction, expressed in $\varepsilon_{620}$-normalized units. A wrapping-loss term $\chi_{3}$ scales the length that this fictive strain removes:
++As the knee flexes, the extensor BPA contacts the anterior joint surface and bends around it (Figure~\ref{fig:bpaWrapping}). The rigid routed-length calculation does not account for the resulting change in usable contraction. We represent this effect with fictive strain: an empirical increase in the contraction seen by the force model, beyond the actuator's geometric contraction. The correction is phenomenological; it does not resolve wall stresses or the deformation of the braided actuator. A wrapping-loss term $\chi_3$ scales the associated reduction in usable length:
+ \begin{equation}
+     \Delta l = \begin{cases}
+      \chi_{3}\;R\;\abs{ \theta_\text{wrap}-\theta_\text{k}}\;\zeta^2 & \theta_\text{k} \leq      \theta_\text{wrap} \\
+@@ -294,6 +319,13 @@
+ \begin{equation}
+     l_\text{m} = l_{LMT} - 2\;l_{fitting}  - \chi_{0} - \Delta l\label{eq:x3}
+ \end{equation}
++
++\begin{figure}[htbp]
++\centering
++\includegraphics[width=\textwidth]{Figures/bpa_knee_wrapping_review.pdf}
++\caption[BPA crossing a flexed knee]{Sagittal schematic of an extensor BPA crossing a flexed robot knee, with its braided body following an anterior contact arc between the proximal attachment and distal tendon. Dashed radii bound the contact arc; $R$ is the BPA-path wrapping radius, and $\alpha=\abs{\theta_{\mathrm{wrap}}-\theta_k}$ is the bend angle after contact begins, expressed in radians in Equation~\eqref{eq:deltaL}. The drawing illustrates the local circular-wrap approximation, not the full multi-contact route. The fitted usable-length loss $\Delta l$ is not an arc-minus-chord length.}
++\label{fig:bpaWrapping}
++\end{figure}
+ 
+ \subsection{Identification Procedure}\label{sec:identification}
+ 
+@@ -507,7 +539,7 @@
+ \endgroup
+ \end{table}
+ 
+-Each term has a direct physical reading. The offsets $\chi_{0}$ correct the effective muscle length by a constant, and the flexor and extensor offsets carry opposite signs, as the initial identification already showed. The stiffness pair is an effective system stiffness rather than the beam stiffness of any single part: it lumps the two attachment brackets together with the fixtures and the winch cable, which is why one pair can serve both configurations once the extensor refit locks it. The wrapping factor $\chi_{3}$ scales the usable length that fictive strain removes, $\Delta l = \chi_{3}\, R\, \abs{\theta_{\text{wrap}} - \theta_{\text{k}}}\, \zeta^{2}$ with $\zeta = 1 - \varepsilon^{*}$ (Equations~(\ref{eq:deltaL}) and (\ref{eq:comp})). Because $\varepsilon^{*}$ is normalized by the unloaded \qty{620}{\kPa} contraction $\varepsilon_{620}$ of the free actuator, the loss is expressed in fictive-contraction units: it vanishes as the actuator approaches full contraction, where $\zeta \to 0$, and grows quadratically toward resting length, exactly where a wrapped actuator has the least contraction to spare. The wrapping radii are fixed by the route geometry rather than fitted: the pinned-extensor identification evaluates two contact arcs of wrapping radii $R = \qty{12}{\mm}$ and $R = \qty{40}{\mm}$, and the biomimetic configurations use a wrap radius of \qty{25}{\mm}, so $\chi_{3} = 0.158$ scales a physical arc of known size.
++Each term has a direct physical reading. The offsets $\chi_{0}$ correct the effective muscle length by a constant, and the flexor and extensor offsets carry opposite signs, as the initial identification already showed. The stiffness pair is an effective system stiffness rather than the beam stiffness of any single part: it lumps the two attachment brackets together with the fixtures and the winch cable, which is why one pair can serve both configurations once the extensor refit locks it. The wrapping factor $\chi_{3}$ scales the usable length that fictive strain removes, $\Delta l = \chi_{3}\, R\, \abs{\theta_{\text{wrap}} - \theta_{\text{k}}}\, \zeta^{2}$ with $\zeta = 1 - \varepsilon^{*}$ (Equations~(\ref{eq:deltaL}) and (\ref{eq:comp})). Because $\varepsilon^{*}$ is normalized by the unloaded \qty{620}{\kPa} contraction $\varepsilon_{620}$ of the free actuator, the loss is expressed in fictive-contraction units: it vanishes as the actuator approaches full contraction, where $\zeta \to 0$, and grows quadratically toward resting length, where the unbent actuator would otherwise produce its largest force. The wrapping radii are fixed by the route geometry rather than fitted: the pinned-extensor identification evaluates two contact arcs of wrapping radii $R = \qty{12}{\mm}$ and $R = \qty{40}{\mm}$, and the biomimetic configurations use a wrap radius of \qty{25}{\mm}, so $\chi_{3} = 0.158$ scales a physical arc of known size.
+ 
+ Tables~\ref{tab:FlxPinGof} and \ref{tab:ExtPinGof} quantify what the corrections buy. On the pinned-flexor set, the corrected model reduces the training-mean RMSE, over the $l_{0}=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} training tests, from \qty{8.66}{\newton\meter} to \qty{1.62}{\newton\meter} under the zero-correction prediction, the same kinematics and force model with every correction term disabled, and the validation mean over the held-out $l_{0}=\qty{45.7}{\cm}$ and \qty{40.6}{\cm} tendon tests improves from \qty{7.59}{\newton\meter} to \qty{1.49}{\newton\meter}; it holds the FVU at or below 0.172 on all four tests. On the extensor pool, the corrected model improves the RMSE of every test, reducing the training mean, over the \qty{43.6}{\cm}, \qty{43.2}{\cm}-tendon, and \qty{45.7}{\cm} tests, from \qty{2.50}{\newton\meter} to \qty{1.00}{\newton\meter}, and the validation mean, over the held-out \qty{40.0}{\cm} plain, \qty{40.0}{\cm}-tendon, and \qty{46.5}{\cm} tests, from \qty{2.55}{\newton\meter} to \qty{1.10}{\newton\meter}; the FVU stays below unity on every test except the $l_{0}=\qty{43.2}{\cm}$ tendon test. The biomimetic extensor test, a configuration held out of every identification, improves under the adopted two-stage terms as well: the corrected prediction reduces the RMSE from \qty{3.0322}{\newton\meter} to \qty{1.1702}{\newton\meter} and the FVU from 4.4856 to 0.6681 against the zero-correction baseline (Figure~\ref{fig:Ext10mm_52cm}). Evaluated at the initial single-bracket extensor terms instead, the corrected model reaches \qty{1.5394}{\newton\meter} and FVU 1.1560, so the adopted terms fit this held-out configuration more closely than the configuration-matched initial terms do.
+ 
+@@ -526,7 +558,7 @@
+ \caption{Route geometry of the cam extensor design of record, drawn in the femur frame with schematic femur and tibia outlines. Panels \textbf{(A)}--\textbf{(D)} show four knee poses that track the contact-release cascade: \textbf{(A)} $\theta_\text{k} = \ang{-120}$, full flexion with all contacts active; \textbf{(B)} $\theta_\text{k} = \ang{-91}$, after the first condyle contact has released; \textbf{(C)} $\theta_\text{k} = \ang{-56}$, with one further release; and \textbf{(D)} $\theta_\text{k} = \ang{10}$, full extension with the cam wrap released; knee angle is negative in flexion. Each panel draws the optimized route and its cam contacts over the femur-cylinder, femur-wall, condyle, and tibia clearance envelopes of the route-elimination rule, with the local bend-radius checks dashed; the square marker is the femur-side origin, the diamond marker is the tibial insertion; the fifth tile carries the legend and the sixth the contact-release schedule.}\label{fig:ExtensorRoute_redesigned}
+ \end{figure}
+ 
+-The extensor route was then redesigned once more by allowing the tibial-side route points to trace a cam profile, and this cam redesign is the current extensor design. The cam converts the razor-thin margin of the direct route into genuine headroom. On the final geometry, which folds the optimizer winner together with a verified adjustment of the distal route point and tendon length, the minimum torque margin is $+30.83$~\% with respect to the required envelope and $+39.77$~\% with respect to the plain human target; the unadjusted optimizer solution carried $+31.30$~\% and $+42.34$~\% at the same checks. The pressure required to meet the envelope spans \qty{269}{\kPa} to \qty{507}{\kPa} over the range of motion, comfortably above the \qty{150}{\kPa} regulated floor of the valve manifold that supplies the hardware, so the remaining pressure is a design resource. The geometry confirms that the headroom is not bought with routing risk: the tibial wrap follows a bend radius of \qty{96.9}{\mm}, the guiding route point clears the femoral-condyle envelope by \qty{43.1}{\mm} at \ang{10} of knee extension, and the moment arm spans \qty{59.4}{\mm} to \qty{102.8}{\mm} with a mean of \qty{72.4}{\mm} (Figure~\ref{fig:ExtensorRoute_redesigned}).
++The extensor route was then redesigned once more by allowing the tibial-side route points to trace a cam profile, and this cam redesign is the current extensor design. The cam increases the torque margin relative to the direct route. On the final geometry, which folds the optimizer winner together with a verified adjustment of the distal route point and tendon length, the minimum torque margin is $+30.83$~\% with respect to the required envelope and $+39.77$~\% with respect to the plain human target; the unadjusted optimizer solution carried $+31.30$~\% and $+42.34$~\% at the same checks. The pressure required to meet the envelope spans \qty{269}{\kPa} to \qty{507}{\kPa} over the range of motion, comfortably above the \qty{150}{\kPa} regulated floor of the valve manifold that supplies the hardware, so the remaining pressure is a design resource. The geometric checks give the tibial wrap follows a bend radius of \qty{96.9}{\mm}, the guiding route point clears the femoral-condyle envelope by \qty{43.1}{\mm} at \ang{10} of knee extension, and the moment arm spans \qty{59.4}{\mm} to \qty{102.8}{\mm} with a mean of \qty{72.4}{\mm} (Figure~\ref{fig:ExtensorRoute_redesigned}).
+ 
+ The flexor redesign was a two-BPA mirrored-route solution rather than a single shared route. The first actuator's route is carried directly as design variables, its origin on the femur and its insertion on the tibia, and the second actuator's endpoints are solved from it by a mirrored-endpoint rule: the second insertion mirrors the first across the mid-sagittal plane, and the second origin is placed so that the second route spans the same origin-to-insertion offset as the first, which keeps the two routes from crossing. Each route is then rebuilt by the route solver, so the second carries its own wrap point and its own tibial and femoral-condyle clearance state rather than inheriting the first's, with condyle clearance enforced in the nonlinear constraints. In the design of record the first route clears the tibial envelope at every angle and never wraps, while the second rides its standoff only within about \ang{5} of full extension before the wrap releases. The design meets the flexor target with a minimum margin fraction of 0.0501 against the required 0.05. Its predicted knee-axis torque spans \qty{-81.23}{\newton\meter} to \qty{-3.864}{\newton\meter} against the human-scaled requirement of \qty{-23.16}{\newton\meter} to \qty{-2.461}{\newton\meter} (peak magnitude \qty{23.16}{\newton\meter}), again exceeding the envelope at every angle. The flexor prediction applies the adopted correction terms, including the wrapping factor identified on the extensor configuration: where a route's wrap is active, the actuator loses usable length through the same wrapping mechanism, and the extensor-identified $\chi_{3}$ was applied to it unchanged, a transfer whose testing remains future work (Section~\ref{sec:limitations}).
+ 
+@@ -551,24 +583,24 @@
+ 
+ \subsection{Whole-Body Capability Against Human Torque Surfaces}\label{sec:capability_survey}
+ 
+-The knee redesigns are graded one joint at a time against a single target curve, and the capability survey extends the grading to two joint coordinates at a time across the leg's muscle actuators. For each muscle actuator, torque and active-force capability were graded on a $5 \times 5$ grid over the two joint coordinates its routing crosses, with the hip adduction coordinate bounded by a linear envelope coupled to hip flexion. The human requirement is the torque surface of the same-named single muscle of the stock Gait2392 model on its native routing (OpenSim 4.4.1), the product of OpenSim moment arm and maximum isometric force \citep{delp_opensim_2007, seth_opensim_2018}. The robot side applies the characterized Festo force model \citep{bolen_2026} at \qty{620}{\kPa}, with the same BPA sizes on both routings. A grid cell counts toward the torque capability where the BPA torque carries the human torque's sign and its magnitude meets or exceeds the human magnitude, and toward the active-force capability where the actuator is stretched past rest and holds taut torque; the reported quantities are the shares of the graded domain's area on which each condition holds.
+-
+-The survey compares two routings. The hand-tuned routing is the original master's-project layout of the robot-body model \citep{morrow_optimization_2020}. The optimized routing re-solves each muscle under the transmission freedoms of Section~\ref{sec:route_redesign}: BPAs are added in parallel, up to three per muscle, and the tendon is reeved over a tackle of up to three line parts per joint crossed, with the actuator sizes re-solved per configuration and the configuration chosen by a bounded per-muscle search. Nineteen of the 27 actuators carry complete graded records on both routings, and the survey is reported over those 19.
+-
+-Table~\ref{tab:CapabilitySurvey} gives the aggregate. The hand-tuned routing meets or exceeds the human torque over \qty{66.32}{\percent} of the graded domain and delivers active force over \qty{97.05}{\percent}, and the optimized routing covers \qty{75.30}{\percent} of the graded domain on torque and \qty{95.23}{\percent} on active force. Per actuator, the optimized routing meets or exceeds the human torque over a strictly larger share on 11 of the 19 actuators, with 3 ties and 5 actuators lower, and 5 of the 19 improve on both measures. The active-force share was already near-complete for the hand-tuned routing on most actuators, so the improvement the optimized routing buys lies almost entirely in torque coverage.
++The capability survey grades each actuator against the same-named single muscle of the Gait2392 model on a $5\times5$ grid of two joint coordinates. The hip adduction domain is clipped by its flexion-dependent envelope. A cell meets the requirement when the BPA is taut and its torque has the human torque's sign and at least its magnitude. The coverage metric is the fraction of included grid cells meeting that condition; the aggregate is the unweighted mean of the per-actuator fractions, not a continuous-area integral or a whole-leg torque sum.
++
++The comparison includes all 27 actuator sites. The baseline uses the master's-era attachment routing at unity transmission; its eight nominal \qty{40}{\mm} sites are evaluated with four parallel \qty{20}{\mm} BPAs, while the other sites use the survey's base configuration. The updated side selects the saved transmission-ladder winner at each site, with actuator length and tendon length re-solved per configuration. It retains the same underlying attachment routing and the original diameter specification, including \qty{40}{\mm} actuators at those eight sites. The comparison therefore combines transmission, actuator sizing, and the baseline diameter substitution; it does not isolate an effect of attachment placement or compare two all-\qty{20}{\mm} assemblies.
++
++The mean grid coverage increases from \qty{37.28}{\percent} to \qty{65.19}{\percent}, improving at 23 sites and tying at four (Table~\ref{tab:CapabilitySurvey}). A separate sign-aware torque-ratio score averages $\min(M_R/M_H,1)$ over the graded cells, assigning zero to inactive cells. Its mean falls from $-1.93$ to $-3.63$. Negative ratios penalize torque in the wrong direction, so greater coverage can coexist with a worse mean ratio where severe wrong-sign predictions remain. These two metrics support different conclusions and should be considered together.
+ 
+ \begin{table}[H]
+-\caption{Whole-body capability of the hand-tuned and optimized BPA routings against single-muscle human torque surfaces, mean per-actuator share of the graded domain over the 19 muscle-actuators graded on both routings.}
++\caption{Capability across 27 actuator sites against single-muscle human torque grids. Means are taken over sites. The baseline substitutes four parallel \qty{20}{\mm} BPAs at each nominal \qty{40}{\mm} site; the transmission-ladder winners retain the original diameter specifications. Negative torque-ratio scores reflect wrong-sign torque, not a torque deficit in newton meters.}
+ \label{tab:CapabilitySurvey}
+ \begingroup
+ \renewcommand{\arraystretch}{1.4}%
+ \fontsize{10pt}{12pt}\selectfont
+ \begin{tabular}{@{}lcc@{}}
+ \toprule
+-\textbf{Routing} & \textbf{Torque meets or exceeds human (\%)} & \textbf{Active force (\%)} \\
+-\midrule
+-Hand-tuned & 66.32 & 97.05 \\
+-Optimized & 75.30 & 95.23 \\
++\textbf{Routing} & \textbf{Torque meets or exceeds human (\%)} & \textbf{Mean torque-ratio score} \\
++\midrule
++Baseline & 37.28 & $-1.93$ \\
++Transmission-ladder winners & 65.19 & $-3.63$ \\
+ \bottomrule
+ \end{tabular}
+ \endgroup
+@@ -584,13 +616,15 @@
+ 
+ \subsection{Limitations and Future Work}\label{sec:limitations}
+ 
+- The correction terms are identified for this test stand, these knee configurations, and these actuator families. Other joints or actuator types should repeat the two-stage procedure rather than reuse the values. That procedure is inexpensive next to the test campaign it saves, which is the point of having it.
+-
+- Isometric torque testing has yielded important design factors for roboticists seeking to design biomimetic humanoid robots. Additional testing such as isokinetic and isotonic that are frequently used in in human dynamometer testing may yield equally as important insights.
++ The correction terms are identified for this test stand, these knee configurations, and these actuator families. Other joints or actuator types should repeat the two-stage procedure rather than reuse the values. Transfer to other systems requires validation against their measured torque.
++
++ Isometric torque testing has yielded important design factors for roboticists seeking to design biomimetic humanoid robots. Isokinetic and isotonic tests would assess behavior outside the isometric conditions evaluated here.
+ 
+ \section{Conclusion}\label{sec:conclusion}
+ 
+-This work started with an improved braided pneumatic actuator force-length-pressure model and actually delivers about a joint, and answered with a corrected torque model and the design workflow built on it. Isometric knee-torque measurements on pinned and biomimetic test stands, interpreted through a hybrid calculation that substitutes the measured muscle length and moment arm, isolated the error sources that rigid-body torque models miss: attachment compliance, a constant effective-length offset, and a wrapping loss that acts like fictive strain, expressed through the unloaded \qty{620}{\kPa} contraction of the free actuator. A two-stage identification recovered the correction terms with one stiffness pair shared across the flexor and extensor configurations, roughly halving fitting-set error, cutting held-out error by two thirds or more, and carrying the corrected model from the pinned knee to the biomimetic knee without refitting. The attachment routes themselves were then redesigned under the corrected model: two $\diameter$\qty{20}{\mm} actuators per route, graded against OpenSim human isometric torque profiles with a required \qty{5}{\percent} overshoot, meet or exceed the human flexor and extensor envelopes at every angle, the cam extensor design converts the thinnest margins into design headroom, the doctrine re-solves quantify how a reeved tackle, fed by parallel actuator pairs, converts surplus force into range of motion across five muscle sites, and the redesigned extensor route's physical validation spans nine data measurements from deep flexion to extension that meet or exceed the human target at every measured angle. The design-factor reading is the practical summary: moment arm, normalized contraction, and path compliance are the three quantities a designer of BPA-actuated joints controls, and each now carries a measurable, correctable model. First-iteration torque design for such joints is, as a result, no longer a guess.
++Isometric knee-torque measurements on pinned and biomimetic test stands showed that actuator force characterization alone does not determine delivered joint torque. A hybrid calculation using measured muscle length and moment arm helped separate force-model error from routing and attachment effects. The corrected torque model represents a constant length offset, effective attachment compliance, and an empirical wrapping loss. A two-stage identification shares one stiffness pair across flexor and extensor configurations and reduces prediction error on the held-out tests.
++
++Route redesign under the corrected model produces two-\qty{20}{\mm}-BPA configurations that meet the selected human-muscle torque targets over their design grids, with the required \qty{5}{\percent} margin. The cam extensor increases predicted torque headroom while reducing the required operating pressure. Physical tests meet or exceed the respective human targets at all 15 measured flexor points and all nine measured extensor points. These measurements validate the tested isometric configurations; dynamic loading and transfer to other joints remain to be evaluated.
+ 
+ \section*{Resource Identification Initiative}
+ \begin{itemize}

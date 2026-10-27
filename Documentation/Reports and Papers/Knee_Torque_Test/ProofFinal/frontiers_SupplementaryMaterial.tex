@@ -9,12 +9,14 @@
 
 \documentclass[utf8]{frontiers_suppmat} % for all articles
 \usepackage{amssymb}
+\usepackage{mathabx}
 \usepackage{amsmath, bm}
 \usepackage{siunitx}
 \usepackage{url,hyperref,lineno,microtype}
+\usepackage{xr}
+\externaldocument{Main}
 \let\DeclareUSUnit\DeclareSIUnit
 \let\US\SI
-\DeclareUSUnit\inch{in}
 \DeclareUSUnit\inch{in}
 \providecommand{\abs}[1]{\lvert#1\rvert}
 \providecommand{\norm}[1]{\lVert#1\rVert}
@@ -22,6 +24,7 @@
 \graphicspath{{../}}
 \usepackage{caption}
 \usepackage{tabularx}
+\usepackage{booktabs}
 \usepackage{multirow}
 \usepackage{array}
 \usepackage[onehalfspacing]{setspace}
@@ -36,140 +39,19 @@
 \title[Supplementary Material]{{\helveticaitalic{Supplementary Material}}}
 \maketitle
 
-\section{Supplementary Methods and Materials}
-
-% \subsection{Moment and Torque calculations}
-
-
-
-% The analysis presented here is based on physiology that is displayed in the OpenSim model gait2392. OpenSim is a platform in which researchers can explore the human musculoskeletal structure. Gait2392 is a human model of the lower torso and legs, and includes 92 muscle-actuators that represent 72 human muscles. These actuators are displayed as straight line segments that start at an origin point and end at an insertion point, with many actuators including via or wrapping points in between the origin and insertion which capture the changing direction of muscles in the human body without curving the muscles themselves. 
-
-
-% \subsubsection{Vector Analysis of Moment Arms}
-% The calculation of a moment arm $\Vec{ma}$ of a muscle that passes over a joint was done by using vector analysis and transformation matrices. The transformation matrices will be discussed in the next section. In this section, we will explore a vector algorithm that will be able to calculate the length and direction of a moment arm in the coordinate frame of a joint. 
-
-% A moment arm is the vector that begins at the origin of a body reference frame $\Vec{b}$ and goes to the force vector $\Vec{F}$. The moment arm is orthogonal to the force vector. When the moment arm is crossed with a force vector, a torque is produced. If we know the spatial coordinates of the reference frame as well as two points that define the line of action of the force vector, we can derive the moment arm to that vector. 
-
-% \subsubsection{Transformation Matrices}
-% Muscles generate torque by contracting about a joint. Because a muscle has complicated geometry, calculating the torque about a joint can be simplified by creating one or more linear approximations for the muscle geometry as it passes over joints. OpenSim \citep{delp_interactive_1990,seth_opensim_2011,seth_opensim_2018} provides the linear approximations of the muscles by listing origin points, attachment points, and wrapping or via points. Each of these points are given coordinates within a joint reference frame and are connected to one another with straight lines.
-
-% Since muscles have points along their geometric path that reside in two or more reference frames, it is important to determine the orientation and spatial distance between each of these reference frames in order to accurately calculate the moment arm. With this in mind, each joint reference frame is prescribed a transformation matrix that relates it to its parent reference frame, or the reference frame of the joint that precedes it in the path of the muscle.
-
-% \begin{equation}
-%     \Vec{p}_{knee} = \Vec{p}_{hk} = [p_{x}(\theta_k) \quad  p_{y}(\theta_k)  \quad p_{z}] \label{eq:joint_loc}
-% \end{equation}
-
-% It can be helpful to write $\Vec{p}_{knee}$ as $\Vec{p}_{hk}$ to emphasize that knee point $k$ is being described in the reference frame of the hip $h$.
-
-% In order to construct a transformation matrix, we first need to calculate the rotation matrix of a frame. A rotation matrix requires knowledge about how the axes of a coordinate frame has rotated away from it origin or home position. The home position of the OpenSim model has all of the coordinate frames in the same orientation, meaning there is no rotation along any of the axes. The axes all list the x axis as pointing along the anterior direction away from the model within the saggital plane and parallel to the ground. The y axis points in the superior direction, within the saggital plane, orthogonal to the ground. The z axis points laterally along the horizontal plane, orthogonal to the x and y axis, and parallel to the ground %\ref{fig:RobotSim_frames}.
-
-%\begin{figure}[htbp]
-%\begin{center}
-%\includegraphics[width=0.95\textwidth]{Figures/RobotSim_frames.pdf}
-%\end{center}
-%\caption{Refernce frames for Gait2392 in \textbf{(A)} home position and \textbf{(B)} flexed ($\theta=\ang{-120}$). Frames for biomimetic robot knee in \textbf{(C)} home position and \textbf{(D)} flexed ($\theta=\ang{-120}$). Coordinate directions are: $\hat{x}$ in red, $\hat{y}$ in green, and $\hat{z}$ in blue. Spatial frame is ${s}$ and body frame is ${b}$. For \textbf{(A)} and \textbf{(B)}: black arrows point to the tibia reference frame as defined by OpenSim, yellow arrows point to the actual ICR (the tibial-femoral contact point), the large axes are general space frames, and the small axes represent body frames for the hip {h} and knee {k}. For \textbf{(C)} and \textbf{(D)}: black arrows point to the tibia reference frame as arbitrarily defined by us ($\Vec{p}_{k}$ is at $\theta_{3}$ (see \citep{steele_development_2017} for details) when knee angle $\theta_{k}=0$ and follows a similar path to the Gait2392 model), yellow arrows point to the actual ICR (intersection point of the two links).}\label{fig:RobotSim_frames}
-%\end{figure}
-
-
-
-% \begin{equation}
-%         \bm{R}_{\hat{z}} = \begin{bmatrix}
-%                 \cos\theta_k && -\sin\theta_k && 0\\
-%                 \sin\theta_k && cos\theta_k && 0\\
-%                 0 && 0 && 1\\
-%             \end{bmatrix} \label{eq:Rot_z}
-% \end{equation}
-
-% Combining \ref{eq:joint_loc} and \ref{eq:Rot_z} in a 4x4 matrix creates the homogeneous transformation matrix.
-
-% \begin{equation}
-%     \bm{T}_{k} =  \bm{T}_{hk} = \begin{bmatrix}
-%             \cos\theta_k && -\sin\theta_k && 0 && p_{x}\\
-%             \sin\theta_k &&  \cos\theta_k && 0 && p_{y}\\
-%             0         && 0          && 0 && p_{z}\\
-%             0 && 0 && 0 && 1
-%         \end{bmatrix} \label{eq:trans_mat}
-% \end{equation}
-
-% The inverse homogeneous transformation matrix translates points from the $h$ frame to the $k$
-
-% \begin{equation}
-%     \bm{T}_{k}^{-1} = {\bm{T}_{hk}}^{-1} = \bm{T}_{kh}
-% \end{equation} \label{eq:invs_trans}
-
-% These calculations were moved into Matlab as described by Bolen \citep{bolen_determination_2019}, and further improved by Morrow \citep{morrow_optimization_2020}. Optimization was used for the placement for artificial muscle
-
-% \subsubsection{System compliance modeling}
-% We define:
-
-% \begin{align*}
-% \mathbf{p}_0 &= \text{original bracket point (given)} \\
-% \mathbf{p}_A &= \text{target point that defines the general } x' \text{ direction} \\
-% \mathbf{y}_0 &= \text{reference point used to define the general } y' \text{ direction} \\
-% \mathbf{z}_0 &= \text{reference point used to define the general } z' \text{ direction}
-% \end{align*}
-
-% We first compute the unit direction vectors:
-
-% \begin{align*}
-% \hat{\mathbf{z}}' &= \frac{\mathbf{p}_0 - \mathbf{z}_0}{\|\mathbf{p}_0 - \mathbf{z}_0\|} \\
-% \hat{\mathbf{y}}' &= \frac{\mathbf{p}_0 - \mathbf{y}_0}{\|\mathbf{p}_0 - \mathbf{y}_0\|}
-% \end{align*}
-
-% Let:
-% \[
-% \mathbf{v} = \mathbf{p}_A - \mathbf{p}_0
-% \]
-
-% To ensure the new origin lies in the \( x'y' \)-plane (i.e., \( \mathbf{v} \cdot \hat{\mathbf{z}}' = 0 \)), we compute the scalar offset:
-
-% \[
-% \lambda = -(\mathbf{v} \cdot \hat{\mathbf{z}}')
-% \]
-
-% Then the new origin, denoted \( \mathbf{p}_{\text{Br}} \), is:
-
-% \[
-% \mathbf{p}_{\text{Br}} = \mathbf{p}_0 + \lambda \cdot \hat{\mathbf{z}}'
-% \]
-
-% Finally, we construct an orthonormal right-handed frame:
-
-% \begin{align*}
-% \hat{\mathbf{x}}' &= \frac{(\mathbf{p}_A - \mathbf{p}_{\text{Br}}) - ((\mathbf{p}_A - \mathbf{p}_{\text{Br}}) \cdot \hat{\mathbf{z}}') \cdot \hat{\mathbf{z}}'}{\left\|(\mathbf{p}_A - \mathbf{p}_{\text{Br}}) - ((\mathbf{p}_A - \mathbf{p}_{\text{Br}}) \cdot \hat{\mathbf{z}}') \cdot \hat{\mathbf{z}}'\right\|} \\
-% \hat{\mathbf{y}}' &= \hat{\mathbf{z}}' \times \hat{\mathbf{x}}'
-% \end{align*}
-
-% Assembling the rotation matrix \( \mathbf{R} \in \mathbb{R}^{3 \times 3} \), with columns \( \hat{\mathbf{x}}', \hat{\mathbf{y}}', \hat{\mathbf{z}}' \), gives:
-
-% \[
-% \mathbf{R} = \begin{bmatrix}
-% | & | & | \\
-% \hat{\mathbf{x}}' & \hat{\mathbf{y}}' & \hat{\mathbf{z}}' \\
-% | & | & |
-% \end{bmatrix}
-% \]
-
-
-%\section{Supplementary Data}
-
-% Material should be uploaded separately on submission. Please include any supplementary data, figures and/or tables. All supplementary files are deposited to FigShare for permanent storage and receive a DOI.
-
-%Supplementary material is not typeset so please ensure that all information is clearly presented, the appropriate caption is included in the file and not in the manuscript, and that the style conforms to the rest of the article. To avoid discrepancies between the published article and the supplementary material, please do not add the title, author list, affiliations or correspondence in the supplementary files.
-
 \section{Supplementary Tables and Figures}
 
 \subsection{Tables}
 
 \begin{table}[htbp]
-\caption{Comparison of pre- and post-optimization torque prediction fits for BPAs in flexor and extensor configurations on the pinned and biomimetic knees. GoF metrics are RMSE ($N \cdot m$), FVU, and maximum residual ($N \cdot m$).}
+\caption{Historical single-bracket torque-prediction fits, preceding the adopted two-stage identification, for BPAs in flexor and extensor configurations on the pinned and biomimetic knees. GoF metrics are RMSE ($N \cdot m$), FVU, and maximum residual ($N \cdot m$).}
 \label{tab:TorqueFit}
 \resizebox{\textwidth}{!}
 {%
 \begin{tabular}{|cc|l|l|lll|lll|}
 \hline
 \multicolumn{2}{|l|}{\multirow{2}{*}{\textbf{Configuration}}} &
-  \multirow{2}{*}{\textbf{$\phi$}} &
+  \multirow{2}{*}{\textbf{$\diameter$}} &
   \multirow{2}{*}{\textbf{$l_{rest}$, cm}} &
   \multicolumn{3}{c|}{\textbf{Pre-optimization}} &
   \multicolumn{3}{c|}{\textbf{Optimized}} \\ \cline{5-10} 
@@ -266,12 +148,6 @@
 }
 \end{table}
 
-%For more information on Supplementary Material and for details on the different file types accepted, please see \href{http://home.frontiersin.org/about/author-guidelines#SupplementaryMaterial}{the Supplementary Material section} of the Author Guidelines.
-
-%Figures, tables, and images will be published under a Creative Commons CC-BY licence and permission must be obtained for use of copyrighted material from other sources (including re-published/adapted/modified/partial figures and images from the internet). It is the responsibility of the authors to acquire the licenses, to follow any citation instructions requested by third-party rights holders, and cover any supplementary charges.
-
-%% Figures, tables, and images will be published under a Creative Commons CC-BY licence and permission must be obtained for use of copyrighted material from other sources (including re-published/adapted/modified/partial figures and images from the internet). It is the responsibility of the authors to acquire the licenses, to follow any citation instructions requested by third-party rights holders, and cover any supplementary charges.
-
 \begin{table}[htbp]
 \caption{Muscle origin and insertion locations for different models. Origin is in femur reference frame, insertion is in the tibia reference frame.}
 \label{table:muscle_attachment}
@@ -294,8 +170,6 @@
  Extensor, \qty{10}{\milli\metre} & insertion & Biomimetic knee  & 0.021 & -0.072 & 0 \\
  Flexor, \qty{20}{\milli\metre} & origin & Biomimetic knee  & -0.050 & -0.045 & 0.0328  \\
  Flexor, \qty{20}{\milli\metre} & insertion & Biomimetic knee  & -0.0279 & -0.046 & 0.0328 \\
- % Extensor, \qty{40}{\milli\metre} & origin & Biomimetic knee  & 0.040 & 0.035 & 0 \\
- % Extensor, \qty{40}{\milli\metre} & insertion & Biomimetic knee & 0.022 & -0.072 & 0 \\ [1ex] 
  \hline
 \end{tabular}
 \end{table}
@@ -348,7 +222,7 @@ Pinned extensor & $\mathbf{p}_{br}$, rib midpoint, medial side & hip & -3.84 & -
 \end{table}
 
 \begin{table}[htbp]
-\caption{Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The flexor design routes two BPAs on mirrored paths: the second BPA keeps the $z$-mirrored distal endpoint while both origins sit off the same side of the knee, and each route carries one tibial wrap point placed at the BPA centerline standoff from the tibial surface while contact is active. The extensor design is the clip-on-cam route; the liftoff column lists the knee angle above which each contact leaves the path as the knee extends, with all contacts engaged at maximum flexion.}
+\caption{Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The flexor design uses a staggered pair of BPA paths: the second BPA keeps the $z$-mirrored distal endpoint while both origins sit off the same side of the knee, and each route carries one tibial wrap point placed at the BPA centerline standoff from the tibial surface while contact is active. The extensor design is the clip-on-cam route; the liftoff column lists the knee angle above which each contact leaves the path as the knee extends, with all contacts engaged at maximum flexion.}
 \label{tab:RouteRedesign20}
 \centering
 \small
@@ -379,36 +253,122 @@ Pinned extensor & $\mathbf{p}_{br}$, rib midpoint, medial side & hip & -3.84 & -
 
 \subsection{Figures}
 
-%%% There is no need for adding the file termination, as long as you indicate where the file is saved. In the examples below the files (logo1.eps and logos.eps) are in the Frontiers LaTeX folder
-%%% If using *.tif files convert them to .jpg or .png
-%%%  NB logo1.eps is required in the path in order to correctly compile front page header %%%
-
-%\begin{figure}[h]
-%\begin{center}
-%\begin{turn}{-90}
-%\includegraphics[width=10cm]{Figures/LoadCellCalibration.png}
-%\end{turn}
-%\end{center}
-%\caption{Load cell calibration procedure. Weight was hung with no weight to find zero offset. Weight was then hung on the load cell to find the calibration factor (shown). Then the weight was changed to verify that the scale was reading correctly. Finally, load cell was installed horizontally on the swing arm and a new zero factor was determined.}\label{fig:LoadCellCalibration}
-%\end{figure}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{Figures/RouteVariants_20261020.eps}
+\end{center}
+\caption{Predicted knee-axis torque of the redesigned route families against the human-scaled requirements. Knee angle is negative in flexion; extension torque is positive and flexion torque negative. \textbf{(A)} Extensor routes: the direct route and the cam design of record against the vasti requirement and its required \qty{5}{\percent} envelope. \textbf{(B)} Flexor routes: the direct two-BPA route and the mono-pulley variant on the insertion-side measure against the biceps femoris short-head requirement and its envelope.}\label{fig:RouteVariants}
+\end{figure}
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=1\textwidth]{Figures/extensor_misalign.png}\label{fig:extensor_misalign}
+\includegraphics[width=1\textwidth]{Figures/extensor_misalign.png}
 \end{center}
 \caption{During extensor tests with the pinned knee using a tendon it was noticed that the actuator pathway was modeled to be anterior of the socket head cap screw that joins the femur body to the knee assembly. This slippage affects the muscle path and the moment arm. It was determined this caused a \qty{\pm20}{\milli\metre} $\hat{z}$ axis displacement. Test assembly is shown with \textbf{(A)} top down view and  \textbf{(B)} side view.}
 \label{fig:extensor_misalign}
 \end{figure}
 
-%%% If you are submitting a figure with subfigures please combine these into one image file with part labels integrated.
-%%% If you don't add the figures in the LaTeX files, please upload them when submitting the article.
-%%% Frontiers will add the figures at the end of the provisional pdf automatically
-%%% The use of LaTeX coding to draw Diagrams/Figures/Structures should be avoided. They should be external callouts including graphics.
-
-
-%\bibliographystyle{Frontiers-Harvard} %  Many Frontiers journals use the Harvard referencing system (Author-date), to find the style and resources for the journal you are submitting to see \href{https://zendesk.frontiersin.org/hc/en-us/articles/360017860337-Frontiers-Reference-Styles-by-Journal}{Frontiers Reference Styles by Journal}. For Humanities and Social Sciences articles please include page numbers in the in-text citations 
-%\bibliographystyle{Frontiers-Vancouver} % Many Frontiers journals use the numbered referencing system, to find the style and resources for the journal you are submitting to see \href{https://zendesk.frontiersin.org/hc/en-us/articles/360017860337-Frontiers-Reference-Styles-by-Journal}{Frontiers Reference Styles by Journal}.
-
 \bibliography{BolenFrontiers22}
 
+
+
+
+
+
+
+
+
+\subsection{Contact and Release Angles of the Wrapped Route}\label{app:contact_release}
+
+The route-elimination rule that schedules the wrapped extensor route is a route-topology state machine rather than a shortest-path solver: the fully flexed route carries every candidate contact, and each contact is released at the first more-extended knee angle at which the straight chord between its surviving neighbors can replace it without entering the exclusion envelopes. This section states the calculation in generic terms, so that it applies to any wrapped actuator route on a rotating joint pair; the extensor route of Table~\ref{tab:RouteRedesign20} gives the cam-route example; its release schedule follows the same rule on the cam geometry.
+
+The route is stored as a fixed number of rows $p_{1},\ldots,p_{9}$: rows $p_{1}$ through $p_{5}$ are femur-frame points, rows $p_{6}$ through $p_{9}$ are tibia-frame points, and the segment from $p_{5}$ to $p_{6}$ crosses from one body frame into the other. The endpoints $p_{1}$ and $p_{9}$ are the actuator origin and insertion, and they are always active. Each interior row is either active, a genuine wrap contact, or eliminated; an eliminated femur-side row repeats the preceding active femur row, and an eliminated tibia-side row repeats the neighboring active tibia row, so the route keeps a fixed size and its segment chain crosses the joint exactly once. Let $\mathcal{A}(\theta_{\mathbf{k}}) \subseteq \{2,\ldots,8\}$ denote the active interior rows at knee angle $\theta_{\mathbf{k}}$. The sweep over the design grid, here 100 poses from $\ang{-120}$ to $\ang{+10}$ at a spacing of \qty{1.31}{\degree}, proceeds from full flexion toward extension, each pose inherits the active set of the previous pose, and rows are only ever removed, so $\mathcal{A}$ shrinks monotonically as the knee extends.
+
+At every pose, every active interior row is tested between its nearest active anchors,
+\begin{equation}
+i^{-}_{j} = \max\{i < j : i \in \mathcal{A} \cup \{1\}\}, \qquad
+i^{+}_{j} = \min\{i > j : i \in \mathcal{A} \cup \{9\}\},
+\label{eq:app_anchors}
+\end{equation}
+with the anchors expressed in the candidate's native frame through the per-angle joint transforms. Write $A$, $B$, and $C$ for the planar, sagittal positions of $p_{i^{-}_{j}}$, $p_{i^{+}_{j}}$, and $p_{j}$, and let $s(x, y)$ denote the signed angle from vector $x$ to vector $y$, positive counterclockwise, evaluated as a single $\operatorname{atan2}$ of the planar cross product and the dot product so that no principal-value seam can corrupt the comparison. The elimination margin of row $j$ is
+\begin{equation}
+\mu_{j}(\theta_{\mathbf{k}}) =
+\begin{cases}
+s\!\left(C - A,\; B - A\right), & j \leq 5,\\[4pt]
+s\!\left(A - B,\; C - B\right), & j \geq 6,
+\end{cases}
+\label{eq:app_elim_margin}
+\end{equation}
+a signed angle between the through-contact leg and the bypass chord, measured in the native wrap sense of the candidate's side of the crossing segment; the two cases differ only in that sense of rotation, because the femur-side contacts turn the route one way around the distal femur and the tibia-side contacts turn it the opposite way around the proximal tibia. The rotation rule releases the contact once the margin turns positive, the orientation at which the chord, rather than the contact, provides the outer boundary of the route on that side. The gate is opened slightly early,
+\begin{equation}
+\mu_{j}(\theta_{\mathbf{k}}) > -\Delta, \qquad \Delta = \qty{1.5}{\degree},
+\label{eq:app_rotation_gate}
+\end{equation}
+as a release hysteresis: in the last poses before the contact becomes collinear with its chord, the computed moment arm of the wrapping segment collapses, and releasing the contact slightly before that orientation, with the collision gate below still controlling validity, removes the artifact without changing the route family.
+
+Opening the rotation gate is necessary but not sufficient. A removal additionally requires the straight bypass chord $\overline{AB}$ to clear the exclusion envelopes of the candidate's side,
+\begin{equation}
+\operatorname{dist}\!\left(\overline{AB}_{\mathrm{trim}},\, \mathcal{E}_{j}\right) \;\geq\; g, \qquad g = \qty{0.5}{\mm},
+\label{eq:app_bypass_gate}
+\end{equation}
+where $\operatorname{dist}$ is the planar clearance between the trimmed chord and the envelope and tangency is allowed. The chord is trimmed by \qty{2}{\mm} at each end, capped at \qty{45}{\percent} of its length, because a legitimate contact departs from the clearance boundary itself. On the femur side the envelopes $\mathcal{E}_{j}$ are the femoral-cylinder clearance circle, the condyle clearance polygon, and the femoral-wall span; on the tibia side they are the two tibial-cylinder clearance circles and the wall band between them. Every envelope is the normal offset of a bone profile by the fully inflated BPA radius $R_{\mathrm{BPA}}$,
+\begin{equation}
+\mathbf{q}(\vartheta) = \mathbf{e}(\vartheta) + R_{\mathrm{BPA}}\,\hat{\mathbf{n}}(\vartheta),
+\label{eq:app_offset_curve}
+\end{equation}
+where $\mathbf{e}(\vartheta)$ traces the physical profile and $\hat{\mathbf{n}}(\vartheta)$ is its outward normal; the offset curve shares the tangent of the physical profile, its radius of curvature is $\rho(\vartheta) = \rho_{\mathrm{phys}}(\vartheta) + R_{\mathrm{BPA}}$, and the candidate contact positions themselves are seeded at tangent points of this curve. Because the envelopes are drawn at the fully inflated radius while the routed BPA is contracted at the release angles, each envelope radius may be relaxed by $\rho = \qty{3}{\mm}$ inside the gate, floored at the bone profile plus \qty{0.5}{\mm}; a rotation-gate opening that still fails the relaxed collision gate indicates that the seed placement, not the gate, must move.
+
+At the first pose of the sweep, full flexion, the seed route is settled to a fixpoint: every contact whose two gates already open there is removed, and removals repeat until no further gate opens, so that the sweep starts from a valid topology; a colinearity guard may additionally remove a seed contact that starts the sweep already aligned with its neighbors, and its tolerance is zero in the design of record, so every seed row of Table~\ref{tab:RouteRedesign20} starts active. At every later pose at most one contact is released: if several rows open both gates in the same pose, the row with the largest elimination margin, the one whose rotation rule is most decisively open, is released first, and the remaining rows are retested at the next pose. The release angle of row $j$ is recorded as the first grid pose at which the row is inactive. The activation angle is read from the same record with the sweep reversed, as the last pose at which the row is active, which is the pose at which the contact re-engages when the route is driven from extension toward flexion.
+
+The same active-set record drives the geometric bend measure that scales the fictive-strain wrapping loss of Equations~\eqref{eq:deltaL} and~\eqref{eq:x3} inside the stiffness-aware force balance. Each wrap family, the femoral-cylinder contact, the femoral-condyle curve, the tibial contact curve, and the crossing-point curve at the ICR, contributes an arc length over its effective radius, and the total
+\begin{equation}
+b(\theta_{\mathbf{k}}) = \sum_{f} R_{f}(\theta_{\mathbf{k}})\, \alpha_{f}(\theta_{\mathbf{k}})
+\label{eq:app_bend_measure}
+\end{equation}
+is the bend signal handed to the force model. Each family's turn angle $\alpha_{f}$ ramps with knee angle between the two route-state events that bound it, holding zero before the first event and its plateau after the second, so the topology state and the bending signal are two readings of one record. The formulation is joint-agnostic: it requires only a fixed route representation with one crossing segment, per-angle transforms between the two body frames, and clearance envelopes on each side, so it carries unchanged to the other wrapped routes of this program.
+
+
+\clearpage
+\subsection{Configuration-Survey Coordinates and Actuator Sizes}
+
+\begin{table}[htbp]
+\centering
+\caption{Degrees of freedom and nominal BPA sizes in the 27-site configuration survey. Diameter follows the inherited robot sizing rule and is retained on the updated side. At nominal \qty{40}{\mm} sites, the baseline instead uses four parallel \qty{20}{\mm} BPAs; other baseline sites use one actuator of the listed diameter. The two coordinate columns identify the graded surface, rather than every coordinate a multiarticular route could cross.}
+\label{tab:survey_dofs_sizes}
+\begingroup\small\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Site} & \textbf{Primary DoF} & \textbf{Secondary DoF} & \textbf{Dia. (mm)} & \textbf{Baseline (mm)} \\
+\midrule
+ercspn\_r & lumbar ext. & lumbar bend. & 40 & 4$\times$20 \\
+intobl\_r & lumbar ext. & lumbar bend. & 20 & 1$\times$20 \\
+extobl\_r & lumbar ext. & lumbar bend. & 20 & 1$\times$20 \\
+bifemlh\_r & knee & hip flex. & 20 & 1$\times$20 \\
+semimem\_r & knee & hip flex. & 40 & 4$\times$20 \\
+sar\_r & knee & hip flex. & 10 & 1$\times$10 \\
+tfl\_r & knee & hip flex. & 10 & 1$\times$10 \\
+rect\_fem\_r & knee & hip flex. & 20 & 1$\times$20 \\
+grac\_r & knee & hip flex. & 10 & 1$\times$10 \\
+bifemsh\_r & knee & hip flex. & 20 & 1$\times$20 \\
+vas\_int\_r & knee & hip flex. & 40 & 4$\times$20 \\
+soleus\_r & ankle & knee & 40 & 4$\times$20 \\
+med\_gas\_r & ankle & knee & 40 & 4$\times$20 \\
+lat\_gas\_r & ankle & knee & 20 & 1$\times$20 \\
+tib\_post\_r & subtalar & ankle & 40 & 4$\times$20 \\
+tib\_ant\_r & ankle & subtalar & 20 & 1$\times$20 \\
+per\_brev\_r & subtalar & ankle & 10 & 1$\times$10 \\
+per\_long\_r & subtalar & ankle & 20 & 1$\times$20 \\
+per\_tert\_r & subtalar & ankle & 10 & 1$\times$10 \\
+flex\_dig\_r & MTP & ankle & 10 & 1$\times$10 \\
+flex\_hal\_r & MTP & ankle & 10 & 1$\times$10 \\
+ext\_dig\_r & MTP & ankle & 10 & 1$\times$10 \\
+ext\_hal\_r & MTP & ankle & 10 & 1$\times$10 \\
+glut\_max\_r & hip flex. & hip add. & 40 & 4$\times$20 \\
+add\_mag\_r & hip add. & hip flex. & 40 & 4$\times$20 \\
+iliacus\_r & hip flex. & hip add. & 20 & 1$\times$20 \\
+psoas\_r & hip flex. & hip add. & 20 & 1$\times$20 \\
+\bottomrule
+\end{tabular}
+\endgroup
+\end{table}
 \end{document}

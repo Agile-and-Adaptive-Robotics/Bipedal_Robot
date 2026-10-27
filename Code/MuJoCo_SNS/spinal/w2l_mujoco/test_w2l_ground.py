@@ -264,7 +264,14 @@ def write_ground_xml() -> None:
            "     the 2026-09-30 make_w2l_mjcf.py rebuild). Rest pose kept\n"
            "     verbatim (hovers 2.6-3.1 cm; the drop protocol harness\n"
            "     holds it in air, then lowers it). -->\n")
-    open(GROUND, "w", encoding="utf-8").write(hdr + txt)
+    content = hdr + txt
+    # Parallel evaluators share this immutable source; avoid truncating it
+    # while another worker compiles an already-current copy.
+    if os.path.exists(GROUND):
+        with open(GROUND, encoding="utf-8") as existing:
+            if existing.read() == content:
+                return
+    open(GROUND, "w", encoding="utf-8").write(content)
 
 
 def rotvec_deg(R: np.ndarray, R0: np.ndarray) -> np.ndarray:

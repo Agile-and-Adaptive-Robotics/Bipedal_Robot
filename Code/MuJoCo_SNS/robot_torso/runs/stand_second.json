@@ -1,0 +1,43 @@
+{
+  "machine": "easteregg2",
+  "mode": "stand",
+  "backend": "exact_fast",
+  "duration_simulated_s": 4.999999999999671,
+  "requested_duration_s": 5.0,
+  "wall_s": 10.730664999980945,
+  "failed": null,
+  "finite": true,
+  "neuron_count": 262,
+  "neural_inputs": 230,
+  "actuators": 54,
+  "active_force_actuators": 54,
+  "maximum_control": 1.0,
+  "pelvis_height_min_m": 0.6826051598038312,
+  "mean_neural_tracking_error": 0.008781202857420397,
+  "maximum_lumbar_rotation_deg": 10.921226113763007,
+  "pelvis_forward_displacement_m": 0.009408763682662063,
+  "knee_range_deg": [
+    79.73722643347796,
+    72.64569437925802
+  ],
+  "mean_support_fraction": 0.9992024594972162,
+  "nominal_support_fraction": 0.8,
+  "mean_rig_torque_Nm": [
+    4.938570280925097,
+    3.9349048610269053,
+    48.30363017545851
+  ],
+  "mean_ground_load_N": [
+    0.3123572382174309,
+    0.0
+  ],
+  "neural_parameters": {
+    "c1_gain": 0.15,
+    "v3_gain": 0,
+    "heel_rge": 0.15,
+    "toe_rge": 0.05
+  },
+  "force_model": "30 ms first-order reference tension, capped by existing 27-actuator map MIFs; not calibrated BPA hardware",
+  "controller": "Layered SNS with Ia/II/Ib/contact inputs, descending postural torque allocation, and RG-driven stepping references",
+  "status": "Supported neural-control diagnostic; walking classification requires trajectory/contact review"
+}

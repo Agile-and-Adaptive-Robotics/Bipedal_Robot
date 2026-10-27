@@ -1,0 +1,259 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="ah001_manual_tree">
+  <!--Knee loop closures are in ah001_lower.xml; this URDF is an open tree. Hip spherical joints use three serial passive continuous axes.-->
+  <link name="pelvis">
+    <inertial>
+      <origin xyz="-0.078796991107286066 0.0012808169841764449 -1.7911951924109649e-05" rpy="0 0 0" />
+      <mass value="2.1978978622323857" />
+      <inertia ixx="0.0193833305658541" iyy="0.01563238676881486" izz="0.009630908503043368" ixy="0.0010292285821547193" ixz="9.88263823909345e-08" iyz="-4.702535966726235e-06" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/pelvis_00.stl" />
+      </geometry>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/pelvis_01.stl" />
+      </geometry>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/pelvis_02.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="back_r">
+    <inertial>
+      <origin xyz="-0.010190465840423477 -0.0058387324349582492 -0.028137730169172745" rpy="0 0 0" />
+      <mass value="0.01249462557416818" />
+      <inertia ixx="1.8436649861435256e-06" iyy="3.522486861912207e-06" izz="3.6171251883834797e-06" ixy="-1.4327413033799083e-06" ixz="-7.39959995272532e-07" iyz="-4.242254795929829e-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/back_r_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="thigh_l">
+    <inertial>
+      <origin xyz="0.028025720058928137 -0.27438308961312313 -0.029527193315700473" rpy="0 0 0" />
+      <mass value="0.6562521668190106" />
+      <inertia ixx="0.016485796473453888" iyy="0.0004076663016106783" izz="0.016370338557527626" ixy="0.0006831430367162809" ixz="-5.132521545817289e-06" iyz="0.0007444877454859885" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/thigh_l_00.stl" />
+      </geometry>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/thigh_l_01.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="front_r">
+    <inertial>
+      <origin xyz="0.0040662276111129575 -0.012812713633207184 0.028374575757583967" rpy="0 0 0" />
+      <mass value="0.013025342374168185" />
+      <inertia ixx="4.8754141166966066e-06" iyy="1.4378882359933022e-06" izz="4.526799817434941e-06" ixy="1.2133035394903039e-06" ixz="-2.954285622325901e-07" iyz="9.306694710349984e-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/front_r_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="shank_r">
+    <inertial>
+      <origin xyz="-0.016599201329018973 -0.10980516660081174 -0.0064435669617622648" rpy="0 0 0" />
+      <mass value="0.3728116768140501" />
+      <inertia ixx="0.003814206135982782" iyy="0.00048281145286569556" izz="0.004205284880491442" ixy="-0.0011724188588160542" ixz="-9.716700882926885e-06" iyz="-2.9675622053029715e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/shank_r_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="front_l">
+    <inertial>
+      <origin xyz="0.0030490009485867609 -0.013092064033309148 -0.028374575757585299" rpy="0 0 0" />
+      <mass value="0.013025342374168185" />
+      <inertia ixx="5.0441148801660315e-06" iyy="1.269204277812965e-06" izz="4.526816622724239e-06" ixy="9.294086229339733e-07" ixz="2.2144285847422648e-07" iyz="-9.509975319945697e-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/front_l_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="back_l">
+    <inertial>
+      <origin xyz="-0.01071468272144134 -0.0048119972440191505 0.028137730169168637" rpy="0 0 0" />
+      <mass value="0.01249462557416818" />
+      <inertia ixx="1.5799587161037049e-06" iyy="3.7859013473813223e-06" izz="3.6168334038111823e-06" ixy="-1.2408601668141219e-06" ixz="7.779347255491819e-07" iyz="3.493352592454337e-07" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/back_l_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="shank_l">
+    <inertial>
+      <origin xyz="-0.031510693803855919 -0.10648835891723951 0.00044356447193712178" rpy="0 0 0" />
+      <mass value="0.3728115701926304" />
+      <inertia ixx="0.0034327299944294596" iyy="0.0008642921450937785" izz="0.004205289283715174" ixy="-0.0015811086417745754" ixz="1.3696998441328468e-05" iyz="2.806145259742423e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/shank_l_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="thigh_r">
+    <inertial>
+      <origin xyz="0.028025927809675388 -0.27438558231077187 0.029527184949351887" rpy="0 0 0" />
+      <mass value="0.6562646327126397" />
+      <inertia ixx="0.01648591964063513" iyy="0.0004076666390672828" izz="0.016370448041248733" ixy="0.0006831594627613687" ixz="5.12987380854164e-06" iyz="-0.0007444962961604442" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/thigh_r_00.stl" />
+      </geometry>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/thigh_r_01.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="foot_r">
+    <inertial>
+      <origin xyz="0.050887046556475815 -0.064261623549291991 0.00089728085451584727" rpy="0 0 0" />
+      <mass value="0.5247929879115335" />
+      <inertia ixx="0.0006723443758920591" iyy="0.002649514022334691" izz="0.002874726549350205" ixy="0.0006201081733258258" ixz="-5.468646996419108e-05" iyz="1.3119633903591628e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/foot_r_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="foot_l">
+    <inertial>
+      <origin xyz="0.050887046556475801 -0.064261623549291991 -0.00089728085451584727" rpy="0 0 0" />
+      <mass value="0.5247929879115335" />
+      <inertia ixx="0.0006723443758920591" iyy="0.002649514022334691" izz="0.002874726549350205" ixy="0.0006201081733258258" ixz="5.468646996419108e-05" iyz="-1.3119633903591628e-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="meshes/foot_l_00.stl" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="thigh_r_axis0" />
+  <joint name="thigh_r_passive_0" type="continuous">
+    <parent link="pelvis" />
+    <child link="thigh_r_axis0" />
+    <origin xyz="-0.061043984572223972 -0.049509447059738795 0.064999999999999988" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <link name="thigh_r_axis1" />
+  <joint name="thigh_r_passive_1" type="continuous">
+    <parent link="thigh_r_axis0" />
+    <child link="thigh_r_axis1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="thigh_r_passive_2" type="continuous">
+    <parent link="thigh_r_axis1" />
+    <child link="thigh_r" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="back_r_passive_0" type="continuous">
+    <parent link="thigh_r" />
+    <child link="back_r" />
+    <origin xyz="0.035131884574180566 -0.45563682494473146 0.05675832161499747" rpy="0 0 0" />
+    <axis xyz="0 -1.1102230246251565e-16 -1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="shank_r_passive_0" type="continuous">
+    <parent link="back_r" />
+    <child link="shank_r" />
+    <origin xyz="-0.04056196844092276 -0.023244122186043548 -0.031000000000000319" rpy="0 0 0" />
+    <axis xyz="2.0539125955565396e-15 1.6653345369377348e-16 -1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="front_r_passive_0" type="continuous">
+    <parent link="thigh_r" />
+    <child link="front_r" />
+    <origin xyz="0.01735188457418059 -0.44039682494473148 -0.017241703385002513" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <link name="thigh_l_axis0" />
+  <joint name="thigh_l_passive_0" type="continuous">
+    <parent link="pelvis" />
+    <child link="thigh_l_axis0" />
+    <origin xyz="-0.061043984572223965 -0.049509447059738795 -0.065000000000000016" rpy="0 0 0" />
+    <axis xyz="1 0 0" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <link name="thigh_l_axis1" />
+  <joint name="thigh_l_passive_1" type="continuous">
+    <parent link="thigh_l_axis0" />
+    <child link="thigh_l_axis1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="thigh_l_passive_2" type="continuous">
+    <parent link="thigh_l_axis1" />
+    <child link="thigh_l" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="back_l_passive_0" type="continuous">
+    <parent link="thigh_l" />
+    <child link="back_l" />
+    <origin xyz="0.035131884574171886 -0.45563682494472801 -0.056758321614996318" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="shank_l_passive_0" type="continuous">
+    <parent link="back_l" />
+    <child link="shank_l" />
+    <origin xyz="-0.042647033370564219 -0.019151841809324277 0.036900000000001709" rpy="0 0 0" />
+    <axis xyz="-1.7208456881689926e-15 -2.55351295663786e-15 -1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+  <joint name="front_l_passive_0" type="continuous">
+    <parent link="thigh_l" />
+    <child link="front_l" />
+    <origin xyz="0.017351884574171882 -0.44039682494472793 0.017241703385003623" rpy="0 0 0" />
+    <axis xyz="0 -1.1102230246251565e-16 -1" />
+    <limit effort="0" velocity="0" />
+  </joint>
+</robot>

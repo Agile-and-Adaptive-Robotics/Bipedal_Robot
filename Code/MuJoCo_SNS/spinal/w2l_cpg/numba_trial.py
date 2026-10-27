@@ -266,12 +266,16 @@ class FastTrial:
                            self.dt, self.n, len(self.syn_pre))
 
     def run(self, te=3.0, tf=4.0, wsup=0.7, dur=10.0,
-            stimN=0.0, stimT=8.0, stimDur=1.0) -> dict:
-        """One trial with the compiled neural step."""
+            stimN=0.0, stimT=8.0, stimDur=1.0,
+            hold=3.0, lower=1.0, sink=0.01, drop=0.026,
+            cap=0.5, acap=-1, rig=0.25, settle=0.4) -> dict:
+        """One trial: full drop protocol, numba neural, 1ms physics substeps."""
         m, d = self.model, self.data
         mujoco = self.mujoco
-        dt = self.dt
-        n_steps = int(dur / dt)
+        dt_net = self.dt       # 2 ms neural step
+        dt_phy = 0.001         # 1 ms physics substep (matches runner)
+        nsub = 2               # physics substeps per neural step
+        m.opt.timestep = dt_phy
 
         # reset
         mujoco.mj_resetDataKeyframe(m, d, 0)
@@ -279,76 +283,191 @@ class FastTrial:
         self.b_gate[:] = 0.0
         self.c_gate[:] = 0.0
 
-        # preallocate metric buffers
-        heelF = np.zeros((n_steps, 2))
-        com_x = np.zeros(n_steps)
-        pel_z = np.zeros(n_steps)
-        qbuf = np.zeros((n_steps, 6))
+        # ---- drop-protocol vertical harness
+        jadr = m.jnt_qposadr[mujoco.mj_name2id(
+            m, mujoco.mjtObj.mjOBJ_JOINT, "root")]
+        z_air = float(d.qpos[jadr + 2])
+        z_contact = z_air - drop - sink
+        W = float(np.sum(m.body_mass)) * (-m.opt.gravity[2])
+        K_V = 4.0 * W / max(drop, 0.01)
+        M_EFF = 42.0
+        C_V = 2.0 * float(np.sqrt(K_V * M_EFF))
 
-        # contact force buffer
+        # ---- ankle range fix
+        for anm in ("ankle_L", "ankle_R"):
+            jid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_JOINT, anm)
+            m.jnt_range[jid] = np.array([np.radians(-20.0), np.radians(5.0)])
+
+        # ---- drive caps
+        cap = 0.5 if cap <= 0 else cap
+        acap_v = cap if acap < 0 else acap
+
+        # ---- port indices
+        P_HEEL = [self.net.input_index(p) for p in
+                  ("L heel contact", "R heel contact")]
+        P_TOE = [self.net.input_index(p) for p in
+                 ("L toe contact", "R toe contact")]
+        P_E = [self.net.input_index(p) for p in
+               ("TONIC L RG ext", "TONIC R RG ext")]
+        P_F = [self.net.input_index(p) for p in
+               ("TONIC L RG flx", "TONIC R RG flx")]
+        P_S1 = self.net.input_index("Stimulus_1")
+        P_S2 = self.net.input_index("Stimulus_2 (10nA)")
+        P_IB = [[self.net.input_index(p) for p in self.net.inputs
+                 if p.startswith("PORT Ib " + s)] for s in ("L", "R")]
+
+        EXT_ACTS = {s: [self.act_idx[k] for k in self.act_idx
+                        if "ext" in k.lower() and s.lower() in k.lower()]
+                    for s in ("L", "R")}
+        FMAX = {k: max(float(m.actuator_gainprm[a][2]), 1.0)
+                for k, a in self.act_idx.items()}
+
+        toe_geoms = {s: mujoco.mj_name2id(
+            m, mujoco.mjtObj.mjOBJ_GEOM, "toe_" + s.lower() + "_contact")
+            for s in ("L", "R")}
+
+        ctn_amp, cref, ibnA = 4.0, 50.0, 1.0
+        blend = 0.6
+
+        # metric buffers (at neural-step resolution)
+        n_net = int(dur / dt_net)
+        heelF = np.zeros((n_net, 2))
+        toeF = np.zeros((n_net, 2))
+        com_x = np.zeros(n_net)
+        pel_z = np.zeros(n_net)
+        qbuf = np.zeros((n_net, 6))
         f6 = np.zeros(6)
-        weight = -m.opt.gravity[2] * m.body_mass.sum()
 
-        # drive indices (precomputed)
-        # Note: the runner builds these from net.inputs; we replicate here
-        # for the bilateralrg2 template's port structure
-        alpha_l_idx = 0  # placeholder — real indices come from net.inputs
+        # contact force accumulator (persists across substeps)
+        cf = {g: 0.0 for g in list(self.heel_geoms.values()) +
+              list(toe_geoms.values())}
 
-        for i in range(n_steps):
-            t = i * dt
+        n_phy = int(dur / dt_phy)
+        anchor_com = None
+        anchor_R0 = None
+        rv_prev = None
+        for i in range(n_phy):
+            t = i * dt_phy
+            is_neural = (i % nsub == 0)
+            i_net = i // nsub
 
-            # --- sensors (minimal: read heel forces for metrics)
-            mujoco.mj_forward(m, d)
-            hL, hR = 0.0, 0.0
-            for k in range(d.ncon):
-                c_con = d.contact[k]
-                if (c_con.geom1 == self.heel_geoms["L"] or
-                        c_con.geom2 == self.heel_geoms["L"]):
+            # --- sensor read (every substep, cheap: just accumulate)
+            if is_neural:
+                mujoco.mj_forward(m, d)
+                for g in cf:
+                    cf[g] = 0.0
+                for k in range(d.ncon):
+                    c_con = d.contact[k]
                     mujoco.mj_contactForce(m, d, k, f6)
-                    hL += max(f6[2], 0.0)
-                elif (c_con.geom1 == self.heel_geoms["R"] or
-                          c_con.geom2 == self.heel_geoms["R"]):
-                    mujoco.mj_contactForce(m, d, k, f6)
-                    hR += max(f6[2], 0.0)
-            heelF[i, 0] = hL; heelF[i, 1] = hR
-            com_x[i] = d.subtree_com[0][0]
-            pel_z[i] = d.xpos[self.root_body, 2]
-            for j in range(6):
-                qbuf[i, j] = d.qpos[self.qadr[j]]
+                    fz = max(f6[2], 0.0)
+                    if c_con.geom1 in cf:
+                        cf[c_con.geom1] += fz
+                    elif c_con.geom2 in cf:
+                        cf[c_con.geom2] += fz
+                heelF[i_net] = [cf[self.heel_geoms["L"]],
+                                cf[self.heel_geoms["R"]]]
+                toeF[i_net] = [cf[toe_geoms["L"]], cf[toe_geoms["R"]]]
+                com_x[i_net] = d.subtree_com[0][0]
+                pel_z[i_net] = d.xpos[self.root_body, 2]
+                for j in range(6):
+                    qbuf[i_net, j] = d.qpos[self.qadr[j]]
 
-            # --- input currents (tonic drive on the appropriate ports)
-            self.u[:] = 0.0
-            # TODO: wire the full drive schedule (te/tf on the correct ports)
+            # --- rig scale
+            if t < settle:
+                S_now = 1.0
+            elif t < settle + blend:
+                S_now = 1.0 + (rig - 1.0) * (t - settle) / blend
+            else:
+                S_now = rig
+                if anchor_com is None and t >= settle:
+                    anchor_com = d.subtree_com[0].copy()
+                    anchor_R0 = d.xmat[self.root_body].reshape(3, 3).copy()
 
-            # --- neural step (NUMBA-COMPILED: ~1-2 µs instead of 48 µs)
-            self._step_compiled(
-                self.V, self.V_last, self.i_syn, self.u,
-                self.syn_pre, self.syn_post, self.syn_gmax,
-                self.syn_del_e, self.syn_e_lo, self.syn_range,
-                self.in_pre, self.in_post, self.in_gmax,
-                self.g_m, self.v_rest, self.i_b, self.tf_mem,
-                self.gated_flag, self.k_a, self.k_b, self.k_c,
-                self.slope_a, self.slope_b, self.slope_c,
-                self.e_a, self.e_b, self.e_c, self.e_ion,
-                self.g_ion, self.pow_a, self.pow_b, self.pow_c,
-                self.tau_max_b, self.tau_max_c,
-                self.b_gate, self.c_gate,
-                dt, self.n, len(self.syn_pre))
+            # --- input currents + neural step + muscle update
+            if is_neural:
+                self.u[:] = 0.0
+                if t < 0.01:
+                    self.u[P_S1] = 10.0
+                    self.u[P_S2] = 10.0
+                self.u[P_E[0]] = te
+                self.u[P_E[1]] = te
+                self.u[P_F[0]] = tf
+                self.u[P_F[1]] = tf
+                if stimN > 0.0 and stimT <= t < stimT + stimDur:
+                    self.u[P_E[0]] = max(0.0, te - stimN)
+                    self.u[P_E[1]] = max(0.0, te - stimN)
+                for k in range(2):
+                    self.u[P_HEEL[k]] = ctn_amp * min(
+                        heelF[i_net, k] / cref, 1.0)
+                    self.u[P_TOE[k]] = ctn_amp * min(
+                        toeF[i_net, k] / cref, 1.0)
+                for si, s in enumerate(("L", "R")):
+                    if EXT_ACTS[s]:
+                        fnorm = np.mean([
+                            max(d.actuator_force[a] /
+                                FMAX[k2], 0.0)
+                            for k2, a in self.act_idx.items()
+                            if a in EXT_ACTS[s]])
+                        for p in P_IB[si]:
+                            self.u[p] = ibnA * fnorm
 
-            # --- muscle activation from membrane voltage
-            ctrl = self.net.muscle_ctrl(self.V)
-            for template_label, act_i in self.act_idx.items():
-                d.ctrl[act_i] = ctrl.get(template_label, 0.0)
+                self._step_compiled(
+                    self.V, self.V_last, self.i_syn, self.u,
+                    self.syn_pre, self.syn_post, self.syn_gmax,
+                    self.syn_del_e, self.syn_e_lo, self.syn_range,
+                    self.in_pre, self.in_post, self.in_gmax,
+                    self.g_m, self.v_rest, self.i_b, self.tf_mem,
+                    self.gated_flag, self.k_a, self.k_b, self.k_c,
+                    self.slope_a, self.slope_b, self.slope_c,
+                    self.e_a, self.e_b, self.e_c, self.e_ion,
+                    self.g_ion, self.pow_a, self.pow_b, self.pow_c,
+                    self.tau_max_b, self.tau_max_c,
+                    self.b_gate, self.c_gate,
+                    dt_net, self.n, len(self.syn_pre))
 
-            # --- harness
-            d.xfrc_applied[:] = 0.0
-            d.xfrc_applied[self.root_body, 2] = wsup * weight
+                ctrl = self.net.muscle_ctrl(self.V)
+                for template_label, act_i in self.act_idx.items():
+                    c_val = ctrl.get(template_label, 0.0)
+                    c_cap = acap_v if "ankle" in template_label.lower() else cap
+                    d.ctrl[act_i] = min(c_val, c_cap)
 
-            # --- physics (mujoco C code: ~17 µs)
+                # harness: vertical PD + horizontal leash + tilt
+                d.xfrc_applied[:] = 0.0
+                # vertical
+                if t < hold:
+                    z_t, wff = z_air, 1.0
+                elif t < hold + lower:
+                    z_t = z_air + (z_contact - z_air) *                         (t - hold) / max(lower, 1e-6)
+                    wff = 1.0
+                else:
+                    z_t, wff = z_contact, wsup
+                Fz = max(wff * W + K_V * (z_t - float(d.qpos[jadr + 2]))
+                         - C_V * d.qvel[jadr + 2], 0.0)
+                d.xfrc_applied[self.root_body, 2] = Fz
+                # horizontal leash (COM xy spring + damping)
+                if anchor_com is not None:
+                    dv_xy = d.subtree_com[0] - anchor_com
+                    c_damp = S_now * 2.0 * np.sqrt(2000.0 * 42.0)
+                    d.xfrc_applied[self.root_body, 0] += \
+                        -S_now * 2000.0 * dv_xy[0] - c_damp * d.qvel[jadr]
+                    d.xfrc_applied[self.root_body, 1] += \
+                        -S_now * 2000.0 * dv_xy[1] - c_damp * d.qvel[jadr + 1]
+                    # tilt assist (rotation spring + damping)
+                    rv = np.zeros(3)
+                    R_now = d.xmat[self.root_body].reshape(3, 3)
+                    R_err = R_now @ anchor_R0.T
+                    # rotation vector from R_err (small-angle approx ok)
+                    rv[0] = R_err[2, 1] - R_err[1, 2]
+                    rv[1] = R_err[0, 2] - R_err[2, 0]
+                    rv[2] = R_err[1, 0] - R_err[0, 1]
+                    T = -S_now * 400.0 * rv * 0.5
+                    d.xfrc_applied[self.root_body, 3:] += T
+
+            # --- physics step (every 1 ms)
             mujoco.mj_step(m, d)
 
-        return dict(heelF=heelF, com_x=com_x, pel_z=pel_z, q=qbuf)
-
+        return dict(heelF=heelF, toeF=toeF, com_x=com_x,
+                    pel_z=pel_z, q=qbuf)
 
 if __name__ == "__main__":
     print("compiling neural_step (first call is slow)...")

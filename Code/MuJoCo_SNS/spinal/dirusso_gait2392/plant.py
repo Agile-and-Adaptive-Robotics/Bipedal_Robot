@@ -43,8 +43,20 @@ for _grp, _names in {
         HER_ACTUATORS |= {_n + "_r", _n + "_l"}
 
 
-def build_sagittal_xml(src_xml: str) -> str:
-    txt = open(src_xml, encoding="utf-8").read()
+def build_sagittal_xml(src_xml: str, linear_muscles: bool = False,
+                       xml_text: str | None = None) -> str:
+    """Patch + compile with the original's relative Geometry/ assets.
+
+    xml_text optionally supplies an already repaired model, avoiding a
+    second file read and allowing the canonical conversion repairs.
+
+    linear_muscles=True is an EXPERIMENTAL approximation, not the paper's
+    Hill-type muscles. It replaces MuJoCo dyntype=muscle actuators with
+    simple <motor> actuators (force = ctrl × Fmax, no activation dynamics,
+    no FL/FV curves). The default keeps the MuJoCo muscle model.
+    """
+    txt = (open(src_xml, encoding="utf-8").read()
+           if xml_text is None else xml_text)
     # 1) exact sagittal lock via joint equalities (append into the existing
     #    <equality> section)
     eq_add = "".join(
@@ -75,6 +87,34 @@ def build_sagittal_xml(src_xml: str) -> str:
         return tag
 
     txt = re.sub(r'<general [^>]*name="[^"]+"[^>]*/>', _zero, txt)
+
+    # 3) LINEAR MUSCLE option (Di Russo's assumption: force = ctrl * Fmax)
+    # replaces <general class="muscle"> with <motor> (no activation
+    # dynamics, no FL/FV curves — instant force response)
+    if linear_muscles:
+        def _linearize(match):
+            tag = match.group(0)
+            name = re.search(r'name="([^"]+)"', tag).group(1)
+            if name not in HER_ACTUATORS:
+                return tag  # already zeroed
+            # extract Fmax from gainprm[2] (already may be zeroed for non-her)
+            gp = re.search(r'gainprm="([^"]+)"', tag)
+            fmax = float(gp.group(1).split()[2]) if gp else 100.0
+            if fmax <= 0:
+                fmax = 100.0
+            # get the tendon reference (transmission path)
+            tendon = re.search(r'tendon="([^"]+)"', tag)
+            tendon_name = tendon.group(1) if tendon else ""
+            # build the <motor> replacement
+            # simple torque motor: force = ctrl * Fmax (her assumption)
+            # activation smoothing is in the controller (tau_A = 20 ms)
+            # gear capped to prevent instant-force explosion
+            gear = min(fmax, 500.0)
+            return (f'<motor name="{name}" tendon="{tendon_name}" '
+                    f'gear="{gear:.1f}" ctrllimited="true" '
+                    f'ctrlrange="0 1"/>')
+        txt = re.sub(r'<general [^>]*class="muscle"[^>]*/>', _linearize, txt)
+
     return txt, n_zero
 
 

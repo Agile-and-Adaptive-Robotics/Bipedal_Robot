@@ -1,0 +1,19 @@
+Design of record: p1 [0.04       0.137           0] pEnd [0.03442     -0.1971           0] rest 0.827738 tendon 0.092490
+Adopted chi (pick 32): Xi0 -0.00637802 Xi1 39978.7 Xi2 14733.8 Xi3 0.158289
+Old proximal ring (routeSeed row 6, t1): [0.06985     0.03433           0]
+vas_med nodes [-120         -87.5           -55         -22.5            10] deg
+  tau_h  [30.18      38.911      48.132      58.653      40.738] N*m
+  arm(a) [0.023323    0.030071    0.037196    0.045327    0.031482] m
+{Dot indexing is not supported for variables of this type.
+
+Error in study1_vasmed_minBPA_20261027>cableFirstLeg (line 449)
+        rel = circs(k).c - cur;
+              ^^^^^^^^^^
+Error in study1_vasmed_minBPA_20261027 (line 120)
+    [uFirst, nC] = cableFirstLeg(pEndRec(1:2), ringOld(1:2), {cylUp, cylLo});
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in run (line 112)
+evalin('caller', strcat(scriptStem, ';'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+ERROR: MATLAB error Exit Status: 0x00000001

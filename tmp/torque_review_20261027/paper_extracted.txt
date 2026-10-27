@@ -1,0 +1,1612 @@
+
+
+PDF PAGE 1
+1
+Design Factors for Isometric Robotic Knee
+Torque Using Braided Pneumatic Actuators
+Ben Bolen 1,˚, Lindie Burgess 1, Connor Morrow 1, and Alex Hunt 1
+1Agile and Adaptive Robotics Laboratory , Portland State University , Department of
+Mechanical and Materials Engineering, Portland, OR, USA
+Correspondence*:
+Ben Bolen
+Portland State University
+Department of Mechanical and Materials Engineering
+PO Box 751
+Portland, OR, 97207-0751, USA
+bbolen83@gmail.com
+ABSTRACT2
+Artificial muscles such as braided pneumatic actuators (BPAs) reproduce the force and con-3
+traction behavior of skeletal muscle, making them attractive for the legs of musculoskeletal4
+robots. However, the isometric torque a BPA delivers about a joint remains difficult to predict,5
+because rigid-body torque models omit attachment compliance, effective-length offsets, and the6
+contraction lost where the actuator wraps over the joint. In this work, we measured isometric7
+knee torque on pinned and biomimetic knee test stands across actuator resting lengths, isolated8
+error sources with a hybrid torque calculation, and identified correction terms by multiobjective9
+optimization. Our analysis resulted in (1) a corrected torque model whose length offset, effective10
+stiffness, and fictive-strain wrapping loss, expressed through the unloaded620 kPa contraction,11
+reduce held-out prediction error on both pinned-knee test families and transfer to the biomimetic12
+knee without refitting; (2) a cross-configuration-consistent stiffness pair selected by a simulta-13
+neous design requirement; and (3) redesigned attachment routes that meet or exceed human14
+isometric knee-torque targets with quantified margins, together with the first hardware torque15
+measurements of the redesigned extensor route. The corrected model and redesign pipeline16
+support first-iteration torque design of BPA-actuated robot joints.17
+Keywords: Braided Pneumatic Actuator, Artificial Muscle, Isometric Torque, Moment Arm, System Identification, Actuator Routing,18
+Biomimetic Robotics, Knee Joint19
+1 INTRODUCTION
+Musculoskeletal robots built on biological design principles are experimental platforms for motor-control20
+questions that are impractical or unethical to study in human subjects, from spinal reflex loops to the21
+coupling of posture and locomotion (Ijspeert, 2020; Goldsmith et al., 2021; Liu et al., 2018). The same22
+principles also yield machines that copy the anatomy of their biological counterparts: human-mimetic23
+humanoids and anthropomorphic arms with anatomically arranged musculotendon networks (Asano et al.,24
+2017, 2019; Hitzmann et al., 2018), lower-limb robots driven by multifilament muscles (Kurumaya et al.,25
+2016), and platforms that isolate the function of a single muscle such as the gluteus medius (Shin et al.,26
+2018) or select actions during adaptive locomotion (Schilling et al., 2022). Each of these machines asks its27
+1
+
+PDF PAGE 2
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+actuators to do what skeletal muscle does: pull as a lightweight tension member whose force depends on28
+excitation and length, routed from origin to insertion across a joint. The joint-level quantity that matters is29
+not force but torque, and torque depends as much on the routed path as on the actuator itself.30
+No actuator family reproduces muscle exactly, and each alternative trades something away. Geared31
+electric motors dominate position control, but they place mass and reflected inertia at the joint and gain32
+compliance only through added series elasticity (Veale and Xie, 2016). Hydraulics supply high force33
+density at the price of pumps, valves, and rigid supply lines (Suzumori and Faudzi, 2018). Shape-memory34
+alloys respond slowly, and dielectric elastomers deliver low force at impractical drive voltages (Madden35
+et al., 2004). Braided pneumatic actuators (BPAs), also called McKibben artificial muscles, occupy the36
+practical middle ground: a pressurized sleeved bladder that shortens and pulls, producing force that falls37
+with contraction in a muscle-like way while remaining a compliant tension member. Air-muscle quadrupeds38
+have demonstrated robust, adaptive gaits (Aschenbeck et al., 2006), and the Festo fluidic BPAs used in this39
+work are commercially available in the sizes a human-scale leg requires.40
+For BPAs, the force side of the design problem is well characterized: we have published closed-form41
+equations for the maximum force and the isometric force of10 mmand20 mm Festo actuators as functions42
+of pressure, contraction, and resting length (Bolen et al., 2026). The torque side has received far less43
+attention. Joint torque is the product of actuator force and the moment arm of the actuator’s line of action44
+about the joint axis, and the moment arm is a property of the attachment route that changes with joint45
+angle. Biomechanics treats moment-arm determination as its own measurement problem, from lower-limb46
+muscular anatomy (Brand et al., 1982) and three-dimensional musculotendon estimation (Menegaldo et al.,47
+2004) to curved paths with moving attachment points (Suderman and Vasavada, 2012), because short48
+moment arms amplify path error (Young et al., 2019). The robot hardware adds further sources of error:49
+brackets and fixtures deform under load, artificial tendons and cabling stretch, and at deep flexion the50
+actuator bends over the joint and loses usable contraction. None of these effects appears in a rigid-body51
+torque model built from a characterized actuator and nominal geometry.52
+Torque modeling for braided actuators has consequently concentrated on the force law and on placement.53
+Chou and Hannaford (1996) derived the static force relation of McKibben muscles from braid geometry54
+and quantified its hysteresis, and later work refined static models and approximations for pneumatic and55
+fluidic muscles (Tondu, 2022; S´arosi, 2012). For the actuator family used here, Martens and Boblan (2017)56
+modeled static force from a geometric and material framework, and Hunt et al. (2017) modeled length57
+effects. At the joint level, Bolen and Hunt (2019) determined artificial-muscle placement for biomimetic58
+humanoid robot legs, and Morrow et al. (2020) optimized placements so that a bipedal robot matches59
+human torque and range-of-motion capabilities. The present tests evaluate errors that remain when these60
+force and routing models are applied to a physical joint. None of them represents fixture and tendon61
+compliance in the load path, carries an effective-length offset between modeled and physical muscle length,62
+or accounts for the contraction lost where the actuator wraps over the joint. To our knowledge, no BPA63
+torque model has been validated across joint configurations, actuator resting lengths, and both antagonistic64
+sides of a joint with a single consistent parameter set.65
+The present work treats these mispredictions as identifiable design factors, not residual noise. We66
+measured isometric knee torque on two test stands: a robot leg with a pinned revolute knee, and the same67
+leg with a biomimetic knee whose instantaneous center of rotation migrates with flexion like that of the68
+human joint (Steele, 2018; Steele et al., 2017). Each knee was driven by antagonistic flexor and extensor69
+BPAs of 10 mmand20 mm diameter across a range of resting lengths, with and without artificial tendons.70
+Frontiers 2
+
+PDF PAGE 3
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+A hybrid torque calculation, which combines measured muscle lengths and moment arms with modeled71
+actuator force, isolated kinematic error from force error before any parameter was fitted.72
+Our analysis resulted in (1) a corrected torque model whose constant length offset (χ0), lumped attachment73
+stiffness (χ1 and χ2), and fictive-strain wrapping loss (χ3) reduce held-out prediction error on both pinned-74
+knee test families and carry to the biomimetic knee without refitting; (2) a two-stage multiobjective75
+identification that holds one stiffness pair consistent across both knees and both actuators, validates it on76
+held-out resting lengths and on the biomimetic knee, and selects the adopted set by an external design77
+requirement; and (3) redesigned attachment routes, each driven by two 20 mm BPAs, that meet or exceed78
+human isometric knee-torque targets from OpenSim musculoskeletal models (Seth et al., 2018; Delp et al.,79
+1990) with a required 5 % margin at every angle, together with the first hardware torque measurements80
+of the redesigned extensor route. Throughout, the wrapping loss is expressed through fictive strain: the81
+excess contraction the force model must see beyond the actuator’s physical contraction, normalized by82
+the unloaded 620 kPacontraction ε620 of the free actuator. Together, the corrected model and the redesign83
+pipeline let a designer predict isometric joint torque, correct it against hardware, and route the actuators to84
+a human-derived target on the first design iteration.85
+2 METHODS AND MATERIALS
+2.1 Overview86
+Isometric knee torque is the product of the force an actuator develops and the moment arm of its line87
+of action about the joint axis, and the force itself is set by the actuator’s effective length through the88
+force model. Each link in that chain is a design quantity: the attachment routing fixes the moment arm,89
+the resting length and attachment compliance set the effective contraction, and wrapping over the joint90
+removes usable length. We built two knee test stands, measured isometric torque across each joint’s91
+range of motion with 10 mmand20 mm Festo braided pneumatic actuators (BPAs) in flexor and extensor92
+configurations, and compared the measurements against the original rigid-body model, the improved93
+actuator force characterization alone, and the corrected model developed here. A hybrid calculation isolated94
+the error sources, a multiobjective identification produced the correction terms, and the corrected model95
+then drove a redesign of the attachment routes against human isometric torque targets.96
+2.2 Actuator Force Model97
+The actuator force model is fully described in Bolen et al. (2026) and is reproduced here only as far as98
+the torque model requires. The contractionεof a BPA is99
+ε“ pl0 ´l mq
+l0
+(1)
+where l0 is the uninflated resting length measured from hose clamp to hose clamp and lm is the current100
+muscle length. The unloaded contraction at620 kPais101
+ε620 “ pl0 ´l 620q
+l0
+(2)
+wherel 620 is the actuator length at620 kPawith no external load, and the relative contraction is102
+ε˚ “ ε
+ε620
+(3)
+Frontiers 3
+
+PDF PAGE 4
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+The pair pε620, ε˚q is the strain basis of this work: every length-based correction introduced below is103
+expressed inε 620-normalized units. The normalized isometric force is104
+F ˚pε˚, P ˚q “
+$
+&
+%
+c0 ¨
+`
+expp´c1 ¨ε ˚q ´1
+˘
+`P ˚ ¨exp
+`
+´c2pε˚q2˘
+where positive
+0otherwise,
+(4)
+that is, the normalized force is the value of the bracketed expression where that expression is positive and105
+zero elsewhere, where P ˚ is pressure normalized by 620 kPaand the diameter-dependent coefficients c0,106
+c1, andc 2 are tabulated in Bolen et al. (2026) (p. 10). The maximum force is107
+Fmaxpl0, Pq “a 1 Parctan
+`
+a2 Ppl 0 ´0.0075q
+˘
+(5)
+with l0 in meters, a fixed 7.5 mm end-contact offset, and coefficients tabulated in Bolen et al. (2026) (p. 7);108
+at the620 kPasystem ceiling,F maxpl0,620 kPaq “F 620pl0q. The isometric force is the composition109
+Fpε ˚, P ˚, l0q “F ˚pε˚, P ˚q ¨F 620pl0q(6)
+2.3 Robot Leg Model and Knee Test Stands110
+The robot leg consists of a knee joint, femur, tibia, BPA assemblies, and artificial tendons (Figure 1A–C).111
+The artificial bones were 3D printed in Onyx, carbon fiber, and high-strength high-temperature fiberglass,112
+with machined links for the knee mechanism, and the tendons are Shimano bicycle brake cable. The leg113
+geometry and dimensions derive from bone scans of a 6 ft (1.83 m) tall person (Bolen and Hunt, 2019;114
+Seth et al., 2018; Delp et al., 1990, 2007).115
+Frontiers 4
+
+PDF PAGE 5
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+A)
+B)
+θ
+Test jig assembly
+mounting locations
+Load cell
+BPA
+Tibia
+Femur
+Swing arm
+Winch cable
+Winch 
+housing
+Knee joint
+C)
+Figure 1. (A)CAD solid model assembly of the revolute joint knee in the test stand.(B)1-DoF pinned-
+joint robot knee in the test apparatus with important components labeled; the leg is shown with 30 degrees
+of flexion, i.e. θk “ ´30 ˝.(C)Picture from isometric torque testing. The setup shows the revolute knee
+configured for a test of the extensor BPA, with the knee flexed atθk “ ´120 ˝; note the compressed shape
+of the inflated BPA on the knee at this high degree of flexion.
+Two knee joints were tested: a pure revolute joint, and a biomimetic joint whose four-bar linkage116
+translates the instantaneous center of rotation (ICR) as the knee rotates (Steele, 2018; Steele et al., 2017,117
+2018), moving it posteriorly in X and distally in Y in the femur frame, except briefly proximally near118
+Frontiers 5
+
+PDF PAGE 6
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+full flexion, much as the human knee does (Bolen and Hunt, 2019). Reference coordinate frames follow119
+Wu and Cavanagh (1995); Wu et al. (2002), and Figure 2 shows the measured ICR migration. Both joints120
+share the same rotation center in the femur frame at θk “0 ˝, each was driven by an antagonistic flexor and121
+extensor, andθ k is negative in flexion throughout this work.122
+X (m)
+-0.01 0 0.01 0.02 0.03 0.04 
+Y (m) 
+0
+0.005
+0.01
+0.015
+0.02
+0.025
+0.03
+0.035
+  
+  
+  
+  
+  
+  
+Distance from 
+θ1
+Figure 2.ICR for the biomimetic robot knee as a function of knee angle, measured from θ1 on the tibia.
+The plot is overlaid on a model of the knee at θk “0 ˝ (solid line) and ´60˝ and ´120˝ (dotted dash lines).
+White circles represent measured points in ´15˝ increments from ´150˝ to ´15˝, in ´5˝ increments from
+´15˝ to0 ˝, and then at2 ˝,5 ˝, and10 ˝.
+Each stand was tested with I10 mm Festo BPAs in both configurations, and the biomimetic knee also123
+with a I20 mm BPA. Each actuator was pinned at its origin on the femur, with the far end either pinned at124
+the tibial insertion or attached there through an artificial tendon. Bolen and Hunt (2019); Morrow et al.125
+(2020) give full details of the modeled robot and its torque calculation.126
+Frontiers 6
+
+PDF PAGE 7
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+2.4 Equipment and Data Collection127
+A test jig was built to collect knee torque at set knee angles over the range of motion. The stand frame is128
+made of 80/20 1515 series extruded aluminum. The femur is fixed to the frame while the knee rotates the129
+tibia, with the joint axis co-axial with gravity to eliminate gravitational torque. A force sensor connects the130
+tibia to a swing arm tied to a winch with 3/16-inch Kevlar rope (Quality Nylon Rope) routed over idler131
+pulleys. At each measured θk the winch was locked and the BPA was inflated and then deflated, keeping the132
+measurement as isometric as possible. Because the sensor and its rope load path tie the tibia to the locked133
+winch, the sensor reading is the tension that holds the tibia at the set angle. The measured knee torque at134
+each angle is that tension multiplied by the perpendicular distance from the knee axis to the rope’s line of135
+action at its tibial attachment, the measured counterpart of the scalar reduction of Equation (10), with the136
+attachment geometry and the sensor-line angle recorded at each test position.137
+Force was collected with one of two sensors: a MODERN STEP 300 kg digital crane scale, or a CALT138
+DYLY-103100 kg S-shaped load cell used with an HX711 load-cell amplifier. Pressure was measured139
+with a Freescale MPX5700 GP 5 V pressure sensor. Supply pressure was controlled by two regulators140
+in series, a Parker 20R113GC (0ψto120ψ ) and a Husky HDA72200, and air was delivered through a141
+Festo VTUG-10 valve manifold. Pressure and load-cell data were sent to MATLAB through a Sparkfun142
+BlackBoard C (Arduino Uno style) microcontroller. Lengths were measured with a tape measure, with a143
+flexible string marking the axial length of the BPA when its curvature was sufficient, and angles with a144
+Medigauge digital goniometer or MALENOO analog goniometers of6 in,8 inand12 inlengths.145
+2.5 Hybrid Torque Calculation146
+Torque about the knee is the moment of the actuator force about the ICR. Two vectors enter it: the147
+position vector d from the ICR to the point of force application, and the force vector F“∥F∥ ˆu along the148
+line of action. The moment arm is the perpendicular distance from the joint axis to the line of action,149
+r“∥dˆ ˆu∥(7)
+the same quantity computed from the vectors or measured with a tape measure. In the model it follows the150
+projection method of Young et al. (2019): the scalar moment arm about the joint axis ˆzk (the knee-frame Z151
+axis) is152
+rk “p proj,xy ¨ pf ˆ ˆzk
+∥pf ˆ ˆzk∥ (8)
+where pf is the three-dimensional free muscle segment vector, the segment whose endpoints ride on153
+different bodies and whose in-plane component sets the line of action, and pproj,xy is the position vector154
+from the joint-axis origin to the point of force application, projected onto the plane normal to the joint axis.155
+The ratio term is the in-plane unit normal to the projected line of action, so the product is the perpendicular156
+distance of Equation (7), computed in the tibial body frame.157
+The hybrid torque calculation localizes disagreement between the model and the measurements. The158
+classical moment is the cross product159
+m“dˆF(9)
+and its scalar component about the joint axis, written Mz, reduces through the moment arm to the ordinary160
+product161
+Mz “r F(10)
+Frontiers 7
+
+PDF PAGE 8
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+The hybrid method replaces the model-predicted moment arm of Equation (8) and the model-predicted162
+muscle length with measured counterparts: r is measured directly as the perpendicular distance from the163
+knee axis to the line of action, and F follows from the measured P , l0, l620, and lm through the force model164
+of Section 2.2, which separates kinematic error from force error. This calculation is also referred to as the165
+back-calculated torque; the two names denote the same quantity and are used interchangeably in this paper.166
+2.6 Improved Torque Model: Length Offset and Bracket Compliance167
+Measured muscle lengths were consistently shorter than predicted at all joint angles, and the shortfall168
+persisted at ε˚ “1 with F“0 , indicating a constant rather than a load-dependent offset. The corrected169
+muscle length is therefore170
+lm “l LM T ´2l f itting ´χ 0 (11)
+where lLM T is the musculotendon path length from origin to insertion, lf itting is the end-cap length171
+(25.4 mmper end), andχ 0 is the constant length offset.172
+As the actuator develops force, the compliant attachments deform, changing the effective BPA length173
+and, through it, the force. The combined compliance is modeled with Hooke’s law in a local bracket174
+frame at each attachment. The two-rotation frame is constructed from the vector joining the bracket175
+reference point to the BPA attachment point,pA at the femur-side muscle origin or pB at the tibial insertion176
+(Figure 3): a rotation through θz about the fixed space-frame axis ˆzs aligns an intermediate axis with the177
+sagittal-plane projection of the attachment point, and a rotation through ´θy about the current ˆy axis,178
+which points posteriorly in the primary cantilever bending direction, aligns the bracket axis ˆxbr with the179
+full three-dimensional point vector. The orientation and homogeneous transform are180
+Rsb “R zpθzqRypθyqT ,T sb “
+»
+——–
+Rsb pbr
+0T 1
+fi
+ffiffifl.(12)
+Figure 4 shows the bracket frame for each test configuration.181
+Frontiers 8
+
+PDF PAGE 9
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+̂xs
+̂ys
+̂x1
+̂z1 = ̂zs
+psag
+A/B
+pA/B
+sagittal plane
+θz
+(A) First rotation: ̂x1 targets the sagittal projection
+̂x1
+̂z1
+̂xbr̂ybr = ̂y1
+̂zbr
+psag
+A/B
+pA/B
+−θy
+(B) Second rotation: ̂xbr targets pA/B
+Figure 3.Two-rotation construction of the bracket frame from the attachment point pA, the femur-side
+muscle origin, or pB, the tibial insertion.(A)Rotation through θz about the fixed ˆzs axis aligns the
+intermediate axis ˆx1 with the point’s sagittal-plane projection.(B)Rotation through ´θy about the current
+ˆy1 “ ˆybr axis aligns the final bracket axis ˆxbr with the full point vector.
+Frontiers 9
+
+PDF PAGE 10
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+(A)
+(C)
+(B)
+(D)
+Ybr
+XbrYbr
+Ybr
+Ybr
+Ybr
+Xbr
+XbrXbr
+Xbr
+Figure 4.Bracket frame orientations for:(A)flexor configuration on the pinned knee,(B)extensor
+configuration on the pinned knee,(C)flexor and extensor configurations on the biomimetic knee with
+I10 mmBPAs, and(D)flexor configuration on the biomimetic knee with theI20 mmBPA.
+In each local frame the bracket is modeled as three independent linear springs. For the pinned-flexor182
+insertion bracket, the identified stiffness assignment is183
+Kbr “
+»
+——————–
+χ1 0 0
+0χ 2 0
+0 0χ 1
+fi
+ffiffiffiffiffiffifl
+(13)
+with χ1 assigned to xbr and zbr, and χ2 to ybr. The stiffness pair is shared across configurations, but its axis184
+assignment follows the hardware model: the pinned-flexor origin bracket uses diagpχ1, χ1, χ2q, the pinned185
+extensor and biomimetic flexor use diagpχ1, χ2, χ2q, and the biomimetic extensor uses Equation (13). The186
+flexor evaluator constructs both bracket frames with the first rotation alone; the pinned-extensor evaluator187
+uses the two-rotation construction. A rotation about ybr leaves a stiffness matrix unchanged only when188
+its xbr and zbr stiffnesses are equal. Frame independence therefore applies to Equation (13), not to every189
+assignment.190
+The local force vector is the force magnitude times its unit direction,191
+Fbr “F ˆu, ˆu“ ru x, uy, uzsT .(14)
+Frontiers 10
+
+PDF PAGE 11
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Hooke’s law relates this force to the bracket displacement vector:192
+Fbr “K brηbr,η br “C brFbr,C br “K ´1
+br .(15)
+For the insertion-bracket assignment of Equation (13), this gives193
+ηbr “F
+»
+——————–
+ux{χ1
+uy{χ2
+uz{χ1
+fi
+ffiffiffiffiffiffifl
+.(16)
+The displacement need not be parallel to the force. Only its projection along the local line of action194
+contributes to the scalar shortening used in the force balance (Figure 5):195
+δbr “ ˆuT ηbr.(17)
+Substitution of Equation (15) gives196
+δbr “F ˆuT K´1
+br ˆu(18)
+so the bracket presents the scalar stiffness197
+kˆu,br“ F
+δbr
+“
+´
+ˆuT K´1
+br ˆu
+¯´1
+(19)
+along the force path. An artificial tendon is modeled as an axial spring of stiffness kten “nA cE{Lten,198
+with n“2 parallel cable strands (six for the I20 mm assembly), cable cross-sectional area Ac “199
+1.51ˆ10 ´6 m2, and modulus E“193 GPa . Bracket deflection and tendon stretch both shorten the200
+effective BPA length under the same force, so their scalar compliances add in series:201
+keq “
+ˆ 1
+kˆu,br
+` 1
+kten
+˙´1
+(20)
+This reduction assumes quasi-static tensile loading, linear translational springs, and additive displacements202
+along the force path. The direction is held fixed during the scalar solve, then updated with the displaced203
+attachments; rotational compliance and force–moment coupling are not modeled. With a second compliant204
+bracket, the same reduction gives205
+k´1
+eq “
+ÿ
+j
+ˆuT
+j K´1
+br,jˆuj `k ´1
+ten,(21)
+where the tendon term is omitted for a direct attachment. All unit directions and stiffness matrices in a206
+projection are expressed in the same local frame.207
+The compliance displacement shortens the actuator, so the active length entering the force model is208
+lmpδq “l p0q
+m ´δ(22)
+Frontiers 11
+
+PDF PAGE 12
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+where lp0q
+m is the initial length of Equation (11). Because the force depends on contraction, and the209
+contraction on the compliance displacement,δis the root of the implicit balance210
+F620pl0qF ˚pε˚pδq, P ˚q ´k eq δ“0(23)
+solved by bracketed scalar root-finding between zero deflection and the deflection that would bring the211
+actuator to its maximum usable contraction, with δ“0 returned when the residual shows no sign change212
+across that interval. The solved force gives the vector bracket deflection, which updates the attachment213
+location; the routed length, force direction, moment arm, and torque are recalculated at the deflected214
+geometry. The stiffness terms are effective parameters for the attachment system as a whole, absorbing the215
+printed brackets, the bone fixtures, and the winch cable, and they are identified from torque rather than216
+measured on any component in isolation.217
+Figure 5 shows how both ends of the actuator path can be compliant: the insertion-side bracket together218
+with a second, origin-side bracket. Each bracket j develops a three-dimensional deflection ηbr,j along its219
+local frame basis, of which only the projection along the corresponding force direction ˆuj changes the220
+actuator length, and the two projections act in series with the tendon elongation:221
+ηbr,j “
+3ÿ
+i“1
+ηi,jˆepjq
+i ,
+δbr,j “ ˆuT
+j ηbr,j, jP t1,2u,
+δseries “δ br,1 `δ tendon `δ br,2.
+(24)
+Frontiers 12
+
+PDF PAGE 13
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+BPA
+Tendon
+F ̂u1 F ̂u2
+Bracket 1 Bracket 2
+δbr, 1
+δten
+δbr, 2
+̂u
+ηbr
+δbr
+Local projection
+δbr, j = ̂uT
+j ηbr, j
+δ = δbr, 1 + δten + δbr, 2
+Figure 5.Local bracket displacement ηbr,j and its projection δbr,j along the force direction ˆuj. The inset
+shows that an anisotropic bracket can deflect off the force axis. The two projected bracket displacements
+and the tendon elongation add to the actuator shortening. Displacements are exaggerated for clarity.
+2.7 Fictive Strain and Wrapping Loss222
+As the knee flexes, the extensor BPA contacts the anterior joint surface and bends around it (Figure 6).223
+The rigid routed-length calculation does not account for the resulting change in usable contraction. We224
+represent this effect with fictive strain: an empirical increase in the contraction seen by the force model,225
+beyond the actuator’s geometric contraction. The correction is phenomenological; it does not resolve wall226
+stresses or the deformation of the braided actuator. A wrapping-loss termχ3 scales the associated reduction227
+in usable length:228
+∆l“
+#
+χ3 R|θ wrap ´θ k|ζ 2 θk ďθ wrap
+0θ k ěθ wrap
+(25)
+where ∆l is the change in usable length of the BPA, R is the wrapping radius, |θwrap ´θ k| is the angle229
+through which the BPA is bent once contact begins, and θwrap, the knee flexion angle at which the BPA230
+starts to bend over the joint, is determined from solid modeling. The factor ζ is the additive complement to231
+the relative contraction,232
+ζ“1´ε ˚ (26)
+so the wrapping loss vanishes at full contraction and grows quadratically toward resting length. Combining233
+Equations (26) and (25) with the offset of Equation (11) yields the fully corrected muscle length234
+lm “l LM T ´2l f itting ´χ 0 ´∆l(27)
+Frontiers 13
+
+PDF PAGE 14
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Femur
+Tibia
+Knee axis
+Proximal attachment
+Braided BPA
+Distal tendon
+R Contact geometry
+α = |θwrap − θk|
+Δl = χ3Rα(1 − ε * )2
+Fitted usable-length loss
+Sagittal view  |  schematic, not to scale
+α
+Figure 6.Sagittal schematic of an extensor BPA crossing a flexed robot knee, with its braided body
+following an anterior contact arc between the proximal attachment and distal tendon. Dashed radii bound
+the contact arc; R is the BPA-path wrapping radius, and α“|θ wrap ´θ k| is the bend angle after contact
+begins, expressed in radians in Equation(25). The drawing illustrates the local circular-wrap approximation,
+not the full multi-contact route. The fitted usable-length loss∆lis not an arc-minus-chord length.
+2.8 Identification Procedure235
+The correction terms were identified by global optimization against measured isometric torque. For a236
+candidate correction vector χ, pχ0, χ1, χ2q in the flexor stage and pχ0, χ3q on the locked stiffness pair in237
+the extensor refit, the predicted torque curve of test i is interpolated to its ni measured knee angles θij,238
+giving residuals eij “M ij ´ ˆMpθ ij;χq against the measured torque Mij, and the three goodness-of-fit239
+(GoF) components of that test are240
+RMSEi “
+d
+1
+ni
+ÿ
+j
+e2
+ij,FVU i “ ni ´1
+ni
+¨
+ř
+j e2
+ijř
+jpMij ´ ¯Miq2 , e max
+i “max
+j
+|eij|.(28)
+RMSE summarizes the overall error magnitude. FVU expresses the residual sum of squares relative to the241
+sum of squared deviations of the measured torque from its mean ¯Mi, with the factor pni ´1q{n i carrying the242
+Frontiers 14
+
+PDF PAGE 15
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+small-sample adjustment of the evaluators. The maximum absolute residual records the largest pointwise243
+error. RMSE and the maximum residual have torque units, whereas FVU is dimensionless; smaller values244
+indicate closer agreement for all three. The solver minimizes the objective vector245
+gpχq “ 1
+|T |
+ÿ
+iPT
+»
+——————–
+g1,ipχq{gp0q
+1,i
+g2,ipχq{gp0q
+2,i
+g3,ipχq{gp0q
+3,i
+fi
+ffiffiffiffiffiffifl
+,(29)
+where g1,i, g2,i, and g3,i are the RMSE, FVU, and maximum absolute residual of Equation (28), the246
+superscript p0q marks the zero-correction baseline value of the same component, the same kinematics and247
+force model with every correction term disabled, and T is the training fold; the fold mean of the baseline-248
+normalized components makes the three objectives dimensionless and the training tests commensurate. The249
+search carried no constraints beyond the parameter bounds of each stage, and the returned Pareto fronts250
+were filtered to members scoring at or below the zero-correction baseline on every component of every test251
+in that stage’s identification pool.252
+Together, these measures assess agreement in torque magnitude and variation across the range of motion.253
+Offsets, amplitude differences, and shifts along the knee-angle axis can affect several metrics at once,254
+so the metrics are interpreted jointly rather than assigning each one to a single type of disagreement.255
+Across tests with different torque ranges, the absolute and variance-normalized errors also weight the tests256
+differently. Multiobjective optimization retains these comparisons alongside the largest local error, making257
+the trade-offs visible instead of allowing a favorable average score to conceal a poor fit elsewhere. The258
+resulting Pareto front contains alternative compromises among the objectives, from which the adopted259
+terms are selected using held-out validation.260
+The solver was an elitist nondominated-sorting genetic algorithm (gamultiobj in MATLAB,261
+RRID:SCR 001622) with adaptive-feasible mutation, scattered crossover at a fraction of 0.8, and a262
+Pareto fraction of 0.35; each member of the returned Pareto front is scored on the reserved validation test,263
+and the adopted solution is the member whose validation goodness of fit lies closest to its training-set264
+fit. Where a family of members validates nearly equally well, as the flexor stiffness pairs do, the external265
+redesign requirement of Section 4.3 selects among them.266
+The identification proceeded in two stages. The flexor stage fits the two-bracket model pχ0, χ1, χ2q267
+across the four pinned-knee flexor tests, with the l0 “48.5 cm and 41.0 cm tests in training and the268
+l0 “45.7 cm and 40.6 cm tendon tests held out for validation. It evolved a population of 150 for up to269
+600 generations, terminating early once the relative change in the spread of the Pareto front fell below270
+4ˆ10 ´3. The extensor stage locks pχ1, χ2q to a member of the flexor Pareto front, enforcing a single271
+stiffness pair across configurations, and solves only the extensor-specific termspχ0, χ3q on a six-test pool272
+of the pinned-extensor campaign, at resting lengths of 40.0 cm plain and with tendon, 43.6 cm, 43.2 cm273
+with tendon, 45.7 cm, and 46.5 cm, with the 43.6 cm, 43.2 cm-tendon, and 45.7 cm tests in training and the274
+40.0 cm plain, 40.0 cm-tendon, and 46.5 cm tests held out for validation, and the extensor offset allowed275
+negative values. The refit used a population of 50 for up to 150 generations at a spread tolerance of1ˆ10 ´3.276
+Both stages searched a normalized space, with length offsets in centimeters and stiffnesses on a base-ten277
+logarithmic scale, so that the genetic search samples the decade-spanning stiffness bounds uniformly. The278
+flexor bounds were χ0 P r0,20smm , χ1 P r3ˆ10 4,10 6sN m ´1, and χ2 P r5ˆ10 3,2ˆ10 4sN m ´1; the279
+Frontiers 15
+
+PDF PAGE 16
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+extensor refit searched χ0 P r´20,`5smm and χ3 P r0,1s with the stiffness pair locked. The initial flexor280
+population was drawn from χ0 P r5,15smm , χ1 P r5ˆ10 4,5ˆ10 5s, and χ2 P r7ˆ10 3,1.5ˆ10 4sN m ´1.281
+An initial single-bracket identification, produced with the same framework before the origin-side bracket282
+was added, is reported alongside the results figures; the two-stage procedure superseded it, and its adopted283
+values are given in the Discussion.284
+2.9 Route-Redesign Procedure285
+With the correction terms fixed, the attachment routes themselves become design variables, and their286
+best values are the ones that make the redesigned routes meet or exceed human knee torque capability. The287
+redesign was carried out on the robot-body model derived from the Gait2392 lower-extremity model (Delp288
+et al., 2007; Seth et al., 2018). The human targets are maximum-isometric torque curves: OpenSim moment289
+arms, the partial derivative of muscle-tendon length with respect to the knee coordinate,rpθkq “ Bl MT{Bθk,290
+multiplied by each muscle’s maximum isometric force (Delp et al., 1990; Hoy et al., 1990; Yamaguchi291
+and Zajac, 1989; Sherman et al., 2013; Millard et al., 2013; Thelen, 2003; Seth et al., 2011). The extensor292
+is graded against vastus medialis and the flexor against biceps femoris short head; each target carries a293
+required margin of 5 % above the human curve, so a route that merely touches the target at any angle is294
+rejected.295
+The design variables are the BPA origin p1, the insertion pend, the resting length, and the tendon length.296
+Because the route prediction (contact activation, wrapping, and the compliance correction) is expensive297
+to evaluate and only moderately smooth, the redesign minimizes a scalar cost assembled from weighted298
+penalty terms:299
+J“w w Jworst `w t Jtorque ` ř
+a Ja `J geom `J len (30)
+where Jworst is the largest fraction by which robot torque falls short of the human target at any angle,300
+weighted at ww “10 5, and Jtorque is the mean-squared shortfall fraction, weighted at wt “10 3, two301
+orders of magnitude lower so that no single-angle shortfall can be traded for a better average. The Ja are302
+configuration-specific penalties (torque overshoot above the human curve, off-axis torque, wrap release),303
+and Jgeom and Jlen regularize the endpoints and actuator lengths toward their seed values. Hard constraints,304
+including bone clearance, wrap feasibility, actuator strain and contraction limits, and tendon geometry,305
+reject failed candidates with a prohibitive penalty. The shared actuator plan is two I20 mm BPAs per route306
+under a 620 kPa pressure ceiling, with a maximum usable contraction of 0.255 in the force model: the307
+flexor model carries its two actuators on two separately solved routes, the second derived from the first by308
+a mirrored distal attachment, with the two actuator forces summed, and the extensor model scales the force309
+of a single shared route by the actuator count. Adjacent routes are required to maintain 25 mm of clearance.310
+Each run began with a sanity evaluation of the seed design, then executed a surrogate-assisted global311
+solver under per-configuration evaluation budgets of 3,000 evaluations for the extensor route and 1,000312
+for the flexor route, and finally refined the best feasible point with a derivative-free mesh-adaptive pattern313
+search for 15,000 further evaluations. The surrogate budgets cap run time rather than define convergence;314
+the pattern search stops on its budget or early, once its mesh collapses with the constraints satisfied.315
+The contact-release calculation is given in the Supplementary Material (Section 1.4). Three variants316
+extend the search space. In the cam variant, the tibial-side route points trace a cam profile, so the routing317
+geometry itself is shaped rather than only its endpoints. The pulley variants make the transmission ratio318
+itself a design variable: a reeved tackle divides the force delivered at the insertion by its number of moving319
+line parts G and multiplies the insertion travel per unit of actuator contraction by the same factor, so the320
+Frontiers 16
+
+PDF PAGE 17
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+tackle converts surplus actuator force into range of motion, and the surplus is supplied by mounting BPAs321
+in parallel or mirrored pairs, the same two-actuator-per-route arrangement the knee designs of this paper322
+already use. With n actuators in parallel feeding a tackle of G line parts, the transmission’s force gain323
+is n{G and its travel gain is G; for example, three actuators through a two-part tackle deliver 1.5 times324
+the force of a single actuator at twice the travel. The mono-pulley variant reeves the tendon over a single325
+tackle and serves uniarticular muscles, which cross one joint, and the bi-pulley variant reeves one tackle per326
+joint crossed and serves biarticular and multi-articular muscles; the bi-pulley machinery was applied as a327
+batch over five anatomical muscle sites of the robot-body model’s leg. Every pulley run of record operated328
+at unity transmission, the batch sites with one BPA and one line part per crossing and the mono-pulley329
+flexor rig with its two actuators over a single line part, so no tackle altered the force or travel anywhere; the330
+tendon exit followed the moving-force-point routing, fixed to the proximal body with the tendon direction331
+recomputed as the joint rotates, rather than a bowden cable housing.332
+3 RESULTS
+With the actuator force model characterized at the actuator level, we applied the same model to predict333
+isometric torque about the knee on both test stands (Section 2.3). In every configuration, the measured334
+torque is compared against three predictions: the original rigid-body torque model, the improved BPA335
+force characterization applied to the rigid kinematics, and the corrected torque model of Section 2.6336
+at its identified terms. The hybrid torque calculation (Section 2.5) replaces the modeled muscle length337
+and moment arm with their measured counterparts, which isolates kinematic error from force error. The338
+coefficients quoted in this section are the adopted two-stage identification of Section 2.8; the superseded339
+initial single-bracket fit and its values are reported in the Discussion. The two campaigns reserve different340
+validation tests: the flexor fit held out thel0 “45.7 cm and 40.6 cm tendon actuators, while the extensor341
+pool holds out thel 0 “40.0 cmplain,40.0 cm-tendon, and46.5 cmactuators.342
+3.1 Flexor on Pin Joint343
+Figure 7 shows the measured flexor torque on the pinned knee next to the pre-optimization prediction344
+series and the corrected prediction at the adopted terms for the four cross-validation tests. Both pre-345
+optimization force models overpredicted the magnitude of the measured flexor torque (Table 1); each346
+prediction is scored against all measured points at which it is defined. The Hunt equation attains the347
+lower RMSE of the two on every test, but its score covers only the angles at which it is defined: near full348
+extension, where its modeled strain falls below zero, it offers no prediction at all, while the improved349
+BPA characterization remains defined over those same angles with its largest residuals. On these four tests350
+the Hunt equation’s valid domain coincides with the common domain on which every pre-optimization351
+prediction is defined, so its per-model and common-domain scores are identical. The four tests are the cross-352
+validation tests of the adopted two-stage identification. The back-calculated (hybrid) torque reproduced the353
+measurements closely, which localizes the misprediction to the modeled kinematics, the muscle length lm354
+and the moment armr, rather than to the force model.355
+The flexor identification of record is the two-bracket fit of Section 2.8 on the four cross-validation tests:356
+the l0 “48.5 cm and 41.0 cm tests in training and the l0 “45.7 cm and 40.6 cm-tendon tests held out.357
+Its adopted terms are a length offset χ0 “3.94 mm and effective stiffnesses χ1 “39.98 kN m ´1 and358
+χ2 “14.73 kN m´1 (Table 4). At these terms the corrected model follows the measured torque across the359
+range of motion, including the loss of torque near full extension that the rigid-body prediction does not360
+produce (Figure 7). The fitting-set RMSE is 2.165 N mfor the l0 “48.5 cm test and 1.084 N mfor the361
+Frontiers 17
+
+PDF PAGE 18
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+l0 “41.0 cm test, and the held-out validation tests give 1.368 N mat 45.7 cm and 1.611 N mat 40.6 cm362
+with tendon (Table 2). An initial single-bracket identification, fitted on the48.5 cm test with the 45.7 cm363
+test as validation, preceded the origin-side bracket and was superseded by this fit; its values are reported in364
+the Discussion.365
+Frontiers 18
+
+PDF PAGE 19
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+ θ k , 
+ M k, N·m -120 -90 -60 -30 0
+-40
+-30
+-20
+-10
+0  Training
+ 48 cm
+-120 -90 -60 -30 0
+-40
+-30
+-20
+-10
+0  Training
+ 41 cm
+-120 -90 -60 -30 0
+-40
+-30
+-20
+-10
+0  Validation
+ 46 cm
+-120 -90 -60 -30 0
+-40
+-30
+-20
+-10
+0  Validation
+ 40 cm Tendon
+Hybrid
+Measured
+Hunt equation
+Unoptimized
+Corrected model
+ (A)  (B)
+ (C)  (D)
+Figure 7.Pre-optimization and optimized pinned-knee torque versus knee angle for the four cross-
+validation flexor tests. Knee angle is negative in flexion, and flexion torque is negative. Gold circles are
+the hybrid calculation; indigo filled circles are experimentally measured torque; the gray dashed line is
+the Hunt-equation rigid-body prediction; the light orange dash-dot line is the unoptimized prediction, the
+improved BPA force characterization applied to the same rigid kinematics; and the magenta line is the
+corrected prediction at the adopted terms. Panel titles give the nominal resting length; the actual resting
+lengths l0 are(A) 48.5 cm,(B) 41.0 cm,(C) 45.7 cm, and(D) 40.6 cm with tendon. Panels(A)and(B)
+are the training tests and panels(C)and(D)the validation tests of the adopted cross-validation fold; the
+pre-optimization goodness-of-fit values are given in Table 1 and the corrected-model values in Table 2.
+Frontiers 19
+
+PDF PAGE 20
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Table 1.Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test: the Hunt-equation
+rigid-body prediction, the unoptimized prediction of the improved BPA characterization, and the back-
+calculated (hybrid) torque. The first two rows are the training tests and the last two the validation tests of
+the adopted cross-validation fold; RMSE and maximum absolute residual (Max.) are in N m with FVU
+the fraction of variance unexplained. Each prediction is scored against all measured points at which it is
+defined, so the Hunt equation is scored only away from full extension, where its modeled strain is negative
+and it offers no prediction.
+Hunt equation Improved char. alone Back-calculated (hybrid)
+l0 (cm)l ten (mm)RMSE FVU Max. RMSE FVU Max. RMSE FVU Max.
+48.5 – 5.223 0.9477 9.534 7.617 2.1278 25.531 1.635 0.0991 3.842
+41.0 – 6.249 2.6768 10.510 9.694 2.1149 21.076 2.187 0.1184 4.243
+45.7 – 6.048 1.1466 9.956 8.803 1.9380 26.264 1.246 0.0409 2.275
+40.6 35 3.956 0.6301 7.344 6.373 0.5935 16.859 2.085 0.0755 3.073
+Table 2.Optimized pinned-knee flexor torque-prediction goodness of fit at the adopted correction terms
+(Table 4): the improved BPA characterization alone (the zero-correction prediction, the same kinematics
+and force model with every correction term disabled) and the corrected model; training and validation tests
+follow the adopted cross-validation fold. RMSE and maximum absolute residual (Max.) are in N m, and
+FVU denotes the fraction of variance unexplained.
+Improved BPA char. alone Corrected model
+l0 (cm)l ten (mm)RMSE FVU Max. RMSE FVU Max.
+Training
+48.5 – 7.617 2.1278 25.531 2.165 0.1718 5.467
+41.0 – 9.694 2.1149 21.076 1.084 0.0277 1.766
+Mean 8.656 2.1213 23.303 1.624 0.0998 3.617
+Validation
+45.7 – 8.803 1.9380 26.264 1.368 0.0468 3.614
+40.6 35 6.373 0.5935 16.859 1.611 0.0427 5.891
+Mean 7.588 1.2657 21.562 1.490 0.0447 4.752
+3.2 Extensor on Pin Joint366
+Two features of the pinned-extensor measurements shaped the extensor identification. First, the measured367
+torque crossed zero at a more extended angle than the prediction, indicating a length offset opposite in sign368
+to the flexor offset. Second, on the l0 “45.7 cm test the hybrid calculation tracked the original prediction369
+closely while the measured torque diverged from both, and the divergence grew with torque as the actuator370
+wrapped over the joint.371
+The extensor identification of record locks the stiffness pair at the flexor-identified values and solves372
+the two extensor-specific terms: χ0 “ ´6.38 mm and χ3 “0.158 , so the extensor length offset is close373
+Frontiers 20
+
+PDF PAGE 21
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+to the flexor offset in magnitude and opposite in sign (Table 4). The refit used the six-test identification374
+pool of Section 2.8, with the 43.6 cm, 43.2 cm-tendon, and 45.7 cm tests in training and the 40.0 cm plain,375
+40.0 cm-tendon, and 46.5 cm tests held out for validation; Figure 8 shows the six pool tests at the adopted376
+terms. The initial extensor terms, χ0 “ ´10.9 mm and χ3 “0.123 , belong to the superseded single-bracket377
+identification and are reported in the Discussion.378
+Frontiers 21
+
+PDF PAGE 22
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+ θ k , 
+ M k, N·m -120 -90 -60 -30 0 30
+0
+5
+10
+15
+20
+25  Training
+ 44 cm
+-120 -90 -60 -30 0 30
+0
+5
+10
+15
+20
+25  Training
+ 43 cm Tendon
+-120 -90 -60
+0
+5
+10
+15
+20
+25
+-120 -90 -60 -30 0 30
+0
+5
+10
+15
+20
+25  Validation
+ 40 cm
+-120 -90 -60 -30 0 30
+0
+5
+10
+15
+20
+25  Validation
+ 40 cm Tendon
+-120 -90 -60
+0
+5
+10
+15
+20
+25
+(A) (B) (C)
+(D) (E) (F)
+Figure 8.Pinned-knee torque versus knee angle for the extensor BPAs: the six identification-pool tests at
+the adopted correction terms, with the extensor-specific termspχ0, χ3q on the shared stiffness pair (Table 4).
+Knee angle is negative in flexion, and extension torque is positive. Gold circles are the hybrid calculation;
+indigo filled circles are experimentally measured torque; the dashed light orange line is the unoptimized
+prediction of the improved BPA characterization; the magenta line is the optimized prediction of the
+corrected model. Panel titles give the nominal resting length; the actual resting lengths l0 are(A) 43.6 cm,
+(B) 43.2 cm with tendon,(C) 45.7 cm,(D) 40.0 cm,(E) 40.0 cm with tendon, and(F) 46.5 cm. Panels
+(A)–(C)are the training tests and panels(D)–(F)the held-out validation tests of the adopted cross-validation
+fold; the legend is given in panel(C).
+Frontiers 22
+
+PDF PAGE 23
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Table 3.Pinned-knee extensor torque-prediction goodness of fit, at the adopted correction terms with the
+effective-stiffness pair locked to the flexor-identified values (Table 4): the improved BPA characterization
+alone (the zero-correction prediction of the text) and the corrected model. RMSE and maximum absolute
+residual (Max.) are inN m, and FVU denotes the fraction of variance unexplained.
+Improved BPA char. alone Corrected model
+l0 (cm)l ten (mm)RMSE FVU Max. RMSE FVU Max.
+Training
+43.6 – 2.437 0.9618 4.284 0.978 0.1634 1.818
+43.2 22 2.878 4.7304 4.817 1.525 1.3270 2.481
+45.7 – 2.178 1.0586 4.974 0.490 0.0535 1.206
+Mean 2.498 2.2503 4.692 0.997 0.5146 1.835
+Validation
+40.0 – 3.092 0.5638 4.842 1.244 0.1303 2.196
+40.0 40 3.622 6.3919 7.845 1.350 0.8878 1.890
+46.5 – 0.949 0.3152 2.272 0.699 0.1714 1.559
+Mean 2.554 2.4236 4.986 1.098 0.3965 1.882
+3.3 Extensor on Biomimetic Knee379
+We tested the extensor configuration on the biomimetic knee with a I10 mm BPA at l0 “51.8 cm . The380
+measured torque fell well below both the original prediction and the hybrid calculation (Figure 9). Applying381
+the extensor terms identified on the pinned knee improved the prediction: at the adopted two-stage terms,382
+the corrected model reached an RMSE of1.1702 N m, an FVU of 0.6681, and a maximum absolute residual383
+of 2.2088 N m, against 3.0322 N m, 4.4856, and 5.5870 N mfor the original rigid-body prediction. On this384
+configuration the actuator path passes between the femoral condyles close to the instantaneous center of385
+rotation, a geometry that is difficult to represent with the modeled path (Figure 9A).386
+Frontiers 23
+
+PDF PAGE 24
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+ θk , 
+-120 -90 -60 -30 0
+ Torque, N·m
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+Hybrid
+Measured
+Original
+Optimized prediction
+(A) (B)
+Figure 9.Biomimetic 2-DoF robot leg in the extensor test configuration and its measured torque.(A)
+The leg installed in the extensor test configuration, with the BPA passing between the femoral condyles.
+(B)Biomimetic-knee torque versus knee angle for the I10 mm, l0 “51.8 cm extensor BPA; knee angle
+is negative in flexion, and extension torque is positive. Indigo filled circles are experimentally measured
+torque; gold circles are the hybrid calculation; the gray dashed line is the original rigid-body prediction;
+the magenta line is the optimized prediction of the corrected model using the extensor terms identified on
+the pinned knee.
+3.4 Flexor on Biomimetic Knee387
+Figure 10 shows the biomimetic-knee flexor measurements with the flexor terms carried over unchanged388
+from the pinned-knee identification. PanelApresents the I10 mm actuator at l0 “41.5 cm with a389
+21 mm artificial tendon (I1.5 mm bicycle brake cable wrapped four times), pressurized to 604 kPa; the390
+corrected model reached an RMSE of 0.3007 N m, an FVU of 0.0102, and a maximum absolute residual391
+of 0.4647 N m. PanelBpresents the I20 mm actuator at l0 “41.5 cm with a 14 mm artificial tendon392
+at 620 kPa, for which the corrected model reached an RMSE of 1.8024 N m, an FVU of 0.0499, and a393
+maximum absolute residual of3.5678 N m.394
+The torque of the singleI20 mmflexor actuator of panelBdid not exceed the magnitude of the maximum395
+human isometric flexion torque (Delp et al., 1990; Seth et al., 2018) between 60˝ and 100˝ of knee flexion;396
+within a ˘20% band about the human mean, it still fell short of human-level torque between 78˝ and 103˝397
+of flexion, the shortfall extending slightly past the upper end of the no-tolerance comparison. Because398
+operating at 620 kPa across the full desired range of motion would load the printed femur beyond its399
+ultimate strength, we also recorded single points at the reduced pressures 560 kPa, 421 kPa, 325 kPaand400
+281 kPa, which show that the desired range of motion is achievable at reduced pressure. This shortfall in401
+flexion torque defines the target that the attachment-route redesign reported in the Discussion addresses.402
+The redesigned flexor route was then validated physically on the same stand with the two I20 mm403
+actuators of the design of record at l0 “56.2 cm (Figure 10C). The original rigid-body prediction of this404
+design at 620 kPareaches a peak torque magnitude of 190.3 N m, while the corrected model, carrying the405
+length offset, attachment compliance, and wrapping loss identified on the pinned knee, reaches 91.9 N m.406
+Frontiers 24
+
+PDF PAGE 25
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Fifteen isometric points held from ´119˝ to 5˝ at hung loads of 11.1 Nto106 N and gauge pressures of407
+226.5 kPato638 kPa , with the measured wrench carried to the moving knee center by the same adjoint408
+transform as the identification data; the measured torque magnitude met or exceeded the human target at409
+every point, with margins from0.42 N mat´105 ˝ to17.0 N mat´14 ˝.410
+Frontiers 25
+
+PDF PAGE 26
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+ θ k , 
+ M k, N·m -120 -90 -60 -30 0
+-30
+-20
+-10
+0  10 mm
+-90 -60 -30 0
+-100
+-80
+-60
+-40
+-20
+0
+ 20 mm
+-90 -60 -30 0
+-100
+-80
+-60
+-40
+-20
+0
+ 20 mm
+Unoptimized
+Corrected model
+Measured
+Human model (max)
+Measured at reduced pressure
+(A) (B)
+(C)
+Figure 10.Biomimetic-knee torque versus knee angle for the flexor BPAs, in a 2 ˆ2 layout with the legend
+in the fourth tile. Knee angle is negative in flexion, and flexion torque is negative.(A)10 mm panel:
+I10 mm, l0 “41.5 cm actuator with a 21 mm artificial tendon at 604 kPa.(B)20 mm panel: I20 mm,
+l0 “41.5 cm actuator with a 14 mmartificial tendon at620 kPa.(C)20 mm panel, the redesigned two-BPA
+flexor route (twoI20 mmBPAs, l0 “56.2 cm ) at 620 kPa, a different configuration from panel(B)despite
+the shared title: corrected prediction and measured points against the human target. Indigo filled circles are
+measured torque; the magenta line is the optimized prediction of the corrected model using the flexor terms
+identified on the pinned knee; the dashed light orange line is the unoptimized prediction of the improved
+BPA characterization alone. In(B), the black dotted line is the maximum human isometric torque, and
+the pink circles are measured points at the reduced pressures 560 kPa, 421 kPa, 325 kPaand281 kPa ,
+recorded because full pressure would load the printed femur beyond its ultimate strength; in(C), the black
+dotted line is the maximum human isometric torque of the biceps femoris short head. Panels(B)and(C)
+share their axis ranges.
+Frontiers 26
+
+PDF PAGE 27
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+4 DISCUSSION
+4.1 Sources of Error in Isometric Torque Generation411
+The improved BPA force characterization removes part of the torque-prediction error, but only part412
+(Figure 7). The remainder traces to the test system itself. The isometric system is not rigid: the winch413
+cable, the artificial tendons, and the attachment brackets all bend and stretch under load, and the correction414
+family χ0, χ1, and χ2 was created to represent them. Positioning tolerances, imperfect path modeling, and415
+variation between individual actuators contribute as well.416
+The modeling of extensor paths that wrap around the knee is an approximation with inherent error, and417
+the test-stand geometry amplifies it. When the moment arm is short, small changes to it have a large effect418
+on the resultant torque (Young et al., 2019), which is why moment-arm determination receives so much419
+attention in musculoskeletal modeling (Brand et al., 1982; Menegaldo et al., 2004; Suderman and Vasavada,420
+2012). We chose to wrap the BPA around the joint rather than add a patella with a deterministically designed421
+location and friction; the resulting path, which passes between the femoral condyles close to the migrating422
+center of rotation of the biomimetic knee (Steele, 2018), resists any straight-line idealization (Figure 9A).423
+At high flexion, the shorter actuators were also observed to stretch and compress (Figure 1C), and the424
+same loading occasionally slipped the actuator off the anterior bolt head that holds the femur to the knee,425
+displacing the path by up to ˘20 mm in the Z direction and changing both the force vector and the torque.426
+The pinned extensor tests exposed one further error source, with a signature distinct from compliance.427
+Figure 8 shows a deviation between measured and originally predicted torque that widens as the expected428
+torque grows, yet the hybrid calculation matches or exceeds the prediction except at the highest flexion429
+angles. That combination points to a loss of functional muscle length rather than excess compliance, and it430
+is why the wrapping-loss term χ3 was created in Equation (25). Bent over the joint, the actuator behaves431
+like a beam, and the wrapped arc stops contributing usable contraction, so the actuator behaves as if it were432
+more contracted than it physically is; this is the fictive strain of Section 2.7, and Section 4.2 quantifies it.433
+Working from the simple pinned knee to the complex biomimetic one isolated each of these mechanisms434
+in turn. The products of that progression, a predictor for bending and axial compliance, a constant length435
+offset, and a measure of the usable length lost as the actuator bends around a joint, are what make436
+first-iteration torque design tractable for BPA-driven joints.437
+4.2 Two-Stage Re-Identification and the Adopted Correction Terms438
+The Results quote the adopted two-stage terms. For completeness, the superseded initial single-bracket439
+identification, fitted on the 48.5 cm flexor test with the 45.7 cm test as its validation, yielded a length offset440
+χ0 “11.9 mm and effective stiffnesses χ1 “102 kN m´1 and χ2 “10.6 kN m´1, with extensor-specific441
+terms χ0 “ ´10.9 mm and χ3 “0.123 on the locked pair. Re-identifying the correction terms over the442
+full test sets, with the two-bracket flexor model and the locked extensor refit, yields the adopted values:443
+χ0 “3.94 mm , χ1 “3.998ˆ10 4 N m´1, and χ2 “1.473ˆ10 4 N m´1 for the flexor, andχ0 “ ´6.38 mm444
+withχ 3 “0.158for the extensor on the same locked stiffness pair (Table 4).445
+Frontiers 27
+
+PDF PAGE 28
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Table 4.Adopted correction terms of the two-stage identification; the extensor refit locked the effective-
+stiffness pair pχ1, χ2q to the flexor-identified values, so one stiffness pair is shared across both
+configurations, and a dash marks a term not applied in that configuration. The stiffness terms are effective
+system stiffnesses that lump the compliance of the brackets, fixtures, and winch cable, and χ3 is unitless.
+The wrapping factor χ3 was identified on the extensor configuration and is applied unchanged in the flexor
+route redesign, where a route’s wrap is active; it was not fitted to the pinned-flexor identification, whose
+routes carry no wrap, so the flexor configuration takes a dash.
+Configurationχ 0 (m)χ 1 (N m´1)χ 2 (N m´1)χ 3
+Flexor configuration3.94ˆ10 ´3 3.998ˆ10 4 1.473ˆ10 4 –
+Extensor configuration´6.38ˆ10 ´3 3.998ˆ10 4 1.473ˆ10 4 0.158
+Each term has a direct physical reading. The offsets χ0 correct the effective muscle length by a constant,446
+and the flexor and extensor offsets carry opposite signs, as the initial identification already showed. The447
+stiffness pair is an effective system stiffness rather than the beam stiffness of any single part: it lumps448
+the two attachment brackets together with the fixtures and the winch cable, which is why one pair can449
+serve both configurations once the extensor refit locks it. The wrapping factorχ3 scales the usable length450
+that fictive strain removes,∆l“χ 3 R|θ wrap ´θ k|ζ 2 with ζ“1´ε ˚ (Equations (25) and (26)). Because451
+ε˚ is normalized by the unloaded 620 kPa contraction ε620 of the free actuator, the loss is expressed in452
+fictive-contraction units: it vanishes as the actuator approaches full contraction, where ζÑ0 , and grows453
+quadratically toward resting length, where the unbent actuator would otherwise produce its largest force. The454
+wrapping radii are fixed by the route geometry rather than fitted: the pinned-extensor identification evaluates455
+two contact arcs of wrapping radii R“12 mm and R“40 mm , and the biomimetic configurations use a456
+wrap radius of25 mm, soχ 3 “0.158scales a physical arc of known size.457
+Tables 2 and 3 quantify what the corrections buy. On the pinned-flexor set, the corrected model reduces458
+the training-mean RMSE, over the l0 “48.5 cm and 41.0 cm training tests, from 8.66 N mto 1.62 N m459
+under the zero-correction prediction, the same kinematics and force model with every correction term460
+disabled, and the validation mean over the held-out l0 “45.7 cm and 40.6 cm tendon tests improves461
+from 7.59 N mto 1.49 N m; it holds the FVU at or below 0.172 on all four tests. On the extensor pool,462
+the corrected model improves the RMSE of every test, reducing the training mean, over the 43.6 cm,463
+43.2 cm-tendon, and 45.7 cm tests, from 2.50 N mto 1.00 N m, and the validation mean, over the held-out464
+40.0 cm plain, 40.0 cm-tendon, and 46.5 cm tests, from 2.55 N mto 1.10 N m; the FVU stays below unity465
+on every test except the l0 “43.2 cm tendon test. The biomimetic extensor test, a configuration held out of466
+every identification, improves under the adopted two-stage terms as well: the corrected prediction reduces467
+the RMSE from 3.0322 N mto 1.1702 N mand the FVU from 4.4856 to 0.6681 against the zero-correction468
+baseline (Figure 9). Evaluated at the initial single-bracket extensor terms instead, the corrected model469
+reaches 1.5394 N mand FVU 1.1560, so the adopted terms fit this held-out configuration more closely than470
+the configuration-matched initial terms do.471
+The solver assignment follows the problem. The identification retains the genetic multiobjective solver,472
+an elitist nondominated-sorting genetic algorithm, because the Pareto front it returns is what the holdout-473
+validation procedure selects from. The route redesign is served by the surrogate-plus-pattern-search pipeline474
+of Section 2.9, a surrogate-assisted global search refined by a derivative-free mesh-adaptive pattern search,475
+because a single scalar cost is optimized there and each route evaluation is expensive.476
+Frontiers 28
+
+PDF PAGE 29
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+4.3 Route Redesign Meeting Human Isometric Torque Targets477
+The redesign addresses the single-actuator shortfall documented in the Results: one BPA per route does not478
+reach the human flexor envelope through the mid-flexion range. Every redesigned configuration therefore479
+carries two I20 mm BPAs per route, a 620 kPa pressure ceiling, and a maximum usable contraction of480
+0.255 in the force model, and every family was produced by the procedure of Section 2.9 under the adopted481
+correction terms of Table 4. The targets are maximum-isometric torque profiles computed on the Gait2392482
+lower-extremity model (Delp et al., 2007; Seth et al., 2018), the vastus medialis for the extensor and the483
+biceps femoris short head for the flexor, each enlarged by a required5 % overshoot margin so that a route484
+merely touching the target at any angle is rejected, and the redesign itself runs on the robot-body model485
+derived from it. Knee angles are negative in flexion throughout this section, and Supplementary Figure S1486
+graphs the four redesigned route families against their human-scaled requirements.487
+The direct extensor route exceeds the human envelope in magnitude at every angle, with zero shortfall488
+points. Across the design range, the predicted two-BPA torque spans 35.45 N mto 109.4 N magainst a489
+human-scaled requirement of 20.25 N mto 50.32 N m, and the required overshoot is consumed as the490
+thinnest margin exactly as designed, `5.02 % at the worst-case angle of ´20.2˝. The route respects the491
+wrap-release schedule of the route-elimination rule, releasing its six sequential contacts at knee angles of492
+´89.8˝, ´55.7˝, ´47.8˝, ´20.2˝, 6.1˝, and 7.4˝, and the optimized design places the femur-side origin493
+at p40.0,137.0,0q mm and the tibial insertion at p34.4,´197.1,0q mm, with a resting length of 827.7 mm494
+and36.8 mmof tendon.495
+Frontiers 29
+
+PDF PAGE 30
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+ Femur-frame x, m
+ Femur-frame y, m
+-0.2 -0.1 0 0.1
+-0.6
+-0.4
+-0.2
+0
+femur
+tibia
+ p1
+ p2
+ p3 p4 p5 p6 p7 p8
+ p9
+ θ k = -120
+-0.2 -0.1 0 0.1
+-0.6
+-0.4
+-0.2
+0
+femur
+tibia
+ p1
+ p2
+ p3 p4
+ p6 p7 p8
+ p9
+ θ k = -91
+-0.2 -0.1 0 0.1
+-0.6
+-0.4
+-0.2
+0
+femur
+tibia
+ p1
+ p2
+ p3
+ p6 p7 p8 p9
+ θ k = -56
+-0.2 -0.1 0 0.1
+-0.6
+-0.4
+-0.2
+0
+femur
+tibia
+ p1
+ p7 p8
+ p9
+ θ k = +10
+•  Femur outline (schematic)
+•  Tibia outline (schematic)
+Femur cylinder clearance
+Femur wall clearance
+Condyle offset boundary
+Tibia lower clearance
+Tibia upper clearance
+Local bend radii
+Cam contacts p6:p8
+p1:p9 optimized route
+Optimized p1 (origin)
+Optimized pEnd (insertion)
+ Design range: -120
+ to 10
+ Cam-drum wrap radius: 96.9 mm
+\bf Contact release (row, angle):
+  p5 at -112.1
+, p4 at -91.1 , p3 at -55.7 , p2 at -22.8 , p6 at -20.2
+ 
+\bf Poses:
+  (A) full flexion, all contacts
+  (B) p5 released, p4 last frame
+  (C) p4 released, p3 last frame
+  (D) full extension, wrap released
+(A) (B) (C)
+(D)
+Figure 11.Route geometry of the cam extensor design of record, drawn in the femur frame with schematic
+femur and tibia outlines. Panels(A)–(D)show four knee poses that track the contact-release cascade:
+(A) θk “ ´120 ˝, full flexion with all contacts active;(B) θk “ ´91 ˝, after the first condyle contact has
+released;(C) θk “ ´56 ˝, with one further release; and(D) θk “10 ˝, full extension with the cam wrap
+released; knee angle is negative in flexion. Each panel draws the optimized route and its cam contacts over
+the femur-cylinder, femur-wall, condyle, and tibia clearance envelopes of the route-elimination rule, with
+the local bend-radius checks dashed; the square marker is the femur-side origin, the diamond marker is the
+tibial insertion; the fifth tile carries the legend and the sixth the contact-release schedule.
+Frontiers 30
+
+PDF PAGE 31
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+The extensor route was then redesigned once more by allowing the tibial-side route points to trace a496
+cam profile, and this cam redesign is the current extensor design. The cam increases the torque margin497
+relative to the direct route. On the final geometry, which folds the optimizer winner together with a verified498
+adjustment of the distal route point and tendon length, the minimum torque margin is `30.83 % with499
+respect to the required envelope and `39.77 % with respect to the plain human target; the unadjusted500
+optimizer solution carried `31.30 % and `42.34 % at the same checks. The pressure required to meet the501
+envelope spans 269 kPa to 507 kPa over the range of motion, comfortably above the 150 kPa regulated502
+floor of the valve manifold that supplies the hardware, so the remaining pressure is a design resource. The503
+geometric checks give the tibial wrap follows a bend radius of 96.9 mm, the guiding route point clears the504
+femoral-condyle envelope by 43.1 mm at 10˝ of knee extension, and the moment arm spans 59.4 mm to505
+102.8 mmwith a mean of72.4 mm(Figure 11).506
+The flexor redesign uses two staggered BPA routes rather than a single shared route. The first actuator’s507
+route is carried directly as design variables, its origin on the femur and its insertion on the tibia, and508
+the second actuator’s endpoints are derived from it by an offset-preserving endpoint rule: the second509
+insertion mirrors the first across the mid-sagittal plane, and the second origin is placed so that the second510
+route spans the same origin-to-insertion offset as the first, which keeps the two routes from crossing.511
+Each route is then rebuilt by the route solver, so the second carries its own wrap point and its own tibial512
+and femoral-condyle clearance state rather than inheriting the first’s, with condyle clearance enforced in513
+the nonlinear constraints. In the design of record the first route clears the tibial envelope at every angle514
+and never wraps, while the second rides its standoff only within about 5˝ of full extension before the515
+wrap releases. The design meets the flexor target with a minimum margin fraction of 0.0501 against the516
+required 0.05. Its predicted knee-axis torque spans ´81.23 N mto ´3.864 N magainst the human-scaled517
+requirement of ´23.16 N mto ´2.461 N m(peak magnitude 23.16 N m), again exceeding the envelope518
+at every angle. The flexor prediction applies the adopted correction terms, including the wrapping factor519
+identified on the extensor configuration: where a route’s wrap is active, the actuator loses usable length520
+through the same wrapping mechanism, and the extensor-identified χ3 was applied to it unchanged, a521
+transfer evaluated in the redesigned flexor’s isometric tests.522
+The bi-pulley machinery was then applied as a batch over five anatomical muscle sites of the robot-body523
+model’s leg, covering both halves of the pulley doctrine: three uniarticular sites that the mono-pulley524
+variant serves, soleus and tibialis anterior at the ankle and biceps femoris short head at the knee, and two525
+biarticular sites that the bi-pulley variant serves, medial gastrocnemius across the knee and ankle and rectus526
+femoris across the hip and knee. Every run of record operated at unity transmission, one BPA and one527
+tackle line part per crossing, with the tendon exit on the moving-force-point routing; the bowden-housing528
+arrangement is implemented in the machinery but was never exercised. Because the point of a reeved tackle529
+is to exchange actuator force for range of motion, each site was then re-solved in full at three doctrine530
+configurations of the transmission: a parallel pair of BPAs through a two-part tackle (force gain 1, travel531
+gain 2), the same pair through a four-part tackle (force gain 0.5, travel gain 4), and a four-actuator group532
+through a four-part tackle (force gain 1, travel gain 4), all at supply pressures of 300 kPa, 450 kPaand533
+620 kPa. The actuator sizes are re-solved rather than carried over, because a route sized for direct drive534
+runs its tendon slack under a multi-part tackle that feeds takeup faster than the span demands; the optimizer535
+re-fits the actuator lengths to the transmission at every configuration. The resulting torque surfaces at the536
+two-actuator, two-part configuration were evaluated over joint angle and supply pressure at each site’s537
+evaluation plane: soleus and tibialis anterior over the ankle, biceps femoris short head over the knee,538
+medial gastrocnemius over the knee with the ankle pinned at zero, and rectus femoris over the hip of539
+its recorded route; the margins against the human requirements were likewise evaluated over joint angle540
+Frontiers 31
+
+PDF PAGE 32
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+along the transmission ladder at 620 kPa. The human requirements are maximum-isometric torques of the541
+stock Gait2392 model (Delp et al., 2007; Seth et al., 2018), computed as OpenSim moment arms times542
+maximum isometric force (3549 N soleus, 905 N tibialis anterior, 1558 N medial gastrocnemius, 1169 N543
+rectus femoris, and804 Nbiceps femoris short head), all five sites on the same OpenSim basis.544
+The re-solves show the exchange operating in the direction the doctrine intends: at matched net force, the545
+meeting range against the human requirement grows with the tackle’s travel gain. The tibialis-anterior route546
+is the strongest site: the single-actuator baseline meets the human dorsiflexor requirement, which spans547
+24.60 N mto39.35 N m over the ankle range, across 48.1˝ of the 70˝ ankle range (46.7˝ contiguous) at548
+620 kPawith a peak of52.0 N m, and its meeting range grows from zero at300 kPato 14.6˝ at 450 kPaand549
+48.1˝ at 620 kPa; the parallel pair through the two-part tackle holds the peak at 53.0 N mand extends the550
+meeting range to 56.9˝ (55.4˝ contiguous), and the four-actuator group through the four-part tackle extends551
+it further to 59.8˝ (58.3˝ contiguous). At the knee, the biceps femoris short head is already served over its552
+whole range by the direct two-actuator flexor redesign of Section 2.9, which exceeds its requirement at553
+every angle of the full130˝ span at a minimum margin fraction of 0.0501; the transmission study at this site554
+therefore starts from the batch’s unity-transmission single-actuator run, which meets its OpenSim-graded555
+requirement at no angle, with eight of twenty-five grid cells infeasible at every pressure. Against that556
+single-actuator baseline, the matched-force pair removes every infeasible cell and meets over 21.7˝ of the557
+span at a peak of 34.1 N m, and the four-actuator group reaches 40.6˝; at this site the tackle’s contribution558
+is the multiplied insertion travel and the actuator-count scalability it buys, not meeting range that the559
+direct design lacks. The medial gastrocnemius baseline meets over 21.7˝ of the knee sweep with seven560
+of twenty-five cells infeasible; the matched-force pair extends the meeting range to 65.0˝, and at force561
+gain 0.5, with the pair alone feeding the four-part tackle, the design meets over 105.6˝ of the sweep562
+at a peak of 118.0 N m, while the four-actuator group at matched force meets over 119.2˝ at a peak of563
+236.1 N m. The rectus femoris route was recorded with its knee crossing rigid, so its margins are evaluated564
+over the hip angle, where the baseline meets over 46.9˝ at 620 kPaand the matched-force pair more than565
+doubles the meeting range to 99.0˝. The soleus site is the honest limit of the exchange: it never meets its566
+human requirement at any transmission, a peak of 25.3 N magainst a required magnitude of 134.08 N mto567
+171.35 N m, a factor of 6.8 short, because its shortfall is in force, and a tackle that divides force cannot add568
+it, only the actuator count can.569
+Physical validation of the redesigned extensor route is under way on the rebuilt cam route with the570
+20 mm actuator, and the first full angle sweep is complete. An initial three-point measurement near full571
+extension on the earlier direct route measured knee torque of 1.163 N mat 10˝, 7.849 N mat 11˝, and572
+23.437 N mat 10˝, against hung loads of 3.7 N, 25.2 Nand76 N at gauge pressures of 388.5 kPa, 388 kPa573
+and592 kPa, with the measured wrench carried to the moving knee center by the same adjoint transform as574
+the identification data. On the rebuilt cam route the sweep then recorded nine isometric data measurements575
+from deep flexion to extension:116 Nat ´119˝ and 256 kPa, 140 Nat ´86.5˝ and 350 kPa, 168 Nat ´61˝576
+and 425 kPa, 181 N at ´43˝ and 435 kPa, 181.5 N at ´30˝ and 420 kPa, 180.2 N at ´26.2˝ and 437 kPa,577
+173.4 N at ´22˝ and 435 kPa, 126 N at ´1˝ and 488 kPa, and 100 N at 5˝ and 480 kPa, each with its578
+load-cell angle recorded in the tibia frame. The post-test rig measurement of the reaction-point geometry579
+is complete, and the adjoint reduction of the nine points follows in Figure 12. The corresponding flexor580
+validation is reported with the biomimetic flexor results (Figure 10C).581
+The pressures alone already read against the design. The deep-flexion data measurement at ´119˝ was582
+carried at 256 kPa, at the low end of the cam design’s predicted269 kPato507 kPa requirement band, and583
+Frontiers 32
+
+PDF PAGE 33
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+the near-extension measurement at ´1˝ at 488 kPa against the 507 kPa worst case, so the route carried584
+loads across the full range without approaching the620 kPaceiling.585
+With the reaction-point constants entered, the nine data measurements reduce to knee-extension torques586
+of 32.52 N mat ´119˝, 38.91 N mat ´86.5˝, 47.12 N mat ´61˝, 50.50 N mat ´43˝, 51.17 N mat ´30˝,587
+50.50 N mat ´26.2˝, 48.71 N mat ´22˝, 35.90 N mat ´1˝, and 29.02 N mat 5˝, with the extensor tab’s588
+positive load-cell angles carried through the same adjoint transform as the identification data, the reaction589
+force at the negated tab angle in the tibia frame (Figure 12). Against the corrected prediction of the cam590
+design evaluated at the measured angles and pressures, the data measurements exceed the prediction at eight591
+of the nine angles, by up to 13.75 N mat ´30˝, and fall below it once, by 2.06 N mat ´86.5˝. Against the592
+maximum-isometric vasti target at the measured angles, all nine data measurements meet or exceed the593
+human target, with margins from 0.24 N mat ´86.5˝ to 3.52 N mat ´119˝, at supply pressures of 256 kPa594
+to488 kPa; the corrected620 kPaprediction exceeds the target at every tested angle.595
+Frontiers 33
+
+PDF PAGE 34
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+ θ k , 
+-120 -90 -60 -30 0
+ M k , N·m
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+Cam design of record, 620 kPa
+Human target (vasti)
+Back-calculated (model at measured P)
+Measured
+Figure 12.Physical validation of the redesigned extensor route: the cam design of record with two
+I20 mm BPAs on the biomimetic knee. Knee angle is negative in flexion, and extension torque is positive.
+The magenta line is the corrected prediction of the cam route at 620 kPa, and the black dotted line is
+the maximum-isometric vasti target. Indigo filled circles are the nine measurements; gold circles are the
+corrected model evaluated at each measured angle and pressure, a pressure-specific force-model prediction,
+not the hybrid calculation, which would require the measured muscle length and moment arm that this test
+did not record. Marker area scales with gauge pressure.
+The same pipeline was extended from the knee to all 27 muscle-actuators of the robot-body model, and596
+we report that extension as a status rather than a completed result. The first pass reached 19 of the 27597
+actuators, and its chosen routes showed the penalty-based formulation to be the binding limitation: all598
+but one violated the feasibility constraints, the exception being the biceps femoris long-head pair at a599
+worst-angle margin of `0.03 %, indistinguishable from zero. The formulation was then restructured so that600
+the task envelope, the joint-angle window each route must serve, acts as a hard feasible set rather than a601
+Frontiers 34
+
+PDF PAGE 35
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+penalty. In the restructured pass, twelve actuators terminated when the route builder failed while assembling602
+the redesigned path segments, an implementation failure of the optimization pipeline rather than a property603
+of the routes, leaving fifteen finalized routes; eight were chosen from constraint-feasible configurations604
+(semimembranosus, biceps femoris long head, tensor fasciae latae, soleus, lateral gastrocnemius, tibialis605
+anterior, iliacus, and psoas), and six of those met the torque requirement at every angle, with worst-angle606
+margins from `0.25 % (biceps femoris long head) to `250.7 % (tensor fasciae latae). All of these redesign607
+solutions remain optimizer-stage results: the reference model contains no pulley entities, no via points or608
+markers were added to it for these routes, and the redesigned geometry has not yet been propagated into609
+the dynamic simulation models.610
+4.4 Whole-Leg Capability Against Human Torque Surfaces611
+The capability survey grades each actuator against the same-named single muscle of the Gait2392 model612
+(Delp et al., 2007; Seth et al., 2018) on a 5ˆ5 grid of two joint coordinates. The hip adduction domain is613
+clipped by its flexion-dependent envelope. A cell meets the requirement when the BPA is taut and its torque614
+has the human torque’s sign and at least its magnitude. The coverage metric is the fraction of included615
+grid cells meeting that condition; the aggregate is the unweighted mean of the per-actuator fractions, not a616
+continuous-area integral or a whole-leg torque sum.617
+The BPA force model is evaluated at 620 kPa (Bolen et al., 2026). The comparison includes all 27618
+actuator sites (Supplementary Table S6). The baseline uses the master’s-era attachment routing at unity619
+transmission; its eight nominal 40 mm sites are evaluated with four parallel 20 mm BPAs, while the other620
+sites use the survey’s base configuration. The updated side selects the saved transmission-ladder winner at621
+each site, with actuator length and tendon length re-solved per configuration. It retains the same underlying622
+attachment routing and the original diameter specification, including 40 mm actuators at those eight sites.623
+The comparison therefore combines transmission, actuator sizing, and the baseline diameter substitution; it624
+does not isolate an effect of attachment placement or compare two all-20 mmassemblies.625
+The mean grid coverage increases from 37.28 % to 65.19 %, improving at 23 sites and tying at four626
+(Table 5). A separate sign-aware torque-ratio score averages minpMR{MH ,1q over the graded cells,627
+assigning zero to inactive cells. Its mean falls from ´1.93 to ´3.63. Negative ratios penalize torque in628
+the wrong direction, so greater coverage can coexist with a worse mean ratio where severe wrong-sign629
+predictions remain. These metrics support different conclusions and should be considered together.630
+For comparison, the average of the two axis-wise mean coverages is38.39 % for the baseline and 66.17 %631
+for the updated configurations. On a complete rectangular grid, averaging row and column coverages equals632
+the overall cell fraction exactly; it cannot reduce the influence of edge poses there. The two summaries633
+differ only on the four hip-envelope domains with excluded cells. The two metrics and the torque-ratio634
+score are reported together, so their different weightings remain visible.635
+Frontiers 35
+
+PDF PAGE 36
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Table 5.Capability across 27 actuator sites against single-muscle human torque grids. Means are taken
+over sites. The baseline substitutes four parallel20 mmBPAs at each nominal40 mmsite; the transmission-
+ladder winners retain the original diameter specifications. Negative torque-ratio scores reflect wrong-sign
+torque, not a torque deficit in newton meters.
+Configuration Grid coverage (%) Axis mean (%) Torque-ratio score
+Baseline 37.28 38.39´1.93
+Updated 65.19 66.17´3.63
+4.5 Design Factors for Isometric Torque636
+Read as a design problem, isometric torque about a BPA-actuated joint factors into three quantities the637
+designer controls: the moment arm r, the normalized contraction ε˚ at which the actuator operates, and the638
+compliance of the path and its fixtures, carried by the χ terms. Each result in this paper maps onto one639
+corner of that triangle. Short moment arms amplify every error, so stiffness must be budgeted where the640
+arm is short (Young et al., 2019). For a given l0, moment arm and contraction allowance trade against each641
+other, and the cam redesign shows the trade can be favorable: it raises the moment arm from the direct642
+route’s44.9 mm to 61.2 mm to a span of 59.4 mm to 102.8 mm while improving the torque margin. This643
+increased moment arm comes at a cost to biomimicry. Pressure headroom, finally, is a design resource: the644
+cam route meets its envelope between269 kPaand507 kPaagainst a620 kPaceiling.645
+These factors situate our work among musculoskeletal robot legs. Multifilament muscle routing has646
+produced human-scale lower limbs (Kurumaya et al., 2016), anthropomorphic arms (Hitzmann et al.,647
+2018), and full human-mimetic humanoids (Asano et al., 2019), and tendon-driven bodies have supported648
+investigations from reflexive hopping (Liu et al., 2018) to human-like manipulation (Chen et al., 2019)649
+and cognitive locomotion (Schilling et al., 2022). Linkage-based knees manage the moment-arm problem650
+geometrically (Romero et al., 2020), reviews of dynamic multilegged robots treat actuation routing as a651
+first-order design decision (He and Gao, 2020), and tunable-compliance actuators make fixture compliance652
+a design element rather than an error source (Leibach, 2020). What these designs share with ours is the653
+recognition that the attachment route, not the actuator alone, sets the deliverable torque. What the corrected654
+model adds is a quantitative accounting of the compliance and wrapping losses along that route, so that655
+a route can be designed against a torque target rather than checked after the fact. Morrow et al. (2020)656
+optimized artificial-muscle placement on a bipedal robot with a rigid-body torque model, and the correction657
+terms quantified here are the physics such rigid-body placements leave unmodeled.658
+The correction family also complements the BPA force-modeling literature. Static models of the actuator659
+in isolation, from the classical McKibben analyses (Chou and Hannaford, 1996) through approximation660
+formulas (S´arosi, 2012) to geometrically grounded models of the Festo muscle (Martens and Boblan,661
+2017; Tondu, 2022), describe the actuator itself; none of them carries attachment compliance, length662
+offsets, or wrapping losses into a joint-torque prediction. The correction terms used here attach to the force663
+characterization of Bolen et al. (2026) and travel with it across joint configurations under one consistent664
+parameter set.665
+Frontiers 36
+
+PDF PAGE 37
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+4.6 Limitations and Future Work666
+The correction terms are identified for this test stand, these knee configurations, and these actuator667
+families. Other joints or actuator types should repeat the two-stage procedure rather than reuse the values.668
+Transfer to other systems requires validation against their measured torque.669
+Isometric torque testing has yielded important design factors for roboticists seeking to design biomimetic670
+humanoid robots. Isokinetic and isotonic tests would assess behavior outside the isometric conditions671
+evaluated here.672
+5 CONCLUSION
+Isometric knee-torque measurements on pinned and biomimetic test stands showed that actuator force673
+characterization alone does not determine delivered joint torque. A hybrid calculation using measured674
+muscle length and moment arm helped separate force-model error from routing and attachment effects.675
+The corrected torque model represents a constant length offset, effective attachment compliance, and an676
+empirical wrapping loss. A two-stage identification shares one stiffness pair across flexor and extensor677
+configurations and reduces prediction error on the held-out tests.678
+Route redesign under the corrected model produces configurations with two I20 mm BPAs that meet679
+the selected human-muscle torque targets over their design grids, with the required 5 % margin. The cam680
+extensor increases predicted torque headroom while reducing the required operating pressure. Physical681
+tests meet or exceed the respective human targets at all 15 measured flexor points and all nine measured682
+extensor points. These measurements validate the tested isometric configurations; dynamic loading and683
+transfer to other joints remain to be evaluated.684
+RESOURCE IDENTIFICATION INITIATIVE
+‚MATLAB (RRID:SCR 001622)685
+‚OpenSim (RRID:SCR 002683)686
+‚Arduino UNO (RRID:SCR 017284)687
+CONFLICT OF INTEREST STATEMENT
+The authors declare no conflicts of interest. The funders had no role in the design of the study; in the688
+collection, analysis, or interpretation of data; in the writing of the manuscript; or in the decision to publish689
+the results.690
+AUTHOR CONTRIBUTIONS
+Conceptualization, B.B. and C.M.; Methodology, B.B., C.M., and A.H.; Software, B.B., C.M., and L.B.;691
+Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., C.M., and L.B.; Resources, B.B.,692
+L.B., and A.H.; Data Curation, B.B.; Writing – Original Draft Preparation, B.B.; Writing – Review &693
+Editing, B.B., C.M., L.B., and A.H.; Visualization, B.B. and A.H.; Supervision, B.B. and A.H.; Project694
+Administration, B.B. and A.H.; Funding Acquisition, A.H.695
+Frontiers 37
+
+PDF PAGE 38
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+FUNDING
+Research for this article was funded by the Department of Mechanical and Materials Engineering at696
+Portland State University, the National Science Foundation (NSF) grant for NeuroNex: Communication,697
+Coordination, and Control in Systems (C3NS) 2015317 and NSF grant 1943483.698
+ACKNOWLEDGMENTS
+The authors would like to acknowledge the contribution of Alex Steele, who designed the initial biomimetic699
+4-bar knee linkage we used for the test. He gave us solid models, built a 3D prototype, and let us break said700
+prototype. His prompt and thoughtful responses to our questions about the previous design was very much701
+appreciated. The authors would also like to thank Jasmine Bradley for her help reworking the figures in the702
+results section. As a visual designer, her contributions improved the aesthetic quality and accessibility of703
+the images.704
+SUPPLEMENTAL DATA
+Supplemental Data includes Supplementary Tables S1 through S5 and Supplementary Figures S1 and S2.705
+DATA AVAILABILITY STATEMENT
+The data sets are available from the authors upon reasonable request.706
+REFERENCES
+Asano, Y ., Okada, K., and Inaba, M. (2017). Design principles of a human mimetic humanoid: Humanoid707
+platform to study human intelligence and internal body system.Science Robotics2. doi:10.1126/708
+scirobotics.aaq0899709
+Asano, Y ., Okada, K., and Inaba, M. (2019). Musculoskeletal design, control, and application of human710
+mimetic humanoid Kenshiro.Bioinspiration & Biomimetics14, 036011. doi:10.1088/1748-3190/ab03fc711
+Aschenbeck, K., Kern, N., Bachmann, R., and Quinn, R. (2006). Design of a Quadruped Robot Driven712
+by Air Muscles. InThe First IEEE/RAS-EMBS International Conference on Biomedical Robotics and713
+Biomechatronics, 2006. BioRob 2006.875–880. doi:10.1109/BIOROB.2006.1639201714
+Bolen, B., Elzein, M., Pang, L., and Hunt, A. (2026). Isometric Force Characterization of Braided715
+Pneumatic Actuators. Manuscript submitted for publication716
+Bolen, B. P. and Hunt, A. J. (2019). Determination of Artificial Muscle Placement for Biomimetic717
+Humanoid Robot Legs. InBiomimetic and Biohybrid Systems, eds. U. Martinez-Hernandez, V . V ouloutsi,718
+A. Mura, M. Mangan, M. Asada, T. J. Prescott, and P. F. Verschure (Cham: Springer International719
+Publishing), vol. 11556. 15–26. doi:10.1007/978-3-030-24741-6 2720
+Brand, R. A., Crowninshield, R. D., Wittstock, C. E., Pedersen, D. R., Clark, C. R., and van Krieken, F. M.721
+(1982). A Model of Lower Extremity Muscular Anatomy.Journal of Biomechanical Engineering104,722
+304–310. doi:10.1115/1.3138363723
+Chen, J., Zhong, S., Kang, E., and Qiao, H. (2019). Realizing human-like manipulation with a724
+musculoskeletal system and biologically inspired control scheme.Neurocomputing339, 116–129.725
+doi:10.1016/j.neucom.2018.12.069726
+Chou, C.-P. and Hannaford, B. (1996). Measurement and modeling of McKibben pneumatic artificial727
+muscles.IEEE Transactions on Robotics and Automation12, 90–102. doi:10.1109/70.481753728
+Frontiers 38
+
+PDF PAGE 39
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Delp, S., Loan, J., Hoy, M., Zajac, F., Topp, E., and Rosen, J. (1990). An interactive graphics-based model729
+of the lower extremity to study orthopaedic surgical procedures.IEEE Transactions on Biomedical730
+Engineering37, 757–767. doi:10.1109/10.102791731
+Delp, S. L., Anderson, F. C., Arnold, A. S., Loan, P., Habib, A., John, C. T., et al. (2007). OpenSim:732
+Open-Source Software to Create and Analyze Dynamic Simulations of Movement.IEEE Transactions733
+on Biomedical Engineering54, 1940–1950. doi:10.1109/TBME.2007.901024734
+Goldsmith, C. A., Quinn, R. D., and Szczecinski, N. S. (2021). Investigating the role of low level735
+reinforcement reflex loops in insect locomotion.Bioinspiration & Biomimetics16, 065008. doi:10.1088/736
+1748-3190/ac28ea737
+He, J. and Gao, F. (2020). Mechanism, Actuation, Perception, and Control of Highly Dynamic Mul-738
+tilegged Robots: A Review.Chinese Journal of Mechanical Engineering33, 79. doi:10.1186/739
+s10033-020-00485-9740
+Hitzmann, A., Masuda, H., Ikemoto, S., and Hosoda, K. (2018). Anthropomorphic musculoskeletal 10741
+degrees-of-freedom robot arm driven by pneumatic artificial muscles.Advanced Robotics32, 865–878.742
+doi:10.1080/01691864.2018.1494040743
+Hoy, M., Zajac, F., and Gordon, M. (1990). A musculoskeletal model of the human lower extremity: the744
+effect of muscle, tendon, and moment arm on the moment-angle relationship of musculotendon actuators745
+at the hip, knee, and ankle.Journal of Biomechanics23, 157–169746
+Hunt, A., Graber-Tilton, A., and Quinn, R. (2017). Modeling length effects of braided pneumatic747
+actuators. InV olume 5A: 41st Mechanisms and Robotics Conference(Cleveland, OH: ASME), vol.748
+58172, V05AT08A008. doi:10.1115/detc2017-67458749
+Ijspeert, A. J. (2020). Amphibious and Sprawling Locomotion: From Biology to Robotics and750
+Back.Annual Review of Control, Robotics, and Autonomous Systems3, 173–193. doi:10.1146/751
+annurev-control-091919-095731. eprint: https://doi.org/10.1146/annurev-control-091919-095731752
+Kurumaya, S., Suzumori, K., Nabae, H., and Wakimoto, S. (2016). Musculoskeletal lower-limb robot753
+driven by multifilament muscles.ROBOMECH Journal3, 18. doi:10.1186/s40648-016-0061-3754
+Leibach, R. (2020).Development of a Tunable Compliance Energy Return Actuator. Ph.D. thesis, Case755
+Western Reserve University756
+Liu, X., Rosendo, A., Ikemoto, S., Shimizu, M., and Hosoda, K. (2018). Robotic investigation on effect of757
+stretch reflex and crossed inhibitory response on bipedal hopping.Journal of the Royal Society Interface758
+15, 20180024. doi:10.1098/rsif.2018.0024. Place: London WOS:000428576200018759
+Madden, J., Vandesteeg, N., Anquetil, P., Madden, P., Takshi, A., Pytel, R., et al. (2004). Artificial muscle760
+technology: physical principles and naval prospects.IEEE Journal of Oceanic Engineering29, 706–728.761
+doi:10.1109/JOE.2004.833135. Conference Name: IEEE Journal of Oceanic Engineering762
+Martens, M. and Boblan, I. (2017). Modeling the Static Force of a Festo Pneumatic Muscle Actuator: A763
+New Approach and a Comparison to Existing Models.Actuators6, 33. doi:10.3390/act6040033764
+Menegaldo, L. L., de Toledo Fleury, A., and Weber, H. I. (2004). Moment arms and musculotendon765
+lengths estimation for a three-dimensional lower-limb model.Journal of Biomechanics37, 1447–1453.766
+doi:10.1016/j.jbiomech.2003.12.017767
+Millard, M., Uchida, T., Seth, A., and Delp, S. L. (2013). Flexing Computational Muscle: Modeling768
+and Simulation of Musculotendon Dynamics.Journal of Biomechanical Engineering135, 021005.769
+doi:10.1115/1.4023390770
+Morrow, C., Bolen, B., and Hunt, A. (2020). Optimization of Artificial Muscle Placements for a Humanoid771
+Bipedal Robot. InBiomimetic and Biohybrid Systems(Springer, Cham), vol. 12413 ofLecture Notes in772
+Computer Science, 257–269. doi:10.1007/978-3-030-64313-3 25773
+Frontiers 39
+
+PDF PAGE 40
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Romero, N., Rua Ramirez, E., and Moreno, G. (2020). FOUR-BAR MECHANISM’S ROTATION774
+CENTER DETERMINATION USING NATURAL COORDINATES.Journal of Engineering and775
+Applied Sciences15776
+Schilling, M., Paskarbeit, J., Ritter, H., Schneider, A., and Cruse, H. (2022). From Adaptive Locomotion777
+to Predictive Action Selection – Cognitive Control for a Six-Legged Walker.IEEE Transactions on778
+Robotics38, 666–682. doi:10.1109/TRO.2021.3106832. Conference Name: IEEE Transactions on779
+Robotics780
+Seth, A., Hicks, J. L., Uchida, T. K., Habib, A., Dembia, C. L., Dunne, J. J., et al. (2018). OpenSim:781
+Simulating musculoskeletal dynamics and neuromuscular control to study human and animal movement.782
+PLOS Computational Biology14, e1006223. doi:10.1371/journal.pcbi.1006223783
+[Dataset] Seth, A., Sherman, M., Reinbolt, J. A., and Delp, S. L. (2011). OpenSim: a musculoskeletal784
+modeling and simulation framework for in silico investigations and exchange.785
+Sherman, M. A., Seth, A., and Delp, S. L. (2013). What is a Moment Arm? Calculating Muscle786
+Effectiveness in Biomechanical Models Using Generalized Coordinates. InV olume 7B: 9th International787
+Conference on Multibody Systems, Nonlinear Dynamics, and Control(Portland, Oregon, USA: American788
+Society of Mechanical Engineers), V07BT10A052. doi:10.1115/DETC2013-13633789
+Shin, H., Ikemoto, S., and Hosoda, K. (2018). Constructive understanding and reproduction of functions790
+of gluteus medius by using a musculoskeletal walking robot.Advanced Robotics32, 202–214. doi:10.791
+1080/01691864.2018.1434015792
+Steele, A. G. (2018).Biomimetic Design and Construction of a Bipedal Walking Robot. Thesis, Portland793
+State University, Portland, Oregon, USA794
+Steele, A. G., Hunt, A., and Etoundi, A. C. (2017). Development of a Bio-inspired Knee Joint Mechanism795
+for a Bipedal Robot. InBiomimetic and Biohybrid Systems(Springer, Cham), Lecture Notes in Computer796
+Science, 418–427. doi:10.1007/978-3-319-63537-8 35797
+Steele, A. G., Hunt, A., and Etoundi, A. C. (2018). Biomimetic Knee Design to Improve Joint Torque and798
+Life for Bipedal Robotics. InTowards Autonomous Robotic Systems, eds. M. Giuliani, T. Assaf, and799
+M. E. Giannaccini (Cham: Springer International Publishing), 91–102800
+Suderman, B. L. and Vasavada, A. N. (2012). Moving muscle points provide accurate curved muscle paths801
+in a model of the cervical spine.Journal of Biomechanics45, 400–404. doi:10.1016/j.jbiomech.2011.10.802
+014803
+Suzumori, K. and Faudzi, A. A. (2018). Trends in hydraulic actuators and components in legged and804
+tough robots: a review.Advanced Robotics32, 458–476. doi:10.1080/01691864.2018.1455606. eprint:805
+https://doi.org/10.1080/01691864.2018.1455606806
+S´arosi, J. (2012). New approximation algorithm for the force of fluidic muscles. InApplied Computational807
+Intelligence and Informatics (SACI), 2012 7th IEEE International Symposium on(IEEE), 229–233808
+Thelen, D. G. (2003). Adjustment of Muscle Mechanics Model Parameters to Simulate Dynamic809
+Contractions in Older Adults.Journal of Biomechanical Engineering125, 70–77. doi:10.1115/1.810
+1531112811
+Tondu, B. (2022). Static Modeling of Pneumatic Artificial Muscle Actuator. In2022 IEEE 5th International812
+Conference on Soft Robotics (RoboSoft). 364–369. doi:10.1109/RoboSoft54090.2022.9762146813
+Veale, A. J. and Xie, S. Q. (2016). Towards compliant and wearable robotic orthoses: A review of current814
+and emerging actuator technologies.Medical Engineering & Physics38, 317–325. doi:10.1016/j.815
+medengphy.2016.01.010816
+Wu, G. and Cavanagh, P. (1995). FOR STANDARDIZATION IN THE REPORTING OF KINEMATIC817
+DATA.Journal Biomechanics28, 1257–1261. doi:0021-9290(95)00017-8818
+Frontiers 40
+
+PDF PAGE 41
+Bolen et al.Design Factors for Isometric Robotic Knee Torque
+Wu, G., Siegler, S., Allard, P., Kirtley, C., Leardini, A., Rosenbaum, D., et al. (2002). ISB recommendation819
+on definitions of joint coordinate system of various joints for the reporting of human joint motion—part820
+I: ankle, hip, and spine.Journal of Biomechanics35, 543–548. doi:10.1016/S0021-9290(01)00222-6821
+Yamaguchi, G. T. and Zajac, F. E. (1989). A planar model of the knee joint to characterize the knee822
+extensor mechanism.Journal of Biomechanics22, 1–10. doi:10.1016/0021-9290(89)90179-6823
+Young, F., Rode, C., Hunt, A., and Quinn, R. (2019). Analyzing Moment Arm Profiles in a Full-Muscle824
+Rat Hindlimb Model.Biomimetics4, 10. doi:10.3390/biomimetics4010010825
+Frontiers 41
