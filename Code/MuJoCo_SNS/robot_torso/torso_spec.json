@@ -6,15 +6,13 @@
   "lumbar_joint_type": "ball",
   "torso_payload_fraction": 0.5,
   "pelvis_payload_center_from_joint_m": [0.1, 0.0, 0.0],
-  "lumbar_axis": [0.0, 0.0, 1.0],
   "lumbar_hinge_position_in_pelvis_m": [-0.16, 0.1, 0.0],
   "hinge_position_status": "Approximate upper rear center, user approved adjustable location",
   "spine_square_width_m": 0.02,
   "spine_density_kg_m3": 1200.0,
   "payload_sphere_radius_m": 0.1,
-  "lumbar_range_deg": [-30.0, 30.0],
   "lumbar_damping_Nms_per_rad": 2.0,
-  "provisional_parameters": ["spine_square_width_m", "payload_sphere_radius_m", "lumbar_range_deg"],
+  "provisional_parameters": ["spine_square_width_m", "payload_sphere_radius_m"],
   "mass_rule": "payload = target total - compiled lower-body mass - spine-bar mass; added hardware must be included in lower-body mass",
   "user_confirmed": ["target_total_mass_kg", "spine_length_m", "payload_center_from_hinge_m", "lumbar ball and socket with rigid spine bar", "half payload supported on ilium crests"]
 }

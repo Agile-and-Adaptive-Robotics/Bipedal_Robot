@@ -94,6 +94,32 @@ Do not optimize another survival-only scalar that rewards collapse or rigid
 support. Save every tuned parameter and its loader, use independent processes,
 and re-check backend trajectory equivalence after changes.
 
+### Latest task-5 checkpoint before switching tasks
+
+The newer task-5 evidence is
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\supported65_backend_verification.json`
+and
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\runs\verified65_exact_fast_assessment.json`.
+Both fresh backends complete 40 s with identical full trajectories. Actual
+vertical support is capped at 65% after 15 s, with a 5% activation floor.
+Lateral and angular pelvis assistance remain active. Foot lifting is intermittent;
+do not promote survival or selected foot apices to regular stepping.
+
+On **easteregg2**, run the saved preset with:
+
+```powershell
+& 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\run_support65.ps1'
+```
+
+The preset creates a timestamped result and performs the post-ramp assessment.
+Use `-ActivationFloor 0` for a floor ablation. Use `-RgTauH 0.7` for the slower
+intrinsic rhythm comparison; report its outcome independently. To view the
+verified recorded motion:
+
+```powershell
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\replay_neural_robot.py' --run 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\runs\verified65_exact_fast.npz' --view
+```
+
 ## Di Russo original baseline and gait2392 adaptation
 
 Continue Di Russo replication on **easteregg2**, with repository
@@ -116,7 +142,7 @@ Staged exact locations:
 - Scenario: `D:\GitHub\Bipedal_Robot\tmp\codex_dirusso_original\spinal_controller_main.scone`
 - Parameters: `D:\GitHub\Bipedal_Robot\tmp\codex_dirusso_original\import\initializations\spinal.par`
 - Model: `D:\GitHub\Bipedal_Robot\tmp\codex_dirusso_original\import\models\gait9dof18musc_Thelen_20170320.osim`
-- Initial state: `D:\GitHub\Bipedal_Robot\tmp\codex_dirusso_original\import\initializations\f0918_init_walk_20170205.sto`
+- Initial state: not staged locally; resolve and obtain the state file referenced by the author's scenario before attempting a native run.
 - Custom fork: `D:\GitHub\Bipedal_Robot\tmp\codex_simgait_scone`
 - Custom controller: `D:\GitHub\Bipedal_Robot\tmp\codex_simgait_scone\src\sconelib\scone\controllers\SegmentalController.cpp`
 - Fork build guidance: `D:\GitHub\Bipedal_Robot\tmp\codex_simgait_scone\README.md`

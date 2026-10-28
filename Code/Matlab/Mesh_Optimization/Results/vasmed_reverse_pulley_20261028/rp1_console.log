@@ -1,0 +1,11 @@
+Design of record: p1 [0.04       0.137           0] pEnd [0.03442     -0.1971           0] rest 0.827738 tendon 0.092490
+Adopted chi (pick 32): Xi0 -0.00637802 Xi1 39978.7 Xi2 14733.8 Xi3 0.158289
+Route seed rows 1/9: p1seed [0.04       0.035           0] pEndseed [0.03406    -0.06687           0]
+geo.tendonMin (route ctx) = 0.0250; this study tendon floor = 0.075 m (pulley packaging)
+Dense human target: 131 poses -120..10 deg, tau_h 30.18..59.91 N*m
+Lchar (max rigid route length) = 0.955769 m
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+GATE A (1,1; Xi3=0): force max rel err 0.988, torque-z max rel err 0.406
+GATE B (1,1; adopted Xi3=0.1583): post-hoc X3 force vs X3 class: max rel err 1 (mean 0.766); mean delta_L 0.0200 m, max 0.0620 m
+saved design as-is (1,1): worst margin -58.61 N*m (-100.0%), meet plain 0/5, +5% 0/0, slack 75, infeas 45, node margins [30.18 -38.91 -48.13 -58.65 -32.25] N*m
