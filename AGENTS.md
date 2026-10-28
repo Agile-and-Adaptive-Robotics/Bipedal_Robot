@@ -68,12 +68,12 @@ machine, NOT staleness.
 **Ben's prose rules:** Oxford comma, always. Call the simulated bodies **models**
 (human model, W2L robot model) — never "plants". Minimal em-dashes.
 
-1. **Dissertation first.** Deadline: **submitted 2026-10-21; defended 2026-11-06**.
+1. **Dissertation first.** Deadline: **2026-10-28 9:00 am Pacific, advisor/committee review copy** (Ben's correction). Defense scheduled 2026-11-06. The supplied current ZIP has been reconciled into ProofFinal; root Bolen_Dissertation.pdf/.zip are the revised delivery. Current review and remaining checks: `Notes\committee_revision_20261027\REVIEW_REPORT.md` and `EASTEREGG2_HANDOFF.md`. Keep ONE working source in ProofFinal (main.tex, bib/bst/cls, chapters/*.tex); figures stay in sibling Figures. Superseded Notes sources, staging folders, and builds are preserved in Dissertation/Archive. Never restore an archived tree over the working copy without reconciling it.
    LaTeX source in `Documentation\Reports and Papers\Dissertation\ProofFinal\`
-   (+ sibling `Figures\<chapter>\` trees). Topic-chapter structure per the advisor's
+   (+ sibling `Figures\<chapter>\` trees). Each chapter, including 95-AppendixD and 96-AppendixE, owns its figures. Chapter figure-folder roots contain active figures only; ingredients go in Components and superseded assets in Deprecated. Every directly included panel also belongs at the chapter root; no active includegraphics may use Components. Live Overleaf was repaired and verified at Errors 0 / Warnings 0 (301 pages); local proof is 300 pages. See the current review report for bounded audit coverage and remaining provenance checks. Do not reintroduce the rejected graphical abstract or split the combined extensor Figure 4.10. Ben rejected the added measurement-uncertainty task. **Published Chapter 20-muscles is protected:** retain its supplied-ZIP prose, captions, and five figures unless Ben explicitly requests a specific change. All eight active graphic files belong directly in Figures/20-muscles; do not move these active panels into Components. Chapter 50 uses the cropped, annotated sadb_bubble.pdf; preserve its six callouts and app-functionality explanation. Chapter 70's active bpa_construction.pdf and bpa_exploded_cutaway.pdf also belong at the chapter-folder root. Topic-chapter structure per the advisor's
    C12 directive: 10-introduction, 15-background, 20-muscles (Ben's Actuators 15(5):230
    paper), 30-torque (WIP manuscript bolen_isometric_2025), 50-database, 60-sns
-   (tools-framed), 70-overall ("Discussion"), 80-conclusion, appendices 92/93/94; no
+   (tools-framed), 70-overall ("Discussion"), 80-conclusion, appendices 92/93/94/95/96; no
    ankle chapter. Chapters 3+ carry Methods/Results/Discussion sections.
    **In any dissertation session, FIRST read** the `dissertation` skill, then
    `Notes\revision_campaign_20261015\BEN_TODO.md`, `Notes\DISS_STATUS.md`, the newest
@@ -115,7 +115,7 @@ machine, NOT staleness.
    (PAMs/BPAs) controlled by a synthetic nervous system. Lab: AARL, PSU.
 3. **Xi-correction-factor program** — the design factors χ0–χ3 (candidate χ4) that
    remove the rigid-body idealization from the BPA joint-torque model.
-   **Values of record = the dissertation's Appendix C** (Tables `tab:app_xi_values`,
+   **Values of record = the dissertation's Appendix C** (Chapter 4 table `tab:AdoptedXi` and Appendix C table
    `tab:app_opt_bounds`) and Chapter 4's adopted set — read those, NOT older numbers
    from git history or retired mats. Identification: `gamultiobj` Pareto fronts +
    holdout validation (the surrogate-vs-gamultiobj question is settled: gamultiobj for
@@ -348,3 +348,6 @@ machine, NOT staleness.
 - Ben commits via GitHub Desktop; agents leave the working tree clean for him and
   say what to commit. NO commits/pushes by agents unless Ben says so.
 - This repo is PUBLIC — never put credentials, license details, or SSH setup here.
+
+## Latest dissertation checkpoint (2026-10-28)
+Current details: Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/REVIEW_REPORT.md and NARRATIVE_REVISION_20261028.md. Published Chapter 20 is protected. Live sources synchronized; dissertation 299 pages, paper 34 plus 11 supplement. Both compile without errors. ProofFinal contains source/support files and chapters only. Ben authorizes resolving verified completed comments; 26 resolved so far, remaining comments require individual verification. Do not accept tracked changes indiscriminately. No agent commits/pushes. Historical handoffs/page counts are superseded by these records.

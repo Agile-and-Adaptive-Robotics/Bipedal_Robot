@@ -190,7 +190,7 @@
   \renewcommand{\ext@figure}{loaf}%
   \renewcommand{\ext@table}{loat}%
   \if@seploa\def\ext@toc{loap}\fi%
-  \addcontentsline{toc}{chapter}{Appendices}%
+  \phantomsection\addcontentsline{toc}{chapter}{Appendices}%
   \appendixpage%
 }
 
@@ -240,7 +240,7 @@
   \if@filesw
     \immediate\write\@auxout{\string\bibdata{#1}}%
   \fi
-  \addcontentsline{toc}{chapter}{Bibliography}
+  \phantomsection\addcontentsline{toc}{chapter}{Bibliography}
   \begin{singlespacing}
   \@input@{\jobname.bbl}
   \end{singlespacing}

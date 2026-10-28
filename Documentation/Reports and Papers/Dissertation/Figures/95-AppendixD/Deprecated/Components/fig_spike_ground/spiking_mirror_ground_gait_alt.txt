@@ -1,0 +1,22 @@
+Alt text for spiking_mirror_ground_gait.pdf
+
+Four panels of joint-angle traces over a 16-second ground walk of the
+converted MuJoCo robot, comparing the non-spiking spinal-network winner
+(left column) with the untuned spiking-neuron mirror run at the same winner
+parameters (right column). Top row: knee angle in degrees. In panel A
+(non-spiking), the dashed orange right-leg trace sweeps repeatedly between
+about minus 101 and plus 8 degrees for nine cycles, while the solid indigo
+left-leg trace moves through a single slow excursion between about minus 42
+and plus 15 degrees without cycling: only the right leg steps. In panel B
+(spiking mirror), the solid indigo left trace and the dashed orange right
+trace both cycle with deep flexion, the right leg completing eight cycles
+between about minus 86 and plus 13 degrees and the left leg nine cycles
+between about minus 85 and minus 8 degrees, with a cycle knee minimum of
+minus 79.8 degrees. Bottom row: hip flexion angle in degrees. In panel C
+(non-spiking), the right hip oscillates between about minus 18 and plus 44
+degrees while the left hip rocks between about minus 21 and plus 2 degrees.
+In panel D (spiking mirror), the right hip oscillates between about minus
+35 and plus 43 degrees and the left hip between about minus 35 and plus 13
+degrees. The figure shows that the untuned spiking mirror, although it
+scores worse overall, produces a bilateral gait that the non-spiking
+winner cannot.
