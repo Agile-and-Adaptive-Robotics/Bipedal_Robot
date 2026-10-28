@@ -1,3 +1,10 @@
+## October 28 reconciliation and comment dispositions
+
+Current delivery: dissertation 299 pages; torque paper 34 pages plus 11-page supplement. Both live Overleaf projects compile with zero errors; dissertation has zero warnings, paper has 19 font substitutions. ProofFinal holds source/support files and chapters only; figures remain in sibling Figures. Published muscle chapter preserved. Restored optimized pinned-flexor Figure 8, complete extensor Figure 9, combined physical-validation Figure 12, main-body biomimetic Table 2 / dissertation Table 4.8, and original abstract bracket schematic. Former paper Table 1 is supplementary S1. Narrative pass changed no numerical results. Earlier metric substitutions remain separately disclosed in Archive/reconciliation_20261028/metric_corrections.json.
+
+Revision-folder and historical CHATGPT_REPORT reconciliation, source readbacks, verification, and remaining C31/C32 unanchored question marks are recorded in Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/REVIEW_REPORT.md. Exact historical saved-run evaluator provenance remains unestablished. Paper currently has 16 combined figures/tables; do not remove results merely to force 15.
+
+Ben authorized resolving completed comments. Seventeen verified paper comments and nine verified dissertation comments were resolved on October 28; exact texts are in Dissertation/Archive/reconciliation_20261028/comment_resolutions_20261028.json. Other comments and tracked changes remain pending review; do not claim all are closed. No commits or pushes.
 # Torque-paper comparison and GoF follow-up
 
 Created `Documentation/Reports and Papers/Knee_Torque_Test/ChatGPT_reportTorque.md`. It inventories all 31 initial active paper review items, all 13 dissertation torque review items, nine current Ben paper comment threads, and the complete 272-thread resolved archive (74 substantive Ben messages). It maps comments to snapshot source lines/labels and records the actionable differences, including six versus nine cam-extensor measurements and conflicting biomimetic-extensor GoF values.
