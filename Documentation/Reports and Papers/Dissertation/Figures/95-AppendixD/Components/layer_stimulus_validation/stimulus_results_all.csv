@@ -1,0 +1,27 @@
+series,condition,target,current_nA,start_s,duration_s,baseline_period_s,baseline_active_ms,lost_active_ms,motor_phase_residual_cycles,RG_phase_residual_cycles,classification,finite
+stimulus_layers,baseline,,0.0,10.1765,0.0,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,RG_plus2_0.1,RG_HC_ext,2.0,10.1765,0.1,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,RG_plus2_0.5,RG_HC_ext,2.0,10.1765,0.5,1.9379999999999988,46.0,46.0,0.03508771929824544,0.035087719298246355,non-resetting deletion,True
+stimulus_layers,RG_plus10_0.1,RG_HC_ext,10.0,10.1765,0.1,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,RG_plus10_0.5,RG_HC_ext,10.0,10.1765,0.5,1.9379999999999988,46.0,46.0,0.04850361197110396,0.04850361197110488,non-resetting deletion,True
+stimulus_layers,PF_plus2_0.1,PF_hip_HC_ext,2.0,10.1765,0.1,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,PF_plus2_0.5,PF_hip_HC_ext,2.0,10.1765,0.5,1.9379999999999988,46.0,46.0,0.0,0.0,non-resetting deletion,True
+stimulus_layers,PF_plus10_0.1,PF_hip_HC_ext,10.0,10.1765,0.1,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,PF_plus10_0.5,PF_hip_HC_ext,10.0,10.1765,0.5,1.9379999999999988,46.0,46.0,0.0,0.0,non-resetting deletion,True
+stimulus_layers,MN_plus2_0.1,MN_hip_ext,2.0,10.1765,0.1,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,MN_plus2_0.5,MN_hip_ext,2.0,10.1765,0.5,1.9379999999999988,46.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,MN_plus10_0.1,MN_hip_ext,10.0,10.1765,0.1,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,MN_plus10_0.5,MN_hip_ext,10.0,10.1765,0.5,1.9379999999999988,46.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_layers,MNflex_minus10_0.5,MN_hip_flx,-10.0,10.1765,0.5,1.9379999999999988,46.0,2.0,0.0,0.0,no observable deletion,True
+stimulus_layers,MNflex_minus50_0.5,MN_hip_flx,-50.0,10.1765,0.5,1.9379999999999988,46.0,10.0,0.0,0.0,no observable deletion,True
+stimulus_controls,baseline,,0.0,10.1765,0.0,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_controls,RG_plus50_0.5,RG_HC_ext,50.0,10.1765,0.5,1.9379999999999988,46.0,46.0,0.051599587203302225,0.05159958720330314,deletion; phase indeterminate,True
+stimulus_controls,RG_plus50_1,RG_HC_ext,50.0,10.1765,1.0,1.9379999999999988,546.0,546.0,0.306501547987616,0.3065015479876169,resetting deletion,True
+stimulus_controls,PF_plus50_0.5,PF_hip_HC_ext,50.0,10.1765,0.5,1.9379999999999988,46.0,46.0,0.0,0.0,non-resetting deletion,True
+stimulus_controls,PF_plus50_1,PF_hip_HC_ext,50.0,10.1765,1.0,1.9379999999999988,546.0,546.0,0.20846233230134167,0.0,resetting deletion,True
+stimulus_controls,MNflex_minus100_0.5,MN_hip_flx,-100.0,8.744000000000002,0.5,1.9379999999999988,500.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_controls,MNflex_minus500_0.5,MN_hip_flx,-500.0,8.744000000000002,0.5,1.9379999999999988,500.0,500.0,0.0,0.0,non-resetting deletion,True
+stimulus_long_controls,baseline,,0.0,10.1765,0.0,1.9379999999999988,0.0,0.0,0.0,0.0,no observable deletion,True
+stimulus_long_controls,RG_plus50_2cycles,RG_HC_ext,50.0,10.1765,3.8759999999999977,1.9379999999999988,1924.0,1924.0,0.21052631578947445,0.21052631578947353,resetting deletion,True
+stimulus_long_controls,PF_plus50_2cycles,PF_hip_HC_ext,50.0,10.1765,3.8759999999999977,1.9379999999999988,1924.0,1924.0,0.0,0.0,non-resetting deletion,True
+stimulus_long_controls,MNflex_minus500_2cycles,MN_hip_flx,-500.0,8.744000000000002,3.8759999999999977,1.9379999999999988,1922.0,1922.0,0.0,0.0,non-resetting deletion,True

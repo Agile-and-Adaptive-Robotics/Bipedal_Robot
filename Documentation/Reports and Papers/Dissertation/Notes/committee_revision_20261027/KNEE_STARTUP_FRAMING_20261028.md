@@ -1,0 +1,7 @@
+# Knee startup response framing
+
+Ben correctly questioned whether Figure 6.5(A) demonstrates a transient reflex and recovery. It does not. sns_run_demo.m initializes zero activation, sustained descending drives, and Tload=0.5 N m, with a five-second horizon. sns_build_demo.m supplies Tload through a Constant block, not a pulse, and initializes angle at 0.26 rad. The NumPy twin likewise starts activation at zero and holds Tload and drives constant. The increasing flexion angle is a startup trajectory under those inputs; it is not evidence of a tendon-tap response or recovery to the initial angle.
+
+Corrected the panel title to Startup under constant load, the caption to Knee-model implementation comparison, and the surrounding interpretation. Existing 44.4/43.0 degree endpoints and 3.6 degree discrepancy remain, now scoped to the end of the five-second run rather than described as established settling. No trace, model, measured data, or numerical result changed. A transient-reflex recovery demonstration still requires a separate settled-baseline, brief-stimulus test and recovery measurement. None was run or claimed here.
+
+Updated local figure and chapter, delivery PDF/ZIP, and Overleaf. Fresh five-pass MiKTeX/BibTeX build: all zero exit codes, 308 pages, no errors or undefined references; preexisting 0.669 pt line remains. Figure page 176 rendered for visual check. Protected muscle chapter, torque chapter, Appendix C, and paper Main hashes unchanged. No commits or pushes. Build and prior source/figure preserved in this Archive.

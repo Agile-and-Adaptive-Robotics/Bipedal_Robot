@@ -34,6 +34,7 @@
 % Leave a blank line between paragraphs instead of using \\
 
 \begin{document}
+\raggedbottom
 \onecolumn
 \firstpage{1}
 \title[Supplementary Material]{{\helveticaitalic{Supplementary Material}}}
@@ -44,7 +45,7 @@
 \subsection{Tables}
 
 \begin{table}[htbp]
-\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\ref{fig:FlxPin_preopt}: the Hunt-equation rigid-body prediction, the unoptimized prediction of the improved BPA characterization, and the back-calculated (hybrid) torque. RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained.}
+\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\ref{fig:FlxPin_preopt}: the Hunt-equation rigid-body prediction, the unoptimized prediction of the improved BPA characterization, and the back-calculated (hybrid) torque. RMSE and maximum absolute residual (Max.) are in $\mathrm{N\,m}$, and FVU denotes the fraction of variance unexplained.}
 \label{tab:FlxPinPreGof}
 \begingroup
 \renewcommand{\arraystretch}{1}%
@@ -177,7 +178,7 @@ Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The fle
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=1\textwidth]{Figures/RouteVariants_20261020.eps}
+\includegraphics[width=1\textwidth]{Figures/RouteVariants_20261020_publication.pdf}
 \end{center}
 \caption{Predicted redesigned extensor (A) and flexor (B) torque against the human reference and required \qty{5}{\percent} design margin.}\label{fig:RouteVariants}
 \end{figure}
@@ -296,13 +297,13 @@ psoas\_r & hip flex. & hip add. & 20 & 1$\times$20 \\
 \clearpage
 \subsection{Cam-Extensor Routing Geometry}
 The route is shown throughout knee extension in Figures~\ref{fig:ExtensorRoute_redesigned} and~\ref{fig:cam_route_end}. Gray anatomical silhouettes locate the femur and tibia; colored outlines show the routing-clearance envelopes.
-\begin{figure}[p]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{Figures/extensor_cam_AF_bones.pdf}
 \caption{Cam-extensor route at six knee poses, A--F, from \ang{-120} to \ang{-27}.}
 \label{fig:ExtensorRoute_redesigned}
 \end{figure}
-\begin{figure}[p]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{Figures/extensor_cam_GH_bones.pdf}
 \caption{Cam-extensor route at \ang{-8} (G) and \ang{10} (H), with the legend and contact-release schedule.}
