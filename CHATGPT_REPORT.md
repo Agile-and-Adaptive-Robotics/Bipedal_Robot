@@ -1,3 +1,40 @@
+## SNS table rewrite (2026-10-28)
+
+Table 6.1 now uses the earlier seven-item contribution list in plain Model or tool / What it is used for columns. Former curriculum Figure 6.4 is Table 6.2. Knee/arm figures renumber automatically to 6.4/6.5. Live 308 pages / local 307, zero errors or undefined references. See committee revision SNS_TABLES_20261028.md.
+
+## Individual pulley example retired by Ben (2026-10-28)
+
+Paper and dissertation transition directly to the Bolen (2019) whole-leg comparison table. Individual vastus sizing/example removed from active prose and archived; no longer pending for submission. Table/results unchanged. Both live builds have zero errors or undefined references. See committee revision WHOLELEG_TRANSITION_20261028.md.
+
+## Knee comparison interpretation corrected (2026-10-28)
+
+Figure 6.5(A) is a startup response under constant 0.5 N m load and sustained drive, not a transient reflex/recovery test. Title, caption, and interpretation corrected; traces and values unchanged. Details in committee revision KNEE_STARTUP_FRAMING_20261028.md.
+
+## Pipeline update (2026-10-28)
+
+Full pipeline moved to Figure 7.4; new Figure 6.2 covers implemented construction and neural-controller tools. Uploaded and verified: 309 live / 308 local pages, zero errors or undefined references. Origin-only vastus instruction corrected. See committee revision PIPELINE_REVISION_20261028.md.
+
+## Reflex figure accuracy update (2026-10-28)
+
+Figures 6.5/6.6 now show all six implemented connections; Figure 6.6 panel letters and caption aligned. Biceps stretch excites biceps and inhibits triceps; Ib remains autogenic inhibition. Results unchanged. Uploaded to Overleaf: 308 pages, zero errors; local 307. See REFLEX_FIGURE_ACCURACY_20261028.md in committee revision notes.
+
+## Latest Overleaf publication update (2026-10-28)
+
+Ben authorized live upload. Current revised dissertation: 307 pages locally, 309 on Overleaf; torque paper: 32 pages plus 10-page supplement. Live builds have zero errors and no undefined references. Recovered W2L feedback comparison and perturbation figures now replace the earlier main comparison; Di Russo rejected adaptation reported in Appendix D. Repeated support caveats removed. Protected muscle chapter and biomimetic results frozen. Details: Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/OVERLEAF_UPLOAD_20261028.md.
+
+## SADb/SNS narrative revision — October 28, 2026
+
+Current local dissertation delivery: 304 pages, zero build errors or unresolved references. SADb leads with the 1,393-record literature collection and identifies the Papers category separately for scoped app statistics. SNS now connects the AnimatLab/MATLAB attempts, knowledge gap, conversion repairs, block/interface tools, alternative models, curriculum, and representative functional demonstrations. Overall discussion and conclusion transitions were revised. No torque/biomimetic results, torque graphics, or published Chapter 20 changes in this pass. Six chapter/appendix sources remain in ProofFinal; the unchanged curriculum figure now belongs in Figures/60-sns. See Notes/committee_revision_20261027/SADB_SNS_NARRATIVE_20261028.md and Archive/narrative_tools_20261028 for line evidence, source-count provenance, hashes, and visual checks. Root PDF/ZIP updated; no upload, commit, or push.
+
+## Local publication pass — October 28, 2026
+
+Current local delivery: dissertation 302 pages; torque paper 32 pages plus 10-page supplement. Builds have no errors or unresolved references. Published Chapter 20 and its supplied graphics remain byte-identical to the authoritative download. All 28 new paper comments and 25 tracked-change entries were reviewed; 27 comments are addressed locally, while the verified vastus-medialis attachment-placement example and reverse-pulley schematic await ZCode. Live comments remain open and tracked changes remain undispositioned; no upload occurred. Numerical additions, the three corrected dissertation prose GoF values, changed Figure 10 curves, and gold flexor pressure-specific predictions are explicitly disclosed in Notes/committee_revision_20261027/PUBLICATION_VERIFICATION_20261028.md and Archive/publication_pass_20261028. Root delivery PDFs/ZIPs are updated; originals are preserved. No commits/pushes.
+
+## Active publication polish checkpoint — October 28
+
+UNFINISHED current pass: Ben supplied new live source ZIP/PDF downloads at 05:14 paper / 05:16 dissertation. Preserved under Dissertation/Archive/publication_pass_20261028 before syncing to working sources. Twenty-eight new paper comments and 25 overview tracked-change entries captured in live/ evidence there. Local Main.tex, supplement, torque chapter, and Appendix C have substantive edits; DO NOT restore the source ZIP over them. Both checkpoint builds passed, but final figure/legend audits, complete carry-over to the dissertation, new-comment dispositions, and final delivery remain. Fifteen vector figures now have plain 'Torque, N m' labels; requested pre-optimization biomimetic values were computed through the canonical evaluator's measured-angle interpolation and inserted with existing post-optimization values. The old extensor figure generator still uses initial coefficients and needs a scientific curve audit. Do not call the latest source publication-ready yet.
+
+The complete continuation record is Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/PUBLICATION_SESSION_PICKUP_20261028.md. Ben requested a new-session prompt if context became too long. ZCode prompt ready at Knee_Torque_Test/ZCODE_VASMED_REQUEST_20261028.txt: obtain actual reverse-pulley vastus medialis placement optimization and schematic without misrepresenting old fixed-route length sizing as successful placement optimization. No new scientific success claimed. Protected muscle chapter not editorially changed. Root PDF/ZIP deliveries still the user's downloads pending final completion. No commits/pushes.
 ## Final live comment cleanup — October 28, 2026
 
 Completed the remaining dangling-comment review in both live Overleaf projects. Torque paper: zero open comment threads. Dissertation: one open thread, the motor schematic's uneven blue-square positions. The circles are concentric, but the square placement still needs correction, so the thread remains open. The old 23 October 11:28 “huh?” anchor was recovered in the current Discussion; that passage has been replaced with explicit contributions, representative checks, and mechanical-support limits, and the thread was resolved. Earlier statements that this anchor was unavailable are superseded.
@@ -7980,4 +8017,19 @@ commits, pushes, outgoing ZCode messages, or dissertation source edits were
 made in this simulation-recovery work. This Session 1 block is additive; it does
 not replace Session 2's work or resolve advisor comment threads.
 <!-- SESSION_1_SIMULATION_RECOVERY_20261027_END -->
+
+
+## Knee transient and Session 1 robot integration (2026-10-28)
+
+Latest completed update: KNEE_AND_ROBOT_UPDATE_20261028.md. Verified transient knee response replaces startup panel A; Session 1 CAD robot still and matched comparison integrated, with MN-clamp and foot-mount assumptions explicit. Local 319 pages; live 320, Errors 0 / Warnings 0. Edited sources read back and matched. Root delivery PDF/ZIP updated. Protected muscle/torque sources and paper unchanged. No commits/pushes.
+
+
+## Appendix C drawings, dimensions, and pulley schematic (2026-10-28)
+
+Latest Appendix C pass: APPENDIX_C_CORRECTIONS_20261028.md. Registered bone drawings, G travel/force distinction, biomimetic evaluator tables, optimizer/physical bounds, Training/Validation wording, and shared reverse-pulley schematic integrated. Final-test table explicitly lists model inputs; actual per-actuator measurements and the noted model/prose metadata differences remain unconfirmed. Local dissertation 321 pages/live 322 (0 errors/0 warnings); paper 33 + supplement 10, no errors or undefined references, existing paper font warnings. Results and coefficients unchanged. No commits/pushes.
+
+
+## Measured test dimensions and human-target comparison (2026-10-28)
+
+Latest measured-dimensions/target clarification: MEASURED_DIMENSIONS_AND_TARGET_20261028.md. Table C7 now records individual resting/tendon lengths: flexors 561/28 and 560/30 mm; extensors 828/92 and 826/85 mm. Shared prediction inputs remain separate. Both manuscripts explicitly state that the -86.5-degree measurement exceeds the human target; the 2.06 N m shortfall is against the pressure-specific prediction only. All nine extensor measurements retain their meet/exceed conclusion. No data, coefficients, fit values, or curves changed. Local dissertation 321 pages/live 322; paper 33 + supplement 10. No commits/pushes.
 

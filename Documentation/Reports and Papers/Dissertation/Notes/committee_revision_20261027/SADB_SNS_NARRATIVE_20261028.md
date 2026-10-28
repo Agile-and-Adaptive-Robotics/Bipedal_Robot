@@ -1,0 +1,35 @@
+# SADb and SNS narrative revision — October 28, 2026
+
+Completed the requested app-centered SADb framing, SNS integration narrative, concise demonstration summary, and transitions into the overall discussion and conclusion. Final local dissertation: 304 pages; five MiKTeX/BibTeX passes, zero errors, zero undefined references/citations, no missing figures. The existing 0.669 pt overfull line remains. Root Bolen_Dissertation.pdf and .zip are updated from the working sources; all packaged TeX and support files were byte-checked against ProofFinal. No Overleaf upload, commit, or push occurred.
+
+## Boundaries preserved
+
+No changes in this pass to the torque-paper Main.tex, dissertation 30-torque.tex, 94-AppendixC.tex, or published 20-muscles.tex. All 40 torque figure uses in the preceding active-figure manifest have unchanged SHA-256 hashes. The torque-results paragraph in the conclusion and the opening/torque synthesis in the overall discussion are also unchanged. No new simulation, optimization, fit, or biomimetic-result calculation was performed. See frozen_files.json and frozen_verification.json in Archive/narrative_tools_20261028.
+
+## SADb application and counts
+
+The chapter leads with the 1,393-record literature collection. The five app categories contain 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and four Recorders. These are organizational categories, not a count of unique publications across categories; models and reviews can themselves represent publications. The former phrasing that treated 943 as the full collection has been removed.
+
+Coverage statistics were read directly from the app's embedded sadb-data payload. Within its 943-entry Papers category: 833 entries have curation notes, 606 preparation tags, 316 animal-study assessments, 119 feedback links, 95 afferent classifications, 363 translation notes, 892 DOIs, and 318 attached-PDF indicators. These replace the main chapter's former maintenance-subset counts (561/523/426/240/118/86/258/550/38), using the expressly stated application-category denominator. This is a scope change, not a new curation or data edit. The historical maintenance subset remains in Appendix E, separated from application coverage. The app HTML was read only. Its source hash and counts are in sadb_app_counts.json. The six-callout map and other SADb graphics are unchanged.
+
+Airtable now appears as the curation backend rather than the primary deliverable. The results describe searching, classification, pivot drill-through, citation neighborhoods, and the connection from a source observation to a candidate feedback pathway. The same collection/category distinction is used in the overall discussion and Appendix E.
+
+## SNS story and evidence
+
+The chapter now proceeds from the AnimatLab walker to the attempted W2L integration in MATLAB, then to the knowledge gap: a failed movement can reflect circuit organization, sensory encoding, mechanical/actuator modeling, or numerical implementation. The history distinguishes successful component imports/ports from a complete walking implementation. The reported early network agreement, later divergence, and tonic-drive fixed point remain scoped to their documented tests; the narrative does not reclassify the 410-neuron export as the W2L rhythm-core test.
+
+Methods explain the robot-routing/human-muscle incompatibility, human-model conversion repairs, human versus BPA and W2L/CAD model distinctions, SNS-Simscape blocks, the MathWorks bridge and the custom integration, and the staged tuning and intervention workflow. The existing curriculum figure moved from Appendix D to Chapter 6, beside its methods explanation. Its graphic bytes are unchanged, its label is retained, and its active asset now belongs in Figures/60-sns/sns_curriculum.pdf. The superseded Appendix-D copy is in Deprecated/narrative_tools_20261028. No figure was invented or lost.
+
+Table 6.1 compiles five functional-verification capabilities with representative evidence and scope: matched neural response, corrective feedback, model/actuator conversion checks, cross-interface command/sensor exchange, and repeatable controlled interventions. The chapter calls these functional-verification and proof-of-concept demonstrations. It does not imply that all tests share a numerical acceptance band, that a post-hoc threshold was preregistered, or that interface operation establishes walking. Existing reflex, rhythm, bridge, and fixed-controller feedback evidence remains. A concise Gait2392 comparison connects alternative neural organizations and pathway removal to the reference-library tests, and the reduced Rybak example illustrates mechanism discrimination through intervention. Replay phase, speed, support fractions, CAD stance diagnostics, and other extensive records remain in Appendix D rather than being repeated in the main narrative.
+
+The main SNS chapter grows from 3,065 to 3,838 whitespace-delimited words because the missing history, methods, and connections are restored; the repeatability/support diagnostics are condensed. This is not a claim that the whole chapter became shorter. The conclusion was tightened from 481 to 432 words. All prior labels are preserved across the edited chapters, and the total figure-float count across Chapters 5–8 and Appendices D/E is unchanged. conservation.json records the per-file counts.
+
+## Overall discussion, ending, and verification
+
+The overall discussion connects source-based sensory selection to controlled model experiments and separates delivered tools from proposed dynamic-actuation, balance, and hardware studies. The hardware paragraph no longer describes future embedded execution as a missing dissertation demonstration. The end of that discussion leads into a conclusion centered on testable assumptions and usable contributions. The conclusion's final paragraph now fits on the closing page without an orphaned continuation.
+
+Visual review covered the revised SADb statistics, MATLAB history, curriculum methods and figure, functional-verification table, Gait2392 comparison, discussion opening/ending, and conclusion. This was a targeted review, not a reread of all 304 pages. Page lists and rendered images are in Archive/narrative_tools_20261028/visual. directive_compliance.json supplies final line-level evidence for each instruction. Final delivery hashes and the exact build results are in delivery_verification.json. Builds and superseded source snapshots are archived outside ProofFinal.
+
+## Files for Overleaf
+
+Changed working source files, all in Dissertation/ProofFinal/chapters: 50-database.tex, 60-sns.tex, 70-overall.tex, 80-conclusion.tex, 95-AppendixD.tex, and 96-AppendixE.tex. New chapter-owned location of the unchanged curriculum graphic: Dissertation/Figures/60-sns/sns_curriculum.pdf. All other active graphics remain in their established folders. Root Bolen_Dissertation.zip contains the complete working source and active figures. Ben can drag these changed TeX files and the curriculum PDF into the established Overleaf folders.

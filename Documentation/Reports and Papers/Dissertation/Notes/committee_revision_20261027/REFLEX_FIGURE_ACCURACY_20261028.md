@@ -1,0 +1,11 @@
+# Figures 6.5 and 6.6 accuracy correction
+
+Checked sns_build_demo.m and sns_build_beer_demo.m, including six synapse signs and source/target connections, and confirmed all six named synapses in each saved KneeReflexDemo.slx and BeerCupReflexDemo.slx. Both demonstrations implement own-muscle Ia excitation, own-muscle Ib inhibition, and antagonist Ia inhibition on both sides. Repeating that effective motif across knee and elbow is intentional. The earlier figure schematics were incomplete: knee omitted flexor Ib inhibition and extensor Ia inhibition of flexor MN; arm omitted triceps Ib inhibition.
+
+Replaced both circuit panels with complete six-connection schematics, separated by postsynaptic target for clarity. Repeated Ia labels refer to the same source population. The arm's load-induced sag stretches biceps; biceps Ia excites biceps MN and inhibits triceps MN. Muscle-force Ib feedback is autogenic inhibition, not an external-load command, so its sign was not flipped. Models and saved simulation results were not changed.
+
+Figure 6.6 now reads A1/A2 mechanical states, B response traces, C circuit. Caption matches. Figure 6.5 retains A kinematics, B knee model, C circuit. Existing mechanical and kinematic vector content retained and rearranged; numerical traces and 2.00/7.85 degree values unchanged. Originals preserved in this Archive. Editable figure generator and circuit PDFs are in Figures/60-sns/Components/reflex_accuracy_20261028.
+
+Fresh final five-pass build: zero errors, no undefined references, 307 pages locally. New pages 176/177 inspected. Root PDF/ZIP regenerated and source bytes checked. Overleaf sources and two figures uploaded; live build 308 pages, zero errors, no unresolved references; one float-placement warning. Protected chapter 20, torque chapter, Appendix C, and paper Main source hashes remain unchanged. No commits or pushes.
+
+Ben's narrowed vastus search scope appended to the existing correction prompt: OpenSim attachment start, fixed origin, femur-side BPA insertion as the only movable attachment, parallel BPA and pulley line-part sweep, OpenSim moment arms, and internal-load compliance. No optimization was launched during this figure correction.
