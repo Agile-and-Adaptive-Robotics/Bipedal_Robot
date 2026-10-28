@@ -1,5 +1,12 @@
 # Simulation recovery results
 
+> **UPDATE 2026-10-27 (later session): the Di Russo native-replay blocker
+> below is CLEARED.** The author's SCONE fork was built on easteregg2 and
+> `spinal.par` replays native walking (16 steps, 1.166 m/s, objective
+> 17.2411, bit-exact fresh-process replay). See
+> `native_baseline/NATIVE_BASELINE_20261027.md` for the run of record,
+> the build manifest, and the controller audit.
+
 The W2L candidate survives fresh-process verification with its effective gains
 delivered to the compiled network. The AH001 CAD robot now compiles with its
 four-bar knees, lumbar hinge, and 75 kg total mass. Di Russo walking remains

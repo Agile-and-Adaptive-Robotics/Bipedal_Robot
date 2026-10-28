@@ -177,7 +177,7 @@ def main():
                   torso=torso_audit, compiled_version=mujoco.__version__,
                   frame='x anterior, y superior, z right',feet=foot_audit,
                   constraints_at_reference=data.efc_pos.tolist(),
-                  status='Geometry and mass model; no SNS controller, muscle routes, or walking result yet')
+                  status='Geometry and mass build; current routed control model and run assessments are separate artifacts')
     (HERE/'ah001_build_audit.json').write_text(json.dumps(output,indent=2))
     # A manually articulated URDF companion for inspection/export tools. Its
     # tree omits two cut knee edges, recorded in the sidecar. Use MJCF for physics.

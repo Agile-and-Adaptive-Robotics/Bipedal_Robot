@@ -1,139 +1,118 @@
-# AH001 robot with lumbar hinge and payload
+# AH001 robot with neural control
 
-The MuJoCo model uses the geometry of `10_AH_001.SLDASM`, both spherical hips,
-both four-bar knees, a lumbar hinge, and a rigid 0.25 m spine bar. The lower legs
-have no ankle joint or separate foot in this CAD assembly. The source CAD and
-Simulink files were not saved or modified.
+**Current diagnostic fails leg-clearance checks.** In the verified 65% support
+replay, ankle left/right order is reversed in 91.8% of post-ramp samples.
+Median foot headings are approximately 28° right and -32° left relative to
+the pelvis anterior axis. Leg mesh self-collision is disabled. These runs
+establish numerical replay and assisted survival only; they are not valid
+stepping or hardware-capability demonstrations. See `foot_heading_audit.json`.
+Current tensions are ideal reference actuators; optimized BPA hardware and
+its pressure/contraction/compliance behavior have not been imported.
 
-`ah001_with_torso.xml` is the model to inspect. It compiles in MuJoCo 2.3.7 with
-15 independent degrees of freedom: six at the floating root, six at the hips,
-two at the knees, and one at the lumbar hinge. Its two knee loop constraints
-have combined rank four. The companion `ah001_manual_tree.urdf` has three serial
-passive hip axes and omits the cut knee edges; use the MJCF for dynamics.
+The current MuJoCo 2.3.7 model is `ah001_neural.xml`. It uses **x anterior,
+y superior, z right**, both spherical hips, both four-bar knees, welded CAD
+feet, and a **ball-and-socket lumbar joint** with a rigid 0.25 m spine bar.
+The current CAD export includes Ben's corrected left-knee pose. Source CAD
+was not saved by this pipeline.
 
-## Adjustable OpenSim routes
+## Geometry, mass, and routes
 
-`ah001_with_opensim_routes.xml` adds all 92 routes from the symmetric
-`gait2392_robot.osim` model. That source preserves Ben's edited right-side
-robot paths and mirrors them to the left. The original file is unchanged.
-All actuator interfaces generate zero force until a force model and capacities
-are assigned.
+The model has 17 independent degrees of freedom: six at the floating pelvis,
+six at the hips, two constrained knee motions, and three at the lumbar ball.
+Two knee-loop constraints have combined rank four. The companion URDF omits
+the cut knee edges; use the MJCF for dynamics.
 
-Edit each point's body-local `position_m` and `enabled` flag in
-`opensim_routes.json`, then run `build_opensim_routes.py` and
-`audit_opensim_routes.py` with the machine's `myo` Python. The preparer refuses
-to overwrite this specification; its `--output` option creates a separate
-fresh transfer. Rebuilding the base CAD model does not overwrite attachment edits.
+Total mass is 75 kg: 5.356664 kg for the lower body including welded feet,
+0.12 kg for the provisional solid-Onyx spine, and 69.523336 kg balancing
+payload. Half the payload attaches to the torso and half to the pelvis.
+The torso payload center is 100 mm anterior and 75 mm superior to the lumbar
+joint. The adjustable joint location is pelvis-frame (-160, 100, 0) mm,
+an upper-rear-center approximation. Material densities and hardware ownership
+are engineering assumptions pending physical measurements.
 
-The transfer aligns hip, knee, and distal-shank landmarks. Pelvis alignment uses
-the hip centers and approved lumbar hinge. The knee landmark is the mean of
-its four pin centers. Torso guides compress onto the square spine bar, and
-foot attachments collapse onto adjustable distal-shank cap points. These are
-engineering routes rather than measured attachments. Transfer matrices and
-the source hash remain in the specification.
+Routes come directly from the right side of
+`Solid_Models/OpenSim/Gait2392_Robotbody/gait2392_robotbody.osim`, mirrored
+left. The existing Routing27 actuator map selects **27 per side, 54 total**.
+The complete source-route audit model, `ah001_routes_audit.xml`, retains
+92 route definitions for comparison; these are not 92 robot actuators.
 
-The source contains 336 static, 10 conditional, and 8 moving points, with no
-wrap objects. All 354 original definitions remain in
-`source_route_inventory.json`. Moving-point locations and conditional membership
-are **frozen at the source neutral pose** in this initial routing model. Their
-functions and conditions need a later dynamic implementation. Source force and
-fiber parameters establish provenance, not robot BPA capacity.
+Edit `robotbody_routes.json` for attachment changes. Recorded mirrored
+corrections in `route_sign_corrections.json` eliminate the reversed neutral
+actions. No new hip-muscle consolidation was performed.
 
-The motion audit covers 65 reachable poses: hip changes of ±30°, knee changes
-of ±15°, and lumbar changes of ±20° around the CAD reference. Knee derivatives
-follow the closed four-bar mechanism. Length-derived moment arms agree with
-the tendon Jacobian within 4.665 × 10⁻¹⁰ m. All interfaces produce zero force
-under unit control, and total model mass remains 75 kg.
+`dynamic_routes.py` evaluates moving-point splines and conditional membership
+at runtime and includes moving-guide terms in length velocity and force.
+A generic XML-only viewer cannot reproduce those dynamic routes. Use the
+Python runner or replay script. The verification covers 492 source function
+values, 25 native conditional checks, and 75 constrained poses, with maximum
+full moment-arm error 1.38e-9 m. Unselected semitendinosus conditional routes
+retain flagged small length jumps after retargeting.
 
-Twenty ankle and toe routes lose joint leverage when foot joints are removed.
-Five additional routes disagree with their source neutral sagittal action:
-bilateral `add_mag2`, bilateral `grac`, and left `tfl`. Review these attachments
-before neural coupling. Seventeen routes change sign over the sampled ranges;
-this alone does not establish a defect or a change from the dynamically routed
-source. The full record is `opensim_route_motion_audit.json`.
+The 54 actuators apply ideal reference tensions with a 30 ms activation
+filter and MIF caps from the existing actuator map, including 2500 N per
+erector spinae. This is not a calibrated pneumatic actuator simulation.
+Twenty ankle/toe actuators lose joint leverage because the feet are welded.
 
-The OpenSim-derived erector routes require 1354.84 N per side to share the
-current neutral holding load. This estimate applies to this routed model;
-the six-route engineering template below remains separate. Neither estimate
-demonstrates actuator capacity.
+## Current controller and evidence
 
-For a fresh transfer, run `inspect_source_routes.py`,
-`prepare_opensim_routes.py`, `build_opensim_routes.py`, and
-`audit_opensim_routes.py`. After attachment edits, only the last two are needed.
-The routed preview is `ah001_opensim_routes_preview.png`.
+`run_neural_robot.py` couples a 262-neuron, 230-input SNS network to the robot.
+SNS membrane outputs drive the actuators. A bounded postural torque allocator
+supplies descending motor-neuron currents; neural RG activity supplies
+stepping references. Ia/II/Ib and foot-contact inputs are present. Motor target
+current compensation makes this a hybrid engineering controller.
 
-## Mass and geometry
+The recorded 20-second supported crouched stance is stable over its final
+five seconds: knee excursions 1.35/0.95 degrees, pelvis tilt below 3.92 degrees,
+and lumbar rotation below 0.59 degrees. Actual vertical support averages
+94.68% body weight, and angular pelvis stabilization remains active.
+This is assisted posture control, not independent balance. Disabling all
+muscle forces under the same rig settings causes lumbar failure at 0.202 s.
 
-| Item | Value | Basis |
-|---|---:|---|
-| Complete model mass | 75 kg | User specified |
-| CAD lower body | 4.307078 kg | Current solid volumes and assumed material densities |
-| Spine length | 0.25 m | User specified |
-| Spine cross-section | 20 × 20 mm | Adjustable provisional choice |
-| Spine mass | 0.12 kg | Solid Onyx, 1200 kg/m³ |
-| Payload mass | 70.572922 kg | 75 kg minus lower body and spine |
-| Payload center | 100 mm anterior, 75 mm superior to hinge | User confirmed |
-| Payload shape | Sphere, radius 100 mm | Adjustable inertia approximation |
-| Lumbar hinge position | Pelvis frame (−160, 0, 100) mm | Approximate upper rear center; user approved adjustable position |
-| Lumbar axis | Left lateral axis | Sagittal flexion and extension |
-| Lumbar range | ±30° | Adjustable provisional choice |
+Reference and exact accelerated neural backends produce bit-identical full
+20-second stance logs (`controller_assessment.json`). Production human and
+W2L baselines remain separate and unchanged.
 
-Coordinates are x anterior, y left, and z superior. The CAD-to-MuJoCo rotation
-maps CAD (x, y, z) to (x, −z, y). The selected pelvis hinge location is an
-engineering approximation rather than a measured mounting feature.
+The drive-3 stepping attempt produces alternating bilateral neural bursts,
+but foot clearance is below 1 mm and sustained swing gates fail.
+Its forward drift must not be described as walking. The current support
+campaign tests explicit stance-load compensation and hard caps on **actual**
+vertical support; lowering a nominal support number alone is insufficient.
 
-Printed components use the [Markforged Onyx density](https://web-objects.markforged.com/craft/materials/CompositesV5.2.pdf).
-Hardware uses provisional densities of 7850 kg/m³ for steel, 8500 kg/m³ for
-brass, and 900 kg/m³ for polypropylene. Steel fasteners are simplified as
-homogeneous solids, including nylon locknut inserts. Component ownership at
-shared pins is recorded in `../spinal/reports_20261027_codex/robot_geometry_audit.json`.
-Actuators, tubing, and hardware absent from the CAD are absorbed into the
-balancing payload, not individually represented. Update these inputs when
-physical mass and mounting data become available.
+The newer reduced-support checkpoint completes 40 seconds with a **5% minimum
+allocated activation** and a hard **65% actual vertical support cap** after
+15 seconds. It includes RG-timed lateral pelvis guidance and angular support.
+Fresh reference and exact-fast runs are bit-identical for the complete 40 s
+(`supported65_backend_verification.json`). Post-ramp foot clearances reach
+55.2/21.8 mm, but lifting remains intermittent and physical cycles skip neural
+cycles. This is reduced-support control, not regular stepping or forward walking.
+The activation floor is adjustable with `--activation-floor`; zero remains the
+general runner default, and the support-65 preset uses 0.05. A minimum activation
+is not a coactivation index or a measured PAM stiffness.
 
-Each CAD solid's density-one volume and inertia were extracted directly.
-An earlier mass query returned the complete assembly mass for every component;
-those earlier `robot_geometry_inventory.json` mass fields are invalid and must
-not be used. `robot_mass_geometry.json` is the corrected geometric inventory.
-Individual body tensors are rotated and combined with the parallel-axis theorem.
-SW2URDF exported nine manually assigned rigid mesh groups. Large meshes are
-partitioned into assets below MuJoCo's 200,000-face limit without decimation.
+Use `run_support65.ps1` on easteregg2 to reproduce this checkpoint with a new
+timestamped output. Its `-ActivationFloor` and `-RgTauH` options permit explicit
+comparisons. `robot_support65.gif` replays the verified post-ramp interval.
 
-## Trunk routes and load
+## Run on easteregg2
 
-`trunk_routes.json` defines six adjustable straight-line routes for bilateral
-erector spinae, internal oblique, and external oblique attachments. These are
-engineering candidates, not measured robot attachments or anatomical muscle-path
-replicas. They have zero passive stiffness and damping, and no active force
-generator is assigned. A single sagittal hinge cannot represent axial rotation
-or lateral bending by the obliques.
+Use PowerShell and the machine's explicit environment:
 
-The neutral payload needs **69.232 N·m** of extension holding torque. The
-provisional erector routes each have a 24.821 mm extension moment arm, requiring
-**1394.605 N per side** if they share that load equally. This is a force
-requirement, not a demonstrated actuator capacity. The actuator force, stroke,
-and mounting design must be checked before controller optimization.
+```powershell
+Set-Location -LiteralPath 'D:\GitHub\Bipedal_Robot'
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\verify_ah001.py'
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\verify_dynamic_routes.py'
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\replay_neural_robot.py' --view
+```
 
-The complete model's neutral center of mass is approximately 100.22 mm anterior
-and 52.76 mm superior to the hinge. The requested 75 mm height locates the
-payload center; lower-body mass shifts the complete model's center downward.
+The viewer replays recorded physics; it does not run a new simulation.
+`neural_stance.gif` provides the same recorded motion without a viewer.
+The runner saves all options, effective neural gains, source hashes, actual
+rig forces, contacts, route states, and neural traces in `runs/`.
+Use `assess_supported_step.py` to assess rhythm, sustained contacts,
+geometry-based foot clearance, and progression separately.
 
-## Verification and regeneration
-
-Run with `D:\Anaconda\envs\myo\python.exe` on easteregg2:
-
-1. Run `audit_robot_geometry.py` in the recovery report folder after extracting
-   the current CAD inventory with `InspectAH001.cs`.
-2. Compile and run `ExportAH001.cs` against the installed SW2URDF DLL with the
-   intended assembly active. Its first argument is `export_groups.json`; its
-   second argument is this directory. It exports geometry without saving CAD.
-3. Run `build_ah001.py`, then `verify_torso.py`, and `verify_ah001.py` here.
-
-The checks confirm the 75 kg compiled mass, knee mobility and constraint rank,
-the analytic lumbar gravity torque, and tendon moment arms against finite
-differences. A two-second mechanical exercise with explicit gravity compensation
-had a maximum loop error of 8.341 μm and no numerical warnings. This supported
-diagnostic does not demonstrate neural control, balance, or walking.
-
-`ah001_preview.png` shows the compiled model. Generated mesh directories remain
-local and are ignored by Git; regenerate them before loading on another machine.
+Earlier `opensim_routes.json`, `source_route_inventory.json`,
+`ah001_with_opensim_routes.xml`, and z-up hinge previews are superseded.
+Do not use them as the current robot model. Current campaign evidence and
+machine-specific ZCode prompts are in
+`../spinal/reports_20261027_robot_control/`.

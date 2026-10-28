@@ -1,0 +1,119 @@
+{
+ "parity_traces": [
+  {
+   "key": "heelF",
+   "maxdiff": 120.24985689591558,
+   "len": 1000
+  },
+  {
+   "key": "com_x",
+   "maxdiff": 0.00390472186229196,
+   "len": 1000
+  },
+  {
+   "key": "com_z",
+   "maxdiff": 0.009052990631855162,
+   "len": 1000
+  },
+  {
+   "key": "tilt",
+   "maxdiff": 0.019881047358408566,
+   "len": 1000
+  }
+ ],
+ "divergence_onset_step": {
+  "heelF": 291,
+  "com_x": 230,
+  "com_z": 261,
+  "tilt": 97
+ },
+ "parity_traces_no_strikes": [
+  {
+   "key": "heelF",
+   "maxdiff": 120.24985689591558,
+   "len": 1000
+  },
+  {
+   "key": "com_x",
+   "maxdiff": 0.00390472186229196,
+   "len": 1000
+  },
+  {
+   "key": "com_z",
+   "maxdiff": 0.009052990631855162,
+   "len": 1000
+  },
+  {
+   "key": "tilt",
+   "maxdiff": 0.019881047358408566,
+   "len": 1000
+  }
+ ],
+ "parity_no_strikes_max_abs_diff": 120.24985689591558,
+ "parity_ok": false,
+ "parity_max_abs_diff": 120.24985689591558,
+ "equivalence_conclusion": "ulp-level: semantics equivalent (sensors identical from same state; neural residual <=3.4e-16); closed-loop divergence is amplification of the ulp seed; use Python path for final verification of kept results",
+ "metrics_ref_vs_fast": {
+  "fell": [
+   true,
+   true
+  ],
+  "speed": [
+   null,
+   null
+  ],
+  "cycL": [
+   null,
+   null
+  ],
+  "cycR": [
+   null,
+   null
+  ],
+  "effort": [
+   null,
+   null
+  ]
+ },
+ "port_vs_v3": {
+  "fell": [
+   true,
+   true
+  ],
+  "speed": [
+   null,
+   null
+  ],
+  "cycL": [
+   null,
+   null
+  ],
+  "cycR": [
+   null,
+   null
+  ],
+  "effort": [
+   null,
+   null
+  ]
+ },
+ "port_faithful": true,
+ "benchmark_10s_seconds": {
+  "reference": 22.655818000028376,
+  "fast": 3.6639416000107303,
+  "single_trial_speedup": 6.183454998289827
+ },
+ "parallel_8x2s": {
+  "seconds": 4.513714300002903,
+  "results": [
+   -100.0,
+   -100.0,
+   -100.0,
+   -100.0,
+   -100.0,
+   -100.0,
+   -100.0,
+   -100.0
+  ]
+ }
+}
