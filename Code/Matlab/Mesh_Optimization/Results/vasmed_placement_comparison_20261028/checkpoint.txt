@@ -1,0 +1,15 @@
+MATLAB 25.1.0.2973910 (R2025a) Update 1
+Saved fields: XiUsed, cBest, ctx, ctxCamBest, fBestCam, marginBest, marginReqBest, predBest, refPts, requiredBest, resultFile, routeInfoBase, seedBase, stamp, tendonRef, thetaP6BaseD, xBestCam, xFixed, xFullBest, xRef8
+ctx fields: T_Pam, T_Pam_inv, T_ICR_t1, T_t1_ICR, T_t1_f, T_f_t1, phi, phiD, pos, N, Name, CrossPoint, routeRows, femurRows, t1Rows, Dia, BPAcount, T, t1toICR, fitting, wraps, idxMaxFlex, humanAngleD, targetName, humanTorque, humanTorqueAbs, torqueScale, targetPressure, Pbins, KMAX, maxRelStrain, minStrain, requiredTorqueMargin, Xi0, Xi1, Xi2, Xi3, routeSeed, geo, x0, lb, ub, initialRawLocation, initialLocation, initialLmt0, initialMaxLmt0, initialIdxMaxLmt0, initialMaxLmtAngleD, initialRest0, initialTendon0, initialTendonMax
+nBPA stored pred=2 ctx=2 rest=0.8277378599107651 tendon=0.09249
+BASELINE max torque replay difference 0 Nm; torque 40.2035989333..105.904702045
+TARGET saved 20.247835026..50.32136527 surface 30.1797690408..59.912901 max diff 25.1424429611; disk-saved 0
+G1 FAIL max force rel=0.08560681497436577 abs=73.83267008147448 N at -119.999999863 deg; alternative 788.629858206525 canonical 862.4625282879995
+G1 length max=0.01170209562813351 m; delta_L initial-vs-force-effective max=0.01275111516543816 m
+G1 force-only torque discrepancy using SAME canonical arm 4.743765381732729 Nm
+G1 fully aligned scalar closure max force rel 0.09439804745849593 abs 81.41477867650497 N effective length 0.01288798772109201 m
+G1 force-effective delta_L differs from initial by 0.01275111516543816 m; local normalize is row-unit normalization, not MATLAB global normalize.
+TARGET legacy inferred force torque/arm 643.153479548..1292.69890204 N; legacy arm vs new arm max 0.000277237641891 m; fixed-Fmax using old arm vs new torque max 0.358747748606 Nm
+G2 actual T size=[4 4 2 2] Fsingle=[2 2] Torque=[2 3 2 2]
+G2 max force residual 0 N; contraction 0 m; slack matches 1 infeasible matches 1
+No optimization: G1 equivalence unestablished. Tolerances: force relative 1e-3, length 1e-6 m, torque 1e-3 Nm.

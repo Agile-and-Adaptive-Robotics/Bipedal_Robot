@@ -1247,6 +1247,9 @@ def main(argv):
     acts = [mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, i)
             for i in range(model.nu)]
     net = bn.build(acts, dt=DT, interleg=interleg)
+    # Optional model-aware controller adapter; absent in all existing families.
+    if hasattr(net, "bind_mujoco"):
+        net.bind_mujoco(model, data)
     aid = {name: i for i, name in enumerate(acts)}
     muscles = net.muscles
 

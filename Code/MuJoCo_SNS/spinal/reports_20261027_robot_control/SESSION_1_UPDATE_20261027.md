@@ -1,14 +1,13 @@
 <!-- SESSION_1_SIMULATION_RECOVERY_20261027_START -->
 ## Session 1 simulation recovery update
 
-**Current task-5 disposition: failed crossed-leg diagnostic.** A subsequent
-pelvis-frame audit confirms reversed ankle order in 91.8% of post-ramp samples.
-The reduced-support numerical replay is reproducible but is not acceptable
-physical standing/stepping. Ideal reference tensions are still used; the
-optimized BPA hardware has not been imported. Details below supersede any
-earlier candidate terminology.
+**Current task-5 disposition: uncrossed supported hybrid-control diagnostic.**
+The new v2 model completes 40 s with no reversed ankle ordering and 80% actual
+vertical assistance after 15 s. Regular stepping, independent balance, and
+calibrated BPA actuation are not established. The older support-65 trajectory
+remains rejected for crossed-leg mechanics (91.8% reversed ankle ordering).
 
-Reporting window: 26–27 October 2026. Updated 27 October 2026 on **easteregg2**.
+Reporting window: 26–28 October 2026. Updated 28 October 2026 on **easteregg2**.
 Repository root: **`D:\GitHub\Bipedal_Robot`**. Python:
 **`D:\Anaconda\envs\myo\python.exe`**. Paths below are relative to that repository
 root unless given in full. This block records Session 1's simulation work;
@@ -318,6 +317,231 @@ combined hip functions, antagonist coverage, physical BPA constraints, geometric
 route variables, and staged validation. It separates functional actuator design
 from two-/four-cell PF-module choices. No new design optimization was launched,
 no message was sent to ZCode, and no existing route geometry was changed.
+
+### 28 October: abductor correction and defense assets in progress
+
+Ben requested a new GIF with more abductor activation, an accompanying still,
+and a dissertation-placement assessment. Measured abduction leverage in the
+selected 27-per-side layout comes primarily from the gluteal seed route, TFL,
+rectus femoris, and sartorius. Increasing every abducting route's floor to 10%
+caused collapse; muscle-mediated separation feedback performed better.
+
+Exploratory uncrossed runs were rejected as final evidence when the geometry
+audit found up to 16.6 mm knee-loop closure error. Investigation found that
+the allocator's full off-manifold constraint-Jacobian nullspace spuriously
+removed hip authority. A corrected anatomical tangent keeps six hip rotations,
+three lumbar rotations, and two planar knee motions independent. A separate
+v2 diagnostic model tightens closure, enables opposite-leg CAD mesh collision,
+and documents provisional passive knee stops (-70° to +3° relative to CAD).
+A flexed-knee initial stance avoids the straight-knee startup transient.
+The original model and older diagnostic XML are preserved.
+
+Current trials, raw states, source snapshots, and activation comparisons remain
+in `robot_torso\runs`. Final assets will be generated from accepted recorded
+physics only. The latest dissertation already has a CAD integration paragraph
+in 60-sns and a detailed subsection in 95-AppendixD (`sec:app_cad_supported_stance`).
+The new still belongs with the scoped CAD-tool demonstration in the SNS chapter;
+the measured comparison and assumptions belong in the existing Appendix D
+subsection. Overall Discussion needs a cross-reference rather than duplicate
+figures or a second results table. No dissertation chapter source has been
+edited in this continuation.
+
+### 28 October: accepted media, attachment sensitivity, and w2lvar probe
+
+Final `abd_defense_exact` and fresh reference runs reproduce every saved array
+bit for bit. In the 15–40 s interval, extra abductor control changes reversed
+ankle ordering from 67% to 0%, minimum separation from -38.3 to 142.4 mm,
+and right TFL mean activation from 22.3% to 81.8%. Vertical assistance is 80%
+in both conditions. The control adds 160 N/m muscle-mediated separation
+feedback and a 6% floor on currently abducting routes, against the 5% global
+floor. Knee-loop maximum position error is 0.387 mm with control on, and
+sampled opposite-leg mesh penetration is zero. Toe-out and very small
+post-ramp knee excursions remain; gait acceptance gates fail.
+
+Recorded media are in `Documentation\Reports and Papers\Dissertation\Defense\
+slideshow\AH001_20261028`: 96-frame GIF (20–32 s; exact 12 s timing),
+2400-by-1400 still (24 s), provenance, alt text, and placement recommendation.
+The new defense copy is `Defense\AE_Revision_20261023\output\
+Bolen_Defense_Assertion_Evidence_20261028_AH001_v8.pptx`: animation slide 29,
+hidden still/comparison slide 39. All 37 original slide identities, text,
+and notes are conserved, source v6 is unchanged, and the GIF is embedded
+byte for byte. Both added slides were rendered in native PowerPoint and
+visually inspected. Use the still in the scoped SNS CAD integration discussion,
+with the matched table and assumptions in existing Appendix D subsection
+`sec:app_cad_supported_stance`; Overall Discussion needs only a cross-reference.
+No master dissertation chapter source was edited.
+
+Ben identified a possible 60 mm tibia/foot interface mismatch. The current
+foot weld uses the top of the ankle assembly and distal shank, not a verified
+mating datum. Its mount-to-sole height is 103.7 mm. A separate hypothesis
+model translates each entire foot 60 mm toward the shank's proximal origin;
+it does not shorten tibial CAD, change tibial inertia, or validate an interface.
+Total mass remains 75 kg. With the same s3k-lineage hybrid control, median
+ankle spacing changes from 159.0 to 57.3 mm, and sampled interleg mesh
+penetration reaches 1.316 mm despite no reversed ankle ordering. The
+attachment assumption materially affects the result.
+
+`probe_foot_mount_w2lvar.py` adapts the existing w2lvar builder to all 54
+actuators in isolated processes, leaving production builders and the baseline
+runner unchanged. The actual variant has 544 neurons and 230 inputs; its
+548 named indices include four ankle aliases, not extra neurons. Each side
+has HIP E/F and shared KNEE/ANKLE E/F PF pairs with inhibitory lamination.
+Both original-attachment and 60 mm-shift trials complete 40 s at the same
+80% post-ramp vertical support, without reversed ordering or sampled
+opposite-leg contact. Median spacing is 63.8/99.0 mm respectively; maximum
+knee-loop error is 0.516/0.784 mm. The shifted w2lvar timing trial passes
+bilateral unloading and lifting counts but fails repeated alternating foot
+apices and forward progression. It is not accepted as regular stepping.
+Accelerated/reference neural stepping is bit-identical for 400 seeded-input
+steps of this exact 544-neuron circuit; no full-trajectory w2lvar replay or
+robustness claim is made.
+
+Crucial limitation: the inherited MN current clamp cancels incoming PF/reflex
+MN synaptic currents. This comparison therefore tests network timing and
+central feedback within an engineering force allocator, not full w2lvar
+muscle-pattern control. A proper PF-driven comparison must retain those
+currents and separately bound the postural contribution.
+
+Floating route points are body-fixed virtual attachments or guides, not
+automatically snapped to the nearest CAD solid. They transmit force through
+the named parent body's Jacobian, assuming ideal rigid offset brackets.
+Bracket mass, compliance, packaging, and collision-aware wrapping are not
+modeled. This is distinct from the validated source moving/conditional
+path-point functions and their complete virtual-work derivatives.
+
+The four-condition table, reproduction commands, and neural-comparison limits
+are in `Code\MuJoCo_SNS\robot_torso\FOOT_MOUNT_W2LVAR_RESULTS.md`.
+A separate 20–28 s GIF and 24 s still of the hypothetical shifted-foot w2lvar
+timing probe are under the final media folder's `w2lvar_foot60_probe\` subfolder.
+They are labeled exploratory and are not substituted into the defense baseline.
+
+### 28 October: s3k/w2lvar/syn6 derivation audit and fast trials
+
+Audit and evidence: `Code\MuJoCo_SNS\spinal\reports_20261028_family_audit\
+AUDIT_REPORT.md`, `RESULTS.json`, six compiled edge inventories, and the
+machine-specific `REPRODUCE.md`. Reviewed current builders, effective gain
+loaders, source weight/basis files, corrected wiring rulings, and the primary
+Rybak, Deng, Shinohara, Shevtsova, and Szczecinski sources. These families are
+literature-informed engineering models, not three exact paper replications.
+
+PF architecture per leg: s3k has E1/E2/F1/F2 phase cells; w2lvar has HIP E/F
+and shared KNEE/ANKLE E/F antagonistic pairs; syn6 has six human IK-derived
+NMF channels with a mixed S5 outside the default reciprocal inhibition.
+The current CAD counts are respectively 262/230, 544/230, and 488/230
+neurons/inputs. w2lvar's 548 named indices include four ankle aliases.
+Its six trunk actuators have no PF input. syn6 covers all 54 CAD actuator
+names but has no per-muscle central sensory projections at default gains.
+The suspected w2lvar explicit-zero fallback problem does not occur in the
+current weight file. The earlier zero-afferent claim about the original Deng
+network is retracted; stale paragraphs in older audit files are identified.
+
+The CAD mechanical check finds 20 of 54 routes without resolved free-joint
+torque at five recorded poses, because distal joints are welded. Internal
+route tension and sensory activity remain possible; full network connectivity
+does not imply 54 useful control directions. Primary human-name groups also
+omit some biarticular and hip rotation functions. These are substantive
+limitations when transferring the controller to the robot's actual routes.
+
+The human-model screen ran 13 configurations: three frozen baselines and
+ten targeted central-feedback, PF-gating, or crossed-pathway changes. The
+baseline scores reproduce -161.56754173676563 (s3k), -174.84835562693294
+(w2lvar), and -200.37955834081458 (syn6). Every targeted change worsens its
+own family's score. The s3k and syn6 baseline diagnostics show a frozen left
+leg; the s3k anchor is a numerical regression reference, not accepted bilateral
+walking. No winner or existing Optuna database was changed.
+
+Added optional `spinal\w2l_cpg\preallocated_exact_eval.py`: sparse Numba
+conductances, reused input/state/reduction buffers, and one-hot I/O maps,
+while retaining the reference NumPy synaptic reduction order and fixed-tau
+NaP equations. All six family/model combinations pass 400-step voltage and
+h-gate parity checks. All three complete human baselines match both the old
+exact-fast and reference backend arrays bit for bit. Warmed local neural-step
+ratios relative to the previous fast evaluator: w2lvar 1.20x human and 1.41x
+CAD; syn6 1.05x human and 1.19x CAD. Small s3k builds are 5–7% slower with
+the extra preallocation, so the old exact-fast evaluator remains preferable
+there. These are shared-machine neural timings, not whole-trial speed claims.
+The new backend rejects non-fixed-tau gated classes rather than silently
+changing a paper model's voltage-dependent channel kinetics.
+
+CAD neural-authority experiments now expose the masking by the old MN clamp.
+Full immediate release fails lumbar posture at 0.126/0.186/0.066 s for
+s3k/w2lvar/syn6. A 5–15 s ramp to 10% uncanceled native synaptic-current
+authority fails at 22.242 s for s3k and 13.830 s for syn6. w2lvar completes
+the requested 25 s at the same 80% post-ramp vertical support, but still
+fails physical stepping gates. A fresh preallocated replay matches every
+saved array of that partial-neural run bit for bit.
+
+Delayed PF-to-MN deletion at 15 s preserves the exact pre-intervention
+history. In the partially exposed w2lvar controller it changes motor commands
+by up to 0.06615 within the first 100 ms (6.615 percentage points). The
+fully clamped negative control changes them by only 6.96e-11 in that window.
+This verifies actual PF influence in the partial mode, unlike the fully
+masked defense baseline. The remaining 90% engineering clamp, posture
+allocator, reference tensions, rig, and geometry assumptions prevent any
+claim of a pure neural, BPA-validated, or independent walking controller.
+
+Production builders, `params.py`, `runner.py`, dissertation chapters, and the
+defense deck were not edited by this audit. Syntax checks, numerical replay,
+and scoped whitespace checks pass. No commits or pushes were made.
+
+### Articulated Gait2392 functional PF experiments (2026-10-28)
+
+Ben directed these experiments to the articulated human Gait2392 MuJoCo
+model, separate from the CAD robot. Evidence and reproduction instructions:
+`Code\MuJoCo_SNS\spinal\reports_20261028_functional_pf\REPORT.md`.
+Optional implementation: `spinal\functional_gait2392\`.
+
+The w2lvar extension adds separate four-cell modules (two PF neurons and
+two inhibitory relays) for bilateral hip X/Y and foot inversion/eversion,
+global lumbar X/Y/Z, separate sagittal ankle drive, and six biarticular
+families per leg. Combined census: 980 neurons/400 inputs; temporal-waveform
+variant: 980/424. Eighteen proximal/knee/ankle biarticular routes receive
+dedicated family PF drive. Long toe muscles do not yet receive dedicated
+multiarticular modules. Native SNS motor-neuron outputs drive the human
+model without the CAD controller's motor-current cancellation.
+
+An equality-aware tangent projection agrees with finite-difference torque
+moment arms to 2.183e-11 m. Recruitment follows signed moment arms, updating
+both cached and underlying synaptic matrices every 10 ms. Twenty-six
+compartments switch hip-rotation action across the sampled hip-flexion
+sweep. Finite perturbations confirm that positive coordinates named
+hip_adduction in this conversion move both feet laterally (abduction).
+The anatomical x-anterior/y-superior/z-right frame is explicit; legacy
+world placement uses a documented adapter and unchanged baseline physics.
+
+IK/movement PCA and activation NMF are kept separate. Rank-six held-out
+activation reconstruction VAF is 0.760; IK-only activation prediction is
+0.608. The paired record is only two seconds of quasi-static IK/GRF
+back-solved activation, not EMG, and retains a subject/model scale mismatch.
+These are mathematical engineering seeds, not identified biological modules.
+Figures: `motor_primitives_vs_synergies.png` and `hip_rotation_routing.png`.
+
+Bounded air tests include axis-only, biarticular-only, combined, gain/time-
+constant variations, and RG-phase-driven temporal waveforms. A finite
+unilateral initialization pulse produces antiphase RG activity, but no
+candidate meets the repeated physical knee-alternation gate. Smaller knee
+excursion alone is not accepted as improved gait. Added combined trials
+attempt afferented air, supported standing, and ground locomotion; these are
+staged diagnostics, not a completed five-stage optimization. Standing
+completes eight seconds with foot-normal-force/body-weight approximately
+0.575 and inferred residual support 0.425; these are force-based proxies,
+not measured harness forces. Maximum torso tilt is 30.2 degrees, so this
+is not accepted as satisfactory balance. Ground motion has 6/0 detected
+right/left cycles and score -246.01, worse than the matched baseline's
+7/5 cycles and -174.23. Neither establishes successful forward walking.
+
+Both new neural construction checks have zero reference/accelerated voltage
+difference over 200 fixed-mechanics steps. The preceding audit's production-
+file statement applies to that audit: this later experiment adds an optional
+three-line model-binding hook in runner.py. Existing families have no hook;
+the original s3k score remains exactly -161.56754173676563. No production
+builder, winner, database, dissertation chapter, or deck is modified by this
+functional PF experiment. Full dynamic-controller backend parity is not claimed.
+
+Robot launchers are now in `Code\MuJoCo_SNS\robot_torso\`:
+`Launch_AH001_Replay.cmd` (double-click on easteregg2) and
+`Launch_AH001_Replay.ps1` (`-RunNew` to simulate before replay).
+They launch the saved supported hybrid MuJoCo demonstration, not Simscape.
 
 ### Scope and next steps
 

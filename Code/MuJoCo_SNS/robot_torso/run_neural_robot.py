@@ -23,7 +23,7 @@ sys.path.insert(0,str(SPINAL/'w2l_cpg'))
 import build_network as bn
 import params
 from dynamic_routes import DynamicRoutes
-from robot_kinematics import knee_pose
+from robot_kinematics import knee_pose,anatomical_knee_tangent
 from exact_fast_eval import ExactFastForward
 
 
@@ -32,6 +32,7 @@ def contact_loads(model,data):
     for index in range(data.ncon):
         contact=data.contact[index]
         names=[mujoco.mj_id2name(model,mujoco.mjtObj.mjOBJ_GEOM,int(g)) or '' for g in (contact.geom1,contact.geom2)]
+        if 'ground' not in names:continue
         foot=next((n for n in names if n.startswith('foot_')),None)
         if foot is None:continue
         side=0 if foot.startswith('foot_r_') else 1
@@ -79,7 +80,7 @@ def motor_target_current(compiled,mn,desired,tau=.005):
 
 def run(args):
     if not 0<=args.activation_floor<1:raise ValueError('Activation floor must be in [0,1).')
-    source_paths=(args.model,HERE/'robotbody_routes.json',Path(__file__),HERE/'dynamic_routes.py',
+    source_paths=(args.model,HERE/'robotbody_routes.json',Path(__file__),HERE/'dynamic_routes.py',HERE/'robot_kinematics.py',
                   SPINAL/'build_network.py',SPINAL/'params.py',SPINAL/'w2l_cpg/exact_fast_eval.py')
     source_hashes={str(p.relative_to(HERE.parent)):hashlib.sha256(p.read_bytes()).hexdigest() for p in source_paths}
     snapshot_dir=HERE/'runs/source_snapshots';snapshot_dir.mkdir(parents=True,exist_ok=True)
@@ -88,7 +89,23 @@ def run(args):
     if not snapshot.exists():snapshot.write_bytes(runner_bytes)
     config=json.loads((HERE/'robotbody_routes.json').read_text())
     model=mujoco.MjModel.from_xml_path(str(args.model))
-    data=mujoco.MjData(model);dynamic=DynamicRoutes(model,config);dynamic.update(data)
+    data=mujoco.MjData(model);dynamic=DynamicRoutes(model,config)
+    if args.initial_knee_flexion:
+        for side in ('r','l'):
+            knee_pose(model,data,side,-args.initial_knee_flexion)
+            joint=mujoco.mj_name2id(model,mujoco.mjtObj.mjOBJ_JOINT,'thigh_'+side+'_joint')
+            qa=model.jnt_qposadr[joint];angle=args.initial_knee_flexion/2
+            data.qpos[qa:qa+4]=[np.cos(angle/2),0,0,np.sin(angle/2)]
+        mujoco.mj_forward(model,data)
+        minimum=np.inf
+        for gid in range(model.ngeom):
+            if not (mujoco.mj_id2name(model,mujoco.mjtObj.mjOBJ_GEOM,gid) or '').startswith('foot_'):continue
+            mid=model.geom_dataid[gid]
+            if mid<0:continue
+            vertices=model.mesh_vert[model.mesh_vertadr[mid]:model.mesh_vertadr[mid]+model.mesh_vertnum[mid]]
+            minimum=min(minimum,float((vertices@data.geom_xmat[gid].reshape(3,3)[1]+data.geom_xpos[gid,1]).min()))
+        data.qpos[1]-=minimum+.0002
+    dynamic.update(data)
     acts=[mujoco.mj_id2name(model,mujoco.mjtObj.mjOBJ_ACTUATOR,i) for i in range(model.nu)]
     # Keep production defaults untouched; these settings exist only in this
     # fresh robot-control process and are saved in the run summary.
@@ -182,6 +199,7 @@ def run(args):
             jacobian=data.efc_J.reshape(data.nefc,model.nv)[rows,6:]
             _,singular,vh=np.linalg.svd(jacobian,full_matrices=True)
             rank=int(np.sum(singular>1e-8));null=vh[rank:].T
+            if args.anatomical_knee_tangent:null=anatomical_knee_tangent(model,data)
             desired_torque=data.qfrc_bias+kp*error-kd*data.qvel
             if args.abduction_gain>0:
                 pelvis_right=data.xmat[pelvis].reshape(3,3)[:,2]
@@ -243,8 +261,13 @@ def run(args):
             weighting=null.T@(weights[:,None]*null)
             lower=np.full(model.nu,args.activation_floor)
             if args.abductor_floor>args.activation_floor:
-                for dof,sign in zip(hip_dofs,(-1.,1.)):
-                    abducting=sign*dynamic.moment_arms[route_ids,dof]>.002
+                for dof,sign,side in zip(hip_dofs,(-1.,1.),('r','l')):
+                    body=mujoco.mj_name2id(model,mujoco.mjtObj.mjOBJ_BODY,'thigh_'+side)
+                    jac=np.zeros((3,model.nv));angular=np.zeros_like(jac)
+                    mujoco.mj_jacBody(model,data,jac,angular,body)
+                    world_axis=sign*data.xmat[pelvis].reshape(3,3)[:,0]
+                    local_velocity=angular[:,dof:dof+3].T@world_axis
+                    abducting=(dynamic.moment_arms[route_ids,dof:dof+3]@local_velocity)>.002
                     lower[abducting]=args.abductor_floor
             desired_activation=allocate(weighting@matrix,weighting@reduced_target,desired_activation,
                 activation_floor=args.activation_floor,minimum_activation=lower)
@@ -357,6 +380,8 @@ def run(args):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--model',type=Path,default=HERE/'ah001_neural.xml')
+    parser.add_argument('--initial-knee-flexion',type=float,default=0.,help='Explicit initial knee flexion, rad, with half-angle hip flexion and soles placed at ground')
+    parser.add_argument('--anatomical-knee-tangent',action='store_true',help='Preserve hip authority when projecting planar knee-loop constraints')
     parser.add_argument('--mode',choices=['stand','step'],default='stand')
     parser.add_argument('--duration',type=float,default=10.)
     parser.add_argument('--stand-time',type=float,default=3.)

@@ -1,0 +1,45 @@
+{
+  "path": "D:\\GitHub\\Bipedal_Robot\\tmp\\codex_dirusso_original\\import\\models\\gait9dof18musc_Thelen_20170320.osim",
+  "opensim_version": "version 4.4.1-2023-07-13-710e13be5, build date 12:13:22 Jul 14 2023",
+  "coordinates": [
+    "pelvis_tilt",
+    "pelvis_tx",
+    "pelvis_ty",
+    "hip_flexion_r",
+    "knee_angle_r",
+    "ankle_angle_r",
+    "hip_flexion_l",
+    "knee_angle_l",
+    "ankle_angle_l",
+    "lumbar_extension"
+  ],
+  "locked_coordinates": [
+    "lumbar_extension"
+  ],
+  "muscles": [
+    "hamstrings_r",
+    "bifemsh_r",
+    "glut_max_r",
+    "iliopsoas_r",
+    "rect_fem_r",
+    "vasti_r",
+    "gastroc_r",
+    "soleus_r",
+    "tib_ant_r",
+    "hamstrings_l",
+    "bifemsh_l",
+    "glut_max_l",
+    "iliopsoas_l",
+    "rect_fem_l",
+    "vasti_l",
+    "gastroc_l",
+    "soleus_l",
+    "tib_ant_l"
+  ],
+  "muscle_classes": [
+    "Thelen2003Muscle"
+  ],
+  "credits": "A planar reduced gait model with 9 degrees of freedom and 18 muscles by Ajay Seth. Adjusted by Carmichael Ong to follow muscle strengths of Handsfield/Rajagopal and changed hamstrings to follow semimembranosus. Ankle passive mechanics based on Weiss, Kearney, and Hunter 1986. Closely based on Delp S.L., Loan J.P., Hoy M.G., Zajac F.E., Topp E.L., Rosen J.M., Thelen D.G., Anderson F.C., Seth A. Notes: 3D, 23 DOF gait model created by D.G. Thelen, Univ. of Wisconsin-Madison, and Ajay Seth, Frank C. Anderson, and Scott L. Delp, Stanford University. Lower extremity joint defintions based on Delp et al. (1990). Low back joint and anthropometry based on Anderson and Pandy (1999, 2001). Planar knee model of Yamaguchi and Zajac (1989). Seth replaced tibia translation constraints with a CustomJoint for the knee and removed the patella to eliminate all kinematic constraints; insertions of the quadrucepts are handled with moving points in the tibia frame as defined by Delp 1990. Number of muscles was reduced by Anderson to improve simulation speed for demonstrations and is not intended to be used in research. License: Creative Commons (CCBY 3.0). You are free to distribute, remix, tweak, and build upon this work, even commercially, as long as you credit us for the original creation. http://creativecommons.org/licenses/by/3.0/ More Information: http://simtk-confluence.stanford.edu:8080/display/OpenSim/Gait+2392+and+2354+Models",
+  "runtime_system_initialized": true,
+  "scope": "Model-load and system-initialization check; not a gait simulation"
+}

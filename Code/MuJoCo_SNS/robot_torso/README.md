@@ -93,6 +93,34 @@ Use `run_support65.ps1` on easteregg2 to reproduce this checkpoint with a new
 timestamped output. Its `-ActivationFloor` and `-RgTauH` options permit explicit
 comparisons. `robot_support65.gif` replays the verified post-ramp interval.
 
+## 28 October: uncrossed defense diagnostic and attachment sensitivity
+
+The earlier crossed-leg support-65 record is not accepted as physical stepping.
+The separate `ah001_abduction_diagnostic_v2.xml` trial in
+`runs/abd_defense_exact.*` maintains normal ankle ordering through 40 s, with
+80% actual vertical assistance after 15 s. Its matched abductor-control removal
+reverses ankle order in 67% of the 15–40 s samples. The diagnostic includes
+provisional passive knee-stop surrogates, tightened knee-loop closure, and
+opposite-leg mesh collisions. These assumptions are not measured hardware.
+The corrected knee tangent preserves all hip rotation authority.
+
+Fresh reference/exact-fast runs are bit-identical (`abduction_defense_verification.json`).
+The final recorded GIF, still, placement recommendation, and slide verification
+are in `Documentation/Reports and Papers/Dissertation/Defense/slideshow/AH001_20261028/`
+relative to the repository root. They demonstrate supported hybrid control,
+not calibrated BPA behavior, regular stepping, or independent balance.
+
+Route sites are body-fixed virtual attachment/guide points, with the source
+moving and conditional functions retained. Sites are not automatically snapped
+to CAD surfaces. Offset sites assume ideal rigid brackets, with no bracket
+mass or compliance. The foot weld is also provisional: it aligns the ankle
+assembly top with the distal shank, not an audited mating datum.
+`probe_foot_mount_w2lvar.py` preserves the baseline and tests a hypothetical
+60 mm proximal foot translation. It changes neither tibial mesh nor tibial
+inertia. Its w2lvar option tests timing inside the same hybrid controller;
+the MN clamp still cancels direct PF/reflex contributions. Do not interpret it
+as a comparison of full neural muscle-pattern control architectures.
+
 ## Run on easteregg2
 
 Use PowerShell and the machine's explicit environment:

@@ -4,13 +4,13 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 base=json.loads((HERE/'runs/verified65_exact_fast.json').read_text())['run_options']
 cases={
-    'abd_stop65':dict(model=str(HERE/'ah001_abduction_diagnostic.xml'),abduction_gain=160.,stance_width=.22,abduction_force_limit=25.,hip_frontal_weight=4.,foot_heading_gain=8.),
-    'abd_stop80':dict(model=str(HERE/'ah001_abduction_diagnostic.xml'),abduction_gain=160.,stance_width=.22,abduction_force_limit=25.,hip_frontal_weight=4.,foot_heading_gain=8.,support_cap_final=.8),
-    'abd_stop90':dict(model=str(HERE/'ah001_abduction_diagnostic.xml'),abduction_gain=160.,stance_width=.22,abduction_force_limit=25.,hip_frontal_weight=4.,foot_heading_gain=8.,support_cap_final=.9),
+    'abd_v2_baseline':dict(model=str(HERE/'ah001_abduction_diagnostic_v2.xml'),initial_knee_flexion=.35,support=1.,anatomical_knee_tangent=True,support_cap_final=.8),
+    'abd_v2_control':dict(model=str(HERE/'ah001_abduction_diagnostic_v2.xml'),initial_knee_flexion=.35,support=1.,anatomical_knee_tangent=True,abduction_gain=160.,stance_width=.24,abduction_force_limit=20.,hip_frontal_weight=2.,foot_heading_gain=8.,abductor_floor=.06,support_cap_final=.8),
+    'abd_v2_heading20':dict(model=str(HERE/'ah001_abduction_diagnostic_v2.xml'),initial_knee_flexion=.35,support=1.,anatomical_knee_tangent=True,abduction_gain=160.,stance_width=.24,abduction_force_limit=20.,hip_frontal_weight=2.,foot_heading_gain=20.,abductor_floor=.06,support_cap_final=.8),
 }
 def execute(item):
     name,updates=item;output=HERE/'runs'/name
-    options=dict(base,duration=20.,output=str(output),**updates)
+    options=dict(base,duration=40.,output=str(output),**updates)
     command=[sys.executable,str(HERE/'run_neural_robot.py')]
     for key,value in options.items():
         if value is None:continue

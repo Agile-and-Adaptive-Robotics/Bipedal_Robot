@@ -1,0 +1,68 @@
+[info] Updating Model file from 30000 to latest format...
+[info] Loaded model 20170320 from file D:\GitHub\Bipedal_Robot\tmp\codex_dirusso_original\import\models\gait9dof18musc_Thelen_20170320.osim
+[warning] Couldn't find file 'sacrum.vtp'.
+[warning] Couldn't find file 'pelvis.vtp'.
+[warning] Couldn't find file 'l_pelvis.vtp'.
+[warning] Couldn't find file 'femur.vtp'.
+[warning] Couldn't find file 'tibia.vtp'.
+[warning] Couldn't find file 'fibula.vtp'.
+[warning] Couldn't find file 'talus.vtp'.
+[warning] Couldn't find file 'foot.vtp'.
+[warning] Couldn't find file 'bofoot.vtp'.
+[warning] Couldn't find file 'l_femur.vtp'.
+[warning] Couldn't find file 'l_tibia.vtp'.
+[warning] Couldn't find file 'l_fibula.vtp'.
+[warning] Couldn't find file 'l_talus.vtp'.
+[warning] Couldn't find file 'l_foot.vtp'.
+[warning] Couldn't find file 'l_bofoot.vtp'.
+[warning] Couldn't find file 'hat_spine.vtp'.
+[warning] Couldn't find file 'hat_jaw.vtp'.
+[warning] Couldn't find file 'hat_skull.vtp'.
+[warning] Couldn't find file 'hat_ribs.vtp'.
+[warning] JointSet 'jointset' has subcomponents with duplicate name 'back'. The duplicate is being renamed to 'back_0'.
+[info] ControllerSet 'Controllers' was renamed and is being reset to 'controllerset'.
+[info] ComponentSet 'MiscComponents' was renamed and is being reset to 'componentset'.
+{
+  "path": "D:\\GitHub\\Bipedal_Robot\\tmp\\codex_dirusso_original\\import\\models\\gait9dof18musc_Thelen_20170320.osim",
+  "opensim_version": "version 4.4.1-2023-07-13-710e13be5, build date 12:13:22 Jul 14 2023",
+  "coordinates": [
+    "pelvis_tilt",
+    "pelvis_tx",
+    "pelvis_ty",
+    "hip_flexion_r",
+    "knee_angle_r",
+    "ankle_angle_r",
+    "hip_flexion_l",
+    "knee_angle_l",
+    "ankle_angle_l",
+    "lumbar_extension"
+  ],
+  "locked_coordinates": [
+    "lumbar_extension"
+  ],
+  "muscles": [
+    "hamstrings_r",
+    "bifemsh_r",
+    "glut_max_r",
+    "iliopsoas_r",
+    "rect_fem_r",
+    "vasti_r",
+    "gastroc_r",
+    "soleus_r",
+    "tib_ant_r",
+    "hamstrings_l",
+    "bifemsh_l",
+    "glut_max_l",
+    "iliopsoas_l",
+    "rect_fem_l",
+    "vasti_l",
+    "gastroc_l",
+    "soleus_l",
+    "tib_ant_l"
+  ],
+  "muscle_classes": [
+    "Thelen2003Muscle"
+  ],
+  "runtime_system_initialized": true,
+  "scope": "Model-load and system-initialization check; not a gait simulation"
+}

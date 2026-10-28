@@ -1,0 +1,94 @@
+% LaTeX_FRAGMENTS_20261028.tex -- ready-to-copy fragments for the torque
+% paper Section 4.4 opening example (vastus medialis reverse-pulley /
+% parallel-BPA placement). Every number matches the run logs in this
+% folder (vasmed_rp4_final_20261028.txt). Bracketed [CHANGES-IF] items
+% mark numbers that move if rp4 Stage C, rp6, or the figure renders land
+% after this file was written. Not compiled here; Ben copies what he
+% wants into the editor.
+
+% ---------------------------------------------------------------------------
+% METHODS fragment (route/model conventions)
+% ---------------------------------------------------------------------------
+\begin{methods}
+\subsection{Reverse-Pulley Evaluation and Vastus Medialis Placement Study}
+
+The vastus medialis route of record (the cam design of record,
+\texttt{Vas\_Pam\_20mm\_Result\_cam\_20261014\_0416}) was re-evaluated
+with parallel 20~mm BPAs at 620~kPa through the block-and-tackle closure
+of the biarticular pulley class applied per knee angle: the tendon span
+is the whole routed path from the tackle exit (route row~5) to the tibial
+insertion (row~9), and each angle's equilibrium references the per-cell
+rigid contraction $s_0(i)-\Delta L(i)$, which carries the BPA-side route
+change as the femur-side contacts release toward extension. The wrapping
+loss $\chi_3$ enters the equilibrium through the evaluator-of-record
+relation $\Delta L_{\mathrm{fict}} = \chi_3 \, b(\theta)\,
+(1-\varepsilon_0/K_{\max})^2$, with the adopted extensor identification
+($\chi_0=-6.378\times10^{-3}$~m, $\chi_1=3.9979\times10^{4}$~N/m,
+$\chi_2=1.4734\times10^{4}$~N/m, $\chi_3=0.15829$), because on this
+route the BPA itself bends around the femoral cylinder and the
+distal-condyle clip; only the tibial-ring contacts bend the cable.
+Bracket compliance $\chi_1,\chi_2$ is projected on the BPA force
+direction per bracket, and the tackle-block mount reacts the
+tackle-increased internal load
+$R = n F_{\mathrm{BPA}} \hat{u}_{\mathrm{bpa}} + F_t \hat{u}_t$, not the
+reduced tendon tension. Configurations $n \in \{1,\dots,5\}$ parallel
+BPAs and tackle line parts $G \in \{1,2,3\}$ were compared with actuator
+resting length and tendon re-solved per configuration (tendon
+$\ge 75$~mm, a packaging floor of the terminated tendon parameter only).
+Torque is graded over the full $-120^{\circ}$ to $+10^{\circ}$ domain
+(flexion negative, extension torque positive) against the
+\emph{single-muscle} vastus medialis target of the pinned OpenSim
+Gait2392 model (1294~N), using both the OpenSim moment arm and the
+routed cable moment arm about the biomimetic knee's measured moving
+instant center of rotation; poses with slack tendon, infeasible
+contraction, or non-positive delivered tendon force count as full
+shortfalls.
+\end{methods}
+
+% ---------------------------------------------------------------------------
+% RESULTS fragment
+% ---------------------------------------------------------------------------
+\begin{results}
+With the corrected closure and the wrapping loss carried in the
+equilibrium, two parallel 20~mm BPAs in direct drive ($n=2$, $G=1$;
+resting length 0.703~m, tendon 92.5~mm) meet or exceed the human
+single-muscle vastus medialis torque at every graded angle and over the
+entire required range: the worst full-domain margin is
+$+6.8$~N$\cdot$m~($+11.4\%$), which also satisfies the 5\% route-design
+margin, with no slack or infeasible poses (Fig.~X [CHANGES-IF rp6
+renders]). Three and four parallel BPAs raise the worst margin to
+$+40$ and $+72$~N$\cdot$m. A single BPA falls short by $15.1$~N$\cdot$m
+at worst. Every tackle configuration examined ($G=2$ and $G=3$ at all
+actuator counts) fails: the tendon goes slack over 25--50 of the 100
+domain poses and the worst-domain shortfall is the full $-59.9$~N$\cdot$m
+at $+10^{\circ}$, because the $1/G$ force division outweighs the
+tackle's travel credit on this route, whose BPA-side path shortens
+toward extension. The earlier fixed-route length-sizing sweep of this
+route (October 27) is superseded: it optimized no attachment placement,
+omitted $\chi_3$, and graded through a closure whose reference identity
+this route violates over the flexion half of the domain.
+\end{results}
+
+% ---------------------------------------------------------------------------
+% DISCUSSION fragment
+% ---------------------------------------------------------------------------
+\begin{discussion}
+For the vastus medialis example, the reverse-pulley transmission is not
+the enabling mechanism: under the corrected per-angle closure, every
+tackled variant goes slack in flexion, while two parallel BPAs on the
+same route in direct drive already exceed the single-muscle human target
+everywhere with margin to spare. The capability in this family comes
+from parallel actuation and attachment placement, not from trading force
+for travel. [CHANGES-IF Stage C lands: add the placement-optimized
+design and its deviation from the anatomical attachments.] Two cautions
+carry forward. First, the pulley closure must reference each angle's own
+rigid contraction on wrapping routes whose proximal contacts release;
+referencing a single installation pose silently mis-books up to
+$\sim$0.6~m of route length on this geometry. Second, the identification,
+mono-pulley, and biarticular evaluator families currently carry three
+different effective tendon stiffness conventions ($2\times$, $3\times$,
+and $18\times$ the single-cable axial stiffness); all are effectively
+rigid next to the measured bracket compliance, but the strand-count
+interpretation should be settled against the hardware before any
+compliance-sensitive claim.
+\end{discussion}

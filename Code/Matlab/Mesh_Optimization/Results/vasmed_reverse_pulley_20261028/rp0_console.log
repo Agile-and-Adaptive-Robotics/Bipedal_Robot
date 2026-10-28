@@ -1,0 +1,8 @@
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+Fmax(rest=0.8277) = 1375.9 N
+kSpr: pulley(3) = 9.453e+06 N/m ; X3(6*3=18) = 5.672e+07 N/m (Aeff*E/L = 3.151e+06)
+GATE A  Xi3=0 : pulley vs X3: poses |F|>=5%Fmax: 100/100, max rel err 0.988 ; abs err: max 1096 N (pose 1, -120.0 deg, Fpul 13.00 Fx3 1109.27)
+GATE B  Xi3=ad : posthoc vs X3: poses |F|>=5%Fmax: 100/100, max rel err 1 ; abs err: max 901.4 N (pose 7, -112.1 deg, Fpul 0.00 Fx3 901.35)
+GATE A torque-z: abs max 15.31 N*m at pose 78 (-18.9 deg); rel(on |tz|>2%max) 0.215
+EXIT:0

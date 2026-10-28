@@ -1,5 +1,17 @@
 # Session 1: task-5 supported-control checkpoint
 
+**28 October update:** the old support-65 result below remains a rejected
+crossed-leg diagnostic. A separate v2 model now provides an uncrossed 40 s
+supported-control demonstration, with 80% actual vertical support after 15 s.
+Its exact/reference saved trajectories are bit-identical; regular stepping
+and calibrated BPA actuation are still unverified. Final media, defense slides,
+and dissertation placement notes are in
+`Documentation\Reports and Papers\Dissertation\Defense\slideshow\AH001_20261028\`
+relative to the repository root below. The updated Session 1 block in
+`CHATGPT_REPORT.md` records the full matched abductor-control result, virtual
+attachment assumptions, 60 mm foot-offset sensitivity, and w2lvar timing probe.
+The historical checkpoint and its failed geometry audit are preserved below.
+
 **Superseding geometry audit:** the recorded ankles reverse left/right order
 in 91.8% of post-ramp samples, with approximately 28°/32° median toe-out.
 Leg self-collision is disabled. The replay is a failed crossed-leg diagnostic;

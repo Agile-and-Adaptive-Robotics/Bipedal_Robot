@@ -1,10 +1,12 @@
 """Create an explicit, separate collision/stop diagnostic; preserve baseline."""
 import json,xml.etree.ElementTree as ET
 from run_neural_robot import *
-source=HERE/'ah001_neural.xml';destination=HERE/'ah001_abduction_diagnostic.xml'
+source=HERE/'ah001_neural.xml';destination=HERE/'ah001_abduction_diagnostic_v2.xml'
 tree=ET.parse(source);root=tree.getroot()
 base=mujoco.MjModel.from_xml_path(str(source))
 changed=[]
+for loop in root.findall('equality/connect'):
+    loop.set('solref','.004 1');loop.set('solimp','.999 .9999 .0001')
 for body in root.findall('.//body'):
     name=body.get('name','')
     if not name.endswith(('_r','_l')):continue

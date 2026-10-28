@@ -28,7 +28,7 @@ def assess(path):
     swings=[bouts(x<5,t) for x in loads.T]
     contacts=[bouts(x>10,t) for x in loads.T]
     # Track actual foot geometry at 20 Hz; no guessed ankle-height proxy.
-    model=mujoco.MjModel.from_xml_path(str(HERE/'ah001_neural.xml'));data=mujoco.MjData(model)
+    model=mujoco.MjModel.from_xml_path(summary.get('model_path',str(HERE/'ah001_neural.xml')));data=mujoco.MjData(model)
     foot_geoms=[]
     for side in ('r','l'):
         foot_geoms.append([i for i in range(model.ngeom) if (mujoco.mj_id2name(model,mujoco.mjtObj.mjOBJ_GEOM,i) or '').startswith('foot_'+side+'_')])

@@ -1,0 +1,40 @@
+{
+  "machine": "easteregg2",
+  "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\ah001_abduction_diagnostic_v2.xml",
+  "output": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\ah001_foot_proximal60_hypothesis.xml",
+  "sides": {
+    "r": {
+      "original_foot_offset_in_shank_m": [
+        -0.08058292338752851,
+        -0.31387591099248346,
+        -0.013568653856787016
+      ],
+      "proximal_translation_in_shank_m": [
+        0.014907165109063508,
+        0.058064411567957865,
+        0.002510087185322442
+      ],
+      "shank_origin_to_mount_m": 0.3243390254202029,
+      "old_mount_to_sole_y_m": 0.10373129904719025
+    },
+    "l": {
+      "original_foot_offset_in_shank_m": [
+        -0.12289387609137054,
+        -0.29984794682384297,
+        0.007568648557664981
+      ],
+      "proximal_translation_in_shank_m": [
+        0.022748053110620933,
+        0.05550282273128157,
+        -0.0014009812762141142
+      ],
+      "shank_origin_to_mount_m": 0.3241434565685767,
+      "old_mount_to_sole_y_m": 0.1037312991214298
+    }
+  },
+  "mass_kg": 75.0,
+  "translation_m": 0.06,
+  "source_sha256": "5d478aeeaa10875d2f522f67b8ef3ee1f723f3b1aff27ad3e51b15080005d1f7",
+  "output_sha256": "7c5c685fff90ab132ca0efa6c48eb4c26e771c2c8d6018ae1a79fa65ecf3aff4",
+  "scope": "Hypothetical proximal foot-mount translation, not tibia shortening or a validated mating datum. Foot meshes, local inertia, tibial meshes, knee linkage, source route mapping, and total mass unchanged; foot-attached points follow the moved foot."
+}

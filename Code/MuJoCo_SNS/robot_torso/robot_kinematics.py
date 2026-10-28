@@ -43,3 +43,26 @@ def camera_axes(position,target,up=np.array([0.,1.,0.])):
     right=np.cross(forward,up);right/=np.linalg.norm(right)
     actual_up=np.cross(right,forward)
     return np.column_stack((right,actual_up,-forward))
+
+
+def anatomical_knee_tangent(model,data):
+    """Internal tangent with free hips and lumbar ball, plus two knee motions.
+
+    Each loop sits entirely below one hip. A common hip rotation cannot
+    constrain loop closure on the closure manifold. Off-manifold Cartesian
+    closure Jacobians contain terms proportional to residual closure error;
+    taking their full numerical nullspace spuriously removes hip authority.
+    Restrict the loop calculation to its three planar hinge coordinates.
+    """
+    rows=np.flatnonzero(data.efc_type==int(mujoco.mjtConstraint.mjCNSTR_EQUALITY))
+    jacobian=data.efc_J.reshape(data.nefc,model.nv)[rows]
+    knee_dofs=[];vectors=[]
+    for side in ('r','l'):
+        joints=[mujoco.mj_name2id(model,mujoco.mjtObj.mjOBJ_JOINT,p+'_'+side+'_joint') for p in ('back','shank','front')]
+        dofs=model.jnt_dofadr[joints]
+        _,singular,vh=np.linalg.svd(jacobian[:,dofs],full_matrices=True)
+        if singular[1]<1e-10:raise ValueError('Singular four-bar knee tangent')
+        vector=np.zeros(model.nv-6);vector[dofs-6]=vh[-1]
+        knee_dofs.extend((dofs-6).tolist());vectors.append(vector)
+    free=[i for i in range(model.nv-6) if i not in knee_dofs]
+    return np.column_stack([np.eye(model.nv-6)[:,i] for i in free]+vectors)
