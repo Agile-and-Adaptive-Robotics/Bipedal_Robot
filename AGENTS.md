@@ -351,3 +351,6 @@ machine, NOT staleness.
 
 ## Latest dissertation checkpoint (2026-10-28)
 Current details: Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/REVIEW_REPORT.md and NARRATIVE_REVISION_20261028.md. Published Chapter 20 is protected. Live sources synchronized; dissertation 299 pages, paper 34 plus 11 supplement. Both compile without errors. ProofFinal contains source/support files and chapters only. Ben authorizes resolving verified completed comments; 26 resolved so far, remaining comments require individual verification. Do not accept tracked changes indiscriminately. No agent commits/pushes. Historical handoffs/page counts are superseded by these records.
+
+## Final live comment status (2026-10-28)
+Dangling-comment cleanup completed: torque paper zero open comments; dissertation one open motor-schematic square-position issue. Eighty-six additional threads resolved after the previous 26. The historical 23 October 11:28 question anchor was recovered in the rewritten SNS Discussion and resolved. See CHATGPT_REPORT.md and Archive/reconciliation_20261028/comment_cleanup_final_20261028.json. Tracked changes remain separate; no blanket acceptance. No manuscript text or numerical changes during this comment-only pass. Ben already pushed before these latest documentation updates.
