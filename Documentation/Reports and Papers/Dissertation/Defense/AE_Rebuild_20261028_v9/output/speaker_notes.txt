@@ -1,0 +1,109 @@
+SPEAKER CUES — 35-MINUTE DEFENSE
+26 core slides, followed by 9 hidden backups. Current defense notes specify 30–45 minutes; this plan uses 35 minutes.
+For a 30-minute rehearsal, omit optional core slides 6, 11, and 16 and shorten transitions. The optional animation is backup 35.
+Full interpretation and source paths remain in PPTX notes and claim_to_source_audit.csv.
+
+01. Movement and Control of Biomimetic Humanoid Robots [0.5 min]
+My dissertation makes actuator and transmission assumptions testable, and develops tools for controlled neuralâ€“mechanical experiments. Introduce the research robot as the motivating scientific instrument. Advisor: M.
+
+02. A research robot needs evidence at each model boundary [1.5 min]
+Biomimetic robots can test controlled changes that are difficult in living subjects. That use requires evidence linking the chosen actuator, transmission, sensory pathways, and model behavior. These are gaps in this project and workflow.
+
+03. Isometric tests isolate force across BPA design choices [1 min]
+A braided pneumatic actuator contracts under pressure. The force study contains 537 forceâ€“pressureâ€“contraction observations: 321 for 10 mm and 216 for 20 mm. Tested resting lengths were 112â€“518 mm and 300â€“509 mm, respectively, up to 620 kPa.
+
+04. Shorter BPAs deliver less maximum isometric force [1.5 min]
+At 620 kPa, maximum force decreases at short resting lengths in both diameters. The manufacturer tool predicts the opposite trend. Black points are measured data, solid blue is the fitted model, and dashed magenta is the manufacturer prediction.
+
+05. Resting-length scaling completes the normalized force model [1.5 min]
+The force is the product of a dimensionless force surface and maximum force at the chosen resting length. Normalized pressure and contraction locate the operating point. Separate coefficients apply to each diameter, and maximum contraction is measured for each actuator.
+
+06. At 112 mm, the new model reduces force error to 4.5% [1 min]
+This is the 10 mm BPA at 112 mm resting length and 620 kPa. Measured force is 350.9 N, the model gives 335.3 N, and the manufacturer tool gives 498.6 N. Reported errors are 4.5% and 42.1%.
+
+07. Joint torque depends on force direction and moment arm [1.5 min]
+Use the editable schematic to explain the cross product. The joint is O, the attachment is p, and the tensile force acts along its route. The perpendicular distance to the force line is the moment arm.
+
+08. Length, compliance, and wrapping alter usable contraction [1.5 min]
+The model includes a constant length offset, force-dependent displacement in effective attachment frames, and an empirical wrapping loss. Ï‡1 and Ï‡2 describe effective system stiffness, including fixtures and the winch, rather than isolated bracket material stiffness. One pair is shared across flexor and extensor. The wrapping schematic explains contact angle and length loss.
+
+09. Corrections reduce error on held-out knee tests [1.5 min]
+These exact validation means compare the characterized BPA model with all correction terms disabled against the adopted corrected model. Flexor uses two held-out tests, and extensor three. They are the selected folds of the existing identification, not newly collected tests.
+
+10. The corrected model guides a buildable two-BPA cam route [1.5 min]
+The extensor redesign uses two 20 mm BPAs. The photo shows the assembled cam-assisted route. The optimizer varies geometry under packaging and torque constraints, using the adopted corrections.
+
+11. The cam model predicts headroom above the required target [1.5 min]
+The adopted cam design predicts a minimum margin of 30.83% over the required envelope, which itself includes 5% overshoot above the selected human reference. The minimum margin over the plain human target is 39.77%. Predicted pressure needed for the required envelope is 269â€“507 kPa.
+
+12. All nine extensor measurements meet the human target [1.5 min]
+Read the series identities: blue points are measured, yellow points are predictions at the measured pressures, the dotted black curve is vastus medialis, and magenta is the optimized 620 kPa prediction. All nine measurements exceed the selected human target, including âˆ’86.5 degrees. At that angle, the measured torque is 2.06 N m below the pressure-specific prediction.
+
+13. All fifteen flexor measurements meet the human target [1.5 min]
+The selected human target is maximum-isometric biceps femoris short head from OpenSim Gait2392. Flexion torque is negative, so compare magnitudes. All 15 holds meet or exceed it from âˆ’119 to +5 degrees.
+
+14. SADb makes sensory evidence traceable to its source context [1.5 min]
+Use the six annotated callouts to explain the app: A view selection, B map controls, C focus record, D curation and translation, E citation neighborhood, and F connected papers. Search and filter across 1,393 total app records, including 943 in the Papers category. Models and reviews can also be publications, so the category count is not a total publication count.
+
+15. Controlled interventions turn a coupled model into an experiment [1.5 min]
+The gap is interpreting the behavior of a particular neuralâ€“mechanical combination. My contributions include graphical SNS blocks, actuator and model coupling, model audits, and controlled evaluation procedures. Existing engines and published neural formulations supply essential foundations.
+
+16. Matched rhythm cores reproduce the same driven bursts [1 min]
+This comparison uses the driven W2L rhythm core, with matched connectivity, initial states, and phasic heel-contact input. Periods match at 1.000 s, all ten expected bursts occur, and trace correlation is at least 0.99996. A 2 ms lag equals one solver step.
+
+17. Two deleted bursts can preserve or reset the rhythm [1.5 min]
+The reduced Deng-derived translated circuit is coupled to a suspended model. Stimuli lasting two baseline periods suppress two expected flexor motor bursts at each tested layer. RG-extensor +50 nA shifts both RG and motor timing by 0.211 cycle.
+
+18. Sensory feedback reduces sag in the loaded-arm model [1.5 min]
+A1 and A2 show the empty and loaded container. B compares forearm elevation with feedback on and off. Sag is 2.00 degrees with feedback versus 7.85 degrees without.
+
+19. The knee model produces a transient sensory response [1.5 min]
+A matched no-stimulus run isolates the effect of a 2 nA, 30 ms current pulse at the extensor Ia input after settling. The peak extension excursion is 1.09 degrees at 111 ms, and the stated recovery thresholds are met at 6.355 s. Six MN/Ia synaptic saturation widths were broadened; the original narrow ramps sustained oscillations.
+
+20. Feedback coordinates foot loading in the W2L model [1.5 min]
+This recovered W2L comparison fixes effective conductances, drive, and support settings, then disables all sensory feedback. Median contact phase changes from 0.498 to 0.223 cycles. The accepted supported-stepping interval is 0.35â€“0.65, with 0.5 indicating alternation.
+
+21. Rhythmic Gait2392 cycles retain hip and knee errors [1.5 min]
+The supported human-model replay contains ten detected cycles per leg. This crop shows hip and knee mean and one standard deviation against the Gait2392 inverse-kinematics reference. Each leg aligns to its own loading onset with no fitted phase shift, angle offset, or amplitude adjustment.
+
+22. Extra abductor control prevents crossing in the AH001 test [1.5 min]
+Anterior and oblique views show the same saved state. Matched 15â€“40 s runs compare the separation-control bundle off and on. Reversed ankle ordering changes from 67% to zero, and minimum separation from âˆ’38.3 to 142.4 mm.
+
+23. The evidence establishes specific capabilities within clear limits [1 min]
+Concentrate model scope here. W2L and human-model evaluations retain mechanical support. No harness-free walking is established anywhere in the program.
+
+24. Each contribution closes a different part of the original gap [1.5 min]
+Return explicitly to the knowledge gap. Force characterization supports actuator selection at different resting lengths. Joint corrections and physical tests connect that force to delivered knee torque.
+
+25. The next experiments should test transfer and control authority [1 min]
+Prioritize experiments that resolve interpretation. First, compare measured and predicted torque under matched pressures, lengths, and dynamic loads, keeping physical dimensions separate from prediction settings. Second, remove the engineered MN clamp only after the intended PF/reflex pathways have effective authority, and check their signs and perturbation responses.
+
+26. The robotâ€™s design assumptions are now experimentally testable [1 min]
+Close with the research contribution, rather than a tool inventory. The force model predicts the consequences of resting-length choices. Corrected routes meet selected human-muscle targets at all tested isometric points.
+
+27. The held-out flexor traces show the corrected torque trend [backup]
+Panels C and D are the held-out nominal 46 cm and 40 cm-tendon tests, corresponding to actual 45.7 and 40.6 cm. Separate crops retain the full traces and shared legend; native labels supply panel letters and axes. The full model shares effective stiffness across both knee configurations.
+
+28. The adopted identification reserves tests in each configuration [backup]
+Use the exact adopted-fold test split. Flexor training is 48.5 and 41.0 cm; validation is 45.7 and 40.6 cm-tendon; 47 cm was not used. Extensor training is 43.6, 43.2-tendon, and 45.7 cm; validation is 40.0, 40.0-tendon, and 46.5 cm.
+
+29. Physical dimensions differ from prediction settings [backup]
+The rows are physical measurements, in resting/tendon order. Flexor 1 is 561/28 mm, flexor 2 560/30 mm, extensor 1 828/92 mm, and extensor 2 826/85 mm. Prediction inputs instead use shared flexor resting length 561.49 mm and an effective 5.00 mm tendon parameter after fitting adjustment, and extensor resting length 827.74 mm with about 92.49 mm tendon.
+
+30. Stimulation duration changes the deletion interpretation [backup]
+All values are from the saved table. Two-period RG stimulus: +50 nA for 3.876 s, +0.210526 cycle RG and MN shift. PF same current/duration: zero residual phase at both.
+
+31. AH001 separation control changes a matched diagnostic [backup]
+Both runs use matching geometry, support, initial pose, and reference tensions. The control bundle adds 160 N/m separation feedback capped at 20 N, plus a 5% to 6% floor on currently abducting routes. The interval is 15â€“40 s.
+
+32. The model workflow supports distinct mechanical implementations [backup]
+The source schematic separates CAD/Simscape imports from OpenSim/MyoConverter/MuJoCo conversion and repairs. Neural control uses graphical SNS blocks or scripted SNS-Toolbox. The MathWorks bridge provides a command/sensor interface, not evidence that every circuit transfers dynamically.
+
+33. Reported force comparisons favor the model in the shown cases [backup]
+The selected 10 mm comparisons are the two upper panels of the published figure, with measured force on x and predicted force on y. The diagonal indicates agreement. Preserve model identities and tested length scopes.
+
+34. The complete IK overlay also exposes contact differences [backup]
+This complete source figure includes hip, knee, ankle, and stance/contact comparisons. Each leg is aligned independently to loading onset. The same ten-cycle replay supplies the core-talk crop.
+
+35. The saved AH001 replay shows supported hybrid motion [backup]
+Optional 12-second replay of the same supported AH001 abductor-control condition. The GIF contains 96 frames over 20â€“32 s. It illustrates the recorded kinematics and leg separation, not accepted regular stepping.

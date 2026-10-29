@@ -134,10 +134,19 @@ to adapt the sensory/group map to the robot's actual free joints.
 
 ## Literature similarity and deviations
 
+The Deng 2023 biarticular follow-up and Hunt's 2019 INRC training slides were
+reviewed after this baseline audit. See
+`reports_20261028_functional_pf/literature_training_review/REVIEW.md` for the
+joint-PF integration architecture, active/passive perturbation distinction,
+and four-step functional training method. Physical-environment gain searches
+are not equivalent to that method. The inventories and baseline results in
+this audit remain the original recorded measurements.
+
 | Source | Supported similarity | Material deviations in these families |
 |---|---|---|
 | [Rybak et al., 2006](https://pmc.ncbi.nlm.nih.gov/articles/PMC1890439/) | Separate RG timing and PF distribution, inhibitory interneuron pathways, resetting versus non-resetting perturbations as a test | Graded single-cell surrogates, different PF counts, reduced MN dynamics, fitted engineering gains, and additional postural control. Wiring similarity alone does not reproduce the perturbation results. |
 | [Deng et al., 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC6477610/) and [Deng et al., 2022](https://pmc.ncbi.nlm.nih.gov/articles/PMC9776051/) | RG/PF hierarchy, hip and knee/ankle synergy precedent, sensory interaction with mechanics | Human/CAD morphology and many-muscle expansion, additional crossed pathways, new support rig and actuator model, and normalized voltage/conductance calibration. |
+| [Deng et al., 2023](https://doi.org/10.1007/978-3-031-39504-8_2) | Joint PF signals feed intermediate BFP/RF/GA populations; active/passive mechanical perturbation comparisons; PF perturbations can shift RG through the closed loop | None of the three baseline families reproduces that full architecture or experiment. The new opt-in human joint-integration variant implements only part of it and remains untuned. |
 | [Shinohara et al., 2025 preprint](https://pmc.ncbi.nlm.nih.gov/articles/PMC12642437/) | Flexor length/velocity and extensor force feedback can reach RG, inhibitory interneurons, PF, and MNs; C1/V3 coordination | That cat model has seven muscles and two PF populations per side, voltage-dependent sodium kinetics, subthreshold NaP in PF/MNs, nonlinear velocity/length encoding, and a flexor-driven regime. These families retain fixed-tau RG NaP, lack PF/MN NaP, use different sensory encodings, and mix several reflex motifs. |
 | [Shevtsova et al., 2026](https://elifesciences.org/articles/107480) | Named V2a/V0V/V0D/V3 and descending-drive motifs | Lumbar-only reduction of a quadruped network, folded interneurons in syn6, recalibrated gains, altered drive, no injury-recovery replication, and fixed tau rather than the paper's voltage-dependent bell-shaped tau. |
 

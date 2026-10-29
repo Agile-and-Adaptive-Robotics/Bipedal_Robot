@@ -1,0 +1,2046 @@
+{
+  "machine": "easteregg2",
+  "stages": [
+    {
+      "stage": 1,
+      "trials": 100,
+      "full_duration_finite": 99,
+      "original_screen_pass_count": 0,
+      "best_trial": 50,
+      "fresh_assessment": {
+        "score": 90.12755900863,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          13,
+          12
+        ],
+        "knee_ranges_deg": [
+          85.48760961404055,
+          87.63054451896772
+        ],
+        "hip_ranges_deg": [
+          81.23012894814498,
+          81.0491652658993
+        ],
+        "cycle_phase_error": 0.22958172621161416,
+        "cycle_coverage": 1.0,
+        "period_s": 0.6740000000000013,
+        "period_cv": 0.004778146786786019,
+        "left_right_phases": [
+          0.7299703264094961,
+          0.7307692307692303,
+          0.7307692307692303,
+          0.7299703264094961,
+          0.7307692307692306,
+          0.7299703264094948,
+          0.7299703264094948,
+          0.7307692307692303,
+          0.7299703264094974,
+          0.730769230769233,
+          0.7299703264094954,
+          0.7130434782608688,
+          0.2692307692307688,
+          0.2692307692307697,
+          0.2700296735905049,
+          0.26923076923076844,
+          0.2700296735905052,
+          0.2700296735905052,
+          0.2692307692307697,
+          0.2700296735905045,
+          0.2692307692307671,
+          0.2700296735905026,
+          0.2700296735905052
+        ]
+      },
+      "metrics": {
+        "nan": false,
+        "t_end": 15.998000000000001,
+        "dx": 0.02828451423758041,
+        "kz": 0.9284613750522456,
+        "tilt_max": 1.2176425494951466,
+        "knee_min": -1.9863353729499544,
+        "hip_amp": 1.9528539448138562,
+        "duty": 0.5441428571428572,
+        "kine": {
+          "contact_frac_r": 0.0,
+          "contact_frac_l": 0.0,
+          "n_cycles_r": 16,
+          "duty_r": 0.0,
+          "duty_r_ref": 0.61,
+          "knee_min_r": -72.02214438988743,
+          "knee_min_r_ref": -69.68811020650568,
+          "rmse_hip_r": 35.01696803137665,
+          "range_hip_r": 71.75672493385511,
+          "range_hip_r_ref": 43.29319243218895,
+          "mean_hip_r": 20.893649059834793,
+          "mean_hip_r_ref": 4.340491323383044,
+          "rmse_knee_r": 39.270532264927,
+          "range_knee_r": 83.27387898547471,
+          "range_knee_r_ref": 70.4553257620587,
+          "mean_knee_r": -18.19654597616161,
+          "mean_knee_r_ref": -25.052680635143876,
+          "rmse_ankle_r": 25.268696374722143,
+          "range_ankle_r": 57.68610133440349,
+          "range_ankle_r_ref": 23.106608540532818,
+          "mean_ankle_r": -54.75812988793413,
+          "mean_ankle_r_ref": 4.204590041315454,
+          "T_r": 0.680625,
+          "T_r_ref": 1.2334,
+          "period_cv_r": 0.02032436449173477,
+          "n_cycles_l": 16,
+          "duty_l": 0.0,
+          "duty_l_ref": 0.61,
+          "knee_min_l": -76.31178144952428,
+          "knee_min_l_ref": -70.62509689835294,
+          "rmse_hip_l": 39.80925227242926,
+          "range_hip_l": 80.56826346933153,
+          "range_hip_l_ref": 44.137088674588234,
+          "mean_hip_l": 16.686132455850114,
+          "mean_hip_l_ref": 3.5293764623717765,
+          "rmse_knee_l": 40.78271518725737,
+          "range_knee_l": 87.1462112083306,
+          "range_knee_l_ref": 70.6955653195196,
+          "mean_knee_l": -20.537173743852165,
+          "mean_knee_l_ref": -23.557536144418,
+          "rmse_ankle_l": 27.456307373822657,
+          "range_ankle_l": 63.634759562822744,
+          "range_ankle_l_ref": 23.956803261189542,
+          "mean_ankle_l": -55.93631399044167,
+          "mean_ankle_l_ref": 2.5856699751157337,
+          "T_l": 0.6743750000000001,
+          "T_l_ref": 1.2133000000000003,
+          "period_cv_l": 0.007649197509532435,
+          "lag_rl": 0.8198347107438013,
+          "lag_rl_ref": 0.5081076698556833,
+          "ds": 0.0,
+          "ds_ref": 0.23243243243243245,
+          "bilateral": true,
+          "kine_score": -356.9627981305021,
+          "n_cycles": 16,
+          "duty": 0.0,
+          "duty_ref": 0.61,
+          "knee_min": -72.02214438988743,
+          "knee_min_ref": -69.68811020650568,
+          "rmse_hip": 35.01696803137665,
+          "range_hip": 71.75672493385511,
+          "range_hip_ref": 43.29319243218895,
+          "rmse_knee": 39.270532264927,
+          "range_knee": 83.27387898547471,
+          "range_knee_ref": 70.4553257620587,
+          "rmse_ankle": 25.268696374722143,
+          "range_ankle": 57.68610133440349,
+          "range_ankle_ref": 23.106608540532818
+        },
+        "kine_score": -356.9627981305021,
+        "burst_r": 18,
+        "bal_sway": 0.12475050989596134,
+        "bal_sway_rms": 0.054891936122607024,
+        "bal_tilt_max": 2.1402584694260294,
+        "bal_contact_sym": 0.25,
+        "bal_com_z_min": 0.9284613750522456,
+        "bal_fell": false,
+        "bal_push_sway": 0.0,
+        "bal_effort": 0.44865594261210656,
+        "bal_cocon": 0.7664594092746962,
+        "bal_foot_load": 0.0,
+        "bal_rig_share": 1.0,
+        "bal_act_sum": 52.08862025872127,
+        "bal_cocon_act": 3.5991431524949613
+      },
+      "parameters": {
+        "drive": 3.8515251578457796,
+        "rg_adapt": 1.2953682110177716,
+        "desc_e": 1.5473985675799633,
+        "desc_f": 1.6693593271812561,
+        "rg_to_pf": 1.9303294829454298,
+        "pf_gain": 0.41465524303205775,
+        "e2_pf": 1.9589627426813,
+        "f1_df": 1.523133550912121,
+        "f1_kf": 1.1382055010524683,
+        "e2_adapt": 2.56508042566242,
+        "post_kneext": 1.5030877247690067,
+        "post_hipext": 0.5189860424936555,
+        "kx": 268.6976067489714,
+        "phase_reset_e": 0.4785490313460971,
+        "phase_reset_f": 1.4767851211488388,
+        "f1_kneext_inh": 1.5835816772141325,
+        "f1_anklepf_inh": 0.011035396383851193,
+        "ankle_post_walk_trim": 0.09686319383207564,
+        "rg_nap_h": 0.43326327518952457,
+        "ia_to_mn": 0.6966494472460364,
+        "ia_to_antagonist": 0.4758789981691727,
+        "ii_to_mn": 0.4612040730933974,
+        "ib_to_mn_inh": 0.013806662977534342,
+        "rg_mutual_inh": 4.07714557689577,
+        "rg_weak_exc": 0.0,
+        "pf_to_mn": 2.7608317569777006,
+        "contact_onset": 0.003269805750452012,
+        "contra_swing": 0.5379297905789677,
+        "ib_group_exc": 0.05119178287854114,
+        "ib_exc_to_mn": 0.8585211345369724,
+        "posture_to_mn": 0.30201804943212746,
+        "coact": 0.0,
+        "vest_prop": 0.0,
+        "rig_scale": 1.0,
+        "pelvis_ty": 0.92,
+        "axis_gain": 0.1,
+        "trunk_gain": 0.1,
+        "axis_feedback": 1.0,
+        "bi_gain": 1.6761899840333307,
+        "bi_afferent": 0.03,
+        "kick": 2.0,
+        "preset_scale": 0.5671582386073619,
+        "w2l_rg_to_pf": 1.5040786065470995,
+        "w2l_pf_to_mn": 3.4182239847342415,
+        "w2l_pf_recip": 1.8691139038695757,
+        "w2l_ia_central": 0.53,
+        "w2l_ii_central": 0.53,
+        "w2l_ib_central": 0.5,
+        "w2l_v3e_inE": 1.0,
+        "w2l_ini_inh": 2.0,
+        "w2l_v0d_inh": 1.2,
+        "w2l_alpha": 2.0,
+        "stance_HAM": 0.07128185549925573,
+        "stance_RECT": 0.7405974516718042,
+        "stance_SAR": 0.3303484592777391,
+        "stance_GRAC": 0.11310166445422454,
+        "stance_TFL": 0.10665584119010971,
+        "stance_GAS": 0.8421317598321175,
+        "mono_hip_ext": 0.32643195224491994,
+        "mono_hip_flex": 0.7679845570465006,
+        "mono_knee_ext": 1.3909354808766106,
+        "mono_knee_flex": 2.0537899214411373,
+        "mono_ankle_pf": 0.1877230423116199,
+        "mono_ankle_df": 2.362976097181667
+      },
+      "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_functional_pf\\curriculum_20261028_v1\\trials\\s1_best_t0050_fresh.npz"
+    },
+    {
+      "stage": 2,
+      "trials": 100,
+      "full_duration_finite": 99,
+      "original_screen_pass_count": 0,
+      "best_trial": 5,
+      "fresh_assessment": {
+        "score": 90.82693938790534,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          7,
+          7
+        ],
+        "knee_ranges_deg": [
+          103.32317899843707,
+          111.26426897824587
+        ],
+        "hip_ranges_deg": [
+          87.20900458091737,
+          83.40413448458878
+        ],
+        "cycle_phase_error": 0.009848391641455673,
+        "cycle_coverage": 1.0,
+        "period_s": 1.238,
+        "period_cv": 0.008636531207759177,
+        "left_right_phases": [
+          0.5139116202945989,
+          0.5128617363344048,
+          0.5064308681672018,
+          0.5097719869706837,
+          0.5065573770491804,
+          0.5111821086261976,
+          0.4967948717948718,
+          0.4821428571428573,
+          0.49029126213592306,
+          0.49516129032258116,
+          0.49344262295081964,
+          0.48470209339774617
+        ]
+      },
+      "metrics": {
+        "nan": false,
+        "t_end": 15.998000000000001,
+        "dx": 0.03357866789449801,
+        "kz": 0.9293487602252154,
+        "tilt_max": 0.7001804254472067,
+        "knee_min": -1.9086985268862604,
+        "hip_amp": 1.6763854455066984,
+        "duty": 0.7055714285714285,
+        "kine": {
+          "contact_frac_r": 0.0,
+          "contact_frac_l": 0.0,
+          "n_cycles_r": 8,
+          "duty_r": 0.0,
+          "duty_r_ref": 0.61,
+          "knee_min_r": -89.52281249773291,
+          "knee_min_r_ref": -69.68811020650568,
+          "rmse_hip_r": 39.03325137514782,
+          "range_hip_r": 80.49008759187099,
+          "range_hip_r_ref": 43.29319243218895,
+          "mean_hip_r": 20.17949708787777,
+          "mean_hip_r_ref": 4.340491323383044,
+          "rmse_knee_r": 46.92709111600669,
+          "range_knee_r": 100.45588824495294,
+          "range_knee_r_ref": 70.4553257620587,
+          "mean_knee_r": -14.660688237592128,
+          "mean_knee_r_ref": -25.052680635143876,
+          "rmse_ankle_r": 30.390305691226704,
+          "range_ankle_r": 73.24592225909643,
+          "range_ankle_r_ref": 23.106608540532818,
+          "mean_ankle_r": -53.58756530845559,
+          "mean_ankle_r_ref": 4.204590041315454,
+          "T_r": 1.23325,
+          "T_r_ref": 1.2334,
+          "period_cv_r": 0.0066834954477336455,
+          "n_cycles_l": 9,
+          "duty_l": 0.0,
+          "duty_l_ref": 0.61,
+          "knee_min_l": -91.80719037674916,
+          "knee_min_l_ref": -70.62509689835294,
+          "rmse_hip_l": 35.04100594913413,
+          "range_hip_l": 66.5441122220299,
+          "range_hip_l_ref": 44.137088674588234,
+          "mean_hip_l": 12.18767940289002,
+          "mean_hip_l_ref": 3.5293764623717765,
+          "rmse_knee_l": 45.72856981317221,
+          "range_knee_l": 101.47706466339889,
+          "range_knee_l_ref": 70.6955653195196,
+          "mean_knee_l": -17.962574623984416,
+          "mean_knee_l_ref": -23.557536144418,
+          "rmse_ankle_l": 30.663494029768362,
+          "range_ankle_l": 74.64102599818385,
+          "range_ankle_l_ref": 23.956803261189542,
+          "mean_ankle_l": -54.79124555912802,
+          "mean_ankle_l_ref": 2.5856699751157337,
+          "T_l": 1.1184444444444446,
+          "T_l_ref": 1.2133000000000003,
+          "period_cv_l": 0.22887501472992425,
+          "lag_rl": 0.48489762821812277,
+          "lag_rl_ref": 0.5081076698556833,
+          "ds": 0.0,
+          "ds_ref": 0.23243243243243245,
+          "bilateral": true,
+          "kine_score": -399.23538545736784,
+          "n_cycles": 8,
+          "duty": 0.0,
+          "duty_ref": 0.61,
+          "knee_min": -89.52281249773291,
+          "knee_min_ref": -69.68811020650568,
+          "rmse_hip": 39.03325137514782,
+          "range_hip": 80.49008759187099,
+          "range_hip_ref": 43.29319243218895,
+          "rmse_knee": 46.92709111600669,
+          "range_knee": 100.45588824495294,
+          "range_knee_ref": 70.4553257620587,
+          "rmse_ankle": 30.390305691226704,
+          "range_ankle": 73.24592225909643,
+          "range_ankle_ref": 23.106608540532818
+        },
+        "kine_score": -399.23538545736784,
+        "burst_r": 10,
+        "bal_sway": 0.09523725617296516,
+        "bal_sway_rms": 0.06005031816607783,
+        "bal_tilt_max": 1.869801706897987,
+        "bal_contact_sym": 0.25,
+        "bal_com_z_min": 0.9293487602252154,
+        "bal_fell": false,
+        "bal_push_sway": 0.0,
+        "bal_effort": 0.2776624154781749,
+        "bal_cocon": 0.8166773005670607,
+        "bal_foot_load": 0.0,
+        "bal_rig_share": 1.0,
+        "bal_act_sum": 36.75280159089053,
+        "bal_cocon_act": 3.1439483792480596
+      },
+      "parameters": {
+        "drive": 3.8515251578457796,
+        "rg_adapt": 1.2953682110177716,
+        "desc_e": 1.5473985675799633,
+        "desc_f": 1.6693593271812561,
+        "rg_to_pf": 1.9303294829454298,
+        "pf_gain": 0.41465524303205775,
+        "e2_pf": 1.9589627426813,
+        "f1_df": 1.523133550912121,
+        "f1_kf": 1.1382055010524683,
+        "e2_adapt": 2.56508042566242,
+        "post_kneext": 1.5030877247690067,
+        "post_hipext": 0.5189860424936555,
+        "kx": 268.6976067489714,
+        "phase_reset_e": 0.4785490313460971,
+        "phase_reset_f": 1.4767851211488388,
+        "f1_kneext_inh": 1.5835816772141325,
+        "f1_anklepf_inh": 0.011035396383851193,
+        "ankle_post_walk_trim": 0.09686319383207564,
+        "rg_nap_h": 0.43326327518952457,
+        "ia_to_mn": 0.49525216703271335,
+        "ia_to_antagonist": 0.5172414568488977,
+        "ii_to_mn": 0.13849234479926775,
+        "ib_to_mn_inh": 0.16503642313401418,
+        "rg_mutual_inh": 4.07714557689577,
+        "rg_weak_exc": 0.0,
+        "pf_to_mn": 2.7608317569777006,
+        "contact_onset": 0.003269805750452012,
+        "contra_swing": 0.5379297905789677,
+        "ib_group_exc": 0.05119178287854114,
+        "ib_exc_to_mn": 0.8585211345369724,
+        "posture_to_mn": 0.30201804943212746,
+        "coact": 0.0,
+        "vest_prop": 0.0,
+        "rig_scale": 1.0,
+        "pelvis_ty": 0.92,
+        "axis_gain": 0.24353914858389242,
+        "trunk_gain": 0.7749144203725143,
+        "axis_feedback": 0.6652828854192874,
+        "bi_gain": 1.6761899840333307,
+        "bi_afferent": 0.026476460406115086,
+        "kick": 2.0,
+        "preset_scale": 0.5671582386073619,
+        "w2l_rg_to_pf": 1.5040786065470995,
+        "w2l_pf_to_mn": 3.4182239847342415,
+        "w2l_pf_recip": 1.8691139038695757,
+        "w2l_ia_central": 0.0007433974992477444,
+        "w2l_ii_central": 0.5380434366944183,
+        "w2l_ib_central": 0.2402793928384001,
+        "w2l_v3e_inE": 0.1751788960230038,
+        "w2l_ini_inh": 1.1171619601202798,
+        "w2l_v0d_inh": 0.902783094497034,
+        "w2l_alpha": 1.3445425757983498,
+        "stance_HAM": 0.07128185549925573,
+        "stance_RECT": 0.7405974516718042,
+        "stance_SAR": 0.3303484592777391,
+        "stance_GRAC": 0.11310166445422454,
+        "stance_TFL": 0.10665584119010971,
+        "stance_GAS": 0.8421317598321175,
+        "mono_hip_ext": 0.32643195224491994,
+        "mono_hip_flex": 0.7679845570465006,
+        "mono_knee_ext": 1.3909354808766106,
+        "mono_knee_flex": 2.0537899214411373,
+        "mono_ankle_pf": 0.1877230423116199,
+        "mono_ankle_df": 2.362976097181667
+      },
+      "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_functional_pf\\curriculum_20261028_v1\\trials\\s2_best_t0005_fresh.npz"
+    },
+    {
+      "stage": 3,
+      "trials": 100,
+      "full_duration_finite": 90,
+      "original_screen_pass_count": 0,
+      "best_trial": 75,
+      "fresh_assessment": {
+        "score": 10.64267412886701,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "tilt_deg": 24.799061356178054,
+        "sway_m": 0.1373153456218207,
+        "normal_force_bw": 0.38424950706512323,
+        "symmetry": 0.000471895607119974,
+        "fall": false
+      },
+      "metrics": {
+        "nan": false,
+        "t_end": 7.998,
+        "dx": 0.0,
+        "kz": 0.8703074679921657,
+        "tilt_max": 24.799061356178054,
+        "knee_min": -1.8446102825420205,
+        "hip_amp": 0.9096920749106394,
+        "duty": 0.0,
+        "kine": null,
+        "kine_score": -25.0,
+        "burst_r": 1,
+        "bal_sway": 0.1373153456218207,
+        "bal_sway_rms": 0.10826520437040367,
+        "bal_tilt_max": 24.799061356178054,
+        "bal_contact_sym": 0.000471895607119974,
+        "bal_com_z_min": 0.8703074679921657,
+        "bal_fell": false,
+        "bal_push_sway": 0.0,
+        "bal_effort": 0.2977270320386155,
+        "bal_cocon": 0.817466368657498,
+        "bal_foot_load": 0.38424950706512323,
+        "bal_rig_share": 0.6157504929348767,
+        "bal_act_sum": 37.096887783018516,
+        "bal_cocon_act": 3.2253408378564092
+      },
+      "parameters": {
+        "drive": 3.8515251578457796,
+        "rg_adapt": 1.2953682110177716,
+        "desc_e": 1.5473985675799633,
+        "desc_f": 1.6693593271812561,
+        "rg_to_pf": 1.9303294829454298,
+        "pf_gain": 0.41465524303205775,
+        "e2_pf": 1.9589627426813,
+        "f1_df": 1.523133550912121,
+        "f1_kf": 1.1382055010524683,
+        "e2_adapt": 2.56508042566242,
+        "post_kneext": 1.5030877247690067,
+        "post_hipext": 0.5189860424936555,
+        "kx": 268.6976067489714,
+        "phase_reset_e": 0.4785490313460971,
+        "phase_reset_f": 1.4767851211488388,
+        "f1_kneext_inh": 1.5835816772141325,
+        "f1_anklepf_inh": 0.011035396383851193,
+        "ankle_post_walk_trim": 0.09686319383207564,
+        "rg_nap_h": 0.43326327518952457,
+        "ia_to_mn": 0.49525216703271335,
+        "ia_to_antagonist": 0.5172414568488977,
+        "ii_to_mn": 0.13849234479926775,
+        "ib_to_mn_inh": 0.16503642313401418,
+        "rg_mutual_inh": 4.07714557689577,
+        "rg_weak_exc": 0.0,
+        "pf_to_mn": 2.7608317569777006,
+        "contact_onset": 0.003269805750452012,
+        "contra_swing": 0.5379297905789677,
+        "ib_group_exc": 0.05119178287854114,
+        "ib_exc_to_mn": 0.8585211345369724,
+        "posture_to_mn": 0.31213030617289156,
+        "coact": 0.002887737799600756,
+        "vest_prop": 0.010122712686963754,
+        "rig_scale": 0.9980087611613954,
+        "pelvis_ty": 0.9179460102654436,
+        "axis_gain": 0.23806626045119442,
+        "trunk_gain": 0.887018396860147,
+        "axis_feedback": 0.9376520107075246,
+        "bi_gain": 1.6761899840333307,
+        "bi_afferent": 0.026476460406115086,
+        "kick": 2.0,
+        "preset_scale": 0.5905788081891437,
+        "w2l_rg_to_pf": 1.5040786065470995,
+        "w2l_pf_to_mn": 3.4182239847342415,
+        "w2l_pf_recip": 1.8691139038695757,
+        "w2l_ia_central": 0.0007433974992477444,
+        "w2l_ii_central": 0.5380434366944183,
+        "w2l_ib_central": 0.2402793928384001,
+        "w2l_v3e_inE": 0.1751788960230038,
+        "w2l_ini_inh": 1.1171619601202798,
+        "w2l_v0d_inh": 0.902783094497034,
+        "w2l_alpha": 1.3445425757983498,
+        "stance_HAM": 0.07128185549925573,
+        "stance_RECT": 0.7405974516718042,
+        "stance_SAR": 0.3303484592777391,
+        "stance_GRAC": 0.11310166445422454,
+        "stance_TFL": 0.10665584119010971,
+        "stance_GAS": 0.8421317598321175,
+        "mono_hip_ext": 0.32643195224491994,
+        "mono_hip_flex": 0.7679845570465006,
+        "mono_knee_ext": 1.3909354808766106,
+        "mono_knee_flex": 2.0537899214411373,
+        "mono_ankle_pf": 0.1877230423116199,
+        "mono_ankle_df": 2.362976097181667
+      },
+      "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_functional_pf\\curriculum_20261028_v1\\trials\\s3_best_t0075_fresh.npz"
+    },
+    {
+      "stage": 4,
+      "trials": 100,
+      "full_duration_finite": 86,
+      "original_screen_pass_count": 22,
+      "best_trial": 85,
+      "fresh_assessment": {
+        "score": 109.90487702669084,
+        "accepted": true,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          5,
+          5
+        ],
+        "knee_ranges_deg": [
+          86.42191970234886,
+          86.27891023169487
+        ],
+        "hip_ranges_deg": [
+          77.55560451535987,
+          72.35867470529774
+        ],
+        "cycle_phase_error": 0.0009308633180443657,
+        "cycle_coverage": 1.0,
+        "period_s": 1.746,
+        "period_cv": 0.0008943144777887204,
+        "left_right_phases": [
+          0.5011467889908258,
+          0.5017182130584188,
+          0.4999999999999995,
+          0.5,
+          0.49828178694158093,
+          0.49885321100917496,
+          0.50057273768614,
+          0.4988558352402742
+        ]
+      },
+      "metrics": {
+        "nan": false,
+        "t_end": 15.998000000000001,
+        "dx": 0.025180198161269346,
+        "kz": 0.9281188210116064,
+        "tilt_max": 0.18807765929468426,
+        "knee_min": -1.3367292460200413,
+        "hip_amp": 1.4044093295869593,
+        "duty": 0.5345714285714286,
+        "kine": {
+          "contact_frac_r": 0.0,
+          "contact_frac_l": 0.0,
+          "n_cycles_r": 5,
+          "duty_r": 0.0,
+          "duty_r_ref": 0.61,
+          "knee_min_r": -72.38369043525681,
+          "knee_min_r_ref": -69.68811020650568,
+          "rmse_hip_r": 32.29064547670042,
+          "range_hip_r": 73.4576831885121,
+          "range_hip_r_ref": 43.29319243218895,
+          "mean_hip_r": 15.282378080962303,
+          "mean_hip_r_ref": 4.340491323383044,
+          "rmse_knee_r": 35.27541469344953,
+          "range_knee_r": 83.0889697630203,
+          "range_knee_r_ref": 70.4553257620587,
+          "mean_knee_r": -12.509758810541975,
+          "mean_knee_r_ref": -25.052680635143876,
+          "rmse_ankle_r": 35.82620510943115,
+          "range_ankle_r": 80.45331494721766,
+          "range_ankle_r_ref": 23.106608540532818,
+          "mean_ankle_r": -50.27267248372299,
+          "mean_ankle_r_ref": 4.204590041315454,
+          "T_r": 1.7456,
+          "T_r_ref": 1.2334,
+          "period_cv_r": 0.00045829514207144353,
+          "n_cycles_l": 6,
+          "duty_l": 0.0,
+          "duty_l_ref": 0.61,
+          "knee_min_l": -74.6803298774653,
+          "knee_min_l_ref": -70.62509689835294,
+          "rmse_hip_l": 31.94536769503783,
+          "range_hip_l": 73.01890410634311,
+          "range_hip_l_ref": 44.137088674588234,
+          "mean_hip_l": 11.433536398119049,
+          "mean_hip_l_ref": 3.5293764623717765,
+          "rmse_knee_l": 35.459054238457476,
+          "range_knee_l": 85.43207233233773,
+          "range_knee_l_ref": 70.6955653195196,
+          "mean_knee_l": -13.719943608658548,
+          "mean_knee_l_ref": -23.557536144418,
+          "rmse_ankle_l": 38.60059930210926,
+          "range_ankle_l": 86.68554563872993,
+          "range_ankle_l_ref": 23.956803261189542,
+          "mean_ankle_l": -52.04698045264334,
+          "mean_ankle_l_ref": 2.5856699751157337,
+          "T_l": 1.7530000000000001,
+          "T_l_ref": 1.2133000000000003,
+          "period_cv_l": 0.009448380489678323,
+          "lag_rl": 0.4983959670027496,
+          "lag_rl_ref": 0.5081076698556833,
+          "ds": 0.0,
+          "ds_ref": 0.23243243243243245,
+          "bilateral": true,
+          "kine_score": -366.69231209261625,
+          "n_cycles": 5,
+          "duty": 0.0,
+          "duty_ref": 0.61,
+          "knee_min": -72.38369043525681,
+          "knee_min_ref": -69.68811020650568,
+          "rmse_hip": 32.29064547670042,
+          "range_hip": 73.4576831885121,
+          "range_hip_ref": 43.29319243218895,
+          "rmse_knee": 35.27541469344953,
+          "range_knee": 83.0889697630203,
+          "range_knee_ref": 70.4553257620587,
+          "rmse_ankle": 35.82620510943115,
+          "range_ankle": 80.45331494721766,
+          "range_ankle_ref": 23.106608540532818
+        },
+        "kine_score": -366.69231209261625,
+        "burst_r": 7,
+        "bal_sway": 0.10785836489936136,
+        "bal_sway_rms": 0.07186424298132918,
+        "bal_tilt_max": 1.8851630183715125,
+        "bal_contact_sym": 0.25,
+        "bal_com_z_min": 0.9281188210116064,
+        "bal_fell": false,
+        "bal_push_sway": 0.0,
+        "bal_effort": 0.22804153256044765,
+        "bal_cocon": 0.8071949078582008,
+        "bal_foot_load": 0.0,
+        "bal_rig_share": 1.0,
+        "bal_act_sum": 32.08916965565546,
+        "bal_cocon_act": 2.7085745202689404
+      },
+      "parameters": {
+        "drive": 3.489622083506981,
+        "rg_adapt": 1.2953682110177716,
+        "desc_e": 1.3820052486102443,
+        "desc_f": 1.7010803107642078,
+        "rg_to_pf": 1.9303294829454298,
+        "pf_gain": 0.41465524303205775,
+        "e2_pf": 1.9589627426813,
+        "f1_df": 1.523133550912121,
+        "f1_kf": 1.1382055010524683,
+        "e2_adapt": 2.56508042566242,
+        "post_kneext": 1.5030877247690067,
+        "post_hipext": 0.5189860424936555,
+        "kx": 268.6976067489714,
+        "phase_reset_e": 0.4785490313460971,
+        "phase_reset_f": 1.4767851211488388,
+        "f1_kneext_inh": 1.5835816772141325,
+        "f1_anklepf_inh": 0.011035396383851193,
+        "ankle_post_walk_trim": 0.09686319383207564,
+        "rg_nap_h": 0.5034069831019671,
+        "ia_to_mn": 0.49525216703271335,
+        "ia_to_antagonist": 0.5172414568488977,
+        "ii_to_mn": 0.13849234479926775,
+        "ib_to_mn_inh": 0.16503642313401418,
+        "rg_mutual_inh": 4.07714557689577,
+        "rg_weak_exc": 0.0,
+        "pf_to_mn": 2.7608317569777006,
+        "contact_onset": 0.003269805750452012,
+        "contra_swing": 0.5379297905789677,
+        "ib_group_exc": 0.05119178287854114,
+        "ib_exc_to_mn": 0.8585211345369724,
+        "posture_to_mn": 0.34596342706872196,
+        "coact": 0.002887737799600756,
+        "vest_prop": 0.010122712686963754,
+        "rig_scale": 0.9980087611613954,
+        "pelvis_ty": 0.9179460102654436,
+        "axis_gain": 0.33551897290088695,
+        "trunk_gain": 0.887018396860147,
+        "axis_feedback": 0.5556272912220641,
+        "bi_gain": 1.888925618681023,
+        "bi_afferent": 0.026476460406115086,
+        "kick": 2.0,
+        "preset_scale": 0.4482920969670368,
+        "w2l_rg_to_pf": 2.3010178673465798,
+        "w2l_pf_to_mn": 2.0238055918453943,
+        "w2l_pf_recip": 1.5873534972951344,
+        "w2l_ia_central": 0.0007433974992477444,
+        "w2l_ii_central": 0.5380434366944183,
+        "w2l_ib_central": 0.2402793928384001,
+        "w2l_v3e_inE": 0.1751788960230038,
+        "w2l_ini_inh": 1.1171619601202798,
+        "w2l_v0d_inh": 0.902783094497034,
+        "w2l_alpha": 1.3445425757983498,
+        "stance_HAM": 0.009975537541123536,
+        "stance_RECT": 0.4557188649009504,
+        "stance_SAR": 0.30473954634926526,
+        "stance_GRAC": 0.11010168801218476,
+        "stance_TFL": 0.13905815385119338,
+        "stance_GAS": 0.9659867307436256,
+        "mono_hip_ext": 0.4137376363904526,
+        "mono_hip_flex": 1.1591975916002766,
+        "mono_knee_ext": 1.1248813513934521,
+        "mono_knee_flex": 1.5145840137503332,
+        "mono_ankle_pf": 0.35037664575537,
+        "mono_ankle_df": 2.4703278214090845
+      },
+      "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_functional_pf\\curriculum_20261028_v1\\trials\\s4_best_t0085_fresh.npz",
+      "frontal": {
+        "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_functional_pf\\curriculum_20261028_v1\\trials\\s4_best_t0085_fresh.npz",
+        "frontal_gate": false,
+        "minimum_ankle_width_m": -0.07978546240046701,
+        "minimum_knee_width_m": -0.08561436518359385,
+        "crossed_ankle_fraction": 0.195,
+        "pelvis_local_right_axis": [
+          0.0,
+          4.547414961947327e-16,
+          1.0
+        ],
+        "anatomical_axis_verified_from_hip_anchors": true,
+        "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+      },
+      "frontal_before_axis_correction": {
+        "minimum_ankle_width_m": -0.21963949780435996,
+        "median_ankle_width_m": -0.013426245276237961,
+        "crossed_ankle_fraction": 0.545,
+        "minimum_knee_width_m": -0.14810748206282828,
+        "frontal_gate": false,
+        "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+      }
+    },
+    {
+      "stage": 5,
+      "trials": 100,
+      "full_duration_finite": 81,
+      "original_screen_pass_count": 64,
+      "best_trial": 80,
+      "fresh_assessment": {
+        "score": 97.5096869236487,
+        "accepted": true,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          5,
+          5
+        ],
+        "knee_ranges_deg": [
+          94.0404471631342,
+          90.2625070172522
+        ],
+        "hip_ranges_deg": [
+          56.36887692024614,
+          55.48329565858663
+        ],
+        "cycle_phase_error": 0.006081173189623798,
+        "cycle_coverage": 1.0,
+        "period_s": 1.75,
+        "period_cv": 0.006468017741737628,
+        "left_right_phases": [
+          0.5051428571428571,
+          0.5057208237986266,
+          0.5126146788990827,
+          0.4994285714285717,
+          0.49485714285714316,
+          0.4914675767918091,
+          0.4930394431554522,
+          0.49603624009059993
+        ],
+        "contact_cycles": [
+          8,
+          13
+        ],
+        "contact_duty": [
+          0.6421428571428571,
+          0.7075714285714285
+        ],
+        "kine_score": -144.5734377902333,
+        "dx_m": 0.05848616072952034,
+        "contact_gate": true
+      },
+      "metrics": {
+        "nan": false,
+        "t_end": 15.998000000000001,
+        "dx": 0.05848616072952034,
+        "kz": 0.8764154861168023,
+        "tilt_max": 14.68847096185599,
+        "knee_min": -1.378949525936396,
+        "hip_amp": 1.0130572073444557,
+        "duty": 0.5304285714285715,
+        "kine": {
+          "contact_frac_r": 0.6458571428571429,
+          "contact_frac_l": 0.7087142857142857,
+          "n_cycles_r": 8,
+          "duty_r": 0.6421428571428571,
+          "duty_r_ref": 0.61,
+          "knee_min_r": -48.5783917354776,
+          "knee_min_r_ref": -69.68811020650568,
+          "rmse_hip_r": 18.638057137608307,
+          "range_hip_r": 21.59751807513951,
+          "range_hip_r_ref": 43.29319243218895,
+          "mean_hip_r": 6.68678861465653,
+          "mean_hip_r_ref": 4.340491323383044,
+          "rmse_knee_r": 23.04508738058606,
+          "range_knee_r": 40.42624198858769,
+          "range_knee_r_ref": 70.4553257620587,
+          "mean_knee_r": -25.444030297265293,
+          "mean_knee_r_ref": -25.052680635143876,
+          "rmse_ankle_r": 12.074981679210605,
+          "range_ankle_r": 27.361089191480737,
+          "range_ankle_r_ref": 23.106608540532818,
+          "mean_ankle_r": -5.3511145808677165,
+          "mean_ankle_r_ref": 4.204590041315454,
+          "T_r": 1.1525,
+          "T_r_ref": 1.2334,
+          "period_cv_r": 0.4843636612819227,
+          "n_cycles_l": 13,
+          "duty_l": 0.7075714285714285,
+          "duty_l_ref": 0.61,
+          "knee_min_l": -36.1066147649471,
+          "knee_min_l_ref": -70.62509689835294,
+          "rmse_hip_l": 13.524414790666672,
+          "range_hip_l": 17.079968581540165,
+          "range_hip_l_ref": 44.137088674588234,
+          "mean_hip_l": 7.759447915946072,
+          "mean_hip_l_ref": 3.5293764623717765,
+          "rmse_knee_l": 21.895031773314905,
+          "range_knee_l": 36.58120175838193,
+          "range_knee_l_ref": 70.6955653195196,
+          "mean_knee_l": -27.604993854059156,
+          "mean_knee_l_ref": -23.557536144418,
+          "rmse_ankle_l": 8.790278563437932,
+          "range_ankle_l": 28.255991332509907,
+          "range_ankle_l_ref": 23.956803261189542,
+          "mean_ankle_l": -18.334541203073552,
+          "mean_ankle_l_ref": 2.5856699751157337,
+          "T_l": 0.7836923076923079,
+          "T_l_ref": 1.2133000000000003,
+          "period_cv_l": 0.28949225033192216,
+          "lag_rl": 0.688937093275488,
+          "lag_rl_ref": 0.5081076698556833,
+          "ds": 0.3497142857142857,
+          "ds_ref": 0.23243243243243245,
+          "bilateral": true,
+          "kine_score": -144.5734377902333,
+          "n_cycles": 8,
+          "duty": 0.6421428571428571,
+          "duty_ref": 0.61,
+          "knee_min": -48.5783917354776,
+          "knee_min_ref": -69.68811020650568,
+          "rmse_hip": 18.638057137608307,
+          "range_hip": 21.59751807513951,
+          "range_hip_ref": 43.29319243218895,
+          "rmse_knee": 23.04508738058606,
+          "range_knee": 40.42624198858769,
+          "range_knee_ref": 70.4553257620587,
+          "rmse_ankle": 12.074981679210605,
+          "range_ankle": 27.361089191480737,
+          "range_ankle_ref": 23.106608540532818
+        },
+        "kine_score": -144.5734377902333,
+        "burst_r": 7,
+        "bal_sway": 0.18712290760829922,
+        "bal_sway_rms": 0.14590489829615458,
+        "bal_tilt_max": 14.68847096185599,
+        "bal_contact_sym": 0.7184645730486309,
+        "bal_com_z_min": 0.8764154861168023,
+        "bal_fell": false,
+        "bal_push_sway": 0.0,
+        "bal_effort": 0.18844559115343276,
+        "bal_cocon": 0.8096934712101557,
+        "bal_foot_load": 0.9383179463692615,
+        "bal_rig_share": 0.06168205363073853,
+        "bal_act_sum": 26.439924423982838,
+        "bal_cocon_act": 2.497676730689452
+      },
+      "parameters": {
+        "drive": 3.489622083506981,
+        "rg_adapt": 1.2953682110177716,
+        "desc_e": 1.3820052486102443,
+        "desc_f": 1.7010803107642078,
+        "rg_to_pf": 1.9303294829454298,
+        "pf_gain": 0.41465524303205775,
+        "e2_pf": 1.9589627426813,
+        "f1_df": 1.523133550912121,
+        "f1_kf": 1.1382055010524683,
+        "e2_adapt": 2.56508042566242,
+        "post_kneext": 1.5030877247690067,
+        "post_hipext": 0.5189860424936555,
+        "kx": 268.6976067489714,
+        "phase_reset_e": 0.4785490313460971,
+        "phase_reset_f": 1.4767851211488388,
+        "f1_kneext_inh": 1.5835816772141325,
+        "f1_anklepf_inh": 0.011035396383851193,
+        "ankle_post_walk_trim": 0.09686319383207564,
+        "rg_nap_h": 0.5034069831019671,
+        "ia_to_mn": 0.49525216703271335,
+        "ia_to_antagonist": 0.5172414568488977,
+        "ii_to_mn": 0.13849234479926775,
+        "ib_to_mn_inh": 0.16503642313401418,
+        "rg_mutual_inh": 4.07714557689577,
+        "rg_weak_exc": 0.0,
+        "pf_to_mn": 2.7608317569777006,
+        "contact_onset": 0.18429465447941898,
+        "contra_swing": 0.30708064480512665,
+        "ib_group_exc": 0.719647298774631,
+        "ib_exc_to_mn": 0.03479377106337728,
+        "posture_to_mn": 0.036761631520500826,
+        "coact": 0.002887737799600756,
+        "vest_prop": 0.010122712686963754,
+        "rig_scale": 0.9479453607337881,
+        "pelvis_ty": 0.9485680399187392,
+        "axis_gain": 0.558567398265602,
+        "trunk_gain": 0.887018396860147,
+        "axis_feedback": 0.5661117218948172,
+        "bi_gain": 1.888925618681023,
+        "bi_afferent": 0.026476460406115086,
+        "kick": 2.0,
+        "preset_scale": 0.8508712311823983,
+        "w2l_rg_to_pf": 2.3010178673465798,
+        "w2l_pf_to_mn": 2.0238055918453943,
+        "w2l_pf_recip": 1.5873534972951344,
+        "w2l_ia_central": 0.0007433974992477444,
+        "w2l_ii_central": 0.5380434366944183,
+        "w2l_ib_central": 0.16079605229642818,
+        "w2l_v3e_inE": 0.2852290293016304,
+        "w2l_ini_inh": 1.1171619601202798,
+        "w2l_v0d_inh": 0.902783094497034,
+        "w2l_alpha": 1.3445425757983498,
+        "stance_HAM": 0.009975537541123536,
+        "stance_RECT": 0.4557188649009504,
+        "stance_SAR": 0.30473954634926526,
+        "stance_GRAC": 0.11010168801218476,
+        "stance_TFL": 0.13905815385119338,
+        "stance_GAS": 0.9659867307436256,
+        "mono_hip_ext": 0.4137376363904526,
+        "mono_hip_flex": 1.1591975916002766,
+        "mono_knee_ext": 1.1248813513934521,
+        "mono_knee_flex": 1.5145840137503332,
+        "mono_ankle_pf": 0.35037664575537,
+        "mono_ankle_df": 2.4703278214090845
+      },
+      "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_functional_pf\\curriculum_20261028_v1\\trials\\s5_best_t0080_fresh.npz",
+      "frontal": {
+        "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_functional_pf\\curriculum_20261028_v1\\trials\\s5_best_t0080_fresh.npz",
+        "frontal_gate": false,
+        "minimum_ankle_width_m": -0.36973697494838803,
+        "minimum_knee_width_m": -0.16795332047148864,
+        "crossed_ankle_fraction": 1.0,
+        "pelvis_local_right_axis": [
+          0.0,
+          4.547414961947327e-16,
+          1.0
+        ],
+        "anatomical_axis_verified_from_hip_anchors": true,
+        "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+      },
+      "frontal_before_axis_correction": {
+        "minimum_ankle_width_m": -0.13428540366570602,
+        "median_ankle_width_m": -0.024841583245740546,
+        "crossed_ankle_fraction": 0.6675,
+        "minimum_knee_width_m": -0.08337152252721214,
+        "frontal_gate": false,
+        "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+      }
+    }
+  ],
+  "production_baseline_arrays_bit_exact": {
+    "t": true,
+    "act": true,
+    "ctrl": true,
+    "q": true,
+    "qfull": true,
+    "com": true,
+    "neuro": true,
+    "contact": true,
+    "footz": true,
+    "key_acts": true,
+    "key_joints": true,
+    "neuro_names": true,
+    "cfg": true
+  },
+  "production_anchor_score": -161.56754173676563,
+  "causal_intervention": {
+    "deletion_time_s": 8.0,
+    "prehistory_bit_exact": {
+      "qfull": true,
+      "q": true,
+      "act": true,
+      "ctrl": true,
+      "neuro": true,
+      "contact": true
+    },
+    "max_saved_motor_command_change_first_100ms": 1.0,
+    "max_saved_motor_command_change_late": 1.0,
+    "maximum_joint_coordinate_change_late_deg": 55.932402314472455,
+    "scope": "Saved motor columns are a subset of all actuators. Direct biarticular PF-to-MN drive removed; remaining phase/reflex pathways retained."
+  },
+  "final_basin": {
+    "perturbation": "Independent uniform +/-1% on every saved scalar, including inherited/inert settings and posture/support parameters; zeros stay zero",
+    "results": [
+      {
+        "label": "s4_perturb00",
+        "stage": 4,
+        "assessment": {
+          "score": 109.58831690369566,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            84.63762654135692,
+            86.69089121723226
+          ],
+          "hip_ranges_deg": [
+            75.18979698933427,
+            72.10052417004206
+          ],
+          "cycle_phase_error": 0.002329233682484999,
+          "cycle_coverage": 1.0,
+          "period_s": 1.7710000000000004,
+          "period_cv": 0.0007858524153606163,
+          "left_right_phases": [
+            0.5011286681715577,
+            0.5028248587570626,
+            0.5028248587570621,
+            0.5022573363431144,
+            0.4983089064261553,
+            0.49717514124293744,
+            0.49717514124293843,
+            0.49774266365688563
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.054512951794653326,
+          "minimum_knee_width_m": -0.07307701088506417,
+          "crossed_ankle_fraction": 0.1275,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.20702969742624594,
+          "median_ankle_width_m": -0.01602367919121385,
+          "crossed_ankle_fraction": 0.5675,
+          "minimum_knee_width_m": -0.14198066531798265,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s4_perturb01",
+        "stage": 4,
+        "assessment": {
+          "score": 109.80617547330847,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            87.52601320540674,
+            86.61386563413662
+          ],
+          "hip_ranges_deg": [
+            77.32435789793612,
+            72.71678064769887
+          ],
+          "cycle_phase_error": 0.00100492423224164,
+          "cycle_coverage": 1.0,
+          "period_s": 1.7409999999999997,
+          "period_cv": 0.001284358401780495,
+          "left_right_phases": [
+            0.5034403669724772,
+            0.5,
+            0.5000000000000006,
+            0.4988505747126438,
+            0.4982738780207134,
+            0.5005740528128585,
+            0.5005753739930952,
+            0.5005740528128589
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.07569231361200712,
+          "minimum_knee_width_m": -0.085802818204782,
+          "crossed_ankle_fraction": 0.1975,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.2251773776225189,
+          "median_ankle_width_m": -0.011476676317124693,
+          "crossed_ankle_fraction": 0.55,
+          "minimum_knee_width_m": -0.15097958190534821,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s4_perturb02",
+        "stage": 4,
+        "assessment": {
+          "score": 109.62621303365427,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            83.41694482024651,
+            85.80512203956667
+          ],
+          "hip_ranges_deg": [
+            72.91405294873707,
+            72.56991463110747
+          ],
+          "cycle_phase_error": 0.0011843089330040163,
+          "cycle_coverage": 1.0,
+          "period_s": 1.6899999999999995,
+          "period_cv": 0.0008373082074439208,
+          "left_right_phases": [
+            0.5005917159763316,
+            0.5011848341232226,
+            0.5017751479289936,
+            0.5005917159763316,
+            0.49822064056939497,
+            0.49940828402366844,
+            0.49822485207100636,
+            0.4988151658767774
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.13075862445096545,
+          "minimum_knee_width_m": -0.11475630653979449,
+          "crossed_ankle_fraction": 0.25,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.2290610032124422,
+          "median_ankle_width_m": -0.005515143586850714,
+          "crossed_ankle_fraction": 0.5225,
+          "minimum_knee_width_m": -0.15653197341445518,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s4_perturb03",
+        "stage": 4,
+        "assessment": {
+          "score": 109.64232962891715,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            86.58229712252495,
+            87.04528064438242
+          ],
+          "hip_ranges_deg": [
+            75.46478525799802,
+            74.32830447774217
+          ],
+          "cycle_phase_error": 0.002930641732836789,
+          "cycle_coverage": 1.0,
+          "period_s": 1.734,
+          "period_cv": 0.0066224424033856965,
+          "left_right_phases": [
+            0.5034562211981563,
+            0.501730103806228,
+            0.500576701268742,
+            0.48981900452488697,
+            0.49596309111880066,
+            0.49769053117782963,
+            0.4988452655889152,
+            0.5000000000000006
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.08881264614585502,
+          "minimum_knee_width_m": -0.09452121123553044,
+          "crossed_ankle_fraction": 0.22,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.2300785713025889,
+          "median_ankle_width_m": -0.010897395836784925,
+          "crossed_ankle_fraction": 0.535,
+          "minimum_knee_width_m": -0.15530218470519336,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s4_perturb04",
+        "stage": 4,
+        "assessment": {
+          "score": 109.49044473153329,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            84.66950684389083,
+            86.8697925281651
+          ],
+          "hip_ranges_deg": [
+            74.12381947127739,
+            73.19141229621798
+          ],
+          "cycle_phase_error": 0.003445622611196221,
+          "cycle_coverage": 1.0,
+          "period_s": 1.7059999999999995,
+          "period_cv": 0.0010050805747545436,
+          "left_right_phases": [
+            0.5029308323563894,
+            0.5029308323563897,
+            0.5041128084606349,
+            0.5035128805620616,
+            0.4964788732394365,
+            0.4970691676436106,
+            0.4970691676436103,
+            0.4953051643192483
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.11278215876110183,
+          "minimum_knee_width_m": -0.10769989042999338,
+          "crossed_ankle_fraction": 0.225,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.22813113212117478,
+          "median_ankle_width_m": -0.007573505295609549,
+          "crossed_ankle_fraction": 0.5225,
+          "minimum_knee_width_m": -0.15527696286015832,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s4_perturb05",
+        "stage": 4,
+        "assessment": {
+          "score": 109.69935037664541,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            85.36595184773384,
+            86.82104708802706
+          ],
+          "hip_ranges_deg": [
+            74.38536598783062,
+            74.2923109844279
+          ],
+          "cycle_phase_error": 0.001296935096449764,
+          "cycle_coverage": 1.0,
+          "period_s": 1.7280000000000006,
+          "period_cv": 0.002817806980285738,
+          "left_right_phases": [
+            0.5011574074074078,
+            0.5000000000000006,
+            0.4988425925925922,
+            0.4948335246842713,
+            0.4994219653179189,
+            0.4994206257242174,
+            0.5005793742757818,
+            0.5011574074074078
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.09571454478577875,
+          "minimum_knee_width_m": -0.09500676627115082,
+          "crossed_ankle_fraction": 0.2175,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.22498008899581776,
+          "median_ankle_width_m": -0.00891890627465785,
+          "crossed_ankle_fraction": 0.52,
+          "minimum_knee_width_m": -0.15363176350533908,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s4_perturb06",
+        "stage": 4,
+        "assessment": {
+          "score": 109.6345868528665,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            84.35302213939904,
+            86.02600449514554
+          ],
+          "hip_ranges_deg": [
+            75.11239823978225,
+            70.91633142039504
+          ],
+          "cycle_phase_error": 0.002234638963802202,
+          "cycle_coverage": 1.0,
+          "period_s": 1.7900000000000005,
+          "period_cv": 0.0009676261494799281,
+          "left_right_phases": [
+            0.503348214285714,
+            0.5011160714285711,
+            0.5011185682326621,
+            0.5033557046979867,
+            0.49776286353467586,
+            0.4994413407821235,
+            0.4977678571428569,
+            0.49608938547486003
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.04730550768756268,
+          "minimum_knee_width_m": -0.06723769134191267,
+          "crossed_ankle_fraction": 0.115,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.2026213562542951,
+          "median_ankle_width_m": -0.013690572615128717,
+          "crossed_ankle_fraction": 0.555,
+          "minimum_knee_width_m": -0.13840659758930823,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s4_perturb07",
+        "stage": 4,
+        "assessment": {
+          "score": 109.65709016592241,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            84.64470027801119,
+            86.2809696842414
+          ],
+          "hip_ranges_deg": [
+            74.47084734056352,
+            68.90906996750384
+          ],
+          "cycle_phase_error": 0.0019257996425124935,
+          "cycle_coverage": 1.0,
+          "period_s": 1.8179999999999996,
+          "period_cv": 0.0012306373018712384,
+          "left_right_phases": [
+            0.5027502750275027,
+            0.5010989010989008,
+            0.5011037527593818,
+            0.5027502750275027,
+            0.4977973568281938,
+            0.5000000000000004,
+            0.4972497249724973,
+            0.4972497249724973
+          ]
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.016124293946509008,
+          "minimum_knee_width_m": -0.05086581984189426,
+          "crossed_ankle_fraction": 0.04,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.1899543939129338,
+          "median_ankle_width_m": -0.01347036442957153,
+          "crossed_ankle_fraction": 0.55,
+          "minimum_knee_width_m": -0.13192951296945601,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb00",
+        "stage": 5,
+        "assessment": {
+          "score": 97.01495929674329,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            90.84102317513013,
+            89.11926730045771
+          ],
+          "hip_ranges_deg": [
+            52.73674038073764,
+            53.71330513684162
+          ],
+          "cycle_phase_error": 0.00748988110354961,
+          "cycle_coverage": 1.0,
+          "period_s": 1.721,
+          "period_cv": 0.0035568197211218416,
+          "left_right_phases": [
+            0.510514018691589,
+            0.5063879210220674,
+            0.5046403712296988,
+            0.5093023255813949,
+            0.4930394431554522,
+            0.4900584795321638,
+            0.4941860465116275,
+            0.49364161849710975
+          ],
+          "contact_cycles": [
+            7,
+            13
+          ],
+          "contact_duty": [
+            0.614,
+            0.7137142857142857
+          ],
+          "kine_score": -152.72327088169092,
+          "dx_m": 0.050401774283226355,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.3964447915839222,
+          "minimum_knee_width_m": -0.17593278179446883,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.12501525676239997,
+          "median_ankle_width_m": -0.025397935699231336,
+          "crossed_ankle_fraction": 0.68,
+          "minimum_knee_width_m": -0.08697808570768628,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb01",
+        "stage": 5,
+        "assessment": {
+          "score": 97.60668418235107,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            89.58237909099921,
+            88.83622335623332
+          ],
+          "hip_ranges_deg": [
+            55.200805680428914,
+            54.91417240637947
+          ],
+          "cycle_phase_error": 0.007012259990292188,
+          "cycle_coverage": 1.0,
+          "period_s": 1.8250000000000002,
+          "period_cv": 0.011121653257261487,
+          "left_right_phases": [
+            0.4950711938663744,
+            0.4837662337662341,
+            0.5049944506104326,
+            0.4999999999999995,
+            0.5077092511013217,
+            0.5118025751072958,
+            0.4944567627494463,
+            0.49511400651465826
+          ],
+          "contact_cycles": [
+            8,
+            12
+          ],
+          "contact_duty": [
+            0.7835714285714286,
+            0.5415714285714286
+          ],
+          "kine_score": -145.6542516160572,
+          "dx_m": 0.13947400137726731,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.3682943330259733,
+          "minimum_knee_width_m": -0.16305092834763624,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.11791288079184106,
+          "median_ankle_width_m": -0.014663038270973447,
+          "crossed_ankle_fraction": 0.635,
+          "minimum_knee_width_m": -0.0888487623556833,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb02",
+        "stage": 5,
+        "assessment": {
+          "score": 96.72814594153365,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            90.5859771673533,
+            91.23968957025924
+          ],
+          "hip_ranges_deg": [
+            55.54126585561623,
+            56.683590115753375
+          ],
+          "cycle_phase_error": 0.00813440758068909,
+          "cycle_coverage": 1.0,
+          "period_s": 1.7859999999999996,
+          "period_cv": 0.005359208996724636,
+          "left_right_phases": [
+            0.5067415730337081,
+            0.5095184770436733,
+            0.5095184770436727,
+            0.5051078320090803,
+            0.4910514541387022,
+            0.4904815229563268,
+            0.49603624009060093,
+            0.4882418812989917
+          ],
+          "contact_cycles": [
+            11,
+            12
+          ],
+          "contact_duty": [
+            0.7952857142857143,
+            0.5264285714285715
+          ],
+          "kine_score": -156.88011977402138,
+          "dx_m": 0.15306118759608756,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.3447644831874428,
+          "minimum_knee_width_m": -0.15877404626334743,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.12980896014946924,
+          "median_ankle_width_m": -0.023403883829986635,
+          "crossed_ankle_fraction": 0.68,
+          "minimum_knee_width_m": -0.08657375722302679,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb03",
+        "stage": 5,
+        "assessment": {
+          "score": 96.4128116700497,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            90.82638962521374,
+            90.41463669043748
+          ],
+          "hip_ranges_deg": [
+            55.06000629803104,
+            55.555453815142734
+          ],
+          "cycle_phase_error": 0.012104565960235632,
+          "cycle_coverage": 1.0,
+          "period_s": 1.8189999999999995,
+          "period_cv": 0.004888995829106495,
+          "left_right_phases": [
+            0.4884742041712402,
+            0.48580786026200834,
+            0.48390677025527196,
+            0.4933920704845812,
+            0.5115257958287598,
+            0.519294377067255,
+            0.5093099671412926,
+            0.5082872928176794
+          ],
+          "contact_cycles": [
+            11,
+            12
+          ],
+          "contact_duty": [
+            0.792,
+            0.5412857142857143
+          ],
+          "kine_score": -157.7649963929209,
+          "dx_m": 0.15611565245107656,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.3780029122000357,
+          "minimum_knee_width_m": -0.17195481128193596,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.1374542876660074,
+          "median_ankle_width_m": -0.023993624208754505,
+          "crossed_ankle_fraction": 0.68,
+          "minimum_knee_width_m": -0.08702192615930203,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb04",
+        "stage": 5,
+        "assessment": {
+          "score": 96.42890032693788,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            91.3874864998644,
+            90.88915407191008
+          ],
+          "hip_ranges_deg": [
+            52.116922600081026,
+            53.976178108987654
+          ],
+          "cycle_phase_error": 0.01228928463822062,
+          "cycle_coverage": 1.0,
+          "period_s": 1.6589999999999994,
+          "period_cv": 0.01037779416372136,
+          "left_right_phases": [
+            0.4879518072289156,
+            0.4854368932038835,
+            0.48495788206979523,
+            0.5126658624849215,
+            0.5143884892086331,
+            0.5151515151515148,
+            0.5126964933494563,
+            0.5017584994138335
+          ],
+          "contact_cycles": [
+            8,
+            13
+          ],
+          "contact_duty": [
+            0.7734285714285715,
+            0.5708571428571428
+          ],
+          "kine_score": -156.25816528558772,
+          "dx_m": 0.13300455269678887,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.3626184543709554,
+          "minimum_knee_width_m": -0.16563989086494527,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.13006890610418834,
+          "median_ankle_width_m": -0.020786952870037956,
+          "crossed_ankle_fraction": 0.645,
+          "minimum_knee_width_m": -0.08486044692984338,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb05",
+        "stage": 5,
+        "assessment": {
+          "score": 96.31515745955149,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            92.61204555958646,
+            93.02282696442316
+          ],
+          "hip_ranges_deg": [
+            57.099177655523576,
+            57.27627333093132
+          ],
+          "cycle_phase_error": 0.0092406456697368,
+          "cycle_coverage": 1.0,
+          "period_s": 1.7499999999999996,
+          "period_cv": 0.009305074066404587,
+          "left_right_phases": [
+            0.4857468643101483,
+            0.5045871559633027,
+            0.5144843568945541,
+            0.5073947667804327,
+            0.5061728395061729,
+            0.4931506849315068,
+            0.48439306358381445,
+            0.4954233409610984
+          ],
+          "contact_cycles": [
+            12,
+            12
+          ],
+          "contact_duty": [
+            0.6365714285714286,
+            0.7065714285714285
+          ],
+          "kine_score": -160.67827534963936,
+          "dx_m": 0.051738707599915015,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.3500615184363167,
+          "minimum_knee_width_m": -0.16190492995398864,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.13507729513931974,
+          "median_ankle_width_m": -0.01818927335932485,
+          "crossed_ankle_fraction": 0.6425,
+          "minimum_knee_width_m": -0.08267739251203073,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb06",
+        "stage": 5,
+        "assessment": {
+          "score": 95.65160296871724,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            92.04007549082581,
+            91.9150323651489
+          ],
+          "hip_ranges_deg": [
+            58.394885002096025,
+            57.1754908731011
+          ],
+          "cycle_phase_error": 0.014498305761882234,
+          "cycle_coverage": 1.0,
+          "period_s": 1.8270000000000004,
+          "period_cv": 0.007729563256301859,
+          "left_right_phases": [
+            0.522026431718062,
+            0.5247524752475252,
+            0.5081788440567064,
+            0.5065075921908891,
+            0.4763995609220633,
+            0.48106904231625797,
+            0.4912854030501094,
+            0.4967248908296942
+          ],
+          "contact_cycles": [
+            9,
+            10
+          ],
+          "contact_duty": [
+            0.7807142857142857,
+            0.5491428571428572
+          ],
+          "kine_score": -165.04983066245484,
+          "dx_m": 0.15579183831988336,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.35765200265614233,
+          "minimum_knee_width_m": -0.16324476956199907,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.14406757124433298,
+          "median_ankle_width_m": -0.030010422967807877,
+          "crossed_ankle_fraction": 0.7925,
+          "minimum_knee_width_m": -0.09172735446770618,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      },
+      {
+        "label": "s5_perturb07",
+        "stage": 5,
+        "assessment": {
+          "score": 97.02434048416579,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            5,
+            5
+          ],
+          "knee_ranges_deg": [
+            90.77460796510148,
+            89.94253677988274
+          ],
+          "hip_ranges_deg": [
+            55.57778020077525,
+            55.69278132487268
+          ],
+          "cycle_phase_error": 0.005392605990852908,
+          "cycle_coverage": 1.0,
+          "period_s": 1.8129999999999997,
+          "period_cv": 0.010283769628543571,
+          "left_right_phases": [
+            0.49171270718232013,
+            0.5010989010989012,
+            0.4861572535991139,
+            0.5066079295154188,
+            0.5021834061135374,
+            0.5083986562150055,
+            0.5021645021645024,
+            0.49944258639910794
+          ],
+          "contact_cycles": [
+            10,
+            12
+          ],
+          "contact_duty": [
+            0.793,
+            0.5398571428571428
+          ],
+          "kine_score": -154.40321403532883,
+          "dx_m": 0.17106318424284836,
+          "contact_gate": true
+        },
+        "frontal": {
+          "frontal_gate": false,
+          "minimum_ankle_width_m": -0.38467087145025647,
+          "minimum_knee_width_m": -0.1736195138894203,
+          "crossed_ankle_fraction": 1.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision."
+        },
+        "frontal_before_axis_correction": {
+          "minimum_ankle_width_m": -0.1314944161085277,
+          "median_ankle_width_m": -0.024337640788201623,
+          "crossed_ankle_fraction": 0.6825,
+          "minimum_knee_width_m": -0.08825317001150976,
+          "frontal_gate": false,
+          "scope": "Pelvis-frame calcaneus/tibia origin separation; not a full self-collision or foot-edge clearance test"
+        }
+      }
+    ],
+    "counts": {
+      "4": {
+        "initial_screen_pass": 8,
+        "frontal_pass": 0,
+        "total": 8
+      },
+      "5": {
+        "initial_screen_pass": 8,
+        "frontal_pass": 0,
+        "total": 8
+      }
+    },
+    "frontal_axis_correction": "Earlier frontal measurements used a world -y vector as pelvis-local and projected almost vertically. Corrected right is derived from hip anchors and verifies pelvis-local +z. Old frontal widths/percentages are withdrawn; raw simulations are unchanged."
+  },
+  "qualified_3d_gait": false,
+  "scope": "Frozen 500-trial curriculum plus separately labeled corrective probes. Original sagittal/contact screens omit frontal separation.",
+  "frontal_axis_correction": "Earlier frontal measurements used a world -y vector as pelvis-local and projected almost vertically. Corrected right is derived from hip anchors and verifies pelvis-local +z. Old frontal widths/percentages are withdrawn; raw simulations are unchanged."
+}

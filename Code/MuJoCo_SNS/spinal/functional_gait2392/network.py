@@ -19,7 +19,7 @@ ROOT=Path(__file__).resolve().parent.parent
 OUT=ROOT/'reports_20261028_functional_pf'
 DEFAULTS=dict(axes=False,biarticular=False,pose_dependent=True,axis_gain=.1,
               axis_feedback=1.,trunk_gain=.1,bi_gain=1.,bi_afferent=.03,update_steps=5,
-              primitive=False,primitive_gain=1.)
+              primitive=False,primitive_gain=1.,bi_stance=None,mono_gains=None)
 
 @dataclass
 class FunctionalNetwork(W.W2LVarnet):
@@ -75,10 +75,17 @@ class FunctionalNetwork(W.W2LVarnet):
         budget=sum(float(c['params']['max_conductance']) for c in old)
         self.legacy_pf_budget[act]=budget
         info=self.routing['actuator_mapping'][act];family=info['family']
+        if self.options['mono_gains'] and not family:
+            factor=self.options['mono_gains'].get(mi.groups[0],1.)
+            for c in old:c['params']['max_conductance']*=factor
+            budget*=factor
         if self.options['biarticular'] and family:
             for c in old:n.connections.remove(c)
             cells=self.extra_pairs['BI_'+family+'_'+mi.side]
             weights=self.routing['phase_weights'][act]
+            if self.options['bi_stance'] and family in self.options['bi_stance']:
+                fraction=self.options['bi_stance'][family]
+                weights=dict(stance=fraction,swing=1.-fraction)
             for cell,phase in zip(cells,('stance','swing')):
                 self._edge(n,cell,mn,self.options['bi_gain']*budget*(.5 if self.options['primitive'] else weights[phase]))
             # Retain autogenic feedback, now reaching this muscle's own PF pair.
@@ -128,13 +135,15 @@ class FunctionalNetwork(W.W2LVarnet):
                 matches=np.flatnonzero((c.post==post)&(c.pre==pre))
                 assert len(matches)==1,(source,target,matches)
                 self.edge_locations.append((post,pre,int(matches[0]),self.act_index[act],row,sign,key))
-        for post,pre,edge,ai,row,sign,key in self.edge_locations:
-            gain=self.options['trunk_gain'] if key.startswith('LUM') else self.options['axis_gain']
-            value=gain*np.clip(sign*rho[row,ai]/self.row_scale[row],0.,1.)
-            c.c.g_max_non[post,pre]=value;c.gmax[edge]=value
+            self.edge_posts=np.array([r[0] for r in self.edge_locations]);self.edge_pres=np.array([r[1] for r in self.edge_locations])
+            self.edge_ids=np.array([r[2] for r in self.edge_locations]);self.edge_acts=np.array([r[3] for r in self.edge_locations])
+            self.edge_rows=np.array([r[4] for r in self.edge_locations]);self.edge_signs=np.array([r[5] for r in self.edge_locations])
+            self.edge_gains=np.array([self.options['trunk_gain'] if r[6].startswith('LUM') else self.options['axis_gain'] for r in self.edge_locations])
+        values=self.edge_gains*np.clip(self.edge_signs*rho[self.edge_rows,self.edge_acts]/self.row_scale[self.edge_rows],0.,1.)
+        c.c.g_max_non[self.edge_posts,self.edge_pres]=values;c.gmax[self.edge_ids]=values
         if self.step_count%100==0:
             self.change_log.append(dict(time_s=float(data.time),hip_flexion_r=float(data.qpos[self.arm_model.addresses[0]]),
-                active_functional_synapses=int(np.count_nonzero(c.gmax[[r[2] for r in self.edge_locations]]))))
+                active_functional_synapses=int(np.count_nonzero(c.gmax[self.edge_ids]))))
 
     def step(self,input_currents):
         if self.live is not None and self.options['primitive']:

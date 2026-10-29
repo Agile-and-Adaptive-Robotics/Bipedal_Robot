@@ -1,0 +1,18 @@
+# Local simulation evidence, not source/configuration for publication.
+*.json
+*.npz
+*.npy
+*.log
+*.db
+*.db-*
+*.sqlite*
+source_snapshots/
+**/sources/
+**/experiment_sources/
+**/source_variants/
+# Small required runtime inputs and curated summaries/specifications.
+!routing_audit.json
+!routing_samples.npz
+!curriculum_20261028_v1/FINAL_SUMMARY.json
+!literature_training_review/TRAINING_PROTOCOL.json
+!literature_training_review/VALIDATION_SUMMARY.json

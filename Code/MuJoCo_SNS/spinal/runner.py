@@ -1251,6 +1251,9 @@ def main(argv):
     if hasattr(net, "bind_mujoco"):
         net.bind_mujoco(model, data)
     aid = {name: i for i, name in enumerate(acts)}
+    fast_io = bool(getattr(net, "fast_io", False))
+    fast_mn_indices = np.array([net.idx[net.mn_names[a]] for a in acts], dtype=int) if fast_io else None
+    fast_controls = np.empty(len(acts)) if fast_io else None
     muscles = net.muscles
 
     # per-muscle normalization: length range and peak force. The converted
@@ -1432,6 +1435,7 @@ def main(argv):
                       for s in net.sides}
             mod_ia = 1.0 + MOD["ia"] * drive_frac
             mod_ii = 1.0 + MOD["ii"] * drive_frac
+            stance_per_act = np.array([stance[muscles[a].side] for a in acts]) if fast_io else None
             g_ia = np.where(stance_ext,
                             AFF["ia_gain"] * mod_ia * (0.5 + 0.5 * np.array(
                                 [stance[muscles[a].side] for a in acts])) * _gam,
@@ -1460,8 +1464,8 @@ def main(argv):
                 # i0_ii=1.0 nA tonic excites every extensor MN ~0.2 ctrl
                 # through swing (phase-aligned means: quads 0.25 in swing,
                 # knee parked at +10 deg - diag_phase.py)
-                u_ii = AFF["i0_ii"] * (0.3 + 0.7 * np.array(
-                    [stance[muscles[a].side] for a in acts]))[i] \
+                u_ii = AFF["i0_ii"] * (0.3 + 0.7 * (stance_per_act if fast_io else np.array(
+                    [stance[muscles[a].side] for a in acts])))[i] \
                     + g_ii[i] * len_norm[i]
                 if vest_prop_on:
                     # goal2 (SCONE T3a KL analog): scale the stance-gated
@@ -1726,9 +1730,13 @@ def main(argv):
 
         # --- neural step + motor mapping ---
         v = net.step(u)
+        if fast_io:
+            np.take(v, fast_mn_indices, out=fast_controls)
+            np.divide(fast_controls, E_HI, out=fast_controls)
+            np.clip(fast_controls, 0.0, 1.0, out=fast_controls)
         for i, a in enumerate(acts):
-            c = float(np.clip(v[net.idx[net.mn_names[a]]] / E_HI,
-                              0.0, 1.0))
+            c = float(fast_controls[i]) if fast_io else float(np.clip(
+                v[net.idx[net.mn_names[a]]] / E_HI, 0.0, 1.0))
             # per-side contact-reset phase machine (G["pm_gain"] > 0
             # only): during this side's swing window, scale extensor
             # ctrl DOWN and flexor ctrl UP — guarantees every leg a

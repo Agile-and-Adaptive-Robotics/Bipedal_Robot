@@ -1,0 +1,87 @@
+{
+  "status": "Specification; four functional fits not completed",
+  "machine": "easteregg2",
+  "repository": "D:\\GitHub\\Bipedal_Robot",
+  "python": "D:\\Anaconda\\envs\\myo\\python.exe",
+  "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody_cvt3.xml",
+  "sources": {
+    "hunt": "C:\\Users\\Ben Bolen\\Downloads\\19_02_15 - INRC.pptx, slides 39-46, 48-49",
+    "deng2023": "D:\\GitHub\\_zcode_backups\\lit_20261026\\kaiyu2023.docx, Figures 1, 3, 5, 7, Tables 1-2",
+    "doi": "10.1007/978-3-031-39504-8_2"
+  },
+  "physics": {"engine": "MuJoCo 2.3.7", "integrator": "implicitfast", "physics_neural_step_s": 0.002},
+  "acceleration": {
+    "current_fixed_tau_variant": "SparsePairwiseForward, preallocation, no fastmath, one BLAS thread per worker",
+    "verification": "Neural voltage and h-gate equality; complete-trajectory parity before accepting a new configuration",
+    "voltage_dependent_tau_variant": "Requires its own equation-preserving backend; do not silently use the fixed-tau evaluator"
+  },
+  "target_preparation": {
+    "required": [
+      "Hash and document the model, motion, GRF, and muscle-force assumptions",
+      "Map and check reference motion and loads against this model's geometry, mass, and constraints",
+      "Solve feasible muscle tensions using equality-aware moment arms and the actual muscle force model",
+      "Map target tension to native MN activation with force-length/velocity and passive-force effects documented",
+      "Encode expected Ia, II, and Ib with the same definitions used at runtime",
+      "Separate temporal activation profiles from spatial recruitment and pose-dependent functions",
+      "Reserve afferent sequences and disturbances for validation rather than fitting"
+    ],
+    "existing_short_inverse_force_and_nmf_data": "Exploratory; not measured EMG or independently validated biological primitives"
+  },
+  "functional_training_blocks": [
+    {
+      "id": "A_intrinsic_rhythm",
+      "fit": "Intrinsic RG dynamics",
+      "disable": ["external drive", "afferent feedback", "commissural inputs for single-leg calibration"],
+      "target": "Undriven free-running period approximately 2 times the target stepping period",
+      "evidence": "Finite sustained oscillation, measured periods and duty, initialization and transient window recorded",
+      "status": "Not fitted"
+    },
+    {
+      "id": "B_sensory_transition",
+      "fit": "Expected-afferent projections that control RG/PF transitions",
+      "freeze": ["intrinsic RG dynamics", "MN output and reflex gains"],
+      "input": "Teacher-forced expected afferent signals, with separate held-out sequences",
+      "target": "Transitions at the desired stepping timing",
+      "evidence": "Phase transition error and period on training and held-out afferents",
+      "status": "Not fitted"
+    },
+    {
+      "id": "C_feedforward_output",
+      "fit": "Joint PF timing/distribution, biarticular integration, PF-to-MN output",
+      "freeze": ["accepted intrinsic and sensory timing solution"],
+      "disable": ["MN Ia/Ib refinement pathways during initial output fitting"],
+      "target": "Desired MN peak magnitude, timing, and waveform, with static posture contributions recorded separately",
+      "feedforward_guidance": "Hunt slide 43 gives 70%+ nominal MN activity; define a contribution measure before scoring, not a universal activation floor",
+      "evidence": "Activation peaks/waveform errors and mechanical torque/ROM feasibility",
+      "status": "Not fitted"
+    },
+    {
+      "id": "D_reflex_refinement",
+      "fit": "MN Ia/Ib feedback refinement",
+      "freeze": ["accepted RG, sensory timing, and PF/MN feedforward parameters"],
+      "target": "Improve the desired activation waveform and disturbance response without replacing the feedforward solution",
+      "evidence": "Held-out afferent error and closed-loop tests, including weakened/missing feedback and altered loads",
+      "status": "Not fitted"
+    }
+  ],
+  "freezing_policy": "Engineering enforcement of modular training, not a verbatim requirement from the slide deck",
+  "physical_environments": ["deafferented air", "afferented air", "standing", "air pattern", "ground stepping"],
+  "promotion": {
+    "failed_fresh_replay_stops": true,
+    "diagnostic_override": "--diagnostic-continue; exploration is not graduation",
+    "required": ["complete finite motion", "stage-appropriate balance/load checks", "physical bilateral cycles where appropriate", "bounded RoM", "frontal ankle/knee ordering", "contact and assistance checks on ground"],
+    "frontal_origin_separation_m": 0.02,
+    "frontal_threshold_basis": "Engineering screen, not full foot-edge/self-collision clearance or a literature value",
+    "final_basin": "Fresh processes, independent +/-1% perturbation of every saved scalar, all relevant gates"
+  },
+  "deng_comparison": {
+    "conditions": ["active", "active-force-off with passive force retained", "active and passive forces off"],
+    "neural_edge_deletion": "Separate neural-pathway experiment; not equivalent to active force off",
+    "nominal": "Separate unperturbed reference for each mechanical condition",
+    "disturbances": ["RG current", "joint-PF current", "mechanical torque"],
+    "human_scaling": "Document torque relative to model mass, gravity, and leg length; do not copy rat 0.1 Nm as a comparable dose",
+    "outcomes": ["phase displacement", "amplitude disturbance", "recovery cycles", "contact changes", "support forces"],
+    "status": "Protocol specified; active/passive mechanical comparison not yet run"
+  },
+  "publication_boundary": "No dissertation, biomimetic results, or defense figures changed by this method review"
+}

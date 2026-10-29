@@ -8395,10 +8395,153 @@ Robot launchers are now in `Code\MuJoCo_SNS\robot_torso\`:
 `Launch_AH001_Replay.ps1` (`-RunNew` to simulate before replay).
 They launch the saved supported hybrid MuJoCo demonstration, not Simscape.
 
+<!-- FUNCTIONAL_PF_CURRICULUM_START -->
+### Five-stage functional PF campaign: final audited outcome
+
+**Ran all five stages, 100 trials each (500 optimization trials) on easteregg2. No valid 3D gait is accepted.**
+
+Final report: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20261028_functional_pf\curriculum_20261028_v1\FINAL_REPORT.md`.
+
+| Stage | Trials | Full-duration finite | Original screen passes |
+|---|---:|---:|---:|
+| 1 | 100 | 99 | 0 |
+| 2 | 100 | 99 | 0 |
+| 3 | 100 | 90 | 0 |
+| 4 | 100 | 86 | 22 |
+| 5 | 100 | 81 | 64 |
+
+Original screens measure physical sagittal motion, timing, and contact; they omit frontal crossing. Stages 1–3 fail their gates. Final stage-four and stage-five winners pass their original screens fresh and in 8/8 independent +/-1% perturbations each, but fail frontal separation in 8/8 each. Later-stage attempts do not imply successful graduation through the earlier failed stages.
+
+Final ground trial 80: 5/5 late-window knee cycles, 1.750 s period, half-cycle phase error 0.0061, knee excursions 94.0/90.3 degrees, and hip excursions 56.4/55.5 degrees. Repeated foot loading is present, but detected contact onsets (8/13) exceed the physical knee-cycle counts. Displacement is only +0.058 m under the fixed support. This is supported in-place motion, not validated forward walking. Rig scale 0.948 scales spring stiffness/damping, not a body-weight-support fraction.
+
+Deleting direct biarticular PF-to-MN drive at 8 s preserves every saved pre-intervention state exactly. Saved motor commands change by up to 1.0 within 100 ms, and joint coordinates later diverge by up to 55.93 degrees. The new biarticular PF pathways therefore affect the actual closed-loop controller. No CAD-style MN target-current cancellation is used.
+
+The protected s3k anchor remains exactly -161.56754173676563, with every saved baseline array bit-exact after the optional speed-up changes. The sparse pairwise backend, cached functional routing, and opt-in motor/sensory I/O preserve full checked trajectories.
+
+Corrective frontal experiments include isolated axis gains, faster PF/relay dynamics, damping and position gains, functional inhibitory relays, nonnegative torque-based recruitment, separated inherited pattern drive, and tonic abductor PF input. None is promoted. The first air candidate’s 3/8 result below is historical; the final air/ground winners reach 8/8 original-screen robustness while still failing frontal checks.
+
+Diagnostic figure: `Code\MuJoCo_SNS\spinal\reports_20261028_functional_pf\curriculum_20261028_v1\ground_finalist_diagnostics.png`. Raw configurations, source snapshots, trajectories, robustness cases, and causal interventions are retained. Dissertation prose and slides were not changed by this curriculum campaign.
+<!-- FUNCTIONAL_PF_CURRICULUM_END -->
+
+### Curriculum diagnostics and verified acceleration
+
+The new sparse pairwise neural backend preserves NumPy's reduction tree.
+At 980 neurons its 1,000-step neural timing check was 11.23 times faster
+than the preceding preallocated backend, with zero voltage difference.
+Every saved array of a 16 s moving-leg pilot remains bit-exact after sparse
+summation, vectorized functional routing, and opt-in preallocated motor
+mapping. Its single-run time changed from 69.51 s to 15.86 s. A full
+afferented comparison also preserves every saved array (113.74 s versus
+34.59 s under concurrent load). These timings are scoped measurements,
+not universal performance or faster-than-real-time claims.
+
+Stage-two tuning produces actual opposite-leg knee cycles near a 1.24 s
+period and approximately half-cycle separation, but excursions remain too
+large for acceptance. Six small-feedback continuation seeds and six
+stage-four amplitude seeds are recorded explicitly in the campaign folder.
+Slower-rhythm probes at 0.8–1.2 s NaP time constants lose alternation;
+slowing the rhythm alone does not solve coordination.
+
+Separate symmetric-start standing checks improve maximum torso tilt to
+approximately 12–14 degrees and near-even foot contact. They still fail
+the balance gate: foot-normal-force/body-weight is only approximately
+0.28–0.32 and COM displacement from the foot reference is large. These
+checks are distinguished from the main curriculum and do not establish
+independent balance or a passed standing stage.
+
+Evidence: `reports_20261028_functional_pf\full_trajectory_speedup_verification.json`,
+`afferented_speedup_verification.json`, and campaign subfolders
+`targeted_slowing\` and `symmetric_standing\`.
+
+### Air-screen pass is not a complete gait result
+
+Stage-four trial 2 passes the initial sagittal air-pattern screen: 7/7
+physical knee cycles, period 1.234 s, full matched-cycle coverage, phase
+error 0.00385 cycles, knee excursions 92.3/97.7 degrees, and hip excursions
+67.1/65.6 degrees. A fresh replay reproduces that screen pass.
+
+The original frontal widths/percentages in this paragraph are withdrawn
+after the anatomical-axis correction documented below. Corrected measurements
+for this older candidate are minimum ankle separation -0.185 m, crossed ordering
+in 2.25% of the sampled late window, and minimum knee separation -0.040 m.
+It still fails the body-origin separation gate. Only 3/8 independent +/-1% all-scalar perturbations pass
+the original sagittal screen. This candidate is therefore NOT accepted as
+robust gait and must not be presented as such. Media are diagnostic recorded
+states, not new defense evidence. Hip-X-only feedback and adductor-drive
+probes are being kept separate from the frozen curriculum studies.
+
+Evidence: campaign `air_basin_t0002\SUMMARY.json`,
+`trials\s4_t0002.frontal.json`, `air_t0002_media\`, and `hipx_probes\`.
+
+<!-- SESSION1_DENG_HUNT_REVIEW_START -->
+### Deng 2023 and Hunt's 2019 functional training method
+
+Machine: easteregg2. Reviewed all 57 slides and speaker notes from
+`C:\Users\Ben Bolen\Downloads\19_02_15 - INRC.pptx`, including the training
+plots/circuit artwork, and the user-supplied Deng 2023 manuscript at
+`D:\GitHub\_zcode_backups\lit_20261026\kaiyu2023.docx`.
+Evidence and source limitations:
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20261028_functional_pf\literature_training_review\REVIEW.md`.
+
+Hunt's slide 44 trains four functions separately: intrinsic CPG period near
+twice the stepping period without drive; expected-afferent transition timing;
+PF-to-MN output peaks; then Ia/Ib activation refinement. Slide 46 warns against
+whole-network fitting that overdepends on expected feedback. The five physical
+environments in the 500-trial campaign did not implement these four functional
+fits. Slide 43's 70%+ feedforward guidance is not a minimum coactivation level
+or an automatically additive percentage of conductance-based MN output.
+
+Deng 2023 uses joint PF outputs to form intermediate BFP/RF/GA patterns,
+distinguishes active and passive biarticular mechanics, and shows knee-PF
+perturbation shifting RG timing through the closed mechanical/sensory loop.
+The blanket rule that PF perturbations cannot reset phase has been corrected
+in the shared neuroscience skill. The source is a sagittal rat model with
+suspended perturbation tests, not evidence for unsupported human/robot gait.
+
+Added a separate experimental joint-integration variant, 962 neurons/400 inputs
+before initialization. It combines hip extension+knee flexion for HAM/BFP-like
+drive, hip flexion+knee extension for RECT, and knee flexion+ankle extension
+for GAS. The current human joint PFs remain leaky and several other source
+differences remain; this is not a paper replication. Two bounded air probes
+produce 5/5 knee cycles near 1.75 s but fail RoM and corrected frontal checks.
+The four functional fits remain incomplete; no improved gait is promoted.
+
+Verification: 1,000 steps of exact neural voltage/h-gate agreement, all 13
+recorded arrays bit-exact in a complete sparse-versus-preallocated trajectory,
+and three promotion tests that stop before any trial. Future evaluations include
+an anatomical frontal gate; failed fresh replays stop curriculum progression
+unless `--diagnostic-continue` explicitly requests unqualified exploration.
+
+### Anatomical-axis measurement correction
+
+The earlier frontal audit rotated world -y as if it were pelvis-local, making
+the separation measure nearly vertical. Earlier widths/percentages are withdrawn.
+The corrected method derives anatomical right from hip anchors and verifies
+pelvis-local +z. Neutral ankle/knee widths are 0.18284/0.167 m; neutral and crossed
+pose tests now pass. Final air minimum ankle width is -0.080 m with 19.5% crossed
+ordering; final ground is -0.370 m with 100% crossed ordering. Both finalists and
+all 16 final perturbations still fail the corrected gate. Raw simulations,
+sagittal results, and the controller's coordinate mappings are unchanged.
+Earlier corrective-probe frontal rankings need separate re-audit. The final
+report, summary, and diagnostic plot now carry the corrected measurements.
+
+### Generated-file storage
+
+Per Ben's preference, raw JSON trial outputs, NPZ trajectories, logs, databases,
+and generated source snapshots remain local on D: and are gitignored in the
+functional-PF and family-audit directories. Removed 183 previously tracked
+byproducts from Git's index while preserving all 510,428,214 bytes locally;
+these appear as staged removals in GitHub Desktop. Required small routing
+inputs, code, concise reports, and curated summaries/specifications remain
+visible. No commit, deletion of working files, or history rewrite was made.
+Storage manifest: `D:\GitHub\Bipedal_Robot\tmp\simulation_artifact_untracking_manifest.json`.
+<!-- SESSION1_DENG_HUNT_REVIEW_END -->
+
 ### Scope and next steps
 
-Continue stepping diagnostics and inspect contact, phase, and support forces
-before classifying locomotion. Supported stance and complete-trajectory backend
+Build model-consistent afferent/MN training targets and fit the four functional
+blocks separately before reopening a full closed-loop gain search. Recheck contact,
+phase, anatomical separation, and support forces before classifying locomotion. Supported stance and complete-trajectory backend
 parity are now verified within the assistance conditions stated above. Updated
 ZCode prompts name easteregg2 and provide full paths, environment, and runnable
 commands in
