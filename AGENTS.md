@@ -394,3 +394,6 @@ Latest Appendix C pass: APPENDIX_C_CORRECTIONS_20261028.md. Registered bone draw
 
 Latest measured-dimensions/target clarification: MEASURED_DIMENSIONS_AND_TARGET_20261028.md. Table C7 now records individual resting/tendon lengths: flexors 561/28 and 560/30 mm; extensors 828/92 and 826/85 mm. Shared prediction inputs remain separate. Both manuscripts explicitly state that the -86.5-degree measurement exceeds the human target; the 2.06 N m shortfall is against the pressure-specific prediction only. All nine extensor measurements retain their meet/exceed conclusion. No data, coefficients, fit values, or curves changed. Local dissertation 321 pages/live 322; paper 33 + supplement 10. No commits/pushes.
 
+
+## Consolidation completed (2026-10-28)
+Dissertation 311 pages local/live; paper 33 plus 10 supplement. Consolidated methods, SADb, SNS, Discussion, Conclusion, and appendices; adopted flexor row 77 is the dated two-bracket/two-transform result. Published Chapter 20 and biomimetic results preserved. Twenty-nine verified comments resolved; seven remain, including all extensor threads. Tracked changes remain pending. See Notes/committee_revision_20261027/CONSOLIDATION_COMPLETED_20261028.md. Delivery PDFs/ZIPs refreshed; no commits/pushes.
