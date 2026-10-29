@@ -107,7 +107,7 @@ ax.plot(anchor[0],anchor[1],marker='D',ms=5,color=INK,zorder=8)
 ax.plot([.12,R],[2.9,2.9],color=INK,lw=2)
 ax.plot([R,R],[2.9,2.65],color=INK,lw=1.5)
 ax.text(1.48,2.82,'Proximal attachment',fontsize=10)
-ax.annotate('Braided BPA',xy=(R,1.7),xytext=(2.02,1.7),arrowprops=dict(arrowstyle='-',lw=.7),va='center')
+ax.annotate('BPA',xy=(R,1.7),xytext=(2.02,1.7),arrowprops=dict(arrowstyle='-',lw=.7),va='center')
 ax.annotate('Distal tendon',xy=tuple(center[-1]+.3*v),xytext=(.55,-2.2),arrowprops=dict(arrowstyle='-',lw=.7),fontsize=10)
 
 for th in [0,-65]:
