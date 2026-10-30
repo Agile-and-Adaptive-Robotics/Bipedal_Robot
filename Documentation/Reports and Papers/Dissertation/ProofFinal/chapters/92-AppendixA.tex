@@ -195,7 +195,7 @@ The compliance-corrected muscle length entering Equation~(\ref{eq:Lm}) is comput
     k_{\hat{u},br} = \left(\hat{u}^{\,T}\mathbf{K}_{br}^{-1}\hat{u}\right)^{-1},
     \label{eq:app_kbr}
 \end{equation}
-matching Equation~(\ref{eq:bktstiffness}), and the origin-side second bracket contributes an additional scalar compliance $c_{b2}$ in series (Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_stiffness_arrays}). As executed by the evaluator of record, both bracket frames are assembled pitch-only, at \texttt{minimizeFlxPin.m} line 289 (insertion) and line 306 (origin), with the two-rotation assemblies carried as commented alternatives; the insertion array is $[X_{1},X_{2},X_{1}]$ (line 387) and the origin array $[X_{1},X_{1},X_{2}]$ (line 400). The two-rotation-capable twin of the same block is \texttt{minimizeFlxPin2brk.m} lines 387--418. An earlier arm-1 array $[X_{1},X_{2},X_{2}]$ is superseded and survives only in the provenance comment at line 387, and the legacy single-bracket evaluator uses $[X_{1},X_{2},X_{1}]$ (\texttt{minimizeFlxPinX3.m} line 267).
+matching Equation~(\ref{eq:bktstiffness}). The origin-side bracket contributes an additional scalar compliance $c_{b2}$ in series. Both bracket frames use the two-rotation construction of Equation~\eqref{eq:app_bracketframe}. Their stiffness arrays are $[X_1,X_2,X_1]$ at insertion and $[X_1,X_1,X_2]$ at origin, as listed in Table~\ref{tab:app_stiffness_arrays}.
 
 The artificial tendon is modeled as an axial spring with stiffness
 \begin{equation}

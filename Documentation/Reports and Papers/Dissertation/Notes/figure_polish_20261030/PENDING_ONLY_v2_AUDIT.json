@@ -1,0 +1,1342 @@
+{
+  "version": "v2",
+  "date": "2026-10-30",
+  "state": "FINAL: current source anchors verified; approved figure corrections closed after integrated r2 checks",
+  "group_count": 25,
+  "dissertation_groups": 17,
+  "paper_groups": 8,
+  "original_pdf": "D:\\Github\\Bipedal_Robot\\output\\pdf\\Dissertation_Audit_Followup_20261030.pdf",
+  "original_pdf_sha256": "62142f2851985a275724f426f06d26187dab76bbceb949329d6369dbf738ad28",
+  "source_manifest": {
+    "15-background": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\15-background.tex",
+      "sha256": "814a896e0a214bf8b83df50db9c72e58036cead32cb5b14b62556995bf223d67",
+      "lines": 290
+    },
+    "30-torque": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+      "sha256": "df3a3c081830b667b1d3105a5b8154f6d63250d32a5b5f8187b3b67863af0060",
+      "lines": 803
+    },
+    "50-database": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+      "sha256": "0f1891fa565353430e462c05afb78efa55fdf145351df07c266aacb4b630ec21",
+      "lines": 84
+    },
+    "60-sns": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+      "sha256": "7d72673b8c806d4412a3e4f849db344181d631270d53ab066379399525e031fe",
+      "lines": 241
+    },
+    "93-AppendixB": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\93-AppendixB.tex",
+      "sha256": "a3734f52f306cf2a07be3c743414bbd0e79d3871e66b027cb05e8fd89ed0e13f",
+      "lines": 225
+    },
+    "94-AppendixC": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\94-AppendixC.tex",
+      "sha256": "478fd04d6b078d72aaae932ded43890fb68af152b229c0ef5a64ba78a17e3d3c",
+      "lines": 525
+    },
+    "95-AppendixD": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+      "sha256": "b9ffbe47f68153413b92c4036e11ca3765c6145c7c1696f8cd166d98c9c73a6f",
+      "lines": 456
+    },
+    "96-AppendixE": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\96-AppendixE.tex",
+      "sha256": "af1d216e37a9521488cc0853ee526fa67e77c553b013672fdd1cd51b6c62d652",
+      "lines": 57
+    },
+    "Main": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+      "sha256": "101ed4c28cc2c55072c19123841f691052e2dbe405620e3a5dc6858aa2613de5",
+      "lines": 757
+    },
+    "Supplement": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\frontiers_SupplementaryMaterial.tex",
+      "sha256": "d2f19284d6288057fe716dad949220dfc2a28ec07b2275bd4cce3326beab8b48",
+      "lines": 353
+    },
+    "PaperBib": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\BolenFrontiers22.bib",
+      "sha256": "37371057529c0cf45cd2c95bb3a8960cdf3786368232ceca70e6822e26694e4a",
+      "lines": 1166
+    },
+    "ThesisBib": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\thesis.bib",
+      "sha256": "f1ba8585a124fc60ef459f9b2036364f96af9261598c18b0dddc3d7241259e72",
+      "lines": 2264
+    }
+  },
+  "excluded": [
+    "FVU reanalysis or reoptimization",
+    "AI-tool ratings/assessment method or corpus reclassification",
+    "waived individual-vastus example",
+    "new simulations/refits",
+    "already resolved review metadata and retained pushbacks"
+  ],
+  "pending_items": [
+    {
+      "id": "D01",
+      "title": "Document the historical gait score behind each result family",
+      "status": "Existing-record verification",
+      "original_ids": [
+        "SNS-S01"
+      ],
+      "evidence": "Appendix D still describes zero as perfect agreement and calls the tuning errors mean-removed, but does not identify the exact historical objective, its terms, or its version. Earlier code review identified additional mean-angle and bilateral-bonus terms; the link between that revision and every saved table remains unestablished.",
+      "action": "Match the saved result families to their archived scorer. Give a short equation or term/weight table and distinguish the no-cycle sentinel from a genuine gait score.",
+      "locations": [
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 127,
+          "section": "§D.3 Tuning and Supported Evaluations",
+          "anchor": "The cycle-shape metric assigns zero to perfect agreement.",
+          "source_line": "The cycle-shape metric assigns zero to perfect agreement. A run without detectable cycles returns $-25$ as a reserved failure value. Because this value is numerically greater than the genuine-gait scores below, failed runs must be identified before ranking scores. That value itself is not a valid measure of gait quality."
+        },
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 157,
+          "section": "§D.3.2 Direct Kinematics Overlay",
+          "anchor": "These errors retain posture offsets and are distinct from the mean-removed cycle-shape errors used in tuning.",
+          "source_line": "Mean cycle periods were \\qty{1.285}{\\second} on the right and \\qty{1.254}{\\second} on the left, compared with \\qty{1.233}{\\second} and \\qty{1.213}{\\second} in the reference. Model stance fractions were 0.710 and 0.649, compared with 0.610 in the reference. Table~\\ref{tab:ik_absolute_rmse} reports absolute-angle errors between mean cycles. These errors retain posture offsets and are distinct from the mean-removed cycle-shape errors used in tuning. The hip and knee mismatches show why cycle counts and a scalar score must be accompanied by the trajectories and contact timing."
+        }
+      ],
+      "boundary": "Use existing records; preserve reported scores. No tuning or simulation is requested.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "zero to perfect agreement",
+      "pdf_action": "Match each saved result family to its archived scorer/version. Define its equation or terms and distinguish the no-cycle sentinel. Preserve recorded scores.",
+      "pdf_context": "The historical objective is not operationally identified."
+    },
+    {
+      "id": "D02",
+      "title": "Define duty and knee-minimum denominators for the zero-cycle case",
+      "status": "Existing-definition verification",
+      "original_ids": [
+        "SNS-S02"
+      ],
+      "evidence": "The supported-ground table says knee minima and contact duty are computed over detected cycles, yet its non-spiking left leg has zero detected cycles and a contact duty of 0.985.",
+      "action": "Check the saved diagnostic definition. If duty is a time fraction over the scored window, label it that way; state how the reported knee minimum is selected.",
+      "locations": [
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 222,
+          "section": "§D.4.1 MuJoCo Network and Ground Evaluation",
+          "anchor": "Knee minima and contact duty are computed over detected cycles.",
+          "source_line": "\\caption{Supported ground evaluation at the same selected parameters (16 s), with no spiking re-tuning. Knee minima and contact duty are computed over detected cycles. The kinematic score is a cycle-shape error metric: zero denotes perfect agreement, and less negative scores indicate closer agreement.}"
+        },
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 229,
+          "section": "§D.4.1 MuJoCo Network and Ground Evaluation",
+          "anchor": "Gait cycles, right / left",
+          "source_line": "Gait cycles, right / left      & 9 / 0 (left frozen) & 8 / 9 (bilateral) \\\\"
+        },
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 231,
+          "section": "§D.4.1 MuJoCo Network and Ground Evaluation",
+          "anchor": "Contact duty, right / left",
+          "source_line": "Contact duty, right / left     & 0.637 / 0.985       & 0.799 / 0.856 \\\\"
+        }
+      ],
+      "boundary": "Clarify the caption and definition without recalculating the run.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "computed over detected cycles",
+      "pdf_action": "Check the saved duty and knee-minimum definitions; label the actual denominator, including the zero-cycle leg. Keep reported values.",
+      "pdf_context": "The caption is cycle-conditioned, but the left leg has zero cycles and a duty of 0.985."
+    },
+    {
+      "id": "D03",
+      "title": "Identify the earlier spiking knee comparison as a startup configuration",
+      "status": "Clarification proposal",
+      "original_ids": [
+        "SNS-S03",
+        "O-A08"
+      ],
+      "evidence": "The five-second spiking comparison retains “matched operating point” and “settle” terminology. The main chapter now explicitly describes a different, broadened-ramp graded configuration that settles before its pulse. The earlier traces should not imply replication of that later experiment.",
+      "action": "Label the retained comparison as the earlier startup test, use “final-window” where steady settling was not demonstrated, and briefly state its angle convention and relation to the later transient configuration.",
+      "locations": [
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 251,
+          "section": "§D.4.2 Simulink Demonstrations",
+          "anchor": "Knee-reflex demonstration, graded baseline versus spiking twin at the matched operating point",
+          "source_line": "\\caption{Knee-reflex demonstration, graded baseline versus spiking twin at the matched operating point (5 s runs; settle statistics over the last \\qty{2}{\\second}).}"
+        },
+        {
+          "file_id": "60-sns",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+          "filename": "60-sns.tex",
+          "line": 141,
+          "section": "§6.4.3 SNS-Simscape Block Library and Editor",
+          "anchor": "The displayed configuration broadens the MN and Ia synaptic saturation ramps;",
+          "source_line": "\\noindent\\textbf{Verification.} The library assembles Ia stretch excitation, reciprocal inhibition, and Ib autogenic inhibition in a reduced-order antagonist knee model (Figure~\\ref{fig:sns_reflex_current}C). After the model reaches a steady operating point, a \\qty{2}{\\nano\\ampere}, \\qty{30}{\\milli\\second} current pulse at the extensor Ia sensory-neuron input evokes \\ang{1.09} of extension, peaking \\qty{111}{\\milli\\second} after pulse onset. The knee then returns toward the matched no-stimulus trajectory, meeting the specified recovery thresholds after \\qty{6.355}{\\second}. The displayed configuration broadens the MN and Ia synaptic saturation ramps; the original narrow-ramp settings maintained oscillations. This is a transient test of the implemented feedback and actuator equations, rather than a physiologically calibrated tendon-tap model. Appendix~\\ref{sec:app_knee_transient} gives the configuration and numerical checks, with the complete response in Figure~\\ref{fig:app_knee_transient}."
+        }
+      ],
+      "boundary": "Keep the earlier negative/transient evidence and all recorded values; do not request a new spiking experiment.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "settle statistics",
+      "pdf_action": "Identify the earlier startup configuration, use final-window labels where settling was not demonstrated, and state its angle convention and relationship to the later broadened-ramp transient test.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D04",
+      "title": "Provide one compact model/controller/support map",
+      "status": "Presentation decision",
+      "original_ids": [
+        "SNS-S08",
+        "LATER-37"
+      ],
+      "evidence": "The chapter distinguishes the model families in prose, but Table 6.1 is a tool map rather than a result-to-configuration map. Appendix D still spans human, W2L, spiking, and CAD configurations with different actuator laws and support conditions.",
+      "action": "Consider one appendix table mapping model/mechanics, controller ID, actuator law, assistance, evaluated outcome, saved configuration, and relevant figure/table. Replace some inventory prose with that table; identify “production configuration” precisely.",
+      "locations": [
+        {
+          "file_id": "60-sns",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+          "filename": "60-sns.tex",
+          "line": 122,
+          "section": "§6.4.2 Gait2392-Based Models",
+          "anchor": "Removing Ia feedback eliminated detected cycles in the tested production configuration",
+          "source_line": "The Gait2392-based evaluations use the same reference-library and pathway-removal procedures to compare alternative neural organizations. The full graded, pruned, six-synergy, and W2L-layout configurations show different responses to feedback removal and different agreement with the tuning and library references. Removing Ia feedback eliminated detected cycles in the tested production configuration, whereas other removals and other network organizations had different effects. The library comparisons also exposed asymmetric activity and limited transfer beyond the tuning reference (Appendix~\\ref{sec:gait_library_results}). This demonstrates that the models and experiment drivers can discriminate controller dependence and transfer limits; the comparison does not establish normal human gait."
+        },
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 133,
+          "section": "§D.3.1 Reference-Library Comparison",
+          "anchor": "The production network (",
+          "source_line": "The 43-cycle library contains 32 running trials from eight subjects at four speeds, ten walking references, and a predicted-walking cycle. The walking references span prescribed speeds of \\qtyrange{0.5}{2.0}{\\meter\\per\\second} and self-selected trials. The production network (\\texttt{s3k}), reduced-connection network (\\texttt{s3kpruned}), six-group activation network (\\texttt{syn6}), and W2L-organization network (\\texttt{w2lvar}) were scored without treating a good tuning-reference score as evidence of generalization. Library scores were substantially more negative (Table~\\ref{tab:gait_sweep}), and the evaluations showed unilateral or asymmetric gait. This comparison bounds transfer to the available references; it does not validate normal human walking."
+        },
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 358,
+          "section": "§D.5.4 CAD-Derived Robot Integration",
+          "anchor": "The 262-neuron controller receives 230 inputs",
+          "source_line": "The 262-neuron controller receives 230 inputs and drives 54 reference-tension actuators. Its MN target-current compensation cancels incoming PF and reflex synaptic currents to track the force allocator's targets. Consequently, the effective comparison concerns RG timing, engineered force allocation, and mechanical response, rather than normal PF/reflex authority over activation. Toe-out and small post-ramp knee excursions remain, and the stepping acceptance tests fail."
+        }
+      ],
+      "boundary": "Do not turn different support configurations into a matched support-weaning claim or remove failed outcomes.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "production configuration",
+      "pdf_action": "Consider one appendix map: model/mechanics, controller, saved ID, actuator law, support, outcome, and figure/table. Replace repeated inventory prose and identify the production configuration precisely.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D05",
+      "title": "Enlarge the inspectable SNS diagram details",
+      "status": "Figure-polish decision",
+      "original_ids": [
+        "SNS-S05"
+      ],
+      "evidence": "The retained neuron implementation and the knee inset use much smaller labels than the surrounding explanatory content. These are the SNS library/knee assets, separate from the now-enlarged Chapter 2 comparison and circuit figures.",
+      "action": "Improve internal area allocation: give the neuron signal-flow/ports a readable crop and enlarge the knee inset within its existing composite. Retain the twelve-block overview and all six feedback connections. Also change the existing knee-demo panel citation from `Figure~\\ref{fig:sns_reflex_current}C` to `Figure~\\ref{fig:sns_reflex_current}\\textbf{(C)}`, preserving its figure label.",
+      "locations": [
+        {
+          "file_id": "60-sns",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+          "filename": "60-sns.tex",
+          "line": 149,
+          "section": "§6.4.3 SNS-Simscape Block Library and Editor",
+          "anchor": "{sns_library_implementation_current.pdf}",
+          "source_line": "\\includegraphics[width=\\textwidth,height=0.84\\textheight,keepaspectratio]{sns_library_implementation_current.pdf}"
+        },
+        {
+          "file_id": "60-sns",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+          "filename": "60-sns.tex",
+          "line": 156,
+          "section": "§6.4.3 SNS-Simscape Block Library and Editor",
+          "anchor": "{knee_transient_current_layout.pdf}",
+          "source_line": "\\includegraphics[width=\\textwidth,height=0.80\\textheight,keepaspectratio]{knee_transient_current_layout.pdf}"
+        },
+        {
+          "file_id": "60-sns",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+          "filename": "60-sns.tex",
+          "line": 141,
+          "section": "§6.4.3 SNS-Simscape Block Library and Editor",
+          "anchor": "Figure~\\ref{fig:sns_reflex_current}C",
+          "source_line": "\\noindent\\textbf{Verification.} The library assembles Ia stretch excitation, reciprocal inhibition, and Ib autogenic inhibition in a reduced-order antagonist knee model (Figure~\\ref{fig:sns_reflex_current}C). After the model reaches a steady operating point, a \\qty{2}{\\nano\\ampere}, \\qty{30}{\\milli\\second} current pulse at the extensor Ia sensory-neuron input evokes \\ang{1.09} of extension, peaking \\qty{111}{\\milli\\second} after pulse onset. The knee then returns toward the matched no-stimulus trajectory, meeting the specified recovery thresholds after \\qty{6.355}{\\second}. The displayed configuration broadens the MN and Ia synaptic saturation ramps; the original narrow-ramp settings maintained oscillations. This is a transient test of the implemented feedback and actuator equations, rather than a physiologically calibrated tendon-tap model. Appendix~\\ref{sec:app_knee_transient} gives the configuration and numerical checks, with the complete response in Figure~\\ref{fig:app_knee_transient}."
+        }
+      ],
+      "boundary": "This is an unapproved presentation proposal; no model or connection changes are proposed.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "sns_library_implementation_current.pdf",
+      "pdf_action": "Give the neuron signal-flow/ports a readable crop and enlarge the knee inset inside the existing composite. Retain the twelve-block overview and all six feedback connections. Also replace the attached C in the knee-demo citation with bold parenthesized (C), preserving its figure label.",
+      "pdf_context": "",
+      "pdf_extra_anchor": "Figure~\\ref{fig:sns_reflex_current}C"
+    },
+    {
+      "id": "D06",
+      "title": "Show the contact-phase result in the W2L comparison itself",
+      "status": "Figure-annotation decision",
+      "original_ids": [
+        "SNS-S10"
+      ],
+      "evidence": "The text supplies the central 0.498 versus 0.223 contact phases and 0.35–0.65 criterion. The retained figure caption declares the coordination failure, while the graphic relies on dense traces and differing force-axis limits.",
+      "action": "Annotate the existing columns with the saved phase statistic and acceptance interval. Use matching comparison-axis limits where appropriate; an inset is optional.",
+      "locations": [
+        {
+          "file_id": "60-sns",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+          "filename": "60-sns.tex",
+          "line": 83,
+          "section": "§6.4.1 Li--Deng/W2L Walker and Controller",
+          "anchor": "disabling all sensory feedback shifted median bilateral contact phase from 0.498 to 0.223 cycles.",
+          "source_line": "The saved W2L controller was tested with all saved effective gains delivered to the compiled network. With controller, drive, and support settings fixed, disabling all sensory feedback shifted median bilateral contact phase from 0.498 to 0.223 cycles. A phase of 0.5 cycles indicates alternating foot loading; the supported-stepping criterion accepts 0.35--0.65 cycles. Forward progression and joint cycling persisted, but the feedback-disabled condition failed this criterion for supported stepping (Figure~\\ref{fig:sns_ablation_pair}). Over the \\qtyrange{4.5}{30}{\\second} scored window, forward displacement was \\qty{2.239}{\\meter} with feedback and \\qty{1.996}{\\meter} without it. Thus, the demonstrated feedback contribution is to bilateral contact coordination, rather than the existence of oscillation or forward motion. Additional pathway deletions and stimulus tests are summarized in Appendix~\\ref{sec:app_w2l_perturbations} (Figure~\\ref{fig:app_w2l_perturbations}).\\par"
+        },
+        {
+          "file_id": "60-sns",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+          "filename": "60-sns.tex",
+          "line": 95,
+          "section": "§6.4.1 Li--Deng/W2L Walker and Controller",
+          "anchor": "{w2l_feedback_verified.pdf}",
+          "source_line": "\\includegraphics[width=0.85\\textwidth]{w2l_feedback_verified.pdf}"
+        }
+      ],
+      "boundary": "Preserve the saved traces and metrics; no retuning or new simulation.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "0.498 to 0.223 cycles",
+      "pdf_action": "Annotate the saved median phase and 0.35-0.65 acceptance interval in each figure column. Use matching comparison-axis limits where appropriate; retain every trace.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D07",
+      "title": "Separate optional software acceptance bookkeeping from appendix evidence",
+      "status": "Optional presentation decision",
+      "original_ids": [
+        "APP-A5"
+      ],
+      "evidence": "Appendix B still includes the outstanding graphical-acceptance ruling and several full 17-digit identity scores. The headless-test limits and identity result matter; the project-task status and long strings need not occupy the scientific account.",
+      "action": "If desired, retain the headless-only scope and pass/fail outcomes here, and move GUI task status/full identity strings to the linked verification report. Do not silently round or delete recorded numbers.",
+      "locations": [
+        {
+          "file_id": "93-AppendixB",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\93-AppendixB.tex",
+          "filename": "93-AppendixB.tex",
+          "line": 152,
+          "section": "§B.4.3 Verification Gates of the MuJoCo Mirror",
+          "anchor": "Non-spiking bit-identity & PASS",
+          "source_line": "Non-spiking bit-identity & PASS & default baseline score $-161.56754173676563$ identical before and after the edit (all 17 digits); other baselines $-144.46440311078322$ and $-200.37955834081458$. \\\\"
+        },
+        {
+          "file_id": "93-AppendixB",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\93-AppendixB.tex",
+          "filename": "93-AppendixB.tex",
+          "line": 200,
+          "section": "§B.4.4 AnimatLab Conversion Variants",
+          "anchor": "graphical verification (or an equivalent acceptance ruling) remains outstanding",
+          "source_line": "The spiking copies are headless-run artifacts only: none has been opened in the AnimatLab graphical environment, and graphical verification (or an equivalent acceptance ruling) remains outstanding for every \\texttt{.asim} listed in Table~\\ref{tab:app_spk_animatlab_full}. The mirror work also scoped, but did not attempt, two further conversions: the full 410-population Simulink spinal network (whose every one of 1,392 gains is tuned for graded voltages, making a spiking conversion a full re-tune rather than a parameter port) and the spiking mirrors of the alternative MuJoCo network variants (separate architectures whose fresh tuning is future work)."
+        }
+      ],
+      "boundary": "",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "Non-spiking bit-identity",
+      "pdf_action": "Retain the headless-only scope and identity-test outcome. Consider keeping GUI acceptance status and full 17-digit strings in the archived report rather than the scientific appendix.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D08",
+      "title": "Use reader-facing status terms in Appendix D/B",
+      "status": "Wording proposal",
+      "original_ids": [
+        "SNS-S11"
+      ],
+      "evidence": "The surviving tables/prose still use “dead,” “no / up,” “zero hand drive,” and implementation aliases. These are less precise than the actual outcomes already recorded.",
+      "action": "Use explicit outcomes such as “no sustained alternation” or “zero external neural drive”; separate the yes/no non-finite/fall fields. Keep alias bookkeeping in technical notes unless needed to interpret the model census.",
+      "locations": [
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 233,
+          "section": "§D.4.1 MuJoCo Network and Ground Evaluation",
+          "anchor": "Non-finite states / fell",
+          "source_line": "Non-finite states / fell       & no / up             & no / up \\\\"
+        },
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 304,
+          "section": "§D.5 Supported BPA-Robot Evaluations",
+          "anchor": "retained bilateral stepping down to zero hand drive.",
+          "source_line": "In the separate human-model drive-weaning study, the selected score improved from $-161.57$ to $-145.07$, with ten contact cycles per leg and contact duties of 0.71 and 0.65. It passed eight of eight perturbed reruns and retained bilateral stepping down to zero hand drive. The motion remained in place under support. These two studies distinguish reduced neural assistance from reduced mechanical assistance."
+        },
+        {
+          "file_id": "95-AppendixD",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+          "filename": "95-AppendixD.tex",
+          "line": 360,
+          "section": "§D.5.4 CAD-Derived Robot Integration",
+          "anchor": "four named ankle indices alias knee-PF cells",
+          "source_line": "The foot attachment is an unverified assembly datum. A separate hypothesis translates each whole foot 60 mm toward the proximal shank, retaining tibial geometry and mass. With otherwise unchanged hybrid control, median ankle separation changes from 159.0 to \\qty{57.3}{\\milli\\meter}, and sampled interleg penetration reaches \\qty{1.316}{\\milli\\meter}. A separate W2L-organization timing probe has 544 neurons and 230 inputs; four named ankle indices alias knee-PF cells and are not additional neurons. Its shifted-foot condition passes bilateral unloading and lifting counts but fails repeated alternating foot apices and forward progression. The inherited MN compensation remains active, so this is not a full PF-driven controller comparison."
+        },
+        {
+          "file_id": "93-AppendixB",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\93-AppendixB.tex",
+          "filename": "93-AppendixB.tex",
+          "line": 177,
+          "section": "§B.4.4 AnimatLab Conversion Variants",
+          "anchor": "dead (2 spikes / 5 s)",
+          "source_line": "Two-layer v1        & $-55$/$-59$ mV        & 80  & 17 & 150 & dead (2 spikes / 5 s) \\\\"
+        }
+      ],
+      "boundary": "Preserve negative results and the correct neuron counts.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "Non-finite states / fell",
+      "pdf_action": "Replace debug terms with explicit outcomes, separate the non-finite/fall fields, and clarify zero external neural drive. Keep correct censuses, failed outcomes, and assistance qualifications.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D09",
+      "title": "Improve the remaining route-geometry and transmission figure details",
+      "status": "Figure/readability decision",
+      "original_ids": [
+        "T14",
+        "APP-A3"
+      ],
+      "evidence": "The main A/H cam-pose caption still does not state coordinate axes/units. The Appendix C eight-pose route view, small central 3-D bone view, and first transmission plots retain the original dense area allocation and labels. These are separate from the current 4.11/4.14 plot fixes.",
+      "action": "Supply the main pose frame/axes/units, uncrowd contact labels, and enlarge meaningful detail at final size. Crop the bone view to the knee or omit it if it adds no unique geometry; reduce redundant poses before adding figures.",
+      "locations": [
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 715,
+          "section": "§4.3.3 Redesigned Routes for the Biomimetic Robot Model",
+          "anchor": "Cam-extensor geometry at",
+          "source_line": "\\caption{Cam-extensor geometry at \\ang{-120} (A) and \\ang{10} (H), with the assembled two-BPA hardware below. Panel letters match the complete sequence in Figures~\\ref{fig:app_cam_AF} and~\\ref{fig:app_cam_GH}.}"
+        },
+        {
+          "file_id": "94-AppendixC",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\94-AppendixC.tex",
+          "filename": "94-AppendixC.tex",
+          "line": 325,
+          "section": "§C.6 Redesigned Extensor Route Geometry",
+          "anchor": "{route_geometry_ext20mm_20260925.pdf}",
+          "source_line": "\\includegraphics[width=\\textwidth]{route_geometry_ext20mm_20260925.pdf}"
+        },
+        {
+          "file_id": "94-AppendixC",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\94-AppendixC.tex",
+          "filename": "94-AppendixC.tex",
+          "line": 333,
+          "section": "§C.6 Redesigned Extensor Route Geometry",
+          "anchor": "{bone_mesh_static_extensor20mm.png}",
+          "source_line": "\\includegraphics[width=0.85\\textwidth]{bone_mesh_static_extensor20mm.png}"
+        },
+        {
+          "file_id": "94-AppendixC",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\94-AppendixC.tex",
+          "filename": "94-AppendixC.tex",
+          "line": 406,
+          "section": "§C.8 Supporting Route Searches and Transmission Sweeps",
+          "anchor": "{pulley_torque_resolved_publication.pdf}",
+          "source_line": "\\includegraphics[width=\\textwidth]{pulley_torque_resolved_publication.pdf}"
+        },
+        {
+          "file_id": "94-AppendixC",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\94-AppendixC.tex",
+          "filename": "94-AppendixC.tex",
+          "line": 413,
+          "section": "§C.8 Supporting Route Searches and Transmission Sweeps",
+          "anchor": "{pulley_margin_resolved.pdf}",
+          "source_line": "\\includegraphics[width=\\textwidth]{pulley_margin_resolved.pdf}"
+        }
+      ],
+      "boundary": "Keep all route coordinates and plotted results unchanged. Direct-route and cam views are distinct configurations; do not assume they are duplicates.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "Cam-extensor geometry at",
+      "pdf_action": "Supply the main pose frame/axis names/units and uncrowd contact labels. Enlarge Appendix C route/transmission details; crop the bone view or omit it only if it adds no unique geometry. Direct-route and cam views are distinct configurations.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D10",
+      "title": "Remove repeated full-corpus inventories from Appendix E",
+      "status": "Selective compression decision",
+      "original_ids": [
+        "DB-S5",
+        "SADB_AUDIT—Appendix relevance (unnumbered P3)"
+      ],
+      "evidence": "Appendix E repeats Chapter 5’s full 943-paper field inventory and citation-graph counts before giving the distinct retained-set counts. Its III/IV signal cell also contains a long pathway-convergence explanation.",
+      "action": "Use short Chapter 5 references in place of the repeated full-set lists; retain the unique 561-paper maintenance counts and denominator distinctions. A two-column coverage table is optional. Consider moving the III/IV convergence explanation to the pathway-role column.",
+      "locations": [
+        {
+          "file_id": "50-database",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+          "filename": "50-database.tex",
+          "line": 31,
+          "section": "§5.2 Results: Application and Corpus Coverage",
+          "anchor": "Within the application's Papers category, containing 943 entries,",
+          "source_line": "Within the application's Papers category, containing 943 entries, 833 carry curation notes, 606 have tags for the animals or human participants studied, 316 carry animal-study assessments, 119 link to feedback pathways, 95 carry an afferent classification, and 363 carry robot-or-simulation translation notes. DOI identifiers are present for 892 papers, and 318 have attached-PDF indicators. Within the Papers category, 730 papers are connected by 11,130 directed citation pairs. The Louvain algorithm groups these papers by their citation connections into 18 named topic clusters (Figure~\\ref{fig:sadb_clusters}, callout~(G)), which help users navigate related studies in the Bubble map tab."
+        },
+        {
+          "file_id": "96-AppendixE",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\96-AppendixE.tex",
+          "filename": "96-AppendixE.tex",
+          "line": 10,
+          "section": "§E.1 Record Sets and Coverage",
+          "anchor": "Coverage of the application's Papers category is reported in Chapter",
+          "source_line": "Coverage of the application's Papers category is reported in Chapter~\\ref{ch:database}: among its 943 entries, 833 have curation notes, 606 preparation tags, 316 animal-study assessments, 119 pathway links, 95 afferent classifications, 363 robot/simulation translation notes, 892 DOIs, and 318 attached-PDF indicators. The following retained-set counts describe the maintenance subset only and use a different denominator."
+        },
+        {
+          "file_id": "96-AppendixE",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\96-AppendixE.tex",
+          "filename": "96-AppendixE.tex",
+          "line": 14,
+          "section": "§E.1 Record Sets and Coverage",
+          "anchor": "The citation graph covers the 943-paper audit:",
+          "source_line": "The citation graph covers the 943-paper audit: 730 connected papers, 11,130 directed in-corpus citation pairs, and 18 Louvain groups. Citation proximity is a navigation aid, not mechanistic evidence. Chapter~\\ref{ch:database} shows the citation view (Figure~\\ref{fig:sadb_clusters}); Figure~\\ref{fig:sadb_explorer} shows the paper table."
+        },
+        {
+          "file_id": "96-AppendixE",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\96-AppendixE.tex",
+          "filename": "96-AppendixE.tex",
+          "line": 33,
+          "section": "§E.2 Afferent Classes and Linked Pathways",
+          "anchor": "III/IV & free nerve endings",
+          "source_line": "III/IV & free nerve endings & metabolic and nociceptive signals, converging with cutaneous and group II--III afferents as flexor-reflex afferents & phase-dependent resetting of the locomotor rhythm \\citep{schomburg_flexor_1998} \\\\"
+        }
+      ],
+      "boundary": "The earlier “five text pages before the first image” diagnosis is closed; the current chapter shows the app earlier.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "943 entries",
+      "pdf_action": "Replace repeated full-set inventory/graph lists with Chapter 5 references; retain the unique 561-paper maintenance counts. A coverage table is optional. Consider moving the III/IV convergence explanation into the pathway-role column.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D11",
+      "title": "Identify the retrievable SADb snapshot",
+      "status": "Availability/provenance decision",
+      "original_ids": [
+        "DB-S6"
+      ],
+      "evidence": "The chapter describes the embedded 1,393-record app and monthly watch but still gives no retrievable application release or snapshot identity. A working local browser session is different from an artifact a dissertation reader can obtain.",
+      "action": "Add one verified availability statement for the existing app/repository and the snapshot behind the reported counts/captures. Include an existing version/date if recoverable; do not invent a release or new hosting.",
+      "locations": [
+        {
+          "file_id": "50-database",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+          "filename": "50-database.tex",
+          "line": 8,
+          "section": "Chapter 5 opening",
+          "anchor": "The primary deliverable is SADb Explorer,",
+          "source_line": "The primary deliverable is SADb Explorer, a browser application containing 1,393 literature and related records. It has four main tabs (Figure~\\ref{fig:sadb_clusters}, callout~(A)): Table searches individual records, Pivot compares classifications, Bubble map explores citation links among papers, and Search (online) finds candidate additions through OpenAlex. The records, notes, and citation graph are embedded in the application, so the first three tabs can be used without an internet connection. Search (online) requires an internet connection and lets the user save candidate records for later curation. The application preserves both the records retained for active curation and archived records from the collected material."
+        },
+        {
+          "file_id": "50-database",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+          "filename": "50-database.tex",
+          "line": 25,
+          "section": "§5.1 Curation Methods",
+          "anchor": "I implemented a monthly literature watch",
+          "source_line": "I implemented a monthly literature watch that queries OpenAlex and Crossref for candidate additions matching selected authors and keywords. The script removes DOI and version duplicates, verifies shortlisted DOIs through Crossref, and writes a shortlist for manual curation. Source-access limitations are recorded with the shortlist; inclusion and classification decisions remain manual."
+        },
+        {
+          "file_id": "96-AppendixE",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\96-AppendixE.tex",
+          "filename": "96-AppendixE.tex",
+          "line": 4,
+          "section": "Appendix E opening",
+          "anchor": "This appendix records the curation snapshot",
+          "source_line": "This appendix records the curation snapshot and pathway examples supporting Chapter~\\ref{ch:database}. Counts refer to the stated audited or retained set; they are not estimates of the size of the neuroscience literature."
+        }
+      ],
+      "boundary": "",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "SADb Explorer",
+      "pdf_action": "Identify the existing retrievable app/repository and the archived snapshot behind the 1,393-record counts and captures. Add a verified version/date if available; do not invent a release or hosting.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D12",
+      "title": "Add only the useful local terminology reminders",
+      "status": "Optional gloss/title decision",
+      "original_ids": [
+        "LATER-34",
+        "LATER-35",
+        "LATER-36",
+        "LATER-42"
+      ],
+      "evidence": "Remaining small reader aids are the local meaning of l620, identification/citation of the Hunt force-model baseline, the “Mono- and Bi-Pulley” heading, and OpenAlex’s role as a bibliographic index.",
+      "action": "Consider a brief reminder/cross-reference at l620, a local Hunt citation, and a mechanical reeving heading or definition that distinguishes BPA count, cable parts, and sheave count. Give OpenAlex a short first-use gloss if helpful.",
+      "locations": [
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 83,
+          "section": "§4.1.3 Hybrid Torque Calculation Method",
+          "anchor": "$l_{620}$ and $l_\\text{m}$",
+          "source_line": "where $r$ is the scalar moment arm of Eq.~\\eqref{eq:momentarm_def}, here measured directly with a tape measure as the perpendicular distance from the knee axis to the actuator's line of action, and $F$ is the scalar force magnitude, calculated by measuring the BPA's $P$, $l_{0}$, $l_{620}$ and $l_\\text{m}$ values and using the model fit equations determined in the previous chapter. The hybrid method therefore replaces the model-predicted moment arm $r_{\\mathbf{k}}$ of Eq.~\\eqref{eq:project_ma} and the model-predicted muscle length with their measured counterparts, leaving the force model as the only predicted quantity. The flexor and extensor signs are then assigned using the adopted knee convention."
+        },
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 472,
+          "section": "§4.2 Results",
+          "anchor": "The pinned-flexor results first compare the Hunt actuator model",
+          "source_line": "The pinned-flexor results first compare the Hunt actuator model with the improved BPA force model. Subsequent comparisons use the improved model before and after design-parameter optimization. Hybrid calculations substitute measured muscle length and moment arm to help distinguish force-model error from geometric error on the pinned knee."
+        },
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 764,
+          "section": "§4.3.5 Mono- and Bi-Pulley Tendon Routing",
+          "anchor": "\\subsection{Mono- and Bi-Pulley Tendon Routing}",
+          "source_line": "\\subsection{Mono- and Bi-Pulley Tendon Routing}\\label{sec:disc_pulley}"
+        },
+        {
+          "file_id": "50-database",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+          "filename": "50-database.tex",
+          "line": 8,
+          "section": "Chapter 5 opening",
+          "anchor": "Search (online) finds candidate additions through OpenAlex.",
+          "source_line": "The primary deliverable is SADb Explorer, a browser application containing 1,393 literature and related records. It has four main tabs (Figure~\\ref{fig:sadb_clusters}, callout~(A)): Table searches individual records, Pivot compares classifications, Bubble map explores citation links among papers, and Search (online) finds candidate additions through OpenAlex. The records, notes, and citation graph are embedded in the application, so the first three tabs can be used without an internet connection. Search (online) requires an internet connection and lets the user save candidate records for later curation. The application preserves both the records retained for active curation and archived records from the collected material."
+        }
+      ],
+      "boundary": "The pulley equations already define n and G correctly; no new transmission calculation is requested. Published Chapter 3 stays protected.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "$l_{620}$",
+      "pdf_action": "Consider a local l620 reminder, Hunt-model citation, a reeving heading/definition separating BPA count from cable parts/sheaves, and a brief OpenAlex gloss. The n/G pulley equations already define the transmission.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D13",
+      "title": "Check the existing reuse records for three reproduced images",
+      "status": "Source-specific verification",
+      "original_ids": [
+        "C2-O15",
+        "C2-O16",
+        "C2-O17",
+        "LATER-56",
+        "LATER-57",
+        "LATER-58"
+      ],
+      "evidence": "Kengoro, Rybak 2006 Figure 1, and Shevtsova’s Figure 5.8 have different source/credit contexts. The previous primary-source review did not establish a common CC BY grant or determine whether existing permissions were already held.",
+      "action": "Locate each actual image’s source and existing reuse/permission basis, then use the required credit. Keep the correct 2006 Rybak source and the Springer chapter’s Figure 5.8 attribution.",
+      "locations": [
+        {
+          "file_id": "15-background",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\15-background.tex",
+          "filename": "15-background.tex",
+          "line": 19,
+          "section": "§2.1 Biomimetic and Musculoskeletal Robots",
+          "anchor": "Kengoro human-mimetic musculoskeletal humanoid in neutral",
+          "source_line": "\\caption[Kengoro human-mimetic musculoskeletal humanoid]{Kengoro human-mimetic musculoskeletal humanoid in neutral and upper-limb poses, illustrating its human-scale skeletal structure and densely routed tendon-driven musculature \\citep{asano_design_2017}.}"
+        },
+        {
+          "file_id": "15-background",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\15-background.tex",
+          "filename": "15-background.tex",
+          "line": 169,
+          "section": "§2.5 Neural Control of Locomotion: Central Pattern Generators",
+          "anchor": "Reproduced from \\citet[Fig.~1]{rybak_modelling_2006}",
+          "source_line": "\\caption[Rybak two-level locomotor CPG concept]{Two-level CPG: rhythm generation (RG), pattern formation (PF), motor output, and afferent feedback. Reproduced from \\citet[Fig.~1]{rybak_modelling_2006}.}"
+        },
+        {
+          "file_id": "15-background",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\15-background.tex",
+          "filename": "15-background.tex",
+          "line": 181,
+          "section": "§2.5 Neural Control of Locomotion: Central Pattern Generators",
+          "anchor": "Reproduced from \\citet[Fig.~5.8]{shevtsova_modeling_2016}",
+          "source_line": "\\caption[Shevtsova extended CPG model with two-joint-muscle circuits]{Extended CPG with pattern-formation and motor populations for the two-joint posterior biceps--semitendinosus (PBSt) and rectus femoris (RF). Reproduced from \\citet[Fig.~5.8]{shevtsova_modeling_2016}.}"
+        }
+      ],
+      "boundary": "This is not a finding of unlawful reuse. Do not apply the 2015 review’s license to the 2006 article or add blanket CC BY wording.",
+      "references": [
+        {
+          "title": "Kengoro primary record",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33157878/"
+        },
+        {
+          "title": "Rybak 2006 source",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1890439/"
+        },
+        {
+          "title": "Shevtsova chapter",
+          "url": "https://link.springer.com/chapter/10.1007/978-1-4939-3267-2_5"
+        }
+      ],
+      "yellow": true,
+      "pdf_anchor": "Kengoro human-mimetic",
+      "pdf_action": "Locate the actual source and existing reuse basis for Kengoro, Rybak 2006 Figure 1, and Shevtsova Figure 5.8. Apply each required credit; do not insert blanket CC BY wording or borrow the 2015 review license.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D14",
+      "title": "Confirm the torque manuscript author list and title",
+      "status": "Human metadata decision",
+      "original_ids": [
+        "T11"
+      ],
+      "evidence": "The dissertation’s publication note/bibliographic record names seven torque co-authors and an older title. The companion paper names four authors and uses “Design Factors for Isometric Robotic Knee Torque Using Braided Pneumatic Actuators.”",
+      "action": "Have the authors confirm the intended author list, contribution statement, title, and manuscript status, then align the dissertation note, bibliography, and paper metadata.",
+      "locations": [
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 5,
+          "section": "Chapter 4 opening",
+          "anchor": "Publication note: This chapter is the subject of an unpublished manuscript",
+          "source_line": "\\noindent Publication note: This chapter is the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scharzenberger, and Hunt \\citep{bolen_isometric_2025}. For that work, B.B.\\ performed the conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, and original draft preparation; M.E., L.P., L.B., and C.M.\\ contributed methodology, software, investigation, and data curation; and A.H.\\ supervised the work, administered the project, and acquired funding. All co-authors contributed to writing, review, and editing.\\par}"
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 48,
+          "section": "Paper front matter",
+          "anchor": "\\def\\Authors{",
+          "source_line": "\\def\\Authors{Ben Bolen\\,$^{1,*}$, Lindie Burgess\\,$^{1}$, Connor Morrow\\,$^{1}$, and Alex Hunt\\,$^{1}$}"
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 69,
+          "section": "Paper front matter",
+          "anchor": "\\title[Design Factors",
+          "source_line": "\\title[Design Factors for Isometric Robotic Knee Torque]{Design Factors for Isometric Robotic Knee Torque Using Braided Pneumatic Actuators} "
+        },
+        {
+          "file_id": "ThesisBib",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\thesis.bib",
+          "filename": "thesis.bib",
+          "line": 1113,
+          "section": "References",
+          "anchor": "@unpublished{bolen_isometric_2025",
+          "source_line": "@unpublished{bolen_isometric_2025,"
+        }
+      ],
+      "boundary": "No agent should select or remove co-authors.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "unpublished manuscript in preparation",
+      "pdf_action": "Have the authors confirm the intended list, contribution statement, title, and status; then align the dissertation note, reference, and paper metadata.",
+      "pdf_context": "The dissertation note lists seven torque authors; the paper lists four."
+    },
+    {
+      "id": "D15",
+      "title": "Choose the scope of prior-publication/presentation notes",
+      "status": "Author decision; no insertion authorized",
+      "original_ids": [
+        "PUBLICATION_NOTE_RECOMMENDATION"
+      ],
+      "evidence": "Chapter 5 already identifies the 2023/2024 presentations. Chapter 4 cites the earlier Morrow–Bolen–Hunt placement work and identifies the new unpublished torque manuscript. A citation alone does not tell whether a chapter actually reproduces/adapts prior co-authored material. The 2023 poster record also pairs an SfN note with a NeuroNex URL.",
+      "action": "Choose one concise presentation credit for Chapter 5 rather than duplicating its opener. Confirm the 2023 record/link. For Chapter 4, add a scoped published-material/contribution note only if prior co-authored material is incorporated; merely citing related work does not by itself establish that case.",
+      "locations": [
+        {
+          "file_id": "50-database",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+          "filename": "50-database.tex",
+          "line": 4,
+          "section": "Chapter 5 opening",
+          "anchor": "The resource and the evaluation of AI-assisted literature curation were presented",
+          "source_line": "The Sensory Afferent Database (SADb) is a curated literature resource for studying sensory feedback in locomotion and posture. It links findings from animal and human studies to afferent classes, feedback pathways, and computational models. I developed it within the AARL's NeuroNex Communication, Coordination, and Control in Nervous Systems (C3NS) effort. The resource and the evaluation of AI-assisted literature curation were presented at Neuroscience 2023 and 2024, respectively \\citep{bolen_sensory_2023,bolen_using_2024}."
+        },
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 342,
+          "section": "§4.1.5 Actuator Placement and Route Redesign",
+          "anchor": "\\citep{bolen_determination_2019,morrow_optimization_2020}",
+          "source_line": "The placement search varies actuator attachments to control moment arm and muscle excursion over the joint range of motion \\citep{bolen_determination_2019,morrow_optimization_2020}. For the erector spinae, internal oblique, and external oblique at the lumbosacral joint, the targets are Gait2392 torque surfaces sampled at 100 positions along each of two joint coordinates."
+        },
+        {
+          "file_id": "ThesisBib",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\thesis.bib",
+          "filename": "thesis.bib",
+          "line": 1132,
+          "section": "References",
+          "anchor": "@misc{bolen_sensory_2023",
+          "source_line": "@misc{bolen_sensory_2023,"
+        }
+      ],
+      "boundary": "PSU’s requirement is conditional on incorporated material; a poster does not automatically make the entire later chapter a published paper. The detailed source/Zotero recommendation is preserved separately.",
+      "references": [
+        {
+          "title": "PSU ETD handbook, March 2026",
+          "url": "https://www.pdx.edu/gradschool/sites/gradschool.web.wdt.pdx.edu/files/2026-03/ETD_Formatting_Requirements_and_Format_Review_Handbook_March_2026.pdf"
+        }
+      ],
+      "yellow": true,
+      "pdf_anchor": "presented at Neuroscience 2023 and 2024",
+      "pdf_action": "Choose one concise Chapter 5 presentation credit or keep the existing opener; confirm the 2023 link. Add a scoped Chapter 4 prior-publication/contribution note only if earlier co-authored material is incorporated. A citation or poster alone does not establish whole-chapter republication.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D16",
+      "title": "Choose limited compression of the mechanical methods",
+      "status": "Optional compression decision",
+      "original_ids": [
+        "T13",
+        "LATER-46"
+      ],
+      "evidence": "Chapter 4 and the paper retain successive scalar/component substitutions in the compliance development. Chapter 4 also retains the legacy cube-search steps and numerical weights before the distinct later mesh objective.",
+      "action": "If shortening is useful, inline/move only repetitive substitutions and legacy search implementation details. Keep the advisor-requested bracket mechanics, stiffness projection, series relation, implicit force balance, master’s/Morrow attribution, and distinction between the published cost and the later mesh objective.",
+      "locations": [
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 91,
+          "section": "§4.1.4 / Length Offset and System Stiffness (unnumbered subheading)",
+          "anchor": "\\subsubsection{Length Offset and System Stiffness}",
+          "source_line": "\\subsubsection{Length Offset and System Stiffness}\\label{sec:offset_stiffness}"
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 197,
+          "section": "Paper §2.6 Improved Torque Model: Length Offset and Bracket Compliance",
+          "anchor": "\\subsection{Improved Torque Model: Length Offset and Bracket Compliance}",
+          "source_line": "\\subsection{Improved Torque Model: Length Offset and Bracket Compliance}\\label{sec:improved_model}"
+        },
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 344,
+          "section": "§4.1.5 Actuator Placement and Route Redesign",
+          "anchor": "At each scale the search perturbs both attachments",
+          "source_line": "At each scale the search perturbs both attachments by $\\pm\\epsilon$ offsets along the Cartesian coordinates (eight candidates per attachment, 64 candidate pairs), centers on the lowest-cost pair, and halves $\\epsilon$ when no candidate improves, from an initial $\\epsilon=\\qty{0.1}{\\m}$ down to \\qty{1}{\\mm} \\citep{morrow_optimization_2020}."
+        },
+        {
+          "file_id": "30-torque",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+          "filename": "30-torque.tex",
+          "line": 346,
+          "section": "§4.1.5 Actuator Placement and Route Redesign",
+          "anchor": "The original cost combined the summed absolute torque mismatch",
+          "source_line": "The original cost combined the summed absolute torque mismatch over the sampled poses, actuator length, displacement of the attachments from their starting locations, and a diameter-dependent penalty. The published weights for the first three terms were $10^{-4}$, $10^{-2}$, and $1$, respectively; the penalties for \\qtylist{10;20;40}{\\mm} BPAs were $1$, $5$, and $15$. These were numerical weights chosen to balance differently scaled cost terms. The geometric terms discouraged impractical placements but did not impose collision avoidance: attachments could lie away from the modeled bones, and routes could intersect them. This study established the placement-search approach; it did not establish physical torque accuracy or satisfaction of the human torque requirement at every pose."
+        }
+      ],
+      "boundary": "Do not delete the author-retained route-builder chronology or change equations, weights, or results without an explicit decision.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "Length Offset and System Stiffness",
+      "pdf_action": "Optionally shorten repeated compliance substitutions and legacy search implementation details. Preserve the bracket development, core mechanics, master’s/Morrow attribution, and distinct mesh objective. Keep the author-retained route-builder chronology.",
+      "pdf_context": ""
+    },
+    {
+      "id": "D17",
+      "title": "Separate the two meanings of rho in the contact-release description",
+      "status": "Notation-fix proposal",
+      "original_ids": [
+        "OP07",
+        "LATER-49"
+      ],
+      "evidence": "The same paragraph uses rho(theta) for offset-curve radius of curvature and rho = 3 mm for collision-envelope relaxation. This collision survives in both Appendix C and the paper supplement.",
+      "action": "Use a distinct symbol for the fixed clearance relaxation, retaining rho(theta) for curvature. Change the prose/notation consistently in the two documents and preserve the 3 mm value.",
+      "locations": [
+        {
+          "file_id": "94-AppendixC",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\94-AppendixC.tex",
+          "filename": "94-AppendixC.tex",
+          "line": 377,
+          "section": "§C.7 Contact and Release Angles of the Wrapped Route",
+          "anchor": "each envelope radius may be relaxed by $\\rho = \\qty{3}{\\mm}$",
+          "source_line": "where $\\mathbf{e}(\\vartheta)$ traces the physical profile and $\\hat{\\mathbf{n}}(\\vartheta)$ is its outward normal; the offset curve shares the tangent of the physical profile, its radius of curvature is $\\rho(\\vartheta) = \\rho_{\\mathrm{phys}}(\\vartheta) + R_{\\mathrm{BPA}}$, and the candidate contact positions themselves are seeded at tangent points of this curve. Because the envelopes are drawn at the fully inflated radius while the routed BPA is contracted at the release angles, each envelope radius may be relaxed by $\\rho = \\qty{3}{\\mm}$ inside the gate, floored at the bone profile plus \\qty{0.5}{\\mm}; a rotation-gate opening that still fails the relaxed collision gate indicates that the seed placement, not the gate, must move."
+        },
+        {
+          "file_id": "Supplement",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\frontiers_SupplementaryMaterial.tex",
+          "filename": "frontiers_SupplementaryMaterial.tex",
+          "line": 251,
+          "section": "Supplement §1.5 Contact and Release Angles of the Wrapped Route",
+          "anchor": "each envelope radius may be relaxed by $\\rho = \\qty{3}{\\mm}$",
+          "source_line": "where $\\mathbf{e}(\\vartheta)$ traces the physical profile and $\\hat{\\mathbf{n}}(\\vartheta)$ is its outward normal; the offset curve shares the tangent of the physical profile, its radius of curvature is $\\rho(\\vartheta) = \\rho_{\\mathrm{phys}}(\\vartheta) + R_{\\mathrm{BPA}}$, and the candidate contact positions themselves are seeded at tangent points of this curve. Because the envelopes are drawn at the fully inflated radius while the routed BPA is contracted at the release angles, each envelope radius may be relaxed by $\\rho = \\qty{3}{\\mm}$ inside the gate, floored at the bone profile plus \\qty{0.5}{\\mm}; a rotation-gate opening that still fails the relaxed collision gate indicates that the seed placement, not the gate, must move."
+        }
+      ],
+      "boundary": "",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "\\rho = \\qty{3}{\\mm}",
+      "pdf_action": "Use a separate symbol for fixed clearance relaxation in Appendix C and the paper supplement; retain rho(theta) for curvature and keep the 3 mm value.",
+      "pdf_context": "One paragraph assigns rho to both curvature and a fixed relaxation."
+    },
+    {
+      "id": "P01",
+      "title": "Update the published force-model reference",
+      "status": "Bibliographic correction proposal",
+      "original_ids": [
+        "T05"
+      ],
+      "evidence": "The companion bibliography still defines bolen_2026 as an unpublished manuscript submitted for publication, although the force paper is published in Actuators 15(5):230.",
+      "action": "Replace the stale record’s type/status with the verified journal metadata and DOI 10.3390/act15050230, keeping the cited key and byte-safe bibliography handling.",
+      "locations": [
+        {
+          "file_id": "PaperBib",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\BolenFrontiers22.bib",
+          "filename": "BolenFrontiers22.bib",
+          "line": 1085,
+          "section": "References",
+          "anchor": "@unpublished{bolen_2026",
+          "source_line": "@unpublished{bolen_2026,"
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 112,
+          "section": "Paper §2.2 Actuator Force Model",
+          "anchor": "The actuator force model is fully described",
+          "source_line": "The actuator force model is fully described in \\citet{bolen_2026} and is reproduced here only as far as the torque model requires. The contraction $\\varepsilon$ of a BPA is"
+        }
+      ],
+      "boundary": "This changes reference metadata, not the protected published chapter or the force model.",
+      "references": [
+        {
+          "title": "Published force paper",
+          "url": "https://www.mdpi.com/2076-0825/15/5/230"
+        }
+      ],
+      "yellow": true,
+      "pdf_anchor": "@unpublished{bolen_2026",
+      "pdf_action": "Update the stale record to the published Actuators 15(5):230 metadata and DOI 10.3390/act15050230. Preserve its cited key and use byte-safe bibliography handling.",
+      "pdf_context": ""
+    },
+    {
+      "id": "P02",
+      "title": "Check the remaining small pinned/supplementary plot labels",
+      "status": "Figure-polish decision",
+      "original_ids": [
+        "T07"
+      ],
+      "evidence": "The outstanding scope is the six-panel pinned-extensor figure and supplementary direct-route comparison. The prior audit measured legends around 6.3 and 5.3 pt, respectively. The repaired physical pair and extensor legend are separate, completed changes.",
+      "action": "Re-export or allocate more usable area so the surviving plots meet the standing 10-pt final-size target. Preserve every trace and result; do not treat the repaired physical-pair styles as clearing these other assets.",
+      "locations": [
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 443,
+          "section": "Paper §3.2 Extensor on Pin Joint",
+          "anchor": "\\label{fig:ExtPin_group}",
+          "source_line": "\\caption{Optimized pinned-knee extensor torque: \\textbf{(A)} $l_0=\\qty{43.6}{\\cm}$, \\textbf{(B)} $l_0=\\qty{43.2}{\\cm}$ with a \\qty{22}{\\mm} tendon, \\textbf{(C)} $l_0=\\qty{45.7}{\\cm}$, \\textbf{(D)} $l_0=\\qty{40.0}{\\cm}$, \\textbf{(E)} $l_0=\\qty{40.0}{\\cm}$ with a \\qty{40}{\\mm} tendon, and \\textbf{(F)} $l_0=\\qty{46.5}{\\cm}$. Panels \\textbf{(A)}--\\textbf{(C)} are training tests; \\textbf{(D)}--\\textbf{(F)} are validation tests. The legend applies to all panels.}\\label{fig:ExtPin_group}"
+        },
+        {
+          "file_id": "Supplement",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\frontiers_SupplementaryMaterial.tex",
+          "filename": "frontiers_SupplementaryMaterial.tex",
+          "line": 173,
+          "section": "Supplement §1.3 Figures",
+          "anchor": "\\label{fig:RouteVariants}",
+          "source_line": "\\caption{Predicted redesigned extensor (A) and flexor (B) torque against the human reference and required \\qty{5}{\\percent} design margin.}\\label{fig:RouteVariants}"
+        }
+      ],
+      "boundary": "Confirm final inclusion scale when exporting; the inherited measured values are not a claim that every paper label is undersized.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "fig:ExtPin_group",
+      "pdf_action": "Improve final-size labels in the pinned-extensor and supplementary direct-route figures to the standing 10-pt target. Preserve all traces. This excludes the already repaired physical pair and extensor legend.",
+      "pdf_context": "The unchanged audited assets had legends near 6.3 and 5.3 pt."
+    },
+    {
+      "id": "P03",
+      "title": "Decide whether the journal should place hardware evidence in Results",
+      "status": "Optional paper-structure decision",
+      "original_ids": [
+        "T08"
+      ],
+      "evidence": "The redesigned-route capacity and physical comparisons remain within Discussion. The cost details have already moved to the supplement, and the capacity/physical passages already lead with their important results.",
+      "action": "For journal organization, consider moving the new hardware capacity evidence into Results and leaving interpretation/trade-offs in Discussion. Preserve the currently approved result-first order and pulley placement after that evidence.",
+      "locations": [
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 600,
+          "section": "Paper §4.3.2 Physical Validation Against Human Torque",
+          "anchor": "\\subsubsection{Physical Validation Against Human Torque}",
+          "source_line": "\\subsubsection{Physical Validation Against Human Torque}"
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 623,
+          "section": "Paper §4.4 Whole-Leg Capability Against Human Torque Surfaces",
+          "anchor": "\\subsection{Whole-Leg Capability Against Human Torque Surfaces}",
+          "source_line": "\\subsection{Whole-Leg Capability Against Human Torque Surfaces}\\label{sec:capability_survey}"
+        }
+      ],
+      "boundary": "This is not an instruction to move the specifically named dissertation §4.3.4 or repeat completed U12/U13 work.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "Physical Validation Against Human Torque",
+      "pdf_action": "For journal organization, consider moving hardware capacity evidence into Results, leaving interpretation in Discussion. Keep the approved result-first sequence and pulley placement; this does not move dissertation §4.3.4.",
+      "pdf_context": ""
+    },
+    {
+      "id": "P04",
+      "title": "Replace the remaining identification settings wall with a compact specification",
+      "status": "Compression proposal",
+      "original_ids": [
+        "T09"
+      ],
+      "evidence": "The Identification Procedure still places both stages’ memberships, populations, generations, tolerances, normalization, bounds, and initialization into one long source paragraph. The redesigned-route tables are already completed and are not this issue.",
+      "action": "Consider a two-row stage/settings table, with one short explanatory paragraph. Keep every existing training/validation assignment, bound, solver setting, and adopted stiffness-pair constraint; remove duplicated settings prose rather than adding a decorative figure.",
+      "locations": [
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 382,
+          "section": "Paper §2.8 Identification Procedure",
+          "anchor": "The identification proceeded in two stages.",
+          "source_line": "The identification proceeded in two stages. The flexor stage fits the two-bracket model $(\\chi_{0}, \\chi_{1}, \\chi_{2})$ across the four pinned-knee flexor tests, with the $l_{0}=\\qty{48.5}{\\cm}$ and \\qty{41.0}{\\cm} tests in training and the $l_{0}=\\qty{45.7}{\\cm}$ and \\qty{40.6}{\\cm} tendon tests held out for validation. It evolved a population of 150 for up to 600 generations, terminating early once the relative change in the spread of the Pareto front fell below $4\\times10^{-3}$. The extensor stage locks $(\\chi_{1}, \\chi_{2})$ to a member of the flexor Pareto front, enforcing a single stiffness pair across configurations, and solves only the extensor-specific terms $(\\chi_{0}, \\chi_{3})$ on a six-test pool of the pinned-extensor campaign, at resting lengths of \\qty{40.0}{\\cm} plain and with tendon, \\qty{43.6}{\\cm}, \\qty{43.2}{\\cm} with tendon, \\qty{45.7}{\\cm}, and \\qty{46.5}{\\cm}, with the \\qty{43.6}{\\cm}, \\qty{43.2}{\\cm}-tendon, and \\qty{45.7}{\\cm} tests in training and the \\qty{40.0}{\\cm} plain, \\qty{40.0}{\\cm}-tendon, and \\qty{46.5}{\\cm} tests held out for validation, and the extensor offset allowed negative values. The refit used a population of 50 for up to 150 generations at a spread tolerance of $1\\times10^{-3}$. Both stages searched a normalized space, with length offsets in centimeters and stiffnesses on a base-ten logarithmic scale, so that the genetic search samples the decade-spanning stiffness bounds uniformly. Expressed in physical units, the flexor bounds were $\\chi_{0} \\in [0, 20]$~\\si{\\milli\\metre}, $\\chi_{1} \\in [3\\times10^{4}, 10^{6}]$~\\si{\\N\\per\\metre}, and $\\chi_{2} \\in [5\\times10^{3}, 2\\times10^{4}]$~\\si{\\N\\per\\metre}; the extensor refit searched $\\chi_{0} \\in [-20, +5]$~\\si{\\milli\\metre} and $\\chi_{3} \\in [0, 1]$ with the stiffness pair locked. The initial flexor population was drawn from $\\chi_{0} \\in [5, 15]$~\\si{\\milli\\metre}, $\\chi_{1} \\in [5\\times10^{4}, 5\\times10^{5}]$, and $\\chi_{2} \\in [7\\times10^{3}, 1.5\\times10^{4}]$~\\si{\\N\\per\\metre}."
+        }
+      ],
+      "boundary": "No new optimization or changes to the FVU analysis.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "The identification proceeded in two stages.",
+      "pdf_action": "Consider a two-row stage/settings table and short explanation. Preserve all training/validation memberships, bounds, optimizer settings, and the shared stiffness constraint. Remove duplicated prose, with no new optimization or FVU analysis.",
+      "pdf_context": ""
+    },
+    {
+      "id": "P05",
+      "title": "Represent both hardware routes in the paper abstract",
+      "status": "Framing/optional compression proposal",
+      "original_ids": [
+        "T12",
+        "OP05",
+        "LATER-54"
+      ],
+      "evidence": "The abstract promotes hardware measurements of the redesigned extensor only; the current physical section reports that both redesigned routes met/exceeded their selected references at the measured angles. The abstract, final Introduction paragraph, and Methods Overview also repeat the work sequence.",
+      "action": "Include the existing flexor as well as extensor capacity result in a concise abstract statement, scoped to the tested points/configurations. Optionally trim repeated contribution/process lists between Introduction and Overview.",
+      "locations": [
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 81,
+          "section": "Paper front matter",
+          "anchor": "together with the first hardware torque measurements of the redesigned extensor route.",
+          "source_line": "Artificial muscles such as braided pneumatic actuators (BPAs) reproduce the force and contraction behavior of skeletal muscle, making them attractive for the legs of musculoskeletal robots. However, the isometric torque a BPA delivers about a joint remains difficult to predict, because rigid-body torque models omit attachment compliance, effective-length offsets, and the contraction lost where the actuator wraps over the joint. In this work, we measured isometric knee torque on pinned and biomimetic knee test stands across actuator resting lengths, isolated error sources with a hybrid torque calculation, and identified correction terms by multiobjective optimization. Our analysis resulted in (1) a corrected torque model whose length offset, effective stiffness, and fictive-strain wrapping loss, expressed through the unloaded \\qty{620}{\\kPa} contraction, reduce held-out prediction error on both pinned-knee test families and are evaluated on the biomimetic knee; (2) one effective stiffness pair shared across flexor and extensor configurations; and (3) redesigned attachment routes that meet or exceed human isometric knee-torque targets with quantified margins, together with the first hardware torque measurements of the redesigned extensor route. The optimized model and redesign pipeline support first-iteration torque design of BPA-actuated robot joints."
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 602,
+          "section": "Paper §4.3.2 Physical Validation Against Human Torque",
+          "anchor": "Both redesigned routes met or exceeded their selected human-muscle torque references",
+          "source_line": "Both redesigned routes met or exceeded their selected human-muscle torque references at the measured angles: vastus medialis for the extensor and biceps femoris short head for the flexor (Figure~\\ref{fig:redesign_validation}). Both tests span \\ang{-119} to \\ang{5}. Extensor torque margins range from \\qty{0.24}{\\newton\\meter} to \\qty{3.52}{\\newton\\meter}; flexor margins range from \\qty{0.42}{\\newton\\meter} at \\ang{-105} to \\qty{17.0}{\\newton\\meter} at \\ang{-14}."
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 108,
+          "section": "Paper §2.1 Overview",
+          "anchor": "A hybrid calculation isolated the error sources,",
+          "source_line": "Isometric knee torque is the product of the force an actuator develops and the moment arm of its line of action about the joint axis, and the force itself is set by the actuator's effective length through the force model. Each link in that chain is a design quantity: the attachment routing fixes the moment arm, the resting length and attachment compliance set the effective contraction, and wrapping over the joint removes usable length. We built two knee test stands, measured isometric torque across each joint's range of motion (RoM) with \\qtylist{10;20}{\\mm} Festo braided pneumatic actuators (BPAs) in flexor and extensor configurations, and compared the measurements against the original rigid-body model, the improved actuator force characterization alone, and the optimized model developed here. A hybrid calculation isolated the error sources, a multiobjective identification produced the correction terms, and the optimized model then drove a redesign of the attachment routes against human isometric torque targets."
+        }
+      ],
+      "boundary": "The scientific segue and 27-site contribution have already been corrected; do not reopen them.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "first hardware torque measurements of the redesigned extensor route",
+      "pdf_action": "Include the existing flexor as well as extensor capacity result in the abstract, scoped to tested configurations/points. Optionally trim repeated Introduction/Overview work lists. The 27-site segue is already fixed.",
+      "pdf_context": ""
+    },
+    {
+      "id": "P06",
+      "title": "Add the remaining pinned-bracket inventory callout",
+      "status": "Small callout proposal",
+      "original_ids": [
+        "T15",
+        "OP14"
+      ],
+      "evidence": "The retained pinned-bracket table has an explanatory lead but still no numbered reference to tab:RoutePinnedBrackets. The other retained coordinate inventories and cam figures now have purposeful references; the old incorrect supplement-inventory sentence is fixed.",
+      "action": "Add one explicit Supplementary Table reference to the existing pinned-bracket introduction or relevant main Methods sentence. Do not add redundant calls for items that are already introduced.",
+      "locations": [
+        {
+          "file_id": "Supplement",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\frontiers_SupplementaryMaterial.tex",
+          "filename": "frontiers_SupplementaryMaterial.tex",
+          "line": 80,
+          "section": "Supplement §1.2 BPA routing and via points",
+          "anchor": "Bracket reference points of the pinned-knee BPA routes, in mm.",
+          "source_line": "Bracket reference points of the pinned-knee BPA routes, in mm. The pinned flexor route runs from origin to insertion with a compliant bracket at each end, and the pinned extensor route additionally wraps on two fixed arcs ($R_{1} = \\qty{12}{\\milli\\metre}$, active for $-23^{\\circ} \\leq \\theta_{\\mathbf{k}} \\leq 27^{\\circ}$, and $R_{2} = \\qty{40}{\\milli\\metre}$, active for $\\theta_{\\mathbf{k}} \\leq -23^{\\circ}$)."
+        },
+        {
+          "file_id": "Supplement",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\frontiers_SupplementaryMaterial.tex",
+          "filename": "frontiers_SupplementaryMaterial.tex",
+          "line": 84,
+          "section": "Supplement §1.2 BPA routing and via points",
+          "anchor": "\\label{tab:RoutePinnedBrackets}",
+          "source_line": "\\label{tab:RoutePinnedBrackets}"
+        }
+      ],
+      "boundary": "",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "Bracket reference points of the pinned-knee BPA routes",
+      "pdf_action": "Add one explicit numbered reference to the pinned-bracket table in its existing introduction or the relevant main Methods sentence. Other retained coordinate/cam items now have useful calls.",
+      "pdf_context": ""
+    },
+    {
+      "id": "P07",
+      "title": "Make first table mentions follow table order",
+      "status": "Callout-order proposal",
+      "original_ids": [
+        "OP13",
+        "LATER-52"
+      ],
+      "evidence": "The adopted-parameter table is still called in the first flexor/extensor Results paragraphs before the goodness-of-fit and biomimetic tables. Its natural introduction remains in Identified Design Parameters.",
+      "action": "Defer/remove the two premature adopted-table references while retaining the parameter values. Verify the resulting first-mention sequence by labels after the build; do not manually renumber tables.",
+      "locations": [
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 411,
+          "section": "Paper §3.1 Flexor on Pin Joint",
+          "anchor": "Its adopted design parameters are a length offset",
+          "source_line": "The flexor identification of record is the two-bracket fit of Section~\\ref{sec:identification} on the four cross-validation tests: the $l_{0}=\\qty{48.5}{\\cm}$ and \\qty{41.0}{\\cm} tests in training and the $l_{0}=\\qty{45.7}{\\cm}$ and \\qty{40.6}{\\cm}-tendon tests held out. Its adopted design parameters are a length offset $\\chi_{0} = \\qty{+3.94}{\\mm}$ and attachment stiffness parameters $\\chi_{1} = \\qty{39.98}{\\kilo\\newton\\per\\meter}$ and $\\chi_{2} = \\qty{14.73}{\\kilo\\newton\\per\\meter}$ (Table~\\ref{tab:AdoptedXi}). Figure~\\ref{fig:FlxPin_optimized} shows that, at these terms, the optimized model follows the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction does not produce. The training-set RMSE is \\qty{2.165}{\\newton\\meter} for the $l_{0}=\\qty{48.5}{\\cm}$ test and \\qty{1.084}{\\newton\\meter} for the $l_{0}=\\qty{41.0}{\\cm}$ test, and the held-out validation tests give \\qty{1.368}{\\newton\\meter} at \\qty{45.7}{\\cm} and \\qty{1.611}{\\newton\\meter} at \\qty{40.6}{\\cm} with tendon (Table~\\ref{tab:FlxPinGof})."
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 437,
+          "section": "Paper §3.2 Extensor on Pin Joint",
+          "anchor": "The extensor identification of record locks the stiffness pair",
+          "source_line": "The extensor identification of record locks the stiffness pair at the flexor-identified values and solves the two extensor-specific terms: $\\chi_{0} = \\qty{-6.38}{\\mm}$ and $\\chi_{3} = 0.158$, so the extensor length offset is close to the flexor offset in magnitude and opposite in sign (Table~\\ref{tab:AdoptedXi}). The refit used the six-test identification pool of Section~\\ref{sec:identification}, with the \\qty{43.6}{\\cm}, \\qty{43.2}{\\cm}-tendon, and \\qty{45.7}{\\cm} tests in training and the \\qty{40.0}{\\cm} plain, \\qty{40.0}{\\cm}-tendon, and \\qty{46.5}{\\cm} tests held out for validation; Figure~\\ref{fig:ExtPin_group} shows the six pool tests at the adopted terms."
+        },
+        {
+          "file_id": "Main",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+          "filename": "Main.tex",
+          "line": 551,
+          "section": "Paper §4.2 Identified Design Parameters",
+          "anchor": "The adopted correction terms are listed in Table",
+          "source_line": "The adopted correction terms are listed in Table~\\ref{tab:AdoptedXi}."
+        }
+      ],
+      "boundary": "The former premature hybrid-figure callout is already removed.",
+      "references": [
+        {
+          "title": "Frontiers figure/table guidance",
+          "url": "https://www.frontiersin.org/guidelines/author-guidelines"
+        }
+      ],
+      "yellow": true,
+      "pdf_anchor": "adopted design parameters",
+      "pdf_action": "Defer/remove the two premature adopted-parameter table calls; retain the values and introduce the table naturally in §4.2. Recheck first-mention order after the build, using labels rather than manual numbering.",
+      "pdf_context": "The adopted-parameter table is mentioned before the first two main tables."
+    },
+    {
+      "id": "P08",
+      "title": "Optional bibliography source cleanup",
+      "status": "Optional source-hygiene decision",
+      "original_ids": [
+        "OP11",
+        "OP15",
+        "LATER-51",
+        "LATER-53"
+      ],
+      "evidence": "The uncited supplement retains an unused bibliography command. The main bibliography also retains two records for the same Hunt 2017 DOI, but only the non-suffixed key is cited; this does not produce a duplicate printed reference.",
+      "action": "If preparing a submission-only source package, remove the unused supplement bibliography invocation while it has no citations, and consolidate verified Hunt metadata while preserving the cited key. If citations are later added to the supplement, supply its style and an end reference list.",
+      "locations": [
+        {
+          "file_id": "Supplement",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\frontiers_SupplementaryMaterial.tex",
+          "filename": "frontiers_SupplementaryMaterial.tex",
+          "line": 177,
+          "section": "Supplement §1.3 Figures",
+          "anchor": "\\bibliography{BolenFrontiers22}",
+          "source_line": "\\bibliography{BolenFrontiers22}"
+        },
+        {
+          "file_id": "PaperBib",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\BolenFrontiers22.bib",
+          "filename": "BolenFrontiers22.bib",
+          "line": 369,
+          "section": "References",
+          "anchor": "@inproceedings{hunt_modeling_2017,",
+          "source_line": "@inproceedings{hunt_modeling_2017,"
+        },
+        {
+          "file_id": "PaperBib",
+          "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\BolenFrontiers22.bib",
+          "filename": "BolenFrontiers22.bib",
+          "line": 1020,
+          "section": "References",
+          "anchor": "@inproceedings{hunt_modeling_2017-1,",
+          "source_line": "@inproceedings{hunt_modeling_2017-1,"
+        }
+      ],
+      "boundary": "Low priority. There is no current visible mid-document bibliography or proven duplicate rendered citation.",
+      "references": [],
+      "yellow": true,
+      "pdf_anchor": "\\bibliography{BolenFrontiers22}",
+      "pdf_action": "Optionally remove the unused supplement bibliography invocation while it has no citations, and consolidate the uncited Hunt duplicate while retaining the cited key. Neither is a current duplicate/mid-document printed-reference defect.",
+      "pdf_context": ""
+    }
+  ],
+  "reviewer_recommendations_are_not_author_approvals": true,
+  "closure_evidence": [
+    "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\pdf_approvals_20261030\\FINAL_APPROVAL_DISPOSITION.md",
+    "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\second_pdf_comments_20261030\\FINAL_DIRECTIVE_COMPLIANCE.md",
+    "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\approved_implementation_20261030\\IMPLEMENTATION_REPORT.md"
+  ],
+  "checked_source_manifest": {
+    "02-abstract": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\02-abstract.tex",
+      "sha256": "83834640d1d44b4a99a03b9b7264495a2b53d9b5b7d7179559e132a64c7b361a",
+      "lines": 7
+    },
+    "15-background": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\15-background.tex",
+      "sha256": "814a896e0a214bf8b83df50db9c72e58036cead32cb5b14b62556995bf223d67",
+      "lines": 290
+    },
+    "20-muscles": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\20-muscles.tex",
+      "sha256": "0930ef6c09eee0b786a6fec5877e874297282e1dcd45125ba98eeb78642ee9f8",
+      "lines": 405
+    },
+    "30-torque": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+      "sha256": "df3a3c081830b667b1d3105a5b8154f6d63250d32a5b5f8187b3b67863af0060",
+      "lines": 803
+    },
+    "50-database": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+      "sha256": "0f1891fa565353430e462c05afb78efa55fdf145351df07c266aacb4b630ec21",
+      "lines": 84
+    },
+    "60-sns": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex",
+      "sha256": "7d72673b8c806d4412a3e4f849db344181d631270d53ab066379399525e031fe",
+      "lines": 241
+    },
+    "70-overall": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\70-overall.tex",
+      "sha256": "a9c603800ee477af651fbfecf725fdb326ab789a6d36ada8c55e312f400670d5",
+      "lines": 105
+    },
+    "80-conclusion": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\80-conclusion.tex",
+      "sha256": "f578ee7279e52d190e4dcc40efaebc1dcacb5af4403da4696ff914fa7d1f3881",
+      "lines": 14
+    },
+    "92-AppendixA": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\92-AppendixA.tex",
+      "sha256": "f8bc4a38f3337d35c8265d5ecb685e3fd54439ae812628e436f891ead50d3373",
+      "lines": 217
+    },
+    "93-AppendixB": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\93-AppendixB.tex",
+      "sha256": "a3734f52f306cf2a07be3c743414bbd0e79d3871e66b027cb05e8fd89ed0e13f",
+      "lines": 225
+    },
+    "94-AppendixC": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\94-AppendixC.tex",
+      "sha256": "478fd04d6b078d72aaae932ded43890fb68af152b229c0ef5a64ba78a17e3d3c",
+      "lines": 525
+    },
+    "95-AppendixD": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex",
+      "sha256": "b9ffbe47f68153413b92c4036e11ca3765c6145c7c1696f8cd166d98c9c73a6f",
+      "lines": 456
+    },
+    "96-AppendixE": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\96-AppendixE.tex",
+      "sha256": "af1d216e37a9521488cc0853ee526fa67e77c553b013672fdd1cd51b6c62d652",
+      "lines": 57
+    },
+    "Main": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\Main.tex",
+      "sha256": "101ed4c28cc2c55072c19123841f691052e2dbe405620e3a5dc6858aa2613de5",
+      "lines": 757
+    },
+    "Supplement": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\frontiers_SupplementaryMaterial.tex",
+      "sha256": "d2f19284d6288057fe716dad949220dfc2a28ec07b2275bd4cce3326beab8b48",
+      "lines": 353
+    },
+    "PaperBib": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\ProofFinal\\BolenFrontiers22.bib",
+      "sha256": "37371057529c0cf45cd2c95bb3a8960cdf3786368232ceca70e6822e26694e4a",
+      "lines": 1166
+    },
+    "ThesisBib": {
+      "path": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\thesis.bib",
+      "sha256": "f1ba8585a124fc60ef459f9b2036364f96af9261598c18b0dddc3d7241259e72",
+      "lines": 2264
+    }
+  },
+  "carried_forward_plot_checks": [
+    {
+      "asset": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\Figures\\ExtPin_complete_publication.pdf",
+      "sha256": "a9994622a02b52407c24fe09768c1f5defb2d5ee80309f562f423dc298297ddf",
+      "same_as_audited_asset": true,
+      "prior_legend_size_pt": 6.28
+    },
+    {
+      "asset": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Knee_Torque_Test\\Figures\\RouteVariants_20261020_publication.pdf",
+      "sha256": "92449a0552110ee7aafc88e075650bacb9555aa6625dedfb0d4af5693241f3e3",
+      "same_as_audited_asset": true,
+      "prior_legend_size_pt": 5.31
+    }
+  ],
+  "final_source_release": {
+    "authority": "Lead agent final release,30October2026; current canonical sources frozen for audit anchors",
+    "source60_sha256": "7d72673b8c806d4412a3e4f849db344181d631270d53ab066379399525e031fe",
+    "figure_dispositions": "Requested4.11/4.14/5.1 corrections and conclusion verified in integratedr2; no completed item carried as pending.",
+    "layout_boundary": "Lead confirms final dissertation r3 narrow flow QA passed at298pages; paper localr2 is32pages plus11supplement. This audit implements none of its pending proposals."
+  },
+  "final_pdf": {
+    "path": "D:\\Github\\Bipedal_Robot\\output\\pdf\\Dissertation_Audit_PENDING_ONLY_v2_20261030.pdf",
+    "sha256": "0657396e1d1ef787d4b6c6d8ae20f8ef4bb6dcea1f44dfa8b207567f18675c2a",
+    "pages": 7,
+    "pending_groups": 25,
+    "yellow_boxes": 50,
+    "visual_qa": "PASS: page2delta; other6pages identical"
+  },
+  "audit_only_followup": "D05 adds the existing knee-demo panel-reference formatting proposal; still25groups, no manuscript change."
+}

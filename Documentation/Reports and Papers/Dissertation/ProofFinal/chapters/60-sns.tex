@@ -1,17 +1,17 @@
-\chapter{Synthetic Nervous System Simulation}\label{ch:sns}
+\chapter{Tools for Neuromechanical Simulation}\label{ch:sns}
 \graphicspath{{../Figures/60-sns/}{figs/60-sns/}}
 
-The actuator and torque models of Chapters~\ref{ch:muscles} and~\ref{ch:torque} describe the robot's mechanics. The next task is to investigate how those mechanics interact with neural control. My initial AnimatLab walker and subsequent W2L integration work in MATLAB exposed the difficulty of distinguishing a controller limitation from an implementation or model-conversion error. I developed neuromechanical models, graphical neural blocks, simulation interfaces, and a staged evaluation procedure to make those distinctions testable. This chapter follows that progression, then presents tests of the circuits, interfaces, and coupled models.
+I first transferred a published neural controller to a different biomechanical model and adjusted it by hand. The combined model produced alternating neural activity and air stepping, but not weight-bearing walking. This result motivated more efficient ways to test alternative controllers, first on the complex Gait2392 human model and then on a robot counterpart with BPAs. This chapter presents the resulting neuromechanical models, graphical neural blocks, simulation interfaces, and controlled experiments.
 
 \section{The AnimatLab Bipedal Walker}\label{sec:prior_walker}
 
 For a course project in ME 610: Neuromechanical Modeling, Morrow and I combined the bipedal mechanics of \citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \citet{deng_neuromechanical_2019} in AnimatLab \citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The initial controller used one rhythm generator (RG) to control both sides, with hip and knee/ankle pattern-formation (PF) groups for each leg. We added afferent feedback at the motoneuron (MN) level. Figure~\ref{fig:animatlab_model_architecture} shows the model and controller organization.
 
-We adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking.
+We adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and air stepping, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking.
 
-I subsequently replaced the shared rhythm generator with one rhythm generator on each side and linked the two through commissural pathways. The bilateral pattern-formation and motor organization was already present in the original model. I added afferent feedback to the RG and PF layers, and heel- and toe-contact signals during the subsequent development. This later model is referred to as the Walker Two-Layer (W2L) model. Further circuit schematics and implementation records are provided in Appendix~\ref{app:simulation_verification}.
+I subsequently replaced the shared rhythm generator with one rhythm generator on each side and linked the two through commissural pathways. The bilateral pattern-formation and motor organization was already present in the original model. I added afferent feedback to the RG and PF layers, and heel- and toe-contact signals during the subsequent development. This later model is referred to as the Walker Two-Layer (W2L) model. Joint recordings from a separate instrumented AnimatLab configuration are provided in Figure~\ref{fig:animatlab_phase1_preliminary}; further circuit schematics and implementation records are in Appendix~\ref{app:simulation_verification}.
 
-The AnimatLab model established that the combined circuit could generate alternating activity and move the suspended limbs. To investigate the contribution of sensory feedback and actuator mechanics, I needed to vary those components while retaining a specified neural organization and mechanical support condition. Extending that approach to the human-scale Gait2392 model and its BPA-routed robot counterpart also required checking joint directions, muscle paths, actuator forces, and the signals exchanged with the controller.
+I found AnimatLab's graphical block editor usable but dated. I wanted a more efficient way to modify connections, try alternative controllers, and evaluate their interaction with the many joints and actuators of the Gait2392 model and its BPA-routed robot counterpart.
 
 \begin{figure}[p]
 \centering
@@ -26,19 +26,15 @@ The AnimatLab model established that the combined circuit could generate alterna
 
 \section{Attempting W2L Integration in MATLAB}\label{sec:w2l_matlab_attempt}
 
-I next pursued W2L integration in MATLAB, using Simulink for the neural controller and Simscape Multibody for the mechanical model. Bringing these parts into one environment required explicit interfaces for neural activation, muscle force, joint motion, and sensory feedback. A mechanism that imported successfully and a neural circuit that oscillated separately were necessary components, but neither established that the coupled model retained the intended behavior.
+I later explored MATLAB as one route to those controller experiments, using Simulink for the neural controller and Simscape Multibody for the mechanical model. This required interfaces for neural activation, muscle force, joint motion, and sensory feedback. Importing a mechanism and obtaining neural oscillation separately did not establish the behavior of their coupled model.
 
 The MATLAB work therefore became a sequence of component and coupling tests. Selected neural implementations reproduced their reference responses, and mechanical import provided models that could be assembled and simulated. More extensive tests also exposed limits: a full-network export agreed with its reference over an early transient but later diverged, and one Simulink realization reached a steady, nonoscillating state under constant neural drive while its NumPy reference oscillated (Appendix~\ref{sec:sns_ports}). Those results did not establish a complete W2L walking implementation in MATLAB. They showed why importing a model or reproducing a short trace could not substitute for testing the neural dynamics, actuator action, and feedback loop separately.
 
-This experience motivated two complementary development routes. SNS-Simscape makes neural and mechanical connections inspectable in block diagrams, while the scripted MuJoCo/SNS-Toolbox models support repeated trials, parameter searches, and controlled pathway changes. The MuJoCo--Simulink bridge connects the two approaches without requiring the mechanical model to be rebuilt for every controller experiment.
+I subsequently developed both block-programmed and scripted implementations, allowing controller experiments through SNS-Simscape or MuJoCo with SNS-Toolbox.
 
 \section{Knowledge Gaps and the New Tools}\label{sec:sns_gaps}
 
-The knowledge gap concerns how to attribute movement in a coupled neuromechanical model. When a proposed circuit fails to produce the expected behavior, the cause may lie in its neural organization, its sensory encoding, the actuator or mechanical model, or the numerical implementation. For the humanoid models studied here, I needed to determine whether selected neural mechanisms survived transfer between implementations and how their effects changed when coupled to human musculotendon mechanics or artificial muscles. That requires common inputs, observable intermediate signals, and interventions that hold the other parts of the model fixed.
-
-I addressed this gap by constructing models in which the neural pathways, actuator characteristics, sensory inputs, and support conditions can be specified and varied, together with tests that distinguish circuit behavior from implementation and coupling errors. The tools include the Li--Deng/W2L and Gait2392 model implementations, the SNS-Simscape library and GUI, neural and BPA-actuator coupling to a SolidWorks-derived Simscape assembly, the MuJoCo--Simulink interface, and experiment drivers for staged tuning and controlled interventions. Literature-derived and spiking-neuron implementations support comparisons of circuit mechanisms and coding assumptions.
-Table~\ref{tab:sns_capability} summarizes the models and tools developed in this work and what each is used for. The following sections describe their implementation and demonstrations. The feedback experiments also provide a limited mechanistic result: removing sensory pathways can disrupt bilateral contact coordination in a fixed configuration, identifying a dependence that would not be apparent from its intact motion alone.
-
+Transferring a controller between biomechanical models changes its sensory and actuator interactions. A circuit that produces air stepping may require different feedback and coordination under load. I needed to vary neural organization and actuator mechanics while retaining identifiable model, input, and support conditions. Table~\ref{tab:sns_capability} summarizes the models and tools developed for these comparisons.
 
 \begin{table}[htbp]
 \centering
@@ -62,13 +58,48 @@ Literature circuits and spiking variants & Compare selected published neural mec
 
 OpenSim supplied musculoskeletal geometry, MyoConverter translated models to MuJoCo, SNS-Toolbox supplied neural formulations, and Simulink/Simscape supplied graphical neural and mechanical modeling \citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012,nourse_sns_2023}. My contributions are the model implementations, custom blocks, actuator integrations, and evaluation procedures built with those packages.
 
-\section{Methods: Software Tools}\label{sec:preliminary_sim_methods}
+\section{Methods and Verification of Software Tools}\label{sec:preliminary_sim_methods}\label{sec:preliminary_sim_results}
 
-The tools provide three complementary capabilities: constructing a neuromechanical model, testing its component behavior and signal exchange, and evaluating controlled changes in neural or mechanical conditions. Figure~\ref{fig:simulation_workflow} shows the model-construction routes and neural-controller interfaces used in this chapter. The broader simulation-to-hardware workflow is discussed in Chapter~\ref{ch:overall} (Figure~\ref{fig:pipeline}).
+Figure~\ref{fig:simulation_workflow} shows the model-construction routes and controller interfaces. Chapter~\ref{ch:overall} places them within the broader simulation-to-hardware workflow (Figure~\ref{fig:pipeline}).
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{simulation_workflow.pdf}
+\caption[Model construction and neural-controller interfaces]{Model construction and neural-controller interfaces. SOLIDWORKS-derived geometry supplies Simscape Multibody and separately assembled MuJoCo models; OpenSim models follow the MyoConverter and repair route. The SNS-Simulink block editor assembles controllers from SNS-Simscape library blocks. Commands and sensory measurements couple these controllers to Simscape or, through the MuJoCo--Simulink bridge, to MuJoCo. }
+\label{fig:simulation_workflow}
+\end{figure}
 
+The comparisons below report circuit responses, coupled motion, and the effects of controlled interventions in the order of Table~\ref{tab:sns_capability}. Detailed configurations and evaluation sets are provided in Appendix~\ref{app:simulation_verification}.
 
-\subsection{Model Conversion and Actuator Coupling}\label{sec:sns_existing_tools}
+\subsection{Li--Deng/W2L Walker and Controller}\label{sec:sns_w2l_methods}\label{sec:crossengine_results}\label{sec:sns_feedback_test}
+
+For cross-implementation checks of the contact-driven W2L rhythm core, I used a common connectivity specification and identical drive and contact inputs in NumPy and Simulink. Closed-loop experiments held a saved controller fixed while changing selected sensory pathways, drive, or support. Appendix~\ref{app:connectomes} documents the bilateral pathways and conductances of the independently replayed W2L configuration.
+
+\noindent\textbf{Verification.} The contact-driven W2L rhythm core was implemented in NumPy and native Simulink blocks from a common connectivity specification. Both implementations received the same input protocol. Burst periods matched at \qty{1.000}{\second}, all ten expected bursts were reproduced, and voltage-trace correlation was at least 0.99996 (Figure~\ref{fig:w2l_crossengine}). The agreement is specific to this circuit and input protocol.
+
+Removing the phasic heel-contact inputs caused the circuit to latch in both implementations. The alternating activity therefore depends on the specified sensory drive.
+
+\begin{samepage}
+The saved W2L controller was tested with all saved effective gains delivered to the compiled network. With controller, drive, and support settings fixed, disabling all sensory feedback shifted median bilateral contact phase from 0.498 to 0.223 cycles. A phase of 0.5 cycles indicates alternating foot loading; the supported-stepping criterion accepts 0.35--0.65 cycles. Forward progression and joint cycling persisted, but the feedback-disabled condition failed this criterion for supported stepping (Figure~\ref{fig:sns_ablation_pair}). Over the \qtyrange{4.5}{30}{\second} scored window, forward displacement was \qty{2.239}{\meter} with feedback and \qty{1.996}{\meter} without it. Thus, the demonstrated feedback contribution is to bilateral contact coordination, rather than the existence of oscillation or forward motion. Additional pathway deletions and stimulus tests are summarized in Appendix~\ref{sec:app_w2l_perturbations} (Figure~\ref{fig:app_w2l_perturbations}).\par
+\end{samepage}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{sns_w2l_traces.png}
+\caption[W2L rhythm-core traces across engines]{W2L rhythm-generator voltages under matched inputs in NumPy and Simulink. Burst periods and counts agree; full-trace correlation is at least 0.99996. The residual \qty{2}{\milli\second} lag is one discrete solver step. The test concerns the driven rhythm core, not walking mechanics.}
+\label{fig:w2l_crossengine}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\textwidth]{w2l_feedback_verified.pdf}
+\caption[Sensory-feedback comparison in the recovered W2L model]{Sensory-feedback comparison with fixed W2L conductances, drive, and support settings. Knee angles, heel contact forces, and displacement are shown with feedback intact (left) and all sensory feedback disabled (right). Cycling persists in both conditions; the feedback-disabled condition fails the bilateral contact-phase criterion.}
+\label{fig:sns_ablation_pair}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Gait2392-Based Models}\label{sec:sns_existing_tools}\label{sec:sns_gait_comparison_main}
 
 My first conversion attempt used the robot model, which combined BPA routing on the Gait2392 skeleton with unchanged human muscle parameters. MyoConverter's muscle-equilibrium checks rejected infeasible combinations of routed length and muscle parameters. I therefore separated conversion of the human reference from reconstruction of the robot routing. This distinction matters because an error caused by an artificial-actuator route should not be interpreted as a property of the original human model.
 
@@ -82,20 +113,36 @@ For artificial-muscle simulations, I implemented an actuator-force calculation t
 
 The SADb of Chapter~\ref{ch:database} supplies the physiological context for selecting Ia, II, Ib, and contact pathways. A database link identifies the supporting observation; it does not by itself determine a numerical gain or guarantee the same function in another model. The implemented encoding, connection sign, phase gating, and tested response therefore remain explicit parts of the controller specification.
 
-The resulting model set separates the mechanical representation from the neural controller. The human Gait2392 reference retains biological-muscle actuators; the robot counterpart uses custom artificial-muscle paths and BPA forces. The Li--Deng/W2L walker and the SolidWorks-derived robot are separate mechanical models, rather than interchangeable versions of Gait2392. Within the Gait2392-based pipeline, the controller comparisons include the full graded network, a version with selected connections removed, a version organized around six grouped muscle-activation patterns, and a version adapting the W2L controller organization; selected spiking counterparts change neural dynamics while retaining a continuous motor-activation interface. These alternatives make controller and actuator assumptions available for comparison. Appendix~\ref{app:simulation_verification} distinguishes their configurations and reported support conditions.
+The human Gait2392 reference retains biological-muscle actuators, while the robot counterpart uses custom artificial-muscle paths and BPA forces. The Li--Deng/W2L walker and the SolidWorks-derived robot are separate mechanical models. Figure~\ref{fig:mujoco_model_views} contrasts the converted Gait2392 robot with the reduced-order knee model used for block demonstrations. Appendix~\ref{app:simulation_verification} distinguishes their configurations and support conditions.
 
-\subsection{Block Programming Neural Pathways}\label{sec:sns_new_tools}
+\noindent\textbf{Verification.} The conversion checks test the quantities needed to interpret a neural-control experiment: the direction of each muscle's joint action, the coupled motion of path points, the force scale, and the intended ground contacts. They exposed reversed hip actions, inconsistent path-point limits, unintended contact pairs, and incorrect force scales in individual actuator entries. Correcting those faults made the converted human model usable for the subsequent controller tests. Appendix~\ref{sec:app_conversion_repairs} gives the individual repairs and the full force comparison.
+
+At matched poses and OpenSim static-optimization activations (Figure~\ref{fig:force-compare}; Table~\ref{tab:force-r2}), eight of twelve sampled muscles had force-prediction $R^2$ between 0.87 and 0.98 and mean forces within \qty{10}{\percent} of the reference. Rectus femoris and biceps femoris short head had negative $R^2$, indicating errors greater than a constant mean-force prediction. This comparison checks force predictions in the repaired MyoConverter-derived human model while identifying remaining muscle-specific differences. Because the comparison sets pose and activation frame by frame without reproducing trajectory velocities or tendon dynamics, it does not establish dynamic equivalence between the muscle formulations. That distinction matters when interpreting feedback based on muscle force.
+
+The Gait2392-based evaluations use the same reference-library and pathway-removal procedures to compare alternative neural organizations. The full graded, pruned, six-synergy, and W2L-layout configurations show different responses to feedback removal and different agreement with the tuning and library references. Removing Ia feedback eliminated detected cycles in the tested production configuration, whereas other removals and other network organizations had different effects. The library comparisons also exposed asymmetric activity and limited transfer beyond the tuning reference (Appendix~\ref{sec:gait_library_results}). This demonstrates that the models and experiment drivers can discriminate controller dependence and transfer limits; the comparison does not establish normal human gait.
+
+A replay of the saved human-model controller produced ten detected cycles per leg. Figure~\ref{fig:gait2392_ik_overlay} compares the joint trajectories directly with the Gait2392 inverse-kinematics reference and its associated ground-reaction forces. The model's mean stance fractions were 0.71 and 0.65 on the right and left, compared with 0.61 in the reference. Substantial hip and knee timing differences remain visible despite the detected cycles. The overlay therefore complements the scalar gait score by showing which parts of the movement disagree. Appendix~\ref{sec:app_ik_overlay} reports the angle errors and alignment method.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{gait2392_ik_overlay.pdf}
+\caption[Gait2392 model motion compared with inverse kinematics]{Supported human-model joint motion compared with the Gait2392 inverse-kinematics reference. Model curves show the mean and one standard deviation across ten cycles per leg. Each leg is aligned to its own foot-loading onset; no angle offset, amplitude adjustment, or fitted phase shift is applied. Bottom strips compare model contact probability across cycles with reference stance and swing from ground-reaction forces, using a \qty{50}{\newton} threshold. Separate leg alignment does not establish bilateral phase agreement.}
+\label{fig:gait2392_ik_overlay}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{SNS-Simscape Block Library and Editor}\label{sec:sns_new_tools}\label{sec:sns_simulink_demos}
 
 The SNS-Simscape library implements neuron, synapse, afferent-encoder, activation, and muscle-force elements as editable Simulink blocks. The library retains the conductance-based neuron and synapse formulation supplied by SNS-Toolbox; it does not introduce a new neuron model. Verification uses selected circuits under matched inputs. Figure~\ref{fig:simulink_sns_implementation} shows the core blocks and graded-neuron signal flow.
 
-I imported OpenSim-derived and SolidWorks-derived mechanisms into Simscape Multibody and coupled the SolidWorks robot assembly to a neural controller and BPA actuators using my force model. The block library also supports reduced-order demonstrations in which the sensory pathway and mechanical response can be inspected directly. These smaller models provide interpretable checks of the components used in larger assemblies.
+The library also supports reduced-order demonstrations in which the sensory pathway and mechanical response can be inspected directly.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{simulation_workflow.pdf}
-\caption[Model construction and neural-controller interfaces]{Model construction and neural-controller interfaces. SOLIDWORKS-derived geometry supplies Simscape Multibody and separately assembled MuJoCo models; OpenSim models follow the MyoConverter and repair route. The SNS-Simulink block editor assembles controllers from SNS-Simscape library blocks. Commands and sensory measurements couple these controllers to Simscape or, through the MuJoCo--Simulink bridge, to MuJoCo. }
-\label{fig:simulation_workflow}
-\end{figure}
+\noindent\textbf{Verification.} The library assembles Ia stretch excitation, reciprocal inhibition, and Ib autogenic inhibition in a reduced-order antagonist knee model (Figure~\ref{fig:sns_reflex_current}C). After the model reaches a steady operating point, a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} current pulse at the extensor Ia sensory-neuron input evokes \ang{1.09} of extension, peaking \qty{111}{\milli\second} after pulse onset. The knee then returns toward the matched no-stimulus trajectory, meeting the specified recovery thresholds after \qty{6.355}{\second}. The displayed configuration broadens the MN and Ia synaptic saturation ramps; the original narrow-ramp settings maintained oscillations. This is a transient test of the implemented feedback and actuator equations, rather than a physiologically calibrated tendon-tap model. Appendix~\ref{sec:app_knee_transient} gives the configuration and numerical checks, with the complete response in Figure~\ref{fig:app_knee_transient}.
+
+\begin{samepage}
+A second demonstration tests feedback in an arm holding a beverage container as it is loaded (Figure~\ref{fig:sns_beverage_current}). With the reflex enabled, arm sag was \ang{2.00}, compared with \ang{7.85} when it was disabled. As the forearm sags, biceps stretch feedback excites the biceps motoneuron and reciprocally inhibits the triceps motoneuron. The separate Ib pathways provide autogenic inhibition of each muscle. The reduced sag demonstrates a corrective effect of the implemented sensory pathways in the coupled neural and actuator blocks.\par
+\end{samepage}
 
 \begin{figure}[p]
 \centering
@@ -104,11 +151,46 @@ I imported OpenSim-derived and SolidWorks-derived mechanisms into Simscape Multi
 \label{fig:simulink_sns_implementation}
 \end{figure}
 
-\subsection{Connecting Simulink Controllers to MuJoCo}\label{sec:sns_bridge_methods}
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{knee_transient_current_layout.pdf}
+\caption{Transient knee response to a 2 nA, 30 ms sensory-current pulse after settling (A), antagonist-BPA leg schematic in an illustrative pose (B), and the six implemented feedback connections (C). Flexion is negative. The graded-response configuration uses broadened MN and Ia synaptic saturation ramps; its response is compared with a matched no-stimulus control.}
+\label{fig:sns_reflex_current}\label{fig:simulink_reflex_topology}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{beverage_current_layout.pdf}
+\caption{Loaded-arm demonstration: empty and loaded cup positions (A1, A2), feedback-on/off kinematics (B), and all six implemented feedback connections (C).}
+\label{fig:sns_beverage_current}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{SOLIDWORKS-Derived Robot Assembly}\label{sec:sns_cad_methods}
+
+I imported OpenSim-derived and SolidWorks-derived mechanisms into Simscape Multibody and coupled the SolidWorks robot assembly to a neural controller and BPA actuators using my force model. The separately assembled MuJoCo CAD model was evaluated under specified mechanical assistance and actuator control (Appendix~\ref{sec:app_cad_supported_stance}).
+
+\noindent\textbf{Verification.} A newer CAD-model comparison tests whether additional abductor control prevents the legs from crossing (Figure~\ref{fig:ah001_supported_control}). Under the same assistance settings, muscle-mediated separation feedback changed reversed ankle ordering from \qty{67}{\percent} of sampled states to zero. The model uses a layered SNS for timing together with an engineering force allocator. Its MN target-current compensation cancels incoming PF and reflex currents, so this comparison demonstrates supported model integration and a separation-control effect, rather than full neural pattern control. Appendix~\ref{sec:app_cad_supported_stance} gives the matched measures and foot-mount sensitivity.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{ah001_supported_control.png}
+\caption[CAD-derived robot under supported hybrid control]{Anterior (A) and oblique (B) views of the same recorded CAD-model state. Right and left legs are blue and gold; selected hip-abducting routes are green. The 75 kg model uses 54 reference-tension actuators with hybrid neural and postural control. Vertical assistance supplies 80\% of body weight in this interval; lateral and angular assistance remain active. Attachments, the welded foot mount, and passive knee stops are provisional.}
+\label{fig:ah001_supported_control}
+\end{figure}
+
+A separate CAD-derived model completed a coupled stance demonstration under substantial rig support and reference actuator tensions. Appendix~\ref{sec:app_cad_supported_stance} documents the support and actuator conditions.
+
+\FloatBarrier
+
+\subsection{MuJoCo--Simulink Integration}\label{sec:sns_bridge_methods}
 
 The MathWorks MuJoCo--Simulink bridge provides an alternative to importing the mechanical model into Simscape. I connected SNS-Simscape neural outputs to the bridge's actuator-command interface and returned muscle length, velocity, force, and joint measurements to the controller. This arrangement allows a block-programmed neural controller to act on an existing MuJoCo model. The integration tests compare activation and sensor readback against a Python reference before interpreting the coupled motion. The bridge supplies the simulation interface; the neural and actuator integrations and their verification are the work described here.
 
-\subsection{A Curriculum for Tuning and Controlled Experiments}\label{sec:sns_curriculum_main}
+\noindent\textbf{Verification.} The MathWorks MuJoCo--Simulink bridge exchanges activation commands and mechanical measurements between a Simulink controller and an existing MuJoCo mechanical model. I paired this bridge with SNS-Simscape and tested single-muscle activation, different control rates, and sensor readback against a Python integration. Readback was bit-exact over the scored window. An exported neural network also drove all 92 actuator channels during a \qty{5}{\second} run without afferent return; a separate closed-loop reflex experiment exercised both commands and sensory measurements. These tests verify signal exchange through the interface. Under constant neural drive, one Simulink circuit realization reached a steady, nonoscillating state while its NumPy reference oscillated, showing why successful signal exchange must be followed by circuit-specific dynamical checks before transferring tuned parameters.
+
+\subsection{Curriculum and Experiment Drivers}\label{sec:sns_curriculum_main}\label{sec:sns_repeatability_main}
 
 The larger models require a tuning procedure as well as a working interface. I organized the evaluations as a staged curriculum, beginning with suspended rhythm generation, adding sensory feedback and standing requirements, and progressing to supported ground evaluations (Table~\ref{tab:sns_curriculum}). This ordering separates a failure to generate rhythmic commands from a failure to support or coordinate the mechanical model. Free network gains, which scale connection strengths and sensory contributions, were searched with a tree-structured Parzen estimator. This sequential search uses earlier simulation results to propose new parameter combinations; each candidate is then evaluated through simulation. Saved configurations and fixed evaluation protocols allow the candidate to be replayed before a new condition is introduced.
 
@@ -132,113 +214,28 @@ The experiment drivers then hold a selected controller fixed while changing sens
 \end{tabularx}
 \end{table}
 
-\section{Results: Verification of the Implemented Interfaces}\label{sec:preliminary_sim_results}
+\noindent\textbf{Verification.} A separate W2L configuration reproduced its supported-stepping trajectory in four independent replays, and all twelve reruns with \qty{1}{\percent} parameter perturbations retained supported stepping. This demonstrates that a saved controller can be replayed and tested in its local parameter neighborhood. The repeatability tests and the pathway-removal panels use separately specified support settings; their event counts are therefore reported separately. Appendix~\ref{sec:app_supported_replays} retains the event counts, bilateral phase, displacement, speed, and support accounting.
 
-The tests address three distinct questions: whether a circuit produces its expected response, whether implementations agree under matched inputs, and whether the neural and mechanical models exchange signals in a closed loop. The larger evaluation sets and their limitations are collected in Appendix~\ref{app:simulation_verification}; neuron equations and calibration details remain in Appendix~\ref{app:neuron_equations}.
+Mechanical support remains part of these results. Removing a constant weight-support term did not remove the position-control harness, and contact duty remained below the strict walking criterion. No harness-free walking was demonstrated.
 
-The demonstrations below apply these tests to the models and tools summarized in Table~\ref{tab:sns_capability}, followed by saved-controller replays and pathway removals that test whether the coupled experiments can be repeated and compared.
+\FloatBarrier
 
+\subsection{Literature Circuits and Spiking Variants}\label{sec:sns_literature_methods}\label{sec:sns_literature_results}\label{sec:layer_stimulus_main}
 
+Selected literature-derived circuits were tested with matched inputs and layer-specific stimuli before interpreting coupled motion. The reduced Rybak circuit was tested without mechanics; the Deng-derived circuit drove a suspended W2L model. Spiking variants retained a continuous motor-activation interface while changing the neural dynamics. Appendix~\ref{app:neuron_equations} gives their equations and calibration, and Appendix~\ref{sec:spiking_methods} gives the comparisons.
 
-\subsection{Coupled Block-Model Tests}\label{sec:sns_simulink_demos}
-
-The library assembles Ia stretch excitation, reciprocal inhibition, and Ib autogenic inhibition in a reduced-order antagonist knee model (Figure~\ref{fig:sns_reflex_current}C). After the model reaches a steady operating point, a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} current pulse at the extensor Ia sensory-neuron input evokes \ang{1.09} of extension, peaking \qty{111}{\milli\second} after pulse onset. The knee then returns toward the matched no-stimulus trajectory, meeting the specified recovery thresholds after \qty{6.355}{\second}. The displayed configuration broadens the MN and Ia synaptic saturation ramps; the original narrow-ramp settings maintained oscillations. This is a transient test of the implemented feedback and actuator equations, rather than a physiologically calibrated tendon-tap model. Appendix~\ref{sec:app_knee_transient} gives the configuration and numerical checks.
-
-A second demonstration tests feedback in an arm holding a beverage container as it is loaded (Figure~\ref{fig:sns_beverage_current}). With the reflex enabled, arm sag was \ang{2.00}, compared with \ang{7.85} when it was disabled. As the forearm sags, biceps stretch feedback excites the biceps motoneuron and reciprocally inhibits the triceps motoneuron. The separate Ib pathways provide autogenic inhibition of each muscle. The reduced sag demonstrates a corrective effect of the implemented sensory pathways in the coupled neural and actuator blocks.
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{knee_transient_current_layout.pdf}
-\caption{Transient knee response to a 2 nA, 30 ms sensory-current pulse after settling (A), antagonist-BPA leg schematic in an illustrative pose (B), and the six implemented feedback connections (C). Flexion is negative. The graded-response configuration uses broadened MN and Ia synaptic saturation ramps; its response is compared with a matched no-stimulus control.}
-\label{fig:sns_reflex_current}\label{fig:simulink_reflex_topology}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{beverage_current_layout.pdf}
-\caption{Loaded-arm demonstration: empty and loaded cup positions (A1, A2), feedback-on/off kinematics (B), and all six implemented feedback connections (C).}
-\label{fig:sns_beverage_current}
-\end{figure}
-
-\subsection{Matched Neural Implementations}\label{sec:crossengine_results}
-
-The contact-driven W2L rhythm core was implemented in NumPy and native Simulink blocks from a common connectivity specification. Both implementations received the same input protocol. Burst periods matched at \qty{1.000}{\second}, all ten expected bursts were reproduced, and voltage-trace correlation was at least 0.99996 (Figure~\ref{fig:w2l_crossengine}). The agreement is specific to this circuit and input protocol.
-
-Removing the phasic heel-contact inputs caused the circuit to latch in both implementations. The alternating activity therefore depends on the specified sensory drive.
-
-A complementary neural-only test distinguishes mechanisms that can produce a missing motor burst. In the reduced Rybak implementation, pattern-formation stimulation suppresses flexor motor output while the rhythm generator continues; rhythm-generator stimulation shifts the subsequent phase. Reproducing that distinction demonstrates the use of controlled interventions to test circuit organization before adding mechanical coupling (Appendix~\ref{sec:rybak_verification}).
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{sns_w2l_traces.png}
-\caption[W2L rhythm-core traces across engines]{W2L rhythm-generator voltages under matched inputs in NumPy and Simulink. Burst periods and counts agree; full-trace correlation is at least 0.99996. The residual \qty{2}{\milli\second} lag is one discrete solver step. The test concerns the driven rhythm core, not walking mechanics.}
-\label{fig:w2l_crossengine}
-\end{figure}
-
-\subsection{Layer-Specific Stimulation}\label{sec:layer_stimulus_main}
+\noindent\textbf{Verification.} A complementary neural-only test distinguishes mechanisms that can produce a missing motor burst. In the reduced Rybak implementation, pattern-formation stimulation suppresses flexor motor output while the rhythm generator continues; rhythm-generator stimulation shifts the subsequent phase. Reproducing that distinction demonstrates the use of controlled interventions to test circuit organization before adding mechanical coupling (Appendix~\ref{sec:rybak_verification}).
 
 A missing motor burst can arise from a disturbance of the rhythm generator or from suppression farther downstream. I applied stimuli separately to the RG, PF, and MN layers of a reduced Deng-derived circuit \citep{deng_neuromechanical_2019,nourse_sns_2023}. A resetting deletion suppresses expected motor activity and shifts the subsequent rhythm; a non-resetting deletion suppresses activity while preserving the original schedule. Matched baseline and stimulus runs distinguish the rhythm-generator clock from the motor output.
 
-Stimuli lasting two baseline periods suppressed two expected flexor motor bursts at each layer. RG stimulation shifted both RG and motor timing by 0.211 cycles, whereas PF stimulation and direct MN inhibition preserved the original schedule. A separate one-second PF stimulus shifted motor timing by 0.208 cycles while leaving the RG clock unchanged. Thus, a motor phase shift alone did not establish resetting of the rhythm generator. The smaller-current sweep produced no observable deletions. Appendix~\ref{sec:app_layer_stimulus} gives the protocols, all stronger-current controls, and representative neural responses. These are controlled tests of a translated circuit coupled to a suspended model, rather than a replication of the original rat's locomotion.
+Stimuli lasting two baseline periods suppressed two expected flexor motor bursts at each layer. RG stimulation shifted both RG and motor timing by 0.211 cycles, whereas PF stimulation and direct MN inhibition preserved the original schedule. A separate one-second PF stimulus shifted motor timing by 0.208 cycles while leaving the RG clock unchanged. Thus, a motor phase shift alone did not establish resetting of the rhythm generator. The smaller-current sweep produced no observable deletions. Appendix~\ref{sec:app_layer_stimulus} gives the protocols and all stronger-current controls; Figure~\ref{fig:layer_stimulus_validation} shows representative neural responses. These are controlled tests of a translated circuit coupled to a suspended model, rather than a replication of the original rat's locomotion.
 
-\subsection{Conversion Checks and Muscle-Force Agreement}
-
-The conversion checks test the quantities needed to interpret a neural-control experiment: the direction of each muscle's joint action, the coupled motion of path points, the force scale, and the intended ground contacts. They exposed reversed hip actions, inconsistent path-point limits, unintended contact pairs, and incorrect force scales in individual actuator entries. Correcting those faults made the converted human model usable for the subsequent controller tests. Appendix~\ref{sec:app_conversion_repairs} gives the individual repairs and the full force comparison.
-
-At matched poses and OpenSim static-optimization activations, eight of twelve sampled muscles had force-prediction $R^2$ between 0.87 and 0.98 and mean forces within \qty{10}{\percent} of the reference. Rectus femoris and biceps femoris short head had negative $R^2$, indicating errors greater than a constant mean-force prediction. These results support selected force predictions while identifying remaining muscle-specific differences. Because the comparison sets pose and activation frame by frame without reproducing trajectory velocities or tendon dynamics, it does not establish dynamic equivalence between the muscle formulations. That distinction matters when interpreting feedback based on muscle force.
-
-\subsection{Closed-Loop Model Coupling}
-
-The MathWorks MuJoCo--Simulink bridge exchanges activation commands and mechanical measurements between a Simulink controller and an existing MuJoCo mechanical model. I paired this bridge with SNS-Simscape and tested single-muscle activation, different control rates, and sensor readback against a Python integration. Readback was bit-exact over the scored window. An exported neural network also drove all 92 actuator channels during a \qty{5}{\second} run without afferent return; a separate closed-loop reflex experiment exercised both commands and sensory measurements. These tests verify signal exchange through the interface. Under constant neural drive, one Simulink circuit realization reached a steady, nonoscillating state while its NumPy reference oscillated, showing why successful signal exchange must be followed by circuit-specific dynamical checks before transferring tuned parameters.
-
-\subsection{Testing Alternative Controllers on Gait2392}\label{sec:sns_gait_comparison_main}
-
-The Gait2392-based evaluations use the same reference-library and pathway-removal procedures to compare alternative neural organizations. The full graded, pruned, six-synergy, and W2L-layout configurations show different responses to feedback removal and different agreement with the tuning and library references. Removing Ia feedback eliminated detected cycles in the tested production configuration, whereas other removals and other network organizations had different effects. The library comparisons also exposed asymmetric activity and limited transfer beyond the tuning reference (Appendix~\ref{sec:gait_library_results}). This demonstrates that the models and experiment drivers can discriminate controller dependence and transfer limits; the comparison does not establish normal human gait.
-
-A replay of the saved human-model controller produced ten detected cycles per leg. Figure~\ref{fig:gait2392_ik_overlay} compares the joint trajectories directly with the Gait2392 inverse-kinematics reference and its associated ground-reaction forces. The model's mean stance fractions were 0.71 and 0.65 on the right and left, compared with 0.61 in the reference. Substantial hip and knee timing differences remain visible despite the detected cycles. The overlay therefore complements the scalar gait score by showing which parts of the movement disagree. Appendix~\ref{sec:app_ik_overlay} reports the angle errors and alignment method.
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{gait2392_ik_overlay.pdf}
-\caption[Gait2392 model motion compared with inverse kinematics]{Supported human-model joint motion compared with the Gait2392 inverse-kinematics reference. Model curves show the mean and one standard deviation across ten cycles per leg. Each leg is aligned to its own foot-loading onset; no angle offset, amplitude adjustment, or fitted phase shift is applied. Bottom strips compare model contact probability across cycles with reference stance and swing from ground-reaction forces, using a \qty{50}{\newton} threshold. Separate leg alignment does not establish bilateral phase agreement.}
-\label{fig:gait2392_ik_overlay}
-\end{figure}
-
-\subsection{Feedback Contribution at Fixed Controller Settings}\label{sec:sns_feedback_test}
-
-The recovered W2L controller was tested with all saved effective gains delivered to the compiled network. With controller, drive, and support settings fixed, disabling all sensory feedback shifted median bilateral contact phase from 0.498 to 0.223 cycles. A phase of 0.5 cycles indicates alternating foot loading; the supported-stepping criterion accepts 0.35--0.65 cycles. Forward progression and joint cycling persisted, but the feedback-disabled condition failed this criterion for supported stepping (Figure~\ref{fig:sns_ablation_pair}). Over the \qtyrange{4.5}{30}{\second} scored window, forward displacement was \qty{2.239}{\meter} with feedback and \qty{1.996}{\meter} without it. Thus, the demonstrated feedback contribution is to bilateral contact coordination, rather than the existence of oscillation or forward motion. Additional pathway deletions and stimulus tests are summarized in Appendix~\ref{sec:app_w2l_perturbations}.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.85\textwidth]{w2l_feedback_verified.pdf}
-\caption[Sensory-feedback comparison in the recovered W2L model]{Sensory-feedback comparison with fixed W2L conductances, drive, and support settings. Knee angles, heel contact forces, and displacement are shown with feedback intact (left) and all sensory feedback disabled (right). Cycling persists in both conditions; the feedback-disabled condition fails the bilateral contact-phase criterion.}
-\label{fig:sns_ablation_pair}
-\end{figure}
-
-\subsection{Repeatability and Mechanical Support}
-
-A separate W2L configuration reproduced its supported-stepping trajectory in four independent replays, and all twelve reruns with \qty{1}{\percent} parameter perturbations retained supported stepping. This demonstrates that a saved controller can be replayed and tested in its local parameter neighborhood. The repeatability tests and the pathway-removal panels use separately specified support settings; their event counts are therefore reported separately. Appendix~\ref{sec:app_supported_replays} retains the event counts, bilateral phase, displacement, speed, and support accounting.
-
-Mechanical support remains part of these results. Removing a constant weight-support term did not remove the position-control harness, and contact duty remained below the strict walking criterion. A separate CAD-derived model completed a coupled stance demonstration under substantial rig support and reference actuator tensions. The model-specific support and actuator limitations are documented in Appendix~\ref{sec:app_cad_supported_stance}. No harness-free walking was demonstrated.
-
-A newer CAD-model comparison tests whether additional abductor control prevents the legs from crossing (Figure~\ref{fig:ah001_supported_control}). Under the same assistance settings, muscle-mediated separation feedback changed reversed ankle ordering from \qty{67}{\percent} of sampled states to zero. The model uses a layered SNS for timing together with an engineering force allocator. Its MN target-current compensation cancels incoming PF and reflex currents, so this comparison demonstrates supported model integration and a separation-control effect, rather than full neural pattern control. Appendix~\ref{sec:app_cad_supported_stance} gives the matched measures and foot-mount sensitivity.
-
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{ah001_supported_control.png}
-\caption[CAD-derived robot under supported hybrid control]{Anterior (A) and oblique (B) views of the same recorded CAD-model state. Right and left legs are blue and gold; selected hip-abducting routes are green. The 75 kg model uses 54 reference-tension actuators with hybrid neural and postural control. Vertical assistance supplies 80\% of body weight in this interval; lateral and angular assistance remain active. Attachments, the welded foot mount, and passive knee stops are provisional.}
-\label{fig:ah001_supported_control}
-\end{figure}
-
-
-These distinctions are part of the experimental method: circuit agreement, successful signal exchange, supported stepping, and balance are different capabilities. A result in one cannot be used as an acceptance test for another.
+\begin{samepage}
+Spiking-neuron comparisons preserved a continuous motor-activation interface while changing rhythm timing and, in some runs, limb coordination (Appendix~\ref{app:simulation_verification}).\par
+\end{samepage}
 
 \section{Discussion: What the Tools Establish}\label{sec:sns_discussion}
 
-The principal contribution is a set of executable neuromechanical models and experimental tools that make the roles of neural pathways and actuator mechanics accessible to controlled tests. The initial AnimatLab model established the combined walker and CPG organization. The Gait2392 implementations extend controller development to a human-scale model with many joints and actuator channels, while the BPA implementations connect the measured actuator-force model to neural control. SNS-Simscape provides a graphical representation of the pathways, and the curriculum and experiment drivers provide repeatable changes in drive, support, feedback, and perturbation conditions.
+Matched neural traces support the tested circuit and input protocol. Successful command and sensor exchange through the bridge establishes the interface needed to couple models, while the fixed-controller W2L comparison identifies a sensory-feedback contribution to bilateral contact coordination. The loaded-arm comparison gives a directly interpretable corrective response in the coupled neural and actuator blocks. These results answer different questions and should be interpreted at their respective scales.
 
-The representative results answer different parts of the knowledge gap. Agreement between the NumPy and Simulink rhythm cores establishes that the specified circuit response can be preserved across those implementations under matched inputs. The loaded-arm comparison establishes a corrective effect of feedback in the coupled block model. The fixed-controller W2L comparison identifies a contribution of sensory feedback to bilateral contact coordination. The bridge tests establish the command and measurement exchange needed to carry out such experiments across software environments. Together, these results provide an operational method for separating implementation agreement, sensory contribution, and mechanical response.
-
-Spiking-neuron comparisons preserved a continuous motor-activation interface while changing rhythm timing and, in some runs, limb coordination (Appendix~\ref{app:simulation_verification}).
-
-The gap identified at the start of the chapter is addressed through a working experimental workflow: construct a defined neural--mechanical model, check its implementation and interfaces, tune it in stages, and compare controlled changes. The demonstrations establish selected capabilities of that workflow and identify where additional validation is needed. The next chapter brings these tools together with the actuator characterization, torque models, and SADb application, then separates the uses already supported by the dissertation from the studies required for broader robot behavior and hardware deployment.
+The implemented workflow supports controlled circuit comparisons and virtual-harness-assisted evaluations of the human and BPA robot models. It makes alternative controllers accessible to repeated tests with specified mechanics, sensory pathways, and assistance. Chapter~\ref{ch:overall} connects these capabilities with the actuator characterization, torque models, and SADb, then considers their use in broader robot behavior and hardware experiments.

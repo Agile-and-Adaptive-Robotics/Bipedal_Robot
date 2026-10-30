@@ -44,29 +44,9 @@
 
 \subsection{Tables}
 
-\begin{table}[htbp]
-\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\ref{fig:FlxPin_preopt}: the Hunt-equation rigid-body prediction, the unoptimized prediction of the improved BPA characterization, and the back-calculated (hybrid) torque. RMSE and maximum absolute residual (Max.) are in $\mathrm{N\,m}$, and FVU denotes the fraction of variance unexplained.}
-\label{tab:FlxPinPreGof}
-\begingroup
-\renewcommand{\arraystretch}{1}%
-\fontsize{10pt}{12pt}\selectfont
-\begin{tabular}{@{}cc ccccccccc@{}}
-\toprule
-& & \multicolumn{3}{c}{\textbf{Hunt equation}} & \multicolumn{3}{c}{\textbf{Improved BPA}} & \multicolumn{3}{c}{\textbf{Back-calculated (hybrid)}} \\
-\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(l){9-11}
-$\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\mm}) & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
-\midrule
-48.5 & -- & 5.779 & 1.1761 & 9.798 & 4.871 & 0.8354 & 9.865 & 1.635 & 0.0991 & 3.842 \\
-41.0 & -- & 6.633 & 3.2313 & 11.409 & 6.074 & 2.7090 & 9.262 & 2.187 & 0.1184 & 4.243 \\
-45.7 & -- & 5.315 & 0.9408 & 9.991 & 4.465 & 0.6640 & 9.536 & 1.246 & 0.0409 & 2.275 \\
-40.6 & 35 & 3.945 & 0.6750 & 7.527 & 3.226 & 0.4512 & 7.376 & 2.085 & 0.0755 & 3.073 \\
-\bottomrule
-\end{tabular}
-\endgroup
-\end{table}
 
 \begin{table}[htbp]
-\caption{Muscle origin and insertion locations for different models. Origin is in femur reference frame, insertion is in the tibia reference frame.}
+\caption{Baseline muscle endpoints in meters. Origins are in the femur frame and insertions in the tibia frame. The biomimetic rows specify the single-BPA tests, with the femur and tibia $\theta_1$ frames defined below.}
 \label{table:muscle_attachment}
 \centering
 \begin{tabular}{||l l l r r r||} 
@@ -81,12 +61,12 @@ $\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\mm}) &
  Bifemsh & insertion & Gait2392 & -0.03 & -0.036 & 0.029 \\
  Vastus int. & origin & Gait2392 & 0.029 & -0.192 & 0.031 \\
  Vastus int. & insertion & Gait2392 & moving & moving & 0.0018 \\  
- Flexor, \qty{10}{\milli\metre} & origin & Biomimetic knee & -0.050 & -0.045 & 0.0328 \\
- Flexor, \qty{10}{\milli\metre} & insertion & Biomimetic knee  & -0.0279 & -0.046 & 0.0328 \\
+ Flexor, \qty{10}{\milli\metre} & origin & Biomimetic knee & -0.050 & 0.035 & 0.050 \\
+ Flexor, \qty{10}{\milli\metre} & insertion & Biomimetic knee  & -0.01224 & -0.00887 & 0.02787 \\
  Extensor, \qty{10}{\milli\metre} & origin & Biomimetic knee  & 0.040 & 0.035 & 0 \\
- Extensor, \qty{10}{\milli\metre} & insertion & Biomimetic knee  & 0.021 & -0.072 & 0 \\
- Flexor, \qty{20}{\milli\metre} & origin & Biomimetic knee  & -0.050 & -0.045 & 0.0328  \\
- Flexor, \qty{20}{\milli\metre} & insertion & Biomimetic knee  & -0.0279 & -0.046 & 0.0328 \\
+ Extensor, \qty{10}{\milli\metre} & insertion & Biomimetic knee  & 0.03604 & -0.02844 & 0 \\
+ Flexor, \qty{20}{\milli\metre} & origin & Biomimetic knee  & -0.050 & 0.035 & 0.050  \\
+ Flexor, \qty{20}{\milli\metre} & insertion & Biomimetic knee  & -0.01224 & -0.00887 & 0.02787 \\
  \hline
 \end{tabular}
 \end{table}
@@ -95,7 +75,7 @@ $\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\mm}) &
 
 \subsection{BPA routing and via points}
 
-The tables in this section list the routing via points of the BPA configurations reported in the main text. All coordinates are coded in meters in the project's MATLAB sources and are reported here in millimeters, rounded to $0.01$~mm. Knee angle $\theta_{\mathbf{k}}$ follows the model convention with flexion negative. Femur-side points (path rows before the crossing index) are specified in the femur-referenced instantaneous-center-of-rotation (ICR) frame and are used untransformed at every knee angle, while tibia-side points are specified in the tibia $\theta_{1}$ frame and are mapped into the ICR frame at each pose with the measured ICR migration, fitted as cubic splines of the tibia-to-ICR offsets over the knee range. The pinned-knee bracket reference points use the knee-ICR and hip frames noted per row, and the pinned-knee route endpoints (origins and insertions) are listed in Table~\ref{table:muscle_attachment}.
+The tables in this section list the routing via points of the BPA configurations reported in the main text. All coordinates are coded in meters in the project's MATLAB sources and are reported here in millimeters, rounded to $0.01$~mm. Knee angle $\theta_{\mathbf{k}}$ follows the model convention with flexion negative. Femur-side points (path rows before the crossing index) are specified in the femur frame and are used untransformed at every knee angle, while tibia-side points are specified in the tibia $\theta_{1}$ frame and are mapped first into the knee-ICR frame using the measured ICR migration and then into the femur frame using the knee rotation and translation. The tibia-to-ICR offsets are fitted as cubic splines over the knee range. The pinned-knee bracket reference points use the knee-ICR and hip frames noted per row, and the pinned-knee route endpoints (origins and insertions) are listed in Table~\ref{table:muscle_attachment}.
 
 Bracket reference points of the pinned-knee BPA routes, in mm. The pinned flexor route runs from origin to insertion with a compliant bracket at each end, and the pinned extensor route additionally wraps on two fixed arcs ($R_{1} = \qty{12}{\milli\metre}$, active for $-23^{\circ} \leq \theta_{\mathbf{k}} \leq 27^{\circ}$, and $R_{2} = \qty{40}{\milli\metre}$, active for $\theta_{\mathbf{k}} \leq -23^{\circ}$).
 
@@ -115,10 +95,10 @@ Pinned extensor & $\mathbf{p}_{br}$, rib midpoint, medial side & hip & -3.84 & -
 \end{tabular}
 \end{table}
 
-Routing via points of the biomimetic-knee \qty{10}{\milli\metre} BPA routes, in mm. The flexor route is a two-point path (crossing index 2), and the extensor route is the eight-point path of the extensor test (crossing index 5, nominal resting length \qty{520}{\milli\metre}) whose femur- and tibia-side contacts engage progressively with flexion. The active-range column lists the knee angles over which each point participates in the path.
+The biomimetic-knee single-BPA flexor tests in Figure~\ref{fig:FlxGrp}\textbf{(A)} and Figure~\ref{fig:FlxGrp}\textbf{(B)} share the two-point route below (crossing index 2). The femur-frame origin is fixed. At each knee angle, the tibia $\theta_1$ insertion is translated into the knee-ICR frame, then transformed into the femur frame. The table also gives the \qty{10}{\mm} extensor route, the eight-point path of Figure~\ref{fig:Ext10mm_52cm} (crossing index 5, nominal resting length \qty{520}{\milli\metre}) whose femur- and tibia-side contacts engage progressively with flexion. The active-range column lists the knee angles over which each point participates in the path.
 
 \begin{table}[htbp]
-\caption{Biomimetic-knee \qty{10}{\mm} routing points in millimeters. Active ranges identify when each contact participates.}
+\caption{Biomimetic-knee routing points in millimeters for the single-BPA flexor tests and the \qty{10}{\mm} extensor. Active ranges identify when each contact participates.}
 \label{tab:RouteBio10}
 \centering
 \small
@@ -126,7 +106,7 @@ Routing via points of the biomimetic-knee \qty{10}{\milli\metre} BPA routes, in 
 \hline
 \textbf{Point} & \textbf{Description} & \textbf{Frame} & \textbf{x (mm)} & \textbf{y (mm)} & \textbf{z (mm)} & \textbf{Active $\theta_{\mathbf{k}}$} \\
 \hline
-\multicolumn{7}{l}{\textbf{Flexor, \qty{10}{\milli\metre} (two-point route, resting length \qty{415}{\milli\metre})}} \\
+\multicolumn{7}{l}{\textbf{Single-BPA flexor, \qtylist{10;20}{\mm} (two-point route, resting length \qty{415}{\mm})}} \\
 \hspace{3mm} $p_{1}$ & origin & femur & -50.00 & 35.00 & 50.00 & all $\theta_{\mathbf{k}}$ \\
 \hspace{3mm} $p_{2}$ & insertion & tibia $\theta_{1}$ & -12.24 & -8.87 & 27.87 & all $\theta_{\mathbf{k}}$ \\
 \multicolumn{7}{l}{\textbf{Extensor, \qty{10}{\milli\metre} (eight-point route, resting length \qty{520}{\milli\metre})}} \\
@@ -153,7 +133,7 @@ Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The fle
 \hline
 \textbf{Point} & \textbf{Description} & \textbf{Frame} & \textbf{x (mm)} & \textbf{y (mm)} & \textbf{z (mm)} & \textbf{Liftoff $\theta_{\mathbf{k}}$} \\
 \hline
-\multicolumn{7}{l}{\textbf{Flexor, \qty{20}{\milli\metre} (two-BPA mirrored route, two BPAs, resting length \qty{561.49}{\milli\metre}, tendon \qty{25.00}{\milli\metre})}} \\
+\multicolumn{7}{l}{\textbf{Flexor, \qty{20}{\milli\metre} (two-BPA mirrored route, resting length \qty{561.49}{\milli\metre}, design tendon \qty{25.00}{\milli\metre})}} \\
 \hspace{3mm} $p_{1}$ & origin, BPA 1 & femur & -125.00 & 135.00 & 72.08 & end point \\
 \hspace{3mm} $p_{end}$ & insertion, BPA 1 & tibia $\theta_{1}$ & -18.72 & -32.69 & 38.96 & end point \\
 \hspace{3mm} $p_{1}^{(2)}$ & origin, BPA 2 & femur & -125.00 & 135.00 & -5.85 & end point \\
@@ -174,6 +154,16 @@ Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The fle
 
 \clearpage
 
+The flexor design tendon parameter in Table~\ref{tab:RouteRedesign20} is distinct from the model input used for the physical-test predictions. Let $l_{\mathrm{ten,design}}$ denote the saved route parameter and $l_{\mathrm{ten,model}}$ the value passed to the force calculation. The retained plotting input is
+\begin{equation}
+\begin{aligned}
+l_{\mathrm{ten,model}} &= l_{\mathrm{ten,design}}-\qty{20}{\mm}=\qty{5}{\mm},\\
+l_{m,\mathrm{geom}}(\theta) &= L_{\mathrm{route}}(\theta)-l_{\mathrm{ten,model}}-2l_{\mathrm{fitting}}.
+\end{aligned}
+\label{eq:flexor_tendon_inputs}
+\end{equation}
+Here $L_{\mathrm{route}}$ is the total routed length and $l_{m,\mathrm{geom}}$ is the geometric BPA length before the offset, compliance, and wrapping corrections. The \qty{20}{\mm} input adjustment is separate from the \qty{21}{\mm} end-fitting length $l_{\mathrm{fitting}}$ subtracted at each end. The measured cable lengths are per-actuator hardware dimensions; they were not substituted for the shared effective parameter in the reported prediction curves.
+
 \subsection{Figures}
 
 \begin{figure}[htbp]
@@ -183,13 +173,6 @@ Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The fle
 \caption{Predicted redesigned extensor (A) and flexor (B) torque against the human reference and required \qty{5}{\percent} design margin.}\label{fig:RouteVariants}
 \end{figure}
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=1\textwidth]{Figures/extensor_misalign.png}
-\end{center}
-\caption{Pinned-extensor actuator slippage: top view (A) and side view (B). The lateral displacement changes the force path and moment arm.}
-\label{fig:extensor_misalign}
-\end{figure}
 
 \bibliography{BolenFrontiers22}
 
@@ -200,6 +183,32 @@ Routing via points of the \qty{20}{\milli\metre} route redesigns, in mm. The fle
 
 
 
+
+\subsection{Route-Redesign Objectives and Detailed Geometry}\label{app:route_redesign_details}
+
+The flexor and extensor routes use different terms in the common objective of Equation~\eqref{eq:opt_cost}:
+\begin{align}
+J_{\mathrm{flx}} =\;& 10^{5}J_{\text{worst}} + 10^{3}J_{\text{torque}} + 10^{-2}J_{\text{shape}} + J_{\text{off}} + J_{\text{rest}} + J_{\text{strain,hi}} \nonumber\\
+& + J_{\text{strain,lo}} + J_{\text{wrap}} + J_{\text{geom}} + J_{\text{len}} + J_{\text{anchor}},
+\label{eq:opt_cost_flx}\\[4pt]
+J_{\mathrm{ext}} =\;& 10^{5}J_{\text{worst}} + 10^{3}J_{\text{torque}} + J_{\text{over}} + J_{\text{rest}} + J_{\text{strain,hi}} \nonumber\\
+& + J_{\text{strain,lo}} + J_{\text{contr}} + J_{\text{geom}} + J_{\text{len}}.
+\label{eq:opt_cost_ext}
+\end{align}
+Here $J_{\text{shape}}$ penalizes torque-curve disagreement, $J_{\text{off}}$ off-axis torque, $J_{\text{rest}}$ infeasible resting length, $J_{\text{strain,hi}}$ and $J_{\text{strain,lo}}$ strain-limit violations, $J_{\text{wrap}}$ failure to release a wrap, $J_{\text{anchor}}$ attachment displacement, $J_{\text{over}}$ torque overshoot, and $J_{\text{contr}}$ excessive contraction. Geometric and length regularizers retain the seed neighborhood. The cam formulation additionally rewards worst-angle torque margin and penalizes abrupt changes in moment arm and displacement from the initial cam profile. These additions seek usable torque capacity while preserving feasible actuator travel.
+
+The direct extensor route respects the wrap-release schedule of the route-elimination rule, releasing its six sequential contacts at knee angles of \ang{-89.8}, \ang{-55.7}, \ang{-47.8}, \ang{-20.2}, \ang{6.1}, and \ang{7.4}, and the optimized design places the femur-side origin at $(40.0, 137.0, 0)$~mm and the tibial insertion at $(34.4, -197.1, 0)$~mm, with a resting length of \qty{827.7}{\mm} and \qty{36.8}{\mm} of tendon.
+
+The cam summaries use two different normalizations. For the evaluated knee-angle grid $\Theta$, let $M_h(\theta)$ be the human-reference torque, $M_{h,\max}$ its peak magnitude, and $M_{\mathbf{k}}(\theta)$ the predicted knee-axis torque. The minimum surplus above the required envelope and the minimum relative margin above the human reference are
+\begin{equation}
+\begin{aligned}
+s_{\mathrm{req}} &= \min_{\theta\in\Theta}\frac{\lvert M_{\mathbf{k}}(\theta)\rvert-1.05\lvert M_h(\theta)\rvert}{M_{h,\max}},\\
+m_h &= \min_{\theta\in\Theta}\frac{\lvert M_{\mathbf{k}}(\theta)\rvert-\lvert M_h(\theta)\rvert}{\lvert M_h(\theta)\rvert}.
+\end{aligned}
+\label{eq:cam_summary_definitions}
+\end{equation}
+
+The unadjusted cam optimizer solution had $s_{\mathrm{req}}=+31.30$~\% and $m_h=+42.34$~\%, using Equation~\eqref{eq:cam_summary_definitions}. The adjusted cam design is the one evaluated in the main paper. Its required pressure remains above the \qty{150}{\kPa} regulated floor used in the design calculation. The tibial wrap follows a bend radius of \qty{96.9}{\mm}, the guiding route point clears the femoral-condyle envelope by \qty{43.1}{\mm} at \ang{10} of knee extension, and the moment arm spans \qty{59.4}{\mm} to \qty{102.8}{\mm} with a mean of \qty{72.4}{\mm} (Supplementary Figure~\ref{fig:ExtensorRoute_redesigned}).
 
 \subsection{Contact and Release Angles of the Wrapped Route}\label{app:contact_release}
 
@@ -250,6 +259,38 @@ b(\theta_{\mathbf{k}}) = \sum_{f} R_{f}(\theta_{\mathbf{k}})\, \alpha_{f}(\theta
 \end{equation}
 is the bend signal handed to the force model. Each family's turn angle $\alpha_{f}$ ramps with knee angle between the two route-state events that bound it, holding zero before the first event and its plateau after the second, so the topology state and the bending signal are two readings of one record. The formulation is joint-agnostic: it requires only a fixed route representation with one crossing segment, per-angle transforms between the two body frames, and clearance envelopes on each side, so it carries unchanged to the other wrapped routes of this program.
 
+
+\subsection{Transmission Sizing and Configuration Selection}\label{app:transmission_selection}
+
+The transmission search retained each site's attachment routing while varying the number of parallel BPAs $N_B$, the travel multiplier $G$, resting length, and tendon length. For the schematic in the main paper, $G=n$, the number of cable parts supporting the moving sheave. The ideal force gain relative to one BPA is $N_B/G$; for example, three BPAs through a two-part tackle deliver 1.5 times the force and twice the travel of one directly attached BPA. Lengths were re-solved for each visited transmission configuration.
+
+Let $N_D$ be the number of included joint-coordinate cells after applying the hip-domain mask. The resting and tendon lengths were selected by minimizing
+\begin{equation}
+J_{\mathrm{survey}}=-10^3 m-a_{\mathrm{search}}+10^{-3}d,
+\label{eq:survey_selection_cost}
+\end{equation}
+with the dimensionless terms defined in Table~\ref{tab:survey_selection_terms}. Invalid model evaluations received a cost of $10^6$. Slack and infeasible cells otherwise contributed through these soft terms; the length bounds were enforced directly. The search's positive-strain tie-break is distinct from the positive-insertion-tension coverage reported in the main paper, which evaluates the saved configurations.
+
+\begin{table}[htbp]
+\centering
+\begingroup\fontsize{10pt}{12pt}\selectfont
+\caption{Terms in the transmission-sizing objective. All counts use the included grid cells.}
+\label{tab:survey_selection_terms}
+\begin{tabularx}{\textwidth}{@{}lXr@{}}
+\toprule
+\textbf{Term} & \textbf{Definition} & \textbf{Coefficient} \\
+\midrule
+$m$ & Fraction of cells with taut, feasible BPA torque matching the human torque's sign and meeting its magnitude. & $-10^3$ \\
+$a_{\mathrm{search}}$ & Fraction of taut, feasible cells with finite positive model strain and nonzero torque, as used during the search. & $-1$ \\
+$d$ & Sum of the slack-cell and infeasible-cell counts, divided by $N_D$. & $10^{-3}$ \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+For a configuration, pattern search started from the lowest-cost of five box seeds. If $L_{\mathrm{char}}$ is the maximum rigid route length over the evaluated grid, the resting-length bounds were $[0.30L_{\mathrm{char}},0.90L_{\mathrm{char}}]$ and the tendon-length bounds were $[0.02,\max(0.30L_{\mathrm{char}},0.06)]$~m. The mesh and step tolerances were $10^{-4}$.
+
+Each site started at $(N_B,G)=(1,1)$. A torque shortfall among taut, feasible cells relative to the peak human torque magnitude prompted an additional parallel BPA; slack or infeasible cells prompted an additional cable part. Both counts were capped at three, with at most five visited configurations, 300 evaluations, and approximately ten minutes per site. Among the visited configurations, the saved winner maximized the integer number of cells meeting the human torque requirement, then the search-active cell count, then preferred smaller $N_B+G$. A remaining tie retained the earlier configuration. These rules select among the evaluated designs rather than establish a global optimum.
 
 \clearpage
 \subsection{Configuration-Survey Coordinates and Actuator Sizes}

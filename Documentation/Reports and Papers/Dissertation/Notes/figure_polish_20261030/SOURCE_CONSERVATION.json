@@ -1,0 +1,168 @@
+{
+  "scope": "Read-only numeric-token/source-hash verification for recorded caption/callout changes and protected published Chapter20 source plus8 active graphics. No source/asset changes, compile, upload, or scientific recalculation.",
+  "source_edits_record": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\figure_polish_20261030\\SOURCE_EDITS.json",
+  "source_checks": [
+    {
+      "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\30-torque.tex",
+      "current_sha256": "df3a3c081830b667b1d3105a5b8154f6d63250d32a5b5f8187b3b67863af0060",
+      "recorded_after_sha256": "df3a3c081830b667b1d3105a5b8154f6d63250d32a5b5f8187b3b67863af0060",
+      "after_hash_matches": true,
+      "reconstructed_before_sha256": "3f6fc0f0d9241a0456f7638739b108c648b1ab6b667b637b890535854eb20bb2",
+      "recorded_before_sha256": "3f6fc0f0d9241a0456f7638739b108c648b1ab6b667b637b890535854eb20bb2",
+      "before_hash_reconstruction_matches": true,
+      "edits": [
+        {
+          "old": "\\caption{Biomimetic-knee flexor torque with a single \\qty{10}{\\mm} BPA (A) and a single \\qty{20}{\\mm} BPA (B). The legend in panel B identifies the measurements, predictions, and human reference.}",
+          "new": "\\caption{Biomimetic-knee flexor torque: \\textbf{(A)} a single \\qty{10}{\\mm} BPA; \\textbf{(B)} a single \\qty{20}{\\mm} BPA. The legend in \\textbf{(B)} identifies the measurements, predictions, and human reference.}",
+          "old_numeric_tokens": {
+            "10": 1,
+            "20": 1
+          },
+          "new_numeric_tokens": {
+            "10": 1,
+            "20": 1
+          },
+          "numeric_tokens_exact": true,
+          "new_fragment_occurrences": 1
+        }
+      ],
+      "all_numeric_tokens_exact": true
+    },
+    {
+      "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\50-database.tex",
+      "current_sha256": "0f1891fa565353430e462c05afb78efa55fdf145351df07c266aacb4b630ec21",
+      "recorded_after_sha256": "0f1891fa565353430e462c05afb78efa55fdf145351df07c266aacb4b630ec21",
+      "after_hash_matches": true,
+      "reconstructed_before_sha256": "a6aa3b0f49eab61860016d50e01eb23759e25632415b4a12bd646a45cf152c5e",
+      "recorded_before_sha256": "a6aa3b0f49eab61860016d50e01eb23759e25632415b4a12bd646a45cf152c5e",
+      "before_hash_reconstruction_matches": true,
+      "edits": [
+        {
+          "old": "citation neighborhood (E), and connected papers (F).",
+          "new": "citation neighborhood (E), connected papers (F), and the topic-cluster color key (G).",
+          "old_numeric_tokens": {},
+          "new_numeric_tokens": {},
+          "numeric_tokens_exact": true,
+          "new_fragment_occurrences": 1
+        },
+        {
+          "old": "into 18 named topic clusters, which help users navigate related studies in the Bubble map tab.",
+          "new": "into 18 named topic clusters (Figure~\\ref{fig:sadb_clusters}, callout~(G)), which help users navigate related studies in the Bubble map tab.",
+          "old_numeric_tokens": {
+            "18": 1
+          },
+          "new_numeric_tokens": {
+            "18": 1
+          },
+          "numeric_tokens_exact": true,
+          "new_fragment_occurrences": 1
+        }
+      ],
+      "all_numeric_tokens_exact": true
+    }
+  ],
+  "protected_chapter": {
+    "source": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\20-muscles.tex",
+    "active_graphic_count": 8,
+    "files": [
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\20-muscles.tex",
+        "sha256": "0930ef6c09eee0b786a6fec5877e874297282e1dcd45125ba98eeb78642ee9f8",
+        "bytes": 41339,
+        "source_package_entry": "chapters/20-muscles.tex",
+        "source_package_sha256": "0930ef6c09eee0b786a6fec5877e874297282e1dcd45125ba98eeb78642ee9f8",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "9f50fab09e7ce4f1f2beb4cc23f2a610737e40ab649751f2b75ea9130387a0b2",
+        "matches_prior_protected_baseline": false
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\01_testJigs1.pdf",
+        "sha256": "f8afe9fabec78ff9f5cd30b5dbca1ccb919bdeccf30480c81354a585840f118f",
+        "bytes": 91484,
+        "source_package_entry": "figs/20-muscles/01_testJigs1.pdf",
+        "source_package_sha256": "f8afe9fabec78ff9f5cd30b5dbca1ccb919bdeccf30480c81354a585840f118f",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "f8afe9fabec78ff9f5cd30b5dbca1ccb919bdeccf30480c81354a585840f118f",
+        "matches_prior_protected_baseline": true
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\02a_MaxForce10.eps",
+        "sha256": "c49d240c37cd9506613f30aada344a96e24ba6e5a8d8c29e110f2d41d966b696",
+        "bytes": 39995,
+        "source_package_entry": "figs/20-muscles/02a_MaxForce10.eps",
+        "source_package_sha256": "c49d240c37cd9506613f30aada344a96e24ba6e5a8d8c29e110f2d41d966b696",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "c49d240c37cd9506613f30aada344a96e24ba6e5a8d8c29e110f2d41d966b696",
+        "matches_prior_protected_baseline": true
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\02b_MaxForce20.eps",
+        "sha256": "e21f17fc5dc3c8b8aead8df3b333b86f8e254c487c3bfba2a6fc9d305a1b1740",
+        "bytes": 42676,
+        "source_package_entry": "figs/20-muscles/02b_MaxForce20.eps",
+        "source_package_sha256": "e21f17fc5dc3c8b8aead8df3b333b86f8e254c487c3bfba2a6fc9d305a1b1740",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "e21f17fc5dc3c8b8aead8df3b333b86f8e254c487c3bfba2a6fc9d305a1b1740",
+        "matches_prior_protected_baseline": true
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\03a_MaxForce10_all.eps",
+        "sha256": "ab847b436f1715458619787d444a36745f859c92151a44ff7ff6fc34e56bf0e0",
+        "bytes": 12954,
+        "source_package_entry": "figs/20-muscles/03a_MaxForce10_all.eps",
+        "source_package_sha256": "ab847b436f1715458619787d444a36745f859c92151a44ff7ff6fc34e56bf0e0",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "ab847b436f1715458619787d444a36745f859c92151a44ff7ff6fc34e56bf0e0",
+        "matches_prior_protected_baseline": true
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\03b_kmax10.eps",
+        "sha256": "1e033701ea5a1918099e2f4379104f4727d9e9fb3f20107eb710fee5d9b94487",
+        "bytes": 12281,
+        "source_package_entry": "figs/20-muscles/03b_kmax10.eps",
+        "source_package_sha256": "1e033701ea5a1918099e2f4379104f4727d9e9fb3f20107eb710fee5d9b94487",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "1e033701ea5a1918099e2f4379104f4727d9e9fb3f20107eb710fee5d9b94487",
+        "matches_prior_protected_baseline": true
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\04a_FStar10.eps",
+        "sha256": "67d3cc20e4ac17c4781be2cb218f620ea3df5f0e3a385d31fd83aa9a2147c351",
+        "bytes": 993091,
+        "source_package_entry": "figs/20-muscles/04a_FStar10.eps",
+        "source_package_sha256": "67d3cc20e4ac17c4781be2cb218f620ea3df5f0e3a385d31fd83aa9a2147c351",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "67d3cc20e4ac17c4781be2cb218f620ea3df5f0e3a385d31fd83aa9a2147c351",
+        "matches_prior_protected_baseline": true
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\04b_FStar20.eps",
+        "sha256": "23c7ea70c8836e6c7c739f2d2cfc01d5a38b6b430246b1070eee77f8c8ac2030",
+        "bytes": 39551,
+        "source_package_entry": "figs/20-muscles/04b_FStar20.eps",
+        "source_package_sha256": "23c7ea70c8836e6c7c739f2d2cfc01d5a38b6b430246b1070eee77f8c8ac2030",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "23c7ea70c8836e6c7c739f2d2cfc01d5a38b6b430246b1070eee77f8c8ac2030",
+        "matches_prior_protected_baseline": true
+      },
+      {
+        "file": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\20-muscles\\05_Comparison.eps",
+        "sha256": "25e6a7a239e779bde4a2a34c6a66c5524482e66561fad33af786f67abcd7ea27",
+        "bytes": 65122,
+        "source_package_entry": "figs/20-muscles/05_Comparison.eps",
+        "source_package_sha256": "25e6a7a239e779bde4a2a34c6a66c5524482e66561fad33af786f67abcd7ea27",
+        "matches_second_phase_final_package": true,
+        "prior_20261022_sha256": "25e6a7a239e779bde4a2a34c6a66c5524482e66561fad33af786f67abcd7ea27",
+        "matches_prior_protected_baseline": true
+      }
+    ],
+    "second_phase_manifest": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\second_pdf_comments_20261030\\FINAL_DELIVERY_MANIFEST.json",
+    "source_package": "D:\\Github\\Bipedal_Robot\\output\\source\\Bolen_Dissertation_Reframed_Source_20261030.zip",
+    "source_package_sha256": "96843916c5d348a7b8482dec39dc71b47b2608bc6342fc985d425b2b1303d095",
+    "recorded_package_sha256": "96843916c5d348a7b8482dec39dc71b47b2608bc6342fc985d425b2b1303d095",
+    "package_hash_matches_manifest": true,
+    "prior_baseline": "D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\figure_polish_20261022\\protected_hashes.json",
+    "prior_baseline_boundary": "All8 active graphics match both baselines. The older20261022 chapter TEX hash differs from the current and final second-phase source package; that historical difference predates this figure-polish pass. Current-phase protection is checked against the verified final20261030 source package. No historical manuscript re-audit performed."
+  },
+  "pass": true
+}

@@ -1,5 +1,13 @@
-% Biomimetic-knee flexor comparison: 10 mm, 20 mm, and redesigned two-BPA route.
-% Figure 4.11. Run this script to update the dissertation PDF, PNG, and FIG.
+% Biomimetic-knee flexor comparison: retained 10 mm and 20 mm panels A/B.
+% Default mode reuses full-precision plotted series, without model evaluation.
+% An intentional data rebuild can opt in with BPA_FLX_BIO_REBUILD=1;
+% both paths finish with the same A/B layout, lettering, and legend helper.
+festodir=fileparts(mfilename('fullpath'));addpath(festodir);
+if ~strcmp(getenv('BPA_FLX_BIO_REBUILD'),'1')
+    Polish_KneeTorque_Figures('AB');
+    return
+end
+
 festodir = fileparts(mfilename('fullpath'));
 root = fileparts(fileparts(festodir));
 festodir = fullfile(root, 'Testing_Data/2022_02_Festo');
@@ -155,105 +163,28 @@ margin56 = abs(TorqueZ56) - abs(tgt56);
 fprintf('Panel C: meet-or-exceed %d of %d; smallest margin %+.2f N*m at %.1f deg\n', ...
     sum(margin56 >= 0), numel(margin56), min(margin56), K_deg(margin56 == min(margin56)));
 
-%% ---- figure: 2x2, three data panels + dedicated legend tile --------------
-sty = {'FontSize',12,'FontWeight','bold','FontName','Arial','LineWidth',2, ...
-    'XMinorTick','on','YMinorTick','on','TickLength',[0.025 0.05], ...
-    'XLim',[-120 15],'XTick',[-120 -90 -60 -30 0],'GridLineStyle','none'};
-
-fig = figure('Name','FlxGrp_2x2_20261026','Color','w', ...
-    'Units','centimeters','Position',[2 2 19.5 13.5]);
-t = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
-axT = gobjects(1,3);
-
-% (A) 10 mm 41.5 cm, title '10 mm'
-axT(1) = nexttile(1); hold on
-i = 1;
-hUnopt = plot(bpau(i).Ak, bpau(i).M_p(:,3), '--', 'Color', c3, 'LineWidth', 2, ...
-    'HandleVisibility','off');
-hCorr = plot(bpab(i).Ak, bpab(i).M_p(:,3), '-', 'Color', c5, 'LineWidth', 2.5, ...
-    'HandleVisibility','off');
-hMeas = scatter(bpab(i).Aexp, bpab(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-    'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'HandleVisibility','off');
-title('\bf 10 mm');
-set(gca, sty{:});
-
-% (B) 20 mm 41.5 cm + human + reduced-P points, title '20 mm'
-axT(2) = nexttile(3); hold on
-i = 2;
-hHum = plot(knee_angle_rT, Bifemsh_T, ':', 'Color', c8, 'LineWidth', 4, ...
-    'HandleVisibility','off');
-plot(bpau(i).Ak, bpau(i).M_p(:,3), '--', 'Color', c3, 'LineWidth', 2, ...
-    'HandleVisibility','off');
-plot(bpab(i).Ak, bpab(i).M_p(:,3), '-', 'Color', c5, 'LineWidth', 2.5, ...
-    'HandleVisibility','off');
-scatter(bpab(i).Aexp, bpab(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-    'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'HandleVisibility','off');
-hRed = scatter(angle_data(mask), torque_data(mask), sz, 'filled', ...
-    'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none', ...
-    'HandleVisibility','off');
-title('\bf 20 mm');
-set(gca, sty{:});
-
-% (C) 20 mm 56 cm redesigned two-BPA route, title '20 mm'
-axT(3) = nexttile(4); hold on
-plot(humanAngle, TorqueHz, ':', 'Color', c8, 'LineWidth', 4, ...
-    'HandleVisibility','off');
-plot(phiD, TqCorr, '-', 'Color', c5, 'LineWidth', 2.5, ...
-    'HandleVisibility','off');
-scatter(K_deg(idx), TorqueZ56(idx), sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-    'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'HandleVisibility','off');
-scatter(K_deg(~idx), TorqueZ56(~idx), sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-    'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none', 'HandleVisibility','off');
-title('\bf 20 mm');
-set(gca, sty{:});
-
-% shared B/C y-range and x-range (both 20 mm vs the same human target);
-% panel A keeps its own y-range (10 mm scale) -- no clipping to share.
-tmpRP = torque_data(mask);
-yBC = [bpab(2).M_p(:); bpau(2).M_p(:); tmpRP(:); ...
-       Bifemsh_T(:); TorqueHz(:); TqCorr(:); TorqueZ56(:)];
-yLo = floor(min(yBC)/10)*10 - 5;
-axT(2).YLim = [yLo, 5];
-axT(3).YLim = [yLo, 5];
-tmpX = [phiD(:); K_deg(:); humanAngle(:); bpab(2).Ak(:); bpau(2).Ak(:)];
-xLo = max(min(tmpX), -125);
-xHi = min(max(tmpX), 10);
-axT(2).XLim = [xLo, xHi];
-axT(3).XLim = [xLo, xHi];
-
-% tile 4: dedicated legend (dummy series with the panel styles)
-axL = nexttile(2); hold on
-plot(NaN, NaN, '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
-plot(NaN, NaN, '-', 'Color', c5, 'LineWidth', 2.5, 'DisplayName','Optimized');
-plot(NaN, NaN, ':', 'Color', c8, 'LineWidth', 4, 'DisplayName','Human model (max)');
-scatter(NaN, NaN, sz, 'filled', 'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', ...
-    'DisplayName','Measured');
-scatter(NaN, NaN, sz, 'filled', 'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none', ...
-    'DisplayName','Measured at reduced pressure');
-lg = legend('Location','northwest'); lg.FontSize = 11; lg.Box = 'on';
-axis(axL,'off');
-
-axT(3).YTickLabelMode = 'auto';
-ylabel(t, 'Torque, N\cdotm', 'Interpreter','tex'); xlabel(t, '\bf \theta_{\bf k} , \circ');
-
-% Reserve a left margin for A/B outside the shared torque label.
-t.OuterPosition = [0.07 0 0.93 1];
-drawnow;
-% A/B align vertically; C sits left of its y-axis numbers at the same height.
-ann = {'(A)','(B)','(C)'};
-for j = 1:3
-    if j < 3, letterX = -0.42; else, letterX = -0.23; end
-    text(axT(j),letterX,1.005,ann{j},'Units','normalized', ...
-        'FontSize',12,'FontName','Arial','FontWeight','bold', ...
-        'HorizontalAlignment','left','VerticalAlignment','bottom', ...
-        'Clipping','off');
+%% Current figure: one row with only the original A/B data panels.
+fig=figure('Visible','off','Name','FlxGrp_AB','Color','w',...
+    'Units','centimeters','Position',[2 2 24 10]);
+axT=gobjects(1,2);
+for j=1:2
+    axT(j)=axes(fig,'Units','normalized','Position',[.075+(j-1)*.50 .19 .40 .72]);
+    ax=axT(j);hold(ax,'on');
+    if j==2
+        plot(ax,knee_angle_rT,Bifemsh_T,':','Color',c8,'LineWidth',4);
+    end
+    plot(ax,bpau(j).Ak,bpau(j).M_p(:,3),'--','Color',c3,'LineWidth',2);
+    plot(ax,bpab(j).Ak,bpab(j).M_p(:,3),'-','Color',c5,'LineWidth',2.5);
+    scatter(ax,bpab(j).Aexp,bpab(j).Mexp,sz,'filled',...
+        'MarkerFaceAlpha',.75,'MarkerFaceColor',c7,'MarkerEdgeColor','none');
+    if j==2
+        scatter(ax,angle_data(mask),torque_data(mask),sz,'filled',...
+            'MarkerFaceAlpha',.75,'MarkerFaceColor',c4,'MarkerEdgeColor','none');
+    end
+    set(ax,'XLim',[-120 15],'XTick',[-120 -90 -60 -30 0],...
+        'FontName','Arial','FontSize',16,'FontWeight','bold','LineWidth',2,...
+        'XMinorTick','on','YMinorTick','on','TickLength',[.025 .05]);
+    xlabel(ax,'\theta_{\bf k}, ^\circ');ylabel(ax,'Torque, N m');
+    title(ax,sprintf('%d mm',10*j));
 end
-lg.FontSize = 12;
-drawnow;
-
-% Update the active dissertation asset and its editable MATLAB figure.
-savefig(fig,fullfile(outdir,'FlxGrp_2x2_20261026_publication.fig'));
-exportgraphics(fig,fullfile(outdir,'FlxGrp_2x2_20261026_publication.pdf'),'ContentType','vector');
-exportgraphics(fig,fullfile(outdir,'FlxGrp_2x2_20261026_publication.png'),'Resolution',300);
-save(fullfile(festodir,'Plot_KneeFlxBio_all.mat'),'bpab','bpau','phiD','TqCorr','K_deg','TorqueZ56');
-disp('Updated dissertation Figure 4.11');
+Polish_KneeTorque_Figures('AB',fig,axT);
