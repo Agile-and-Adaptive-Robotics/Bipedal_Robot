@@ -497,3 +497,73 @@ use vasti versus biceps-femoris-short-head commands. RF and the three long
 hamstrings retain their separate paired PF targets; sartorius and gracilis
 remain separate. These are normalized simulation-derived command targets,
 not EMG or a claimed literature replication. Raw failed fits remain in runs.
+
+## Session 1 — mono-command checkpoint and extended run guide, 2026-10-30
+
+The native joint-PF mono-command fit and its normal-cadence motor/reflex fitting
+finished in `runs/native_joint_pf_mono_20261030_v1`. Its afferented stage-2 air
+retry passes the current physical gate: 7/7 knee cycles, approximately 1.229 s
+period, phase error 0.0537 cycles, and minimum ankle width 0.0323 m. The default
+deafferented stage 1 still crosses. The gain-8 abductor release comparison passes
+stage 1 (3/3 cycles, 2.466 s period, minimum width 0.0295 m) but fails stage 2's
+frontal gate (minimum width -0.0663 m). These are different passing configurations;
+the combined early-stage gate remains unmet. No later curriculum stage was
+advanced. Next work is a bounded frontal sensory/torque diagnosis with fitted
+weights frozen, followed by fresh-process repeats of both early stages.
+
+Ben requested a detailed runnable guide and bounded jobs for other models.
+Added `Code/MuJoCo_SNS/how_to_run_code_extended.md` and nine standalone jobs in
+`Code/MuJoCo_SNS/ZCODE_SIMULATION_PROMPTS.md`. They name easteregg2 and exact
+paths, distinguish the actual controller families and coordinate frames, separate
+Hunt A/B/C/D fitting from corrected physical stages, and retain failed-stage
+gates. The original `HowToRunCode.md`, CHATGPT_REPORT.md, dissertation, production
+builders/parameters, saved winners, and the user's live editor were not changed.
+
+New opt-in tools are `run_spinal_extended.py`, `run_w2l_bpa_extended.py`, and
+`plot_recording_extended.py` in Code/MuJoCo_SNS, plus
+`run_sns_model_extended.m` and `prepare_spiking_library_extended.m` in
+Code/Matlab/SNS_Simscape. They select existing models, write separate results,
+and provide named command/activation/pressure/neural/foot/harness plotting.
+The Simulink spiking knee initially failed because the shared library lacked
+SpikingNeuron/HybridSpikingSynapse. The preparation helper builds those blocks
+in a private copy; the shared library remains unchanged.
+
+Verification on easteregg2:
+
+- s3k, w2lvar, and syn6: native versus preallocated fresh-process 15.3 s schedules
+  have zero maximum difference in qfull, ctrl, and neuro. This is trajectory
+  parity, not a walking pass or a controlled performance benchmark.
+- W2L BPA graded: complete 12 s native/preallocated recordings match exactly in
+  t, q, foot forces, height/progression, pressure, and RG-extensor trace. A fresh
+  native repetition also matches. The spiking BPA version completes 12 s with
+  finite state. These old drop-protocol metrics do not establish corrected
+  alternating ground stepping; the graded trial has no right-foot load.
+- Stock human hybrid spiking mirror: native 0.04 s standing smoke run completes.
+  The graded fast kernels are explicitly rejected for spiking networks.
+- MATLAB R2025a Update 1: graded knee and private-library spiking knee each
+  complete five-second runs. Small fixed-point gain-quantization warnings remain
+  in the spiking log. The Deng CPG also completes its earlier 0.02 s smoke run.
+  No compiled MuJoCo bridge MEX was found in this checkout.
+- Named joint, neural, command, native activation, pressure, contact, and harness
+  selections were exercised. Command-only data are rejected as activation state.
+  Generated plots were visually checked for labels and line/marker distinctions.
+
+`render_air_preview.py` now uses MuJoCo 2.3.7 renderer destruction rather than
+the unavailable close method. It exposes time range, frame density, and playback
+speed, and derives GIF delays from the saved time axis. Cumulative centisecond
+quantization prevents frame-by-frame rounding drift. A private 2.016 s source
+clip encodes as 2.020 s at 1x playback; poses are replayed without correction.
+
+Raw verification, plots, MAT/NPZ files, and the private library are ignored under
+`tmp/extended_guide_checks`. `final_guide_verification.json` records parity,
+plot checks, the activation-label rejection, and GIF timing. The guide also
+flags the legacy BPA hip-RoM sign error and the evaluator's real JSON keys:
+`diagnose_swing` enables mechanics logging, and the configuration filename stem
+determines its output prefix. No claim that an unused JSON key redirects output.
+
+The staged Simulink knee MAT-to-GIF/still recipe was also exercised. It exposed
+an indexed-palette bug in `demos/sns_animate_demo_v2.m`: every frame was written
+using the final frame's palette. The renderer now retains each frame's own
+palette for knee and cup animations. No model dynamics or shared figure outputs
+were changed. The legacy fixed frame delay and angle-derived decorative muscle
+activity remain explicitly identified in the guide.

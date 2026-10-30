@@ -6,7 +6,11 @@ H=Path(__file__).resolve().parent;sys.path[:0]=[str(H.parent)]
 import numpy as np,mujoco,bsolve_ik as B
 from PIL import Image,ImageDraw,ImageFont
 parser=argparse.ArgumentParser(description=__doc__)
-parser.add_argument('recording',type=Path);args=parser.parse_args()
+parser.add_argument('recording',type=Path)
+parser.add_argument('--start',type=float,default=5.);parser.add_argument('--end',type=float,default=13.)
+parser.add_argument('--fps',type=float,default=12.);parser.add_argument('--playback-speed',type=float,default=1.)
+args=parser.parse_args()
+if args.fps<=0 or args.playback_speed<=0 or args.end<=args.start:parser.error('Use positive fps/speed and end greater than start')
 source=args.recording.resolve();z=np.load(source,allow_pickle=True);model,data=B.build_air_model(False)
 assert z['qfull'].shape[1]==model.nq
 out=source.parent/'preview';out.mkdir(exist_ok=True)
@@ -18,7 +22,16 @@ for b in range(model.nbody):
         color=[.27,.47,.67,1.] if name.endswith('_r') else [.93,.47,.20,1.]
         for geom in range(model.body_geomadr[b],model.body_geomadr[b]+model.body_geomnum[b]):model.geom_rgba[geom]=color
 font=ImageFont.truetype(r'C:\Windows\Fonts\arial.ttf',18)
-indices=np.flatnonzero((z['t']>=5.)&(z['t']<13.))[::25];frames=[]
+sample_step=float(np.median(np.diff(z['t'])))
+stride=max(1,round(1./(args.fps*sample_step)))
+indices=np.flatnonzero((z['t']>=args.start)&(z['t']<args.end))[::stride];frames=[]
+if len(indices)<2:parser.error('At least two frames are required in the selected time range')
+frame_times=z['t'][indices]
+deltas=np.r_[np.diff(frame_times),np.median(np.diff(frame_times))]/args.playback_speed
+if np.min(deltas)<.01-1e-9:parser.error('GIF frames need at least 10 ms; lower fps or playback speed')
+# Quantize the cumulative clock, avoiding drift from rounding every frame.
+ticks=np.rint(np.r_[0.,np.cumsum(deltas)]*100).astype(int)
+durations=(np.diff(ticks)*10).tolist()
 for k in indices:
     data.qpos[:]=z['qfull'][k];mujoco.mj_forward(model,data);views=[]
     for azimuth in (0.,40.):
@@ -26,10 +39,11 @@ for k in indices:
         cam.distance=2.8;cam.azimuth=azimuth;cam.elevation=-6.
         renderer.update_scene(data,camera=cam,scene_option=opt);views.append(Image.fromarray(renderer.render().copy()))
     frame=Image.new('RGB',(880,650),'white');frame.paste(views[0],(0,50));frame.paste(views[1],(440,50));draw=ImageDraw.Draw(frame)
-    draw.text((12,7),'Gait2392: neural air stepping | full vertical support',fill='black',font=font)
+    draw.text((12,7),f'Gait2392: neural air stepping | full vertical support | {args.playback_speed:g}x playback',fill='black',font=font)
     draw.text((12,29),'Anterior',fill='black',font=font);draw.text((452,29),f'Oblique | t = {z["t"][k]:.2f} s',fill='black',font=font)
     frames.append(frame)
-renderer.close();frames[0].save(out/'stage2_air_neural.gif',save_all=True,append_images=frames[1:],duration=50,loop=0)
+del renderer  # MuJoCo 2.3.7 releases its renderer through destruction.
+frames[0].save(out/'stage2_air_neural.gif',save_all=True,append_images=frames[1:],duration=durations,loop=0)
 frames[len(frames)//2].save(out/'stage2_air_neural.png')
-(out/'provenance.json').write_text(json.dumps(dict(source=str(source),scope='Recorded full qpos; no corrected poses, resimulation, or walking claim. Nominal run; basin checks pending.',frames=len(frames)),indent=2))
+(out/'provenance.json').write_text(json.dumps(dict(source=str(source),scope='Recorded full qpos; no corrected poses, resimulation, or walking claim. Nominal run; basin checks pending.',frames=len(frames),frame_times_s=frame_times.tolist(),playback_speed=args.playback_speed,gif_duration_ms=sum(durations)),indent=2))
 print(out,flush=True)
