@@ -67,3 +67,16 @@ figures, equations, or recorded values were altered.
 - Round-5 ledger entry appended to SLIM_BATCH1_LEDGER_20261028.md (isokinetic move, FlxGrp rename, ch.6 sweep, Overleaf sync record).
 - Ben-only items outstanding: (1) drag FlxGrp.pdf into Overleaf figs/30-torque (live compile shows missing-file until then); (2) the open advisor comment threads incl. motor-schematic square position; (3) torque-paper Overleaf push blocked by browser-channel failure tonight - local paper Main.tex (33 pp) is ahead of live (32 pp).
 
+
+
+## Torque paper sync verified 2026-10-29 (evening)
+
+- Live Overleaf paper (project 622e9536b8ea1e0a7f167cf5) extracted and compared against
+  local Knee_Torque_Test\ProofFinal: Main.tex and frontiers_SupplementaryMaterial.tex are
+  character-identical (95,356 and 23,058 chars after CRLF normalization; zero diff lines).
+- The earlier "local 33 pp ahead of live 32 pp" staging note is superseded - it was based on
+  checkpoint page counts, not a live read; the 10-28 18:29 local edits did reach Overleaf.
+- No paper push required. Remaining Ben items: the four figure drags for the dissertation
+  (reverse_pulley_biomimetic.pdf required; FlxGrp.pdf, Ext10mm_52cm_current_publication.pdf,
+  Redesigned_flexor_pressure_publication.pdf replacements).
+

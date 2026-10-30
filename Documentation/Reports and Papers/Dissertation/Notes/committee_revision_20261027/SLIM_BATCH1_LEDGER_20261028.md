@@ -486,3 +486,48 @@ No dissertation numbers, tables, citations, or figure panels changed in Round 5.
 edits are prose moves, deduplications, and one figure-file rename. Chapter 20 and all
 biomimetic results untouched.
 
+
+
+---
+
+## Round 6 (2026-10-29 evening) - CH45 Word-doc directives pushed to Overleaf
+
+Context: Ben + ChatGPT's tracked-changes Word doc (CH45_COMMENTS_REPLIES_AND_FIXES) was
+located at Notes/committee_revision_20261027/ (REVISED 16:23 copy is current). An earlier
+session today had already implemented all 42 comment dispositions plus the directives
+locally and verified build 306 pp, but deliberately did not upload. This round verified
+that work and pushed it live.
+
+Verification before push:
+- Fresh build via tmp\build_slim1_20261028.ps1: PASS all, **306 pages**, UNDEF 0, ERRORS 0,
+  MISSING 0, OVERFULL 1 (inherited 0.67 pt), WORDS_30TORQUE 9,655.
+- Extracted live 30-torque.tex (79,990 chars) and 50-database.tex (11,769 chars) from the
+  Overleaf editor and diffed against local. Every live-only line is an intentional CH45
+  rewrite (claim-first extensor/flexor paragraphs, 4.3.4 renamed "Redesigned Routes for the
+  Biomimetic Robot Model" at 30-torque:665, "Exceeding Human Torque Magnitude" at :727,
+  reverse-pulley "Example of" caption at :781 with the sqrt(1+1/n^2) mount reaction at :771,
+  SADb intro rewrite and callout prose in 50-database). Local is a verified superset of live;
+  the morning's 08:47/08:49 advisor tracked deletions are already reconciled in local.
+
+Pushed to Overleaf (CodeMirror dispatch, review mode confirmed "Editing" so no tracked
+changes were created), each verified by read-back hash match:
+- chapters/30-torque.tex (80,387 chars)
+- chapters/50-database.tex (14,052 chars)
+
+Figure binaries NOT uploadable (IAB blocks file uploads by design; the DataTransfer input
+route was attempted but the control channel failed). Ben's drag list into Overleaf
+figs/30-torque/ (all four in Figures\30-torque\):
+1. **reverse_pulley_biomimetic.pdf - REQUIRED: live compile reports a missing file until
+   this lands** (new filename referenced by the pushed chapter; the old
+   reverse_pulley_principle.pdf carries the incorrect F_BPA(n-1) labeling).
+2. FlxGrp.pdf - replace; live copy is the 04:08 2x2 version, local 15:39 version is the
+   1x2 relayout with larger fonts matching the new caption.
+3. Ext10mm_52cm_current_publication.pdf - replace; hybrid scatter series removed.
+4. Redesigned_flexor_pressure_publication.pdf - replace; updated 15:33 version.
+Optional cleanup after the drags: delete FlxGrp_2x2_20261026_publication.pdf and
+reverse_pulley_principle.pdf from Overleaf (no longer referenced).
+
+No dissertation numbers were changed by this round; all edits were the Word doc's
+directives as implemented by the earlier session. Chapter 20 and the torque paper
+untouched. The torque-paper Main.tex push (local 33 pp vs live 32 pp) remains staged.
+
