@@ -6,12 +6,21 @@ Machine: **easteregg2**. Repository: `D:\GitHub\Bipedal_Robot`. Model: articulat
 
 ## Five-stage results
 
+**Curriculum-definition clarification:** this campaign inherited the later
+`_curriculum_w2lvar.py` ladder, whose stage 4 explicitly disables ground contact.
+Stages 2 and 4 therefore share an air-stepping environment; stage 2 tunes
+feedback/interleg connections, and stage 4 retunes motor-pattern gains.
+They are not distinct physical environments, and stage 4 is not harness-supported
+ground walking. The stock `_curriculum.py` instead puts supported ground walking
+at stage 4 and contact-PF refinement at stage 5. The new Hunt training campaign
+records its stage definitions separately in `hunt_training/TRAINING_RECORD.md`.
+
 | Stage | Trials | Full-duration finite runs | Original screen passes | Fresh winner result |
 |---|---:|---:|---:|---|
 | 1: Deafferented air, interleg off | 100 | 99 | 0 | Fails original screen |
 | 2: Afferented air, interleg on | 100 | 99 | 0 | Fails original screen |
 | 3: Supported standing | 100 | 90 | 0 | Fails original screen |
-| 4: Air stepping | 100 | 86 | 22 | Passes original screen; fails frontal audit |
+| 4: Air-pattern retuning, no contact | 100 | 86 | 22 | Passes original screen; fails frontal audit |
 | 5: Ground contact | 100 | 81 | 64 | Passes original screen; fails frontal audit |
 
 “Original screen” refers to the frozen objective in `functional_gait2392/curriculum_metrics.py`. Its `accepted` field is retained unchanged in raw results. It checks actual knee/hip excursions, physical cycle counts, phase, cadence, and finite completion; standing has separate posture/load checks, and ground adds loading/duty checks. It did not include frontal separation. The later audit corrects that omission without relabeling old raw evidence.

@@ -1,0 +1,53 @@
+{
+  "neurons": 1031,
+  "enabled_edges": 7290,
+  "disabled_edges": 2608,
+  "groups": {
+    "Descending / posture / balance": 10,
+    "RG + local inhibition": 8,
+    "Foot / load populations": 6,
+    "Joint PF + local inhibition": 68,
+    "Biarticular PF / integrators": 30,
+    "Calibrated timing afferents": 12,
+    "Causal phase filters": 48,
+    "Tonic feedforward": 1,
+    "Motor neurons": 92,
+    "Muscle sensory populations": 276,
+    "Renshaw network": 92,
+    "Sensory interneurons": 378,
+    "Candidate commissural inhibition": 2,
+    "Task balance + relays": 8
+  },
+  "panels": {
+    "rhythm": {
+      "neurons": 22,
+      "edges": 24,
+      "scope": "Actual induced subnetwork; omitted boundary connections are not deleted from the model. Graphics use generic neuron shapes; dynamics remain in the source model."
+    },
+    "joint_and_biarticular": {
+      "neurons": 15,
+      "edges": 18,
+      "scope": "Actual induced subnetwork; omitted boundary connections are not deleted from the model. Graphics use generic neuron shapes; dynamics remain in the source model."
+    },
+    "hip_axis_pf": {
+      "neurons": 28,
+      "edges": 26,
+      "scope": "Actual induced subnetwork; omitted boundary connections are not deleted from the model. Graphics use generic neuron shapes; dynamics remain in the source model."
+    },
+    "other_biarticular": {
+      "neurons": 24,
+      "edges": 38,
+      "scope": "Actual induced subnetwork; omitted boundary connections are not deleted from the model. Graphics use generic neuron shapes; dynamics remain in the source model."
+    },
+    "balance_example": {
+      "neurons": 16,
+      "edges": 38,
+      "scope": "Actual induced subnetwork; omitted boundary connections are not deleted from the model. Graphics use generic neuron shapes; dynamics remain in the source model."
+    }
+  },
+  "commissural_neurons": [
+    "HUNT_COMM_r",
+    "HUNT_COMM_l"
+  ],
+  "scope": "Recorded end-state conductances and a separate gait-expression-gating projection at the same pose. The projection is not proof of walking."
+}
