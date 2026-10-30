@@ -1,0 +1,137 @@
+﻿slide,role,claim,v10_source_slides,source,evidence_and_scope
+1,core,"Movement and Control of
+Biomimetic Humanoid Robots",1,Portland State University · Agile & Adaptive Robotics Laboratory,"My dissertation makes actuator and transmission assumptions testable, and develops tools for controlled neural–mechanical experiments. Introduce the research robot as the motivating scientific instrument. Advisor: Alexander J. Hunt. Credit the AARL platform and collaborators throughout.
+
+Sources: Portland State University · Agile & Adaptive Robotics Laboratory
+robot"
+2,core,Robots on warehouse floors face different challenges from robots on rubble,2,Amazon Robotics; DARPA Robotics Challenge (2015),"Wheels are an effective solution on prepared warehouse floors. The DARPA obstacle-course photograph illustrates the challenge of changing contacts and disturbances. These images motivate the research goal, not a controlled comparison of the two machines or a claim that modern robots cannot traverse rubble. Our goal is to use biological principles to improve autonomy in unstructured environments. Photo sources: https://www.aboutamazon.com/news/operations/amazon-robotics-headquarters-tour-westborough-massachusetts and https://newatlas.com/robotics/fast-two-legged-robots-roundup/; the latter photo depicts the 2015 DARPA event.
+
+Source: Amazon Robotics; DARPA Robotics Challenge (2015)"
+3,core,Biomimetic robots let us test mechanics and neural control,"3,4",Asano et al. (2016); Bolen and Hunt (2019); Dissertation Ch. 1,"The scientific goal runs in both directions: biology informs robot design, and robots provide experimental access to biological hypotheses. The Kengoro animation, retained from my older talk, illustrates physical biomimicry; it is not my hardware. Our AARL leg is the platform for characterizing artificial muscles, routing, and control. Changing mechanics or neural pathways can support interventions that would be impossible in humans. Prosthetic and orthotic devices are a tertiary application. Credit the AARL platform, Steele’s knee, and Morrow’s route-design collaboration.
+
+Source: Asano et al. (2016); Bolen and Hunt (2019); Dissertation Ch. 1"
+4,core,Four contributions connect actuator mechanics to testable neural control,5,Dissertation Chs. 3–6,"The talk addresses four gaps: force predictions across actuator lengths, real joint transmission and torque comparisons, sensory evidence with source context, and tools for testing synthetic nervous systems. Introduce each question through the evidence rather than a separate background section.
+
+Source: Dissertation Chs. 3–6"
+5,core,"BPA force must be measured across length, pressure, and contraction",6,"Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3","I characterized 10 and 20 mm BPAs across resting length, pressure, and contraction. The 537 isometric observations make resting length a design input. Use the rig to show where force, length, and pressure were measured, then turn immediately to the force-versus-length result.
+
+Source: Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3"
+6,core,Shorter BPAs deliver less maximum isometric force,7,"Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3","At 620 kPa, maximum force decreases at short resting lengths in both diameters. The manufacturer tool predicts the opposite trend. Black points are measured data, solid blue is the fitted model, and dashed magenta is the manufacturer prediction. Resting length therefore must be a model input. Do not generalize beyond the tested actuator families.
+
+Sources: Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3
+max10
+max20"
+7,core,Resting-length scaling completes the normalized force model,8,"Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3","The force is the product of a dimensionless force surface and maximum force at the chosen resting length. Normalized pressure and contraction locate the operating point. Separate coefficients apply to each diameter, and maximum contraction is measured for each actuator. The plotted 20 mm curves show measured points and model isoclines. The source uses an 80/20 point split. This does not establish dynamic performance or every unseen actuator length.
+
+Sources: Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3
+forceeq
+surface20"
+8,core,"At 112 mm, the new model reduces force error to 4.5%",31,"Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3","This is the 10 mm BPA at 112 mm resting length and 620 kPa. Measured force is 350.9 N, the model gives 335.3 N, and the manufacturer tool gives 498.6 N. Reported errors are 4.5% and 42.1%. This is one reported case, not the average error or an independent length holdout. The native chart uses the published values directly.
+
+Sources: Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3"
+9,core,Design corrections reduce error on held-out knee tests,36,"Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4","Panels C and D are the held-out nominal 46 cm and 40 cm-tendon tests, corresponding to actual 45.7 and 40.6 cm. Separate crops retain the full traces and shared legend; native labels supply panel letters and axes. The full model shares effective stiffness across both knee configurations. Validation mean RMSE is 1.490 N m.
+
+Sources: Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4
+validation_left
+validation_right"
+10,core,The corrected model predicts a cam route with torque headroom,32,"Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4","The adopted cam design predicts a minimum margin of 30.83% over the required envelope, which itself includes 5% overshoot above the selected human reference. The minimum margin over the plain human target is 39.77%. Predicted pressure needed for the required envelope is 269–507 kPa. The blue curve is the 620 kPa model prediction. These margins are predictions, not physical measurement margins.
+
+Sources: Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4
+camtorque"
+11,core,All nine cam-route measurements exceed the selected human target,"13,14",Dissertation Ch. 4 · Physical extensor tests,"This combines the cam hardware and its outcome. Two 20 mm BPAs drive the cam-assisted tendon route. Blue points are measured torque, black dotted is vastus medialis, yellow is the prediction at each measured pressure, and magenta is the 620 kPa design prediction. All nine measured points exceed the selected human target. The −86.5-degree point is above the human target; its 2.06 N m discrepancy is relative to the pressure-specific prediction. Target margins are +0.24 to +3.52 N m. Isometric capacity and pressure-specific prediction accuracy are different results.
+
+Source: Dissertation Ch. 4 · Physical extensor tests"
+12,core,All fifteen flexor measurements meet the human target,15,"Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4","The selected human target is maximum-isometric biceps femoris short head from OpenSim Gait2392. Flexion torque is negative, so compare magnitudes. All 15 holds meet or exceed it from −119 to +5 degrees. The source reduction gives margins +0.42 N m at −105 degrees to +17.0 N m at −14 degrees. Recorded pressures are 226.5–638 kPa. Physical lengths are 561/28 and 560/30 mm resting/tendon. Preserve the nominal 562 mm prediction label and distinguish prediction settings from these measurements. The full-pressure predicted curve and variable-pressure points are different conditions. Capacity is demonstrated while prediction agreement remains uneven.
+
+Sources: Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4
+flexphysical"
+13,core,SADb connects sensory findings to their sources,"17,18",Dissertation Ch. 5 · SADb app snapshot,"Show the application as a research action: choose a view, inspect a source record, and follow connected papers. The database contains 1,393 total app records. The 943 count in the screenshot is the Papers category, not the total or a deduplicated publication count. Models and reviews may also be publications. Table search spans record types; pivot and citation-map views use paper records. The current screenshot focuses on Grillner (1985).
+
+Source: Dissertation Ch. 5 · SADb app snapshot"
+14,core,The original controller produces stepping-like motion while suspended,20,AnimatLab reproduction · original standalone controller,"Play the recorded suspended condition. This is a new kinematic rendering of body positions recorded from the original Biped_2xCPG_wSubs_Standalone.asim export. The pelvis is fixed; the neural and muscle parameters were not tuned. The thin lines are recorded muscle-attachment paths, and the colored lines connect recorded body centers. This is a reproduction of the model behavior, not recovered historical video. Suspended motion alone does not establish weight-bearing locomotion.
+
+Source: AnimatLab reproduction · original standalone controller"
+15,core,The same controller falls after virtual support is removed,20,"AnimatLab reproduction · same controller, support removed","Play the unsupported condition immediately after the suspended run. The pelvis is released and the original virtual WalkingPath support is removed in a private copy; the original controller and muscle parameters are retained. The GIF is rendered from AnimatLab body-position records. This comparison motivates tests that separate rhythm generation, feedback, and mechanical support. It is a new reproduction, not a change to the dissertation results.
+
+Source: AnimatLab reproduction · same controller, support removed"
+16,core,The tools make each of Hunt’s four training steps observable,"21,22","Hunt, INRC presentation (2019), slide 44 · Dissertation Ch. 6","Hunt’s first step selects a CPG with an intrinsic period about twice the target stepping period. SNS blocks and open-loop traces expose that rhythm. Second, train afferent inputs to the CPG using expected feedback so transitions match walking timing; the tools provide afferent playback and transition traces. Third, train CPG/PF outputs to match MN peaks; compare motor-neuron activity under common inputs. Fourth, train Ia/Ib feedback to refine activation; use closed-loop simulations and pathway interventions. The four steps are Hunt’s training procedure. This dissertation’s staged tests check implementations and effects; they do not establish that every coupled model has completed all four steps.
+
+Source: Hunt, INRC presentation (2019), slide 44 · Dissertation Ch. 6"
+17,core,Sensory feedback reduces sag in the loaded-arm model,23,Dissertation Ch. 6 and Appendix D · Current saved verification records,"A1 and A2 show the empty and loaded container. B compares forearm elevation with feedback on and off. Sag is 2.00 degrees with feedback versus 7.85 degrees without. C shows the actual implemented circuit: biceps Ia excites biceps MN and inhibits triceps MN; triceps Ia does the converse. Own-muscle Ib inhibits its MN. Arrowheads mean excitation, and filled circles inhibition. This demonstrates a corrective effect in the reduced block model under the selected settings.
+
+Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records
+arm_pose
+arm_circuit
+arm_trace"
+18,core,Two deleted bursts can preserve or reset the rhythm,24,Dissertation Ch. 6 and Appendix D · Current saved verification records,"The reduced Deng-derived translated circuit is coupled to a suspended model. Stimuli lasting two baseline periods suppress two expected flexor motor bursts at each tested layer. RG-extensor +50 nA shifts both RG and motor timing by 0.211 cycle. PF-extensor +50 nA suppresses output without resetting the RG clock, and flexor-MN −500 nA also gives a non-resetting deletion. Read left RG traces and right MN activation together. Stronger-current controls matter: a one-second PF pulse shifts motor timing by 0.208 cycle while RG timing stays unchanged. A motor shift alone therefore does not prove RG resetting. This is a translated reduced-circuit test, not original-rat locomotion replication.
+
+Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records
+layers"
+19,core,Sensory feedback changes bilateral foot-loading timing,25,Dissertation Ch. 6 · Fixed-controller sensory comparison,"The force traces isolate the evidence for bilateral loading rather than repeating joint angles and displacement. With the same saved conductances, drive, and external support, median bilateral contact phase is 0.498 cycles with sensory feedback and 0.223 cycles when all sensory feedback is disabled. The supported-stepping criterion is 0.35–0.65. Cycling and forward displacement persist in both conditions; this comparison identifies a contribution to contact coordination, not the existence of motion. The complete six-panel source remains in the preceding v10 deck and active dissertation figure.
+
+Source: Dissertation Ch. 6 · Fixed-controller sensory comparison"
+20,core,Rhythmic Gait2392 cycles retain hip and knee errors,26,Dissertation Ch. 6 and Appendix D · Current saved verification records,"The supported human-model replay contains ten detected cycles per leg. This crop shows hip and knee mean and one standard deviation against the Gait2392 inverse-kinematics reference. Each leg aligns to its own loading onset with no fitted phase shift, angle offset, or amplitude adjustment. Hip and knee timing differences remain visible. Model stance fractions are 0.71 right and 0.65 left versus reference 0.61. Separate leg alignment does not prove bilateral coordination. The complete ankle/contact overlay is backup slide 37. Rhythmic cycles alone do not establish normal human gait.
+
+Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records
+ik_hipknee"
+21,core,Extra abductor control prevents crossing in the AH001 test,27,Dissertation Ch. 6 and Appendix D · Current saved verification records,"Anterior and oblique views show the same saved state. Matched 15–40 s runs compare the separation-control bundle off and on. Reversed ankle ordering changes from 67% to zero, and minimum separation from −38.3 to 142.4 mm. The bundle adds separation feedback and raises the currently abducting-route activation floor from 5% to 6%. The current model has 54 reference-tension actuators and 262 neurons/230 inputs. The hybrid MN clamp cancels incoming PF/reflex currents, so it does not establish effective PF/reflex control of activation. Regular stepping is not accepted. The optional replay and complete support and geometry assumptions are in the question slides.
+
+Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records
+ah001"
+22,core,Researchers can connect source evidence to a tested actuator or pathway,28,Dissertation Chs. 3–7,"The contributions enable a sequence of research decisions: predict the force available from a candidate actuator, compare a built route against a torque target, recover the source context for a sensory hypothesis, and test the corresponding pathway under controlled conditions. These are reusable foundations for others, with their demonstrated scopes.
+
+Source: Dissertation Chs. 3–7"
+23,core,The next experiments must transfer the models to loaded robot movement,29,Dissertation Discussion · Future work enabled,"The next work is dynamic loading of the characterized hardware, graded reduction of mechanical support in the models, and physical transfer of specified neural mechanisms. These directly address autonomy in unstructured environments and reciprocal biological experiments. Task-specific prosthetic and orthotic concepts remain a later translation requiring human validation. The images identify the physical platform and supported model; they do not claim completion of the proposed experiments.
+
+Source: Dissertation Discussion · Future work enabled"
+24,core,"The dissertation makes actuator, route, and feedback choices testable",30,Dissertation Conclusion,"Close on the scientific contribution: resting-length-aware force characterization, joint design factors tested against measurements and human torque targets, SADb as a source-context resource, and SNS tools demonstrated through controlled comparisons. These foundations support better robot design and more interpretable experiments on biological hypotheses. Thank the committee and audience. Further technical questions follow the conclusion.
+
+Source: Dissertation Conclusion"
+25,backup,SADb keeps experimental context beside the proposed robot interpretation,"16,17,18,19",Dissertation Ch. 5 · Focus record and connected sources,"Read one record rather than cataloging interface features. The left pane preserves the source, experimental context, curation, and proposed robot/simulation translation. The right pane provides related sources for checking the interpretation. The displayed translation proposes shared modular CPG subnetworks; it is a recorded interpretation to test, not a universal controller parameter. This is the handoff from finding sensory evidence to testing a circuit.
+
+Source: Dissertation Ch. 5 · Focus record and connected sources"
+26,backup,Joint torque depends on force direction and moment arm,10,"Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4","Use the editable schematic to explain the cross product. The joint is O, the attachment is p, and the tensile force acts along its route. The perpendicular distance to the force line is the moment arm. Torque magnitude is force times that distance. Routing changes both moment arm and actuator excursion, so maximizing moment arm alone can reduce usable force. The diagram is conceptual and has no numerical geometry.
+
+Sources: Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4"
+27,backup,The model workflow supports distinct mechanical implementations,21,"Dissertation Ch. 6, Model construction and neural-controller interfaces","The source schematic separates CAD/Simscape imports from OpenSim/MyoConverter/MuJoCo conversion and repairs. Neural control uses graphical SNS blocks or scripted SNS-Toolbox. The MathWorks bridge provides a command/sensor interface, not evidence that every circuit transfers dynamically. My contribution is the neural/actuator coupling, graphical implementations, and verification procedures, building on existing engines and formulations.
+
+Sources: Dissertation Ch. 6, Model construction and neural-controller interfaces
+workflow"
+28,backup,"Staged tests separate rhythm, feedback, and mechanical support",22,"Dissertation Ch. 6, curriculum Table 6.2","The staged curriculum is a method for locating the next failure, not a claim that every model passes every stage. Start suspended without feedback, add feedback, introduce standing and perturbations, and then assess supported ground coordination against a reference. Saved controllers and controlled removals make conditions comparable. The next demonstrations test corrective feedback, separation of timing and motor output, and mechanical coordination.
+
+Sources: Dissertation Ch. 6, curriculum Table 6.2"
+29,backup,Matched rhythm cores reproduce the same driven bursts,33,Dissertation Ch. 6 and Appendix D · Current saved verification records,"This comparison uses the driven W2L rhythm core, with matched connectivity, initial states, and phasic heel-contact input. Periods match at 1.000 s, all ten expected bursts occur, and trace correlation is at least 0.99996. A 2 ms lag equals one solver step. Removing the specified phasic inputs latches both implementations. This is agreement under a defined protocol, not full-network equivalence. The bridge additionally gives bit-exact scored sensor readback, but a separate tonic-drive full circuit settles in Simulink while its NumPy reference oscillates.
+
+Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records
+rhythm"
+30,backup,The knee model produces a transient sensory response,34,Dissertation Ch. 6 and Appendix D · Current saved verification records,"A matched no-stimulus run isolates the effect of a 2 nA, 30 ms current pulse at the extensor Ia input after settling. The peak extension excursion is 1.09 degrees at 111 ms, and the stated recovery thresholds are met at 6.355 s. Six MN/Ia synaptic saturation widths were broadened; the original narrow ramps sustained oscillations. C shows the six feedback connections. These are engineered block settings, not a calibrated human tendon-tap reflex.
+
+Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records
+knee_trace
+knee_circuit"
+31,backup,The evidence establishes specific capabilities within clear limits,35,Current manuscript Ch. 6 / Appendix D · Session 1 AH001 records,"Concentrate model scope here. W2L and human-model evaluations retain mechanical support. No harness-free walking is established anywhere in the program. For AH001 the displayed interval uses 80% actual vertical assistance plus lateral and angular support. Actuators are reference tensions, not calibrated BPA dynamics. The MN clamp cancels incoming PF and reflex currents. Foot mounting is provisional, with ideal rigid attachment brackets and assumed passive knee stops. Preventing crossing does not establish regular stepping, balance, or hardware validity. Keep these distinctions without repeating the limitation on every slide.
+
+Sources: Current manuscript Ch. 6 / Appendix D · Session 1 AH001 records"
+32,backup,The adopted identification reserves tests in each configuration,37,"Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4","Use the exact adopted-fold test split. Flexor training is 48.5 and 41.0 cm; validation is 45.7 and 40.6 cm-tendon; 47 cm was not used. Extensor training is 43.6, 43.2-tendon, and 45.7 cm; validation is 40.0, 40.0-tendon, and 46.5 cm. The early shifted-bracket tests were excluded. Identification uses gamultiobj; route redesign uses surrogateopt and patternsearch. χ1/χ2 are effective stiffness terms, not isolated bracket material values.
+
+Sources: Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4"
+33,backup,Physical dimensions differ from prediction settings,38,"Torque manuscript, Physical Tests · Dissertation Appendix C dimensions","The rows are physical measurements, in resting/tendon order. Flexor 1 is 561/28 mm, flexor 2 560/30 mm, extensor 1 828/92 mm, and extensor 2 826/85 mm. Prediction inputs instead use shared flexor resting length 561.49 mm and an effective 5.00 mm tendon parameter after fitting adjustment, and extensor resting length 827.74 mm with about 92.49 mm tendon. The nominal 562 mm plot label remains a nominal prediction label.
+
+Sources: Torque manuscript, Physical Tests · Dissertation Appendix C dimensions"
+34,backup,Stimulation duration changes the deletion interpretation,39,stimulus_results_all.csv · Current Appendix D layer-stimulus protocols,"All values are from the saved table. Two-period RG stimulus: +50 nA for 3.876 s, +0.210526 cycle RG and MN shift. PF same current/duration: zero residual phase at both. MN inhibition: −500 nA for 3.876 s, zero residual. The one-second PF control gives +0.208462 motor shift with zero RG shift. Thus motor phase shift alone does not establish an RG reset. The smaller-current sweep has no observable complete-burst deletion, although brief active-time losses appear in some rows.
+
+Sources: stimulus_results_all.csv · Current Appendix D layer-stimulus protocols"
+35,backup,AH001 separation control changes a matched diagnostic,40,AH001_20261028/PLACEMENT_RECOMMENDATION.md · asset_provenance.json,"Both runs use matching geometry, support, initial pose, and reference tensions. The control bundle adds 160 N/m separation feedback capped at 20 N, plus a 5% to 6% floor on currently abducting routes. The interval is 15–40 s. Zero reversed ordering and zero sampled mesh penetration are separate checks. Toe-out remains about 25–28 degrees, and post-ramp knee motion is small. Exact-fast and reference saved arrays reproduce bit for bit in fresh 40 s runs. This is numerical replay, not robustness or hardware validity.
+
+Sources: AH001_20261028/PLACEMENT_RECOMMENDATION.md · asset_provenance.json"
+36,backup,Reported force comparisons favor the model in the shown cases,41,"Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3","The selected 10 mm comparisons are the two upper panels of the published figure, with measured force on x and predicted force on y. The diagonal indicates agreement. Preserve model identities and tested length scopes. This supports the comparison in these reported cases and is not an exhaustive model benchmark. The published coefficients and scientific results remain unchanged.
+
+Sources: Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3
+comparison"
+37,backup,The complete IK overlay also exposes contact differences,42,Dissertation Ch. 6 and Appendix D · Current saved verification records,"This complete source figure includes hip, knee, ankle, and stance/contact comparisons. Each leg is aligned independently to loading onset. The same ten-cycle replay supplies the core-talk crop. No fitted angle offsets, amplitude adjustment, or phase shifts are used. The model and reference stance fractions differ, and separate leg alignment does not establish bilateral phase.
+
+Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records
+ik"
+38,backup,The saved AH001 replay shows supported hybrid motion,43,AH001_20261028/asset_provenance.json · saved 20–32 s interval,"Optional 12-second replay of the same supported AH001 abductor-control condition. The GIF contains 96 frames over 20–32 s. It illustrates the recorded kinematics and leg separation, not accepted regular stepping. Use slide 31 for support, actuator, and MN-clamp scope, and slide 35 for the matched measures.
+
+Sources: AH001_20261028/asset_provenance.json · saved 20–32 s interval"

@@ -1,0 +1,129 @@
+v12 review copy — concise speaking cues
+
+Planning duration: 35–40 minutes, following existing defense notes; no timed rehearsal.
+Overview 5 min; BPA force 5 min; joint mechanics and hardware 9 min; SADb 2 min; SNS models and tools 12 min; synthesis and conclusion 3 min.
+Core talk: 1–26. Optional question slides: 27–41. Slide 15 requires the native AnimatLab recordings before presenting.
+
+01 [core] Movement and Control of Biomimetic Humanoid Robots
+My dissertation develops ways to predict actuator force, compare robot joints with human torque targets, and test sensory control. The research robot serves as an experimental platform for studying how mechanics and neural control work together.
+
+02 [core] Robots on warehouse floors face different challenges from robots on rubble
+Wheels work efficiently on prepared warehouse floors. Rubble introduces changing contacts and disturbances. These photographs motivate our interest in compliant legs and neural control; they are not a controlled comparison of the two robots.
+
+03 [core] Biomimetic robots let us test mechanics and neural control
+Biology informs robot design, while biomimetic robots let us intervene in mechanics and neural pathways in ways that would be impossible in humans. Better prosthetic and orthotic devices are a later application. Kengoro illustrates physical biomimicry; the AARL leg is our research platform.
+
+04 [core] Four knowledge and tool gaps for biomimetic robot research
+Four questions organize the dissertation: what force an actuator can produce, how a real joint transmits it, where to find sensory evidence with its context, and how to test candidate neural mechanisms. SADb addresses the evidence-access question.
+
+05 [core] BPA force depends on length, pressure, and contraction
+Inflation changes the actuator’s length and diameter. The two photographs establish contracted and uncontracted states. Our rig measures force and pressure at controlled lengths. First, consider how resting length affects the maximum available force.
+
+06 [core] Shorter BPAs deliver less maximum isometric force
+At 620 kPa, shorter actuators produce less maximum force in both tested diameters. The manufacturer prediction has the opposite trend. Resting length therefore needs to enter the force model.
+
+07 [core] Resting-length scaling completes the normalized force model
+Both normalized force surfaces use the same pressure colors and symbol conventions. The legend identifies measured points, fitted curves, and manufacturer predictions. Multiplying normalized force by the resting-length force scale gives the complete model. The next slide shows its practical effect at 112 mm.
+
+08 [core] At 112 mm, the new model reduces force error to 4.5%
+The measured force is 350.9 N, compared with 335.3 N from the new model and 498.6 N from the manufacturer. Bars use the force axis; diamonds use the right error axis. The published errors are 4.5% and 42.1%. These are prediction errors, not uncertainty intervals.
+
+09 [core] Length offsets, compliance, and wrapping change predicted joint torque
+Actuator force depends on usable muscle length. Chi-zero corrects an unloaded length offset. Chi-one and chi-two represent effective system stiffness, including fixtures and the loading path. Chi-three scales wrapping-related length loss. Held-out torque curves test the resulting model.
+
+10 [core] Design corrections reduce error on held-out knee tests
+These are the held-out 46 cm and 40 cm-tendon flexor tests. The full model uses the shared effective stiffness pair. Its validation mean RMSE is 1.490 N m. With a better transmission model, we can redesign the route against a human torque target.
+
+11 [core] The corrected model predicts a cam route with torque headroom
+The adopted cam route predicts at least 30.83% margin above the required envelope, which includes 5% overshoot. The predicted pressure requirement is 269–507 kPa. The next comparison tests the built route.
+
+12 [core] All nine cam-route measurements exceed the selected human target
+All nine extensor measurements exceed the selected human target. Keep the measured blue points separate from the pressure-specific and 620 kPa predictions. The point near −86.5° remains above the human target; its 2.06 N m discrepancy concerns the pressure-specific prediction.
+
+13 [core] All fifteen flexor measurements meet the human target
+All fifteen flexor measurements meet or exceed the selected human target from −119° to +5°. Flexion torque is negative, so compare magnitudes. The points establish isometric capacity, while the variable-pressure measurements and nominal prediction curve describe different conditions.
+
+14 [core] SADb makes sensory evidence searchable and traceable
+SADb retains experimental context when searching sensory evidence. Demonstrate search, record details, citation navigation, and pivot drill-through. The embedded walkthrough works offline. The link opens the full app. Table contains 1,393 records; Pivot and Bubble map use the 943-entry Papers category. External links and online search need a connection.
+
+15 [core] Suspended leg motion does not establish weight-bearing walking
+Compare the original walker while suspended and after release. Leg motion alone does not establish weight-bearing behavior. This motivates tools that separate neural activity, sensory feedback, and mechanical support. Continue with the W2L feedback comparison.
+
+16 [core] Sensory feedback changes bilateral foot-loading timing
+With controller, drive, and support held fixed, sensory feedback changes median bilateral loading phase from 0.223 to 0.498 cycles. The supported-stepping criterion is 0.35–0.65. The result identifies a role for feedback in coordination.
+
+17 [core] Rhythmic Gait2392 cycles retain hip and knee errors
+The Gait2392 reference provides a second model comparison. Hip and knee traces expose differences that rhythmic cycles alone would miss. Preserve the source alignment and compare waveform, excursion, and timing. The complete eight-panel comparison is on question slide 39.
+
+18 [core] Graphical blocks close the loop between muscle mechanics and neurons
+The graphical library supplies the components for a sensory pathway: spindle output, synaptic current, a motoneuron, activation, and BPA force. The coupled mechanical model returns muscle length and velocity. The loaded-arm example tests whether such feedback changes a mechanical response.
+
+19 [core] Sensory feedback reduces sag in the loaded-arm model
+With feedback, the loaded arm sags 2.00°, compared with 7.85° without it. Biceps Ia excites its own motoneuron and inhibits the antagonist; own-muscle Ib is inhibitory. The circuit and the matched traces show the implemented feedback effect.
+
+20 [core] Extra abductor control prevents crossing in the AH001 test
+In the supported AH001 comparison, extra abductor control removes crossed states and increases minimum separation. The model uses reference tensions, 80% vertical assistance, lateral/angular support, and an MN clamp that cancels PF/reflex currents. This diagnostic does not establish accepted regular stepping. Question slide 33 collects the model assumptions.
+
+21 [core] The MuJoCo–Simulink bridge preserves measured signals
+The bridge exchanges activation commands and sensory measurements. In the saved interface test, all five sensor channels match the Python reference bit for bit over 80 scored steps. The displayed muscle-length traces show that agreement over 0.4 s. Controlled experiments then test the coupled behavior.
+
+22 [core] The tools make each of Hunt’s four training steps observable
+Hunt’s four steps specify where training acts: intrinsic rhythm, feedback to the CPG, CPG/PF output to motoneurons, and Ia/Ib feedback to motoneurons. The tools expose the activity and mechanical response needed to assess each step.
+
+23 [core] Two deleted bursts can preserve or reset the rhythm
+The reduced Deng-derived circuit suppresses two expected motor bursts at each tested layer. RG stimulation shifts the clock by 0.211 cycle. PF and MN stimulation suppress output without resetting the RG clock. Read neural timing and motor output together when interpreting a deletion.
+
+24 [core] Researchers can connect source evidence to a tested actuator or pathway
+These contributions enable research decisions: select an actuator, test a route against a target, recover the context for a sensory hypothesis, and test the corresponding pathway. Each step has an identifiable source and an observable outcome.
+
+25 [core] The next experiments must transfer the models to loaded robot movement
+The next experiments add dynamic loading to the hardware, reduce support in controlled stages, and transfer specified feedback mechanisms to the robot. These experiments address movement in unstructured environments and the use of robots to study biological hypotheses.
+
+26 [core] The dissertation makes actuator, route, and feedback choices testable
+The dissertation makes actuator, route, and feedback choices testable. It supplies force characterization, joint design factors with physical target comparisons, a sensory evidence resource, and tools for controlled neural–mechanical experiments. Thank the committee and audience.
+
+27 [question] SADb keeps experimental context beside the proposed robot interpretation
+One SADb record keeps source context beside the proposed robot interpretation. The interpretation is a hypothesis to test. Connected sources help check that interpretation before selecting a pathway or parameter.
+
+28 [question] Joint torque depends on force direction and moment arm
+Torque follows the cross product of the attachment position and tensile force. Its magnitude is force times perpendicular moment arm. Changing a route also changes actuator excursion, so moment arm alone is insufficient.
+
+29 [question] The model workflow supports distinct mechanical implementations
+The workflow separates CAD/Simscape construction from OpenSim/MuJoCo conversion. Controllers can use graphical SNS blocks or SNS-Toolbox. Each implementation needs component, interface, and coupled-model checks.
+
+30 [question] Staged tests separate rhythm, feedback, and mechanical support
+The curriculum introduces feedback, perturbations, and mechanical demands in stages. Each stage asks a different question. Passing a rhythm test does not establish performance at the later mechanical stages.
+
+31 [question] Matched rhythm cores reproduce the same driven bursts
+Under the matched phasic-drive protocol, both implementations produce the ten expected bursts with a 1.000 s period and correlation of at least 0.99996. Removing those phasic inputs latches both. The result establishes agreement for this defined core and protocol.
+
+32 [question] The knee model produces a transient sensory response
+The knee example applies 2 nA for 30 ms after settling. The response peaks at 1.09° at 111 ms and meets the recovery thresholds at 6.355 s. Six neural saturation widths changed. This is an engineering demonstration of the implemented blocks.
+
+33 [question] The evidence establishes specific capabilities within clear limits
+The hardware demonstrates isometric capacity. Neural interventions demonstrate responses under their specified protocols. Supported models test coupling and coordination. AH001 retains the stated support, reference tensions, provisional feet, ideal brackets, and hybrid clamp. No harness-free walking has been demonstrated.
+
+34 [question] The adopted identification reserves tests in each configuration
+The adopted flexor fold has two training tests, two held-out tests, and one unused test. The extensor fold has three in each category. Both configurations share the effective stiffness pair. These fitted terms aggregate system compliance.
+
+35 [question] Physical dimensions differ from prediction settings
+These rows contain measured resting and tendon lengths. Prediction settings differ and remain identified separately. In particular, retain the nominal 562 mm prediction label rather than replacing it with a measured length.
+
+36 [question] Stimulation duration changes the deletion interpretation
+Stimulus duration matters. The two-period PF pulse gives a non-resetting deletion, while a one-second PF control shifts motor timing by 0.208 cycle with no RG shift. Motor phase alone cannot identify an RG reset.
+
+37 [question] AH001 separation control changes a matched diagnostic
+The matched AH001 interval is 15–40 s. The control bundle changes separation feedback and the activation floor on currently abducting routes. Reversed ankle ordering and sampled opposite-leg penetration are distinct measurements. Support remains the same.
+
+38 [question] Reported force comparisons favor the model in the shown cases
+The diagonal indicates equality between measured and predicted force. Preserve the model identities and the two tested lengths. These source panels compare the reported cases.
+
+39 [question] The complete IK overlay also exposes contact differences
+The full IK figure adds ankle and stance comparisons. Each leg is aligned independently to loading onset, without fitted phase or amplitude adjustments. Separate leg alignment does not establish bilateral phase agreement.
+
+40 [question] The saved AH001 replay shows supported hybrid motion
+Play the saved 20–32 s AH001 interval if useful. It illustrates the same supported hybrid-control condition. Use slide 33 for its assumptions and slide 37 for the matched diagnostic measures.
+
+41 [question] Changing neural encoding changes rhythm timing
+For the saved constant-drive comparison, changing from non-spiking to spiking encoding increases the period from 0.399 s to 0.621 s, or 55.6%. The panels use different readouts. The comparison shows timing sensitivity to encoding choice.
+

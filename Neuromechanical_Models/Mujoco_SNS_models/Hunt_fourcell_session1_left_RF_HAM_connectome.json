@@ -1,0 +1,211 @@
+{
+  "nodes": [
+    {
+      "type": "HC-PF-E",
+      "label": "PF_HIP-E_l",
+      "x": 180,
+      "y": 150,
+      "grp": "inputs"
+    },
+    {
+      "type": "HC-PF-F",
+      "label": "PF_HIP-F_l",
+      "x": 180,
+      "y": 440,
+      "grp": "inputs"
+    },
+    {
+      "type": "HC-PF-E",
+      "label": "PF_KNEE-E_l",
+      "x": 180,
+      "y": 550,
+      "grp": "inputs"
+    },
+    {
+      "type": "HC-PF-F",
+      "label": "PF_KNEE-F_l",
+      "x": 180,
+      "y": 260,
+      "grp": "inputs"
+    },
+    {
+      "type": "HC-PF-F",
+      "label": "PF_BI_JOINT_HAM_l",
+      "x": 600,
+      "y": 190,
+      "grp": "paired"
+    },
+    {
+      "type": "HC-PF-E",
+      "label": "PF_BI_JOINT_RECT_l",
+      "x": 600,
+      "y": 510,
+      "grp": "paired"
+    },
+    {
+      "type": "MN",
+      "label": "MN_semimem_l",
+      "x": 1180,
+      "y": 150,
+      "grp": "motor"
+    },
+    {
+      "type": "MN",
+      "label": "MN_semiten_l",
+      "x": 1180,
+      "y": 270,
+      "grp": "motor"
+    },
+    {
+      "type": "MN",
+      "label": "MN_bifemlh_l",
+      "x": 1180,
+      "y": 390,
+      "grp": "motor"
+    },
+    {
+      "type": "MN",
+      "label": "MN_rect_fem_l",
+      "x": 1180,
+      "y": 550,
+      "grp": "motor"
+    },
+    {
+      "type": "IN-PF",
+      "label": "PF_IN_BI_PAIR_HAM_l",
+      "x": 820,
+      "y": 190,
+      "grp": "paired"
+    },
+    {
+      "type": "IN-PF",
+      "label": "PF_IN_BI_PAIR_RECT_l",
+      "x": 820,
+      "y": 510,
+      "grp": "paired"
+    }
+  ],
+  "edges": [
+    {
+      "from": "PF_HIP-E_l",
+      "to": "PF_BI_JOINT_HAM_l",
+      "sign": "exc",
+      "gain": 0.11838299119136543,
+      "tag": "gmax",
+      "pts": []
+    },
+    {
+      "from": "PF_KNEE-F_l",
+      "to": "PF_BI_JOINT_HAM_l",
+      "sign": "exc",
+      "gain": 1.8166201384445286,
+      "tag": "gmax",
+      "pts": []
+    },
+    {
+      "from": "PF_IN_BI_PAIR_RECT_l",
+      "to": "PF_BI_JOINT_HAM_l",
+      "sign": "inh",
+      "gain": 0.14780009040026057,
+      "tag": "gmax",
+      "pts": []
+    },
+    {
+      "from": "PF_HIP-F_l",
+      "to": "PF_BI_JOINT_RECT_l",
+      "sign": "exc",
+      "gain": 0.9228324574324517,
+      "tag": "gmax",
+      "pts": []
+    },
+    {
+      "from": "PF_KNEE-E_l",
+      "to": "PF_BI_JOINT_RECT_l",
+      "sign": "exc",
+      "gain": 0.18288825903301048,
+      "tag": "gmax",
+      "pts": []
+    },
+    {
+      "from": "PF_IN_BI_PAIR_HAM_l",
+      "to": "PF_BI_JOINT_RECT_l",
+      "sign": "inh",
+      "gain": 0.501121310047061,
+      "tag": "gmax",
+      "pts": []
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_l",
+      "to": "MN_semimem_l",
+      "sign": "exc",
+      "gain": 0.564914381198741,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 70
+        },
+        {
+          "x": 1060,
+          "y": 70
+        }
+      ]
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_l",
+      "to": "MN_semiten_l",
+      "sign": "exc",
+      "gain": 0.017836530381322907,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 110
+        },
+        {
+          "x": 1060,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "from": "PF_BI_JOINT_RECT_l",
+      "to": "MN_rect_fem_l",
+      "sign": "exc",
+      "gain": 0.4402096126566321,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 640
+        },
+        {
+          "x": 1060,
+          "y": 640
+        }
+      ]
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_l",
+      "to": "PF_IN_BI_PAIR_HAM_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "gmax",
+      "pts": []
+    },
+    {
+      "from": "PF_BI_JOINT_RECT_l",
+      "to": "PF_IN_BI_PAIR_RECT_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "gmax",
+      "pts": []
+    }
+  ],
+  "groups": {
+    "inputs": "Joint PF inputs",
+    "paired": "Four-cell RF/HAM PF",
+    "motor": "Motor outputs"
+  },
+  "scope": "Induced subnetwork; boundary afferents and other PF inputs are omitted, not deleted."
+}

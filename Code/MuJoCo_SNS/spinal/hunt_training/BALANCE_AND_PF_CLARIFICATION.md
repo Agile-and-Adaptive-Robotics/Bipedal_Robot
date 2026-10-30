@@ -33,8 +33,11 @@ coactivation must remain possible. The cells are graded/leaky in this variant,
 not newly introduced intrinsic NaP oscillators.
 
 This is a default-off candidate controlled by biarticular_pair_gain. It keeps
-existing learned neuron IDs/weights compatible and preserves the passing
-unpaired candidate. It has not been refitted through all Hunt phases yet.
+existing learned neuron IDs/weights compatible and preserves the earlier
+unpaired candidate. Three paired variants have now been refitted through the
+Hunt sequence, including a native-dynamics fit of the reciprocal inhibition.
+They have not passed the complete physical curriculum. See
+`FOURCELL_HUNT_RESULTS.md` and `TRAINING_RECORD.md` for the measured results.
 
 ## Actual Gait2392 function checks
 

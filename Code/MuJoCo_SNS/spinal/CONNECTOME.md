@@ -49,6 +49,18 @@ cannot fix a mis-wired circuit, and architecture decisions are Ben's.
 
 ## Notes
 
+- **Current editor (v3.3):** use `connectome_block_editor.html`; the small
+  `connectome_editor.html` is superseded. Session 1's four Hunt views are in
+  **Templates > SNS walker versions**, with names beginning **Hunt Session1**.
+  They provide an exact compiled graph, nested subsystem overview, and separate
+  right/left RF-HAM views. Exports and source metadata are in
+  `Neuromechanical_Models/Mujoco_SNS_models/Hunt_fourcell_session1_*`.
+  The source is a failed ground-stepping candidate, not a walking result.
+  Saving from inside a SUB now retains the outer model. The existing embedded
+  library, canonical 110-neuron model, and browser storage key are preserved.
+  Serialization and template registration were verified offline; live file-URL
+  browser automation was rejected by tool policy. No TEST_* entries were made.
+
 - **Block editor**: `connectome_block_editor.html` (v2, Ben-requested
   block coding) — palette of prebuilt types (V/C INs, SNs, HC RG/PF,
   reflex INs, Renshaw, MN, muscle), drag-place, SHIFT-click pairs to

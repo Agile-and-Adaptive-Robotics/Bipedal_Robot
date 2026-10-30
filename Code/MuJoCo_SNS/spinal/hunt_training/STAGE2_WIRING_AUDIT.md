@@ -103,3 +103,22 @@ the organizing rationale; the five environment tests expose transfer failures.
 Do not present the original intent as five unrelated validation environments,
 or claim that a successful teacher replay has completed the corresponding
 closed-body stage. Stage 4 still requires actual ground-supported stepping.
+
+## Subsequent correction and limitation
+
+The first passing candidate retains full timing/reflex inputs, has 0.1 times
+the inherited IaIN-to-MN gain, 0.3 commissural conductance, 1.5 axis-feedback
+gain, 0.08 rad native hip-abduction goal, knee-extensor output multiplier 0.3,
+and knee-flexor multiplier 2. It passes fresh replay and four independent
+one-percent perturbations of these configuration gains. Its 1.844 s physical
+period remains slower than the reference 1.233 s; this is a movement-screen
+repair, not a completed nominal-cadence training claim.
+
+Removing reciprocal inhibition, axis feedback, or the motor-gain corrections
+fails the screen. Removing commissural inhibition still passes for this case:
+the evidence does not support calling that connection necessary here.
+
+Standing passes with this revised candidate. Actual ground transfer remains
+unsuccessful; the left leg generally remains loaded and does not alternate.
+Tonic contact, contact-event, lateral-restraint, height, and finite initialization
+probes are retained as failures rather than promoted to walking results.
