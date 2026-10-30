@@ -11,7 +11,13 @@ parser.add_argument('--start',type=float,default=5.);parser.add_argument('--end'
 parser.add_argument('--fps',type=float,default=12.);parser.add_argument('--playback-speed',type=float,default=1.)
 args=parser.parse_args()
 if args.fps<=0 or args.playback_speed<=0 or args.end<=args.start:parser.error('Use positive fps/speed and end greater than start')
-source=args.recording.resolve();z=np.load(source,allow_pickle=True);model,data=B.build_air_model(False)
+source=args.recording.resolve()
+metadata_path=source.with_suffix('.result.json')
+if metadata_path.exists():
+    metadata=json.loads(metadata_path.read_text())
+    if metadata.get('stage') not in (1,2):parser.error('This renderer labels air stepping; use an air-stage recording')
+    if not metadata.get('assessment',{}).get('complete',False):parser.error('Incomplete recording; no curriculum preview generated')
+z=np.load(source,allow_pickle=True);model,data=B.build_air_model(False)
 assert z['qfull'].shape[1]==model.nq
 out=source.parent/'preview';out.mkdir(exist_ok=True)
 model.vis.global_.offwidth=800;model.vis.global_.offheight=800
@@ -34,7 +40,8 @@ ticks=np.rint(np.r_[0.,np.cumsum(deltas)]*100).astype(int)
 durations=(np.diff(ticks)*10).tolist()
 for k in indices:
     data.qpos[:]=z['qfull'][k];mujoco.mj_forward(model,data);views=[]
-    for azimuth in (0.,40.):
+    # Native world +x is anterior; MuJoCo azimuth 180 views from +x.
+    for azimuth in (180.,140.):
         cam=mujoco.MjvCamera();cam.lookat[:]=[data.xpos[model.body('pelvis').id,0],data.xpos[model.body('pelvis').id,1],.85]
         cam.distance=2.8;cam.azimuth=azimuth;cam.elevation=-6.
         renderer.update_scene(data,camera=cam,scene_option=opt);views.append(Image.fromarray(renderer.render().copy()))
@@ -45,5 +52,5 @@ for k in indices:
 del renderer  # MuJoCo 2.3.7 releases its renderer through destruction.
 frames[0].save(out/'stage2_air_neural.gif',save_all=True,append_images=frames[1:],duration=durations,loop=0)
 frames[len(frames)//2].save(out/'stage2_air_neural.png')
-(out/'provenance.json').write_text(json.dumps(dict(source=str(source),scope='Recorded full qpos; no corrected poses, resimulation, or walking claim. Nominal run; basin checks pending.',frames=len(frames),frame_times_s=frame_times.tolist(),playback_speed=args.playback_speed,gif_duration_ms=sum(durations)),indent=2))
+(out/'provenance.json').write_text(json.dumps(dict(source=str(source),result_metadata=str(metadata_path),scope='Recorded full qpos; no corrected poses, resimulation, or walking claim. See TRAINING_RECORD.md for robustness evidence.',camera_native_world_azimuth_deg=[180.,140.],frames=len(frames),frame_times_s=frame_times.tolist(),playback_speed=args.playback_speed,gif_duration_ms=sum(durations)),indent=2))
 print(out,flush=True)

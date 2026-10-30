@@ -79,8 +79,10 @@ Compare these matched air-stage recordings:
 OLD: D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\hunt_training\runs\swing_release_20261030_v1\air.mechanics.npz
 NEW: D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\hunt_training\runs\native_joint_pf_mono_20261030_v1\air_retry\stage2.mechanics.npz
 Each has a neighboring .result.json describing the actual configuration.
-Read swing_diagnostics.py, mechanics.py, and analyze_swing_release.py from
+Read swing_diagnostics.py and analyze_swing_release.py from
 D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\hunt_training.
+The equality-aware mechanics implementation is:
+D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\functional_gait2392\mechanics.py
 
 Use t >= 5 and t < 13 s. Resolve every channel by saved names. Define RG
 swing from RG_F > RG_E, and distinguish that neural phase from actual foot
