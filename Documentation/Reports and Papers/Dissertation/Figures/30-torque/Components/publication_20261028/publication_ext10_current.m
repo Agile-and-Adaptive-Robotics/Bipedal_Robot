@@ -19,7 +19,7 @@ setenv('EXTX3_TRANS', '');
 c1 = [1 0.843 0];        % #FFD700 gold    - Hybrid
 c5 = [0.804 0.204 0.710];% #CD34B5 magenta - Optimized prediction
 c7 = [0 0 1];            % #0000FF indigo  - Measured
-cgray = [0.4 0.4 0.4];   % Original dashed
+cgray = [0.980 0.529 0.459]; % light-orange unoptimized prediction
 sz = 60;
 
 S=load('minimizeExt10mmX3_results.mat'); g=S.x_actual(32,1:4);
@@ -54,7 +54,7 @@ set(axT(2), 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
     'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', ...
     'XLim', [-125 15], 'XTick', [-120 -90 -60 -30 0], 'YLim', [0 20], ...
     'TickLength', [0.025 0.05], 'GridLineStyle', 'none');
-lg = legend(axT(2)); lg.Location = 'southwest'; lg.FontSize = 12;
+lg = legend(axT(2)); lg.Location = 'northeast'; lg.FontSize = 12;
 
 % letters (margin-left convention; photo panel letter straddles its box top)
 ann = {'(A)','(B)'};

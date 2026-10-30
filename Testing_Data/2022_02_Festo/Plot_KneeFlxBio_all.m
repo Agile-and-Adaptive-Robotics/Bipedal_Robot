@@ -1,18 +1,9 @@
-%gen_FlxGrp_2x2_20261026.m -- P1-c rebuild per Ben's CONFIRMED layout
-% instruction (2026-10-26 14:44): 2x2 tiled figure, three data panels
-% titled '10 mm', '20 mm', '20 mm' (the third = the redesigned two-BPA
-% 20 mm flexor route, distinction stated in the caption), dedicated legend
-% in tile 4. (A)/(B)/(C) margin letters preserved. Series: measured indigo
-% filled, corrected magenta solid, unoptimized light-orange dashed, human
-% black dotted, reduced-pressure measured pink. Panels B and C (both 20 mm
-% against the same human target) share their y- and x-range; panel A keeps
-% its own y-range (10 mm scale) so no data is clipped; all panels share the
-% angle window. Data machinery verbatim from gen_FlxGrp_3panel_20261023.m.
-% Outputs: OVERWRITES Knee_Torque_Test/Figures/FlxGrp_20261023.eps (same
-% name per instruction) + diss asset FlxGrp_2x2_20261026.pdf/.png + QC png.
-root = 'D:/GitHub/Bipedal_Robot';
+% Biomimetic-knee flexor comparison: 10 mm, 20 mm, and redesigned two-BPA route.
+% Figure 4.11. Run this script to update the dissertation PDF, PNG, and FIG.
+festodir = fileparts(mfilename('fullpath'));
+root = fileparts(fileparts(festodir));
 festodir = fullfile(root, 'Testing_Data/2022_02_Festo');
-outdir = fullfile(root, 'tmp/reconciliation_figures_20261028');
+outdir = fullfile(root, 'Documentation/Reports and Papers/Dissertation/Figures/30-torque');
 qcdir = outdir;
 addpath(fullfile(root, 'Code/Matlab/Functions'));
 addpath(fullfile(root, 'Code/Matlab/Functions/ModernRobotics'));
@@ -134,6 +125,7 @@ Load   = [84 51 77.8 69 67.3 79 96 20 11.1 77 60 69.5 28 93.7 106];
 K_deg  = [-61.5 -83 5 -5 -52 -45 -42 -114 -119 -62 -78 -87 -105 -22.5 -14];
 LC_deg = [35 38 30 25 25 25 25 45 45 28.5 34 35 43 17 16];
 Presh  = [517 628 226.5 242.5 406.7 410.3 412 634 633 400 489 635 638 275.3 273.7];
+idx = Presh>610;
 
 K_ang  = K_deg*pi/180;
 LC_ang = LC_deg*pi/180;
@@ -208,8 +200,10 @@ plot(humanAngle, TorqueHz, ':', 'Color', c8, 'LineWidth', 4, ...
     'HandleVisibility','off');
 plot(phiD, TqCorr, '-', 'Color', c5, 'LineWidth', 2.5, ...
     'HandleVisibility','off');
-scatter(K_deg, TorqueZ56, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+scatter(K_deg(idx), TorqueZ56(idx), sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
     'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'HandleVisibility','off');
+scatter(K_deg(~idx), TorqueZ56(~idx), sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+    'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none', 'HandleVisibility','off');
 title('\bf 20 mm');
 set(gca, sty{:});
 
@@ -230,60 +224,36 @@ axT(3).XLim = [xLo, xHi];
 % tile 4: dedicated legend (dummy series with the panel styles)
 axL = nexttile(2); hold on
 plot(NaN, NaN, '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
-plot(NaN, NaN, '-', 'Color', c5, 'LineWidth', 2.5, 'DisplayName','Corrected model');
+plot(NaN, NaN, '-', 'Color', c5, 'LineWidth', 2.5, 'DisplayName','Optimized');
+plot(NaN, NaN, ':', 'Color', c8, 'LineWidth', 4, 'DisplayName','Human model (max)');
 scatter(NaN, NaN, sz, 'filled', 'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', ...
     'DisplayName','Measured');
-plot(NaN, NaN, ':', 'Color', c8, 'LineWidth', 4, 'DisplayName','Human model (max)');
 scatter(NaN, NaN, sz, 'filled', 'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none', ...
     'DisplayName','Measured at reduced pressure');
 lg = legend('Location','northwest'); lg.FontSize = 11; lg.Box = 'on';
 axis(axL,'off');
 
-axT(3).YTickLabel = {};
-ylabel(t, '\bf M_{\bf k}, N\cdotm'); xlabel(t, '\bf \theta_{\bf k} , \circ');
+axT(3).YTickLabelMode = 'auto';
+ylabel(t, 'Torque, N\cdotm', 'Interpreter','tex'); xlabel(t, '\bf \theta_{\bf k} , \circ');
 
-% (A)/(B)/(C) margin letters, straddling the plot-box top (established
-% convention from gen_ExtPin6Panel.m / gen_FlxGrp_3panel_20261023.m)
-ann = {'(A)','(B)','(C)'};
+% Reserve a left margin for A/B outside the shared torque label.
+t.OuterPosition = [0.07 0 0.93 1];
 drawnow;
-ylL = 0.008; ylR = 0.024;
-xL1 = 0.040;
-if (xL1 < ylR) && (xL1 + 0.032 > ylL)
-    Sx = (xL1 + 0.032 + 0.008) - ylL;
-    tp = t.Position; t.Position = [tp(1) + Sx, tp(2), tp(3) - Sx, tp(4)];
-    drawnow;
-    ylL = ylL + Sx; ylR = ylR + Sx;
-end
+% A/B align vertically; C sits left of its y-axis numbers at the same height.
+ann = {'(A)','(B)','(C)'};
 for j = 1:3
-    pos0 = axT(j).Position;
-    outL = axT(j).OuterPosition(1);
-    tcY = pos0(2) + pos0(4);
-    if ismember(j, [1 2]), xj = xL1; else, xj = outL - 0.037; end
-    a = annotation(fig,'textbox',[xj, tcY - 0.020, 0.032, 0.04], ...
-        'String',['\bf ' ann{j}], 'FontSize',12,'FontName','Arial', ...
-        'FontWeight','bold','EdgeColor','none','HorizontalAlignment','left', ...
-        'VerticalAlignment','top');
-    try
-        drawnow;
-        ae = a.Extent;
-        a.Position(2) = a.Position(2) + (tcY - (ae(2) + ae(4)/2));
-    catch
-    end
-    fprintf('AUDIT tile %d %s: letter@(%s)\n', j, ann{j}, mat2str(a.Position(1:2)));
+    if j < 3, letterX = -0.42; else, letterX = -0.23; end
+    text(axT(j),letterX,1.005,ann{j},'Units','normalized', ...
+        'FontSize',12,'FontName','Arial','FontWeight','bold', ...
+        'HorizontalAlignment','left','VerticalAlignment','bottom', ...
+        'Clipping','off');
 end
+lg.FontSize = 12;
+drawnow;
 
-% paper asset REPLACES the same-named EPS; diss assets separate
-savefig(fig,fullfile(outdir,'FlxGrp_current.fig'));
-exportgraphics(fig, fullfile(outdir, 'FlxGrp_20261023.eps'), 'ContentType','vector');
-exportgraphics(fig, fullfile(qcdir, 'FlxGrp_2x2_20261026.pdf'), 'ContentType','vector');
-exportgraphics(fig, fullfile(qcdir, 'FlxGrp_2x2_20261026.png'), 'Resolution', 300);
-exportgraphics(fig, fullfile(qcdir, 'QC_FlxGrp_2x2_20261026.png'), 'Resolution',150);
-fprintf('WROTE FlxGrp_20261023.eps (2x2 replacement) + diss PDF/PNG\n'); close(fig);
-disp('DONE_FlxGrp_2x2');
-
-for q=1:2
- pred=interp1(bpab(q).Ak,bpab(q).M_p(:,3),bpab(q).Aexp,'pchip');
- er=bpab(q).Mexp(:)-pred(:); er=er(isfinite(er));
- fprintf('ROW77_PANEL_%d RMSE %.8f FVU %.8f MAX %.8f\n',q,sqrt(mean(er.^2)),mean(er.^2)/var(bpab(q).Mexp),max(abs(er)));
-end
-save(fullfile(outdir,'FlxGrp_data.mat'),'bpab','bpau','phiD','TqCorr','K_deg','TorqueZ56');
+% Update the active dissertation asset and its editable MATLAB figure.
+savefig(fig,fullfile(outdir,'FlxGrp_2x2_20261026_publication.fig'));
+exportgraphics(fig,fullfile(outdir,'FlxGrp_2x2_20261026_publication.pdf'),'ContentType','vector');
+exportgraphics(fig,fullfile(outdir,'FlxGrp_2x2_20261026_publication.png'),'Resolution',300);
+save(fullfile(festodir,'Plot_KneeFlxBio_all.mat'),'bpab','bpau','phiD','TqCorr','K_deg','TorqueZ56');
+disp('Updated dissertation Figure 4.11');

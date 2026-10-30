@@ -13,8 +13,6 @@ I subsequently replaced the shared rhythm generator with one rhythm generator on
 
 The AnimatLab model established that the combined circuit could generate alternating activity and move the suspended limbs. To investigate the contribution of sensory feedback and actuator mechanics, I needed to vary those components while retaining a specified neural organization and mechanical support condition. Extending that approach to the human-scale Gait2392 model and its BPA-routed robot counterpart also required checking joint directions, muscle paths, actuator forces, and the signals exchanged with the controller.
 
-Figure~\ref{fig:animatlab_model_architecture} precedes the later split into one rhythm generator per side and the addition of afferent and foot-contact feedback to the RG and PF layers.
-
 \begin{figure}[p]
 \centering
 \makebox[\textwidth][l]{\textbf{(A)}}\par\smallskip
@@ -62,7 +60,7 @@ Literature circuits and spiking variants & Compare selected published neural mec
 \end{tabularx}
 \end{table}
 
-OpenSim supplied musculoskeletal geometry, MyoConverter translated models to MuJoCo, SNS-Toolbox supplied neural formulations, and Simulink/Simscape supplied graphical neural and mechanical modeling \citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012,nourse_sns_2023}. My contributions are the model implementations, custom blocks, actuator integrations, and evaluation procedures built with those packages. Matched-input tests check selected circuits before their outputs are interpreted as control of a mechanical model.
+OpenSim supplied musculoskeletal geometry, MyoConverter translated models to MuJoCo, SNS-Toolbox supplied neural formulations, and Simulink/Simscape supplied graphical neural and mechanical modeling \citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012,nourse_sns_2023}. My contributions are the model implementations, custom blocks, actuator integrations, and evaluation procedures built with those packages.
 
 \section{Methods: Software Tools}\label{sec:preliminary_sim_methods}
 
@@ -78,7 +76,7 @@ The human-model conversion also required specific repairs. Three small hip rotat
 
 The human-model repairs addressed coupled moving muscle-path points, patella tracking, joint limits, and unintended contacts. Conflicting limits were removed from coupled path-point joints while anatomical driver limits were retained; rectus femoris required a patella-tracking via point, and contact was restricted to intended foot--ground pairs. These choices restore specified geometry and contact behavior rather than establish general model equivalence. Appendix~\ref{sec:app_conversion_repairs} records the repairs and force comparison.
 
-Comparisons with the OpenSim attachment paths and single-actuator tests checked the transferred geometry and force directions. They do not establish that every muscle reproduces the source force throughout its range or that the controller produces walking. The neural and mechanical models exchange signals at a \qty{2}{\milli\second} solver time step. Appendix~\ref{sec:app_conversion_repairs} records the individual repairs and their scope.
+Comparisons with the OpenSim attachment paths and single-actuator tests checked the transferred geometry and force directions, though not that every muscle reproduces the source force throughout its range. The neural and mechanical models exchange signals at a \qty{2}{\milli\second} solver time step.
 
 For artificial-muscle simulations, I implemented an actuator-force calculation that evaluates the quasi-static BPA model from Chapter~\ref{ch:muscles} at the current simulated actuator length and commanded pressure. The calculated tensile force acts along the model's specified tendon route. Length, velocity, force, and foot-contact measurements are then returned to the neural controller through sensory channels. This closes the neural-command--actuator-force--sensory-feedback loop. The calculation represents the measured static force dependence; it does not add valve-flow or pressure-transient dynamics. Routing geometry and dynamic force transmission therefore require their own checks beyond the isometric force fit.
 
@@ -136,9 +134,9 @@ The experiment drivers then hold a selected controller fixed while changing sens
 
 \section{Results: Verification of the Implemented Interfaces}\label{sec:preliminary_sim_results}
 
-The tests address three distinct questions: whether a circuit produces its expected response, whether implementations agree under matched inputs, and whether the neural and mechanical models exchange signals in a closed loop.  The larger evaluation sets and their limitations are collected in Appendix~\ref{app:simulation_verification}; neuron equations and calibration details remain in Appendix~\ref{app:neuron_equations}.
+The tests address three distinct questions: whether a circuit produces its expected response, whether implementations agree under matched inputs, and whether the neural and mechanical models exchange signals in a closed loop. The larger evaluation sets and their limitations are collected in Appendix~\ref{app:simulation_verification}; neuron equations and calibration details remain in Appendix~\ref{app:neuron_equations}.
 
-The demonstrations below test the models and tools summarized in Table~\ref{tab:sns_capability}. Matched-input comparisons check neural implementations, the loaded-arm experiment tests corrective feedback, and bridge tests check command and measurement exchange. Saved-controller replays and pathway removals then test whether the coupled experiments can be repeated and compared.
+The demonstrations below apply these tests to the models and tools summarized in Table~\ref{tab:sns_capability}, followed by saved-controller replays and pathway removals that test whether the coupled experiments can be repeated and compared.
 
 
 
