@@ -1,0 +1,26 @@
+v12 review copy
+
+26 core slides end at the conclusion; 15 hidden question slides follow. This is a review copy because the two native AnimatLab recordings are still pending from Ben. The C3NS master artwork, cover, and footer are retained. Baseline: the explicitly current v11 deck, preserved unchanged.
+
+Requested revisions
+- Former slide 4: four independent knowledge/tool gaps; SADb is the sensory-evidence resource, not the mechanics-to-control interface.
+- Former slide 5: removed the observations count and added the contracted/uncontracted Festo photograph from Hunt’s INRC slide 49 (new slide 5).
+- Former slide 7: both published normalized curves, their common legend, and the force equation; removed the right-hand explanation (new slide 7).
+- Former slide 8: black error diamonds overlay the force bars, with a right percentage axis. Both series are bound to the embedded editable workbook (new slide 8).
+- Before the held-out torque results: test photograph, attachment-frame view, and wrapping schematic explain chi-zero through chi-three. Effective stiffness includes fixtures and the loading path (new slide 9).
+- Offline SADb: embedded 26-second walkthrough of the real running app, plus a file link to the unchanged self-contained HTML (new slide 14). Search, record details, citation navigation, pivot, and drill-through were exercised with browser networking disabled; no external requests or page errors were observed. PowerPoint’s player entered its Playing state during a separate native playback check.
+- Former slides 14/15: combined into one sentence and a side-by-side media layout (new slide 15). The rejected stick-figure replays are absent. The marked source stills reserve the positions; they are not suspended/released footage. Both actual AnimatLab clips remain required.
+- SNS sequence: Table 6.1 order. W2L 15–16; Gait2392 17; SNS-Simscape 18–19; CAD robot 20; MuJoCo–Simulink bridge 21; curriculum/experiment drivers 22; literature circuits 23, with spiking comparison in question slide 41. Added real library symbols and a bridge readback comparison from saved samples. Hunt’s four training steps remain paired with their tool use.
+
+Verification
+All 41 slides were rendered by PowerPoint and inspected individually for layout, labels, units, source scope, notes/evidence agreement, and C3NS consistency. The revised wrapping crop and bridge diagram were corrected after inspection. The final deck was opened and rendered again after its package checks. Editable text, eight native tables, and the native two-axis chart remain. Finalization checks passed for the package, geometry, font policy, chart data/workbook references, and 41-slide import. The app video is embedded byte for byte; the live HTML link points to the supplied companion file. Question slides 27–41 remain hidden in the PPTX and are included in the PDF and contact sheet. All 41 exported PDF pages were independently rendered and checked against the native slide renders.
+
+The bridge plot uses unchanged saved muscle-length samples: 80 scored steps from 0.005 to 0.400 s. All five scored sensor channels have zero maximum difference from the saved Python reference. No new simulation result or optimization was generated for this evidence.
+
+All 30 protected dissertation/torque-paper source hashes match the starting snapshot. No manuscript or scientific-figure files were edited. No commits, pushes, or messages to other chats.
+
+Source discrepancy retained
+The published comparison reports 4.5% and 42.1%. Recalculating from the displayed one-decimal forces gives approximately 4.4457% and 42.0918%. The deck preserves the published percentages and force values. No manuscript value was changed, and no uncertainty bars were invented.
+
+Use and remaining work
+Extract the whole offline bundle before using the live-app link; keep sadb_app.html beside the PPTX. Click the app movie for the embedded walkthrough, or Open offline SADb for the live browser app. Online search and external destinations require a connection. PDF/contact-sheet animations are static. Insert the two actual AnimatLab viewport recordings into slide 15, then re-render that slide and update the delivery copy. The .asim saves a runnable model; it does not contain rendered footage. The 35–40-minute duration is a planning estimate, not a timed rehearsal.

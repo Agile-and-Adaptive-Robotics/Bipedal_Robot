@@ -1,0 +1,55 @@
+digraph implemented {
+	bgcolor=white fontname=Arial fontsize=17 label="biw2lvar-Hunt-PT: enabled compiled connections
+Green: excitatory; red: inhibitory. Counts aggregate real synapses; enabled does not prove functional recruitment." labelloc=t rankdir=LR
+	node [fillcolor="#EEF3F8" fontname=Arial fontsize=12 shape=box style="rounded,filled"]
+	0 [label="Biarticular PF / integrators
+34 neurons"]
+	1 [label="Calibrated timing afferents
+12 neurons"]
+	2 [label="Candidate commissural inhibition
+2 neurons"]
+	3 [label="Causal phase filters
+48 neurons"]
+	4 [label="Descending / posture / balance
+10 neurons"]
+	5 [label="Foot / load populations
+6 neurons"]
+	6 [label="Joint PF + local inhibition
+68 neurons"]
+	7 [label="Motor neurons
+92 neurons"]
+	8 [label="Muscle sensory populations
+276 neurons"]
+	9 [label="RG + local inhibition
+8 neurons"]
+	10 [label="Renshaw network
+92 neurons"]
+	11 [label="Sensory interneurons
+378 neurons"]
+	12 [label="Task balance + relays
+8 neurons"]
+	13 [label="Tonic feedforward
+1 neurons"]
+	1 -> 9 [label=12 arrowhead=normal color="#228833" fontsize=10]
+	2 -> 9 [label=2 arrowhead=tee color="#CC3311" fontsize=10]
+	3 -> 6 [label=144 arrowhead=normal color="#228833" fontsize=10]
+	3 -> 6 [label=32 arrowhead=tee color="#CC3311" fontsize=10]
+	6 -> 0 [label=40 arrowhead=normal color="#228833" fontsize=10]
+	9 -> 3 [label=24 arrowhead=normal color="#228833" fontsize=10]
+	4 -> 7 [label=152 arrowhead=normal color="#228833" fontsize=10]
+	6 -> 7 [label=96 arrowhead=normal color="#228833" fontsize=10]
+	11 -> 7 [label=28 arrowhead=normal color="#228833" fontsize=10]
+	11 -> 7 [label=146 arrowhead=tee color="#CC3311" fontsize=10]
+	12 -> 7 [label=181 arrowhead=normal color="#228833" fontsize=10]
+	12 -> 7 [label=181 arrowhead=tee color="#CC3311" fontsize=10]
+	7 -> 10 [label=92 arrowhead=normal color="#228833" fontsize=10]
+	13 -> 7 [label=41 arrowhead=normal color="#228833" fontsize=10]
+	8 -> 7 [label=48 arrowhead=normal color="#228833" fontsize=10]
+	0 -> 7 [label=6 arrowhead=normal color="#228833" fontsize=10]
+	6 -> 11 [label=86 arrowhead=normal color="#228833" fontsize=10]
+	8 -> 11 [label=422 arrowhead=normal color="#228833" fontsize=10]
+	10 -> 11 [label=92 arrowhead=tee color="#CC3311" fontsize=10]
+	9 -> 11 [label=10 arrowhead=normal color="#228833" fontsize=10]
+	0 -> 11 [label=6 arrowhead=normal color="#228833" fontsize=10]
+	9 -> 2 [label=2 arrowhead=normal color="#228833" fontsize=10]
+}

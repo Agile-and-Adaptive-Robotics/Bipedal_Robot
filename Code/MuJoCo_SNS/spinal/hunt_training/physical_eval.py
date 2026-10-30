@@ -12,7 +12,8 @@ from mechanics import CoupledArms,JOINTS
 from curriculum_metrics import assess
 from frontal_metrics import assess_frontal
 stage=cfg['stage'];capture={};extra=np.zeros((8500,21));balance_log=np.zeros((8500,8));count=0
-source_hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__),H/'controller.py',H/'balance.py')}
+trace_cells=cfg.get('trace_cells',[]);cell_log=np.zeros((8500,len(trace_cells)))
+source_hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__),H/'controller.py',H/'balance.py',H/'ground_contact_check.py')}
 oldpose=R.apply_start_pose
 def pose(m,d):
     oldpose(m,d);targets=np.load(H/'runs/targets/targets.npz',allow_pickle=True)
@@ -49,7 +50,9 @@ def build(acts,dt,interleg):
     options=dict(use_timing_afferents=False if stage==1 else cfg.get('timing_afferents',True),axis_feedback=0. if stage==1 else cfg.get('axis_feedback',0.),balance=None if stage==1 else cfg.get('balance'),weights_directory=cfg.get('weights_directory',str(H/'runs/fitted')),timing_scale=cfg.get('timing_scale',1.),reciprocal_gain=cfg.get('reciprocal_gain',0.),commissural_gain=0. if stage==1 else cfg.get('commissural_gain',0.),biarticular_pair_gain=cfg.get('biarticular_pair_gain',0.))
     if 'hip_abduction_goal' in cfg:options['hip_abduction_goal']=cfg['hip_abduction_goal']
     options['cross_contact_gain']=cfg.get('cross_contact_gain',0.)
+    options['learn_reciprocal']=cfg.get('learn_reciprocal',False)
     n=C.build(acts,dt=dt,options=options)
+    trace_indices=np.array([n.idx[cell] for cell in trace_cells],dtype=int)
     C.P.G['contact_onset']=cfg.get('contact_onset',0.)
     if cfg.get('backend','sparse')=='native':n.compiled.forward=n.compiled.c.forward
     capture['neural_step_wall_s']=0.
@@ -62,6 +65,12 @@ def build(acts,dt,interleg):
             if n.names[post].startswith('PF_') and n.names[pre].startswith(('HEEL_','TOEDF_')):
                 n.compiled.gmax[i]=n.original_g[i]*cfg.get('contact_pf_scale',0.)
     native_step=n.step
+    if cfg.get('diagnose_swing',False):
+        from swing_diagnostics import SwingDiagnostics
+        n.swing_diagnostics=SwingDiagnostics(n)
+    if cfg.get('motor_teacher'):
+        from motor_teacher import MotorTeacher
+        n.motor_teacher=MotorTeacher(n,cfg['motor_teacher'])
     def advance(u):
         global count
         for side in ('r','l'):
@@ -71,11 +80,23 @@ def build(acts,dt,interleg):
         if 2.<=count*dt<2.2 and cfg.get('walk_kick',0.)>0.:
             u[n.ports['HUNT_INIT_E_r']]=cfg['walk_kick'];u[n.ports['HUNT_INIT_F_l']]=cfg['walk_kick']
         m,d=n.live;pb=m.body('pelvis').id
+        if not hasattr(n,'harness_reference'):n.harness_reference=m.qpos_spring.copy()
+        elapsed=max(0.,count*dt-cfg.get('harness_motion_start_s',4.))
+        travel=cfg.get('harness_forward_speed',0.)*(elapsed-1.+np.exp(-elapsed))
+        lowering=cfg.get('harness_lowering_m',0.)*np.clip((count*dt-cfg.get('harness_lowering_start_s',2.))/cfg.get('harness_lowering_duration_s',4.),0.,1.)
+        if travel or lowering:
+            displacement=np.array([travel,0.,lowering])
+            for axis in ('tx','ty','tz'):
+                j=m.joint('pelvis_'+axis);ad=j.qposadr[0]
+                m.qpos_spring[ad]=n.harness_reference[ad]+float(d.xaxis[j.id]@displacement)
         # A finite, explicitly declared 100 ms pelvis impulse, never a phase clock.
         d.xfrc_applied[pb,0]=cfg.get('push_N',0.) if cfg.get('push_time',7.)<=count*dt<cfg.get('push_time',7.)+.1 else 0.
         d.xfrc_applied[pb,1]=cfg.get('lateral_push_N',0.) if cfg.get('push_time',7.)<=count*dt<cfg.get('push_time',7.)+.1 else 0.
         d.xfrc_applied[pb,2]=cfg.get('support_fraction',0.)*m.body_mass.sum()*9.81
         step_start=time.perf_counter();native_step(u);capture['neural_step_wall_s']+=time.perf_counter()-step_start
+        if hasattr(n,'swing_diagnostics'):n.swing_diagnostics.sample(count*dt)
+        if hasattr(n,'motor_teacher'):n.motor_teacher.update(count*dt)
+        if len(trace_indices) and count<len(cell_log):cell_log[count]=n.compiled.V[trace_indices]
         if hasattr(n,'balance') and count<len(balance_log):balance_log[count]=np.r_[n.balance.last_task,n.balance.last_command]
         support=0.;wrench=np.zeros(6)
         for axis in ('tx','ty','tz'):
@@ -113,6 +134,7 @@ assessment=assess(str(out)+'.npz',metrics,5 if stage in (4,5) else stage)
 assessment.update(assess_frontal(str(out)+'.npz'))
 assessment['accepted']=bool(assessment['accepted'] and assessment['frontal_gate'])
 n=capture.pop('network');m,d=n.live;BW=float(m.body_mass.sum()*9.81);late=extra[:count,0]>=5
+if hasattr(n,'swing_diagnostics'):n.swing_diagnostics.save(str(out)+'.mechanics.npz')
 z=np.load(str(out)+'.npz',allow_pickle=True);ct=extra[:count,7:9]/BW;window=(extra[:count,0]>=5)&(extra[:count,0]<13)
 late_window_available=bool(np.any(window))
 if not np.any(window):window=extra[:count,0]>=0.
@@ -129,13 +151,29 @@ measured['late_window_available']=late_window_available
 # Independently count each physical contact once. The legacy runner contact
 # logger assigns the same force to both heel and toe; its totals are doubled.
 assessment['ground_load_verified']=bool(late_window_available and stage>=3 and np.mean(ct[window].sum(axis=1))>.2 and np.all(np.max(ct[window],axis=0)>.1))
-if stage in (4,5):assessment['accepted']=bool(assessment['accepted'] and assessment['ground_load_verified'])
+ground_contacts=None
+if stage in (4,5):
+    from ground_contact_check import check_samples
+    ground_contacts=check_samples(extra[:count],BW)
+    motion=assess(str(out)+'.npz',metrics,2)
+    assessment['legacy_contact_gate']=assessment.get('contact_gate',False)
+    assessment['measured_contact_gate']=ground_contacts['accepted']
+    assessment['movement_gate']=motion['accepted']
+    assessment['ground_tilt_gate']=bool(metrics.get('bal_tilt_max',float('inf'))<30.)
+    assessment['accepted']=bool(motion['accepted'] and assessment['frontal_gate'] and assessment['ground_load_verified'] and ground_contacts['accepted'] and assessment['ground_tilt_gate'])
 result=dict(stage=stage,configuration=cfg,assessment=assessment,metrics=metrics,measured=measured,compiled=capture,
     wall_s=time.perf_counter()-start,trained_weights={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(cfg.get('weights_directory',H/'runs/fitted')).glob('*weights.json')},
     source_sha256=source_hashes,
     effort_scope='Dimensionless activation/excitation squared, not metabolic watts; only a secondary objective after movement gates.')
 result['simulated_s']=count*.002
 result['backend']=cfg.get('backend','sparse')
+if hasattr(n,'motor_teacher'):
+    result['teacher_diagnostic']=True;result['neural_curriculum_accepted']=False
+    result['teacher_tracking']=n.motor_teacher.log
+    result['assessment']['teacher_motion_gate']=result['assessment']['accepted'];result['assessment']['accepted']=False
+    n.motor_teacher.save(str(out)+'.teacher_targets.npz')
+if ground_contacts is not None:result['ground_contacts']=ground_contacts
+if trace_cells:np.savez_compressed(str(out)+'.neurons.npz',t=extra[:count,0],voltage=cell_log[:count],cells=trace_cells)
 if hasattr(n,'balance'):
     result['balance_calibration']=n.balance.calibration
     np.savez_compressed(str(out)+'.balance.npz',t=extra[:count,0],state_and_command=balance_log[:count])

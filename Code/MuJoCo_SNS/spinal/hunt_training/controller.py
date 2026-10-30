@@ -80,6 +80,13 @@ class HuntNetwork(D.JointIntegrationNetwork):
     def install(self):
         self.compiled=SparsePairwiseForward(self.compiled);c=self.compiled
         self.names=list(self.idx);self.ports={name:i for i,name in enumerate(self.inputs)}
+        # Tune inherited joint-PF inhibition only in explicit Hunt candidates.
+        scale=float(self.options.get('joint_pf_inhibition_scale',1.))
+        if not 0.<scale<=1.:raise ValueError('joint_pf_inhibition_scale must be in (0, 1]')
+        if scale!=1.:
+            for i,(pre,post) in enumerate(zip(c.pre,c.post)):
+                if self.names[pre].startswith(('PF_IN_HIP-','PF_IN_KNEE-')) and self.names[post].startswith(('PF_HIP-','PF_KNEE-')):
+                    c.gmax[i]*=scale
         self.targets_data=np.load(H/'runs/targets/targets.npz',allow_pickle=True)
         self.target_meta=json.loads((H/'runs/targets/metadata.json').read_text())
         self.sensor_mid=np.asarray(self.target_meta['sensor_mid']);self.sensor_half=np.asarray(self.target_meta['sensor_half'])
@@ -89,7 +96,7 @@ class HuntNetwork(D.JointIntegrationNetwork):
         for i in self.mn_edges:
             pre=self.names[c.pre[i]]
             if pre.startswith('PF_') and not pre.startswith('PF_IN'):self.pf_edges.append(i)
-            elif pre.startswith(('Ia_','IBIN_','IBEXC_')):self.reflex_edges.append(i)
+            elif pre.startswith(('Ia_','IBIN_','IBEXC_')) or (self.options.get('learn_reciprocal',False) and pre.startswith('IaIN_')):self.reflex_edges.append(i)
             elif pre.startswith(('POST','BAL')):self.stand_edges.append(i)
         self.pf_edges=np.asarray(self.pf_edges,dtype=int);self.reflex_edges=np.asarray(self.reflex_edges,dtype=int)
         self.stand_edges=np.asarray(self.stand_edges,dtype=int)
@@ -106,6 +113,8 @@ class HuntNetwork(D.JointIntegrationNetwork):
             ids=np.flatnonzero((c.pre==self.idx[source])&(c.post==self.idx[target]));assert len(ids)==1
             self.pfbank_edges.append(int(ids[0]))
         self.pfbank_edges=np.asarray(self.pfbank_edges,dtype=int)
+        self.pf_internal_edges=np.array([i for i,(pre,post) in enumerate(zip(c.pre,c.post))
+            if self.names[pre].startswith(('PF_IN_HIP-','PF_IN_KNEE-')) and self.names[post].startswith(('PF_HIP-','PF_KNEE-'))],dtype=int)
         # Remove inherited timing inputs: the six fitted sensors are the only
         # sensory projections into each calibrated RG; local INs are retained.
         for i in range(len(c.post)):
@@ -117,8 +126,12 @@ class HuntNetwork(D.JointIntegrationNetwork):
             if post.startswith('PF_') and pre.startswith(('HEEL_','TOEDF_')):c.gmax[i]=0.
         c.gmax[self.mn_edges]=0.
         self.pf_gain=np.zeros(len(c.gmax));self.ff_gain=np.zeros(len(c.gmax));self.reflex_gain=np.zeros(len(c.gmax))
+        self.pf_gain[self.pf_internal_edges]=c.gmax[self.pf_internal_edges]
         self.geometry_factor=np.ones(len(c.gmax));self.step_count=0;self.training_gate=None
         self.reciprocal_edges=np.array([i for i in self.mn_edges if self.names[c.pre[i]].startswith('IaIN_')],dtype=int)
+        self.bi_edges=np.array([i for i,(post,pre) in enumerate(zip(c.post,c.pre)) if self.names[post].startswith(('PF_BI_JOINT_HAM_','PF_BI_JOINT_RECT_')) and self.names[pre].startswith(('PF_HIP','PF_KNEE','PF_IN_BI_PAIR_'))],dtype=int)
+        self.bi_input_edges=np.array([i for i in self.bi_edges if self.names[c.pre[i]].startswith(('PF_HIP','PF_KNEE'))],dtype=int)
+        self.bi_gain=c.gmax.copy()
         self.load_weights()
         self.sync()
 
@@ -126,7 +139,7 @@ class HuntNetwork(D.JointIntegrationNetwork):
         c=self.compiled;c.c.g_max_non[c.post,c.pre]=c.gmax
 
     def load_weights(self):
-        for filename,target in [('pf_weights.json',self.pf_gain),('mn_weights.json',self.ff_gain),('reflex_weights.json',self.reflex_gain)]:
+        for filename,target in [('pf_weights.json',self.pf_gain),('bi_weights.json',self.bi_gain),('mn_weights.json',self.ff_gain),('reflex_weights.json',self.reflex_gain)]:
             path=Path(self.options.get('weights_directory',H/'runs/fitted'))/filename
             if not path.exists():continue
             values=json.loads(path.read_text())['edges']
@@ -137,13 +150,15 @@ class HuntNetwork(D.JointIntegrationNetwork):
     def apply_weights(self,gate):
         c=self.compiled
         c.gmax[self.pfbank_edges]=self.pf_gain[self.pfbank_edges]*gate
+        c.gmax[self.pf_internal_edges]=self.pf_gain[self.pf_internal_edges]
+        c.gmax[self.bi_edges]=self.bi_gain[self.bi_edges]
         c.gmax[self.mn_edges]=0.
         # Geometry-dependent recruitment stays active for positional feedback;
         # tonic/sagittal pattern expression is descending-command gated.
         c.gmax[self.pf_edges]=self.ff_gain[self.pf_edges]*gate
         c.gmax[self.geom_edges]=self.ff_gain[self.geom_edges]*self.geometry_factor[self.geom_edges]
         c.gmax[self.reflex_edges]=self.reflex_gain[self.reflex_edges]
-        c.gmax[self.reciprocal_edges]=self.original_g[self.reciprocal_edges]*self.options.get('reciprocal_gain',0.)
+        c.gmax[self.reciprocal_edges]=self.reflex_gain[self.reciprocal_edges] if self.options.get('learn_reciprocal',False) else self.original_g[self.reciprocal_edges]*self.options.get('reciprocal_gain',0.)
         c.gmax[self.stand_edges]=self.original_g[self.stand_edges]*(1.-gate)
         if hasattr(self,'balance'):self.balance.apply()
         self.sync()
@@ -187,8 +202,19 @@ class HuntNetwork(D.JointIntegrationNetwork):
         return self.compiled.V
 
 def build(acts,dt=.002,interleg=False,options=None):
+    options=dict(options or {})
+    circuit_file=Path(options.get('weights_directory',H/'runs/fitted'))/'circuit_options.json'
+    if circuit_file.exists():
+        saved=json.loads(circuit_file.read_text())
+        if set(saved)-{'joint_pf_inhibition_scale'}:raise ValueError('Unknown saved Hunt circuit option')
+        options={**saved,**options}
     a=json.loads((H/'runs/step_A/winner.json').read_text())
     sensory={side:json.loads((H/('runs/step_B' if side=='r' else 'runs/step_B_left')/'winner.json').read_text()) for side in ('r','l')}
+    timing_file=Path((options or {}).get('weights_directory',H/'runs/fitted'))/'timing_weights.json'
+    if timing_file.exists():
+        timing=json.loads(timing_file.read_text())
+        if not timing.get('accepted'):raise RuntimeError('Candidate sensory fit has not passed expected-afferent gates')
+        sensory={side:dict(accepted=True,afferent_gains=timing['gains'][side]) for side in ('r','l')}
     if not a['accepted'] or not all(v['accepted'] for v in sensory.values()):raise RuntimeError('Intrinsic/sensory fits must pass before motor fitting.')
     P.NAP.update(a['nap']);P.TAU['rg_nap_h']=a['tau_h'];P.G['rg_mutual_inh']=a['mutual_inhibition'];P.G['rg_weak_exc']=0.
     for key in ('w2l_ia_central','w2l_ii_central','w2l_ib_central'):W.GAINS[key]=0.

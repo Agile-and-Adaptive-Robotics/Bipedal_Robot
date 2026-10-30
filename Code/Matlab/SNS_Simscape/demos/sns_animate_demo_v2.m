@@ -123,7 +123,7 @@ fig = figure('Visible', 'off', 'Units', 'pixels', ...
 ax = axes(fig); hold(ax, 'on');
 n = numel(t); skip = max(1, floor(n / 110));
 idx = [1:skip:n, n];
-F = {}; MAP = [];
+F = {}; MAP = []; frameMaps = {};
 for k = idx
     cla(ax); hold(ax, 'on'); axis(ax, 'equal');
     xlim(ax, [-0.42 0.30]); ylim(ax, [-0.95 0.10]); axis(ax, 'off');
@@ -158,14 +158,14 @@ for k = idx
         'FontWeight', 'bold', 'FontSize', 10.5);
     f = getframe(fig);
     [A, MAP] = rgb2ind(f.cdata, 256); %#ok<ASGLU>
-    F{end + 1} = A; %#ok<AGROW>
+    F{end + 1} = A; frameMaps{end + 1} = MAP; %#ok<AGROW>
     if k == idx(round(numel(idx) * 0.45))
         exportgraphics(fig, stillName, 'Resolution', 220);
     end
 end
-imwrite(F{1}, MAP, gifName, 'WriteMode', 'overwrite', 'DelayTime', 0.03);
+imwrite(F{1}, frameMaps{1}, gifName, 'WriteMode', 'overwrite', 'DelayTime', 0.03);
 for k = 2:numel(F)
-    imwrite(F{k}, MAP, gifName, 'WriteMode', 'append', 'DelayTime', 0.03);
+    imwrite(F{k}, frameMaps{k}, gifName, 'WriteMode', 'append', 'DelayTime', 0.03);
 end
 fprintf('wrote %s (+ still)\n', gifName);
 close(fig);
@@ -182,7 +182,7 @@ fig = figure('Visible', 'off', 'Units', 'pixels', ...
 ax = axes(fig); hold(ax, 'on');
 n = numel(t); skip = max(1, floor(n / 110));
 idx = [1:skip:n, n];
-F = {};
+F = {}; frameMaps = {};
 for k = idx
     cla(ax); hold(ax, 'on'); axis(ax, 'equal');
     xlim(ax, [-0.35 0.75]); ylim(ax, [-0.55 0.28]); axis(ax, 'off');
@@ -238,14 +238,14 @@ for k = idx
         mode, thd_(k), mcup(k), t(k)), 'FontWeight', 'bold', 'FontSize', 10.5);
     f = getframe(fig);
     [A, MAP] = rgb2ind(f.cdata, 256); %#ok<ASGLU>
-    F{end + 1} = A; %#ok<AGROW>
+    F{end + 1} = A; frameMaps{end + 1} = MAP; %#ok<AGROW>
     if k == idx(round(numel(idx) * 0.75))
         exportgraphics(fig, stillName, 'Resolution', 220);
     end
 end
-imwrite(F{1}, MAP, gifName, 'WriteMode', 'overwrite', 'DelayTime', 0.03);
+imwrite(F{1}, frameMaps{1}, gifName, 'WriteMode', 'overwrite', 'DelayTime', 0.03);
 for k = 2:numel(F)
-    imwrite(F{k}, MAP, gifName, 'WriteMode', 'append', 'DelayTime', 0.03);
+    imwrite(F{k}, frameMaps{k}, gifName, 'WriteMode', 'append', 'DelayTime', 0.03);
 end
 fprintf('wrote %s (+ still)\n', gifName);
 close(fig);
