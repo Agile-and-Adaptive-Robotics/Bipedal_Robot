@@ -238,7 +238,7 @@ def actuator():
     shape(s,55,42,83,83,kind=MSO_SHAPE.OVAL,fill=LIGHT)
     shape(s,78,65,37,37,kind=MSO_SHAPE.OVAL,fill='E8D7A2')
     for a in range(0,360,60):
-        r=math.radians(a);shape(s,93+37*math.cos(r)-4,80+37*math.sin(r)-4,8,8,fill=BLUE,color=BLUE)
+        r=math.radians(a+30);shape(s,96.5+33*math.cos(r)-4,83.5+33*math.sin(r)-4,8,8,fill=BLUE,color=BLUE)
     line(s,96,83,195,83,width=3);path(s,[(60,37),(87,30),(117,34),(137,49)],color=BLUE)
     txt(s,17,137,203,17,'Electromagnetic shaft rotation',size=10.8,align='center')
     # BPA: explicitly outward wall pressure, distinct inward axial contraction.

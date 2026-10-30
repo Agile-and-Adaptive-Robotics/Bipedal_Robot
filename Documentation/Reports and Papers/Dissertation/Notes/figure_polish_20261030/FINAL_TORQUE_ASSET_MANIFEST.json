@@ -1,0 +1,95 @@
+{
+  "assets": {
+    "FlxGrp": {
+      "candidate": "D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/FlxGrp.pdf",
+      "sha256": "9b082f3ef6bebc67a1cfe1f9ce607ddbabc32a36d7ab8b8054a597bb12cb77cc",
+      "width_pt": 699.0,
+      "height_pt": 281.0,
+      "maximum_native_text_pt": 18.0,
+      "matlab_legend_pt": 15,
+      "data_conserved": true,
+      "targets": [
+        "D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Figures/30-torque/FlxGrp.pdf",
+        "D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/Figures/Biomimetic_flexor_AB_publication.pdf"
+      ],
+      "legend_order": [
+        "Unoptimized",
+        "Optimized",
+        "Human model (max)",
+        "Measured",
+        "Measured at reduced pressure"
+      ]
+    },
+    "Redesigned_flexor_pressure_publication": {
+      "profiles": {
+        "dissertation": {
+          "candidate": "D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/physical_profiles/dissertation/Redesigned_flexor_pressure_publication.pdf",
+          "target": "D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Figures/30-torque/Redesigned_flexor_pressure_publication.pdf",
+          "sha256": "54959e36bcea1e4b717f070e7c27079e89de43081b9dab68f2cb4e62472915a1",
+          "width_pt": 470.0,
+          "height_pt": 279.0,
+          "legend_font_matlab_pt": 10.5,
+          "legend_font_native_pt": 10.5,
+          "legend_font_placed_pt": 10.141659574468084,
+          "maximum_text_native_pt": 11.999999046325684,
+          "maximum_text_placed_pt": 11.590467163978738,
+          "inclusion_scale": 0.9658723404255318,
+          "tick_font_matlab_pt": 11,
+          "data_conserved": true,
+          "measured_drawn_last": true,
+          "legend_bounds": [
+            86.555,
+            65,
+            202.5,
+            52.125
+          ],
+          "curve_linewidth_matlab_pt": 1.2
+        },
+        "paper": {
+          "candidate": "D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/physical_profiles/paper/Redesigned_flexor_pressure_publication.pdf",
+          "target": "D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/Figures/Redesigned_flexor_pressure_publication.pdf",
+          "sha256": "2a60e48163d87dcbafe6ff47c66d5665e5fbff722ac15eb0b847db096911e56f",
+          "width_pt": 472.0,
+          "height_pt": 280.0,
+          "legend_font_matlab_pt": 12,
+          "legend_font_native_pt": 11.999999046325684,
+          "legend_font_placed_pt": 10.19999918937683,
+          "maximum_text_native_pt": 11.999999046325684,
+          "maximum_text_placed_pt": 10.19999918937683,
+          "inclusion_scale": 0.85,
+          "tick_font_matlab_pt": 12,
+          "data_conserved": true,
+          "measured_drawn_last": true,
+          "legend_bounds": [
+            86.555,
+            65,
+            225.75,
+            55.125
+          ],
+          "curve_linewidth_matlab_pt": 1.2
+        }
+      },
+      "data_conserved": true,
+      "scientific_series_identity": "Same full-precision saved series; distinct per-manuscript fonts compensate current inclusion scales."
+    }
+  },
+  "generators": {
+    "Plot_KneeFlxBio_all.m": {
+      "path": "D:/Github/Bipedal_Robot/Testing_Data/2022_02_Festo/Plot_KneeFlxBio_all.m",
+      "sha256": "c3c0edd0e4da8410c48b800d725dcc4d60680842e89b7963d5ccc8f99907d4f7"
+    },
+    "Plot_KneeFlxPhysical_final.m": {
+      "path": "D:/Github/Bipedal_Robot/Testing_Data/2022_02_Festo/Plot_KneeFlxPhysical_final.m",
+      "sha256": "1e4b92a8f9b4969bfb9e2da71f440b123108dd03f05e66eb96ff732e596cccf1"
+    },
+    "Polish_KneeTorque_Figures.m": {
+      "path": "D:/Github/Bipedal_Robot/Testing_Data/2022_02_Festo/Polish_KneeTorque_Figures.m",
+      "sha256": "4ff7a292e6777fe6fb604dd2a4010c59d4efd3fb0c96f4f6788a1c11019ae6bf"
+    }
+  },
+  "data_conservation": "Current-PDF curves/markers verified against retained FIGs; XData/YData/SizeData asserted identical before/after style changes. No model/fitting/optimization/simulation or data-file writes.",
+  "tex_edits": false,
+  "native_visual_qa": "PASS: actual PDF rasters reviewed; A/B outside y labels and aligned with titles; final legend entries contiguous; physical legend clears ticks and predictions.",
+  "font_note": "Physical export uses separate native fonts: dissertation legend10.5pt and paper12pt, giving final legends about10.14pt and10.2pt at unchanged inclusion scales. All placed ordinary text<=12pt.",
+  "checkcode": "All three MATLAB files: zero Code Analyzer messages; R2025a Update1. Final x-limit mirror is a no-op on the verified cached figures."
+}

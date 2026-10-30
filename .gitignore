@@ -98,8 +98,8 @@ tmp/codex_sw2urdf_source/
 tmp/codex_dirusso_original/
 
 # Local publication snapshots and regenerable review/build output.
-# Active ProofFinal sources, Figures, Components generators, and primary delivery
-# PDFs/ZIPs remain visible to Git. Existing tracked files are unaffected.
+# Active ProofFinal sources, Figures, and Components generators remain visible.
+# Generated exports follow the local-only rules below.
 /tmp/
 /build_*/
 /Documentation/Reports and Papers/Dissertation/Archive/
@@ -117,3 +117,70 @@ tmp/codex_dirusso_original/
 /Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/COMMIT_CORE_20261028.txt
 /Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/COMMIT_CANDIDATES_20261028.txt
 /Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/COMMIT_REVIEW_20261028.md
+
+# Review/build scratch stays on this machine; retain selected decision records.
+# Add an explicit exception when a new final report belongs in version control.
+/Documentation/Reports and Papers/Dissertation/Notes/approved_implementation_20261030/**
+!/Documentation/Reports and Papers/Dissertation/Notes/approved_implementation_20261030/IMPLEMENTATION_REPORT.md
+!/Documentation/Reports and Papers/Dissertation/Notes/approved_implementation_20261030/PAPER_DIRECTIVE_IMPLEMENTATION.md
+!/Documentation/Reports and Papers/Dissertation/Notes/approved_implementation_20261030/U23_MARGIN_AND_ANGLE_PROVENANCE.md
+/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/**
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/DISSERTATION_AUDIT_PENDING_ONLY_v2_20261030.md
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/FINAL_DELIVERY_LINKS.md
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/FINAL_DELIVERY_MANIFEST.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/FINAL_TORQUE_ASSET_MANIFEST.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/GENERATOR_IDENTITY_CONSERVATION_AND_QA.md
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/PAPER_TARGETED_CHANGE_QUEUE.md
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/PENDING_ONLY_v2_AUDIT.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/PENDING_ONLY_v2_RELEASE.md
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/PENDING_ONLY_v2_RESOLVED_CROSSWALK.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/PHYSICAL_FONT_PROFILE_FOLLOWUP.md
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/PUBLICATION_NOTE_RECOMMENDATION.md
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/SADB_ASSET_MANIFEST.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/SOURCE_CONSERVATION.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/STRUCTURE_EDITS.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/TABLE412_PUBLICATION_SOURCE_CHECK.json
+!/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/ZCODE_TABLE_4_12_GEOMETRY_PROMPT.md
+/Documentation/Reports and Papers/Dissertation/Notes/pdf_approvals_20261030/**
+!/Documentation/Reports and Papers/Dissertation/Notes/pdf_approvals_20261030/FINAL_APPROVAL_DISPOSITION.md
+!/Documentation/Reports and Papers/Dissertation/Notes/pdf_approvals_20261030/USER_APPROVALS_47.json
+!/Documentation/Reports and Papers/Dissertation/Notes/pdf_approvals_20261030/USER_APPROVALS_47.md
+/Documentation/Reports and Papers/Dissertation/Notes/pdf_pending_20261030/**
+/Documentation/Reports and Papers/Dissertation/Notes/publication_audit_20261030/**
+!/Documentation/Reports and Papers/Dissertation/Notes/publication_audit_20261030/AUDIT_FOLLOWUP_COMPLETE_20261030.md
+!/Documentation/Reports and Papers/Dissertation/Notes/publication_audit_20261030/REVIEW_RUBRIC.md
+!/Documentation/Reports and Papers/Dissertation/Notes/publication_audit_20261030/USER_FINDINGS_LEDGER.md
+/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/**
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/ADDITIONAL_FRAMING_CONTEXT.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/BIBLIOGRAPHY_APPEND_AND_REFERENCE_FIX.json
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/FINAL_DIRECTIVE_COMPLIANCE.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/LIVE_REVIEW_AFTER.json
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/MECHANICS_IMPLEMENTATION_AND_COMPLIANCE.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/OWNED_DISPOSITIONS_AND_CITATIONS.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/PAPER_LIVE_REVIEW_AFTER.json
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/ROUTE_HISTORY_REMOVED_DETAIL.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/SNS_APPENDIX_IMPLEMENTATION.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/THREE_REVIEWS_CONNECTION_AND_IMPACT.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/TRACKED_CHANGES_SOURCE_DISPOSITIONS.md
+!/Documentation/Reports and Papers/Dissertation/Notes/second_pdf_comments_20261030/USER_COMMENTS_19.json
+
+# Generated manuscript exports and screenshots are local; audit versions are retained.
+/output/*
+!/output/pdf/
+/output/pdf/*
+!/output/pdf/Dissertation_and_Torque_Paper_Audit_20261030.pdf
+!/output/pdf/Dissertation_Audit_Followup_20261030.pdf
+!/output/pdf/Dissertation_Audit_Followup_PENDING_YELLOW_20261030.pdf
+!/output/pdf/Dissertation_Audit_PENDING_ONLY_v2_20261030.pdf
+
+# Regenerable inspection previews; editable figure inputs remain versioned.
+/Documentation/Reports and Papers/Dissertation/Figures/30-torque/Components/approved_20261030/Ext10_preview.png
+/Documentation/Reports and Papers/Dissertation/Figures/30-torque/Components/approved_20261030/Paper_flexor_preview.png
+/Documentation/Reports and Papers/Dissertation/Figures/30-torque/Components/approved_20261030/reverse_pulley_biomimetic_preview.png
+
+# Generated ZIP deliveries stay on disk without binary commit churn.
+/Documentation/Reports and Papers/Dissertation/Bolen_Dissertation.zip
+/Documentation/Reports and Papers/Knee_Torque_Test/Design_Factors_for_Isometric_Robotic_Knee_Torque.zip
+
+# Accidental cmd-shell redirection target.
+/$null

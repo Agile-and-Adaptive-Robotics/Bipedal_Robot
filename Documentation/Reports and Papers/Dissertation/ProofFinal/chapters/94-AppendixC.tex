@@ -98,7 +98,7 @@ ke(9) & 48\,cm          & 0.480 & 0     & 605.9 & 443.1 & not used \\
 \end{tabular}
 \end{table}
 
-The biomimetic flexor route (\nolinkurl{buildKneeFlexorContext20mm.m}) is a three-point path (femur-frame origin $\mathbf{p}_{1}$, a moving wrap point $\mathbf{p}_{\text{wrap}}$ on the tibia, and tibia-frame insertion $\mathbf{p}_{\text{end}}$), with the wrap point held on a standoff surface of radius \texttt{bpaRb} about the joint and its $z$ placed on the projected $\mathbf{p}_{1}$--$\mathbf{p}_{\text{end}}$ line; the optimizer seed is $\mathbf{p}_{1,0} = [-50.0,\,35.0,\,50.0]$~mm and $\mathbf{p}_{2,0} = [-12.24,\,-8.87,\,27.87]$~mm with $l_{0} = 415$~mm and 25~mm tendon [Provenance: \nolinkurl{buildKneeFlexorContext20mm.m} lines 209--218; \nolinkurl{buildKneeFlexorRoute20mm.m} lines 98--186]. The biomimetic extensor seed route is given in Table~\ref{tab:app_ext_seed}, including the release schedule of the route-elimination rule.
+The single-BPA biomimetic flexor tests in Figure~\ref{fig:FlxGrp}\textbf{(A)} and Figure~\ref{fig:FlxGrp}\textbf{(B)} use the femur-frame origin $\mathbf{p}_1=[-50.0,\,35.0,\,50.0]$~mm and tibia $\theta_1$ insertion $\mathbf{p}_2=[-12.24,\,-8.87,\,27.87]$~mm. The insertion is mapped first from the tibia $\theta_1$ frame into the knee-ICR frame and then into the femur frame at each knee angle. These endpoints also seed the later two-BPA redesign, with $l_0=415$~mm and a 25~mm design tendon parameter. The redesigned flexor route adds a moving tibial wrap point on a standoff surface of radius \texttt{bpaRb}, with its $z$ coordinate on the projected origin--insertion line. The extensor seed route and contact-release schedule are given in Table~\ref{tab:app_ext_seed}.
 
 The biomimetic-knee evaluator inputs are listed in Tables~\ref{tab:app_flxbio_tests} and~\ref{tab:app_extbio_tests}. These tables report the saved model dimensions loaded by \texttt{minimizeFlx} and \texttt{minimizeExt}; the laboratory test names are nominal labels. The reduced-pressure flexor row identifies the reference model used with the separate pressure measurements.
 
@@ -108,11 +108,11 @@ The biomimetic-knee evaluator inputs are listed in Tables~\ref{tab:app_flxbio_te
 \label{tab:app_flxbio_tests}
 \begin{tabular}{lrrrrr}
 \toprule
-Model & Diameter (mm) & $l_0$ (mm) & Tendon (mm) & $P$ (kPa) & $F_m$ (N) \\
+Model & Diameter (m) & $l_0$ (m) & Tendon (m) & $P$ (kPa) & $F_m$ (N) \\
 \midrule
-10 mm & 10 & 415.0 & 11.0 & 603.5 & 437.8 \\
-20 mm, full pressure & 20 & 415.0 & 14.0 & 620.0 & 1302.9 \\
-20 mm, reduced pressure & 20 & 415.0 & 14.0 & 325.0 & 1302.9 \\
+10 mm & 0.010 & 0.4150 & 0.0110 & 603.5 & 437.8 \\
+20 mm, full pressure & 0.020 & 0.4150 & 0.0140 & 620.0 & 1302.9 \\
+20 mm, reduced pressure & 0.020 & 0.4150 & 0.0140 & 325.0 & 1302.9 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -123,9 +123,9 @@ Model & Diameter (mm) & $l_0$ (mm) & Tendon (mm) & $P$ (kPa) & $F_m$ (N) \\
 \label{tab:app_extbio_tests}
 \begin{tabular}{lrrrrr}
 \toprule
-Model & Diameter (mm) & $l_0$ (mm) & Tendon (mm) & $P$ (kPa) & $F_m$ (N) \\
+Model & Diameter (m) & $l_0$ (m) & Tendon (m) & $P$ (kPa) & $F_m$ (N) \\
 \midrule
-10 mm extensor & 10 & 520.0 & 38.0 & 596.4 & 445.7 \\
+10 mm extensor & 0.010 & 0.5200 & 0.0380 & 596.4 & 445.7 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -148,7 +148,15 @@ Extensor 2 & 826 & 85 \\
 
 \FloatBarrier
 
-The prediction inputs are distinct from the measured dimensions in Table~\ref{tab:final_test_dimensions}. The flexor predictions retain a shared optimized resting length of 561.49 mm and an effective tendon length of 5.00 mm, obtained from the 25 mm route parameter less a 20 mm fitting adjustment; the physical-test plot uses the nominal 562 mm resting-length label. The extensor predictions retain a shared resting length of 827.74 mm and the approximate 92.49 mm tendon parameter. The reported physical-test comparisons use these original prediction inputs; the measured dimensions above do not constitute a new model evaluation.
+The prediction inputs are distinct from the per-actuator measurements in Table~\ref{tab:final_test_dimensions}. The flexor predictions use a shared resting length of 561.49 mm, with the nominal 562 mm label retained on the physical-test plot. The saved route tendon parameter and the effective prediction input are related by
+\begin{equation}
+\begin{aligned}
+l_{\mathrm{ten,model}} &= l_{\mathrm{ten,design}}-\qty{20}{\mm}=\qty{5}{\mm},\\
+l_{m,\mathrm{geom}}(\theta) &= L_{\mathrm{route}}(\theta)-l_{\mathrm{ten,model}}-2l_{\mathrm{fitting}}.
+\end{aligned}
+\label{eq:app_flexor_tendon_inputs}
+\end{equation}
+Here $l_{\mathrm{ten,design}}=\qty{25}{\mm}$ is the route parameter and $L_{\mathrm{route}}$ is the total routed length. The geometric BPA length $l_{m,\mathrm{geom}}$ precedes the offset, compliance, and wrapping corrections. The \qty{20}{\mm} input adjustment is distinct from the \qty{21}{\mm} end-fitting length $l_{\mathrm{fitting}}$ subtracted at each end. The measured cable lengths in Table~\ref{tab:final_test_dimensions} are hardware dimensions, not replacements for this shared effective prediction input. The extensor predictions retain the shared resting length of 827.74 mm and approximate 92.49 mm tendon parameter. These original prediction inputs are retained; no new evaluation with the measured dimensions is implied.
 
 \section{Joint Transformation Matrices}
 
@@ -183,7 +191,7 @@ and the bracket-frame pose is
     \mathbf{T}_{kbr} = \left[\mathbf{R}_{kbr},\; \mathbf{p}_{br};\; \mathbf{0}\;\,1\right],
     \label{eq:app_bracketframe}
 \end{equation}
-The frame's $x$ axis follows the nominal load path, with angles calculated from the bracket geometry. The adopted pinned-flexor result is row 77 of \nolinkurl{minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat}: both brackets use the two-rotation construction of Equation~\eqref{eq:app_bracketframe}. The pinned extensor also uses this construction. Forces are transformed into each bracket frame, and displaced attachment points are transformed back into the limb frame. The symmetric insertion stiffness array makes its compliance invariant to the additional rotation; the origin array does not have that invariance (Table~\ref{tab:app_stiffness_arrays}).
+The frame's $x$ axis follows the nominal load path, with angles calculated from the bracket geometry. Both brackets in the pinned-flexor model and the pinned extensor use the two-rotation construction of Equation~\eqref{eq:app_bracketframe}. Forces are transformed into each bracket frame, and displaced attachment points are transformed back into the limb frame. The symmetric insertion stiffness array is invariant to the additional rotation; the origin array is not (Table~\ref{tab:app_stiffness_arrays}).
 
 \begin{table}[htbp]
 \caption{Bracket reference points (mm, as coded; divided by 1000 in code). All are author-set CAD interpretation points; frame denotes the frame the vector is expressed in.}
@@ -204,27 +212,22 @@ Pbr  & $-19.00$ & 22.00 & 27.60 & biomimetic flexor 10\,mm, cantilever centroid 
 
 \section{Stiffness Arrays and Compliance}
 
-Every configuration models bracket compliance as a diagonal Hooke-law spring in the bracket frame, $\mathbf{K}_{br} = \operatorname{diag}(k_{1}, k_{2}, k_{3})$ newtons per meter. The scalar compliance along the force path and its series combinations are
-\begin{equation}
-    c_{b} = \hat{\mathbf{u}}^{\top}\mathbf{K}_{br}^{-1}\hat{\mathbf{u}},
-    \qquad
-    c_{\text{eff}} = c_{b} + c_{\text{ten}} \;(+\,c_{b2}\ \text{for the second bracket}),
-    \label{eq:app_compliance}
-\end{equation}
-exactly as in Equations~(\ref{eq:bktstiffness})--(\ref{eq:keff}); when an artificial tendon is present its axial spring ($\times2$ cables, effective steel area $1.51\times10^{-6}$~m$^{2}$, $E = 193$~GPa) adds in series, and the force balance of Equation~\eqref{eq:complianceforcebalance} is solved per frame by \texttt{fzero} on the contraction interval [Provenance: stiffness arrays: \nolinkurl{minimizeFlxPin.m} lines 387 and 400; \nolinkurl{minimizeExtX3.m} lines 575--584; \nolinkurl{minimizeExt.m} line 352; \nolinkurl{minimizeFlx.m} line 314. \texttt{fzero} force balance: \nolinkurl{minimizeFlxPin.m} line 438; \nolinkurl{minimizeExtX3.m} line 611; \nolinkurl{minimizeExt.m} line 389; \nolinkurl{minimizeFlx.m} line 352]. The per-configuration stiffness arrays and their series combinations are given in Table~\ref{tab:app_stiffness_arrays}.
+Every configuration models bracket compliance as a diagonal Hooke-law spring in the bracket frame, $\mathbf{K}_{br} = \operatorname{diag}(k_{1}, k_{2}, k_{3})$ newtons per meter. The force-path projection and series combination of the compliances are defined in Chapter~\ref{ch:torque}, Equations~\eqref{eq:bktstiffness}--\eqref{eq:keff}.
 
-Table~\ref{tab:app_stiffness_arrays} lists bracket stiffness arrays by configuration ($K = [k_{1}, k_{2}, k_{3}]$ in bracket-frame axes, N/m; optimizer solves $X_{1}, X_{2}$ assigned as shown), as executed by the evaluators of record. The flexor evaluator has no frame switch: both brackets use the pitch-only assembly (see the Bracket Reference Points and Frames section above). The pinned-extensor evaluator carries a \texttt{transMode} argument (default \texttt{2trans}, env \texttt{EXTX3\_TRANS}); its axis assignment was revised by the author, with the previous assignment kept commented in the file.
+When an artificial tendon is present, its axial spring ($\times2$ cables, effective steel area $1.51\times10^{-6}$~m$^2$, $E=193$~GPa) adds in series. The force balance of Equation~\eqref{eq:complianceforcebalance} is solved at each pose by \texttt{fzero} on the contraction interval. Table~\ref{tab:app_stiffness_arrays} gives the configuration-specific stiffness arrays.
+
+Table~\ref{tab:app_stiffness_arrays} assigns the fitted variables $X_1$ and $X_2$ to the bracket-frame axes, in N/m. The two pinned-flexor bracket frames follow Equation~\eqref{eq:app_bracketframe}; the final column identifies the stiffness-array assignments in the source, rather than a separate frame convention.
 
 \begin{table}[htbp]
 \caption{Bracket-frame stiffness arrays by configuration, in N/m. The fitted variables $X_1$ and $X_2$ are assigned to the axes shown.}
 \label{tab:app_stiffness_arrays}
 \begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.22\textwidth}X@{}}
 \toprule
-\textbf{Configuration} & $\boldsymbol{K}$ array & \textbf{Source} \\
+\textbf{Configuration} & $\boldsymbol{K}$ array & \textbf{Stiffness-array source} \\
 \midrule
 Pinned flexor, single bracket (legacy)       & $[X_{1},\,X_{2},\,X_{1}]$ & \nolinkurl{minimizeFlxPinX3.m} line 267 \\
-Pinned flexor, insertion bracket (pitch-only frame)    & $[X_{1},\,X_{2},\,X_{1}]$ & \nolinkurl{minimizeFlxPin.m} line 387 (frame line 289) \\
-Pinned flexor, origin bracket (pitch-only frame) & $[X_{1},\,X_{1},\,X_{2}]$ & \nolinkurl{minimizeFlxPin.m} line 400 (frame line 305) \\
+Pinned flexor, insertion bracket (two-rotation frame)    & $[X_{1},\,X_{2},\,X_{1}]$ & \nolinkurl{minimizeFlxPin.m} line 387 \\
+Pinned flexor, origin bracket (two-rotation frame) & $[X_{1},\,X_{1},\,X_{2}]$ & \nolinkurl{minimizeFlxPin.m} line 400 \\
 Pinned extensor, 2trans (with $X_{3}$)      & $[X_{1},\,X_{2},\,X_{2}]$ & \nolinkurl{minimizeExtX3.m} line 575 \\
 Biomimetic extensor                 & $[X_{1},\,X_{2},\,X_{1}]$ & \nolinkurl{minimizeExt.m} line 352 \\
 Biomimetic flexor                   & $[X_{1},\,X_{2},\,X_{2}]$ & \nolinkurl{minimizeFlx.m} line 314 \\
@@ -259,7 +262,7 @@ Extensor refit & $x_0$ & $[-2,0.5]$ & $\chi_0=10x_0\in[-20,5]$ mm \\
 
 The adopted correction terms are listed in Table~\ref{tab:AdoptedXi}. The flexor uses row 77 of \texttt{filtered\_results} in \nolinkurl{minimizeFlxPin10_results.mat}; the extensor uses row 32 in \nolinkurl{minimizeExt10mmX3_results.mat}. The extensor identification holds $(\chi_1,\chi_2)$ at the flexor values and solves $(\chi_0,\chi_3)$, preserving one effective stiffness pair across both configurations.
 
-Tables~\ref{tab:app_gof} and~\ref{tab:app_gof_ext_all} report every recorded pinned-knee test before and after applying the adopted corrections. ``Before'' uses the characterized BPA force model with zero length and wrapping corrections and rigid attachments; ``after'' uses the adopted correction terms. Both predictions use the same measured angles and test inputs. RMSE and maximum absolute residual have units of N\,m, and FVU is dimensionless. The sample-size convention for FVU is given in Section~\ref{sec:app_torque_fit_details}.
+Tables~\ref{tab:app_gof} and~\ref{tab:app_gof_ext_all} report every recorded pinned-knee test before and after applying the adopted corrections. ``Before'' uses the characterized BPA force model with zero length and wrapping corrections and rigid attachments; ``after'' uses the adopted correction terms. Both predictions use the same measured angles and test inputs. RMSE and maximum absolute residual have units of N\,m, and FVU is dimensionless. The sample-size convention for FVU is given in Chapter~\ref{ch:torque}, Equation~\eqref{eq:gof_fvu}.
 
 The adopted flexor identification uses tests 1 and 5 for training and tests 2 and 4 for validation. Test 3 (47\,cm) was not used in identification. The extensor identification uses tests 5, 6, and 7 for training and tests 1, 2, and 8 for validation. Tests 3, 4, and 9 (42\,cm, 42\,cm with tendon, and 48\,cm) were excluded from identification. Results for unused tests are retrospective predictions, not held-out validation results.
 
@@ -307,7 +310,7 @@ Test & Use & RMSE & FVU & Max. & RMSE & FVU & Max. \\
 
 The adopted corrections reduce all three errors on every test used in identification. The unused 48\,cm extensor test has larger errors after correction, as shown in Table~\ref{tab:app_gof_ext_all}. The 43\,cm-tendon extensor test retains an FVU above unity despite improvement over its baseline.
 
-The values were evaluated with \nolinkurl{minimizeFlxPin.m} and \nolinkurl{minimizeExtX3.m}. On the biomimetic extensor test ($l_0=\qty{51.8}{\cm}$), the shared adopted terms give RMSE \qty{1.17}{\N\m}, FVU 0.67, and maximum residual \qty{2.21}{\N\m}, compared with the rigid-model values \qty{3.03}{\N\m}, 4.49, and \qty{5.59}{\N\m}. Table~\ref{tab:TorqueFit} collects the biomimetic comparisons at the adopted terms.
+The values were evaluated with \nolinkurl{minimizeFlxPin.m} and \nolinkurl{minimizeExtX3.m}. On the biomimetic extensor test ($l_0=\qty{51.8}{\cm}$), the shared adopted terms give RMSE \qty{1.17}{\N\m}, FVU 0.67, and maximum residual \qty{2.21}{\N\m}, compared with the rigid-model values \qty{3.03}{\N\m}, 4.49, and \qty{5.59}{\N\m}. Table~\ref{tab:BioTorqueGof} in Chapter~\ref{ch:torque} collects the biomimetic comparisons at the adopted terms.
 
 \section{Redesigned Extensor Route Geometry}\label{app:route_geometry}
 
@@ -386,11 +389,15 @@ is the bend signal handed to the force model. Each family's turn angle $\alpha_{
 
 The transmission studies extend the route search by allowing an artificial tendon to pass through a tackle before insertion. A redirect changes the force direction; a multi-part tackle also changes the relation between actuator travel and insertion force. The comparisons below re-solve actuator sizes for each transmission configuration and evaluate insertion-side torque against the same human reference. They remain model predictions; physical tests of the redesigned flexor and cam extensor are reported in Section~\ref{sec:redesign_physical}.
 
-The robot-body model itself carries one update from this work. The adductor magnus attachment point P2 was restored to its full-precision location $(-0.1357, -0.0929, 0.0591)$~m, displacing a rounded copy that was disqualified for producing a zero-length via point that nullified the flexion torque; the regenerated mirrored model passed its validation with zero non-mirrored pairs. At the restored location, the muscle delivers \qty{34.28}{\newton\meter} of flexion torque, $1.12\times$ the human target of \qty{30.61}{\newton\meter}, and \qty{27.62}{\newton\meter} of adduction torque, $0.82\times$ the human target of \qty{33.60}{\newton\meter}. These redesigned routes remain optimizer-stage results: the robot-body OpenSim model contains no pulley entities, and no via points or markers were added to it for these routes (its eight pre-existing moving-path-point vias, the rectus-femoris and vastii patella-tracking points, one per muscle per leg, belong to the original muscle paths). The MuJoCo conversion used for the simulation work predates the pulley batch and the adductor-magnus restoration, so it carries one stale path point, the pre-restoration rounded adductor-magnus P2. Physical torque tests of the redesigned routes are reported in Section~\ref{sec:redesign_physical}.
+For the knee-flexor route, the pulley variant converged to a collision-feasible layout with zero bound violations and a peak predicted flexion torque of \qty{85.56}{\newton\meter} on the insertion-side measure, the torque applied at the insertion after the tackle's force loss. At unity transmission, the knee-flexor pulley route increased peak predicted knee-axis torque from \qty{81.23}{\newton\meter} to \qty{85.74}{\newton\meter}, while limiting off-axis torque to \qty{0.803}{\newton\meter}. This comparison measures the effect of the two optimized routing configurations; their different objective functions do not isolate the pulley alone. The pulley serves as a redirect in this configuration rather than a force multiplier.
 
-The same redesign pipeline was then extended from the knee to all 27 muscle-actuators of the robot-body model, and this whole-body extension is reported as work in progress rather than a completed result. The first pass reached 19 of the 27 actuators before the run stopped, and its chosen solutions showed that the penalty-based formulation itself was the binding limitation: all but one of the chosen routes violated the feasibility constraints, the sole exception being the biceps femoris long-head pair, whose worst-angle margin of $+0.03\,\%$ is indistinguishable from zero. The formulation was then restructured so that the task envelope, the joint-angle window each route must serve, acts as a hard feasible set rather than a penalty. In the restructured pass, twelve of the 27 actuators terminated on a concatenation error in the route builder (the three lumbar-wall actuators, tibialis posterior, the seven distal-foot actuators, and adductor magnus), leaving fifteen finalized routes. Eight of the fifteen were chosen from constraint-feasible configurations: semimembranosus, biceps femoris long head, tensor fasciae latae, soleus, lateral gastrocnemius, tibialis anterior, iliacus, and psoas. Of those eight, six also met the torque requirement at every angle, with worst-angle margins spanning $+0.25\,\%$ (biceps femoris long head) to $+250.7\,\%$ (tensor fasciae latae); the semimembranosus and soleus routes satisfy the geometry but remain short of their torque targets. The crash set and the two torque-short feasible routes define the remaining engineering: the route builder needs a fix for the concatenation failure, and the short routes need either larger actuators or relaxed corridors.
+The robot-body model includes an adductor magnus attachment update to $\mathbf{P}_2=(-0.1357,-0.0929,0.0591)$~m. At this location, the model delivers \qty{34.28}{\newton\meter} of flexion torque, $1.12\times$ the human target of \qty{30.61}{\newton\meter}, and \qty{27.62}{\newton\meter} of adduction torque, $0.82\times$ the human target of \qty{33.60}{\newton\meter}. The OpenSim model retains its eight original moving-path-point vias for rectus-femoris and vastii patella tracking; the candidate pulley routes were not added to those paths, and the model contains no pulley entities. The MuJoCo conversion used for the simulation work predates this attachment update and the pulley batch. Physical tests of the redesigned knee routes are reported in Section~\ref{sec:redesign_physical}.
 
-The unadjusted cam optimizer solution had minimum margins of $+31.30$\,\% against the required envelope and $+42.34$\,\% against the plain human target; the adjusted design used in Chapter~\ref{ch:torque} has margins of $+30.83$\,\% and $+39.77$\,\%, respectively.
+The attachment-route redesign was extended separately from the knee to all 27 muscle-actuators of the robot-body model and remains work in progress. The first pass reached 19 actuators. All but one selected route violated the feasibility constraints; the exception was the biceps femoris long-head pair, with a worst-angle margin of $+0.03\,\%$. The formulation was then restructured to enforce each route's joint-angle task envelope as a hard feasible set rather than a penalty.
+
+The restructured pass encountered a route-builder concatenation error for twelve actuators, leaving fifteen finalized routes. Eight were constraint-feasible: semimembranosus, biceps femoris long head, tensor fasciae latae, soleus, lateral gastrocnemius, tibialis anterior, iliacus, and psoas. Six also met the torque requirement at every angle, with worst-angle margins from $+0.25\,\%$ for biceps femoris long head to $+250.7\,\%$ for tensor fasciae latae. Semimembranosus and soleus satisfied the geometry but remained below their torque targets. Completing the extension requires the route-builder repair and sufficient actuator capacity or relaxed routing corridors for these two routes.
+
+The unadjusted cam optimizer solution had $s_{\mathrm{req}}=+31.30$\,\% and $m_h=+42.34$\,\%; the adjusted design in Chapter~\ref{ch:torque} has $+30.83$\,\% and $+39.77$\,\%, respectively. Equation~\eqref{eq:cam_summary_definitions} distinguishes surplus normalized by peak human torque from the pointwise human-reference margin.
 
 Figure~\ref{fig:PulleySurfaces} shows predicted insertion-torque magnitude versus joint angle and supply pressure for two BPAs through a two-part tackle (force gain 1, travel gain 2), with actuator sizes re-solved. Panels show soleus, tibialis anterior, biceps femoris short head (BFSH), medial gastrocnemius with ankle fixed at zero, and rectus femoris evaluated at the hip. Dashed curves mark equality with the maximum-isometric OpenSim requirement; no equality curve lies within the soleus panel.
 
@@ -424,38 +431,13 @@ Figure~\ref{fig:PulleySurfaces} shows predicted insertion-torque magnitude versu
 \end{figure}
 \clearpage
 
-\section{Supporting Torque-Prediction Fit Statistics}\label{sec:app_torque_fit_details}
+\section{Master's Robot Model: Joint Coordinates and Actuator Sizes}
 
-\subsection{Goodness-of-Fit Metrics}
-The MATLAB torque-fit comparisons use the shared routine \nolinkurl{Functions/Go_OfF.m}: the root-mean-square error $\mathrm{RMSE} = \sqrt{\tfrac{1}{n}\sum_{i}(y_{i}-\hat{y}_{i})^{2}}$, the adjusted fraction of variance unexplained $\mathrm{FVU} = \tfrac{n-1}{n}\,\sum_{i}(y_{i}-\hat{y}_{i})^{2} \,/\, \sum_{i}(y_{i}-\bar{y})^{2}$ (a sample-size-scaled residual ratio, distinct from the conventional $1-R^2=\mathrm{SSE}/\mathrm{SST}$), and the maximum absolute residual $\max_i |y_{i}-\hat{y}_{i}|$ (\nolinkurl{Go_OfF.m} lines 45--52). Lower is better for all three, which makes the triplet directly usable inside optimization objectives.
-
-
-Table~\ref{tab:TorqueFit} reports the biomimetic-knee comparisons at the adopted shared stiffness pair, with the configuration-specific length and wrapping terms defined in Chapter~\ref{ch:torque}. The complete pinned-knee results are given in Tables~\ref{tab:app_gof} and~\ref{tab:app_gof_ext_all}.
-
-\begin{table}[htbp]
-\centering\small
-\caption{Biomimetic-knee goodness of fit before and after design-parameter optimization. RMSE and maximum absolute residual (Max.) are in $\mathrm{N\,m}$; FVU is dimensionless.}
-\label{tab:TorqueFit}
-\begin{tabular}{@{}lrrrrrr@{}}
-\toprule
- & \multicolumn{3}{c}{\textbf{Improved BPA}} & \multicolumn{3}{c}{\textbf{Optimized model}} \\
-\cmidrule(lr){2-4}\cmidrule(l){5-7}
-\textbf{Configuration} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
-\midrule
-Extensor, $\diameter\qty{10}{\mm}$ & 3.0322 & 4.4856 & 5.5870 & 1.1702 & 0.6681 & 2.2088 \\
-Flexor, $\diameter\qty{10}{\mm}$ & 7.4513 & 5.5612 & 13.3163 & 2.8002 & 0.8835 & 4.1201 \\
-Flexor, $\diameter\qty{20}{\mm}$ & 14.8064 & 3.3672 & 23.7218 & 2.2070 & 0.0748 & 3.7320 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\section{Configuration-Survey Coordinates and Actuator Sizes}
-
-The two coordinate columns of Table~\ref{tab:survey_dofs_sizes} define the graded surface, rather than every joint crossed by a multiarticular route. Other baseline sites use one actuator of the listed diameter.
+This comparison extends the 27 actuator sites of my master's robot-leg model \citep{bolen_determination_2019}. Table~\ref{tab:survey_dofs_sizes} lists the two joint coordinates evaluated at each site and the nominal BPA sizes. The evaluated RoM is the joint-coordinate domain sampled on the $5\times5$ grid used to compare each route with its same-named human-muscle reference; a route may cross additional joints beyond the two evaluated coordinates. At matched pressure, braid geometry, and relative contraction, ideal BPA force scales with diameter squared \citep{chou_measurement_1996}, so four parallel \qty{20}{\mm} BPAs have the same theoretical maximum force as one \qty{40}{\mm} BPA. The baseline uses this substitution at the nominal \qty{40}{\mm} sites and one actuator of the listed diameter at the other sites.
 
 \begin{table}[p]
 \centering
-\caption{Graded coordinates and nominal BPA sizes for the 27-site survey. At nominal \qty{40}{\mm} sites, the baseline uses four parallel \qty{20}{\mm} BPAs; the updated configurations retain the inherited diameter.}
+\caption{Joint coordinates and nominal BPA sizes for the 27-site comparison of my master's robot-leg model. At nominal \qty{40}{\mm} sites, the baseline uses four parallel \qty{20}{\mm} BPAs; the updated configurations retain the inherited diameter.}
 \label{tab:survey_dofs_sizes}
 \begingroup\small\renewcommand{\arraystretch}{1.1}
 \begin{tabular}{@{}lllll@{}}
@@ -497,7 +479,7 @@ psoas\_r & hip flex. & hip add. & 20 & 1$\times$20 \\
 
 \subsection{Torque and Active-Force Coverage}
 
-Table~\ref{tab:capability_by_site} expands the means reported in Table~\ref{tab:CapabilitySurvey}. Torque coverage requires the reference torque direction and magnitude; active-force coverage requires positive insertion tension. Both exclude cells outside the graded domain, and slack or infeasible configurations do not count as active.
+Table~\ref{tab:capability_by_site} expands the means reported in Table~\ref{tab:CapabilitySurvey}. Torque coverage requires the reference torque direction and magnitude; active-force coverage requires positive insertion tension. Both exclude cells outside the evaluated joint-coordinate domain, and slack or infeasible configurations do not count as active.
 
 \begin{table}[p]
 \centering\small

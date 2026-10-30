@@ -9,20 +9,15 @@ The application contains 1,393 records from the five-table base: 943 Papers, 247
 
 Coverage of the application's Papers category is reported in Chapter~\ref{ch:database}: among its 943 entries, 833 have curation notes, 606 preparation tags, 316 animal-study assessments, 119 pathway links, 95 afferent classifications, 363 robot/simulation translation notes, 892 DOIs, and 318 attached-PDF indicators. The following retained-set counts describe the maintenance subset only and use a different denominator.
 
-Among the 561 retained papers, 523 carry curation notes, 426 preparation tags, 240 notes assessing animal-study potential, 118 links to named feedback pathways, 86 an afferent classification, and 258 robot/simulation translation notes. There are 550 DOIs; 38 records remain without grounding text. These fields overlap and should not be summed as disjoint categories.
+Among the 561 retained papers, 523 carry curation notes, 426 preparation tags, 240 notes assessing animal-study potential, 118 links to named feedback pathways, 86 an afferent classification, and 258 robot/simulation translation notes. There are 550 DOIs. These fields overlap and should not be summed as disjoint categories.
 
 The citation graph covers the 943-paper audit: 730 connected papers, 11,130 directed in-corpus citation pairs, and 18 Louvain groups. Citation proximity is a navigation aid, not mechanistic evidence. Chapter~\ref{ch:database} shows the citation view (Figure~\ref{fig:sadb_clusters}); Figure~\ref{fig:sadb_explorer} shows the paper table.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{sadb_explorer.png}
-\caption[The SADb Explorer]{SADb Explorer paper-table view. Searches and filters expose bibliographic information, curation notes, preparation tags, and afferent or pathway links. The embedded corpus is available offline.}
-\label{fig:sadb_explorer}
-\end{figure}
+
 
 \section{Afferent Classes and Linked Pathways}
 
-The tables reproduce the curated signal summaries and representative linked pathways. Their record names are database labels; pathway action depends on the experimental preparation and locomotor state described in the cited sources. Translating these records into a controller requires an explicit encoding and verification step.
+Table~\ref{tab:sadb_afferents} summarizes the afferent classes, receptors, and signals available as candidate model inputs. Table~\ref{tab:sadb_pathways} connects representative feedback pathways to their reported actions in the step cycle and the linked studies. Their record names are database labels; pathway action depends on the experimental preparation and locomotor state described in the cited sources. Translating these records into a controller requires an explicit encoding and verification step.
 
 \begin{table}[htbp]
 \caption{Afferent classes, encoded signals, and pathway roles represented in the Sensory Afferent Database. References link to corpus records; Ia, II, and Ib signal summaries follow \citet{prochazka_ensemble_1998}.}

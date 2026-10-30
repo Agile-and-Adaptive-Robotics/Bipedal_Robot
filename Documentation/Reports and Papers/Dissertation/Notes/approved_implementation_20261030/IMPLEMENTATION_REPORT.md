@@ -1,0 +1,76 @@
+# Implemented corrections — 30 October 2026
+
+This is the local implementation of Ben’s written corrections. Additional approval marks in the open PDF could not be recovered: the saved reports contain no PDF annotations, and Document Control exposes no connected session. Unmarked audit proposals, including Chapter 2 proposals, were not treated as approved. This report supersedes intermediate “pending compile” and partial-U23 notes within this implementation folder. The earlier audit PDFs and source snapshots are unchanged.
+
+Final verified local builds: dissertation **303 pages**, paper **32 pages**, supplement **10 pages**. All compile with zero errors, undefined references, or duplicate labels. Existing class/font/box warnings remain; this is not a zero-warning claim. Overleaf has not been uploaded, and no comments/tracked changes were accepted, rejected, or resolved. No commit or push.
+
+The scientific results, fitted parameters, data arrays, and saved result files are conserved. No model, fit, optimization, or simulation was rerun. Display-unit changes, recovered diagnostic angles, and deletions/relocations are explicitly listed below.
+
+A/D4/D5/D7/C are dissertation abstract/Chapters 4/5/7/AppendixC; P/S are paper/supplement. Links give current source line numbers. Numbers and labels in the descriptions use the final build, with former numbers identified where changed.
+
+| Instruction | Status | Fix / verification | Current source |
+|---|---|---|---|
+| U01 | Implemented | Removed the former supplementary fit Table S1 and its references; retained essential common-domain comparison and counts. | [P:413](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:413>) |
+| U02 | Implemented | Removed the unused 42-cm slippage photograph, callouts, inventory entry, and photo-dependent ±20-mm sentence. | [P:541](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:541>) |
+| U03 | Implemented | Removed the duplicate goodness-of-fit Table C13; retained all 18 statistics in Chapter 4 Table 4.8. | [D4:624](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:624>) |
+| U04 | Implemented | Removed repeated former C.9.1 metric definitions and empty container; existing chapter definitions remain. | [C:305](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/94-AppendixC.tex:305>) |
+| U05 | Implemented | Plain-language master’s-model section and explicit Bolen (2019) attribution; former Table C14 is now C13, and former C.10 is C.9. | [C:431](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/94-AppendixC.tex:431>) |
+| U06 | Implemented | Replaced the “must see beyond” segue with direct scientific wording, including the existing 27-site model result. | [P:101](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:101>) |
+| U07 | Implemented | 171-word abstract fits one page with unchanged formatting and the original ethical opening. | [A:7](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/02-abstract.tex:7>) |
+| U08 | Implemented | Replaced the paper schematic with the crossed-link, two-BPA biomimetic knee. | [P:633](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:633>) |
+| U09 | Implemented | Moved pulley explanation after the meet/exceed physical evidence. | [P:621](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:621>) |
+| U10 | Already satisfied | Morrow (2020) cost is not reproduced; concise attribution retained. | [P:97](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:97>) |
+| U11 | Implemented | Removed biomimetic-extensor hybrid series and associated legend/caption/discussion. Current paper Figure11 has no hybrid; unrelated pinned-knee evidence remains. | [P:498](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:498>) |
+| U12 | Implemented | Shortened paper §4.3.1; added a compact capacity table and moved unique geometry/objectives to the supplement. | [S:177](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/frontiers_SupplementaryMaterial.tex:177>) |
+| U13 | Implemented | Paper§4.3.2 opens with the all-nine/all-fifteen measured outcomes, then shows the evidence. | [P:600](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:600>) |
+| U14 | Implemented | Paper§4.4 contains the single new schematic and concise force/travel explanation; current Figure13. | [P:621](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:621>) |
+| U15 | Implemented | “Cam-assisted extensor route”; matched 10.2 pt final panel fonts and line widths. Both panels draw predictions before measurements, with nominal 0.75 fill and no edges; panel B serializes this as 0.74902 in the MATLAB PDF. Former Figure13 is now Figure12. | [P:602](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Main.tex:602>) |
+| U16 | Implemented | Recovered the executed saved search objective and winner rule; supplied exact supplementary equation/term table. No optimization rerun. | [S:244](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/frontiers_SupplementaryMaterial.tex:244>) |
+| U17 | Implemented | Retained origin-reaction label uses F_R; removed mount-reaction arrow/label. | [D4:763](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:763>) |
+| U18 | Implemented | Converted 12 dimension cells in C5/C6 from millimeters to meters; pressure, force, and nominal product names retained. C7 measured dimensions unchanged. | [C:108](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/94-AppendixC.tex:108>) |
+| U19 | Implemented | Removed repeated C.4 compliance display and used chapter references; unique stiffness arrays/bounds/frame descriptions remain. | [C:205](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/94-AppendixC.tex:205>) |
+| U20 | Implemented | FLEX and EXT weights display on separate lines in Table 4.3; values unchanged. | [D4:425](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:425>) |
+| U21 | Implemented | Constrained Knee-Route Redesign is numbered §4.1.6; dense method tail shortened without changing budgets or results. | [D4:374](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:374>) |
+| U22 | Implemented | Figure 4.10 actual vector PDF has a vertical, model-first legend inside the northeast of B; photo and panel label are clear. | [D4:600](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:600>) |
+| U23 | Implemented | Table 4.10 reports achieved 5.02%/5.01% versus required 5%; both use plain human torque. Saved flexor worst angle is −106.9°, extensor −20.2°. Human-reference row relabeled without changing its numbers. | [D4:683](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:683>) |
+| U24 | Implemented | Distinguished Ben’s approximately 200-kPa manifold experience from the saved 150-kPa model floor and explained its nonzero minimum-torque implication. | [D4:731](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:731>) |
+| U25 | Already satisfied | Dissertation Figure 4.14 already has prediction-first paint order, nominal0.75 fill, and no marker edges. Original asset retained. | [D4:752](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:752>) |
+| U26 | Implemented | Removed R_mount derivation/discussion; two concise pulley paragraphs with text equations, RoM, total 2F20, and “Example of…” caption. Unique saved outputs moved to C.8. | [D4:755](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:755>) |
+| U27 | Implemented | Briefly defined joint-coordinate grid sampling/coverage and replaced unexplained “graded” terminology in the whole-leg comparison. | [D4:776](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:776>) |
+| U28 | Implemented | Stated ideal diameter-squared scaling: four 20-mm BPAs equal one 40-mm BPA under matched pressure, braid geometry, and contraction. | [D4:776](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/30-torque.tex:776>) |
+| U29 | Implemented | Cropped Figure 5.2 bottom whitespace, retaining the last Nociceptive row and all displayed cells. | [D5:44](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/50-database.tex:44>) |
+| U30 | Implemented | Moved future improvements to Chapter 7; retained Chapter 5’s segue. Local float/widow controls preserve paragraph flow. | [D7:59](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/70-overall.tex:59>) |
+| U31 | Implemented | Described the monthly literature watch as built, with manual curation; did not claim its scheduling command is installed. | [D5:26](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/50-database.tex:26>) |
+| U32a | Partial | Moved the six-callout Bubble map forward and placed the cropped Pivot near its paragraph. Genuine relevant Table-tab capture remains pending after browser policy rejection. | [D5:14](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/50-database.tex:14>) |
+| U32b | Unverified live scope | All 42 saved advisor cards remain dispositioned in the previous crosswalk; present-day live completeness and uncertain4.1/5.25 anchors are not certified. No comment thread was resolved in this pass. | [D5:1](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/50-database.tex:1>) |
+| New Chapter 5 correction | Implemented | Replaced preparation wording with animal studies/appropriate animal-and-human-study wording; reuse supports reducing further animal experimentation, consistent with the ethics section. AI comparison paragraph is exact. | [D5:66](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/50-database.tex:66>) |
+
+## Numerical and deletion record
+
+- C5/C6: 12 exact mm-to-m display conversions; the conversion ledger is APPENDIX_C_IMPLEMENTATION_LEDGER.md. Measured dimensions in C7 are unchanged.
+- Direct-route angles/margins came from saved MAT diagnostics: flexor −106.8686867°→−106.9°; extensor −20.2020200°→−20.2°. Achieved margins 5.0068731% and 5.0249282% display as 5.01% and 5.02%, respectively. Required allowance remains 5%. See U23_MARGIN_AND_ANGLE_PROVENANCE.md.
+- The historical100-mm proximal-origin allowance anecdote was removed from the shortened method tail; original text remains in the baseline/diff. No model geometry was changed. The photo-dependent±20-mm sentence was removed with the excluded-test photograph. The former S1 and duplicate C13 data remain archived; authoritative retained main tables and necessary common-domain counts remain.
+- Unique 85.56-Nm insertion-side peak,81.23→85.74-Nm knee-axis peak, and 0.803-Nm off-axis output were relocated to AppendixC, with their different definitions kept separate.
+- The abstract adds no new result: 15 flexor/nine extensor test points and 1,393 records already appear in the chapters. The approximately 200-kPa statement is explicitly Ben’s operating experience; it does not replace the saved 150-kPa model assumption.
+
+## Verification and delivery
+
+Independent dissertation source gate: 27/27 checks. It conserves published Chapter 3 and all eight graphic assets, bibliographies, adopted scientific tables/equations, and saved fitting MAT files. Sixteen original target pages plus the final two widow-fix pages were checked at readable size. All 303 r4 dissertation pages were rendered; contacts 1–160 were checked by the SADb reviewer and 161–303 by the lead. Final r5 was rendered and compared across all 303 pages: 301 are pixel-identical to r4, and only 115–116 changed after a local widow fix; both were visually checked. This scan checks layout, not a second scientific audit of unchanged chapters. Inherited hyperlink borders and four Poppler font/dash warnings are recorded separately from the clean TeX build status.
+
+The paper reviewer inspected every main/supplement page, then checked all final changed pages and confirmed the other pages match the inspected version. Final r4 changed only pages 26–29 after shortening the shared schematic caption; all four were visually checked, with the other 28 main pages and all 10 supplement pages matching r3. The actual vector-PDF legend was rechecked after a stale-layout export was caught. The extensor prediction opacity was independently measured and corrected; all data paths, transforms, text, and other styling remain exact. Final hashes, page counts, and warning lists are in DELIVERY_MANIFEST.json.
+
+| Deliverable | File |
+|---|---|
+| dissertation PDF | [Bolen_Dissertation_Revised_20261030.pdf](<D:/Github/Bipedal_Robot/output/pdf/Bolen_Dissertation_Revised_20261030.pdf>) |
+| paper PDF | [Knee_Torque_Paper_Revised_20261030.pdf](<D:/Github/Bipedal_Robot/output/pdf/Knee_Torque_Paper_Revised_20261030.pdf>) |
+| supplement PDF | [Knee_Torque_Supplement_Revised_20261030.pdf](<D:/Github/Bipedal_Robot/output/pdf/Knee_Torque_Supplement_Revised_20261030.pdf>) |
+| dissertation source ZIP | [Bolen_Dissertation_Source_Revised_20261030.zip](<D:/Github/Bipedal_Robot/output/source/Bolen_Dissertation_Source_Revised_20261030.zip>) |
+| paper source ZIP | [Knee_Torque_Paper_Source_Revised_20261030.zip](<D:/Github/Bipedal_Robot/output/source/Knee_Torque_Paper_Source_Revised_20261030.zip>) |
+
+Source packages contain byte-verified current source/support files and active graphics, with extracted graphic paths checked. They contain no old compiled manuscript PDFs. Original Overleaf ZIPs are unchanged. Local working sources remain in their single ProofFinal trees.
+
+## Remaining access limits
+
+Additional PDF approval marks are unavailable through the connected-document tools and are not embedded in the saved copies. Their approval scope remains pending. The genuine SADb Table-tab screenshot is also pending: automatic browser review rejected the local file URL because the browser permits HTTP/HTTPS only. No fabricated capture or alternate route around that rejection was used. A fresh live advisor-comment census has not been established.
+
+FVU remains closed by Ben’s reply. The offset ruling, deferred SADb classification, excluded AI comparison assessment, rejected uncertainty task, waived individual pulley example, protected published chapter, and frozen neuromechanical results remain respected.

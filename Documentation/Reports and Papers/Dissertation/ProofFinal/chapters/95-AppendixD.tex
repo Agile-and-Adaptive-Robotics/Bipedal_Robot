@@ -24,7 +24,7 @@ The archived AnimatLab projects provide reference circuits for implementation co
 \label{fig:animatlab_controller_motifs}
 \end{figure}
 
-A \qty{10}{\second} instrumented run recorded joint, neural, sensory, and body-motion channels at a \qty{0.2}{\milli\second} interval. Contact-sensory recordings are membrane voltages, not contact forces. The initial external horizontal force and the limited window prevent the joint traces from establishing stable walking.
+A \qty{10}{\second} instrumented run recorded joint, neural, sensory, and body-motion channels at a \qty{0.2}{\milli\second} interval. Contact-sensory recordings are membrane voltages, not contact forces. The initial external horizontal force and the limited window prevent the joint traces from establishing stable walking. Figure~\ref{fig:animatlab_phase1_preliminary} shows the recorded hip, knee, and ankle trajectories.
 
 \begin{figure}[htbp]
 \centering
@@ -32,6 +32,8 @@ A \qty{10}{\second} instrumented run recorded joint, neural, sensory, and body-m
 \caption[AnimatLab phase-1 hip, knee, and ankle recordings]{Bilateral hip (A), knee (B), and ankle (C) angles in the recorded joint conventions. All 50,001 samples in the \qty{10}{\second} window are retained. An external horizontal force acts during the first second. The recordings show motion, not validated walking or ground-contact gating.}
 \label{fig:animatlab_phase1_preliminary}
 \end{figure}
+
+Figure~\ref{fig:mujoco_model_views} contrasts the converted Gait2392 robot geometry with the reduced-order knee model used in the SNS-Simscape demonstration.
 
 \begin{figure}[p]
 \centering
@@ -61,7 +63,7 @@ The knee block model was tested from a settled operating point using a rectangul
 
 The graded-response comparison changes exactly six parameters: the two MN output ramp widths from 1 to \qty{10}{\milli\volt}, and the four Ia synaptic ramp widths from 0.5 to \qty{10}{\milli\volt}. Equations, thresholds, conductances, wiring, mechanics, tonic drives, and activation dynamics are retained. This reduces loop gain as an explicit engineering comparison, rather than fitting physiological parameters. The simple actuator-force law is distinct from the characterized BPA model of Chapter~\ref{ch:muscles}. The flexor activation is zero at baseline, so the experiment does not establish suppression of a tonically active antagonist.
 
-The modified configuration passes baseline settling tests for angle, velocity, all six membrane states, and both activations. Its paper-coordinate baseline is \ang{-42.6392}; positive excursions indicate extension. Extension peaks at \ang{1.0908} after \qty{111}{\milli\second}. Recovery requires displacement within \ang{0.01} of baseline and absolute angular velocity below \qty{1e-4}{\radian\per\second}; both remain within those bounds from \qty{6.355}{\second} after stimulus onset. The late residual is approximately \ang{9.3e-7}. A fresh-process replay reproduces the resampled pulse arrays exactly. Halving the ODE45 maximum step from 1 to \qty{0.5}{\milli\second}, at unchanged tolerances, changes the angle trace by at most \ang{5.21e-5}. Comparisons use linear interpolation onto a 1 ms grid, without smoothing. These checks establish numerical recovery in the model, not physiological reflex fidelity.
+The modified configuration passes baseline settling tests for angle, velocity, all six membrane states, and both activations. Its paper-coordinate baseline is \ang{-42.6392}; positive excursions indicate extension. Extension peaks at \ang{1.0908} after \qty{111}{\milli\second}. Recovery requires displacement within \ang{0.01} of baseline and absolute angular velocity below \qty{1e-4}{\radian\per\second}; both remain within those bounds from \qty{6.355}{\second} after stimulus onset. The late residual is approximately \ang{9.3e-7}. A fresh-process replay reproduces the resampled pulse arrays exactly. Halving the ODE45 maximum step from 1 to \qty{0.5}{\milli\second}, at unchanged tolerances, changes the angle trace by at most \ang{5.21e-5}. Comparisons use linear interpolation onto a 1 ms grid, without smoothing. These checks establish numerical recovery in the model, not physiological reflex fidelity. Figure~\ref{fig:app_knee_transient} shows the stimulus, matched kinematics, neural signals, activations, and forces.
 
 \begin{figure}[p]
 \centering
@@ -80,7 +82,7 @@ The fourteen-neuron Deng-derived implementation follows the circuit used in SNS-
 
 The initial sweep applied $+2$ and $+10$ nA to each layer for 0.1 and 0.5 seconds, together with two direct MN inhibitory controls. None met the deletion criterion. Subsequent stronger-current control series, including stimuli lasting two baseline periods (\qty{3.876}{\second}), retained the same circuit and mechanical parameters (Table~\ref{tab:layer_stimulus}). RG and PF stimuli began one-quarter cycle after a baseline RG onset; MN inhibition began 0.05 seconds into a baseline motor burst. Positive currents target the extensor RG or hip-PF population; negative currents target the hip-flexor MN. These currents are mechanistic controls, not experimentally calibrated physiological stimuli.
 
-A deletion required at least \qty{20}{\milli\second} of baseline motor activity in the stimulus window and suppression of at least half of that activity, using an activation threshold of 0.5. Phase residuals compare the final four recovered onsets with the nearest baseline onset, normalized by the baseline period. Residuals at or below 0.05 cycles were classified as non-resetting, and those at or above 0.15 as shifted; intermediate values remained indeterminate. RG and motor residuals were assessed separately. The two-cycle stimuli suppressed both expected flexor burst onsets at all three layers. Baseline and stimulated neural and mechanical trajectories were identical before stimulus onset. The one-second PF pulse shifted the motor pattern without resetting the RG clock, whereas the two-cycle PF pulse preserved both schedules. The duration dependence cautions against treating every motor phase shift as an RG reset.
+A deletion required at least \qty{20}{\milli\second} of baseline motor activity in the stimulus window and suppression of at least half of that activity, using an activation threshold of 0.5. Phase residuals compare the final four recovered onsets with the nearest baseline onset, normalized by the baseline period. Residuals at or below 0.05 cycles were classified as non-resetting, and those at or above 0.15 as shifted; intermediate values remained indeterminate. RG and motor residuals were assessed separately. The two-cycle stimuli suppressed both expected flexor burst onsets at all three layers. Baseline and stimulated neural and mechanical trajectories were identical before stimulus onset. The one-second PF pulse shifted the motor pattern without resetting the RG clock, whereas the two-cycle PF pulse preserved both schedules. The duration dependence cautions against treating every motor phase shift as an RG reset. Figure~\ref{fig:layer_stimulus_validation} compares RG voltage and motor activation for the two-cycle stimuli.
 
 \begin{table}[htbp]
 \centering\small
@@ -311,7 +313,7 @@ Removing nominal constant weight support did not remove the position-control har
 
 \subsection{Pathway Deletions and Stimulus Tests}\label{sec:app_w2l_perturbations}
 
-The recovered W2L configuration was evaluated with nominal weight support set to 0.25 and the remaining controller settings fixed. Mild and strong drive reductions, forward and backward \qty{40}{\newton} pushes, and separate Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the supported-stepping criterion. Their effects differed: Renshaw deletion reduced forward displacement to \qty{0.081}{\meter}, while commissural deletion failed bilateral stepping. Disabling all sensory feedback retained joint cycling and \qty{1.996}{\meter} progression but shifted median contact phase to 0.223 cycles, outside the accepted alternation range. The intact comparison produced \qty{2.239}{\meter} and a phase of 0.498 cycles. These experiments distinguish rhythm generation, progression, and bilateral contact coordination, rather than treating them as interchangeable outcomes.
+The recovered W2L configuration was evaluated with nominal weight support set to 0.25 and the remaining controller settings fixed. Mild and strong drive reductions, forward and backward \qty{40}{\newton} pushes, and separate Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the supported-stepping criterion. Their effects differed: Renshaw deletion reduced forward displacement to \qty{0.081}{\meter}, while commissural deletion failed bilateral stepping. Disabling all sensory feedback retained joint cycling and \qty{1.996}{\meter} progression but shifted median contact phase to 0.223 cycles, outside the accepted alternation range. The intact comparison produced \qty{2.239}{\meter} and a phase of 0.498 cycles. These experiments distinguish rhythm generation, progression, and bilateral contact coordination, rather than treating them as interchangeable outcomes. Figure~\ref{fig:app_w2l_perturbations} compares the drive, push, and pathway interventions.
 
 \begin{figure}[htbp]
 \centering
@@ -404,7 +406,7 @@ These checks verify specific joint actions, coupled paths, and intended contacts
 
 The comparison script reads OpenSim static-optimization forces and activations and assigns the corresponding poses and activations to the converted MuJoCo model. It calls the forward calculation at each pose; it does not assign the trajectory velocities or integrate muscle activation and fiber dynamics through time. OpenSim static optimization likewise solves frame-by-frame force allocation rather than a compliant-tendon forward simulation \citep{opensim_static_optimization_docs}. The comparison therefore tests force predictions along sampled poses at matched activation, not dynamic equivalence or tendon-energy storage.
 
-Table~\ref{tab:force-r2} retains the saved per-muscle statistics: $R^2=1-\mathrm{SSE}/\mathrm{SST}$, squared Pearson correlation, and the best-aligning lag in analysis frames. The calculation and saved values are in \nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \nolinkurl{muscle_force_compare.csv}.
+Figure~\ref{fig:force-compare} shows representative force sequences normalized to each curve's peak. Table~\ref{tab:force-r2} retains the saved per-muscle statistics: $R^2=1-\mathrm{SSE}/\mathrm{SST}$, squared Pearson correlation, and the best-aligning lag in analysis frames. The calculation and saved values are in \nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \nolinkurl{muscle_force_compare.csv}.
 
 \begin{table}[h]
   \centering
