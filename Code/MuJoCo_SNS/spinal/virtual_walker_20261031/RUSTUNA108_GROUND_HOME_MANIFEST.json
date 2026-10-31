@@ -1,0 +1,43 @@
+{
+  "adapter_path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\w2l_ground_optimization.py",
+  "output_dir": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\rustuna108_ground_home_v1",
+  "search_space": {
+    "pf_mn_recruitment_scale": {
+      "low": 0.8,
+      "high": 1.5,
+      "log": false
+    },
+    "toe_mn_gmax": {
+      "low": 0.0,
+      "high": 0.05,
+      "log": false
+    }
+  },
+  "fixed_parameters": {},
+  "seed": 100031,
+  "max_trials": 24,
+  "wall_budget_s": 600,
+  "trial_timeout_s": 90,
+  "initial_candidates": [
+    {
+      "pf_mn_recruitment_scale": 1.0,
+      "toe_mn_gmax": 0.01
+    },
+    {
+      "pf_mn_recruitment_scale": 0.8,
+      "toe_mn_gmax": 0.01
+    },
+    {
+      "pf_mn_recruitment_scale": 1.5,
+      "toe_mn_gmax": 0.01
+    },
+    {
+      "pf_mn_recruitment_scale": 1.0,
+      "toe_mn_gmax": 0.0
+    },
+    {
+      "pf_mn_recruitment_scale": 1.0,
+      "toe_mn_gmax": 0.05
+    }
+  ]
+}

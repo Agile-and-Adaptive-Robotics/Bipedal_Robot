@@ -1,0 +1,34 @@
+{
+  "machine": "easteregg2",
+  "panelA": {
+    "source": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Defense\\C3NS_Revision_20261031_v17\\assets\\free_drop_poster.png",
+    "sha256": "9140aca6442e9c885e08ad5085e111e27e5efbecb74f4b72975e354ae501952f",
+    "crop_pixels": [
+      45,
+      65,
+      400,
+      310
+    ],
+    "condition": "Existing poster from Ben's free_drop.mp4; source-time not inferred from a different trial."
+  },
+  "panelB": {
+    "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_ground_hip0p6_flex0p5_fresh_v1\\SUPPORTED_STEPPING_STILL.png",
+    "sha256": "a03e4ebef0dc0424e45e7a08fab956ddfb6b09958043ff37067ecb5479647983",
+    "crop_pixels": [
+      120,
+      115,
+      790,
+      625
+    ],
+    "time_s": 4.84,
+    "run": "canonical108_ground_hip0p6_flex0p5_fresh_v1",
+    "condition": "108-neuron graded SNS/Hill; near-flat IK starting pose; hipE60%/hipF30%; original30mm guides/rails\u221220mm; 40.50%BW whole-trial net assistance."
+  },
+  "composition": "Existing pixels cropped to remove original header/empty background; no model image generated or dynamics rerun.",
+  "font_floor_pt": 10,
+  "figure_inches": [
+    7.2,
+    3.7
+  ],
+  "caption": "(A) The initial Li\u2013Deng/W2L adaptation after support release in AnimatLab. (B) A later 108-neuron W2L model during alternating ground stepping in MuJoCo, with passive rails and 30 mm guides. The selected run produced nine left and eight right qualified unloaded-clear swings in 10 s, with 40.5% mean net vertical assistance. These are different development and support conditions, rather than a matched comparison or independent-walking demonstration."
+}

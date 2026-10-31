@@ -993,3 +993,11 @@ curriculum passes. No stage5 advancement yet.
 
 Full details: SESSION1_PHYSICS_GROUND_CHECKPOINT_20261030.md. Canonical ground
 checkpoint: tonic_0p02_exact/aligned_support_ladder_v1/CHECKPOINT.json.
+
+## Session 1 — ZCode surviving evidence and output coordination, 2026-10-31
+
+Machine: easteregg2. The six named tmp/zcode_jobs directories are empty. ZCode's forwarded report identifies lost job artifacts; the pruning actor is not established by this inspection. No cleanup or simulation rerun was performed here. Fifty-five surviving files were inventoried with full paths, sizes, and SHA-256 hashes in runs/zcode_job_outputs_20261031/SURVIVING_EVIDENCE_MANIFEST.json, including the original tonic checkpoint, failed-fit campaign, Job D GIF, and later corrected-pose checkpoint.
+
+No bulk regeneration of the six jobs is proposed. Reuse survivors and regenerate only a needed diagnostic/figure in a unique directory under D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\hunt_training\runs\zcode_job_outputs_20261031. Re-executions must carry current hashes and cannot be called recovery of the missing historical evaluator or basin evidence. The failed ZCode Hunt fit retains old independently fitted timing asymmetry and fails its air assessment; it is historical evidence, not the current tied configuration.
+
+Session 1 coordinates housekeeping; neither session prunes shared tmp or active campaign runs during modeling/submission. If the coordinator is unavailable, cleanup waits. Durable rule and recovery inventory: OUTPUT_COORDINATION_20261031.md in this directory. The corrected-pose checkpoint's eight listed source hashes match current files. Next useful diagnostic remains delivered MN activation versus standing targets and stance support, not repetition of insensitive sweeps or obsolete ground-ladder configurations. Working manuscript remains unchanged.

@@ -1,0 +1,82 @@
+{
+  "machine": "easteregg2",
+  "neuron_count": 108,
+  "chemical_edges": 216,
+  "source_sha256": "01ece6edcbcf17c274410b23f1ce7603eab288aadb946d6b548c5102ed5c1154",
+  "staging_only": true,
+  "runs": [
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_RG_minus10nA_100ms_v1",
+      "trajectory_sha256": "96f56fd69e9b055034e1bc0803c4c219d09e15a173c2dffda764a002a2fe00c7",
+      "result_sha256": "b96b265db617245c1948d960cf6fa7b227e8c0781a14ce2e1d1d7b0832eb4f73"
+    },
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_PF_minus10nA_100ms_v1",
+      "trajectory_sha256": "ca1866b52dcbd112e8b32d1e4adccf46221b05d6d79d6867380e16da87a52e6b",
+      "result_sha256": "a3866ed6a1f18a6bceb272a547f013d9246348b5d725c460fa21964ef9d2f03e"
+    },
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_MN_minus10nA_100ms_v1",
+      "trajectory_sha256": "27f67bbc1bdc3e4206a3b1d297deeb5c89cbc31f26aee1c5df7bac5fbe868502",
+      "result_sha256": "0ffda754bdc01cc3a69c454853426b2b963f5f4eae1c8e527a89dcab6d220b59"
+    },
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_ground_rustuna_winner_fresh_v1",
+      "trajectory_sha256": "6f75a6af165cddbc5cc5580a289d29e1ff3d3f4257a01d62403df2ea6aa8f518",
+      "result_sha256": "fd4be278bc183db99dcf79635c96bd276345e5d5894a9ce5e542b9b3ea608434"
+    },
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_ground_baseline_v1",
+      "trajectory_sha256": "b0dcb84f565a2beec4185008c87efe28c164b6800431c93755de426509f083c7",
+      "result_sha256": "7f8f2acd2189f47b4c659ba75f8eb1d04f31dcf674bd2576b966db32a846f934"
+    },
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_ground_nearflat_source_phase_v1",
+      "trajectory_sha256": "362a26b3532d0d5a44e8d0ed65e604027e7b2235a26dbb0d39e0d74c7e97ece5",
+      "result_sha256": "2e0c90bfe2244ad7e7fe11c2336e56ee93fa186b88fcf630174d9f861123b066"
+    },
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_ground_nearflat_ankle_crossed_v1",
+      "trajectory_sha256": "591faa9f2df041ab2fbaee2e86a8a61c86c93734728ff7de716477f09839f7ea",
+      "result_sha256": "bc78576ab0fc16c7db96541873ac047404d4bf3c1cbffd392b18a8c82fc7a21c"
+    },
+    {
+      "folder": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_ground_rustuna_winner_fresh_v1",
+      "trajectory_sha256": "6f75a6af165cddbc5cc5580a289d29e1ff3d3f4257a01d62403df2ea6aa8f518",
+      "result_sha256": "fd4be278bc183db99dcf79635c96bd276345e5d5894a9ce5e542b9b3ea608434"
+    }
+  ],
+  "figures": [
+    {
+      "stem": "W2L108_left_RG_PF_MN_stimuli",
+      "width_in": 6.5,
+      "height_in": 7.1,
+      "minimum_text_pt": 10.0,
+      "window_s": [
+        3.4,
+        7.8
+      ]
+    },
+    {
+      "stem": "W2L108_tuned_ground_motion_load",
+      "width_in": 6.5,
+      "height_in": 7.0,
+      "minimum_text_pt": 10.0,
+      "window_s": [
+        4,
+        8
+      ]
+    }
+  ],
+  "optimizer": {
+    "best_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\rustuna108_ground_home_v1\\BEST.json",
+    "trials_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\rustuna108_ground_home_v1\\TRIALS.jsonl",
+    "accepted": 24,
+    "total": 24,
+    "params": {
+      "pf_mn_recruitment_scale": 1.305863499088313,
+      "toe_mn_gmax": 0.031839851437587975
+    },
+    "objective": "Post-1-s upward assistance + foot-force and relative-belt-speed penalties, subject to swing/unloading/alternation/knee/root-height acceptance. Not a metabolic objective."
+  }
+}

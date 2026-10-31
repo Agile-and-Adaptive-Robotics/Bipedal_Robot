@@ -1,0 +1,16 @@
+\begin{table}[htbp]
+\centering
+\caption{Changes in supported stepping after initial-pose correction, ankle phase correction, and bounded controller fitting. Swing counts and alternation are evaluated from 1 to 10 s; assistance is the mean net vertical support force over the full 10 s, normalized by model body weight.}
+\label{tab:w2l108_ground_changes}
+\small
+\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+\toprule
+Condition & \shortstack{Swings\\L/R} & \shortstack{Alternation\\(\%)} & \shortstack{Assistance\\(\% BW)} \\
+\midrule
+Toe-down initial pose & 3/1 & 33.33 & 89.25 \\
+Near-flat IK pose & 7/8 & 92.86 & 46.66 \\
+IK + ankle phase correction & 9/8 & 100.00 & 42.24 \\
+IK + phase correction + fitting & 9/8 & 100.00 & 39.24 \\
+\bottomrule
+\end{tabularx}
+\end{table}

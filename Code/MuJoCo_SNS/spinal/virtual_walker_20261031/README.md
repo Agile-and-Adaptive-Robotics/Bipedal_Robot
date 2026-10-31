@@ -1,8 +1,18 @@
 # Virtual W2L walkers: native circuit and MuJoCo port
 
+**Latest supported-ground result:** the actual108-neuron model now passes after correcting its physical starting posture with bounded near-flat IK. Source-phase alone yields7/8 clear swings,92.9% alternation; four explicitly mirrored PF→ankle-MN target swaps yield9/8,100%,42.24%BW net assistance. A24-trial Rustuna calibration retains9/8,100% while reducing whole-trial net assistance to39.24%BW; the selected result repeats byte-identically in a fresh process. Knees remain flexed. See the top of EXPERIMENT_RECORD.md for forces, controls, source hashes, and bounded claims. These runtime variants have not yet been embedded back into the editable AnimatLab geometry/network.
+
+Current repeat command on **easteregg2**:
+
+```powershell
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\run_virtual_walker.py' --newer --config 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUSTUNA108_GROUND_WINNER.json' --duration 10 --tag YOUR_UNIQUE_TAG
+```
+
+The consumed JSON records actual initial qpos, four ankle phase swaps, shared PF→MN recruitment, and absolute bilateral toe-contact→ankle-MN gain. It preserves the source30mm passive guides/rails−20mm and uses runtime clock1 because source time constants already include clock2. No inverse-force targets or static tension preload are used in these SNS trials. Rat→Gait transfer is paused.
+
 **Current model is canonical NEWER108/216**, with12 new independent homonymous II relays plus the four existing phase-II channels. Source clock2 is already in its actual parameters: use runtime neural scale1. Actual108 baseline and matched RG/PF/MN −10 nA/100 ms fast-MuJoCo tests are completed, with joint motion and measured current waveforms. See the latest section at the top of EXPERIMENT_RECORD.md and `runs\CANONICAL108_STIMULUS_TRIPLET.json`. The separate rat controller has120 neurons; W2L plots must not be labelled rat.
 
-**Use the canonical NEWER model for the paper and current work:** `D:\GitHub\Bipedal_Robot\Neuromechanical_Models\W2L_VirtualWalker_Newer_20261031\W2L_VirtualWalker_Newer.aproj` and its synchronized standalone. NEWER has bilateral RG, separate bilateral heel/toe contacts, and four physical II channels (left/right hip and knee). The original80 model is only a historical comparison. Generated sibling model families are being removed after immutable input/evidence archival.
+**Use the canonical NEWER model for the paper and current work:** `D:\GitHub\Bipedal_Robot\Neuromechanical_Models\W2L_VirtualWalker_Newer_20261031\W2L_VirtualWalker_Newer.aproj` and its synchronized standalone. NEWER has bilateral RG, separate bilateral heel/toe contacts, four legacy phase-II channels, and twelve independent homonymous II channels. The original80 model is only a historical comparison. Six generated sibling families were removed after immutable input/evidence archival. The successful MuJoCo runtime configuration above includes a physical home/phase/tuning overlay that is not yet embedded in the reference GUI.
 
 The prior NEWER96/204 diagnostic has actual passing air and supported-ground results. One positive V3-output scale 0.01 candidate also passed (ground8/8 clear swings,100% alternation,73.53% BW assistance). Its snapshot precedes the current reference-numeric canonical update, so it is a benchmark, not a passing claim for an untested changed export. See the top of EXPERIMENT_RECORD.md for exact settings and source scope. Six historical source snapshots live under ignored `runs\source_inputs\`, with SHA-checked lookup; they are not alternate active models.
 

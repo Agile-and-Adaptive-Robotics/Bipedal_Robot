@@ -1,5 +1,12 @@
 # Guided W2L stepping media — Session 1
 
+**Historical original 80-neuron comparison only.** Ben selected the newer
+bilateral-RG model. Its current 108-neuron stimulus and fitted-ground media are
+indexed in `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\CANONICAL108_STIMULUS_GRAPHS.md`
+and `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\CANONICAL108_GROUND_GRAPHS.md`.
+Use `RUSTUNA108_GROUND_WINNER.json` for the fitted ground run; do not substitute
+the older controller below for the selected newer model.
+
 Machine: **easteregg2**. Created 31 October 2026.
 
 ## Files for dissertation and defense editors
