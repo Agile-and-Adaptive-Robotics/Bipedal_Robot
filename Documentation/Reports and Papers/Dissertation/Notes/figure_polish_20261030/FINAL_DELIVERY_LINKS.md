@@ -1,3 +1,12 @@
+## Current submission delivery - unit formatting corrected
+
+Dissertation: 299 pages, zero build errors or undefined references. Handwritten quantities and unit headings corrected with siunitx; numerical literals preserved across all eight affected source files. Published Chapter 20, Zotero, and both downloaded Overleaf ZIPs remain unchanged. No live upload.
+
+- [Submission PDF](<D:/Github/Bipedal_Robot/output/pdf/Bolen_Dissertation_Submission_20261030.pdf>)
+- [Pending-only audit v4: two pages, eight open groups](<D:/Github/Bipedal_Robot/output/pdf/Dissertation_Audit_PENDING_ONLY_v4_20261030.pdf>)
+
+The earlier figure-polish delivery below is retained as history.
+
 # Final figure polish delivery
 
 Local clean builds: dissertation 298 pages; paper 32 pages; supplement 11 pages. Updated dissertation/paper PDFs are delivered below; the unchanged-source supplement was compiled for cross-references. All packaged PDFs match their verified build bytes. ZIP CRCs, current member bytes, and extracted graphic paths pass. The dissertation source package includes the reproducible SADb annotation generator and base, genuine Table captures, corrected pipeline, and editable motor PowerPoint. Live upload/readback is owned separately by the lead agent.

@@ -80,7 +80,7 @@ Knee torque is the scalar component of this moment about the joint axis, written
     \abs{M_{\mathbf{k}}} = r\,F \label{eq:M_scalar}
 \end{equation}
 
-where $r$ is the scalar moment arm of Eq.~\eqref{eq:momentarm_def}, here measured directly with a tape measure as the perpendicular distance from the knee axis to the actuator's line of action, and $F$ is the scalar force magnitude, calculated by measuring the BPA's $P$, $l_{0}$, $l_{620}$ and $l_\text{m}$ values and using the model fit equations determined in the previous chapter. The hybrid method therefore replaces the model-predicted moment arm $r_{\mathbf{k}}$ of Eq.~\eqref{eq:project_ma} and the model-predicted muscle length with their measured counterparts, leaving the force model as the only predicted quantity. The flexor and extensor signs are then assigned using the adopted knee convention.
+where $r$ is the scalar moment arm of Eq.~\eqref{eq:momentarm_def}, here measured directly with a tape measure as the perpendicular distance from the knee axis to the actuator's line of action, and $l_{620}$ is the BPA length at \qty{620}{\kPa}. The scalar force magnitude $F$ is calculated by measuring the BPA's $P$, $l_{0}$, $l_{620}$ and $l_\text{m}$ values and using the model fit equations determined in the previous chapter. The hybrid method therefore replaces the model-predicted moment arm $r_{\mathbf{k}}$ of Eq.~\eqref{eq:project_ma} and the model-predicted muscle length with their measured counterparts, leaving the force model as the only predicted quantity. The flexor and extensor signs are then assigned using the adopted knee convention.
 
 \subsection{Improved Torque Model}\label{sec:improved_model}
 
@@ -427,8 +427,8 @@ $J_{\text{strain,lo}}$ stretch limit & \shortstack[l]{FLEX: $10^{7}$\\EXT: $10^{
 $J_{\text{contr}}$ contraction cap (EXT) & $10^{6}$ & Squared violation of the measured maximum usable contraction; also enforced as a hard constraint. \\
 $J_{\text{wrap}}$ wrap release (FLEX) & $10^{3}$ & Penalty when the moving wrap contact fails to release during the extension sweep, scaled by the remaining turn of the wrap. \\
 $J_{\text{geom}}$ endpoint regularizer & $10^{-2}$ & Keeps origin and insertion near their seed values; the flexor scales each axis separately, allowing large proximal motion of the origin. \\
-$J_{\text{len}}$ length regularizer & $10^{-3}$ & Keeps the resting length near its seed value (40~mm norm). \\
-$J_{\text{anchor}}$ second-BPA anchor (FLEX) & $10$ & Keeps the second actuator's derived endpoints near the build line of the loaded design (10~mm norm); a score term only, never a constraint. \\
+$J_{\text{len}}$ length regularizer & $10^{-3}$ & Keeps the resting length near its seed value (\qty{40}{\mm} norm). \\
+$J_{\text{anchor}}$ second-BPA anchor (FLEX) & $10$ & Keeps the second actuator's derived endpoints near the build line of the loaded design (\qty{10}{\mm} norm); a score term only, never a constraint. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -441,8 +441,8 @@ $J_{\text{anchor}}$ second-BPA anchor (FLEX) & $10$ & Keeps the second actuator'
 \textbf{Term} & \textbf{Weight} & \textbf{Meaning} \\
 \midrule
 $J_{\text{arm}}$ moment-arm reward (CAM) & $-10^{2}$, capped & Negative reward on the worst-angle margin against the required envelope, capped at $+100\%$ of the torque scale, so the solver keeps buying moment arm instead of stopping at the requirement. \\
-$J_{\text{armStep}}$ arm-step penalty (CAM) & $10^{3}$ & Penalizes adjacent-pose moment-arm steps beyond the accepted release discontinuity of 2.2~mm. \\
-$J_{\text{reg}}$ cam regularizer (CAM) & $10^{-2}$ & Tie-break toward the first-cut cam neighborhood (25.4~mm norm). \\
+$J_{\text{armStep}}$ arm-step penalty (CAM) & $10^{3}$ & Penalizes adjacent-pose moment-arm steps beyond the accepted release discontinuity of \qty{2.2}{\mm}. \\
+$J_{\text{reg}}$ cam regularizer (CAM) & $10^{-2}$ & Tie-break toward the first-cut cam neighborhood (\qty{25.4}{\mm} norm). \\
 Infeasible sentinels & $10^{11}$, $10^{12}$ & Non-finite predictions, or a route the predictor cannot build, are rejected outright. \\
 \bottomrule
 \end{tabularx}
@@ -469,7 +469,7 @@ The redesign retains the objective of obtaining adequate torque from anatomicall
 
 \begingroup
 \widowpenalty=10000
-The pinned-flexor results first compare the Hunt actuator model with the improved BPA force model. Subsequent comparisons use the improved model before and after design-parameter optimization. Hybrid calculations substitute measured muscle length and moment arm to help distinguish force-model error from geometric error on the pinned knee.
+The pinned-flexor results first compare the length-dependent actuator model of \citet{hunt_modeling_2017} with the improved BPA force model. Subsequent comparisons use the improved model before and after design-parameter optimization. Hybrid calculations substitute measured muscle length and moment arm to help distinguish force-model error from geometric error on the pinned knee.
 \par
 \endgroup
 
@@ -656,7 +656,7 @@ The results figures use the two-stage identification of Section~\ref{sec:identif
 \label{tab:AdoptedXi}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
-Configuration & $\chi_{0}$ (m) & $\chi_{1}$ (N/m) & $\chi_{2}$ (N/m) & $\chi_{3}$\\
+Configuration & $\chi_{0}$ (\unit{\meter}) & $\chi_{1}$ (\unit{\newton\per\meter}) & $\chi_{2}$ (\unit{\newton\per\meter}) & $\chi_{3}$\\
 \midrule
 Flexor & $0.00394$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & --\\
 Extensor & $-0.00638$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & $0.158$\\
@@ -761,7 +761,7 @@ The flexor measurements meet or exceed the biceps femoris short-head reference m
 \label{fig:flexor_physical_final}
 \end{figure}
 
-\subsection{Mono- and Bi-Pulley Tendon Routing}\label{sec:disc_pulley}
+\subsection{Tendon Reeving and Parallel BPAs}\label{sec:disc_pulley}
 
 Reeving the artificial tendon through a reverse block-and-tackle trades transmitted force for tendon travel (Figure~\ref{fig:reverse_pulley_principle}). Let $F_{\mathrm{BPA}}$ be the total input force, $n$ the number of cable parts supporting the moving block, $\Delta\ell_{\mathrm{BPA}}$ the BPA contraction, and $\Delta s_t$ the tendon travel. For an ideal massless cable and frictionless pulleys,
 \begin{equation}

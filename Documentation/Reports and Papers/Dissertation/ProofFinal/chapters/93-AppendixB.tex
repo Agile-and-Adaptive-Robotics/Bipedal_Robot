@@ -92,7 +92,7 @@ The rhythm-generator adaptation time constant is inherited from the analog persi
 \label{tab:app_spk_cells}
 \small\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.28\textwidth}LLLL@{}}
 \toprule
-\textbf{Cell class} & $\boldsymbol{\theta}$ (mV) & $\boldsymbol{V_{\text{reset}}}$ (mV) & $\boldsymbol{\Delta\theta}$ (mV/spike) & $\boldsymbol{\tau_{\theta}}$ (s) \\
+\textbf{Cell class} & $\boldsymbol{\theta}$ (\unit{\milli\volt}) & $\boldsymbol{V_{\text{reset}}}$ (\unit{\milli\volt}) & $\boldsymbol{\Delta\theta}$ (\unit{\milli\volt}/spike) & $\boldsymbol{\tau_{\theta}}$ (\unit{\second}) \\
 \midrule
 Rhythm generator E/F & $-50$ & $-60$ & 4.0 (calibrated) & 0.35 (analog value) \\
 Pattern-formation     & $-50$ & $-60$ & 0.3 & 0.15 \\
@@ -109,7 +109,7 @@ Spiking chemical synapses, in both the toolbox class used in the MuJoCo mirror a
     \qquad g \leftarrow \min\!\left(g_{\max},\, g + g_{\text{inc}}\right) \;\;\text{per spike},
     \label{eq:app_spk_syn}
 \end{equation}
-with $I_{\text{syn}} = g\,(E_{\text{syn}} - V_{\text{post}})$ as for the graded synapse of Equation~(\ref{eq:app_nonsyn}). The Simulink \texttt{HybridSpikingSynapse} implements the same dynamics with the spike detected from the presynaptic voltage crossing a detection threshold that must sit strictly between the presynaptic resting and firing potentials (a detection threshold equal to the firing potential fires nothing, because the presynaptic voltage resets at threshold). Reversal potentials are \qty{0}{\mV} (excitation, above rest) and \qty{-70}{\mV} (inhibition, shunting at rest) in the spiking frame, and $+8$/$-5$~mV in the motor neurons' 0--5~mV frame. The graded-to-spiking command pathways (descending drive, posture, and bias surrogates) keep the graded synapse of Equation~(\ref{eq:app_nonsyn}).
+with $I_{\text{syn}} = g\,(E_{\text{syn}} - V_{\text{post}})$ as for the graded synapse of Equation~(\ref{eq:app_nonsyn}). The Simulink \texttt{HybridSpikingSynapse} implements the same dynamics with the spike detected from the presynaptic voltage crossing a detection threshold that must sit strictly between the presynaptic resting and firing potentials (a detection threshold equal to the firing potential fires nothing, because the presynaptic voltage resets at threshold). Reversal potentials are \qty{0}{\mV} (excitation, above rest) and \qty{-70}{\mV} (inhibition, shunting at rest) in the spiking frame, and \qty{+8}{\milli\volt}/\qty{-5}{\milli\volt} in the motor neurons' \qtyrange{0}{5}{\milli\volt} frame. The graded-to-spiking command pathways (descending drive, posture, and bias surrogates) keep the graded synapse of Equation~(\ref{eq:app_nonsyn}).
 
 \subsection{Calibration of Record}
 
@@ -125,13 +125,13 @@ Table~\ref{tab:app_spk_cal} lists every calibration factor produced by \nolinkur
 Graded saturation reference & 0.9567 & analog network measurement & --- \\
 Spike-to-MN, excitatory ($k_{sn,exc}$) & 5.4087 & MN steady voltage & \qty{1.0e-04}{\mV} \\
 Spike-to-MN, inhibitory ($k_{sn,inh}$) & 1.2284 & MN steady voltage & \qty{2.6e-04}{\mV} \\
-Graded-to-spiking drive ($k_{ns}$) & 0.35 & relay firing rate & $-0.67$~Hz \\
+Graded-to-spiking drive ($k_{ns}$) & 0.35 & relay firing rate & \qty{-0.67}{\hertz} \\
 Spike-to-spiking, excitation & 1.8754 & \qty{40}{\hertz} rate transfer & \qty{0.0}{\hertz} \\
 Spike-to-spiking, inhibition & 0.9996 & silences \qty{40}{\hertz} cell & \qty{0.0}{\hertz} \\
 Readout tap ($g_{inc}$) & 1.7093 & \qty{50}{\hertz} $\to$ full scale & \qty{5.00}{\mV} check \\
-RG threshold increment & 4.0~mV/spike & pair + full-net sweeps & period target \\
-Tonic bias current & 16~nA & equilibrium $-54$~mV & --- \\
-Synaptic time constants & 5~ms (exc), 20~ms (inh) & analog values & --- \\
+RG threshold increment & \qty{4.0}{\milli\volt}/spike & pair + full-net sweeps & period target \\
+Tonic bias current & \qty{16}{\nano\ampere} & equilibrium \qty{-54}{\milli\volt} & --- \\
+Synaptic time constants & \qty{5}{\milli\second} (exc), \qty{20}{\milli\second} (inh) & analog values & --- \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -149,14 +149,14 @@ Table~\ref{tab:app_spk_gates} records the complete gate set of Section~\ref{sec:
 \midrule
 Pipeline compile & PASS & runner, curriculum, parameters, and network builder all compile. \\
 Defaults gate & PASS & $(410,\,376,\,1186)$ populations, inputs, and connections after the selector edit; variant build $(888,\,382,\,7430)$. \\
-Non-spiking bit-identity & PASS & default baseline score $-161.56754173676563$ identical before and after the edit (all 17 digits); other baselines $-144.46440311078322$ and $-200.37955834081458$. \\
+Non-spiking bit-identity & PASS & complete numerical baseline outputs identical before and after the edit for all three tested configurations. \\
 Topology mirror & PASS & directed edge multisets identical in three gain configurations ($1{,}186$ / $7{,}908$ / $7{,}762$); inputs and motor-neuron maps identical; readout taps 12 / 12 / 16. \\
 Constant-drive rhythm & SPLIT & sustained bilateral antiphase (E \qty{4.9}{\hertz}, F \qty{3.2}{\hertz} per leg; swing \qty{5.13}{\mV} in every window) = PASS; period \qty{0.621}{\second} versus analog \qty{0.399}{\second} ($+55.6\,\% > 20\,\%$) = FAIL. \\
 Perturbation basin & PASS & 12/12 trials under \qty{1}{\percent} jitter on every scalar; final swing minimum \qty{4.58}{\mV} (margin $0.89\times$); zero explosions. \\
 Air-regime smoke & FAIL (cadence) & finite, 53 envelope rises, knee range \ang{106.0} of twin's \ang{117.9}, hip \ang{50.4} of \ang{71.1}; period \qty{0.215}{\second} versus \qty{2.108}{\second}. \\
 Untuned ground evaluation & ran & score $-236.35$; bilateral (8 right / 9 left cycles); cycle knee minimum \ang{-79.8}; no non-finite states; stayed up. Single run, no statistics. \\
 Simulink regression & PASS & all committed demonstrations and units tests reproduce exactly with the spiking blocks in the library (two-neuron test \qty{6.07e-04}{\mV}). \\
-AnimatLab baselines & PASS & five headless baseline runs, exit 0, periods and antiphase reproducing the records (\qty{0.443}{\second}, \qty{0.462}{\second}, \qty{1.305}{\second}). \\
+AnimatLab baselines & PASS & five baseline simulations completed without errors, with periods and antiphase reproducing the records (\qty{0.443}{\second}, \qty{0.462}{\second}, \qty{1.305}{\second}). \\
 \bottomrule
 \end{tabular}
 \end{sidewaystable}
@@ -168,19 +168,19 @@ Table~\ref{tab:app_spk_animatlab_full} lists spiking copies of the AnimatLab exp
 The per-connection class tag was also changed to the spiking type; changing the synapse type alone prevented loading. Structural checks confirmed that neuron, connection, synapse-type, chart, and stimulus sets were retained and every connection class matched its synapse type.
 
 \begin{sidewaystable}
-\caption{AnimatLab spiking-conversion variants of the spiking mirror. ``Connections'' counts flipped per-connection class tags; the ablation converts thresholds only. All copies validate structurally and run headless to their configured end; rhythm outcomes as in Table~\ref{tab:spike_animatlab}.}
+\caption{AnimatLab spiking-conversion variants of the spiking mirror. ``Connections'' counts flipped per-connection class tags; the ablation converts thresholds only. All copies validate structurally and complete their configured simulation durations; rhythm outcomes as in Table~\ref{tab:spike_animatlab}.}
 \label{tab:app_spk_animatlab_full}
 \small\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.19\linewidth}>{\raggedright\arraybackslash}p{0.08\linewidth}>{\raggedright\arraybackslash}p{0.10\linewidth}>{\raggedright\arraybackslash}p{0.12\linewidth}L@{}}
 \toprule
 \textbf{Variant} & \textbf{Thresholds} & \textbf{Neurons} & \textbf{Synapse types} & \textbf{Connections} & \textbf{Rhythm outcome} \\
 \midrule
-Two-layer v1        & $-55$/$-59$ mV        & 80  & 17 & 150 & dead (2 spikes / 5 s) \\
-Two-layer v2        & calibrated            & 80  & 17 & 150 & dead \\
-Two-layer v3        & v1, \qty{30}{\ms} decay & 80 & 17 & 150 & dead \\
-Bilateral v1        & $-55$/$-59$ mV        & 96  & 20 & 208 & latch, one side \qty{442}{\hertz}--\qty{450}{\hertz} \\
-Bilateral v2        & calibrated            & 96  & 20 & 208 & latch \\
-Project export v1   & $-55$/$-59$ mV        & 122 & 50 & 243 & synchronous \qty{11.8}{\hertz} co-bursting \\
-Project export v2   & calibrated            & 122 & 50 & 243 & dead (passive settle) \\
+Two-layer v1        & \qty{-55}{\milli\volt}/\qty{-59}{\milli\volt}        & 80  & 17 & 150 & no sustained rhythm (2 spikes / \qty{5}{\second}) \\
+Two-layer v2        & calibrated            & 80  & 17 & 150 & no sustained rhythm \\
+Two-layer v3        & v1, \qty{30}{\ms} decay & 80 & 17 & 150 & no sustained rhythm \\
+Bilateral v1        & \qty{-55}{\milli\volt}/\qty{-59}{\milli\volt}        & 96  & 20 & 208 & sustained unilateral firing, one side \qty{442}{\hertz}--\qty{450}{\hertz} \\
+Bilateral v2        & calibrated            & 96  & 20 & 208 & no sustained alternation \\
+Project export v1   & \qty{-55}{\milli\volt}/\qty{-59}{\milli\volt}        & 122 & 50 & 243 & synchronous \qty{11.8}{\hertz} co-bursting \\
+Project export v2   & calibrated            & 122 & 50 & 243 & passive relaxation without rhythm \\
 Ablation            & spiking, graded synapses & 80 & 0  & 0   & oscillates, near-baseline ranges \\
 2023 reference (baseline) & spiking from birth & 56 & 3 (spiking) & 84 & \qty{1.305}{\second} bursts, antiphase $+0.494$ cycle \\
 \bottomrule
@@ -197,7 +197,7 @@ Figure~\ref{fig:spike_animatlab} compares the graded baseline (A1), full spiking
 \label{fig:spike_animatlab}
 \end{figure}
 
-The spiking copies are headless-run artifacts only: none has been opened in the AnimatLab graphical environment, and graphical verification (or an equivalent acceptance ruling) remains outstanding for every \texttt{.asim} listed in Table~\ref{tab:app_spk_animatlab_full}. The mirror work also scoped, but did not attempt, two further conversions: the full 410-population Simulink spinal network (whose every one of 1,392 gains is tuned for graded voltages, making a spiking conversion a full re-tune rather than a parameter port) and the spiking mirrors of the alternative MuJoCo network variants (separate architectures whose fresh tuning is future work).
+The spiking conversions were verified through simulations run without opening the graphical model editor. These tests establish the reported simulated responses, but do not verify how the converted projects appear in that editor. The mirror work also scoped, but did not attempt, two further conversions: the full 410-population Simulink spinal network (whose every one of 1,392 gains is tuned for graded voltages, making a spiking conversion a full re-tune rather than a parameter port) and the spiking mirrors of the alternative MuJoCo network variants (separate architectures whose fresh tuning is future work).
 
 \section{Connectome of the Verified W2L Model}\label{app:connectomes}
 \graphicspath{{../Figures/93-AppendixB/}{figs/93-AppendixB/}}
