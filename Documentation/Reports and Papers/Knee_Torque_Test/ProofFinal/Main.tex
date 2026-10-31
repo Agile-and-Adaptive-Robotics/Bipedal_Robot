@@ -22,6 +22,7 @@
 \let\DeclareUSUnit\DeclareSIUnit
 \let\US\SI
 \DeclareUSUnit\inch{in}
+\DeclareUSUnit\pressurepsi{psi}
 \DeclareUSUnit\ft{ft}
 \providecommand{\abs}[1]{\lvert#1\rvert}
 \providecommand{\norm}[1]{\lVert#1\rVert}
@@ -169,7 +170,7 @@ Each stand was tested with $\diameter$\qty{10}{\mm} Festo BPAs in both configura
 
 A test jig was built to collect knee torque at set knee angles over the range of motion. The stand frame is made of 80/20 1515 series extruded aluminum. The femur is fixed to the frame while the knee rotates the tibia, with the joint axis co-axial with gravity to eliminate gravitational torque. A force sensor connects the tibia to a swing arm tied to a winch with 3/16-inch Kevlar rope (Quality Nylon Rope) routed over idler pulleys. At each measured $\theta_{\mathbf{k}}$ the winch was locked and the BPA was inflated and then deflated, keeping the measurement as isometric as possible. Because the sensor and its rope load path tie the tibia to the locked winch, the sensor reading is the tension that holds the tibia at the set angle. The measured knee torque at each angle is that tension multiplied by the perpendicular distance from the knee axis to the rope's line of action at its tibial attachment, the measured counterpart of the scalar reduction of Equation~\eqref{eq:M_scalar}, with the attachment geometry and the sensor-line angle recorded at each test position.
 
-Force was collected with one of two sensors: a MODERN STEP \qty{300}{\kilo\gram} digital crane scale, or a CALT DYLY-103 \qty{100}{\kilo\gram} S-shaped load cell used with an HX711 load-cell amplifier. Pressure was measured with a Freescale MPX5700 GP \qty{5}{\volt} pressure sensor. Supply pressure was controlled by two regulators in series, a Parker 20R113GC (\qtyrange{0}{120}{\psi}) and a Husky HDA72200, and air was delivered through a Festo VTUG-10 valve manifold. Pressure and load-cell data were sent to MATLAB through a Sparkfun BlackBoard C (Arduino Uno style) microcontroller. Lengths were measured with a tape measure, with a flexible string marking the axial length of the BPA when its curvature was sufficient, and angles with a Medigauge digital goniometer or MALENOO analog goniometers of \qtylist{6;8;12}{\inch} lengths.
+Force was collected with one of two sensors: a MODERN STEP \qty{300}{\kilo\gram} digital crane scale, or a CALT DYLY-103 \qty{100}{\kilo\gram} S-shaped load cell used with an HX711 load-cell amplifier. Pressure was measured with a Freescale MPX5700 GP \qty{5}{\volt} pressure sensor. Supply pressure was controlled by two regulators in series, a Parker 20R113GC (\qtyrange{0}{120}{\pressurepsi}) and a Husky HDA72200, and air was delivered through a Festo VTUG-10 valve manifold. Pressure and load-cell data were sent to MATLAB through a Sparkfun BlackBoard C (Arduino Uno style) microcontroller. Lengths were measured with a tape measure, with a flexible string marking the axial length of the BPA when its curvature was sufficient, and angles with a Medigauge digital goniometer or MALENOO analog goniometers of \qtylist{6;8;12}{\inch} lengths.
 
 \subsection{Hybrid Torque Calculation}\label{sec:hybrid_method}
 

@@ -1,0 +1,100 @@
+{
+  "source": "reports_20261028_family_audit/s3k_human92_edges.csv",
+  "source_sha256": "850993aa3fe16310f8cfc0adbf02a74f7bc49033aa34a7506541521031008707",
+  "controller": "s3k, human92,410neurons,1186edges",
+  "glyph_source": "Code/Matlab/SNS_Simscape/sns_build_library.m and sns_icon_geom.m",
+  "selected_edges": [
+    {
+      "source": "RG_E_r",
+      "target": "InE_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "InE_r",
+      "target": "RG_F_r",
+      "reversal_mV": -5.0
+    },
+    {
+      "source": "RG_F_r",
+      "target": "InF_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "InF_r",
+      "target": "RG_E_r",
+      "reversal_mV": -5.0
+    },
+    {
+      "source": "RG_E_r",
+      "target": "PF_E1_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "RG_E_r",
+      "target": "PF_E2_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "RG_F_r",
+      "target": "PF_F1_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "PF_E1_r",
+      "target": "MN_vas_lat_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "PF_E2_r",
+      "target": "MN_vas_lat_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "PF_F1_r",
+      "target": "MN_bifemsh_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "Ia_vas_lat_r",
+      "target": "MN_vas_lat_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "II_vas_lat_r",
+      "target": "MN_vas_lat_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "Ib_vas_lat_r",
+      "target": "MN_vas_lat_r",
+      "reversal_mV": -5.0
+    },
+    {
+      "source": "Ia_bifemsh_r",
+      "target": "MN_bifemsh_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "II_bifemsh_r",
+      "target": "MN_bifemsh_r",
+      "reversal_mV": 8.0
+    },
+    {
+      "source": "Ib_bifemsh_r",
+      "target": "MN_bifemsh_r",
+      "reversal_mV": -5.0
+    },
+    {
+      "source": "Ia_vas_lat_r",
+      "target": "MN_bifemsh_r",
+      "reversal_mV": -5.0
+    },
+    {
+      "source": "Ia_bifemsh_r",
+      "target": "MN_vas_lat_r",
+      "reversal_mV": -5.0
+    }
+  ],
+  "omissions": "Other drive,interleg,adaptation,load-sharing,andmuscleinputs omitted; this is not a full connectome.",
+  "active_include": false
+}

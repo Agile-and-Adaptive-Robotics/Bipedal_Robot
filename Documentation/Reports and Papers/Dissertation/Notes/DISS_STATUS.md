@@ -1,3 +1,15 @@
+## Latest audit v3 corrections - 2026-10-30
+
+Current local dissertation: **298 pages**, clean stabilized build with no unresolved references or oversized floats. Appendix C has the bone context first, eight no-bone route poses, and 2D pressure isobars; the former margin figure is archived. Table 6.2 distinguishes mechanical models/controllers/support; graded-versus-spiking output comparison is explained. Remaining unit expressions use siunitx. Chapter 4 publication scope and the blank contribution workbook are ready. Paper 32 pages plus supplement 11, targeted figure typography and psi fixes only. Current report: `Notes/figure_polish_20261030/AUDIT_V3_CORRECTIONS_20261030.md`; **one-page pending-only yellow audit v6**. New Gait2392 pathway diagram is a preview, pending Ben's insertion decision. Original ZIPs, published Chapter 20, bibliography, and Zotero preserved. No live upload, commits, or pushes. Earlier checkpoints below are historical.
+
+## Postdoc review - 2026-10-30
+
+Leo Micklem's 43 open threads (44 messages including one follow-up), posted18:12-19:23 Pacific, were read live and assessed individually. Recommendations and current live/ProofFinal anchors: Notes/figure_polish_20261030/POSTDOC_COMMENT_REVIEW_20261030.md and output/pdf/Dissertation_Postdoc_Comment_Review_20261030.pdf. The first PDF page gives the priorities; remaining pages answer every comment. All manuscript source hashes remain unchanged. No replies, resolutions, tracked-change disposition, upload, or Zotero change. Existing submission PDF and pending-only audit remain unchanged. Earlier status below.
+
+## Latest SNS presentation revision - 2026-10-30
+
+Chapter 6 now follows the AnimatLab result -> transfer gap -> Table 6.1 tools -> curriculum, execution, and integrated CAD/BPA example. Five figures are regenerated from saved recordings with short neural/kinematic windows. D1 terminology/callouts corrected; old D8 startup comparison archived. Current verification/delivery and remaining items: Notes/figure_polish_20261030/SNS_REVISION_20261030.md and pending-only audit v5. No simulation/model run, paper edit, Zotero change, downloaded-ZIP overwrite, or live upload. Earlier checkpoints below are historical.
+
 ## Current local figure-polish checkpoint - 2026-10-30
 
 Final local delivery: dissertation **298 pages** (fresh r3), torque paper **32 pages**, and supplement **11 pages** (fresh r2), with zero build errors, undefined/missing references, or duplicate labels. Existing small box/class/font notices are recorded, not hidden. [Delivery PDFs and current source ZIPs](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Notes/figure_polish_20261030/FINAL_DELIVERY_LINKS.md>) and the adjacent manifest are verified. After Deprecated housekeeping, both PDF hashes, both ZIP hashes/CRCs, and all 109 dissertation/31 paper package members still match current active bytes.

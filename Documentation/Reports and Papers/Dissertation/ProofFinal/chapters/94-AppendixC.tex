@@ -318,23 +318,23 @@ The direct redesigned extensor route is preserved in \nolinkurl{Vas_Pam_20mm_Res
 
 The optimized origin is $\mathbf p_1=[40.0,137.0,0]\,\unit{\mm}$ in the femur frame, and the insertion is $\mathbf p_{\mathrm{End}}=[34.4,-197.1,0]\,\unit{\mm}$ in the tibia frame. Resting length is \qty{827.7}{\mm}, and tendon length is \qty{36.8}{\mm}. The displayed envelopes and bend-radius checks explain the route's geometric constraints.
 
-Figure~\ref{fig:app_bone_mesh} places the same optimized route on the OpenSim bone-surface point clouds (\texttt{Open\_Sim\_Bone\_Geometry}) at exactly zero knee angle: the full lower skeleton (femur, tibia, pelvis and hip, sacrum, lumbar spine, and foot) is drawn behind the three human vastus reference paths in light orange, the optimized p1-to-pEnd route is drawn in magenta with its endpoints circled, and the optimized route carries a total BPA-plus-tendon path length of \qty{0.784}{\m} at this pose. Animated sweeps of both redesigned routes over the full flexion range are archived with the optimization results (\texttt{Knee\_Extensor\_20mm.gif}, 2.3~MB, and \texttt{Knee\_Flexor\_20mm.gif}, 4.7~MB, in \texttt{Code/Matlab/Mesh\_Optimization/Results}).
+Figure~\ref{fig:app_bone_mesh} first locates the optimized route on the OpenSim lower-body bone-surface point clouds (\texttt{Open\_Sim\_Bone\_Geometry}), then enlarges the knee region at exactly zero knee angle. The femur, tibia, pelvis and hip, sacrum, lumbar spine, and foot have distinct colors. The black BPA--tendon route and gray patterned human vastus paths distinguish mechanical routing from anatomical context. The optimized route carries a total BPA-plus-tendon path length of \qty{0.784}{\m} at this pose. Animated sweeps of both redesigned routes over the full flexion range are archived with the optimization results (\texttt{Knee\_Extensor\_20mm.gif}, 2.3~MB, and \texttt{Knee\_Flexor\_20mm.gif}, 4.7~MB, in \texttt{Code/Matlab/Mesh\_Optimization/Results}).
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{route_geometry_ext20mm_20260925.pdf}
-% ALT TEXT: see route_geometry_ext20mm_20260925.alt.txt beside the figure file.
-\caption[Optimized 9-point extensor route geometry at the elimination-event poses]{Eight-panel route-geometry view of the optimized 9-point extensor route of record (\nolinkurl{Vas_Pam_20mm_Result_20260925.mat}), drawn in the femur frame. Gray silhouettes show registered OpenSim femur and proximal tibia as anatomical context; the colored curves are the robot route and clearance envelopes.}
-\label{fig:app_route_geometry}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{bone_mesh_static_extensor20mm.png}
-% ALT TEXT: see bone_mesh_static_extensor20mm.alt.txt beside the figure file.
-\caption[Optimized \qty{20}{\mm} extensor route on the OpenSim bone meshes at zero knee angle]{Static bone-mesh view of the optimized \qty{20}{\mm} extensor route at $\theta_{\mathbf{k}}=\ang{0}$, rendered by \nolinkurl{Export_AppendixBoneMesh.m}.}
+\includegraphics[width=\textwidth]{bone_context_extensor20mm_20261030.png}
+% ALT TEXT: see bone_context_extensor20mm_20261030.alt.txt beside the figure file.
+\caption[Optimized extensor route on the bone meshes]{Optimized extensor route at \ang{0}: \textbf{(A)} lower-body context and \textbf{(B)} knee close-up. Black shows the BPA--tendon route; gray patterned paths show human vastus references.}
 \label{fig:app_bone_mesh}
 \end{figure}
+
+\begin{sidewaysfigure}[p]
+\centering
+\includegraphics[width=\textheight]{direct_route_contact_detail_20261030.pdf}
+% ALT TEXT: see direct_route_contact_detail_20261030.alt.txt beside the figure file.
+\caption[Extensor route at contact-release poses]{Saved extensor route at eight contact-release poses, enlarged in the femur frame. Titles identify the next released contact. The proximal origin lies outside this close-up; Figure~\ref{fig:app_bone_mesh} supplies anatomical context.}
+\label{fig:app_route_geometry}
+\end{sidewaysfigure}
 
 \section{Contact and Release Angles of the Wrapped Route}\label{app:contact_release}
 
@@ -399,21 +399,16 @@ The restructured pass encountered a route-builder concatenation error for twelve
 
 The unadjusted cam optimizer solution had $s_{\mathrm{req}}=+31.30$\,\% and $m_h=+42.34$\,\%; the adjusted design in Chapter~\ref{ch:torque} has $+30.83$\,\% and $+39.77$\,\%, respectively. Equation~\eqref{eq:cam_summary_definitions} distinguishes surplus normalized by peak human torque from the pointwise human-reference margin.
 
-Figure~\ref{fig:PulleySurfaces} shows predicted insertion-torque magnitude versus joint angle and supply pressure for two BPAs through a two-part tackle (force gain 1, travel gain 2), with actuator sizes re-solved. Panels show soleus, tibialis anterior, biceps femoris short head (BFSH), medial gastrocnemius with ankle fixed at zero, and rectus femoris evaluated at the hip. Dashed curves mark equality with the maximum-isometric OpenSim requirement; no equality curve lies within the soleus panel.
+Figure~\ref{fig:PulleySurfaces} compares predicted insertion-torque magnitude with the maximum-isometric OpenSim reference. Colored curves show five constant pressures from the saved pressure grid for two BPAs through a two-part tackle (force gain 1, travel gain 2), with actuator sizes re-solved. The five muscles retain their original evaluation conditions: medial gastrocnemius has the ankle fixed at zero, and rectus femoris is evaluated at the hip.
 
-\begin{figure}[p]
+\begin{sidewaysfigure}[p]
 \centering
-\includegraphics[width=\textwidth]{pulley_torque_resolved_publication.pdf}
-\caption{Predicted insertion-torque magnitude for two BPAs through a two-part tackle, with sizes re-solved. Dashed curves mark equality with the maximum-isometric human target.}
+\includegraphics[width=\textheight]{pulley_torque_isobars_20261030.pdf}
+\caption{Predicted torque at five saved pressure levels for two BPAs through a two-part tackle, with sizes re-solved. Black dashed curves show the maximum-isometric human reference.}
 \label{fig:PulleySurfaces}
-\end{figure}
+\end{sidewaysfigure}
 
-\begin{figure}[p]
-\centering
-\includegraphics[width=\textwidth]{pulley_margin_resolved.pdf}
-\caption{Torque margins at \qty{620}{\kPa} for the single-BPA baseline, two BPAs with a two-part tackle, and four BPAs with a four-part tackle. The categorical axis lists BPA count and travel multiplier $G$; $G$ is not force gain. Ideal force gain relative to one BPA is $n/G$, equal to one for each displayed configuration. Sizes are re-solved. Positive values exceed the reference; panels follow Figure~\ref{fig:PulleySurfaces}.}
-\label{fig:PulleyMargins_resolved}
-\end{figure}
+
 
 \clearpage
 \begin{figure}[htbp]
