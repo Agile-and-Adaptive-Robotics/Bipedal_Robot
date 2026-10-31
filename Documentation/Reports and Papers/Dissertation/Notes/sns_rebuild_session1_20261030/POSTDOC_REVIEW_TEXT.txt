@@ -1,0 +1,316 @@
+ Postdoc dissertation review
+ Leo Micklem | 30 October 2026 | Recommendations only
+
+ 43 threads, 44 messages. All open comments in the review round from 6:12 to 7:23 pm Pacific were read live.
+ Every message has a proposed response below, with verified source anchors.
+ Most identify real clarity and organization problems. They do not require new experiments, broad chapter
+ replacement, or changes to the scientific results.
+
+ Recommended order
+ 1. Clarify purpose before contributions.
+ Open the abstract and Introduction with why biomimetic robots matter. Then connect the four gaps to the four
+ contributions. Reuse the existing objective structure; avoid a second full list.
+ 2. Show SADb through one real use case.
+ Use the existing Grillner figure to show a research question, navigation steps, and the evidence a researcher can
+ inspect. Distinguish curated notes and connections from the researcher's interpretation.
+ 3. Apply bounded clarity fixes.
+ State Ben's ownership immediately. Define actuator-tendon routes versus sensory-feedback pathways. Name the
+ robot class and anatomical extent, and split the long platform-history sentence.
+ 4. Preserve decisions and scientific limits.
+ Keep the one-page abstract and current one-paragraph preference. Retain prosthetic/orthotic applications as
+ longer-term motivation. Keep Morrow's coauthored paper and clarify attribution. Say candidate pathway, not
+ optimal pathway.
+ 5. Separate optional and evidence-dependent work.
+ A new flow diagram and control-label italics are optional. The AI-triage subsection could use a genuine example
+ from the 2024 materials; do not invent a formal method, timings, or failed tasks.
+
+ Status: No manuscript, figure, bibliography, reply, resolution, tracked-change, upload, or Zotero change. The
+ prior submission PDF and pending-only audit are unchanged.
+ Location note: Abstract and Introduction match ProofFinal. Live Chapter5 combines its presentation credits in the opener
+ and lacks the local OpenAlex gloss; its line numbers differ by two. Both locations are shown where needed. Yellow marks
+ proposed changes; Retain entries identify passages to preserve.
+
+
+
+
+30 October 2026 | Read-only review; proposed responses                                                                      1
+ Abstract: five comments
+ Source: 02-abstract.tex; numbers below are current ProofFinal lines unless marked live.
+
+ A01 | 6:12 pm | Abstract | 02-abstract.tex:7
+   Comment: There's no real set up for this sentence. You mention biomimetic robotics in general and then jump to
+   human robots
+ Agree. Name the musculoskeletal humanoid and its actuation/control problem in the opening, then state the
+ specific gaps. The current general-biomimetic opener does not prepare the shift to a human-proportioned BPA
+ robot.
+
+ A02 | 6:14 pm | Abstract | 02-abstract.tex:7
+   Comment: It would be nice if there was a logical flow to these points or a story you're telling with the project
+   rather than just a list
+ Agree. Replace the needs-list followed by a results-list with a causal sequence: force characterization enables
+ torque prediction; joint losses motivate route redesign; sensory evidence and modeling tools enable controller
+ tests. Preserve the four aims and their order.
+
+ A03 | 6:15 pm | Abstract | 02-abstract.tex:7
+   Comment: This sentence would be easier to understand if it was in the first person. 'I produced a x model by...'
+ Agree. Use first person for the contribution: "I characterized Festo BPAs across resting lengths, contractions, and
+ pressures and developed..." Keep BPA characterization before joint torque, as Ben requested.
+
+ A04 | 6:19 pm | Abstract | 02-abstract.tex:7
+   Comment: I think each of these are effectively chapter conclusion summaries but they need some more set up.
+   A thesis abstract can be much longer than a paper abstract. I would consider splitting this into two paragraphs
+   and setting up each takeaway a little more from the needs prior. I find the two lists a little disconnected.
+ Modify. Accept the need to connect gaps and takeaways. Keep Ben's one-page, one-paragraph choice for now; a
+ second paragraph is optional, not required to fix the argument. Do not expand merely because a thesis can be
+ longer.
+
+ A05 | 6:16 pm | Abstract | 02-abstract.tex:7
+   Comment: I think you need something like this at the start of the abstract to help the reader understand where
+   you're going with it.
+ Agree. Move the purpose now stated in the closing sentence into the opening: experimentally informed robot
+ design and controllable neuromechanical experiments. Keep prosthetic/orthotic applications as potential
+ downstream use, not an evaluated outcome.
+
+
+
+
+30 October 2026 | Read-only review; proposed responses                                                                 2
+ Introduction: 24 comments
+ Source: 10-introduction.tex; numbers below are current ProofFinal lines unless marked live.
+
+ I01 | 6:21 pm | 1.1 | 10-introduction.tex:6
+   Comment: For me this is missing a high level intro of why we should be interested in biomimetic humanoid
+   robots
+ Agree. Lead with the unstructured-terrain problem and the value of controlled biological experiments; place the
+ deliverables after the motivation. Do not claim energy savings or terrain autonomy were demonstrated.
+
+ I02 | 6:24 pm | 1.1 | 10-introduction.tex:8
+   Comment: This paragraph is less a goal and more a motivation which I think should proceed the previous
+   paragraph
+ Modify. Put both broader motivations before the contribution list. Keep Ben's priorities: better robots first,
+ biological understanding second, and prosthetic/orthotic potential third.
+
+ I03 | 6:25 pm | 1.1 | 10-introduction.tex:8
+   Comment: Not sure this is a goal specifically and more motivation for what this work could also be beneficial for.
+   You don't do anything related to this in your work
+ Modify. Retain prosthetic/orthotic design as a longer-term application: "These methods may also inform future
+ prosthetic and orthotic devices." Do not describe it as a tested dissertation deliverable.
+
+ I04 | 6:26 pm | 1.1 | 10-introduction.tex:10
+   Comment: It's not clear to me what class of robot you mean here
+ Agree. Replace "this class of robot" with "musculoskeletal humanoid robots actuated by artificial muscles."
+ General biomimetic robots need not use muscles.
+
+ I05 | 6:27 pm | 1.1 | 10-introduction.tex:10
+   Comment: Good
+ Retain. Retain the explanation of BPA-versus-skeletal-muscle differences. No corrective edit is needed.
+
+ I06 | 6:37 pm | 1.1 | 10-introduction.tex:10
+   Comment: This doesn't belong in the motivation. Abstract or contributions
+ Agree. Move "I therefore characterized...developed a force model" to the contribution/objective summary. Let this
+ motivation paragraph end with the unmet prediction need.
+
+ I07 | 6:41 pm | 1.1 | 10-introduction.tex:12
+   Comment: I think you can say this without the previous sentence. You're just trying to motivate the work here.
+ Modify. An optional shorter transition is reasonable. First move the preceding completed-work sentence; keep a
+ clear distinction between actuator force and transmitted joint torque. This is not a reason to delete the
+ transmission-loss rationale.
+
+ I08 | 6:42 pm | 1.1 | 10-introduction.tex:12
+   Comment: Good. Maybe say 'a robot knee' so it's a little more generalised
+ Modify. Use "In a BPA-actuated robot knee..." for the general mechanism, then "the tested knee" for the
+ study-specific evidence. Do not generalize the measurements to all robot knees.
+
+
+
+
+30 October 2026 | Read-only review; proposed responses                                                                  3
+ I09 | 6:48 pm | 1.1 | 10-introduction.tex:12
+   Comment: Muscle routes? Tendon routes?
+ Agree. Define "actuator-tendon routes" as the combined BPA and artificial-tendon paths through attachment and
+ wrapping points, then use that term consistently.
+
+ I10 | 6:43 pm | 1.1 | 10-introduction.tex:12
+   Comment: You're citing a dissertation that isn't 'this dissertation' being your one
+ Modify. Clarify collaborative work done during Ben's doctorate. The bibliography records Morrow, Bolen, and
+ Hunt (2020), a coauthored paper, not a different dissertation. Keep the citation and distinguish it from the 2019
+ master's work.
+
+ I11 | 6:44 pm | 1.1 | 10-introduction.tex:14
+   Comment: I would make it more clear that this is just the first problem
+ Agree. Explicitly label the first neural-modeling gap as access to physiological evidence and the second as
+ controller transfer to different mechanics. Each motivates a separate aim.
+
+ I12 | 6:45 pm | 1.1 | 10-introduction.tex:14
+   Comment: Again, not part of motivation
+ Agree. Move "I addressed that evidence-access problem with the Sensory Afferent Database" to
+ objective/contribution 3; keep the preceding evidence-access gap.
+
+ I13 | 6:46 pm | 1.1 | 10-introduction.tex:14
+   Comment: Good
+ Retain. Retain the explanation that circuit behavior depends on mechanics, sensory input, support, and numerical
+ implementation.
+
+ I14 | 6:47 pm | 1.1 | 10-introduction.tex:14
+   Comment: I think this doesn't belong in the motivation either. Abstract or have a contributions section.
+ Agree. Move "I developed coupled..." and the representative-test outcomes into the fourth contribution. Keep the
+ motivation focused on the need to test the coupled model.
+
+ I15 | 6:48 pm | 1.1 | 10-introduction.tex:16
+   Comment: This is good but you could strengthen it by moving those contributions that are dotted in the
+   motivation to here.
+ Agree. Gather the relocated contribution sentences in the existing four-aim summary or Research Objectives
+ section. Avoid adding another nearly identical contributions list.
+
+ I16 | 6:50 pm | 1.2 | 10-introduction.tex:20
+   Comment: This is missing the 'why' of the work for me
+ Modify. Add one purpose-led link: the platform permits controlled tests of actuation and neural-control
+ hypotheses. Do not repeat the full Motivation section.
+
+ I17 | 6:49 pm | 1.2 | 10-introduction.tex:20
+   Comment: Not sure where the trunk begins and ends.
+ Agree. Replace "from the trunk down" with an anatomically explicit description, matched to the illustrated
+ assembly: lumbar structure, pelvis, and legs. Do not imply a complete upper torso.
+
+
+
+
+30 October 2026 | Read-only review; proposed responses                                                               4
+ I18 | 6:51 pm | 1.2 | 10-introduction.tex:22
+   Comment: I think this is the same as what you mean by routes previously but that could be clarified
+ Agree. Use the same actuator-tendon-route terminology for earlier attachment/wrapping placement. Preserve the
+ master's-to-doctoral chronology and distinguish rigid placement searches from later design-factor redesign.
+
+ I19 | 6:52 pm | 1.2 | 10-introduction.tex:22
+   Comment: This is one very long sentence and you lost me in what you're trying to say
+ Agree. Split the long platform-history sentence into separate knee-linkage and Muscle Mutt/SNS statements,
+ keeping the source beside each claim. No scientific content needs to be lost.
+
+ I20 | 6:54 pm | 1.3 | 10-introduction.tex:24
+   Comment: It should be clear to me from the motivation paragraphs why you have chosen each of these
+   objectives
+ Agree. Make the four motivating needs explicit before their matching objectives: resting-length force prediction,
+ transmission-aware torque prediction, accessible sensory evidence, and controller-transfer tools.
+
+ I21 | 6:52 pm | 1.3 | 10-introduction.tex:26
+   Comment: Good
+ Retain. Retain the objective introduction and four-aim organization; absorb moved contributions without creating
+ another full list.
+
+ I22 | 6:55 pm | 1.3 | 10-introduction.tex:30
+   Comment: I'm not sure this is described earlier?
+ Modify. Wrapping-induced loss of usable length already appears in line12. Make the terminology and connection
+ to objective2 easier to follow; this is signposting, not missing science or a need for new equations.
+
+ I23 | 7:02 pm | 1.3 | 10-introduction.tex:32
+   Comment: This only really gets one motivation sentence - I had to go back and check why you were doing this
+ Agree. Give controller transfer a short separate rationale: hand tuning after transfer to different mechanics is
+ inefficient and does not establish walking. Connect graphical editing and automated evaluation to Gait2392 and
+ BPA robot models.
+
+ I24 | 7:03 pm | 1.4 | 10-introduction.tex:35
+   Comment: This and the figure are good
+ Retain. Retain the dissertation roadmap and figure. Update pointers only if later approved changes require it.
+
+
+
+
+30 October 2026 | Read-only review; proposed responses                                                               5
+ SADb: 14 threads and one follow-up reply
+ Source: 50-database.tex; numbers below are current ProofFinal lines unless marked live.
+
+ S01 | 7:04 pm | Opening | 50-database.tex:4
+   Comment: I think you need to make it clear that this is your work in the first sentence
+ Agree. Start "I developed the Sensory Afferent Database (SADb), a curated literature resource..." Keep the
+ AARL/C3NS context and both 2023/2024 presentation credits.
+
+ S02 | 7:05 pm | Opening | 50-database.tex:8; live:6
+   Comment: Is this someone who is building a model?
+ Agree. Use "A researcher building a neural or neuromechanical model" at first mention instead of the unexplained
+ "A modeler."
+
+ S03 | 7:07 pm | Opening | 50-database.tex:19; live:17
+   Comment: I think it would be helpful to the reader if you put 'clickable' items on the site in italics
+ Modify. Optional: italicize actual tab/control labels consistently, such as Table and Search (online). Keep "tabs"
+ and the existing callouts. Do not italicize every clickable concept or redesign the app.
+
+ S04 | 7:08 pm | 5.1 | 50-database.tex:23; live:21
+   Comment: Was?
+ Modify. The live anchor is "This was a curated research collection." Prefer "SADb is a curated research
+ collection..." or "I curated..."; retain past tense for completed import and screening actions.
+
+ S05 | 7:08 pm | 5.1 | 50-database.tex:23; live:21
+   Comment: What keywords?
+ Modify. Clarify representative search terms, but distinguish historical manual searching from the current monthly
+ watch. Its config verifies terms such as Ia/Ib afferent, muscle spindle, proprioceptive feedback, and central pattern
+ generator; it does not prove the original manual queries.
+
+ S06 | 7:11 pm | 5.1 | 50-database.tex:25; live:23
+   Comment: I feel some kind of flow diagram for the order of operations could be helpful
+ Modify; optional figure. Make the sequence explicit: collect, deduplicate, screen, classify/annotate, and transfer
+ to Explorer; monthly searches feed manual curation. A small flow diagram is optional and should replace
+ repetitive prose, not add a second account.
+
+ S07 | 7:16 pm | 5.2 | 50-database.tex:29; live:27
+   Comment: I think it would be really helpful to pick an example that you can walk through of how you'd use this
+ Agree. Add one short real use case using the existing Grillner screenshot: select a paper, inspect notes, follow a
+ cited/citing study, and inspect its evidence. Verify any named linked record; do not assume every paper has a
+ pathway link. Replace repeated menu descriptions.
+
+ S08 | 7:12 pm | 5.2 | 50-database.tex:33; live:31
+   Comment: I'm assuming this is mentioned in the background section
+ Retain local explanation. The anchor is Louvain. It is not explained in Background, but the present sentence
+ already states its function: grouping citation-connected papers. Keep that brief local explanation; a new
+ background subsection is unnecessary.
+
+
+
+
+30 October 2026 | Read-only review; proposed responses                                                                   6
+ S09 | 7:16 pm | 5.2.1 | 50-database.tex:67; live:65
+   Comment: This feels like more of an abstract for the subsection rather than the section itself. Where is the
+   substance of what was done, examples of things not working etc?
+ Modify; example pending. The live anchor is the AI-triage heading, not corpus coverage. Acknowledge the lack
+ of a concrete example. Consider one genuine example from the 2024 poster if available; otherwise leave this
+ pending. Preserve Ben's subjective judgment against his own speed/quality; no invented protocol, timings,
+ failures, or new rating exercise.
+
+ S10 | 7:18 pm | 5.3.1 | 50-database.tex:78; live:76
+   Comment: Does the database directly tell you these differences or connect the papers? I think it's good to try to
+   use the example but I'm not sure of the point.
+ Agree. Lead with what SADb supplies: curated records, notes, and source connections. The researcher
+ compares study conditions and assumptions; do not imply the app automatically infers the biological distinctions.
+
+ S11 | 7:19 pm | 5.3.1 | 50-database.tex:80; live:78
+   Comment: I'm not sure how this paragraph relates to the database?
+ Agree. Start the Geyer/Deng paragraph with its database-use point, then retain only the study detail needed to
+ show how comparing records informs controller choice.
+
+ S11r | 7:20 pm | 5.3.1 | 50-database.tex:80; live:78
+   Comment: These paragraphs should probably start with the point you're trying to make and then show evidence
+ Agree. Use point, source example, and modeling implication in that order. Preserve informative primary-study
+ examples Ben requested, without claiming an unverified link between papers.
+
+ S12 | 7:21 pm | 5.3.1 | 50-database.tex:80; live:78
+   Comment: Muscle pathway? Neural pathway?
+ Agree. Say "sensory-feedback pathway" here, to distinguish neural connections from the mechanical
+ actuator-tendon routes in Chapter4.
+
+ S13 | 7:22 pm | 5.3.1 | 50-database.tex:82; live:80
+   Comment: This should probably be in the motivation section? I'm not sure what relevance it has to the database
+ Agree selectively. The Ijspeert salamander example already supplies this broader motivation in Introduction
+ line8. Keep that fuller example there; shorten its repeat in Chapter5 to a database-specific connection, or remove
+ the duplication.
+
+ S14 | 7:23 pm | 5.3.1 | 50-database.tex:86; live:84
+   Comment: Is the take home point supposed to be that you can use the database to select the optimal pathway
+   to use for your robot? and then you go do the model development stuff?
+ Modify. Make the handoff explicit: SADb helps identify candidate sensory-feedback pathways and supporting
+ evidence; Chapter6 implements and tests their encoding, connections, and gains. Do not claim the database
+ selects an optimal pathway.
+
+
+
+
+30 October 2026 | Read-only review; proposed responses                                                                 7
+

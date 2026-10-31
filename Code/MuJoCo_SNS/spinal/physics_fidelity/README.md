@@ -11,6 +11,10 @@ The [standing initializer audit](STANDING_INITIALIZER_AUDIT.md) also supplies an
 isolated corrected callable with sign, passive-force, equality-projection,
 bounded-solve, and bilateral-tie corrections. Its static improvements do not
 establish dynamic balance or walking.
+The [contact initialization and ground-alignment follow-up](CONTACT_INITIALIZER_AND_ALIGNMENT.md)
+finds severe initial foot penetration, provides a repaired-probe alignment
+helper, and distinguishes successful fixed-activation holds from the still
+unsuccessful SNS transfer of the new contact-aware initializer.
 
 ## Findings that matter for the current model
 

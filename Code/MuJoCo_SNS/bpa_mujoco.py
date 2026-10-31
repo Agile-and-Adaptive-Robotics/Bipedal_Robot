@@ -8,6 +8,11 @@ The force is computed HERE from Ben's BPA model and applied to the joints
 via data.qfrc_applied, so the actuated dynamics use Ben's force law
 instead of MuJoCo's Hill-type muscle.
 
+BPAMuscle.force returns a positive tensile magnitude T. MuJoCo's actuator
+moment is the transmission length gradient J, so virtual work requires
+Q = -J.T @ T. This matches a native tendon actuator with negative scalar
+actuator force; adding +J.T @ T would instead lengthen the path.
+
 Usage
 -----
     system = BPAMuscleSystem({"knee_flex_bpa": BPAMuscle(...), ...})
@@ -39,8 +44,9 @@ class BPAMuscleSystem:
         """Resolve actuator ids and moment-matrix orientation once."""
         for name in self.muscles:
             self.actuator_ids[name] = model.actuator(name).id
-        # data.actuator_moment is (nv, nu) in mujoco 2.x, (nu, nv) in 3.x;
-        # resolve after first data exists, so defer to first cb call.
+        # MuJoCo 2.3.7 exposes (nu, nv), including when nu == nv. Check
+        # this documented layout first; retain a nonsquare fallback for
+        # callers supplying a transposed compatibility array.
         self._transposed_moment = None
 
     # ----------------------------------------------------------------- state
@@ -59,7 +65,12 @@ class BPAMuscleSystem:
         """mjcb_control callback: apply each BPA force along its tendon."""
         moment = data.actuator_moment
         if self._transposed_moment is None:
-            self._transposed_moment = moment.shape[0] == model.nv
+            if moment.shape == (model.nu, model.nv):
+                self._transposed_moment = False
+            elif moment.shape == (model.nv, model.nu):
+                self._transposed_moment = True
+            else:
+                raise ValueError("Unexpected actuator_moment shape: " + str(moment.shape))
 
         # this callback owns qfrc_applied; clear last step's contribution
         data.qfrc_applied[:] = 0.0
@@ -69,4 +80,4 @@ class BPAMuscleSystem:
             f = mus.force(data.actuator_length[aid],
                           data.actuator_velocity[aid])
             col = moment[:, aid] if self._transposed_moment else moment[aid, :]
-            data.qfrc_applied[:] += col * f
+            data.qfrc_applied[:] -= col * f

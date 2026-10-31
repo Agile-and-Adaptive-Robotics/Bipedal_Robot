@@ -1,0 +1,76 @@
+{
+  "source": {
+    "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_Geometry_Newer_20261031\\W2L_Geometry_Standalone.asim": "173199618a9fe7522cfe69f377993967c2037202bf93d82ebd000a04070771d0",
+    "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_Geometry_Newer_20261031\\W2L_Geometry.aproj": "b1abe7d758b471c12fe0bc747a643425b49003b6d57f77c6aabdd1973aedaf24"
+  },
+  "axes": "x anterior/travel, y superior, z lateral",
+  "root_initial_xyz": [
+    -3.454,
+    0.982884571929984,
+    0.0
+  ],
+  "root_frozen": false,
+  "foot_sole_y": {
+    "foot_L": 0.029930471472280736,
+    "toe_L": 0.015000000000000058,
+    "foot_R": 0.08004121151632632,
+    "toe_R": 0.05476032024221654
+  },
+  "floor_top_y": 0.005000000000000018,
+  "floor_world_rotation": [
+    0,
+    0,
+    0
+  ],
+  "minimum_foot_gap": 0.01000000000000004,
+  "wing_bottom_y": 0.930384571929984,
+  "wing_to_rail_gap": 0.02200000000000004,
+  "extra_support_clearance": 0.012,
+  "rail_top_y": 0.908384571929984,
+  "wing_dimensions_xyz": [
+    0.12,
+    0.025,
+    0.3
+  ],
+  "wing_centers_root_xyz": [
+    [
+      0,
+      -0.04,
+      0.25
+    ],
+    [
+      0,
+      -0.04,
+      -0.25
+    ]
+  ],
+  "wing_declared_mass_g": 0.001,
+  "rail_dimensions_xyz": [
+    4,
+    0.04,
+    0.18
+  ],
+  "rail_centers_z": [
+    0.32,
+    -0.32
+  ],
+  "rail_visible": false,
+  "rail_collision_enabled": true,
+  "material": {
+    "id": "430d15de-f355-5042-a3fb-bbc6fb4894e2",
+    "linear_friction": 0.05,
+    "restitution": 0
+  },
+  "support": "passive normal contact, no pelvis joint or freeze; roll/pitch/yaw remain possible",
+  "recording_speed": "MatchPhysicsStep (normal speed)",
+  "poses_deg": {
+    "L": {
+      "hip": -10,
+      "knee_flexion": 10
+    },
+    "R": {
+      "hip": 20,
+      "knee_flexion": 55
+    }
+  }
+}

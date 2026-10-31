@@ -20,11 +20,11 @@ The archived AnimatLab projects provide reference circuits for implementation co
 \par\medskip
 \textbf{(C) Sensorimotor organization}\par\smallskip
 \includegraphics[width=0.76\textwidth,height=0.39\textheight,keepaspectratio]{sensoryMotor_Network.PNG}
-\caption[AnimatLab neural subsystems]{AnimatLab neural subsystems: \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx denote antagonist pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferents. Triangles and circles distinguish excitatory and inhibitory connections.}
+\caption[AnimatLab controller reference schematics]{Archived AnimatLab neural subsystems: \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx denote antagonist pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferents. Triangles and circles distinguish excitatory and inhibitory connections.}
 \label{fig:animatlab_controller_motifs}
 \end{figure}
 
-A \qty{10}{\second} instrumented run recorded joint, neural, sensory, and body-motion channels at a \qty{0.2}{\milli\second} interval. Contact-sensory recordings are membrane voltages, not contact forces. The initial external horizontal force and the limited window prevent the joint traces from establishing stable walking. Figure~\ref{fig:animatlab_phase1_preliminary} in Chapter~\ref{ch:sns} aligns a short window of neural and joint recordings. The platform was present, but no timed vertical release was recorded; these traces therefore do not establish a drop or touchdown response.
+A \qty{10}{\second} instrumented run recorded joint, neural, sensory, and body-motion channels at a \qty{0.2}{\milli\second} interval. Contact-sensory recordings are membrane voltages, not contact forces. The initial external horizontal force and the limited window prevent the joint traces from establishing stable walking. The platform was present, but no timed vertical release was recorded; these traces therefore do not establish a drop or touchdown response.
 
 
 
@@ -229,8 +229,8 @@ Fell                            & no                  & no \\
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics.pdf}
-\caption[Short-window graded and spiking neuromechanics]{Matched \qtyrange{10}{14}{\second} ground-evaluation window: graded controller (left) and untuned spiking controller (right). Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural readouts pair extensor (orange solid) and flexor (blue dashed) channels; mechanical traces pair right (orange solid) and left (blue dashed) legs. Spiking populations are displayed through their filtered readout channels.}
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
+\caption[Matched neural and mechanical responses with graded and spiking controllers]{Matched \qtyrange{10}{12.5}{\second} ground-trial window: graded controller (left) and untuned spiking controller (right), at the same selected parameters and support settings. Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural rows pair extensor (orange solid) and flexor (blue dashed) outputs; joint rows pair right (orange solid) and left (blue dashed) legs. Spiking signals are filtered readouts, and muscle activation is the actuator state.}
 \label{fig:spike_rhythm}\label{fig:spike_ground}
 \end{figure}
 
@@ -238,7 +238,7 @@ Fell                            & no                  & no \\
 
 The earlier \qty{5}{\second} knee startup comparison used a graded baseline and a spiking twin. Its final-window statistics describe startup activity; the settled, matched-control test in Section~\ref{sec:app_knee_transient} instead measures recovery from a brief sensory-current pulse. The earlier startup figure and its numerical table are retained with the supporting source records rather than repeated here.
 
-In the beverage example, the spiking implementation retained approximately the same sag, \ang{2.02} versus \ang{2.00} in the graded implementation, compared with \ang{7.85} without the reflex. This comparison demonstrates transfer of the tested response after calibration, not invariance of all controlled behavior to neural coding.
+In the beverage example, the spiking implementation retained approximately the same sag, \ang{2.02} versus \ang{2.00} in the graded implementation, compared with \ang{7.85} without the reflex. This comparison demonstrates transfer of the tested response after calibration.
 
 \subsection{AnimatLab Conversions}
 
@@ -265,7 +265,9 @@ Thresholds only      & \multirow{2}{=}{hip $-15$ to $+23$, knee $-1$ to $+60$} &
 
 \section{Supported BPA-Robot Evaluations}\label{sec:sns_controller_comparison}
 
-The BPA-actuated walker exercised the chain from neural activation through the actuator force model to multi-joint motion. In the supported air-stepping run, the virtual harness carried \qty{70}{\percent} of the \qty{411}{\newton} body weight. The period was \qty{1.542}{\second}, knee RoM was \ang{63.5}, and peak forces were \qtylist{880;1372}{\newton}, at a peak pressure of \qty{372}{\kPa}.
+An early supported software-interface experiment recorded neural activity, actuator commands, and multi-joint motion. Its nominal vertical-support setting was \qty{70}{\percent} of the \qty{411}{\newton} body weight. The recorded period was \qty{1.542}{\second}, knee RoM was \ang{63.5}, and peak foot-contact forces were \qtylist{880;1372}{\newton}, at a peak commanded pressure of \qty{372}{\kPa}.
+
+Component tests now check tensile-force application against native MuJoCo actuators. Together with the characterized force law, this interface supports simulated BPA control and provides a basis for future work on dynamic actuator models, sensory compensation, and physical BPA control.
 
 With split left/right drives and retuned feedback, the W2L robot progressed \qty{1.72}{\meter} over \qty{30}{\second} under the support protocol. It retained progression at \qty{60}{\percent} drive and passed 12 of 12 perturbed reruns, but did not satisfy the strict contact-duty walking criterion; below that drive the gait ceased. The mechanical support was not weaned.
 
@@ -376,7 +378,7 @@ The comparison script reads OpenSim static-optimization forces and activations a
 
 Figure~\ref{fig:force-compare} shows representative force sequences normalized to each curve's peak. Table~\ref{tab:force-r2} retains the saved per-muscle statistics: $R^2=1-\mathrm{SSE}/\mathrm{SST}$, squared Pearson correlation, and the best-aligning lag in analysis frames. The calculation and saved values are in \nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \nolinkurl{muscle_force_compare.csv}.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \caption{MuJoCo vs.\ OpenSim muscle force along the subject01 walk at
   matched activations. Lag in analysis frames ($\approx 17$\,ms each).}

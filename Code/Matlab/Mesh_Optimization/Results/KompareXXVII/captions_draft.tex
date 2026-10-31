@@ -1,0 +1,22 @@
+% Ready-to-review caption and callout for the Table 4.12 geometry figures.
+% Review artifact only -- NOT inserted into any manuscript.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{wholeleg_saved_routes.pdf}
+\caption{Saved transmission configurations behind Table 4.12, drawn on the inherited master's-era attachment routing (no attachment or via-point locations were re-optimized for this comparison). Panel \textbf{(A)} shows the sagittal plane (x anterior, y superior) and panel \textbf{(B)} the frontal plane (z right, y superior) of the right leg in the pelvis frame; gray links connect recorded joint pivots, and the numbered markers index the 27 actuator sites of Table~\ref{tab:CapabilitySurvey} (site 27, psoas, is shown separately in its own recorded frame because no saved transform registers its torso-frame root to the pelvis frame). Route points were folded from their recorded body-local frames through the saved transformation grids at each site's stored pose nearest the neutral pose (hip $-15.0^{\circ}$ and knee $+10.0^{\circ}$ on the rectus-femoris grid; ankle $+2.5^{\circ}$ and subtalar $+5.0^{\circ}$ on the soleus grid); the rolling-knee center is carried inside the saved transforms, and the drawn knee vertex is the saved neutral fixed-pivot fallback. Colors group the routes by crossed region (torso, hip, knee, knee+ankle, ankle/foot); no bone geometry is drawn because no verified registration exists for the master's-era frames.}\label{fig:wholeleg_saved_routes}
+\end{figure}
+
+% Callout (Discussion or Appendix C prose):
+% Figure~\ref{fig:wholeleg_saved_routes} and
+% Table~\ref{tab:wholeleg_saved_configurations} document the saved
+% configurations that produced Table~\ref{tab:CapabilitySurvey}: the
+% attachment and via-point routing is the inherited master's-era geometry at
+% every one of the 27 sites, and the comparison re-solved actuator and tendon
+% lengths while selecting the transmission configuration (number of parallel
+% BPAs and tackle line parts). At the eight nominal-40~mm sites the baseline
+% entry is a substitute of four parallel 20~mm actuators, and the selected
+% side retains the inherited 40~mm specification. For rectus femoris and
+% vastus intermedius the master's builder represents the patellar function
+% points with a fixed tibial waypoint (a rigid-patella approximation), which
+% the saved survey geometry inherits.

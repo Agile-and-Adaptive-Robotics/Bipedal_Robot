@@ -1,0 +1,37 @@
+[
+  {
+    "paragraph_prefix": "I first transferred a published neural controller",
+    "before": "I first transferred a published neural controller to a different biomechanical model and adjusted it by hand. The combined model produced alternating neural activity and air stepping, but not weight-bearing walking. This result motivated more efficient ways to test alternative controllers, first on the complex Gait2392 human model and then on a robot counterpart with BPAs. This chapter presents the resulting neuromechanical models, graphical neural blocks, simulation interfaces, and controlled experiments.",
+    "after": "I combined a published neural controller with a different biomechanical model and adjusted the controller by hand. Alternating neural activity and air stepping emerged. This experience motivated tools for transferring, training, and testing controllers more efficiently, first on the Gait2392 human model and then on a robot counterpart with BPAs. This chapter presents the resulting neuromechanical models, graphical neural blocks, simulation interfaces, and controlled experiments in the order summarized in Table~\\ref{tab:sns_capability}."
+  },
+  {
+    "paragraph_prefix": "We adjusted applied currents",
+    "before": "We adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and air stepping, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking.",
+    "after": "Morrow and I adjusted applied currents, synaptic weights, and muscle parameters by hand. In suspension, antagonist muscle activity alternated and the legs cycled through air stepping. We presented this result at the 2021 NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. The experiment established coupled neural and limb motion and exposed the difficulty of transferring a controller to different mechanics and loading conditions."
+  },
+  {
+    "paragraph_prefix": "Suspended motion did not establish",
+    "before": "Suspended motion did not establish that the controller could support the model on the ground. In a separate unsupported ground test, the pelvis fell while the neural rhythm continued. That ground test used a different configuration from the suspended recording, rather than a release during the same trial. Together, these observations distinguish coordinated joint motion from control of the body during loading. They also show why neural oscillation alone is an insufficient criterion for successful locomotor control.",
+    "after": "In a separate unsupported ground test, the pelvis descended while the neural rhythm continued. This trial introduced the additional demands of loading and interleg coordination, motivating staged training from suspended movement to supported ground stepping."
+  },
+  {
+    "paragraph_prefix": "Mechanical support remains part of these results.",
+    "before": "Mechanical support remains part of these results. Removing a constant weight-support term did not remove the position-control harness, and contact duty remained below the strict walking criterion. No harness-free walking was demonstrated.",
+    "after": "The support protocol combines a constant weight-support term with position guidance, providing controllable loading conditions during training. These components can be reduced progressively as the controller adapts to greater stance loading."
+  },
+  {
+    "paragraph_prefix": "Matched neural traces support the tested circuit",
+    "before": "Matched neural traces support the tested circuit and input protocol. Successful command and sensor exchange through the bridge establishes the interface needed to couple models, while the fixed-controller W2L comparison identifies a sensory-feedback contribution to bilateral contact coordination. The loaded-arm comparison gives a directly interpretable corrective response in the coupled neural and actuator blocks. These results answer different questions and should be interpreted at their respective scales.",
+    "after": "The tools connect graphical neural construction, detailed mechanics, alternative actuator laws, and automated experiments. Matched neural traces establish implementation agreement, and command and sensor exchange through the bridge couples block-programmed controllers to MuJoCo models. The W2L comparison identifies a sensory-feedback contribution to bilateral contact coordination, while the loaded-arm example demonstrates a corrective response in the coupled neural and actuator blocks."
+  },
+  {
+    "paragraph_prefix": "The implemented workflow supports controlled circuit",
+    "before": "The implemented workflow supports controlled circuit comparisons and virtual-harness-assisted evaluations of the human and BPA robot models. It makes alternative controllers accessible to repeated tests with specified mechanics, sensory pathways, and assistance. Chapter~\\ref{ch:overall} connects these capabilities with the actuator characterization, torque models, and SADb, then considers their use in broader robot behavior and hardware experiments.",
+    "after": "These simulations provide a platform for investigating neural coordination with experimentally characterized BPA forces. Motor-neuron outputs are converted to actuator excitation or pressure commands, and sensory feedback allows the controller to respond to the resulting movement and loading. Future researchers can extend this simulated BPA control through improved dynamic characterization and closed-loop hardware experiments, including pressure response, loading-dependent behavior, and neural compensation for actuator-model errors. Chapter~\\ref{ch:overall} connects these opportunities with the actuator characterization, torque models, SADb, and robot design."
+  },
+  {
+    "paragraph_prefix": "A comparison with a native MuJoCo tensile actuator",
+    "before": "A comparison with a native MuJoCo tensile actuator identified a reversed sign in the force-coupling implementation used for that experiment. The recorded values above are retained, but the motion does not validate physically consistent BPA actuation. A replay with corrected force coupling is required before drawing that conclusion. The subsequent native-muscle W2L evaluations and Gait2392 drive-weaning study use separate force implementations.",
+    "after": "Component tests now check tensile-force application against native MuJoCo actuators. Together with the characterized force law, this interface supports simulated BPA control and provides a basis for future work on dynamic actuator models, sensory compensation, and physical BPA control."
+  }
+]

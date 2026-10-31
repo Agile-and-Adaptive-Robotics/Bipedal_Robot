@@ -1,0 +1,9 @@
+"""Read-only route-function check for the four canonical II physical sources."""
+import json
+import numpy as np
+from import_virtual_walker import HERE,mujoco,safe
+audit=json.loads((HERE/'runs/canonical_newer_audit/AUDIT.json').read_text());base=HERE/'runs/W2L_VirtualWalker_Newer_GUI1nA';m=mujoco.MjModel.from_xml_path(str(base/'W2L_VirtualWalker_Newer_GUI1nA.xml'));d=mujoco.MjData(m);mujoco.mj_forward(m,d);bank=json.loads((base/'IMPORT_AUDIT.json').read_text())['muscles'];rows=[]
+for a in audit['physical_adapters']:
+ if a['source_data_type']!='II':continue
+ b=next(b for b in bank if b['id']==a['physical_id']);tid=mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_TENDON,'route_'+safe(b['name']));assert tid>=0;joint=('hip_' if 'Hip' in a['target'] else 'knee_')+a['target'][0];j=mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,joint);q=m.jnt_qposadr[j];d.qpos[:]=m.qpos0;d.qpos[q]=1e-5;mujoco.mj_forward(m,d);plus=float(d.ten_length[tid]);d.qpos[q]=-1e-5;mujoco.mj_forward(m,d);minus=float(d.ten_length[tid]);arm=-(plus-minus)/2e-5;rows.append(dict(target=a['target'],physical_source=b['name'],physical_id=b['id'],joint=joint,tension_moment_arm_m=arm,route_function_at_assembled_pose='flexor' if arm>0 else 'extensor',label_matches_route_function=arm>0,II_discharge_gain=b['ii_discharge'],adapter_C_A_per_discharge=a['polynomial_ABCD_A'][2],adapter_D_A=a['polynomial_ABCD_A'][3]))
+out=dict(scope='Physical routes are identical in canonical NEWER and this preserved GUI-authoritative snapshot; no neural model substitution. Positive joint coordinate increases anatomical flexion, independently verified by native markers. Central finite difference of actual receptor route length at assembled pose.',rows=rows);(HERE/'runs/canonical_newer_audit/II_GEOMETRY.json').write_text(json.dumps(out,indent=2));print(json.dumps(out,indent=2))

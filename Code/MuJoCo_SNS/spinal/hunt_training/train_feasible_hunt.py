@@ -41,6 +41,8 @@ a=json.loads((H/'runs/step_A/winner.json').read_text());assert a['accepted']
 timing_path=W/'timing_weights.json'
 if not timing_path.exists() and os.environ.get('HUNT_TIMING_SOURCE'):
     shutil.copyfile(Path(os.environ['HUNT_TIMING_SOURCE']),timing_path)
+if not timing_path.exists() and os.environ.get('HUNT_BILATERAL_TIED','1')=='1':
+    raise RuntimeError('New Hunt fits require jointly validated shared timing. Run train_symmetric_hunt.py or supply HUNT_TIMING_SOURCE; independent fits require explicit HUNT_BILATERAL_TIED=0 for historical reproduction.')
 if not timing_path.exists():
     optuna.logging.set_verbosity(optuna.logging.WARNING);gains={};metrics={}
     for side,col in [('r',0),('l',1)]:
@@ -66,6 +68,10 @@ if not timing_path.exists():
     timing=dict(gains=gains,metrics=metrics,accepted=all(r['accepted'] for r in metrics.values()),source='Expected afferents from feasible air teacher; stance proxy is reference phase, not physical air contact')
     timing_path.write_text(json.dumps(timing,indent=2))
 timing=json.loads(timing_path.read_text());assert timing['accepted'],timing
+if os.environ.get('HUNT_BILATERAL_TIED','1')=='1':
+    if timing['gains']['r']!=timing['gains']['l']:raise ValueError('New fits reject asymmetric timing gains')
+    cp=W/'circuit_options.json';co=json.loads(cp.read_text()) if cp.exists() else {};co['require_bilateral_symmetry']=True;cp.write_text(json.dumps(co,indent=2))
+
 MODE='afferented';real_build=C.build;real_setup=M.setup;real_aff=M.afferents;real_fit=M.lsq_linear;captured=[]
 def build(*args,**kwargs):
     n=real_build(*args,options=dict(weights_directory=str(W),biarticular_pair_gain=.3,commissural_gain=0. if MODE=='deafferented' else .3,learn_reciprocal=True,use_timing_afferents=MODE!='deafferented'),**kwargs)
@@ -99,7 +105,7 @@ for block,filename in [('PF','pf_weights.json'),('BI','bi_weights.json'),('MN','
         MODE=mode;M.O=O/(block.lower()+'_'+mode);M.O.mkdir(exist_ok=True);captured=[];M.lsq_linear=capture;M.replay(block,datasets[MODE]['period']);blocks.append(captured);files.append(json.loads((M.O/filename).read_text()))
     keys=list(files[0]['edges']);assert all(keys==list(f['edges']) for f in files);weights={};offset=0
     if len(files)==1:weights=files[0]['edges'];offset=len(keys)
-    elif os.environ.get('HUNT_BILATERAL_TIED')=='1':
+    elif os.environ.get('HUNT_BILATERAL_TIED','1')=='1':
         from bilateral import canonical,assert_tied
         groups={}
         for key in keys:groups.setdefault(canonical(key.split(' -> ')[1]),[]).append(key)

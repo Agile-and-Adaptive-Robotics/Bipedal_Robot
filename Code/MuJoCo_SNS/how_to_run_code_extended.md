@@ -1008,3 +1008,65 @@ The acceptance target remains actual alternating ground stepping with measured
 assistance. No harness-free walking has been established in this program's
 records. Do not replace that statement with a successful animation or a numerical
 speedup claim.
+
+## W2L virtual walkers: direct AnimatLab → MuJoCo, added 31 October
+
+Machine: **easteregg2**. The source-specific port, consumed configuration keys,
+observer definitions, and complete experiment record are in
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\README.md`.
+The original circuit has 80 neurons/150 chemical connections; the newer editable
+project has 96/204. Select sources explicitly: these are separate circuits.
+Their IntegrateFireSim equations are ported directly, with a Numba implementation
+and a scalar reference; this runner does not offer the Gait2392 spiking selector.
+
+### Run the original circuit with physical guides
+
+This 20 s run uses a doubled neural time scale, rails lowered 20 mm, 30 mm
+guide clearance, and a phase-triggered yaw perturbation. Use a new tag for each
+experiment so saved trajectories remain available.
+
+```powershell
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\run_virtual_walker.py' --config 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUN_GUIDE_30MM_CLOCK2.json' --duration 20 --tag my_guided_clock2_run
+```
+
+The resulting folder is
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\runs\W2L_VirtualWalker\my_guided_clock2_run`.
+To compare slower timing, add `--neural-time-scale 4` and use a new tag. Explicit
+CLI flags override configuration values. To compare identical calculations
+without Numba, add `--reference`; exclude first-use compilation when timing.
+The current matched 4 s air benchmark is 17.208 s reference versus 0.970 s
+Numba, including physics and observers, excluding import, warm-up, and export.
+
+### Render the saved motion
+
+```powershell
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\render_trial.py' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\runs\W2L_VirtualWalker\my_guided_clock2_run' --start 2 --stop 5
+```
+
+This saves `SUPPORTED_STEPPING_REPLAY.gif` and `SUPPORTED_STEPPING_STILL.png`
+inside that folder. Rendering replays saved states; it does not rerun control.
+The runner logs root orientation/angular velocity, pelvis rotational energy,
+whole-model COM, rail/guide/harness reactions, regional foot forces, clearance,
+double support, belt-relative strides, and neural/muscle states. The record
+defines filtering and qualification thresholds. Retain raw force channels.
+
+### Edit and run the native AnimatLab companion
+
+Open
+`D:\GitHub\Bipedal_Robot\Neuromechanical_Models\W2L_VirtualWalker_GuidedT2_20261031\W2L_VirtualWalker_GuidedT2.aproj`
+in AnimatLab for the 10 mm guide, doubled-clock version. The matching `.asim`
+and `_Standalone.asim` are beside it. Hierarchical RG, hip, and knee/ankle pages
+remain editable. Its separate record is
+`D:\GitHub\Bipedal_Robot\Neuromechanical_Models\W2L_VirtualWalker_Guided_20261031\EXPERIMENT_RECORD.md`.
+Clock changes scale membrane and calcium-gate time constants, preserving physics
+and muscle timing. After a GUI edit, export and verify the standalone graph:
+the supplied newer project's GUI and old standalone export differ.
+
+Current original-circuit 20 s supported tests pass the declared clearance and
+alternation checks at clock scales 2 and 4; scale 6 loses consistent alternation.
+The newer source circuit has a latched RG. A separately saved diagnostic with
+symmetric zero tonic currents and only the two mirrored V3-to-contralateral-RG-IN
+outputs disabled passes the bounded air and guided-ground checks; see the
+experiment record for exact configuration and repeat status. This is a distinct
+controller variant. These tests are kept separate from the Hunt training and
+Gait2392 curriculum records.

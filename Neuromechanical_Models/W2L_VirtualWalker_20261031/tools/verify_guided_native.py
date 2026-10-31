@@ -1,0 +1,24 @@
+from pathlib import Path
+from lxml import etree as E
+import json,hashlib,numpy as np
+R=Path(__file__).resolve().parents[3];S=R/'Neuromechanical_Models/W2L_VirtualWalker_20261031';O=S/'build/guided_source_audit';rows=[]
+def pos(n):return np.array([float(n.find('Position').get(a,'0')) for a in 'xyz'])
+for tag in ('Guided','Guided30','GuidedT2'):
+ name='W2L_VirtualWalker_'+tag;W=R/('Neuromechanical_Models/'+name+'_20261031');sr=E.parse(str(W/(name+'_Standalone.asim'))).getroot();pr=E.parse(str(W/(name+'.aproj'))).getroot();meta=json.loads((W/'BUILD_GUIDE.json').read_text());original=E.parse(str(S/'W2L_VirtualWalker_Standalone.asim')).getroot();robot=next(b for b in sr.iter('RigidBody') if b.findtext('Name')=='Root');oldrobot=next(b for b in original.iter('RigidBody') if b.findtext('Name')=='Root');assert E.tostring(robot,method='c14n')==E.tostring(oldrobot,method='c14n');assert robot.find('Joint') is None and robot.findtext('Freeze')=='False'
+ carrier=next(b for b in sr.iter('RigidBody') if b.findtext('Name')=='Guide carriage cap');parent=carrier.getparent().getparent();assert parent.findtext('Name')=='Left support rail';assert parent.findtext('Freeze')=='True';joint=carrier.find('Joint');assert joint.findtext('Type')=='Prismatic' and joint.findtext('EnableMotor')=='False';assert float(joint.findtext('LowerLimit/LimitPos'))==-1.9 and float(joint.findtext('UpperLimit/LimitPos'))==1.9
+ shapes={carrier.findtext('ID'):(pos(parent)+pos(carrier),carrier)}
+ for q in carrier.findall('ChildBodies/RigidBody'):shapes[q.findtext('ID')]=(pos(parent)+pos(carrier)+pos(q),q)
+ assert len(shapes)==8;actual=sorted(tuple(np.round(np.r_[p,[float(n.findtext(k)) for k in ('Length','Height','Width')]],9)) for p,n in shapes.values());expected=sorted(tuple(np.round(np.r_[[x['center_relative_initial_root_x_world_yz'][0]+pos(robot)[0],*x['center_relative_initial_root_x_world_yz'][1:]],x['dimensions_xyz']],9)) for x in meta['geometry'][1]['geometry']);assert actual==expected
+ gui_pages=0
+ for n in pr.findall('.//NervousSystem//Node'):
+  if n.find('DiagramXml') is not None:E.fromstring(n.findtext('DiagramXml').encode());gui_pages+=1
+ ids=[n.text for n in sr.iter('ID')];assert len(ids)==len(set(ids))
+ raw=np.load(W/'Guide diagnostics.npz');z=raw['data'];labels=raw['labels'].tolist();signal=lambda n:z[:,labels.index(n)]
+ rec={'variant':tag,'robot_payload_unchanged':True,'eight_guide_shapes_match_geometry_manifest':True,'gui_drawing_pages_parsed':gui_pages,'passive_slider_motor_disabled':True,'source_files_unchanged':all(hashlib.sha256(Path(f).read_bytes()).hexdigest()==sha for f,sha in meta['source_hashes'].items()),'finite':bool(np.isfinite(z).all()),'root_Y_min_final_m':[float(signal('root_pos_Y').min()),float(signal('root_pos_Y')[-1])],'root_world_X_change_m':float(signal('root_pos_X')[-1]-signal('root_pos_X')[0]),'carriage_Y_range_m':float(np.ptp(signal('carriage_pos_Y'))),'carriage_Z_range_m':float(np.ptp(signal('carriage_pos_Z'))),'carriage_X_change_m':float(signal('carriage_pos_X')[-1]-signal('carriage_pos_X')[0]),'ordinary_collider_contactcount_max':max(float(signal(n).max()) for n in labels if 'ContactCount' in n),'root_peak_rotation_deg':{a:float(np.degrees(np.max(np.abs(signal('root_Rotation'+a))))) for a in 'XYZ'},'root_peak_angular_velocity_raw_rad_s':{a:float(np.max(np.abs(signal('root_BodyAngularVelocity'+a)))) for a in 'XYZ'}}
+ v=np.load(W/'Virtual walker verification.npz');vl=v['labels'].tolist();vq=v['data'];knees=np.column_stack((10+np.degrees(vq[:,vl.index('knee_L_angle')]),55+np.degrees(vq[:,vl.index('knee_R_angle')])));rec['anatomical_knee_flexion_min_deg_LR']=knees.min(axis=0).tolist();rec['knee_hyperextension_samples']=np.sum(knees<0,axis=0).tolist();rec['knee_mapping']='10degL/55degR initialflexion + degrees(native JointRotation), positiveflexion; sourcehingesign independently marker-verified by MuJoCo importaudit.'
+ mfile=R/('Code/MuJoCo_SNS/spinal/virtual_walker_20261031/runs/W2L_VirtualWalker/guides_v1_t2_c'+str(meta['clearance_m'])+'_h0_p5/model.xml')
+ if mfile.exists():
+  mr=E.parse(str(mfile)).getroot();mc=mr.find("worldbody/body[@name='GuideCarriage']");mp=np.fromstring(mc.get('pos'),sep=' ');mshapes=sorted(tuple(np.round(np.r_[mp+np.fromstring(g.get('pos'),sep=' '),2*np.fromstring(g.get('size'),sep=' ')],9)) for g in mc.findall('geom'));assert actual==mshapes;rec['matches_actual_MuJoCo_initial_geometry']=str(mfile)
+ if 'belt_BodyLinearVelocityX' in labels:rec['belt_world_mean_velocity_after_1s']=float(signal('belt_BodyLinearVelocityX')[z[:,1]>=1].mean());rec['belt_world_X_change_m']=float(signal('belt_pos_X')[-1]-signal('belt_pos_X')[0])
+ (W/'GUIDE_VERIFICATION.json').write_text(json.dumps(rec,indent=2));rows.append(rec)
+(O/'ALL_NATIVE_GUIDES.json').write_text(json.dumps(rows,indent=2));print(json.dumps(rows,indent=2))

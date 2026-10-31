@@ -1,0 +1,2272 @@
+GUI False Root
+<RigidBody>
+<Name>Root</Name>
+<ID>66aca4dc-cc8d-4b4f-aea5-cceb5a5793be</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-3.454" y="0.99298" z="0"/>
+<Rotation x="0" y="0" z="-0.112"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>2.787</Density>
+<Mass>30991</Mass>
+<COM x="0.02" y="0" z="0"/>
+<Freeze>True</Freeze>
+<MaterialTypeID>09bccf17-3f71-4b1b-b397-53550cb1bd6b</MaterialTypeID>
+
+GUI False femur_L
+<RigidBody>
+<Name>femur_L</Name>
+<ID>20eb335a-ab76-41dd-be7d-885c53010b81</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0.752941" Blue="0.752941" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="-0.27" z="0.06"/>
+<Rotation x="0" y="0" z="-0.05236"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>3.333</Density>
+<Mass>3500</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Joint>
+<Name>hip_L</Name>
+<ID>971e98a5-7bf3-4088-ad43-787fd141daed</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0.5</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0.21" z="0"/>
+<Rotation x="-0.000215" y="1.571" z="0.000215"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<Size>0.005</Size>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<ID>56d89e09-00a8-4a55-8925-4f3db51cdae0</ID>
+<Name>X Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation1>
+<Relaxation2>
+<ID>a264296b-47be-46a7-acfa-2a5607714754</ID>
+<Name>Y Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation2>
+<Relaxation3>
+<ID>eaa8264c-5698-413f-9b04-3c99c0d8dd83</ID>
+<Name>Z Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation3>
+<Relaxation4>
+<ID>448c8825-3825-4f15-8d52-b0cfa0ac108a</ID>
+<Name>X Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation4>
+<Relaxation5>
+<ID>47b787dc-1699-4981-879c-19db7e0807db</ID>
+<Name>Y Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation5>
+<Friction>
+<ID>3d1cd1c7-68bf-408d-9505-2c8fea350980</ID>
+<Name/>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<Coefficient>0.02</Coefficient>
+<MaxForce>10</MaxForce>
+<Loss>0</Loss>
+<StaticFrictionScale>1</StaticFrictionScale>
+</Friction>
+<LowerLimit>
+<Name>398d8a76-69ef-434c-a49d-0353d0ffd557</Name>
+<ID>398d8a76-69ef-434c-a49d-0353d0ffd557</ID>
+<LimitPos>-0.261799</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>1e+009</Stiffness>
+</LowerLimit>
+<UpperLimit>
+<Name>f4a67efd-00f6-49ce-81b3-57d991de791a</Name>
+<ID>f4a67efd-00f6-49ce-81b3-57d991de791a</ID>
+<LimitPos>0.401426</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>1e+009</Stiffness>
+</UpperLimit>
+<MaxForce>100</MaxForce>
+<MaxVelocity>100</MaxVelocity>
+<EnableMotor>False</EnableMotor>
+<MotorType>0</MotorType>
+<ServoGain>100</ServoGain>
+</Joint>
+
+GUI False tibia_L
+<RigidBody>
+<Name>tibia_L</Name>
+<ID>c2e413b9-6236-48c5-be28-bf50986e5cfd</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0.25098" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="-0.43" z="0"/>
+<Rotation x="1.571" y="-0.05236" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>1.429</Density>
+<Mass>1500</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Joint>
+<Name>knee_L</Name>
+<ID>b74369c5-94af-4631-b67c-8a40c3285cfe</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0.5</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0" z="-0.22"/>
+<Rotation x="1.571" y="-1.571" z="-3.141"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<Size>0.005</Size>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<ID>c1ef3ed9-17ef-4b3d-a211-9dbef1220952</ID>
+<Name>X Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation1>
+<Relaxation2>
+<ID>0b0af446-0dbc-4422-a1e1-2e22523fd85f</ID>
+<Name>Y Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation2>
+<Relaxation3>
+<ID>1852d5f7-18ba-4058-9261-ba04b5bdee19</ID>
+<Name>Z Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation3>
+<Relaxation4>
+<ID>0aee1f38-f86b-4ecc-aae5-df082066262d</ID>
+<Name>X Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation4>
+<Relaxation5>
+<ID>8d45a163-51e1-42af-9764-69bd909996a6</ID>
+<Name>Y Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation5>
+<Friction>
+<ID>fe16bbe4-0dfb-457a-adc6-fa49539d6c68</ID>
+<Name/>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<Coefficient>0.02</Coefficient>
+<MaxForce>10</MaxForce>
+<Loss>0</Loss>
+<StaticFrictionScale>1</StaticFrictionScale>
+</Friction>
+<LowerLimit>
+<Name>8d42c443-2c17-4eb8-adc6-db645b9b65e3</Name>
+<ID>8d42c443-2c17-4eb8-adc6-db645b9b65e3</ID>
+<LimitPos>0</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</LowerLimit>
+<UpperLimit>
+<Name>31690e07-854f-4134-b83b-762dfe78dff3</Name>
+<ID>31690e07-854f-4134-b83b-762dfe78dff3</ID>
+<LimitPos>1.0472</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</UpperLimit>
+<MaxForce>100</MaxForce>
+<MaxVelocity>100</MaxVelocity>
+<EnableMotor>False</EnableMotor>
+<MotorType>0</MotorType>
+<ServoGain>100</ServoGain>
+</Joint>
+
+GUI False foot_L
+<RigidBody>
+<Name>foot_L</Name>
+<ID>8b100a2c-ec0b-424e-a71a-21297bffc869</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0.25098" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0.02" y="5.265e-005" z="0.25825"/>
+<Rotation x="0" y="0.13963" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>2.083</Density>
+<Mass>400</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>f9d84949-3fe9-48fd-bade-5e3432c034cd</MaterialTypeID>
+<Joint>
+<Name>ankle_L</Name>
+<ID>9cadb11e-126a-4b15-a95d-a2ba44b7537b</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0.5</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-0.050101" y="-7.231e-006" z="-0.040024"/>
+<Rotation x="3.142" y="0" z="1.571"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<Size>0.005</Size>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<ID>3cf3d2c5-d30a-4907-85ee-8222bf2d3af7</ID>
+<Name>X Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation1>
+<Relaxation2>
+<ID>45a8e916-19e1-4c3d-99c2-7e8f9b48ddb4</ID>
+<Name>Y Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation2>
+<Relaxation3>
+<ID>52d371fc-7e82-4278-bd63-e1d5b713b111</ID>
+<Name>Z Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation3>
+<Relaxation4>
+<ID>0048db82-4dde-4fec-b74f-74dd3c8e3cc3</ID>
+<Name>X Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation4>
+<Relaxation5>
+<ID>2dc56b56-460d-49f0-8f5c-accaf4bb141b</ID>
+<Name>Y Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation5>
+<Friction>
+<ID>3e3273ad-98af-474e-84bd-ee55e4836182</ID>
+<Name/>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<Coefficient>0.02</Coefficient>
+<MaxForce>10</MaxForce>
+<Loss>0</Loss>
+<StaticFrictionScale>1</StaticFrictionScale>
+</Friction>
+<LowerLimit>
+<Name>2a79190c-8e4b-40b8-9e3f-6cf194e847c7</Name>
+<ID>2a79190c-8e4b-40b8-9e3f-6cf194e847c7</ID>
+<LimitPos>-0.349066</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</LowerLimit>
+<UpperLimit>
+<Name>2709406f-d59c-468f-bd16-c44d3db689eb</Name>
+<ID>2709406f-d59c-468f-bd16-c44d3db689eb</ID>
+<LimitPos>-0.0872665</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</UpperLimit>
+<MaxForce>100</MaxForce>
+<MaxVelocity>100</MaxVelocity>
+<EnableMotor>False</EnableMotor>
+<MotorType>0</MotorType>
+<ServoGain>100</ServoGain>
+</Joint>
+
+GUI False tibia_L
+<RigidBody>
+<Name>tibia_L</Name>
+<ID>a92f842d-25e0-4c1b-9f3a-8d096bbe509b</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.647059" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0.0348804" y="0" z="-0.09"/>
+<Rotation x="0" y="1.57" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Attachment</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Attachment</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>1</Density>
+<Mass>0</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<FoodSource>False</FoodSource>
+<FoodQuantity>100</FoodQuantity>
+<MaxFoodQuantity>10000</MaxFoodQuantity>
+<FoodReplenishRate>1</FoodReplenishRate>
+<FoodEnergyContent>1000</FoodEnergyContent>
+<Radius>0.01</Radius>
+<LatitudeSegments>20</LatitudeSegments>
+<LongtitudeSegments>20</LongtitudeSegments>
+</RigidBody>
+
+
+GUI False femur_R
+<RigidBody>
+<Name>femur_R</Name>
+<ID>8e5e2746-c733-4d2f-bd8a-a88329c1f9b5</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="0.25098" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="-0.27" z="-0.06"/>
+<Rotation x="0" y="0" z="-0.05236"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>3.333</Density>
+<Mass>3500</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Joint>
+<Name>hip_R</Name>
+<ID>1eb89987-6c6d-4668-ae19-3701b63de615</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0.5</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0.21" z="0"/>
+<Rotation x="1.571" y="1.571" z="-1.571"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<Size>0.005</Size>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<ID>7795c1d0-e71e-4e1f-9057-3f5fded98328</ID>
+<Name>X Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation1>
+<Relaxation2>
+<ID>180966c4-10b9-478e-8398-afab88e07411</ID>
+<Name>Y Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation2>
+<Relaxation3>
+<ID>d1fa7acb-0ae1-4c36-86b0-9aa76bf4880e</ID>
+<Name>Z Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation3>
+<Relaxation4>
+<ID>ae80d3a7-8de5-47ce-930e-aa5c482361dc</ID>
+<Name>X Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation4>
+<Relaxation5>
+<ID>115665db-a79f-48bb-8331-5898cd823190</ID>
+<Name>Y Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation5>
+<Friction>
+<ID>c198a3a1-998b-40e7-90c7-65e9706016be</ID>
+<Name/>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<Coefficient>0.02</Coefficient>
+<MaxForce>10</MaxForce>
+<Loss>0</Loss>
+<StaticFrictionScale>1</StaticFrictionScale>
+</Friction>
+<LowerLimit>
+<Name>0176b4ba-5cc4-4caf-a957-7418a5652b18</Name>
+<ID>0176b4ba-5cc4-4caf-a957-7418a5652b18</ID>
+<LimitPos>-0.261799</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>1e+009</Stiffness>
+</LowerLimit>
+<UpperLimit>
+<Name>d62a1406-df32-4621-98cc-c349c6d17800</Name>
+<ID>d62a1406-df32-4621-98cc-c349c6d17800</ID>
+<LimitPos>0.401426</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>1e+009</Stiffness>
+</UpperLimit>
+<MaxForce>100</MaxForce>
+<MaxVelocity>100</MaxVelocity>
+<EnableMotor>False</EnableMotor>
+<MotorType>0</MotorType>
+<ServoGain>100</ServoGain>
+</Joint>
+
+GUI False tibia_R
+<RigidBody>
+<Name>tibia_R</Name>
+<ID>4c469b4d-caa0-4a0c-bc47-3c3aad72e87e</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0.501961" Green="0.501961" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="-0.43" z="0"/>
+<Rotation x="1.571" y="-0.05236" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>1.429</Density>
+<Mass>1500</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Joint>
+<Name>knee_R</Name>
+<ID>4b42e5a2-ce52-4f05-8458-51890d49d7a6</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0.5</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0" y="0" z="-0.22"/>
+<Rotation x="1.571" y="-1.571" z="3.141"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<Size>0.005</Size>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<ID>d46bcdb6-82b9-4d71-8e0a-0509ef349ec6</ID>
+<Name>X Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation1>
+<Relaxation2>
+<ID>b92e03d6-afb6-40be-9179-e80f6f3944ae</ID>
+<Name>Y Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation2>
+<Relaxation3>
+<ID>d0b22e47-f5cf-43f2-8b83-81eaf8483215</ID>
+<Name>Z Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation3>
+<Relaxation4>
+<ID>bff05bb1-3fb0-4b14-9753-dc96d1a1c77f</ID>
+<Name>X Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation4>
+<Relaxation5>
+<ID>c67c8c79-2582-4a85-8c84-9d77dc3f87bf</ID>
+<Name>Y Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation5>
+<Friction>
+<ID>d6cb72c2-5deb-485a-b151-121ea7a77d18</ID>
+<Name/>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<Coefficient>0.02</Coefficient>
+<MaxForce>10</MaxForce>
+<Loss>0</Loss>
+<StaticFrictionScale>1</StaticFrictionScale>
+</Friction>
+<LowerLimit>
+<Name>6d66d5d7-9f0a-4b39-af63-75a4317f2e0e</Name>
+<ID>6d66d5d7-9f0a-4b39-af63-75a4317f2e0e</ID>
+<LimitPos>0</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</LowerLimit>
+<UpperLimit>
+<Name>b25c0c15-9e3d-4e41-9400-53415c5d92b3</Name>
+<ID>b25c0c15-9e3d-4e41-9400-53415c5d92b3</ID>
+<LimitPos>1.0472</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</UpperLimit>
+<MaxForce>100</MaxForce>
+<MaxVelocity>100</MaxVelocity>
+<EnableMotor>False</EnableMotor>
+<MotorType>0</MotorType>
+<ServoGain>100</ServoGain>
+</Joint>
+
+GUI False foot_R
+<RigidBody>
+<Name>foot_R</Name>
+<ID>54820b02-b14b-46d0-b199-d2beabff7541</ID>
+<Description/>
+<GraphicsAlpha>1</GraphicsAlpha>
+<CollisionsAlpha>1</CollisionsAlpha>
+<JointsAlpha>0.5</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>1</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0.752941" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="0.02" y="5.265e-005" z="0.25825"/>
+<Rotation x="0" y="0.13963" z="0"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter x="0" y="0" z="0"/>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag x="1" y="1" z="1"/>
+<AngularDrag x="0.05" y="0.05" z="0.05"/>
+<MaxHydroForce>50</MaxHydroForce>
+<MaxHydroTorque>20</MaxHydroTorque>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density>2.083</Density>
+<Mass>400</Mass>
+<COM x="0" y="0" z="0"/>
+<Freeze>False</Freeze>
+<MaterialTypeID>f9d84949-3fe9-48fd-bade-5e3432c034cd</MaterialTypeID>
+<Joint>
+<Name>ankle_R</Name>
+<ID>df6a7bef-7ae9-43e0-ba1f-1bae1a330b5b</ID>
+<Description/>
+<GraphicsAlpha>0.5</GraphicsAlpha>
+<CollisionsAlpha>0.5</CollisionsAlpha>
+<JointsAlpha>1</JointsAlpha>
+<ReceptiveFieldsAlpha>0.5</ReceptiveFieldsAlpha>
+<SimulationAlpha>0.5</SimulationAlpha>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<Position x="-0.050101" y="-7.231e-006" z="-0.040024"/>
+<Rotation x="3.142" y="0" z="1.571"/>
+<DraggerSize>-1</DraggerSize>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<Size>0.005</Size>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<ID>f15d9698-7418-44df-8468-495ee84181a0</ID>
+<Name>X Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation1>
+<Relaxation2>
+<ID>ce74bbd2-bd18-411e-a1ec-73182e1e522e</ID>
+<Name>Y Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation2>
+<Relaxation3>
+<ID>42c5850b-a0b5-4bc1-9760-2ac6d94a667d</ID>
+<Name>Z Axis Displacement</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation3>
+<Relaxation4>
+<ID>01624946-226d-4128-a009-57b1c4f466f1</ID>
+<Name>X Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation4>
+<Relaxation5>
+<ID>d806b337-b222-4467-957f-a6718659b648</ID>
+<Name>Y Axis Rotation</Name>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness>100000</Stiffness>
+<Damping>5000</Damping>
+<Loss>0</Loss>
+</Relaxation5>
+<Friction>
+<ID>4769a1d4-cbc5-4a11-af51-82ee04a03f19</ID>
+<Name/>
+<Type>Default</Type>
+<Enabled>False</Enabled>
+<Coefficient>0.02</Coefficient>
+<MaxForce>10</MaxForce>
+<Loss>0</Loss>
+<StaticFrictionScale>1</StaticFrictionScale>
+</Friction>
+<LowerLimit>
+<Name>731d96a5-c2e0-4a80-9af1-15a7375d59f5</Name>
+<ID>731d96a5-c2e0-4a80-9af1-15a7375d59f5</ID>
+<LimitPos>-0.349066</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</LowerLimit>
+<UpperLimit>
+<Name>b4e946af-acb7-4577-a40f-688f2ede7da0</Name>
+<ID>b4e946af-acb7-4577-a40f-688f2ede7da0</ID>
+<LimitPos>-0.0872665</LimitPos>
+<Damping>0</Damping>
+<Restitution>0</Restitution>
+<Stiffness>5e+006</Stiffness>
+</UpperLimit>
+<MaxForce>100</MaxForce>
+<MaxVelocity>100</MaxVelocity>
+<EnableMotor>False</EnableMotor>
+<MotorType>0</MotorType>
+<ServoGain>100</ServoGain>
+</Joint>
+
+GUI True Root
+<RigidBody>
+<Name>Root</Name>
+<ID>66aca4dc-cc8d-4b4f-aea5-cceb5a5793be</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="-3.454" Scale="None" Actual="-3.454"/>
+<Y Value="99.298" Scale="centi" Actual="0.99298"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="-6.417" Scale="None" Actual="-6.417"/>
+</Rotation>
+<LocalMatrix>0.993735,-0.111766,-0,0,0.111766,0.993735,0,0,0,-0,1,0,-34.54,9.9298,0,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="2.787" Scale="None" Actual="2.787"/>
+<Mass Value="30.991" Scale="Kilo" Actual="30991"/>
+<COM>
+<X Value="0.02" Scale="None" Actual="0.02"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>09bccf17-3f71-4b1b-b397-53550cb1bd6b</MaterialTypeID>
+<Freeze>True</Freeze>
+
+GUI True femur_L
+<RigidBody>
+<Name>femur_L</Name>
+<ID>20eb335a-ab76-41dd-be7d-885c53010b81</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0.752941" Blue="0.752941" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="-27" Scale="centi" Actual="-0.27"/>
+<Z Value="60" Scale="milli" Actual="0.06"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="-3" Scale="None" Actual="-3"/>
+</Rotation>
+<LocalMatrix>0.99863,-0.0523361,-0,0,0.0523361,0.99863,0,0,0,-0,1,0,0,-2.7,0.6,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="3.333" Scale="None" Actual="3.333"/>
+<Mass Value="3.5" Scale="Kilo" Actual="3500"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<Joint>
+<Name>hip_L</Name>
+<ID>971e98a5-7bf3-4088-ad43-787fd141daed</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0.21" Scale="None" Actual="0.21"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="-0.012303" Scale="None" Actual="-0.012303"/>
+<Y Value="90" Scale="None" Actual="90"/>
+<Z Value="0.0123081" Scale="None" Actual="0.0123081"/>
+</Rotation>
+<LocalMatrix>-0.000203653,4.45852e-012,-1,0,4.37854e-008,1,-4.45852e-012,0,1,-4.37854e-008,-0.000203653,0,0,2.1,0,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<Size Value="0.005" Scale="None" Actual="0.005"/>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>56d89e09-00a8-4a55-8925-4f3db51cdae0</ID>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation1>
+<Relaxation2>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>a264296b-47be-46a7-acfa-2a5607714754</ID>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation2>
+<Relaxation3>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>eaa8264c-5698-413f-9b04-3c99c0d8dd83</ID>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation3>
+<Relaxation4>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>448c8825-3825-4f15-8d52-b0cfa0ac108a</ID>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation4>
+<Relaxation5>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>47b787dc-1699-4981-879c-19db7e0807db</ID>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation5>
+<Friction>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
+<ID>3d1cd1c7-68bf-408d-9505-2c8fea350980</ID>
+<Name/>
+<Enabled>False</Enabled>
+<Proportional>True</Proportional>
+<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
+<MaxForce Value="10" Scale="None" Actual="10"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+<StaticFrictionScale Value="1" Scale="None" Actual="1"/>
+</Friction>
+<LowerLimit>
+<Name>398d8a76-69ef-434c-a49d-0353d0ffd557</Name>
+<ID>398d8a76-69ef-434c-a49d-0353d0ffd557</ID>
+<LimitPos Value="-15" Scale="None" Actual="-15"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="1000" Scale="Mega" Actual="1e+009"/>
+</LowerLimit>
+<UpperLimit>
+<Name>f4a67efd-00f6-49ce-81b3-57d991de791a</Name>
+<ID>f4a67efd-00f6-49ce-81b3-57d991de791a</ID>
+<LimitPos Value="23" Scale="None" Actual="23"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="1000" Scale="Mega" Actual="1e+009"/>
+</UpperLimit>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<EnableMotor>False</EnableMotor>
+<MotorType>VelocityControl</MotorType>
+<ServoGain>100</ServoGain>
+<PID>
+<ID>a7a94ddb-054f-43cf-a791-3c658368db6a</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
+<Enabled>False</Enabled>
+<ComplexError>True</ComplexError>
+<AntiResetWindup>False</AntiResetWindup>
+<RampLimit>False</RampLimit>
+<Kp Value="20" Scale="None" Actual="20"/>
+<Ki Value="0" Scale="None" Actual="0"/>
+<Kd Value="1" Scale="None" Actual="1"/>
+<RangeMax Value="1" Scale="None" Actual="1"/>
+<RangeMin Value="-1" Scale="None" Actual="-1"/>
+<ARWBound Value="0" Scale="None" Actual="0"/>
+<RampGradient Value="45" Scale="None" Actual="45"/>
+</PID>
+</Joint>
+
+GUI True tibia_L
+<RigidBody>
+<Name>tibia_L</Name>
+<ID>c2e413b9-6236-48c5-be28-bf50986e5cfd</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0.25098" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="-43" Scale="centi" Actual="-0.43"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="90.012" Scale="None" Actual="90.012"/>
+<Y Value="-3" Scale="None" Actual="-3"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>0.99863,-0.0523361,-1.06584e-005,0,-0,-0.000203653,1,0,-0.0523361,-0.99863,-0.000203374,0,0,-4.3,0,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1.429" Scale="None" Actual="1.429"/>
+<Mass Value="1.5" Scale="Kilo" Actual="1500"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<Joint>
+<Name>knee_L</Name>
+<ID>b74369c5-94af-4631-b67c-8a40c3285cfe</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="-0.22" Scale="None" Actual="-0.22"/>
+</LocalPosition>
+<Rotation>
+<X Value="90.0123" Scale="None" Actual="90.0123"/>
+<Y Value="-89.9883" Scale="None" Actual="-89.9883"/>
+<Z Value="-179.988" Scale="None" Actual="-179.988"/>
+</Rotation>
+<LocalMatrix>0.000203653,1,-0.000388968,0,-1.20689e-007,-0.000388968,-1,0,-1,0.000203653,4.14746e-008,0,0,0,-2.2,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<Size Value="0.005" Scale="None" Actual="0.005"/>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>c1ef3ed9-17ef-4b3d-a211-9dbef1220952</ID>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation1>
+<Relaxation2>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>0b0af446-0dbc-4422-a1e1-2e22523fd85f</ID>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation2>
+<Relaxation3>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>1852d5f7-18ba-4058-9261-ba04b5bdee19</ID>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation3>
+<Relaxation4>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>0aee1f38-f86b-4ecc-aae5-df082066262d</ID>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation4>
+<Relaxation5>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>8d45a163-51e1-42af-9764-69bd909996a6</ID>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation5>
+<Friction>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
+<ID>fe16bbe4-0dfb-457a-adc6-fa49539d6c68</ID>
+<Name/>
+<Enabled>False</Enabled>
+<Proportional>True</Proportional>
+<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
+<MaxForce Value="10" Scale="None" Actual="10"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+<StaticFrictionScale Value="1" Scale="None" Actual="1"/>
+</Friction>
+<LowerLimit>
+<Name>8d42c443-2c17-4eb8-adc6-db645b9b65e3</Name>
+<ID>8d42c443-2c17-4eb8-adc6-db645b9b65e3</ID>
+<LimitPos Value="0" Scale="None" Actual="0"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</LowerLimit>
+<UpperLimit>
+<Name>31690e07-854f-4134-b83b-762dfe78dff3</Name>
+<ID>31690e07-854f-4134-b83b-762dfe78dff3</ID>
+<LimitPos Value="60" Scale="None" Actual="60"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</UpperLimit>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<EnableMotor>False</EnableMotor>
+<MotorType>VelocityControl</MotorType>
+<ServoGain>100</ServoGain>
+<PID>
+<ID>9606cc4d-cdc3-4f9c-8cea-7ae4093ab110</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
+<Enabled>False</Enabled>
+<ComplexError>True</ComplexError>
+<AntiResetWindup>False</AntiResetWindup>
+<RampLimit>False</RampLimit>
+<Kp Value="20" Scale="None" Actual="20"/>
+<Ki Value="0" Scale="None" Actual="0"/>
+<Kd Value="1" Scale="None" Actual="1"/>
+<RangeMax Value="1" Scale="None" Actual="1"/>
+<RangeMin Value="-1" Scale="None" Actual="-1"/>
+<ARWBound Value="0" Scale="None" Actual="0"/>
+<RampGradient Value="45" Scale="None" Actual="45"/>
+</PID>
+</Joint>
+
+GUI True foot_L
+<RigidBody>
+<Name>foot_L</Name>
+<ID>8b100a2c-ec0b-424e-a71a-21297bffc869</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0.25098" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="20" Scale="milli" Actual="0.02"/>
+<Y Value="52.65" Scale="micro" Actual="5.265e-005"/>
+<Z Value="25.825" Scale="centi" Actual="0.25825"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="8" Scale="None" Actual="8"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>0.990268,0,-0.139177,0,-0,1,0,0,0.139177,-0,0.990268,0,0.2,0.0005265,2.5825,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="2.083" Scale="None" Actual="2.083"/>
+<Mass Value="0.4" Scale="Kilo" Actual="400"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>f9d84949-3fe9-48fd-bade-5e3432c034cd</MaterialTypeID>
+<Freeze>False</Freeze>
+<Joint>
+<Name>ankle_L</Name>
+<ID>9cadb11e-126a-4b15-a95d-a2ba44b7537b</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="-50.101" Scale="milli" Actual="-0.050101"/>
+<Y Value="-7.231" Scale="micro" Actual="-7.231e-006"/>
+<Z Value="-40.024" Scale="milli" Actual="-0.040024"/>
+</LocalPosition>
+<Rotation>
+<X Value="180" Scale="None" Actual="180"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="89.9883" Scale="None" Actual="89.9883"/>
+</Rotation>
+<LocalMatrix>-0.000203653,-1,-0.000407306,0,-1,0.000203653,8.29492e-008,0,0,0.000407306,-1,0,-0.50101,-7.231e-005,-0.40024,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<Size Value="0.005" Scale="None" Actual="0.005"/>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>3cf3d2c5-d30a-4907-85ee-8222bf2d3af7</ID>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation1>
+<Relaxation2>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>45a8e916-19e1-4c3d-99c2-7e8f9b48ddb4</ID>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation2>
+<Relaxation3>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>52d371fc-7e82-4278-bd63-e1d5b713b111</ID>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation3>
+<Relaxation4>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>0048db82-4dde-4fec-b74f-74dd3c8e3cc3</ID>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation4>
+<Relaxation5>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>2dc56b56-460d-49f0-8f5c-accaf4bb141b</ID>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation5>
+<Friction>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
+<ID>3e3273ad-98af-474e-84bd-ee55e4836182</ID>
+<Name/>
+<Enabled>False</Enabled>
+<Proportional>True</Proportional>
+<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
+<MaxForce Value="10" Scale="None" Actual="10"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+<StaticFrictionScale Value="1" Scale="None" Actual="1"/>
+</Friction>
+<LowerLimit>
+<Name>2a79190c-8e4b-40b8-9e3f-6cf194e847c7</Name>
+<ID>2a79190c-8e4b-40b8-9e3f-6cf194e847c7</ID>
+<LimitPos Value="-20" Scale="None" Actual="-20"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</LowerLimit>
+<UpperLimit>
+<Name>2709406f-d59c-468f-bd16-c44d3db689eb</Name>
+<ID>2709406f-d59c-468f-bd16-c44d3db689eb</ID>
+<LimitPos Value="-5" Scale="None" Actual="-5"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</UpperLimit>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<EnableMotor>False</EnableMotor>
+<MotorType>VelocityControl</MotorType>
+<ServoGain>100</ServoGain>
+<PID>
+<ID>b88615c5-20fc-4783-b293-fc81a44dfb85</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
+<Enabled>False</Enabled>
+<ComplexError>True</ComplexError>
+<AntiResetWindup>False</AntiResetWindup>
+<RampLimit>False</RampLimit>
+<Kp Value="20" Scale="None" Actual="20"/>
+<Ki Value="0" Scale="None" Actual="0"/>
+<Kd Value="1" Scale="None" Actual="1"/>
+<RangeMax Value="1" Scale="None" Actual="1"/>
+<RangeMin Value="-1" Scale="None" Actual="-1"/>
+<ARWBound Value="0" Scale="None" Actual="0"/>
+<RampGradient Value="45" Scale="None" Actual="45"/>
+</PID>
+</Joint>
+
+GUI True tibia_L
+<RigidBody>
+<Name>tibia_L</Name>
+<ID>a92f842d-25e0-4c1b-9f3a-8d096bbe509b</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0.647059" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0.0348804" Scale="None" Actual="0.0348804"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="-0.09" Scale="None" Actual="-0.09"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="89.972" Scale="None" Actual="89.972"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,0.348804,0,-0.9,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Attachment</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Attachment</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1" Scale="None" Actual="1"/>
+<Mass Value="0" Scale="None" Actual="0"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<FoodSource>False</FoodSource>
+<Radius Value="0.01" Scale="None" Actual="0.01"/>
+<LatitudeSegments>20</LatitudeSegments>
+<LongtitudeSegments>20</LongtitudeSegments>
+</RigidBody>
+
+
+GUI True femur_R
+<RigidBody>
+<Name>femur_R</Name>
+<ID>8e5e2746-c733-4d2f-bd8a-a88329c1f9b5</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0" Green="0" Blue="0.25098" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="-27" Scale="centi" Actual="-0.27"/>
+<Z Value="-60" Scale="milli" Actual="-0.06"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="-3" Scale="None" Actual="-3"/>
+</Rotation>
+<LocalMatrix>0.99863,-0.0523361,-0,0,0.0523361,0.99863,0,0,0,-0,1,0,0,-2.7,-0.6,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="3.333" Scale="None" Actual="3.333"/>
+<Mass Value="3.5" Scale="Kilo" Actual="3500"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<Joint>
+<Name>hip_R</Name>
+<ID>1eb89987-6c6d-4668-ae19-3701b63de615</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="21" Scale="centi" Actual="0.21"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="90.034" Scale="None" Actual="90.034"/>
+<Y Value="90" Scale="None" Actual="90"/>
+<Z Value="-90.036" Scale="None" Actual="-90.036"/>
+</Rotation>
+<LocalMatrix>4.14746e-008,4.22322e-012,-1,0,-0.000203653,1,-4.22322e-012,0,1,0.000203653,4.14746e-008,0,0,2.1,0,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<Size Value="0.005" Scale="None" Actual="0.005"/>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>7795c1d0-e71e-4e1f-9057-3f5fded98328</ID>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation1>
+<Relaxation2>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>180966c4-10b9-478e-8398-afab88e07411</ID>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation2>
+<Relaxation3>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>d1fa7acb-0ae1-4c36-86b0-9aa76bf4880e</ID>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation3>
+<Relaxation4>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>ae80d3a7-8de5-47ce-930e-aa5c482361dc</ID>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation4>
+<Relaxation5>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>115665db-a79f-48bb-8331-5898cd823190</ID>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation5>
+<Friction>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
+<ID>c198a3a1-998b-40e7-90c7-65e9706016be</ID>
+<Name/>
+<Enabled>False</Enabled>
+<Proportional>True</Proportional>
+<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
+<MaxForce Value="10" Scale="None" Actual="10"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+<StaticFrictionScale Value="1" Scale="None" Actual="1"/>
+</Friction>
+<LowerLimit>
+<Name>0176b4ba-5cc4-4caf-a957-7418a5652b18</Name>
+<ID>0176b4ba-5cc4-4caf-a957-7418a5652b18</ID>
+<LimitPos Value="-15" Scale="None" Actual="-15"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="1000" Scale="Mega" Actual="1e+009"/>
+</LowerLimit>
+<UpperLimit>
+<Name>d62a1406-df32-4621-98cc-c349c6d17800</Name>
+<ID>d62a1406-df32-4621-98cc-c349c6d17800</ID>
+<LimitPos Value="23" Scale="None" Actual="23"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="1000" Scale="Mega" Actual="1e+009"/>
+</UpperLimit>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<EnableMotor>False</EnableMotor>
+<MotorType>VelocityControl</MotorType>
+<ServoGain>100</ServoGain>
+<PID>
+<ID>f8de4bd9-bab4-4d12-9df9-7029fbdeb480</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
+<Enabled>False</Enabled>
+<ComplexError>True</ComplexError>
+<AntiResetWindup>False</AntiResetWindup>
+<RampLimit>False</RampLimit>
+<Kp Value="20" Scale="None" Actual="20"/>
+<Ki Value="0" Scale="None" Actual="0"/>
+<Kd Value="1" Scale="None" Actual="1"/>
+<RangeMax Value="1" Scale="None" Actual="1"/>
+<RangeMin Value="-1" Scale="None" Actual="-1"/>
+<ARWBound Value="0" Scale="None" Actual="0"/>
+<RampGradient Value="45" Scale="None" Actual="45"/>
+</PID>
+</Joint>
+
+GUI True tibia_R
+<RigidBody>
+<Name>tibia_R</Name>
+<ID>4c469b4d-caa0-4a0c-bc47-3c3aad72e87e</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0.501961" Green="0.501961" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="-43" Scale="centi" Actual="-0.43"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</LocalPosition>
+<Rotation>
+<X Value="90.012" Scale="None" Actual="90.012"/>
+<Y Value="-3" Scale="None" Actual="-3"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>0.99863,-0.0523361,-1.06584e-005,0,-0,-0.000203653,1,0,-0.0523361,-0.99863,-0.000203374,0,0,-4.3,0,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="1.429" Scale="None" Actual="1.429"/>
+<Mass Value="1.5" Scale="Kilo" Actual="1500"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>DEFAULTMATERIAL</MaterialTypeID>
+<Freeze>False</Freeze>
+<Joint>
+<Name>knee_R</Name>
+<ID>4b42e5a2-ce52-4f05-8458-51890d49d7a6</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="-0.22" Scale="None" Actual="-0.22"/>
+</LocalPosition>
+<Rotation>
+<X Value="89.9877" Scale="None" Actual="89.9877"/>
+<Y Value="-89.9883" Scale="None" Actual="-89.9883"/>
+<Z Value="179.988" Scale="None" Actual="179.988"/>
+</Rotation>
+<LocalMatrix>0.000203653,1,0.000796274,0,1.20689e-007,0.000796274,-1,0,-1,0.000203653,4.14746e-008,0,0,0,-2.2,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<Size Value="0.005" Scale="None" Actual="0.005"/>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>d46bcdb6-82b9-4d71-8e0a-0509ef349ec6</ID>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation1>
+<Relaxation2>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>b92e03d6-afb6-40be-9179-e80f6f3944ae</ID>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation2>
+<Relaxation3>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>d0b22e47-f5cf-43f2-8b83-81eaf8483215</ID>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation3>
+<Relaxation4>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>bff05bb1-3fb0-4b14-9753-dc96d1a1c77f</ID>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation4>
+<Relaxation5>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>c67c8c79-2582-4a85-8c84-9d77dc3f87bf</ID>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation5>
+<Friction>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
+<ID>d6cb72c2-5deb-485a-b151-121ea7a77d18</ID>
+<Name/>
+<Enabled>False</Enabled>
+<Proportional>True</Proportional>
+<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
+<MaxForce Value="10" Scale="None" Actual="10"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+<StaticFrictionScale Value="1" Scale="None" Actual="1"/>
+</Friction>
+<LowerLimit>
+<Name>6d66d5d7-9f0a-4b39-af63-75a4317f2e0e</Name>
+<ID>6d66d5d7-9f0a-4b39-af63-75a4317f2e0e</ID>
+<LimitPos Value="0" Scale="None" Actual="0"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</LowerLimit>
+<UpperLimit>
+<Name>b25c0c15-9e3d-4e41-9400-53415c5d92b3</Name>
+<ID>b25c0c15-9e3d-4e41-9400-53415c5d92b3</ID>
+<LimitPos Value="60" Scale="None" Actual="60"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</UpperLimit>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<EnableMotor>False</EnableMotor>
+<MotorType>VelocityControl</MotorType>
+<ServoGain>100</ServoGain>
+<PID>
+<ID>b5ee0495-f7a3-4286-b1d8-d6a3b2f59960</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
+<Enabled>False</Enabled>
+<ComplexError>True</ComplexError>
+<AntiResetWindup>False</AntiResetWindup>
+<RampLimit>False</RampLimit>
+<Kp Value="20" Scale="None" Actual="20"/>
+<Ki Value="0" Scale="None" Actual="0"/>
+<Kd Value="1" Scale="None" Actual="1"/>
+<RangeMax Value="1" Scale="None" Actual="1"/>
+<RangeMin Value="-1" Scale="None" Actual="-1"/>
+<ARWBound Value="0" Scale="None" Actual="0"/>
+<RampGradient Value="45" Scale="None" Actual="45"/>
+</PID>
+</Joint>
+
+GUI True foot_R
+<RigidBody>
+<Name>foot_R</Name>
+<ID>54820b02-b14b-46d0-b199-d2beabff7541</ID>
+<Description/>
+<Transparencies>
+<Graphics>0</Graphics>
+<Collisions>0</Collisions>
+<Joints>50</Joints>
+<RecFields>50</RecFields>
+<Simulation>0</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="0.752941" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="20" Scale="milli" Actual="0.02"/>
+<Y Value="52.65" Scale="micro" Actual="5.265e-005"/>
+<Z Value="25.825" Scale="centi" Actual="0.25825"/>
+</LocalPosition>
+<Rotation>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="8" Scale="None" Actual="8"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</Rotation>
+<LocalMatrix>0.990268,0,-0.139177,0,-0,1,0,0,0.139177,-0,0.990268,0,0.2,0.0005265,2.5825,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Box</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<IsContactSensor>False</IsContactSensor>
+<IsCollisionObject>True</IsCollisionObject>
+<BuoyancyCenter>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</BuoyancyCenter>
+<BuoyancyScale>1</BuoyancyScale>
+<LinearDrag>
+<X Value="1" Scale="None" Actual="1"/>
+<Y Value="1" Scale="None" Actual="1"/>
+<Z Value="1" Scale="None" Actual="1"/>
+</LinearDrag>
+<AngularDrag>
+<X Value="50" Scale="milli" Actual="0.05"/>
+<Y Value="50" Scale="milli" Actual="0.05"/>
+<Z Value="50" Scale="milli" Actual="0.05"/>
+</AngularDrag>
+<MaxHydroForce Value="50" Scale="None" Actual="50"/>
+<MaxHydroTorque Value="20" Scale="None" Actual="20"/>
+<Magnus>0</Magnus>
+<EnableFluids>False</EnableFluids>
+<Density Value="2.083" Scale="None" Actual="2.083"/>
+<Mass Value="0.4" Scale="Kilo" Actual="400"/>
+<COM>
+<X Value="0" Scale="None" Actual="0"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="0" Scale="None" Actual="0"/>
+</COM>
+<MaterialTypeID>f9d84949-3fe9-48fd-bade-5e3432c034cd</MaterialTypeID>
+<Freeze>False</Freeze>
+<Joint>
+<Name>ankle_R</Name>
+<ID>df6a7bef-7ae9-43e0-ba1f-1bae1a330b5b</ID>
+<Description/>
+<Transparencies>
+<Graphics>50</Graphics>
+<Collisions>50</Collisions>
+<Joints>0</Joints>
+<RecFields>50</RecFields>
+<Simulation>50</Simulation>
+</Transparencies>
+<IsVisible>True</IsVisible>
+<Ambient Red="0.0980392" Green="0.0980392" Blue="0.0980392" Alpha="1"/>
+<Diffuse Red="1" Green="0" Blue="0" Alpha="1"/>
+<Specular Red="0.25098" Green="0.25098" Blue="0.25098" Alpha="1"/>
+<Shininess>64</Shininess>
+<Texture/>
+<LocalPosition>
+<X Value="-50.101" Scale="milli" Actual="-0.050101"/>
+<Y Value="-7.231" Scale="micro" Actual="-7.231e-006"/>
+<Z Value="-40.024" Scale="milli" Actual="-0.040024"/>
+</LocalPosition>
+<Rotation>
+<X Value="180" Scale="None" Actual="180"/>
+<Y Value="0" Scale="None" Actual="0"/>
+<Z Value="89.9883" Scale="None" Actual="89.9883"/>
+</Rotation>
+<LocalMatrix>-0.000203653,-1,-0.000407306,0,-1,0.000203653,8.29492e-008,0,0,0.000407306,-1,0,-0.50101,-7.231e-005,-0.40024,1</LocalMatrix>
+<DraggerSize Value="-1" Scale="None" Actual="-1"/>
+<Type>Hinge</Type>
+<PartType>AnimatGUI.DataObjects.Physical.Joints.Hinge</PartType>
+<SynchWithRobot>False</SynchWithRobot>
+<SynchUpdateInterval Value="0" Scale="milli" Actual="0"/>
+<Size Value="0.005" Scale="None" Actual="0.005"/>
+<EnableLimits>True</EnableLimits>
+<Relaxation1>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>f15d9698-7418-44df-8468-495ee84181a0</ID>
+<Enabled>False</Enabled>
+<CoordinateID>0</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation1>
+<Relaxation2>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>ce74bbd2-bd18-411e-a1ec-73182e1e522e</ID>
+<Enabled>False</Enabled>
+<CoordinateID>1</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation2>
+<Relaxation3>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>42c5850b-a0b5-4bc1-9760-2ac6d94a667d</ID>
+<Enabled>False</Enabled>
+<CoordinateID>2</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation3>
+<Relaxation4>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>01624946-226d-4128-a009-57b1c4f466f1</ID>
+<Enabled>False</Enabled>
+<CoordinateID>3</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation4>
+<Relaxation5>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintRelaxationVortex</ClassName>
+<ID>d806b337-b222-4467-957f-a6718659b648</ID>
+<Enabled>False</Enabled>
+<CoordinateID>4</CoordinateID>
+<Stiffness Value="100" Scale="Kilo" Actual="100000"/>
+<Damping Value="5" Scale="Kilo" Actual="5000"/>
+</Relaxation5>
+<Friction>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ConstraintFriction</ClassName>
+<ID>4769a1d4-cbc5-4a11-af51-82ee04a03f19</ID>
+<Name/>
+<Enabled>False</Enabled>
+<Proportional>True</Proportional>
+<Coefficient Value="0.02" Scale="None" Actual="0.02"/>
+<MaxForce Value="10" Scale="None" Actual="10"/>
+<Loss Value="0" Scale="None" Actual="0"/>
+<StaticFrictionScale Value="1" Scale="None" Actual="1"/>
+</Friction>
+<LowerLimit>
+<Name>731d96a5-c2e0-4a80-9af1-15a7375d59f5</Name>
+<ID>731d96a5-c2e0-4a80-9af1-15a7375d59f5</ID>
+<LimitPos Value="-20" Scale="None" Actual="-20"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</LowerLimit>
+<UpperLimit>
+<Name>b4e946af-acb7-4577-a40f-688f2ede7da0</Name>
+<ID>b4e946af-acb7-4577-a40f-688f2ede7da0</ID>
+<LimitPos Value="-5" Scale="None" Actual="-5"/>
+<Damping Value="0" Scale="Kilo" Actual="0"/>
+<Restitution Value="0" Scale="None" Actual="0"/>
+<Stiffness Value="5" Scale="Mega" Actual="5e+006"/>
+</UpperLimit>
+<MaxForce Value="100" Scale="None" Actual="100"/>
+<MaxVelocity Value="100" Scale="None" Actual="100"/>
+<EnableMotor>False</EnableMotor>
+<MotorType>VelocityControl</MotorType>
+<ServoGain>100</ServoGain>
+<PID>
+<ID>bad1ea28-4137-4e35-abd3-02467563cf21</ID>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.PidControl</ClassName>
+<Enabled>False</Enabled>
+<ComplexError>True</ComplexError>
+<AntiResetWindup>False</AntiResetWindup>
+<RampLimit>False</RampLimit>
+<Kp Value="20" Scale="None" Actual="20"/>
+<Ki Value="0" Scale="None" Actual="0"/>
+<Kd Value="1" Scale="None" Actual="1"/>
+<RangeMax Value="1" Scale="None" Actual="1"/>
+<RangeMin Value="-1" Scale="None" Actual="-1"/>
+<ARWBound Value="0" Scale="None" Actual="0"/>
+<RampGradient Value="45" Scale="None" Actual="45"/>
+</PID>
+</Joint>
+

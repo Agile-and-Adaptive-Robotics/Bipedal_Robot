@@ -140,6 +140,12 @@ class HuntNetwork(D.JointIntegrationNetwork):
         self.bi_input_edges=np.array([i for i in self.bi_edges if self.names[c.pre[i]].startswith(('PF_HIP','PF_KNEE'))],dtype=int)
         self.bi_gain=c.gmax.copy()
         self.load_weights()
+        self.midline_drive_pairs=[]
+        if self.options.get('bilateral_midline_drive',False):
+            for old_source,old_target,new_source,new_target in self.midline_mirrors:
+                a=np.flatnonzero((c.pre==self.idx[old_source])&(c.post==self.idx[old_target]));b=np.flatnonzero((c.pre==self.idx[new_source])&(c.post==self.idx[new_target]))
+                assert len(a)==len(b)==1
+                self.pf_gain[a[0]]*=.5;self.pf_gain[b[0]]=self.pf_gain[a[0]];self.midline_drive_pairs.append((int(a[0]),int(b[0])))
         self.sync()
 
     def sync(self):
@@ -270,6 +276,20 @@ def build(acts,dt=.002,interleg=False,options=None):
         for side,other in (('r','l'),('l','r')):net.net.add_connection(BN._syn(opts['cross_contact_gain'],True),'HEEL_'+side,'RG_F_'+other)
     if opts.get('ipsilateral_heel_reset_gain',0.)>0.:
         for side in ('r','l'):net.net.add_connection(BN._syn(opts['ipsilateral_heel_reset_gain'],True),'HEEL_'+side,'RG_E_'+side)
+    net.midline_mirrors=[]
+    if opts.get('bilateral_midline_drive',False):
+        # Legacy lumbar PF fits used only the first leg's phase bank. Average
+        # bilateral sagittal drive; reverse directional channels for coronal
+        # and axial motion under anatomical left/right reflection.
+        first,other=net.sides
+        for key in ('lumbar_extension','lumbar_bending','lumbar_rotation'):
+            pair=net.hunt_pairs[key]
+            for j,target in enumerate(pair):
+                opposite=pair[j if key=='lumbar_extension' else 1-j]
+                for k,bank in enumerate(net.bank_names[first]):
+                    for source,new_source,exc in ((bank,net.bank_names[other][k],True),(f'HUNT_BANK_IN_{k}_{first}',f'HUNT_BANK_IN_{k}_{other}',False)):
+                        net.net.add_connection(BN._syn(1e-12,exc),new_source,opposite)
+                        net.bank_connections.append((new_source,opposite,key));net.midline_mirrors.append((source,target,new_source,opposite))
     net.compile(dt);net.install();net.fast_io=True
     if opts.get('balance'):
         from balance import TaskBalance

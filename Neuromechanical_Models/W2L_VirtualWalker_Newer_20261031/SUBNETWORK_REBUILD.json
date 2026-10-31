@@ -1,0 +1,117 @@
+{
+  "machine": "easteregg2",
+  "template_commit": "23b0e785",
+  "template_scope": "historical uniarticular LH subsystem organization, not copied physical model or neuron parameters",
+  "project": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_VirtualWalker_Newer_20261031\\W2L_VirtualWalker_Newer.aproj",
+  "source_sha256": "6724093d0268e955b0d19a4e9b5ef1d2d5e35cc0dc155702d639e7e3c61e073e",
+  "output_sha256": "d4eab0f3f19b847dadee8e9876e7b06d39f32c22dc0a253e798c61e699463495",
+  "original_objects": 168,
+  "original_links": 292,
+  "added_neurons": 0,
+  "added_functional_connections": 0,
+  "offpage_connectors": 70,
+  "pages": {
+    "root": {
+      "nodes": 15,
+      "links": 10
+    },
+    "RH": {
+      "nodes": 21,
+      "links": 17
+    },
+    "RH/RH_K&A Synergy": {
+      "nodes": 15,
+      "links": 11
+    },
+    "RH/RH_K&A Synergy/RH_Anklez Motoneuron": {
+      "nodes": 20,
+      "links": 28
+    },
+    "LH": {
+      "nodes": 21,
+      "links": 17
+    },
+    "LH/LH_K&A Synergy": {
+      "nodes": 15,
+      "links": 11
+    },
+    "LH/LH_K&A Synergy/LH_Knee Motoneuron": {
+      "nodes": 22,
+      "links": 30
+    },
+    "RH/RH_K&A Synergy/RH_Knee Motoneuron": {
+      "nodes": 22,
+      "links": 30
+    },
+    "RH/RH_HipZ": {
+      "nodes": 26,
+      "links": 41
+    },
+    "LH/LH_RG": {
+      "nodes": 4,
+      "links": 6
+    },
+    "LH/LH_HipZ": {
+      "nodes": 26,
+      "links": 41
+    },
+    "LH/LH_Contact feedback": {
+      "nodes": 6,
+      "links": 4
+    },
+    "LH/LH_K&A Synergy/LH_Anklez Motoneuron": {
+      "nodes": 20,
+      "links": 28
+    },
+    "RH/RH_Contact feedback": {
+      "nodes": 6,
+      "links": 4
+    },
+    "LH/LH_K&A Synergy/LH_K&A Pattern Formation": {
+      "nodes": 4,
+      "links": 4
+    },
+    "RH/RH_K&A Synergy/RH_K&A Pattern Formation": {
+      "nodes": 4,
+      "links": 4
+    },
+    "RH/RH_RG": {
+      "nodes": 4,
+      "links": 6
+    },
+    "Commissural coordination": {
+      "nodes": 4,
+      "links": 0
+    }
+  },
+  "validated_drawing_pages": 18,
+  "physical_payloads_unchanged": true,
+  "neuron_parameters_unchanged": true,
+  "effective_edges_unchanged": true,
+  "standalone_bytes_unchanged": true,
+  "root_y_telemetry": "already present: root_y column in Virtual walker verification",
+  "legacy_label_findings": [
+    {
+      "id": "a3828afc-f8fa-4497-a647-354322ee2bd6",
+      "legacy_label": "L Knee MN ext RE",
+      "placement": "RH knee MN; label retained in all files",
+      "neighbour_side_counts": {
+        "R": 5
+      }
+    }
+  ],
+  "unassigned_before_auxiliary_group": [],
+  "original_object_class_counts": {
+    "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking": 96,
+    "AnimatGUI.DataObjects.Behavior.Nodes.Muscle": 12,
+    "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter": 32,
+    "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor": 12,
+    "AnimatGUI.DataObjects.Behavior.Nodes.RigidBody": 4,
+    "AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter": 12
+  },
+  "actual_neuron_count": 96,
+  "original_link_class_counts": {
+    "IntegrateFireGUI.DataObjects.Behavior.Synapse": 204,
+    "AnimatGUI.DataObjects.Behavior.Links.Adapter": 88
+  }
+}

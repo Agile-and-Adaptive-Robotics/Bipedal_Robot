@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="Biarticular_net">
+  <compiler angle="radian" autolimits="true" inertiafromgeom="false" />
+  <statistic extent="3" center="0 -0.45 0" />
+  <option timestep=".002" gravity="0 -9.81 0" integrator="implicitfast" iterations="100" tolerance="1e-10" />
+  <visual>
+    <global azimuth="90" elevation="-15" />
+  </visual>
+  <default>
+    <geom friction="1 .005 .0001" solref=".006 1" solimp=".95 .999 .001" condim="3" />
+  </default>
+  <worldbody>
+    <light pos="0 4 2" dir="0 -1 -.2" directional="true" />
+    <body name="Pelvis" pos="0 0 0" quat="-0.18289265552717 -0.18313360338251 0.68304485675103 0.68298029512741">
+      <camera name="anatomical_oblique" pos="2 .1 2" xyaxes=".70710678 0 -.70710678 -.134974 .981606 -.134974" mode="trackcom" fovy="35" />
+      <inertial pos="0 0 0" mass="0.031824" diaginertia="1.827228e-06 3.315e-06 3.609372e-06" />
+      <geom name="geom_Pelvis" type="box" size="0.0155 0.01 0.0085" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+      <site name="site_BicepsFemorisAntViaOne_Pelvis_RH_HipZ_Ext_39e0b0f4" pos="0.0151 -0.006353 0.002438" size=".002" rgba=".1 .7 .2 1" />
+      <body name="RH_Femur" pos="0.007105 -0.015901 -0.017895" quat="0.81561789707918 0.57859091417351 0 0">
+        <joint name="RH_HipZ" type="hinge" pos="0 0.0179 0" axis="-0.00020367320369518 0 0.99999997925861" damping="0" armature=".00001" limited="true" range="-1.0472 0.872665" solreflimit=".004 1" solimplimit=".999 .9999 .001" />
+        <inertial pos="0 0 0" mass="0.014141" diaginertia="1.5664103541667e-06 1.12208835e-07 1.5664103541667e-06" />
+        <geom name="geom_RH_Femur" type="box" size="0.00345 0.0179 0.00345" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+        <site name="site_IlliopsoasVia_Femur_RH_HipZ_Flx_049cd625" pos="-0.001168 0.012928 0.001056" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_GastrocnemiusOrigin_Femur_RH_Knee_Flx_22ccd77c" pos="-0.001284 -0.012721 -0.004689" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_VastiiVia_Femur_RH_Knee_Ext_5def3fd0" pos="-0.007131 -0.016817 -0.003584" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_RectusFemorisVia_Femur_RH_Knee_Ext_87c90331" pos="-0.006424 -0.016424 -0.004625" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_IlliopsoasIns_Femur_RH_HipZ_Flx_982502e3" pos="0.002203 0.01291 0.002579" size=".002" rgba=".1 .7 .2 1" />
+        <body name="RH_Tibia" pos="0.021978 -0.022329 -0.001782" quat="0.99416711301004 -0.0040206620363914 0.039929803537212 -0.10010592627592">
+          <joint name="RH_Knee" type="hinge" pos="-0.02244 0 0" axis="-0.00020367320369518 -0.00020367319947071 -0.99999995851723" damping="0" armature=".00001" limited="true" range="-1.39626 1.0472" solreflimit=".004 1" solimplimit=".999 .9999 .001" />
+          <inertial pos="0 0 0" mass="0.003338" diaginertia="1.6829083333333e-08 5.6870184726667e-07 5.6870184726667e-07" />
+          <geom name="geom_RH_Tibia" type="box" size="0.02244 0.00275 0.00275" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+          <body name="RH_Foot" pos="0.022378 -0.002727 -0.000897" quat="0.98480739272475 0.17365022094624 0 0">
+            <joint name="RH_AnkleZ" type="hinge" pos="0.0001 0.0028 -0.0002" axis="-0.00020367320369518 0 0.99999997925861" damping="0" armature=".00001" limited="true" range="-1.39626 0.436332" solreflimit=".004 1" solimplimit=".999 .9999 .001" />
+            <inertial pos="0 0 0" mass="0.001571" diaginertia="2.9246783333333e-08 1.0064873333333e-08 2.9246783333333e-08" />
+            <geom name="geom_RH_Foot" type="box" size="0.0031 0.0068 0.0031" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+            <site name="site_TibialisAntIns_Foot_RH_AnkleZ_Flx_0142b3cd" pos="0.003623 -0.005035 -0.000347" size=".002" rgba=".1 .7 .2 1" />
+            <site name="site_AchillesVia_Foot_RH_AnkleZ_Ext_0d09ded8" pos="-0.002491 0.005551 0.00294" size=".002" rgba=".1 .7 .2 1" />
+            <site name="site_HeelIns_Foot_RH_AnkleZ_Ext_62f5058d" pos="0.001602 0.006035 0.003188" size=".002" rgba=".1 .7 .2 1" />
+          </body>
+          <site name="site_RectusFemorisViaTwo_Tibia_RH_Knee_Ext_2947761f" pos="-0.023693 -0.002395 -0.003277" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialisAnteriorOrigin_Tibia_RH_AnkleZ_Flx_7e3e1041" pos="-0.018234 -0.002376 -0.0036" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_VastiiViaTwo_Tibia_RH_Knee_Ext_848db1d4" pos="-0.022531 -0.004007 -0.002727" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_BicepsFemorisPosteriorVia_Tibia_RH_Knee_Flx_8d8c725f" pos="-0.008356 0.003321 0.002463" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialTuberosity_Tibia_RH_Knee_Ext_a3885d92" pos="-0.018962 -0.004543 -0.001895" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialisAnteriorViaOne_Tibia_RH_AnkleZ_Flx_a76f1c30" pos="-0.007447 -0.004408 -0.003553" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialisAnteriorVia_Tibia_RH_AnkleZ_Flx_ae197653" pos="0.017937 -0.001435 0.000331" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_BicepsFemorisPosteriorIns_Tibia_RH_Knee_Flx_b076b5ce" pos="-0.008345 -0.001721 2.0168e-05" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_SoleusOrigin_Tibia_RH_AnkleZ_Ext_bacb2bcb" pos="-0.017546 0.003855 0.002318" size=".002" rgba=".1 .7 .2 1" />
+        </body>
+        <site name="site_BicepsFemorisAnteriorIns_Femur_RH_Knee_Ext_e88713c4" pos="0.002936 -0.017942 0.003833" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_VastiiOrigin_Femur_RH_Knee_Ext_f4d1692d" pos="-0.00426 0.007116 0.002683" size=".002" rgba=".1 .7 .2 1" />
+      </body>
+      <site name="site_BicepsFemorisAntViaTwo_Pelvis_LH_HipZ_Ext_603c2d01" pos="0.014331 0.008945 -0.000456" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_RectusFemorisOrigin_Pelvis_LH_HipZ_Flx_621f076a" pos="0.001417 0.012069 -0.001239" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_IlliopsoasOrigin_Pelvis_LH_Hipz_Flx_7f2998fc" pos="-0.003495 0.008833 -0.00244" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_BicepsFemorisAntViaTwo_Pelvis_RH_HipZ_Ext_82bd420c" pos="0.014331 -0.008495 -0.000456" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_IlliopsoasOrigin_Pelvis_RH_Hipz_Flx_847a1377" pos="-0.003495 -0.008833 -0.00244" size=".002" rgba=".1 .7 .2 1" />
+      <body name="LH_Femur" pos="0.007095 0.015899 -0.017901" quat="0.58086938325314 0.81399678107417 0 0">
+        <joint name="LH_HipZ" type="hinge" pos="0 0.0179 0" axis="-0.00020367320369518 0 0.99999997925861" damping="0" armature=".00001" limited="true" range="-1.0472 0.872665" solreflimit=".004 1" solimplimit=".999 .9999 .001" />
+        <inertial pos="0 0 0" mass="0.014141" diaginertia="1.5664103541667e-06 1.12208835e-07 1.5664103541667e-06" />
+        <geom name="geom_LH_Femur" type="box" size="0.00345 0.0179 0.00345" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+        <site name="site_RectusFemorisVia_Femur_LH_Knee_Ext_3a251aec" pos="-0.006424 -0.016424 0.004625" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_VastiiOrigin_Femur_LH_Knee_Ext_47ca81e1" pos="-0.00426 0.007116 -0.002683" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_IlliopsoasIns_Femur_LH_HipZ_Flx_6dfb5fb0" pos="0.002203 0.01291 -0.002579" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_BicepsFemorisAnteriorIns_Femur_LH_HipZ_Ext_77d4e1e4" pos="0.002936 -0.017942 -0.003833" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_VastiiVia_Femur_LH_Knee_Ext_a20bf2a4" pos="-0.007131 -0.016817 0.003584" size=".002" rgba=".1 .7 .2 1" />
+        <body name="LH_Tibia" pos="0.021975 -0.022342 0.001652" quat="0.99416711301004 0.0040206620363914 -0.039929803537212 -0.10010592627592">
+          <joint name="LH_Knee" type="hinge" pos="-0.02244 0 0" axis="-0.00020367320369518 -0.00020367319947071 -0.99999995851723" damping="0" armature=".00001" limited="true" range="-1.39626 1.0472" solreflimit=".004 1" solimplimit=".999 .9999 .001" />
+          <inertial pos="0 0 0" mass="0.003338" diaginertia="1.6829083333333e-08 5.6870184726667e-07 5.6870184726667e-07" />
+          <geom name="geom_LH_Tibia" type="box" size="0.02244 0.00275 0.00275" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+          <site name="site_VastiiViaTwo_Tibia_LH_Knee_Ext_02cf09ec" pos="-0.022531 -0.004007 0.002727" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialisAnteriorOrigin_Tibia_LH_AnkleZ_Flx_1d78fe09" pos="-0.018234 -0.002376 0.0036" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_BicepsFemorisPosteriorVia_Tibia_LH_Knee_Flx_5cc9d3be" pos="-0.008356 0.003321 -0.002463" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialTuberosity_Tibia_LH_Knee_Ext_60557ebd" pos="-0.018962 -0.004543 0.001895" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialisAnteriorViaOne_Tibia_LH_AnkleZ_Flx_6aee2c68" pos="-0.007447 -0.004408 0.003533" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_RectusFemorisViaTwo_Tibia_LH_Knee_Ext_721be3a9" pos="-0.023693 -0.002395 0.003277" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_BicepsFemorisPosteriorIns_Tibia_LH_Knee_Flx_8d41a9bf" pos="-0.008345 -0.001721 -2.0168e-05" size=".002" rgba=".1 .7 .2 1" />
+          <site name="site_TibialisAnteriorVia_Tibia_LH_AnkleZ_Flx_c18427b1" pos="0.017937 -0.001435 -0.000331" size=".002" rgba=".1 .7 .2 1" />
+          <body name="LH_Foot" pos="0.022377 -0.002746 0.000848" quat="0.98480739272475 -0.17365022094624 0 0">
+            <joint name="LH_AnkleZ" type="hinge" pos="0.0001 0.0029 0.0001" axis="-0.00020367320369518 0 0.99999997925861" damping="0" armature=".00001" limited="true" range="-1.39626 0.436332" solreflimit=".004 1" solimplimit=".999 .9999 .001" />
+            <inertial pos="0 0 0" mass="0.001571" diaginertia="2.9246783333333e-08 1.0064873333333e-08 2.9246783333333e-08" />
+            <geom name="geom_LH_Foot" type="box" size="0.0031 0.0068 0.0031" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+            <site name="site_AchillesVia_Foot_LH_AnkleZ_Ext_8be9b789" pos="-0.002491 0.005551 -0.00294" size=".002" rgba=".1 .7 .2 1" />
+            <site name="site_HeelIns_Foot_LH_AnkleZ_Ext_b59dfecd" pos="0.001602 0.006035 -0.003188" size=".002" rgba=".1 .7 .2 1" />
+            <site name="site_TibialisAntIns_Foot_LH_AnkleZ_Flx_d3c5211a" pos="0.003623 -0.005035 0.000347" size=".002" rgba=".1 .7 .2 1" />
+          </body>
+          <site name="site_SoleusOrigin_Tibia_LH_AnkleZ_Ext_ed7a2d3b" pos="-0.017546 0.003855 -0.002318" size=".002" rgba=".1 .7 .2 1" />
+        </body>
+        <site name="site_GastrocnemiusOrigin_Femur_LH_Knee_Flx_e8a73c28" pos="-0.001284 -0.012721 0.004689" size=".002" rgba=".1 .7 .2 1" />
+        <site name="site_IlliopsoasVia_Femur_LH_HipZ_Flx_e8aec629" pos="-0.001168 0.012928 -0.001056" size=".002" rgba=".1 .7 .2 1" />
+      </body>
+      <site name="site_BicepsFemorisPostOrigin_Pelvis_LH_HipZ_Ext_96525cee" pos="0.022107 0.006969 0.000201" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_BicepsFemorisAntOrigin_Pelvis_RH_HipZ_Ext_b2b5b7fa" pos="0.015561 -0.002322 0.005548" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_BicepsFemorisPostOrigin_Pelvis_RH_HipZ_Ext_be6fe2fd" pos="0.022107 -0.006969 0.000201" size=".002" rgba=".1 .7 .2 1" />
+      <body name="Front_support" pos="-0.059602 -3.5274e-05 -0.096765" quat="0.96592566783965 0 -0.25881963644308 0">
+        <joint name="Mid_spine" type="hinge" pos="0 0 0" axis="-0.00020367320369518 0.99999997925861 0" damping="0" armature=".00001" limited="true" range="-0.0872665 0.0872665" solreflimit=".004 1" solimplimit=".999 .9999 .001" />
+        <inertial pos="0 0 0" mass="0.1" diaginertia="8.3366666666667e-05 1.6666666666667e-07 8.3466666666667e-05" />
+        <geom name="geom_Front_support" type="box" size="0.002 0.05 0.001" rgba=".9 .65 .15 1" contype="1" conaffinity="1" friction="1 .005 .0001" />
+      </body>
+      <site name="site_BicepsFemorisAntViaOne_Pelvis_LH_HipZ_Ext_ebfc532b" pos="0.0151 0.006353 0.002438" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_RectusFemorisOrigin_Pelvis_RH_HipZ_Flx_f2b030dd" pos="0.001417 -0.012069 -0.001293" size=".002" rgba=".1 .7 .2 1" />
+      <site name="site_BicepsFemorisAntOrigin_Pelvis_LH_HipZ_Ext_f8459e29" pos="0.015561 0.002322 0.005548" size=".002" rgba=".1 .7 .2 1" />
+    </body>
+    <body name="Root" pos="0 -0.102 0" quat="0.70703476816784 0.70717878687207 0 0">
+      <geom name="geom_Root" type="plane" size="10 10 .1" quat="0 1 0 0" rgba=".8 .8 .8 1" />
+    </body>
+  </worldbody>
+  <tendon>
+    <spatial name="route_LH_BicepsFemorisAnterior" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisAntOrigin_Pelvis_LH_HipZ_Ext_f8459e29" />
+      <site site="site_BicepsFemorisAntViaOne_Pelvis_LH_HipZ_Ext_ebfc532b" />
+      <site site="site_BicepsFemorisAntViaTwo_Pelvis_LH_HipZ_Ext_603c2d01" />
+      <site site="site_BicepsFemorisAnteriorIns_Femur_LH_HipZ_Ext_77d4e1e4" />
+    </spatial>
+    <spatial name="route_RH_BicepsFemorisPosterior" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisPostOrigin_Pelvis_RH_HipZ_Ext_be6fe2fd" />
+      <site site="site_BicepsFemorisPosteriorVia_Tibia_RH_Knee_Flx_8d8c725f" />
+      <site site="site_BicepsFemorisPosteriorIns_Tibia_RH_Knee_Flx_b076b5ce" />
+    </spatial>
+    <spatial name="route_LH_BicepsFemorisPosterior" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisPostOrigin_Pelvis_LH_HipZ_Ext_96525cee" />
+      <site site="site_BicepsFemorisPosteriorVia_Tibia_LH_Knee_Flx_5cc9d3be" />
+      <site site="site_BicepsFemorisPosteriorIns_Tibia_LH_Knee_Flx_8d41a9bf" />
+    </spatial>
+    <spatial name="route_RH_BicepsFemorisAnterior" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisAntOrigin_Pelvis_RH_HipZ_Ext_b2b5b7fa" />
+      <site site="site_BicepsFemorisAntViaOne_Pelvis_RH_HipZ_Ext_39e0b0f4" />
+      <site site="site_BicepsFemorisAntViaTwo_Pelvis_RH_HipZ_Ext_82bd420c" />
+      <site site="site_BicepsFemorisAnteriorIns_Femur_RH_Knee_Ext_e88713c4" />
+    </spatial>
+    <spatial name="route_RH_Vastii" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_VastiiOrigin_Femur_RH_Knee_Ext_f4d1692d" />
+      <site site="site_VastiiVia_Femur_RH_Knee_Ext_5def3fd0" />
+      <site site="site_VastiiViaTwo_Tibia_RH_Knee_Ext_848db1d4" />
+      <site site="site_TibialTuberosity_Tibia_RH_Knee_Ext_a3885d92" />
+    </spatial>
+    <spatial name="route_RH_TibialisAnterior" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_TibialisAnteriorOrigin_Tibia_RH_AnkleZ_Flx_7e3e1041" />
+      <site site="site_TibialisAnteriorViaOne_Tibia_RH_AnkleZ_Flx_a76f1c30" />
+      <site site="site_TibialisAnteriorVia_Tibia_RH_AnkleZ_Flx_ae197653" />
+      <site site="site_TibialisAntIns_Foot_RH_AnkleZ_Flx_0142b3cd" />
+    </spatial>
+    <spatial name="route_RH_Soleus" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_SoleusOrigin_Tibia_RH_AnkleZ_Ext_bacb2bcb" />
+      <site site="site_AchillesVia_Foot_RH_AnkleZ_Ext_0d09ded8" />
+      <site site="site_HeelIns_Foot_RH_AnkleZ_Ext_62f5058d" />
+    </spatial>
+    <spatial name="route_RH_Gastrocnemius" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_GastrocnemiusOrigin_Femur_RH_Knee_Flx_22ccd77c" />
+      <site site="site_AchillesVia_Foot_RH_AnkleZ_Ext_0d09ded8" />
+      <site site="site_HeelIns_Foot_RH_AnkleZ_Ext_62f5058d" />
+    </spatial>
+    <spatial name="route_LH_Vastii" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_VastiiOrigin_Femur_LH_Knee_Ext_47ca81e1" />
+      <site site="site_VastiiVia_Femur_LH_Knee_Ext_a20bf2a4" />
+      <site site="site_VastiiViaTwo_Tibia_LH_Knee_Ext_02cf09ec" />
+      <site site="site_TibialTuberosity_Tibia_LH_Knee_Ext_60557ebd" />
+    </spatial>
+    <spatial name="route_LH_Gastrocnemius" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_GastrocnemiusOrigin_Femur_LH_Knee_Flx_e8a73c28" />
+      <site site="site_AchillesVia_Foot_LH_AnkleZ_Ext_8be9b789" />
+      <site site="site_HeelIns_Foot_LH_AnkleZ_Ext_b59dfecd" />
+    </spatial>
+    <spatial name="route_LH_TibialisAnterior" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_TibialisAnteriorOrigin_Tibia_LH_AnkleZ_Flx_1d78fe09" />
+      <site site="site_TibialisAnteriorViaOne_Tibia_LH_AnkleZ_Flx_6aee2c68" />
+      <site site="site_TibialisAnteriorVia_Tibia_LH_AnkleZ_Flx_c18427b1" />
+      <site site="site_TibialisAntIns_Foot_LH_AnkleZ_Flx_d3c5211a" />
+    </spatial>
+    <spatial name="route_LH_Soleus" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_SoleusOrigin_Tibia_LH_AnkleZ_Ext_ed7a2d3b" />
+      <site site="site_AchillesVia_Foot_LH_AnkleZ_Ext_8be9b789" />
+      <site site="site_HeelIns_Foot_LH_AnkleZ_Ext_b59dfecd" />
+    </spatial>
+    <spatial name="route_RH_Illiopsoas" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_IlliopsoasOrigin_Pelvis_RH_Hipz_Flx_847a1377" />
+      <site site="site_IlliopsoasVia_Femur_RH_HipZ_Flx_049cd625" />
+      <site site="site_IlliopsoasIns_Femur_RH_HipZ_Flx_982502e3" />
+    </spatial>
+    <spatial name="route_RH_RectusFemoris" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_RectusFemorisOrigin_Pelvis_RH_HipZ_Flx_f2b030dd" />
+      <site site="site_RectusFemorisVia_Femur_RH_Knee_Ext_87c90331" />
+      <site site="site_RectusFemorisViaTwo_Tibia_RH_Knee_Ext_2947761f" />
+      <site site="site_TibialTuberosity_Tibia_RH_Knee_Ext_a3885d92" />
+    </spatial>
+    <spatial name="route_LH_Illiopsoas" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_IlliopsoasOrigin_Pelvis_LH_Hipz_Flx_7f2998fc" />
+      <site site="site_IlliopsoasVia_Femur_LH_HipZ_Flx_e8aec629" />
+      <site site="site_IlliopsoasIns_Femur_LH_HipZ_Flx_6dfb5fb0" />
+    </spatial>
+    <spatial name="route_LH_RectusFemoris" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_RectusFemorisOrigin_Pelvis_LH_HipZ_Flx_621f076a" />
+      <site site="site_RectusFemorisVia_Femur_LH_Knee_Ext_3a251aec" />
+      <site site="site_RectusFemorisViaTwo_Tibia_LH_Knee_Ext_721be3a9" />
+      <site site="site_TibialTuberosity_Tibia_LH_Knee_Ext_60557ebd" />
+    </spatial>
+    <spatial name="route_RH_BicepsFemorisPosterior_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisPostOrigin_Pelvis_RH_HipZ_Ext_be6fe2fd" />
+      <site site="site_BicepsFemorisPosteriorVia_Tibia_RH_Knee_Flx_8d8c725f" />
+      <site site="site_BicepsFemorisPosteriorIns_Tibia_RH_Knee_Flx_b076b5ce" />
+    </spatial>
+    <spatial name="route_LH_BicepsFemorisPosterior_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisPostOrigin_Pelvis_LH_HipZ_Ext_96525cee" />
+      <site site="site_BicepsFemorisPosteriorVia_Tibia_LH_Knee_Flx_5cc9d3be" />
+      <site site="site_BicepsFemorisPosteriorIns_Tibia_LH_Knee_Flx_8d41a9bf" />
+    </spatial>
+    <spatial name="route_RH_Vastii_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_VastiiOrigin_Femur_RH_Knee_Ext_f4d1692d" />
+      <site site="site_VastiiVia_Femur_RH_Knee_Ext_5def3fd0" />
+      <site site="site_VastiiViaTwo_Tibia_RH_Knee_Ext_848db1d4" />
+      <site site="site_TibialTuberosity_Tibia_RH_Knee_Ext_a3885d92" />
+    </spatial>
+    <spatial name="route_RH_TibialisAnterior_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_TibialisAnteriorOrigin_Tibia_RH_AnkleZ_Flx_7e3e1041" />
+      <site site="site_TibialisAnteriorViaOne_Tibia_RH_AnkleZ_Flx_a76f1c30" />
+      <site site="site_TibialisAnteriorVia_Tibia_RH_AnkleZ_Flx_ae197653" />
+      <site site="site_TibialisAntIns_Foot_RH_AnkleZ_Flx_0142b3cd" />
+    </spatial>
+    <spatial name="route_RH_Soleus_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_SoleusOrigin_Tibia_RH_AnkleZ_Ext_bacb2bcb" />
+      <site site="site_AchillesVia_Foot_RH_AnkleZ_Ext_0d09ded8" />
+      <site site="site_HeelIns_Foot_RH_AnkleZ_Ext_62f5058d" />
+    </spatial>
+    <spatial name="route_RH_Gastrocnemius_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_GastrocnemiusOrigin_Femur_RH_Knee_Flx_22ccd77c" />
+      <site site="site_AchillesVia_Foot_RH_AnkleZ_Ext_0d09ded8" />
+      <site site="site_HeelIns_Foot_RH_AnkleZ_Ext_62f5058d" />
+    </spatial>
+    <spatial name="route_LH_Illiopsoas_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_IlliopsoasOrigin_Pelvis_LH_Hipz_Flx_7f2998fc" />
+      <site site="site_IlliopsoasVia_Femur_LH_HipZ_Flx_e8aec629" />
+      <site site="site_IlliopsoasIns_Femur_LH_HipZ_Flx_6dfb5fb0" />
+    </spatial>
+    <spatial name="route_RH_Illiopsoas_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_IlliopsoasOrigin_Pelvis_RH_Hipz_Flx_847a1377" />
+      <site site="site_IlliopsoasVia_Femur_RH_HipZ_Flx_049cd625" />
+      <site site="site_IlliopsoasIns_Femur_RH_HipZ_Flx_982502e3" />
+    </spatial>
+    <spatial name="route_LH_Gastrocnemius_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_GastrocnemiusOrigin_Femur_LH_Knee_Flx_e8a73c28" />
+      <site site="site_AchillesVia_Foot_LH_AnkleZ_Ext_8be9b789" />
+      <site site="site_HeelIns_Foot_LH_AnkleZ_Ext_b59dfecd" />
+    </spatial>
+    <spatial name="route_LH_Soleus_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_SoleusOrigin_Tibia_LH_AnkleZ_Ext_ed7a2d3b" />
+      <site site="site_AchillesVia_Foot_LH_AnkleZ_Ext_8be9b789" />
+      <site site="site_HeelIns_Foot_LH_AnkleZ_Ext_b59dfecd" />
+    </spatial>
+    <spatial name="route_LH_TibialisAnterior_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_TibialisAnteriorOrigin_Tibia_LH_AnkleZ_Flx_1d78fe09" />
+      <site site="site_TibialisAnteriorViaOne_Tibia_LH_AnkleZ_Flx_6aee2c68" />
+      <site site="site_TibialisAnteriorVia_Tibia_LH_AnkleZ_Flx_c18427b1" />
+      <site site="site_TibialisAntIns_Foot_LH_AnkleZ_Flx_d3c5211a" />
+    </spatial>
+    <spatial name="route_LH_Vastii_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_VastiiOrigin_Femur_LH_Knee_Ext_47ca81e1" />
+      <site site="site_VastiiVia_Femur_LH_Knee_Ext_a20bf2a4" />
+      <site site="site_VastiiViaTwo_Tibia_LH_Knee_Ext_02cf09ec" />
+      <site site="site_TibialTuberosity_Tibia_LH_Knee_Ext_60557ebd" />
+    </spatial>
+    <spatial name="route_LH_BicepsFemorisAnterior_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisAntOrigin_Pelvis_LH_HipZ_Ext_f8459e29" />
+      <site site="site_BicepsFemorisAntViaOne_Pelvis_LH_HipZ_Ext_ebfc532b" />
+      <site site="site_BicepsFemorisAntViaTwo_Pelvis_LH_HipZ_Ext_603c2d01" />
+      <site site="site_BicepsFemorisAnteriorIns_Femur_LH_HipZ_Ext_77d4e1e4" />
+    </spatial>
+    <spatial name="route_RH_RectusFemoris_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_RectusFemorisOrigin_Pelvis_RH_HipZ_Flx_f2b030dd" />
+      <site site="site_RectusFemorisVia_Femur_RH_Knee_Ext_87c90331" />
+      <site site="site_RectusFemorisViaTwo_Tibia_RH_Knee_Ext_2947761f" />
+      <site site="site_TibialTuberosity_Tibia_RH_Knee_Ext_a3885d92" />
+    </spatial>
+    <spatial name="route_RH_BicepsFemorisAnterior_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_BicepsFemorisAntOrigin_Pelvis_RH_HipZ_Ext_b2b5b7fa" />
+      <site site="site_BicepsFemorisAntViaOne_Pelvis_RH_HipZ_Ext_39e0b0f4" />
+      <site site="site_BicepsFemorisAntViaTwo_Pelvis_RH_HipZ_Ext_82bd420c" />
+      <site site="site_BicepsFemorisAnteriorIns_Femur_RH_Knee_Ext_e88713c4" />
+    </spatial>
+    <spatial name="route_LH_RectusFemoris_R" width=".0015" rgba=".1 .65 .2 .7">
+      <site site="site_RectusFemorisOrigin_Pelvis_LH_HipZ_Flx_621f076a" />
+      <site site="site_RectusFemorisVia_Femur_LH_Knee_Ext_3a251aec" />
+      <site site="site_RectusFemorisViaTwo_Tibia_LH_Knee_Ext_721be3a9" />
+      <site site="site_TibialTuberosity_Tibia_LH_Knee_Ext_60557ebd" />
+    </spatial>
+  </tendon>
+  <actuator>
+    <general name="LH_BicepsFemorisAnterior" tendon="route_LH_BicepsFemorisAnterior" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_BicepsFemorisPosterior" tendon="route_RH_BicepsFemorisPosterior" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="LH_BicepsFemorisPosterior" tendon="route_LH_BicepsFemorisPosterior" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_BicepsFemorisAnterior" tendon="route_RH_BicepsFemorisAnterior" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_Vastii" tendon="route_RH_Vastii" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_TibialisAnterior" tendon="route_RH_TibialisAnterior" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_Soleus" tendon="route_RH_Soleus" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_Gastrocnemius" tendon="route_RH_Gastrocnemius" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="LH_Vastii" tendon="route_LH_Vastii" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="LH_Gastrocnemius" tendon="route_LH_Gastrocnemius" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="LH_TibialisAnterior" tendon="route_LH_TibialisAnterior" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="LH_Soleus" tendon="route_LH_Soleus" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_Illiopsoas" tendon="route_RH_Illiopsoas" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="RH_RectusFemoris" tendon="route_RH_RectusFemoris" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="LH_Illiopsoas" tendon="route_LH_Illiopsoas" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+    <general name="LH_RectusFemoris" tendon="route_LH_RectusFemoris" gear="-1" gainprm="1" gaintype="fixed" biastype="none" dyntype="none" ctrllimited="true" ctrlrange="0 100" />
+  </actuator>
+  <contact />
+</mujoco>
