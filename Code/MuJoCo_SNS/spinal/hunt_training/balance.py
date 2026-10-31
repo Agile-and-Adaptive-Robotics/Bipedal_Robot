@@ -48,6 +48,24 @@ class TaskBalance:
             wanted=np.zeros(3);wanted[axis]=sign
             solution=lsq_linear(matrix,np.r_[wanted,np.zeros(m.nu)],bounds=(0.,.3),method='bvls')
             basis.append(solution.x);fit.append((response@solution.x).tolist())
+        if self.options.get('bilateral_recruitment',False):
+            # Pool sagittal responses and mirror the jointly fitted lateral pair.
+            acts=[m.actuator(i).name for i in range(m.nu)]
+            mirror=np.array([acts.index(a[:-2]+('_l' if a.endswith('_r') else '_r'))
+                             if a.endswith(('_r','_l')) else i for i,a in enumerate(acts)])
+            families=list(dict.fromkeys(a[:-2] if a.endswith(('_r','_l')) else a for a in acts))
+            tied=np.zeros((m.nu,len(families)))
+            for i,a in enumerate(acts):tied[i,families.index(a[:-2] if a.endswith(('_r','_l')) else a)]=1.
+            for k,sign in ((0,1.),(1,-1.)):
+                wanted=np.array([sign,0.,0.])
+                sol=lsq_linear(np.vstack([response@tied,.1*tied]),np.r_[wanted,np.zeros(m.nu)],bounds=(0.,.3),method='bvls')
+                basis[k]=tied@sol.x
+            sol=lsq_linear(np.vstack([response,response[:,mirror],.1*np.eye(m.nu)]),
+                          np.r_[0.,1.,0.,0.,-1.,0.,np.zeros(m.nu)],bounds=(0.,.3),method='bvls')
+            basis[2]=sol.x;basis[3]=sol.x[mirror]
+            fit=[(response@b).tolist() for b in basis]
+            if not all(np.array_equal(basis[k],basis[k][mirror]) for k in (0,1)) or not np.array_equal(basis[2],basis[3][mirror]):
+                raise ValueError('Balance recruitment violates bilateral tying')
         self.basis=np.array(basis);self.response=response
         c=self.n.compiled;names=self.n.names;acts=self.n.targets_data['act_names'].tolist()
         for i,(pre,post) in enumerate(zip(c.pre,c.post)):
@@ -62,6 +80,7 @@ class TaskBalance:
         self.edges=np.flatnonzero(self.gain)
         self.calibration=dict(reference_native_xy_m=self.reference.tolist(),local_acceleration_response=fit,
             maximum_basis_activation=float(self.basis.max()),response_rank=int(np.linalg.matrix_rank(response)),
+            bilateral_recruitment=bool(self.options.get('bilateral_recruitment',False)),
             basis_scope='Fixed-pose finite-activation forward-dynamics response; not a physiological synergy identification')
     def update(self,u):
         position=self.d.subtree_com[0,:2].copy()

@@ -12,12 +12,13 @@ from mechanics import CoupledArms,JOINTS
 from curriculum_metrics import assess
 from frontal_metrics import assess_frontal
 stage=cfg['stage'];capture={};extra=np.zeros((8500,21));balance_log=np.zeros((8500,8));count=0
+cfg.setdefault('align_ground_pose',stage>=3)
 trace_cells=cfg.get('trace_cells',[]);cell_log=np.zeros((8500,len(trace_cells)))
 event_amplitude=float(cfg.get('cross_contact_event_amplitude',0.))
 event_log=np.zeros((8500,4)) if event_amplitude>0. else None
 regional_log=np.zeros((8500,4)) if cfg.get('regional_contacts',False) else None
 if event_amplitude>0. and cfg.get('cross_contact_gain',0.)<=0.:raise ValueError('Contact events require an enabled crossed contact projection')
-source_hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__),H/'controller.py',H/'balance.py',H/'ground_contact_check.py',H/'regional_contacts.py')}
+source_hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__),H/'controller.py',H/'balance.py',H/'ground_contact_check.py',H/'regional_contacts.py',H/'contact_events.py',H/'bilateral.py',H/'foot_clearance_check.py')}
 oldpose=R.apply_start_pose
 def pose(m,d):
     oldpose(m,d);targets=np.load(H/'runs/targets/targets.npz',allow_pickle=True)
@@ -26,11 +27,17 @@ def pose(m,d):
     mean[[1,8]]=.04;mean[[2,9,5,12,6,13]]=0.
     for label,row in (('hip',0),('knee',3),('ankle',4)):
         if 'start_'+label+'_deg' in cfg:mean[[row,row+7]]=np.radians(cfg['start_'+label+'_deg'])
-    d.qpos[ar.addresses]=mean;ar.project(d);mujoco.mj_forward(m,d)
+    d.qpos[ar.addresses]=mean
+    if 'start_lumbar_extension_deg' in cfg:d.qpos[m.joint('lumbar_extension').qposadr[0]]=np.radians(cfg['start_lumbar_extension_deg'])
+    ar.project(d);mujoco.mj_forward(m,d)
     slides=[m.joint('pelvis_'+axis).id for axis in ('tx','ty','tz')]
     vertical=max(slides,key=lambda j:abs(d.xaxis[j,2]));ad=m.jnt_qposadr[vertical]
     d.qpos[ad]+=cfg.get('height_offset',0.)/d.xaxis[vertical,2]
     ar.project(d);mujoco.mj_forward(m,d)
+    if stage>=3 and cfg.get('align_ground_pose',False):
+        from physics_fidelity.ground_alignment import align_via_repaired_probe
+        capture['ground_alignment']=align_via_repaired_probe(m,d,original_harness,flatten_ankles=True,target_gap_m=cfg.get('initial_foot_gap_m',-.001))
+        for name in ('ground_alignment.py','contact_standing_solver.py'):source_hashes[name]=hashlib.sha256((S/'physics_fidelity'/name).read_bytes()).hexdigest()
 R.apply_start_pose=pose
 original_harness=R.apply_harness
 def harness(*args,**kwargs):
@@ -43,12 +50,14 @@ def harness(*args,**kwargs):
                 i=m.actuator(name).id
                 for key in ('gainprm','biasprm','dynprm','lengthrange'):getattr(m,'actuator_'+key)[i]=row[key]
         source_hashes['force_law_parameters_file']=hashlib.sha256(parameter_path.read_bytes()).hexdigest()
-    if cfg.get('knee_training_limits_deg'):
-        limits=np.radians(cfg['knee_training_limits_deg'])
-        if len(limits)!=2 or not limits[0]<limits[1]:raise ValueError('Invalid knee training limits')
-        for side in ('r','l'):
-            j=m.joint('knee_angle_'+side);m.jnt_limited[j.id]=True;m.jnt_range[j.id]=limits
-            m.jnt_solref[j.id]=[.02,1.]
+    limits=np.radians(cfg.get('knee_training_limits_deg',[-120.,0.]))
+    if len(limits)!=2 or not limits[0]<limits[1] or limits[1]>0.:raise ValueError('Knee limits must exclude hyperextension (positive angle)')
+    for side in ('r','l'):
+        j=m.joint('knee_angle_'+side);m.jnt_limited[j.id]=True;m.jnt_range[j.id]=limits
+        # A protective bumper engages before neutral; do not clip qpos/qvel.
+        m.jnt_margin[j.id]=np.radians(2.)
+        m.jnt_solref[j.id]=[.004,1.]
+        m.jnt_solimp[j.id]=[.999,.9999,.001,.5,2.]
     d=mujoco.MjData(m);mujoco.mj_forward(m,d)
     # Restrict only out-of-plane coordinates. Sagittal leg motion stays free.
     restriction=cfg.get('restriction',0.)
@@ -68,7 +77,13 @@ R.apply_harness=harness
 
 legacy_standing_solver=R.solve_standing_activations
 def standing_solver(model,data,Fmax,preload=True):
-    if cfg.get('standing_solver')!='coupled_symmetric':return legacy_standing_solver(model,data,Fmax,preload=preload)
+    if cfg.get('standing_solver')=='contact_symmetric' and stage>=3:
+        from physics_fidelity.contact_standing_solver import solve_contact_standing_activations
+        activation,diagnostics=solve_contact_standing_activations(model,data,Fmax,preload=False,bilateral=True,support_fraction=cfg.get('support_fraction',0.),return_diagnostics=True)
+        capture['standing_solver_diagnostics']=diagnostics
+        source_hashes['contact_standing_solver.py']=hashlib.sha256((S/'physics_fidelity/contact_standing_solver.py').read_bytes()).hexdigest()
+        return activation
+    if cfg.get('standing_solver') not in ('coupled_symmetric','contact_symmetric'):return legacy_standing_solver(model,data,Fmax,preload=preload)
     from physics_fidelity.standing_solver import solve_standing_activations
     if cfg.get('support_fraction',0.):data.xfrc_applied[model.body('pelvis').id,2]=cfg['support_fraction']*model.body_mass.sum()*9.81
     activation,diagnostics=solve_standing_activations(model,data,Fmax,preload=False,bilateral=True,return_diagnostics=True)
@@ -79,8 +94,9 @@ def build(acts,dt,interleg):
     options=dict(use_timing_afferents=False if stage==1 else cfg.get('timing_afferents',True),axis_feedback=0. if stage==1 else cfg.get('axis_feedback',0.),balance=None if stage==1 else cfg.get('balance'),weights_directory=cfg.get('weights_directory',str(H/'runs/fitted')),timing_scale=cfg.get('timing_scale',1.),reciprocal_gain=cfg.get('reciprocal_gain',0.),commissural_gain=0. if stage==1 else cfg.get('commissural_gain',0.),biarticular_pair_gain=cfg.get('biarticular_pair_gain',0.))
     if 'hip_abduction_goal' in cfg:options['hip_abduction_goal']=cfg['hip_abduction_goal']
     options['cross_contact_gain']=cfg.get('cross_contact_gain',0.)
-    options['commissural_e_gain']=cfg.get('commissural_e_gain',0.)
-    options['ipsilateral_heel_reset_gain']=cfg.get('ipsilateral_heel_reset_gain',0.)
+    options['commissural_e_gain']=0. if stage==1 else cfg.get('commissural_e_gain',0.)
+    options['ipsilateral_heel_reset_gain']=0. if stage==1 else cfg.get('ipsilateral_heel_reset_gain',0.)
+    options['bilateral_midline_drive']=cfg.get('bilateral_midline_drive',False)
     options['learn_reciprocal']=cfg.get('learn_reciprocal',False)
     n=C.build(acts,dt=dt,options=options)
     trace_indices=np.array([n.idx[cell] for cell in trace_cells],dtype=int)
@@ -105,9 +121,10 @@ def build(acts,dt,interleg):
         n.motor_teacher=MotorTeacher(n,cfg['motor_teacher'])
     def advance(u):
         global count
+        tonic=float(cfg.get('rg_tonic_current',0.)) if stage!=3 else 0.
         for side in ('r','l'):
-            u[n.ports['HUNT_INIT_E_'+side]]=2. if side=='r' and count<50 and stage!=3 else 0.
-            u[n.ports['HUNT_INIT_F_'+side]]=2. if side=='l' and count<50 and stage!=3 else 0.
+            u[n.ports['HUNT_INIT_E_'+side]]=tonic+(2. if side=='r' and count<50 and stage!=3 else 0.)
+            u[n.ports['HUNT_INIT_F_'+side]]=tonic+(2. if side=='l' and count<50 and stage!=3 else 0.)
         # Optional single command-onset initialization; never a stride clock.
         if 2.<=count*dt<2.2 and cfg.get('walk_kick',0.)>0.:
             u[n.ports['HUNT_INIT_E_r']]=cfg['walk_kick'];u[n.ports['HUNT_INIT_F_l']]=cfg['walk_kick']
@@ -193,6 +210,10 @@ assessment['accepted']=bool(assessment['accepted'] and assessment['frontal_gate'
 n=capture.pop('network');m,d=n.live;BW=float(m.body_mass.sum()*9.81);late=extra[:count,0]>=5
 if hasattr(n,'swing_diagnostics'):n.swing_diagnostics.save(str(out)+'.mechanics.npz')
 z=np.load(str(out)+'.npz',allow_pickle=True);ct=extra[:count,7:9]/BW;window=(extra[:count,0]>=5)&(extra[:count,0]<13)
+knee_max=np.array([max(float(np.max(z['qfull'][:count,m.joint('knee_angle_'+s).qposadr[0]])),float(d.qpos[m.joint('knee_angle_'+s).qposadr[0]])) for s in ('r','l')])
+assessment['maximum_knee_extension_deg']=np.degrees(knee_max).tolist()
+assessment['knee_extension_gate']=bool(np.all(knee_max<=0.))
+assessment['accepted']=bool(assessment['accepted'] and assessment['knee_extension_gate'])
 late_window_available=bool(np.any(window))
 if not np.any(window):window=extra[:count,0]>=0.
 if not np.any(late):late=extra[:count,0]>=0.
@@ -208,7 +229,7 @@ measured['late_window_available']=late_window_available
 # Independently count each physical contact once. The legacy runner contact
 # logger assigns the same force to both heel and toe; its totals are doubled.
 assessment['ground_load_verified']=bool(late_window_available and stage>=3 and np.mean(ct[window].sum(axis=1))>.2 and np.all(np.max(ct[window],axis=0)>.1))
-ground_contacts=None
+ground_contacts=None;foot_clearance=None
 if stage in (4,5):
     from ground_contact_check import check_samples
     ground_contacts=check_samples(extra[:count],BW)
@@ -217,7 +238,12 @@ if stage in (4,5):
     assessment['measured_contact_gate']=ground_contacts['accepted']
     assessment['movement_gate']=motion['accepted']
     assessment['ground_tilt_gate']=bool(metrics.get('bal_tilt_max',float('inf'))<30.)
-    assessment['accepted']=bool(motion['accepted'] and assessment['frontal_gate'] and assessment['ground_load_verified'] and ground_contacts['accepted'] and assessment['ground_tilt_gate'])
+    assessment['accepted']=bool(motion['accepted'] and assessment['frontal_gate'] and assessment['ground_load_verified'] and ground_contacts['accepted'] and assessment['ground_tilt_gate'] and assessment['knee_extension_gate'])
+    from foot_clearance_check import check_recording
+    foot_clearance=check_recording(m,z,extra[:count],BW)
+    assessment['force_movement_gates_without_clearance']=assessment['accepted']
+    assessment['foot_clearance_gate']=foot_clearance['accepted']
+    assessment['accepted']=bool(assessment['accepted'] and foot_clearance['accepted'])
 result=dict(stage=stage,configuration=cfg,assessment=assessment,metrics=metrics,measured=measured,compiled=capture,
     wall_s=time.perf_counter()-start,trained_weights={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(cfg.get('weights_directory',H/'runs/fitted')).glob('*weights.json')},
     source_sha256=source_hashes,
@@ -230,10 +256,11 @@ if hasattr(n,'motor_teacher'):
     result['assessment']['teacher_motion_gate']=result['assessment']['accepted'];result['assessment']['accepted']=False
     n.motor_teacher.save(str(out)+'.teacher_targets.npz')
 if ground_contacts is not None:result['ground_contacts']=ground_contacts
+if foot_clearance is not None:result['foot_clearance']=foot_clearance
 if trace_cells:np.savez_compressed(str(out)+'.neurons.npz',t=extra[:count,0],voltage=cell_log[:count],cells=trace_cells)
 if event_log is not None:
     np.savez_compressed(str(out)+'.contact_events.npz',t=extra[:count,0],signals=event_log[:count],columns=['right_load_bw','left_load_bw','right_event_current','left_event_current'])
-    result['contact_event_scope']='Whole-foot normal loading event after >=80 ms unloading by default; 0.05/0.025 BW hysteresis. Replaces tonic heel proxy, never a stride clock or literal heel-only sensor.'
+    result['contact_event_scope']='Hindfoot loading event (with regional contacts), armed after >=80ms whole-foot unloading; heel 0.05/0.025BW hysteresis and50ms capture window. One decaying pulse per landing, not sustained contact reset or stride clock.'
     Path(str(out)+'.result.json').write_text(json.dumps(result,indent=2,default=float))
 if regional_log is not None:
     np.savez_compressed(str(out)+'.regional_contacts.npz',t=extra[:count,0],force_N=regional_log[:count],columns=['right_hindfoot','right_forefoot','left_hindfoot','left_forefoot'])

@@ -924,3 +924,72 @@ right-knee contributions are 0.03256 neutral and 0.02570 kg m^2 at swing,
 6.19%/5.35% of reduced inertia. ID mode armature is .005, not zero. The current
 feasible teacher uses live forward physics, so a direct ID-to-C mismatch is not
 established. No production physics was silently changed.
+
+
+## Session 1: shared fitting, physical provenance, and zero hyperextension (2026-10-30)
+
+Machine: easteregg2. Current detailed checkpoint:
+[SESSION1_PHYSICS_GROUND_CHECKPOINT_20261030.md](SESSION1_PHYSICS_GROUND_CHECKPOINT_20261030.md).
+The old independent left/right sensory fits are superseded for new training:
+shared timing, pooled PF/BI/MN/reflex fitting, strict loaders, and a weighted
+pooled-solver regression are implemented. Historical configurations remain
+reproducible. New fits default to bilateral tying.
+
+MyoConverter independent active/passive fitting explains the strength
+differences despite symmetric OpenSim specifications. Static shared v3 laws
+cover18 families/36muscles, not all92. The separate physics subagent produced
+a source-checked compliant-tendon prototype and damping/inertia audits;
+compliance is not integrated into the accepted walker.
+
+Current stage4 acceptance adds actual sustained visual-mesh foot clearance;
+force unloading alone falsely passed dragging at lower support. Ben's latest
+directive adds 0-degree extension ceilings, 2-degree protective stop margins,
+stiffer implicit joint stops, and a whole-run positive-angle rejection on BOTH
+knees. No qpos/qvel clipping is used.
+
+Protected-knee trials in tonic_0p02_exact/zero_hyperextension_v1 pass current
+motion/contact/clearance gates at measured assistance76.43%,61.74%,and43.61%BW.
+The43.61%case has5right/4left sustained swings and maximum knee angles
+-1.324/-1.398degrees. Same-controller air stages1/2 pass in
+zero_hyperextension_air_v1/air_pair/SUMMARY.json. Standing still fails.
+These remain restrained, supported stepping in place, not independent walking.
+
+The starting feet were subsequently found35-58mm inside the floor, with an
+initial6.6-7BW reaction. Height-only correction leaves a tiptoe pose. An opt-in
+repaired-probe ankle/height alignment is now being tested before rebuilding
+rig references. This also rebases existing ankle spring rests under the
+runner's current convention; do not describe it as geometry-only. Contact-aware
+initializer tests and corrected-pose SNS runs are in progress. Eight-second
+constant-activation subagent holds are NOT curriculum passes.
+No completed five-stage curriculum or basin robustness is claimed. No
+CHATGPT_REPORT.md/manuscript edits, commits, or pushes in this work.
+
+
+### Corrected-pose checkpoint (supersedes the unaligned lower-support claim)
+
+Fresh repeat: aligned_support_ladder_v1/repeat_0p5, same saved controller as
+protected-knee air passers. All current ground gates pass, including actual
+foot-mesh clearance and no positive knee angle. Measured assistance63.73%BW;
+sustained swings5right/4left; maximum knee angles-1.201/-1.460degrees.
+Recorded qfull/ctrl/neuro are bit-identical to the first corrected-pose run.
+The initial feet are aligned near the floor before building rig references.
+This also rebases the existing ankle spring rest under the runner convention.
+
+The earlier43.61%assistance run used the bad deeply penetrating initial pose;
+it is NOT the current checkpoint. After correcting the pose, lower prescribed
+support.3/.1 produces measured.556/.598BW assistance and ZERO qualifying
+swings per foot. Those runs are rejected; the guide takes more load as the
+model collapses. No successful further support wean is claimed.
+
+Corrected-pose standing with the original coupled initializer improves to
+12.69degrees tilt and93.6mm sway, load.477BW, but still fails the60mm/.5BW
+limits. The contact-aware initializer succeeds in constant-activation holds
+but fails in the actual SNS interface (about80mm sway/.17BWfootload), and its
+ground test also fails phase criteria. It is an experimental opt-in variant,
+not the selected checkpoint. Next investigate delivered MN activation versus
+initializer targets, gait-trained reflex activity in standing, and stance
+support capacity. Do not sweep insensitive gains or count static holds as SNS
+curriculum passes. No stage5 advancement yet.
+
+Full details: SESSION1_PHYSICS_GROUND_CHECKPOINT_20261030.md. Canonical ground
+checkpoint: tonic_0p02_exact/aligned_support_ladder_v1/CHECKPOINT.json.
