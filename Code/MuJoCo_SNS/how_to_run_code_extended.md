@@ -1,5 +1,22 @@
 # Extended walker simulation guide
 
+**Current newer W2L ground result (Session 1, easteregg2, 31 October):** use
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUSTUNA108_GROUND_WINNER.json`.
+This is the tested 108-neuron bilateral controller with the actual IK starting
+pose, four ankle PF-target swaps, and two fitted gains. The older 80-neuron and
+generated GUI-companion examples later in this guide are historical; six
+generated companion folders have been consolidated into one recovery archive.
+
+```powershell
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\run_virtual_walker.py' --config 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUSTUNA108_GROUND_WINNER.json' --duration 10 --tag my_fresh_trained_w2l
+```
+
+Use a new tag for each run. The source hash is checked before applying the
+configuration. The editable `.aproj` remains the reference circuit; the JSON is
+required to reproduce this tested MuJoCo configuration. Current figures,
+parameters, stimulus trials, and records:
+`D:\GitHub\Bipedal_Robot\SESSION1_HANDOFF_20261031.md`.
+
 Session 1, easteregg2, 2026-10-30. Companion to `HowToRunCode.md`; the older
 guide is preserved. Commands below use PowerShell unless a block says MATLAB.
 They describe implemented entry points, including their limitations. A successful

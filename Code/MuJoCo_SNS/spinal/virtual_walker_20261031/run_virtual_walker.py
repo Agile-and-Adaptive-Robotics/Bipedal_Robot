@@ -7,8 +7,9 @@ from import_virtual_walker import build,HERE,safe,mujoco,number
 import native_kernel as K
 from contact_guides import add_guides,Measurements
 from physics_variants import apply_segment_mass_scale
+from recruitment import apply_recruitment
 
-def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,tag='',dt=.002,release_at=1.5,contact_si=False,pf_knee_flex_scale=1.,source=None,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,sagittal_harness=0.,rail_height_offset=0.,neural_time_scale=1.,guide_clearance=None,yaw_perturb_nm=0.,belt_motor_end_s=10.,v3_output_scale=1.,neural_pulse=None,segment_mass_scale=1.,contact_rg_scale=1.,contact_pf_scale=1.,contact_mn_scale=1.,contact_gmax=None):
+def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,tag='',dt=.002,release_at=1.5,contact_si=False,pf_knee_flex_scale=1.,source=None,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,sagittal_harness=0.,rail_height_offset=0.,neural_time_scale=1.,guide_clearance=None,yaw_perturb_nm=0.,belt_motor_end_s=10.,v3_output_scale=1.,neural_pulse=None,segment_mass_scale=1.,contact_rg_scale=1.,contact_pf_scale=1.,contact_mn_scale=1.,contact_gmax=None,pf_mn_recruitment_scale=1.,toe_mn_gmax=None,initial_qpos=None):
  path=build(newer,source);folder=path.parent;meta=json.loads((folder/'IMPORT_AUDIT.json').read_text());bank=meta['muscles'];tree=E.parse(path);root=tree.getroot();root.find('option').set('timestep',str(dt))
  if mode=='air':
   b=root.find("worldbody/body[@name='Root']");b.remove(b.find('freejoint'));p=np.array(list(map(float,b.get('pos').split())));p[1]+=.3;b.set('pos',' '.join(map(str,p)))
@@ -18,8 +19,12 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
    b=root.find("worldbody/body[@name='"+side+"_support_rail']");p=np.array(list(map(float,b.get('pos').split())));p[1]+=rail_height_offset;b.set('pos',' '.join(map(str,p)))
  guide_geometry=None if guide_clearance is None else add_guides(root,guide_clearance)
  trial=tag or f'{mode}_{"feedback" if feedback else "deafferented"}_{"reference" if reference else "numba"}_{duration:g}s';trialdir=folder/trial;trialdir.mkdir(exist_ok=True)
- xml=trialdir/'model.xml';tree.write(xml,encoding='utf-8',xml_declaration=True);m=mujoco.MjModel.from_xml_path(str(xml));d=mujoco.MjData(m);mass_variant=apply_segment_mass_scale(m,d,segment_mass_scale);mujoco.mj_forward(m,d)
+ xml=trialdir/'model.xml';tree.write(xml,encoding='utf-8',xml_declaration=True);m=mujoco.MjModel.from_xml_path(str(xml));d=mujoco.MjData(m);mass_variant=apply_segment_mass_scale(m,d,segment_mass_scale)
+ if initial_qpos is not None:
+  initial_qpos=np.asarray(initial_qpos,dtype=float);assert initial_qpos.shape==(m.nq,) and np.all(np.isfinite(initial_qpos));d.qpos[:]=initial_qpos
+ mujoco.mj_forward(m,d)
  controller=K.NativeController(meta['source_snapshot'],bank,contact_si,pf_knee_flex_scale,ankle_pf_crossed,symmetric_rg_ext_tonic,neural_time_scale,v3_output_scale,contact_rg_scale,contact_pf_scale,contact_mn_scale,contact_gmax);params=K.bank_parameters(bank);nb=len(bank);n=round(duration/dt);nj=len(controller.v)
+ recruitment=apply_recruitment(controller,pf_mn_recruitment_scale,toe_mn_gmax)
  source_profile_path=Path(meta['source']).parent/'CANONICAL_WORKING_PROFILE.json';source_profile=json.loads(source_profile_path.read_text()) if source_profile_path.exists() else {};source_guides=bool(root.findall(".//body[@name='Guide_carriage_cap']"))
  if source_profile.get('II_homonymous_relays')==12:assert nj==108 and len(controller.edges)==216,'Canonical108 census mismatch: refuse stale runtime export'
  if source_guides and guide_clearance is not None:raise ValueError('Canonical source already contains guides; do not inject a second apparatus')
@@ -121,6 +126,8 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  summary['logging']='Post-step mj_forward updates kinematics and contacts before logging; timestamp t denotes command interval start.'
  summary.update(segment_mass_scale=segment_mass_scale,segment_mass_variant=mass_variant)
  summary.update(contact_rg_scale=contact_rg_scale,contact_pf_scale=contact_pf_scale,contact_mn_scale=contact_mn_scale,contact_gmax=contact_gmax,contact_edge_edits=controller.contact_edge_edits,contact_gain_symmetry_verified=True)
+ summary.update(pf_mn_recruitment_scale=pf_mn_recruitment_scale,toe_mn_gmax=toe_mn_gmax,recruitment=recruitment)
+ summary['initial_qpos']=None if initial_qpos is None else initial_qpos.tolist()
  summary.update(source_neural_clock_scale=source_profile.get('neural_clock_scale',1.),source_profile=source_profile,source_embedded_guides=source_guides,neural_pulse=neural_pulse,neural_pulse_logged_integral_nA_s=np.sum(arrays['neural_stimulus_nA'],axis=0).tolist())
  summary['neural_pulse_logged_integral_nA_s']=(np.sum(arrays['neural_stimulus_nA'],axis=0)*dt).tolist()
  summary['mean_net_vertical_assistance_BW']=float(np.mean(arrays['rail_force_world'][:,1]+arrays['guide_force_world'][:,1]+arrays['harness_force'][:,1])/(robot_mass*9.81))
@@ -128,9 +135,13 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  (trialdir/'RESULT.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary,indent=2));return summary
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--newer',action='store_true');p.add_argument('--source');p.add_argument('--mode',choices=['supported','released','drop','air','replay','native_kinematic'],default='supported');p.add_argument('--duration',type=float,default=4.);p.add_argument('--feedback-off',action='store_true');p.add_argument('--reference',action='store_true');p.add_argument('--tag',default='');p.add_argument('--dt',type=float,default=.002);p.add_argument('--release-at',type=float,default=1.5);p.add_argument('--contact-si',action='store_true');p.add_argument('--pf-knee-flex-scale',type=float,default=1.);p.add_argument('--ankle-pf-crossed',action='store_true');p.add_argument('--symmetric-rg-ext-tonic',type=float);p.add_argument('--sagittal-harness',type=float,default=0.);p.add_argument('--rail-height-offset',type=float,default=0.);p.add_argument('--neural-time-scale',type=float,default=1.);p.add_argument('--guide-clearance',type=float);p.add_argument('--yaw-perturb-nm',type=float,default=0.);p.add_argument('--belt-motor-end-s',type=float,default=10.);p.add_argument('--v3-output-scale',type=float,default=1.);p.add_argument('--config');a=p.parse_args()
- cfg={} if a.config is None else json.loads(Path(a.config).read_text());allowed={'contact_si','pf_knee_flex_scale','ankle_pf_crossed','symmetric_rg_ext_tonic','sagittal_harness','rail_height_offset','neural_time_scale','guide_clearance','yaw_perturb_nm','belt_motor_end_s','v3_output_scale'}
+ cfg={} if a.config is None else json.loads(Path(a.config).read_text());allowed={'contact_si','pf_knee_flex_scale','ankle_pf_crossed','symmetric_rg_ext_tonic','sagittal_harness','rail_height_offset','neural_time_scale','guide_clearance','yaw_perturb_nm','belt_motor_end_s','v3_output_scale','contact_rg_scale','contact_pf_scale','contact_mn_scale','contact_gmax','pf_mn_recruitment_scale','toe_mn_gmax','initial_qpos'}
+ allowed.update({'source','expected_source_sha256'})
  if set(cfg)-allowed:raise ValueError('Unconsumed configuration keys: '+str(set(cfg)-allowed))
  explicit_flags={s.split('=')[0] for s in sys.argv[1:] if s.startswith('--')}
+ if 'expected_source_sha256' in cfg:
+  source_check=a.source if '--source' in explicit_flags else cfg.get('source')
+  if source_check is None or hashlib.sha256(Path(source_check).read_bytes()).hexdigest()!=cfg['expected_source_sha256']:raise ValueError('Source changed; refuse to apply fitted settings to another model')
  for key,value in cfg.items():
   if '--'+key.replace('_','-') not in explicit_flags:setattr(a,key,value)
- run(a.newer,a.mode,a.duration,not a.feedback_off,a.reference,a.tag,a.dt,a.release_at,a.contact_si,a.pf_knee_flex_scale,a.source,a.ankle_pf_crossed,a.symmetric_rg_ext_tonic,a.sagittal_harness,a.rail_height_offset,a.neural_time_scale,a.guide_clearance,a.yaw_perturb_nm,a.belt_motor_end_s,a.v3_output_scale)
+ run(a.newer,a.mode,a.duration,not a.feedback_off,a.reference,a.tag,a.dt,a.release_at,a.contact_si,a.pf_knee_flex_scale,a.source,a.ankle_pf_crossed,a.symmetric_rg_ext_tonic,a.sagittal_harness,a.rail_height_offset,a.neural_time_scale,a.guide_clearance,a.yaw_perturb_nm,a.belt_motor_end_s,a.v3_output_scale,contact_rg_scale=cfg.get('contact_rg_scale',1.),contact_pf_scale=cfg.get('contact_pf_scale',1.),contact_mn_scale=cfg.get('contact_mn_scale',1.),contact_gmax=cfg.get('contact_gmax'),pf_mn_recruitment_scale=cfg.get('pf_mn_recruitment_scale',1.),toe_mn_gmax=cfg.get('toe_mn_gmax'),initial_qpos=cfg.get('initial_qpos'))

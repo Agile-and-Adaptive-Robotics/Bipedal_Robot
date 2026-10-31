@@ -1,5 +1,39 @@
 # W2L virtual-walker experiment record
 
+## Latest: supported-ground success after physical-home correction, then bounded tuning
+
+No formal ±1% finalist basin, unseen perturbation validation, complete Hunt/five-stage curriculum, or harness-free walking has been demonstrated. The fresh repeat and all24 passing sampled points establish the explicitly reported bounded checks.
+
+Machine **easteregg2**; actual canonical108/216 source SHA01ece6edcbcf17c274410b23f1ce7603eab288aadb946d6b548c5102ed5c1154. A bounded near-flat stance IK supplies actual initial qpos, within unchanged source limits, from `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\physics_fidelity\runs\canonical_12II\ik_reference\flat_existing_rails.npz` (`qpos`). No inverse-force targets, tension preload, posture allocator, or MN override enters the SNS trial. The original physical rails and30mm passive guide remain. Runtime neural scale1 preserves the source's embedded clock2.
+
+| Condition,10s unless noted | Qualified clear swings L/R | Alternation | Whole-trial net upward assistance |
+|---|---:|---:|---:|
+| Prior toe-down constructed home, source phase |3/1|33.3%|89.25%BW|
+| Near-flat IK home, source phase |7/8|92.86%|46.66%BW|
+| Same IK home, four explicit ankle PF-target swaps |9/8|100%|42.24%BW|
+| Same crossed candidate,20s |18/17|100%|about41%BW|
+| Bounded Rustuna winner, same home and four swaps |9/8|100%|39.24%BW|
+
+The four declared swaps send knee-PF-flexor activity to the actual dorsiflexor's MN and knee-PF-extensor activity to the plantarflexor's MN, bilaterally. Source `Ank MN ext` actually drives the dorsiflexor, and `Ank MN flx` the plantarflexor; muscle-route/Jacobian evidence, rather than labels alone, establishes this. The near-flat source-phase comparison isolates the benefit of fixing physical starting posture before changing the neural phase assignment. Loaded foot pitch is now approximately+0.6° median, with heel-contact duty about48% bilaterally, versus roughly−30°/−43° loaded foot pitch and zero heel contact previously.
+
+Fresh-process repeats of the crossed baseline and the selected tuned winner are byte-identical across every saved numerical trajectory array. The20s case approaches the finite belt's front boundary during its last swing; it is a bounded-duration check, not evidence of indefinite stepping. All four contact-output ablations repeated from the corrected home/crossed phase still pass9/8 clear swings and100% alternation, with approximately43%BW net assistance. Contact contributes modestly here; it is not the central reason for the prior failure. Separate heel and toe level signals remain, and all Ia/II/Ib pathways remain unchanged in these controls.
+
+Rustuna0.2.1 completed24 bounded trials, all passing the strict supported-stepping gate. It varied only a shared PF→MN conductance multiplier[0.8,1.5] and absolute bilateral toe→ankle-MN conductance[0,0.05µS]. Selected trial7 uses **1.305863499088313** and **0.031839851437587975µS**, respectively. Original hip/ankle PF→MN gains are2.749µS, knee-extension4.93µS, and knee-flexion1.516µS, each mirrored; the shared factor preserves those functional differences. Heel, RG, PF, muscle-feedback, c1, and V3 settings remain fixed.
+
+The objective first rejects failed unloading/clearance/alternation, nonfinite behavior, nonpositive knees, or low root height. Accepted scores minimize summed upward rail/guide/harness assistance after1s, plus gentle p95/peak foot-impact and low relative-belt-progress costs. Downward cap forces cannot cancel lifting support. Winner upward assistance after1s is34.98%BW versus38.31%BW for the untuned crossed baseline; whole-trial net means above include startup and therefore differ. Winner knee minima are2.501°/2.294°, relative-belt progression0.862m/10s, foot-force p95 about1.053BW, and peak about4.23kN. The hard-contact peaks remain unvalidated mechanical loads, even though actual unloading and ground contact are measured.
+
+Reproducible consumed configs: `CANONICAL108_NEARFLAT_ANKLE_PHASE.json` and `RUSTUNA108_GROUND_WINNER.json`. Run the latter with `D:\Anaconda\envs\myo\python.exe` and `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\run_virtual_walker.py --newer --config D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUSTUNA108_GROUND_WINNER.json --duration 10 --tag YOUR_UNIQUE_TAG`. Full trial provenance is in `runs/RUSTUNA108_WINNER_VERIFICATION.json`, `runs/rustuna108_ground_home_v1/{MANIFEST,PROVENANCE,SUMMARY,BEST}.json`, `TRIALS.jsonl`, `runs/CANONICAL108_HOME_VALIDATION.json`, and `runs/CANONICAL108_GROUND_COMPARISON.json`. The original supplied model files have not yet been rewritten to embed this runtime home/phase/tuning configuration; that editable-model reconciliation is separate and must not be silently assumed completed. These are supported stepping results, not harness-free walking or a completed Hunt/five-stage curriculum.
+
+## Earlier failed-home diagnosis: posture before gain fitting
+
+On easteregg2, the actual canonical108/216 supported-ground baseline (`runs/W2L_VirtualWalker_Newer/canonical108_ground_baseline_v1`, source SHA01ece6ed...) is finite and knee-positive but **fails**: 3/1 qualified left/right unloaded-clear swings,33.3% alternating transitions, and89.25% BW mean net vertical assistance. Ten simulated seconds take3.45 s after compilation. Four bilateral contact-output ablations preserve all muscle feedback: RG-off and PF-off match baseline exactly; MN-off and all-contact-off yield4/1 swings and25% alternation, still failing. The RG remains rhythmic, so these observations do not support a contact-induced RG latch.
+
+Both heel sensors are inactive; toe duty is52.96% left and4.56% right after1 s. Orientation-aware FK proves actual toe-only support: loaded CoP lies about105 mm anterior in the foot frame, beyond the main foot's60 mm front edge, while heel gaps remain positive. The heel ghosts are below their local sole plane, rather than erroneously too high. See `runs/canonical_12II/HEEL_GEOMETRY_FK_AUDIT.json` and `ANKLE_DORSIFLEXION_FK_AUDIT.json`.
+
+The preserved anatomical ankle range is−12° plantarflexion to only+3° dorsiflexion. In the observed loaded posture at4 s, holding other joints fixed would require approximately21.94°/20.55° dorsiflexion for horizontal feet. This does not rule out flat feet with different hip, knee, and root posture. Historical raw limits were−20°..−5° around a+8° dorsiflexed assembled home. Our earlier geometry builder changed assembled ankle home to0° while shifting limits to preserve anatomical bounds, and chose hip/knee starting poses producing−20°/−35° foot pitch. The builder's 'keep feet level' comment was incorrect; this starting posture is our construction choice, not Ben's historical neutral stance.
+
+Blind gain optimization is **held** while bounded foot-flat stance IK and inverse-force/MN estimates establish a valid mechanical home. No new limit expansion, sensor-height change, force allocator, or MN tonic override has been applied. Prepared opt-in calibration exposes a shared PF→MN recruitment multiplier and absolute bilateral toe→ankle-MN conductance; inactive heel gains remain fixed. Constructor checks are recorded separately, and no Rustuna model optimization has run. Rat→Gait transfer and nondefault mass studies are paused.
+
 ## Latest actual108 checkpoint and stimulus results
 
 The current canonical NEWER W2L virtual walker has **108 neurons/216 chemical edges**: the 96-neuron bilateral-RG/contact/phase-II circuit plus **12 independent homonymous excitatory II relays**, covering flexors and extensors at hip, knee, and ankle on both sides. All four older phase-II pathways remain separate. The twelve new physical inputs are matched to actual actuator route geometry and motor-neuron bindings; all twelve carry measured nonzero II→MN currents (means approximately 0.25–0.32 nA, maxima 0.34–0.42 nA) at 0.005 µS. This is W2L, **not the separate 120-neuron rat controller**.
@@ -16,9 +50,9 @@ The actual108 afferented fixed-root air baseline runs for12 s, with period appro
 
 These are single matched perturbations, not statistical robustness claims. A missing local voltage maximum is not automatically a deleted whole burst. The early RG rebound must not be treated as a full-cycle phase reset by matching it to the wrong later baseline peak. Three already-started optional positive-current probes also completed (PF+2 nA short/long and bilateral RG+2 nA); their data remain separate, with no added gain sweep.
 
-Actual data and short figures: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\runs\W2L_VirtualWalker_Newer\canonical108_air_baseline_v2\` and sibling tags `canonical108_air_RG_minus10nA_100ms_v1`, `canonical108_air_PF_minus10nA_100ms_v1`, and `canonical108_air_MN_minus10nA_100ms_v1`. Shared summary: `runs\CANONICAL108_STIMULUS_TRIPLET.json`; actual twelve-channel check: baseline `HOMONYMOUS_II_CURRENT_VERIFICATION.json`. These new108 tests are air stepping; prior96 supported-ground percentages below do **not** constitute a108 ground pass. No nondefault segment-mass experiment was run. Current work now transfers the distinct genuine120-neuron rat controller to only approved named Gait2392 muscle channels.
+Actual data and short figures: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\runs\W2L_VirtualWalker_Newer\canonical108_air_baseline_v2\` and sibling tags `canonical108_air_RG_minus10nA_100ms_v1`, `canonical108_air_PF_minus10nA_100ms_v1`, and `canonical108_air_MN_minus10nA_100ms_v1`. Shared summary: `runs\CANONICAL108_STIMULUS_TRIPLET.json`; actual twelve-channel check: baseline `HOMONYMOUS_II_CURRENT_VERIFICATION.json`. These new108 tests are air stepping; prior96 supported-ground percentages below do **not** constitute a108 ground pass. No nondefault segment-mass experiment was run. Rat-to-Gait transfer is paused; current work concerns the actual108 W2L supported-ground configuration.
 
-**Selected paper model: canonical NEWER only**, `D:\GitHub\Bipedal_Robot\Neuromechanical_Models\W2L_VirtualWalker_Newer_20261031\W2L_VirtualWalker_Newer.aproj`, with its synchronized standalone in the same folder. Its intended architecture is 96 neurons with bilateral RG modules, four separate heel/toe contact channels, and four actual type-II physical adapters: hip and knee channels on both sides. There are no ankle or extensor-labelled II channels. Older80 results below are historical comparisons, not the selected paper model.
+**Selected paper model: canonical NEWER only**, `D:\GitHub\Bipedal_Robot\Neuromechanical_Models\W2L_VirtualWalker_Newer_20261031\W2L_VirtualWalker_Newer.aproj`, with its synchronized standalone in the same folder. This historical preaugmentation checkpoint had96 neurons with bilateral RG modules, four separate heel/toe contact channels, and four actual type-II physical adapters: hip and knee channels on both sides. That historical checkpoint lacked the twelve new homonymous II channels now described above. Older80 results below are historical comparisons, not the selected paper model.
 
 The bounded NEWER96/204 diagnostic previously passed air and supported-ground tests with tied 0/0 RG-extensor tonic currents and V3 outputs zero (6/8 clear swings, 84.6% alternation, 35.2% BW assistance). A single **positive V3 scale 0.01** candidate retains those pathways and also passes: deafferented air 7/7 full knee cycles, phase 0.487; afferented air 6/7, phase 0.509; ground 8/8 clear swings with 100% alternation, **73.53% BW assistance**. Effective positive V3 output is 0.02749 µS, not zero. Data: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\runs\POSITIVE_V3_0P01_V1.json`.
 
@@ -165,3 +199,36 @@ Next: quantify a basin for the retained physical-guide checkpoint, then lower ra
 Rustuna 0.2.1 is isolated in ignored tmp/rustuna_runtime_py311 under existing Python 3.11.5; myo Python 3.10.21 and its scientific packages are unchanged. The cheap 256-trial quadratic measured 0.0559 s versus Optuna 5.0.0's 1.8263 s, about 32.7x optimizer bookkeeping only, with different suggestion histories and solution quality. Same-backend seeded histories repeat exactly. The persistent myo protocol passed 100 exact toy requests in one worker, averaging 0.128 ms per round trip. A 64-trial ask/tell history resumed exactly after a trial-32 JSON checkpoint, including an enqueued zero-valued candidate; corrupted replay was rejected. A false baseline gate prevents any optimization.
 Current user direction pauses rat/Gait transfer and synthetic mass changes. The driver is ready for the actual newer108 W2L contact-feedback ablations and bounded training owned by the physics agent, with 64 trials/900 s as the first-stage budget. The adapter must validate consumed symmetric contact gains, score physically unloaded/clear alternating ground steps, reject drag/nonfinite/hyperextension/apparatus-only support, and preserve failed cases. Best candidate is not a pass until fresh-process confirmation. No model optimization was launched in this capability check. Full API, benchmark caveats, protocol, and exact paths are in RUSTUNA_CAPABILITY_RECORD.md; raw toy histories and checks are under ignored runs/rustuna_capability and runs/rustuna_protocol_probe. Existing Optuna SQLite files were not opened or migrated.
 
+
+
+
+## Completed 24-trial calibration ledger
+
+Rustuna completed24 trials in113.89s including persistent-worker computation. Every candidate passes the strict supported-stepping gate; the selected candidate was independently repeated. Upward/downward values below are after1s, whereas net values include startup. Full per-component force records remain in TRIALS.jsonl.
+
+| Trial | PF→MN scale | Toe→MN µS | Pass | Net full (%BW) | Up after1s (%BW) | Guide down after1s (%BW) | Peak foot force (BW) |
+|---:|---:|---:|:---:|---:|---:|---:|---:|
+|0|1.000000|0.010000|yes|42.244|38.311|0.01977|10.688|
+|1|0.800000|0.010000|yes|44.340|40.927|0.02104|7.168|
+|2|1.500000|0.010000|yes|42.777|38.714|0.02753|13.731|
+|3|1.000000|0.000000|yes|42.488|38.575|0.01168|10.245|
+|4|1.000000|0.050000|yes|42.535|38.650|0.03521|9.355|
+|5|1.480212|0.014990|yes|42.360|38.197|0.02041|11.480|
+|6|1.274385|0.025793|yes|40.078|35.923|0.01963|10.595|
+|7|1.305863|0.031840|yes|39.238|34.983|0.01746|10.295|
+|8|1.385312|0.043698|yes|40.705|36.478|0.02119|11.392|
+|9|1.130470|0.039027|yes|41.061|36.988|0.00777|10.933|
+|10|1.230149|0.029865|yes|40.848|36.796|0.01195|12.189|
+|11|1.280109|0.027690|yes|40.625|36.562|0.01198|10.899|
+|12|1.297231|0.026670|yes|40.127|35.986|0.02246|9.882|
+|13|1.371708|0.033505|yes|40.214|35.975|0.01740|11.257|
+|14|1.144576|0.021147|yes|41.474|37.504|0.04473|10.182|
+|15|1.379967|0.034962|yes|40.473|36.230|0.02198|13.163|
+|16|1.179255|0.021539|yes|40.949|36.921|0.00890|9.138|
+|17|1.283873|0.040334|yes|39.993|35.837|0.01122|10.882|
+|18|1.085681|0.020264|yes|41.993|37.996|0.00903|11.719|
+|19|1.336467|0.032081|yes|40.786|36.679|0.02240|11.247|
+|20|1.450985|0.025288|yes|40.624|36.342|0.01610|11.968|
+|21|1.301797|0.040089|yes|40.742|36.663|0.02576|11.039|
+|22|1.227944|0.045234|yes|40.344|36.238|0.01264|10.254|
+|23|1.421341|0.037506|yes|40.722|36.461|0.01516|10.789|

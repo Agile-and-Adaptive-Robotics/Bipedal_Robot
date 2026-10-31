@@ -2,6 +2,38 @@
 
 ## Current priority and completed results
 
+**Latest completed ground result:** the corrected physical initial pose and four
+explicit ankle-PF target swaps produce 9/8 qualified swings with 100% alternation
+and 42.24% BW mean net assistance over 10 s. A fresh-process repeat is byte-exact.
+The untuned crossed reference also passes 20 s (18/17 swings); the finite-belt
+audit records adequate loaded-contact margins.
+
+Rustuna completed 24/24 accepted trials in 113.89 s. Its selected shared PF-to-MN
+factor is 1.305863499088313, and the bilateral absolute toe-to-ankle-MN conductance
+is 0.031839851437587975 uS. The selected 10 s run retains 9/8 swings and 100%
+alternation while reducing mean net assistance to 39.24% BW. Fresh-process and
+actual CLI replay checks are byte-identical. Training and rendering jobs have
+finished. This supersedes the earlier within-day failed-ground status below.
+
+**Run this tested configuration on easteregg2:**
+
+```powershell
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\run_virtual_walker.py' --config 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUSTUNA108_GROUND_WINNER.json' --duration 10 --tag my_fresh_trained_w2l
+```
+
+The JSON includes the actual 17-element physical initial pose, phase assignment,
+both fitted gains, source filename, and source-hash guard. The `.aproj` remains
+the editable reference; **its default home/routing is not the complete tested
+runtime configuration**. Use the JSON/command above for this working MuJoCo run.
+Effective executed graph, including the target swaps and fitted conductances:
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\runs\PRODUCTION108_EFFECTIVE_CONNECTOME.json`.
+
+**Paper/editor pickup:**
+`D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Notes\sns_rebuild_session1_20261030\current_W2L_results\build_review\REVIEW.pdf`.
+Adjacent INSERT.tex, FIGURES.tex, RESULTS_TABLE.tex, figures, numerical results,
+and provenance form the review package. This is staged insertion material;
+the active dissertation and Overleaf were not changed by this result-packaging pass.
+
 Ben's latest instruction is **newer W2L ground contact and training**, testing
 whether contact input is routed to too many layers. Rat-to-Gait2392/CAD transfer
 is paused. The selected canonical W2L now has **108 neurons/216 chemical edges**:
