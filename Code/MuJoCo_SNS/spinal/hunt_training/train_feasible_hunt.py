@@ -99,6 +99,19 @@ for block,filename in [('PF','pf_weights.json'),('BI','bi_weights.json'),('MN','
         MODE=mode;M.O=O/(block.lower()+'_'+mode);M.O.mkdir(exist_ok=True);captured=[];M.lsq_linear=capture;M.replay(block,datasets[MODE]['period']);blocks.append(captured);files.append(json.loads((M.O/filename).read_text()))
     keys=list(files[0]['edges']);assert all(keys==list(f['edges']) for f in files);weights={};offset=0
     if len(files)==1:weights=files[0]['edges'];offset=len(keys)
+    elif os.environ.get('HUNT_BILATERAL_TIED')=='1':
+        from bilateral import canonical,assert_tied
+        groups={}
+        for key in keys:groups.setdefault(canonical(key.split(' -> ')[1]),[]).append(key)
+        assert len(groups)==len(blocks[0])==len(blocks[1])
+        for group,left,right in zip(groups.values(),*blocks):
+            common=sorted({canonical(k) for k in group});xx=[];yy=[]
+            for X,y,kw in (left,right):
+                factor=np.sqrt(X.shape[0]-X.shape[1]);xx.append(X/factor);yy.append(y/factor)
+            solution=real_fit(np.vstack(xx),np.r_[yy[0],yy[1]],**left[2]);assert len(solution.x)==len(common)
+            values=dict(zip(common,solution.x))
+            weights.update({key:max(0.,float(values[canonical(key)])) for key in group});offset+=len(group)
+        assert_tied(weights)
     else:
         for left,right in zip(*blocks):
             xx=[];yy=[]

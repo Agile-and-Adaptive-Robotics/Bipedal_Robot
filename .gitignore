@@ -118,6 +118,12 @@ tmp/codex_dirusso_original/
 /Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/COMMIT_CANDIDATES_20261028.txt
 /Documentation/Reports and Papers/Dissertation/Notes/committee_revision_20261027/COMMIT_REVIEW_20261028.md
 
+# Generated defense artifacts stay local. Keep authoring sources and reference
+# decks/templates visible; these rules do not untrack previously committed files.
+/Documentation/Reports and Papers/Dissertation/Defense/**/output/
+/Documentation/Reports and Papers/Dissertation/Defense/**/build/
+/Documentation/Reports and Papers/Dissertation/Defense/**/assets/
+/Documentation/Reports and Papers/Dissertation/Defense/**/.chart-data-*/
 # Review/build scratch stays on this machine; retain selected decision records.
 # Add an explicit exception when a new final report belongs in version control.
 /Documentation/Reports and Papers/Dissertation/Notes/approved_implementation_20261030/**

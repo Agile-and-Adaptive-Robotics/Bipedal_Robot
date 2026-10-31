@@ -286,16 +286,23 @@ Use its native graded reference or its supported graded accelerated evaluator.
 Read `spinal\hunt_training\TRAINING_RECORD.md` for the research record. It is
 separate from the ZCode handoff `CHATGPT_REPORT.md`. Current campaign:
 
-`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\hunt_training\runs\native_joint_pf_mono_20261030_v1`
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\hunt_training\runs\tonic_abduction_20261030_s1_v1\0p02`
 
-The monoarticular-command fit gives alternating afferented air motion: the
-`air_retry\stage2` evaluation passes its current gate with 7/7 knee cycles,
-approximately 1.229 s period, and minimum ankle width 0.0323 m. The default
-deafferented stage 1 still crosses. Increasing bilateral abductor feedforward to
-8 allows stage 1 to pass, but that **same gain fails stage 2's crossing gate**.
-No one new configuration has passed both. Do not promote these different winners
-to stage 3. Prompt A proposes a small sensory frontal-feedback sweep on one
-configuration, followed by rerunning both early stages unchanged.
+A 0.02 conductance increment on existing tonic-PF outputs to hip-abductor MNs
+passes **both air stages with the same saved parameters**, including fresh-process
+repeats. Stage 1 has 3/3 knee cycles, 2.467 s period, and minimum ankle-origin
+width 0.0991 m; stage 2 has 7/7 cycles, 1.214 s period, and width 0.1086 m.
+This increment is not a 2% muscle-activation floor. Six scalar sensitivity
+checks pass, but only one of two simultaneous synaptic-jitter checks passes.
+
+The same weights pass assisted stage-3 standing with about 55% of body weight
+on the feet and 45% carried by the vertical spring. The harness, joint
+restraints, and inherited posture/reflex pathways remain active. Removing
+the added Peterka/Ting-inspired cells also passes; their benefit is unproven.
+**No candidate passes the corrected alternating ground-contact gate.**
+See the training record for failed ground-transfer and symmetric-PF comparisons.
+ZCode A's scale-8 frontal sweep fails all three tested cases; its job report
+and ZCode B's force-chain diagnostics are under `tmp\zcode_jobs\`.
 
 ### 2.3 Hunt's four training operations
 

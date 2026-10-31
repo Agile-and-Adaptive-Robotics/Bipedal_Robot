@@ -115,12 +115,19 @@ class HuntNetwork(D.JointIntegrationNetwork):
         self.pfbank_edges=np.asarray(self.pfbank_edges,dtype=int)
         self.pf_internal_edges=np.array([i for i,(pre,post) in enumerate(zip(c.pre,c.post))
             if self.names[pre].startswith(('PF_IN_HIP-','PF_IN_KNEE-')) and self.names[post].startswith(('PF_HIP-','PF_KNEE-'))],dtype=int)
+        self.direct_pf_edges=np.array([i for i,(pre,post) in enumerate(zip(c.pre,c.post))
+            if self.names[pre].startswith('RG_') and self.names[post].startswith(('PF_HIP-','PF_KNEE-'))],dtype=int)
+        self.ankle_rg_edges=np.array([i for i,(pre,post) in enumerate(zip(c.pre,c.post)) if self.names[pre].startswith('RG_') and self.names[post].startswith('PF_FUNC_ANKLE_Z_')],dtype=int)
+        direct_gain=float(self.options.get('direct_joint_pf_gain',0.))
+        if not 0.<=direct_gain<=20.:raise ValueError('direct_joint_pf_gain must be in [0, 20]')
+        if direct_gain>0.:assert len(self.direct_pf_edges)==4*len(self.sides)
         # Remove inherited timing inputs: the six fitted sensors are the only
         # sensory projections into each calibrated RG; local INs are retained.
         for i in range(len(c.post)):
             pre,post=self.names[c.pre[i]],self.names[c.post[i]]
             crossed_contact=self.options.get('cross_contact_gain',0.)>0. and post.startswith('RG_F_') and pre=='HEEL_'+('l' if post.endswith('_r') else 'r')
-            if post.startswith('RG_') and not pre.startswith(('InE_','InF_','HUNT_AF_','HUNT_COMM_')) and not crossed_contact:c.gmax[i]=0.
+            ipsi_heel=self.options.get('ipsilateral_heel_reset_gain',0.)>0. and post.startswith('RG_E_') and pre=='HEEL_'+post[-1]
+            if post.startswith('RG_') and not pre.startswith(('InE_','InF_','HUNT_AF_','HUNT_COMM_')) and not crossed_contact and not ipsi_heel:c.gmax[i]=0.
             if post.startswith(('InE_','InF_')) and not pre.startswith('RG_'):c.gmax[i]=0.
             if post.startswith('PF_') and pre.startswith('RG_'):c.gmax[i]=0.
             if post.startswith('PF_') and pre.startswith(('HEEL_','TOEDF_')):c.gmax[i]=0.
@@ -151,6 +158,10 @@ class HuntNetwork(D.JointIntegrationNetwork):
         c=self.compiled
         c.gmax[self.pfbank_edges]=self.pf_gain[self.pfbank_edges]*gate
         c.gmax[self.pf_internal_edges]=self.pf_gain[self.pf_internal_edges]
+        if self.options.get('direct_joint_pf_gain',0.)>0.:
+            c.gmax[self.direct_pf_edges]=self.options['direct_joint_pf_gain']*gate
+        if self.options.get('direct_ankle_pf_gain',0.)>0.:
+            c.gmax[self.ankle_rg_edges]=self.options['direct_ankle_pf_gain']*gate
         c.gmax[self.bi_edges]=self.bi_gain[self.bi_edges]
         c.gmax[self.mn_edges]=0.
         # Geometry-dependent recruitment stays active for positional feedback;
@@ -206,13 +217,19 @@ def build(acts,dt=.002,interleg=False,options=None):
     circuit_file=Path(options.get('weights_directory',H/'runs/fitted'))/'circuit_options.json'
     if circuit_file.exists():
         saved=json.loads(circuit_file.read_text())
-        if set(saved)-{'joint_pf_inhibition_scale'}:raise ValueError('Unknown saved Hunt circuit option')
+        if set(saved)-{'joint_pf_inhibition_scale','direct_joint_pf_gain','require_bilateral_symmetry','direct_ankle_pf_gain'}:raise ValueError('Unknown saved Hunt circuit option')
         options={**saved,**options}
     a=json.loads((H/'runs/step_A/winner.json').read_text())
     sensory={side:json.loads((H/('runs/step_B' if side=='r' else 'runs/step_B_left')/'winner.json').read_text()) for side in ('r','l')}
     timing_file=Path((options or {}).get('weights_directory',H/'runs/fitted'))/'timing_weights.json'
     if timing_file.exists():
         timing=json.loads(timing_file.read_text())
+        if options.get('require_bilateral_symmetry',False):
+            from bilateral import assert_tied
+            if timing['gains']['r']!=timing['gains']['l']:raise ValueError('Bilateral timing gains must be identical')
+            for file in ('pf_weights.json','bi_weights.json','mn_weights.json','reflex_weights.json'):
+                p=timing_file.parent/file
+                if p.exists():assert_tied(json.loads(p.read_text())['edges'])
         if not timing.get('accepted'):raise RuntimeError('Candidate sensory fit has not passed expected-afferent gates')
         sensory={side:dict(accepted=True,afferent_gains=timing['gains'][side]) for side in ('r','l')}
     if not a['accepted'] or not all(v['accepted'] for v in sensory.values()):raise RuntimeError('Intrinsic/sensory fits must pass before motor fitting.')
@@ -231,6 +248,13 @@ def build(acts,dt=.002,interleg=False,options=None):
             net.net.add_connection(BN._syn(1.,True),'RG_F_'+side,'HUNT_COMM_'+side)
             net.net.add_connection(BN._syn(opts['commissural_gain'],False),'HUNT_COMM_'+side,'RG_F_'+other)
         net._n_true=len(net.idx);net.idx.update(net._aliases)
+    if opts.get('commissural_e_gain',0.)>0.:
+        for alias in net._aliases:net.idx.pop(alias,None)
+        for side in ('r','l'):net._add('HUNT_COMM_E_'+side,.05,net.net)
+        for side,other in (('r','l'),('l','r')):
+            net.net.add_connection(BN._syn(1.,True),'RG_E_'+side,'HUNT_COMM_E_'+side)
+            net.net.add_connection(BN._syn(opts['commissural_e_gain'],False),'HUNT_COMM_E_'+side,'RG_E_'+other)
+        net._n_true=len(net.idx);net.idx.update(net._aliases)
     if opts.get('balance'):
         from balance import add_populations
         add_populations(net)
@@ -244,6 +268,8 @@ def build(acts,dt=.002,interleg=False,options=None):
         net._n_true=len(net.idx);net.idx.update(net._aliases)
     if opts.get('cross_contact_gain',0.)>0.:
         for side,other in (('r','l'),('l','r')):net.net.add_connection(BN._syn(opts['cross_contact_gain'],True),'HEEL_'+side,'RG_F_'+other)
+    if opts.get('ipsilateral_heel_reset_gain',0.)>0.:
+        for side in ('r','l'):net.net.add_connection(BN._syn(opts['ipsilateral_heel_reset_gain'],True),'HEEL_'+side,'RG_E_'+side)
     net.compile(dt);net.install();net.fast_io=True
     if opts.get('balance'):
         from balance import TaskBalance

@@ -98,12 +98,16 @@ def replay(kind,period_s=1.233):
             index+=1
         n.step(u);trace[k]=c.V
     weights={};fits={}
-    for post,X in matrix.items():
+    for post,X in (matrix.items() if os.environ.get('HUNT_BILATERAL_TIED')!='1' else ()):
         y=rhs[post];X=X[:index:5];y=y[:index:5]
         regularizer=.03*np.sqrt(len(y));aug=np.vstack([X,regularizer*np.eye(X.shape[1])]);target=np.r_[y,np.zeros(X.shape[1])]
         solution=lsq_linear(aug,target,bounds=(0.,20. if kind in ('PF','BI') else 10. if kind=='MN' else 2.),method='bvls',tol=1e-8,max_iter=200)
         for i,value in zip(lookup[post],solution.x):weights[n.names[c.pre[i]]+' -> '+n.names[post]]=float(value)
         fits[n.names[post]]=dict(current_rmse=float(np.sqrt(np.mean((X@solution.x-y)**2))),parameters=len(solution.x))
+    if os.environ.get('HUNT_BILATERAL_TIED')=='1':
+        from bilateral import tied_solutions,assert_tied
+        weights,fits=tied_solutions({p:X[:index] for p,X in matrix.items()},{p:y[:index] for p,y in rhs.items()},lookup,n.names,c.pre,c.post,lsq_linear,20. if kind in ('PF','BI') else 10. if kind=='MN' else 2.)
+        assert_tied(weights)
     name={'PF':'pf_weights.json','BI':'bi_weights.json','MN':'mn_weights.json','REFLEX':'reflex_weights.json'}[kind]
     (O/name).write_text(json.dumps(dict(block=kind,edges=weights,regression=fits,
         scope='Offline teacher-forced conductance identification; runtime uses native voltages',timing_frozen=True),indent=2))

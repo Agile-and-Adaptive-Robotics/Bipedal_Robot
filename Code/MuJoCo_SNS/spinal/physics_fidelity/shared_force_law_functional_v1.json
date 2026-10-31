@@ -1,0 +1,493 @@
+{
+  "format": "aarl_shared_surrogate_force_law_v1",
+  "model_family": "gait2392_simbody_cvt3_repaired",
+  "scope": "OPT-IN diagnostic: six bilateral muscle families, common static MuJoCo force-law parameters jointly fitted to fresh OpenSim equilibrium forces. Not full-ROM/dynamic/compliant-tendon validation. Other muscles and all geometry/inertia/contact parameters remain outside this file.",
+  "activations": [
+    0.05,
+    0.3,
+    1.0
+  ],
+  "training_poses": [
+    {
+      "hip": 0,
+      "knee": 0,
+      "ankle": 0,
+      "heldout": false
+    },
+    {
+      "hip": 0,
+      "knee": -30,
+      "ankle": 0,
+      "heldout": false
+    },
+    {
+      "hip": 30,
+      "knee": -60,
+      "ankle": 0,
+      "heldout": false
+    },
+    {
+      "hip": 30,
+      "knee": -90,
+      "ankle": 0,
+      "heldout": false
+    },
+    {
+      "hip": 0,
+      "knee": 0,
+      "ankle": -20,
+      "heldout": false
+    },
+    {
+      "hip": 0,
+      "knee": 0,
+      "ankle": 20,
+      "heldout": false
+    },
+    {
+      "hip": 30,
+      "knee": -60,
+      "ankle": -20,
+      "heldout": false
+    },
+    {
+      "hip": 30,
+      "knee": -60,
+      "ankle": 20,
+      "heldout": false
+    }
+  ],
+  "heldout_poses": [
+    {
+      "hip": 15,
+      "knee": -45,
+      "ankle": 10,
+      "heldout": true
+    },
+    {
+      "hip": 15,
+      "knee": -75,
+      "ankle": -10,
+      "heldout": true
+    }
+  ],
+  "source_opensim": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody.osim",
+  "source_audit_sha256": "8001067a33713332cbb3c9d505a43d8929180e93018fcd28e6c10639ee1d477e",
+  "loader_contract": "For each actuator_names entry, copy gainprm,biasprm,dynprm,lengthrange exactly. Preserve actuator gain/bias/dynamics types, controls, activation bounds, tendon routes, timestep, and integrator. Recompute any cached Fmax or muscle normalization AFTER loading. Reject unknown family/name/shape, nonfinite parameters, or model mismatch. Record file hash in trial provenance. Do not infer a production default.",
+  "muscles": {
+    "bifemsh": {
+      "actuator_names": [
+        "bifemsh_r",
+        "bifemsh_l"
+      ],
+      "gainprm": [
+        0.6328372236520814,
+        1.0000000000000013,
+        732.0487990710742,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.6611568845606781,
+        1.4,
+        0.0
+      ],
+      "biasprm": [
+        0.6328372236520814,
+        1.0000000000000013,
+        732.0487990710742,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.6611568845606781,
+        1.4,
+        0.0
+      ],
+      "dynprm": [
+        0.01,
+        0.04,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lengthrange": [
+        0.191264,
+        0.249268
+      ],
+      "validation": {
+        "original": {
+          "train_RMSE_N": 74.6186365916019,
+          "heldout_RMSE_N": 10.368172619137091,
+          "train_normalized_RMSE": 0.09280924949204217,
+          "heldout_normalized_RMSE": 0.01289573708847897,
+          "maximum_bilateral_force_difference_N": 84.25627370546974
+        },
+        "canonical_right": {
+          "train_RMSE_N": 91.02186388065923,
+          "heldout_RMSE_N": 11.817792754048586,
+          "train_normalized_RMSE": 0.113211273483407,
+          "heldout_normalized_RMSE": 0.014698747206528091,
+          "maximum_bilateral_force_difference_N": 8.526512829121202e-13
+        },
+        "shared": {
+          "train_RMSE_N": 3.3268567971927405,
+          "heldout_RMSE_N": 3.0652503496185037,
+          "train_normalized_RMSE": 0.0041378815885481845,
+          "heldout_normalized_RMSE": 0.003812500434848885,
+          "maximum_bilateral_force_difference_N": 3.410605131648481e-13
+        }
+      }
+    },
+    "vas_med": {
+      "actuator_names": [
+        "vas_med_r",
+        "vas_med_l"
+      ],
+      "gainprm": [
+        0.45480075596102176,
+        1.263535169916632,
+        1282.959473790358,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.9179245710701731,
+        1.4,
+        0.0
+      ],
+      "biasprm": [
+        0.45480075596102176,
+        1.263535169916632,
+        1282.959473790358,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.9179245710701731,
+        1.4,
+        0.0
+      ],
+      "dynprm": [
+        0.01,
+        0.04,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lengthrange": [
+        0.163848,
+        0.24673
+      ],
+      "validation": {
+        "original": {
+          "train_RMSE_N": 46.69130781663918,
+          "heldout_RMSE_N": 37.64734393585442,
+          "train_normalized_RMSE": 0.03608292721533167,
+          "heldout_normalized_RMSE": 0.029093774293550558,
+          "maximum_bilateral_force_difference_N": 30.87973973788408
+        },
+        "canonical_right": {
+          "train_RMSE_N": 50.16151386286504,
+          "heldout_RMSE_N": 41.87186828623419,
+          "train_normalized_RMSE": 0.03876469386620173,
+          "heldout_normalized_RMSE": 0.032358476264477735,
+          "maximum_bilateral_force_difference_N": 1.0231815394945443e-12
+        },
+        "shared": {
+          "train_RMSE_N": 6.008399243490234,
+          "heldout_RMSE_N": 7.895059412706892,
+          "train_normalized_RMSE": 0.004643276076885807,
+          "heldout_normalized_RMSE": 0.006101282390036238,
+          "maximum_bilateral_force_difference_N": 5.684341886080801e-13
+        }
+      }
+    },
+    "vas_int": {
+      "actuator_names": [
+        "vas_int_r",
+        "vas_int_l"
+      ],
+      "gainprm": [
+        0.4530814303181707,
+        1.2958372088865242,
+        1358.9626736353293,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.7910847674600251,
+        1.4,
+        0.0
+      ],
+      "biasprm": [
+        0.4530814303181707,
+        1.2958372088865242,
+        1358.9626736353293,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.7910847674600251,
+        1.4,
+        0.0
+      ],
+      "dynprm": [
+        0.01,
+        0.04,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lengthrange": [
+        0.173169,
+        0.25581
+      ],
+      "validation": {
+        "original": {
+          "train_RMSE_N": 40.11970524004118,
+          "heldout_RMSE_N": 35.00201064688363,
+          "train_normalized_RMSE": 0.029391725450579616,
+          "heldout_normalized_RMSE": 0.025642498642405594,
+          "maximum_bilateral_force_difference_N": 180.2348960235292
+        },
+        "canonical_right": {
+          "train_RMSE_N": 51.136263247886184,
+          "heldout_RMSE_N": 40.28833361097478,
+          "train_normalized_RMSE": 0.037462463917865334,
+          "heldout_normalized_RMSE": 0.029515262718662845,
+          "maximum_bilateral_force_difference_N": 0.007533029096180144
+        },
+        "shared": {
+          "train_RMSE_N": 6.369452837945307,
+          "heldout_RMSE_N": 9.096222120806582,
+          "train_normalized_RMSE": 0.004666265815344547,
+          "heldout_normalized_RMSE": 0.0066638989896018914,
+          "maximum_bilateral_force_difference_N": 0.008222415046589049
+        }
+      }
+    },
+    "vas_lat": {
+      "actuator_names": [
+        "vas_lat_r",
+        "vas_lat_l"
+      ],
+      "gainprm": [
+        0.4416323565644103,
+        1.2724183269134977,
+        1852.2947866374093,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.9180280200738347,
+        1.4,
+        0.0
+      ],
+      "biasprm": [
+        0.4416323565644103,
+        1.2724183269134977,
+        1852.2947866374093,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.9180280200738347,
+        1.4,
+        0.0
+      ],
+      "dynprm": [
+        0.01,
+        0.04,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lengthrange": [
+        0.192327,
+        0.273527
+      ],
+      "validation": {
+        "original": {
+          "train_RMSE_N": 49.484296455238244,
+          "heldout_RMSE_N": 50.95663384684599,
+          "train_normalized_RMSE": 0.026448047276984632,
+          "heldout_normalized_RMSE": 0.02723497265999251,
+          "maximum_bilateral_force_difference_N": 20.62376572082144
+        },
+        "canonical_right": {
+          "train_RMSE_N": 49.63559625959695,
+          "heldout_RMSE_N": 50.53709985830362,
+          "train_normalized_RMSE": 0.0265289130195601,
+          "heldout_normalized_RMSE": 0.02701074284249258,
+          "maximum_bilateral_force_difference_N": 1.8189894035458565e-12
+        },
+        "shared": {
+          "train_RMSE_N": 11.661673944806534,
+          "heldout_RMSE_N": 12.23706834366583,
+          "train_normalized_RMSE": 0.006232856197117335,
+          "heldout_normalized_RMSE": 0.0065403892804200055,
+          "maximum_bilateral_force_difference_N": 2.9558577807620168e-12
+        }
+      }
+    },
+    "soleus": {
+      "actuator_names": [
+        "soleus_r",
+        "soleus_l"
+      ],
+      "gainprm": [
+        0.010000000000009794,
+        1.0443790600583713,
+        3527.355569318405,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        4.680972690593252,
+        1.4,
+        0.0
+      ],
+      "biasprm": [
+        0.010000000000009794,
+        1.0443790600583713,
+        3527.355569318405,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        4.680972690593252,
+        1.4,
+        0.0
+      ],
+      "dynprm": [
+        0.01,
+        0.04,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lengthrange": [
+        0.229942,
+        0.326094
+      ],
+      "validation": {
+        "original": {
+          "train_RMSE_N": 88.05104689289237,
+          "heldout_RMSE_N": 81.79431705837709,
+          "train_normalized_RMSE": 0.024810100561536312,
+          "heldout_normalized_RMSE": 0.023047144845978328,
+          "maximum_bilateral_force_difference_N": 189.83919289361666
+        },
+        "canonical_right": {
+          "train_RMSE_N": 79.75202360255314,
+          "heldout_RMSE_N": 78.95353554068703,
+          "train_normalized_RMSE": 0.02247168881446975,
+          "heldout_normalized_RMSE": 0.022246699222509728,
+          "maximum_bilateral_force_difference_N": 4.320099833421409e-12
+        },
+        "shared": {
+          "train_RMSE_N": 47.02608559588856,
+          "heldout_RMSE_N": 29.27422510078731,
+          "train_normalized_RMSE": 0.013250517214958738,
+          "heldout_normalized_RMSE": 0.008248584136598283,
+          "maximum_bilateral_force_difference_N": 4.320099833421409e-12
+        }
+      }
+    },
+    "tib_ant": {
+      "actuator_names": [
+        "tib_ant_r",
+        "tib_ant_l"
+      ],
+      "gainprm": [
+        0.4234427682106292,
+        1.1460952032422544,
+        921.132004137785,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.03494644327698726,
+        1.4,
+        0.0
+      ],
+      "biasprm": [
+        0.4234427682106292,
+        1.1460952032422544,
+        921.132004137785,
+        1.0,
+        0.0,
+        2.0,
+        10.0,
+        0.03494644327698726,
+        1.4,
+        0.0
+      ],
+      "dynprm": [
+        0.01,
+        0.04,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "lengthrange": [
+        0.262587,
+        0.354843
+      ],
+      "validation": {
+        "original": {
+          "train_RMSE_N": 19.57605046034378,
+          "heldout_RMSE_N": 16.66499895687175,
+          "train_normalized_RMSE": 0.02163099498380528,
+          "heldout_normalized_RMSE": 0.018414363488256077,
+          "maximum_bilateral_force_difference_N": 19.680907748362415
+        },
+        "canonical_right": {
+          "train_RMSE_N": 22.970921129658944,
+          "heldout_RMSE_N": 19.844241208475037,
+          "train_normalized_RMSE": 0.025382233292440822,
+          "heldout_normalized_RMSE": 0.021927338351906116,
+          "maximum_bilateral_force_difference_N": 5.684341886080801e-13
+        },
+        "shared": {
+          "train_RMSE_N": 3.32006367152561,
+          "heldout_RMSE_N": 3.530524307056945,
+          "train_normalized_RMSE": 0.003668578642569735,
+          "heldout_normalized_RMSE": 0.003901131831002149,
+          "maximum_bilateral_force_difference_N": 5.684341886080801e-13
+        }
+      }
+    }
+  }
+}
