@@ -45,7 +45,7 @@ def hill_step(length,velocity,vm,params,internal,force,ia,ii,ib,dt):
 def polynomial(coeff,x):return ((coeff[0]*x+coeff[1])*x+coeff[2])*x+coeff[3]
 
 class NativeController:
- def __init__(self,source,bank,contact_si=False,pf_knee_flex_scale=1.,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,neural_time_scale=1.,v3_output_scale=1.):
+ def __init__(self,source,bank,contact_si=False,pf_knee_flex_scale=1.,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,neural_time_scale=1.,v3_output_scale=1.,contact_rg_scale=1.,contact_pf_scale=1.,contact_mn_scale=1.,contact_gmax=None):
   root=E.parse(source).getroot();module=next(x for x in root.iter('NeuralModule') if x.findtext('ModuleName')=='IntegrateFireSim')
   assert module.findtext('HH')=='False' and module.findtext('Cd')=='False'
   nodes=list(module.iter('Neuron'));self.names=[n.findtext('Name') for n in nodes];self.ids={n.findtext('ID'):i for i,n in enumerate(nodes)}
@@ -68,11 +68,21 @@ class NativeController:
   for k,e in enumerate(self.edges):
    if (self.names[int(e[0])],self.names[int(e[1])]) in [('L V3','R RG ext IN'),('R V3','L RG ext IN')]:self.v3_output_edits.append(dict(source=self.names[int(e[0])],target=self.names[int(e[1])],source_gmax=float(e[2]),scale=v3_output_scale));self.edges[k,2]*=v3_output_scale
   if v3_output_scale!=1.:assert len(self.v3_output_edits)==2,'This diagnostic requires exactly two mirrored V3 output edges'
+  self.contact_edge_edits=[];contact_gmax={} if contact_gmax is None else contact_gmax;allowed={'RG','PF','MN_weak','MN_heel_ankle'};assert not(set(contact_gmax)-allowed)
+  for k,e in enumerate(self.edges):
+   pre,post=int(e[0]),int(e[1]);source_name=self.names[pre];target_name=self.names[post]
+   if source_name not in ('L heel contact','L toe contact','R heel contact','R toe contact'):continue
+   category='RG' if ' RG ' in target_name else 'PF' if ' PF ' in target_name else 'MN' if ' MN ' in target_name else None
+   assert category is not None,'Unresolved contact interneuron path requires explicit first-entry classification: '+source_name+'→'+target_name
+   group=category if category!='MN' else 'MN_heel_ankle' if 'heel contact' in source_name and ' Ank MN ' in target_name else 'MN_weak';scale={'RG':contact_rg_scale,'PF':contact_pf_scale,'MN':contact_mn_scale}[category];assert scale>=0;source_g=float(e[2]);new_g=float(contact_gmax[group]) if group in contact_gmax else source_g*scale;assert new_g>=0.;self.edges[k,2]=new_g;self.contact_edge_edits.append(dict(source=source_name,target=target_name,category=category,absolute_parameter_group=group,source_gmax_uS=source_g,effective_gmax_uS=new_g,reversal_mV=float(e[5]),threshold_mV=float(e[3]),saturation_mV=float(e[4])))
+  if contact_rg_scale!=1. or contact_pf_scale!=1. or contact_mn_scale!=1. or contact_gmax:assert len(self.contact_edge_edits)==16,'Expected16 actual bilateral contact edges, not a different model'
+  for row in self.contact_edge_edits:
+   mirrored_source=('R' if row['source'].startswith('L') else 'L')+row['source'][1:];mirrored_target=('R' if row['target'].startswith('L') else 'L')+row['target'][1:];partner=next(x for x in self.contact_edge_edits if x['source']==mirrored_source and x['target']==mirrored_target);assert row['effective_gmax_uS']==partner['effective_gmax_uS'],'Contact fit must use equal absolute homologous weights'
   for k,edge in enumerate(self.edges):
    pre,post=int(edge[0]),int(edge[1])
    if any(self.names[pre]==s+' Knee PF flx' and self.names[post]==s+' Knee MN flx' for s in ('L','R')):
     self.tuned_edges.append(dict(source=self.names[pre],target=self.names[post],source_gmax=float(edge[2]),scale=pf_knee_flex_scale));self.edges[k,2]*=pf_knee_flex_scale
-  assert len(self.tuned_edges)==2,'Expected one shared bilateral PF→knee-flexor MN parameter'
+  if pf_knee_flex_scale!=1. or self.tuned_edges:assert len(self.tuned_edges)==2,'Requested W2L-specific shared PF→knee-flexor MN tuning requires its two actual bindings'
   self.ankle_phase_edits=[]
   if ankle_pf_crossed:
    for k,edge in enumerate(self.edges):

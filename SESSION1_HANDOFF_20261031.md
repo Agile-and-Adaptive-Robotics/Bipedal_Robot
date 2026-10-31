@@ -1,5 +1,48 @@
 # Session 1 handoff — 31 October 2026
 
+## Current priority and completed results
+
+Ben's latest instruction is **newer W2L ground contact and training**, testing
+whether contact input is routed to too many layers. Rat-to-Gait2392/CAD transfer
+is paused. The selected canonical W2L now has **108 neurons/216 chemical edges**:
+12 new homonymous II-to-MN relays cover flexors/extensors at both hips, knees,
+and ankles, alongside the four retained phase-modulation II channels.
+
+Actual108 fast-MuJoCo baseline and matched RG/PF/MN stimulus graphs are complete:
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\CANONICAL108_STIMULUS_GRAPHS.md`.
+The 12 s afferented fixed-root air baseline is stable (period approximately
+1.072 s). All three -10 nA/100 ms trials have exactly matching pre-stimulus
+trajectories. PF stimulation changes downstream output and joint motion while
+largely preserving RG timing; measurements are in the figure index and raw data.
+All 12 new homonymous synaptic currents were measured nonzero.
+
+The actual108 ground baseline is finite with positive knee flexion, but produces
+3 left/1 right qualified swings and 33.3% alternation, with 89.25% BW mean measured
+assistance. This is distinct from older96 passing results below. Ground contact
+class ablations and Rustuna calibration are the active next work. The contact
+audit resolves 16 direct pathways, including a heel-to-ankle-MN maximum
+conductance of 0.5 uS versus 0.01 uS for the other contact pathways.
+
+Rustuna driver/protocol:
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUSTUNA_CAPABILITY_RECORD.md`.
+Rustuna runs in an isolated Python3.11 process, communicating with a persistent
+myo Python3.10 simulation worker; the existing Optuna databases remain untouched.
+No controller-training result is implied by the optimizer capability check.
+
+Chapter 6 evidence/placement audit:
+`D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Notes\sns_rebuild_session1_20261030\CH6_TRANSFER_EVIDENCE_GAPS.md`.
+Interpret its proposed rat-transfer next step as paused by the newer instruction.
+
+## Ben's decoded synapse names
+
+Ben supplied this convention on 31 October: `{destination}_{Source}{Configuration}{type}{exc/inh}`.
+Example: `RG_HF2i` denotes inhibitory type-II hip-flexor feedback to the rhythm
+generator: RG = destination, H = hip source, F = flexor configuration, 2 = type II,
+and i = inhibitory. Use this intended-path label alongside the actual saved
+endpoints, reversal potential, maximum conductance, threshold, and saturation.
+Do not silently rename original synapse types or infer physical attachment from
+the name alone.
+
 **Correction after Ben's model-selection clarification:** W2L means the newer
 bilateral-RG controller with contact and type II feedback. Its canonical editable
 project is `D:\GitHub\Bipedal_Robot\Neuromechanical_Models\W2L_VirtualWalker_Newer_20261031\W2L_VirtualWalker_Newer.aproj`.
