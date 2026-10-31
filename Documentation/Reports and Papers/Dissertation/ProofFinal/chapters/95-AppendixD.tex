@@ -77,7 +77,7 @@ The fourteen-neuron Deng-derived implementation follows the circuit used in SNS-
 
 The initial sweep applied \qty{+2}{\nano\ampere} and \qty{+10}{\nano\ampere} to each layer for \qtylist{0.1;0.5}{\second}, together with two direct MN inhibitory controls. None met the deletion criterion. Subsequent stronger-current control series, including stimuli lasting two baseline periods (\qty{3.876}{\second}), retained the same circuit and mechanical parameters (Table~\ref{tab:layer_stimulus}). RG and PF stimuli began one-quarter cycle after a baseline RG onset; MN inhibition began \qty{0.05}{\second} into a baseline motor burst. Positive currents target the extensor RG or hip-PF population; negative currents target the hip-flexor MN. These currents are mechanistic controls, not experimentally calibrated physiological stimuli.
 
-A deletion required at least \qty{20}{\milli\second} of baseline motor activity in the stimulus window and suppression of at least half of that activity, using an activation threshold of 0.5. Phase residuals compare the final four recovered onsets with the nearest baseline onset, normalized by the baseline period. Residuals at or below 0.05 cycles were classified as non-resetting, and those at or above 0.15 as shifted; intermediate values remained indeterminate. RG and motor residuals were assessed separately. The two-cycle stimuli suppressed both expected flexor burst onsets at all three layers. Baseline and stimulated neural and mechanical trajectories were identical before stimulus onset. The \qty{1}{\second} PF pulse shifted the motor pattern without resetting the RG clock, whereas the two-cycle PF pulse preserved both schedules. The duration dependence cautions against treating every motor phase shift as an RG reset. Figure~\ref{fig:layer_stimulus_validation} aligns the RG, PF, and MN responses with joint motion during the two-cycle PF stimulus.
+A deletion required at least \qty{20}{\milli\second} of baseline motor activity in the stimulus window and suppression of at least half of that activity, using an activation threshold of 0.5. Phase residuals compare the final four recovered onsets with the nearest baseline onset, normalized by the baseline period. Residuals at or below 0.05 cycles were classified as non-resetting, and those at or above 0.15 as shifted; intermediate values remained indeterminate. RG and motor residuals were assessed separately. The two-cycle stimuli suppressed both expected flexor burst onsets at all three layers. Baseline and stimulated neural and mechanical trajectories were identical before stimulus onset. The \qty{1}{\second} PF pulse shifted the motor pattern without resetting the RG clock, whereas the two-cycle PF pulse preserved both schedules. The duration dependence cautions against treating every motor phase shift as an RG reset. The coupled mechanical traces contained large joint-limit violations, so these tests are interpreted through their neural responses in Table~\ref{tab:layer_stimulus}.
 
 \begin{table}[htbp]
 \centering\small
@@ -100,11 +100,13 @@ MN & $-500$ & 3.876 & 0.000 & 0.000 & Non-resetting deletion \\
 \end{tabularx}
 \end{table}
 
+Hip-PF inhibition altered the left motor pattern and joint motion while bilateral RG activity continued (Figure~\ref{fig:w2l108_pf_bilateral}). This separate W2L model has 108 graded neurons, 216 chemical connections, and twelve Hill-type muscles, with its trunk fixed in air. A \qty{-10}{\nano\ampere} pulse acted on the left hip-extensor PF neuron from \qty{4.534}{\second} to \qty{4.634}{\second}. Neural and angular recordings were identical to the unperturbed baseline before injection. The hip plateaus occur at the native joint stops near \ang{20}; they represent limit engagement. This bilateral test is distinct from the fourteen-neuron deletion tests above. Figure~\ref{fig:w2l108_pf_bilateral}\textbf{(A)} and Figure~\ref{fig:w2l108_pf_bilateral}\textbf{(B)} show the left and right legs, respectively. Blue solid and orange dashed neural curves denote extensor and flexor cells; gray curves show the matched baseline, and dotted lines mark the hip limits.
+
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{deng_neuromechanical_stimulus.pdf}
-\caption[Neural and mechanical response to PF stimulation]{Reduced Deng-derived circuit coupled to a suspended model. Rows align RG, hip PF, and hip MN voltages with hip, knee, and ankle angles and applied current. The extensor PF receives \qty{+50}{\nano\ampere} for two baseline periods; shading marks the stimulus. Neural traces pair extensor (orange solid) and flexor (blue dashed) populations. Joint angles overlay the stimulated run (green solid) and matched baseline (gray dashed). Time is relative to stimulus onset. These are responses of the translated test model, not measured rat kinematics.}
-\label{fig:layer_stimulus_validation}
+\includegraphics[width=\textwidth]{deng_neuromechanical_stimulus.pdf}
+\caption[Bilateral W2L response to hip-PF inhibition]{Response of the bilateral W2L model to left hip-PF inhibition.}
+\label{fig:w2l108_pf_bilateral}
 \end{figure}
 
 \FloatBarrier
@@ -125,7 +127,7 @@ The curriculum is shown in Table~\ref{tab:sns_curriculum} in Chapter~\ref{ch:sns
 
 \subsection{Reference-Library Comparison}\label{sec:gait_library_results}
 
-The 43-cycle library contains 32 running trials from eight subjects at four speeds, ten walking references, and a predicted-walking cycle. The walking references span prescribed speeds of \qtyrange{0.5}{2.0}{\meter\per\second} and self-selected trials. The full graded controller, a pruned version with fewer connections, a six-synergy controller, and a controller using the W2L organization were compared on their tuning reference and the broader library. Library scores were substantially more negative (Table~\ref{tab:gait_sweep}), and the evaluations showed unilateral or asymmetric gait. The joint trajectories and contact patterns identify which aspects of the movement transferred to each reference.
+The 43-cycle library contains 32 running trials from eight subjects at four speeds, ten walking references, and a predicted-walking cycle. The predicted-walking reference was generated by optimizing muscle controls in a musculoskeletal simulation \citep{falisse_modeling_2022}; it is a simulated comparison trajectory rather than a participant recording. The walking references span prescribed speeds of \qtyrange{0.5}{2.0}{\meter\per\second} and self-selected trials. The full graded controller, a pruned version with fewer connections, a six-synergy controller, and a controller using the W2L organization were compared on their tuning reference and the broader library. Library scores were substantially more negative (Table~\ref{tab:gait_sweep}), and the evaluations showed unilateral or asymmetric gait. The joint trajectories and contact patterns identify which aspects of the movement transferred to each reference.
 
 Table~\ref{tab:gait_sweep} reports the saved kinematic comparison scores. Less-negative values indicate closer agreement within a scoring configuration; these scores are not percentages or a stand-alone criterion for successful walking. The tuning-reference column uses each controller's selected reference, while the library mean averages its scores over all 43 cycles. The direct angle overlays and errors in Section~\ref{sec:app_ik_overlay} provide the more readily interpretable joint-level comparison.
 
@@ -137,9 +139,9 @@ Table~\ref{tab:gait_sweep} reports the saved kinematic comparison scores. Less-n
  & \textbf{Tuning-ref.} & \textbf{Library mean} & \textbf{Most negative reference} \\
  & \textbf{score} & \textbf{score (43 refs)} & \textbf{(score)} \\
 \midrule
-Full graded        & $-186.4$ & $-8776$ & Falisse predicted walking ($-8841$) \\
-Pruned graded  & $-176.1$ & $-6924$ & Falisse predicted walking ($-6986$) \\
-Six-synergy       & $-200.4$ & $-9961$ & Falisse predicted walking ($-10040$) \\
+Full graded        & $-186.4$ & $-8776$ & Falisse et al.\ (2022), simulated walking ($-8841$) \\
+Pruned graded  & $-176.1$ & $-6924$ & Falisse et al.\ (2022), simulated walking ($-6986$) \\
+Six-synergy       & $-200.4$ & $-9961$ & Falisse et al.\ (2022), simulated walking ($-10040$) \\
 W2L organization     & $-144.5$ & $-5808$ & Subject 8 running trial ($-5896$) \\
 \bottomrule
 \end{tabularx}
@@ -149,9 +151,9 @@ A later matched human-model comparison also varied controller organization and f
 
 \subsection{Direct Kinematics Overlay}\label{sec:app_ik_overlay}
 
-The saved human-model controller reproduced its cycle-shape score of $-145.07$ in an independent process. The direct overlay in Figure~\ref{fig:gait2392_ik_overlay} uses the Gait2392 walking inverse-kinematics trajectory and its paired ground-reaction-force file. Model cycles begin when vertical foot loading crosses \qty{50}{\newton}; reference stance is defined using the same force threshold. Ten cycles per side, with durations between \qty{0.35}{\second} and \qty{2.5}{\second}, were retained using the existing cycle detector. Each leg was aligned to its own onset and resampled over the gait cycle, without fitting phase, subtracting the mean angle, or scaling amplitude.
+The saved human-model controller reproduced its cycle-shape score of $-145.07$ in an independent process. The direct overlay in Figure~\ref{fig:app_gait2392_ik_overlay} uses the Gait2392 walking inverse-kinematics trajectory and its paired ground-reaction-force file. Model cycles begin when vertical foot loading crosses \qty{50}{\newton}; reference stance is defined using the same force threshold. Ten cycles per side, with durations between \qty{0.35}{\second} and \qty{2.5}{\second}, were retained using the existing cycle detector. Each leg was aligned to its own onset and resampled over the gait cycle, without fitting phase, subtracting the mean angle, or scaling amplitude.
 
-Mean cycle periods were \qty{1.285}{\second} on the right and \qty{1.254}{\second} on the left, compared with \qty{1.233}{\second} and \qty{1.213}{\second} in the reference. Model stance fractions were 0.710 and 0.649, compared with 0.610 in the reference. Table~\ref{tab:ik_absolute_rmse} reports absolute-angle errors between mean cycles. These errors retain posture offsets and are distinct from the mean-removed cycle-shape errors used in tuning. The hip and knee mismatches show why cycle counts and a scalar score must be accompanied by the trajectories and contact timing.
+Mean cycle periods were \qty{1.285}{\second} on the right and \qty{1.254}{\second} on the left, compared with \qty{1.233}{\second} and \qty{1.213}{\second} in the reference. Model stance fractions were 0.710 and 0.649, compared with 0.610 in the reference. Table~\ref{tab:ik_absolute_rmse} reports absolute-angle errors between mean cycles. These errors retain posture offsets and are distinct from the mean-removed cycle-shape errors used in tuning. The hip and knee show substantial differences in posture and timing, while the ankle trajectories agree more closely. Similar cycle periods therefore do not imply close agreement of the joint trajectories.
 
 \begin{table}[htbp]
 \centering
@@ -167,6 +169,15 @@ Ankle & 8.71 & 7.38 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{gait2392_ik_overlay.pdf}
+\caption[Direct joint-angle and stance overlay]{Supported Gait2392 human-model motion compared with the inverse-kinematics reference. Columns show the right and left legs. Blue curves and bands show the model mean and one standard deviation across ten cycles per leg; black dashed curves show the reference. Each leg is aligned to its own foot-loading onset, without an angle offset, amplitude adjustment, or fitted phase shift. The bottom row compares model stance fraction across cycles with reference stance and swing, using a \qty{50}{\newton} loading threshold. Absolute-angle errors are reported in Table~\ref{tab:ik_absolute_rmse}.}
+\label{fig:app_gait2392_ik_overlay}
+\end{figure}
+
+\FloatBarrier
 
 \subsection{Pathway-Removal Tests}\label{sec:walker_variant_results}
 

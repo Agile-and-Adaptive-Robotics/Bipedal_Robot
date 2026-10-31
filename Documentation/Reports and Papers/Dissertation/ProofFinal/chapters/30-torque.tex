@@ -4,11 +4,11 @@
 {\doublespacing\normalsize\upshape
 \noindent Publication note: The lumbosacral actuator-placement summary at the beginning of Section~\ref{sec:mesh_opt} summarizes work published by \citet{morrow_optimization_2020}. For that published work, I contributed validation, formal analysis, investigation, resources, data curation, manuscript review and editing, and visualization. Connor Morrow contributed conceptualization, methodology, software, validation, formal analysis, investigation, resources, data curation, the original draft, manuscript review and editing, visualization, supervision, and project administration. Alexander J. Hunt contributed validation, resources, supervision, project administration, and funding acquisition. The remaining material in this chapter forms a manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scharzenberger, and Hunt \citep{bolen_isometric_2025}. For the manuscript in preparation, B.B.\ performed the conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, and original draft preparation; M.E., L.P., L.B., and C.M.\ contributed methodology, software, investigation, and data curation; and A.H.\ supervised the work, administered the project, and acquired funding. All co-authors contributed to writing, review, and editing.\par}
 
-This chapter connects the actuator force characterization of Chapter~\ref{ch:muscles} to torque about the robot knee. The earlier torque model assumed inextensible muscle paths on rigid links. Isometric tests on pinned and biomimetic knees show where those assumptions fail. The methods develop corrections for length offsets, attachment compliance, and wrapping loss, then explain how actuator-placement searches use the corrected prediction. Held-out tests evaluate the correction terms, and physical tests assess whether the redesigned routes meet selected human-muscle torque targets.
+This chapter connects the actuator force characterization of Chapter~\ref{ch:muscles} to torque about the robot knee. The earlier torque model assumed inextensible muscle paths on rigid links. Isometric tests on pinned and biomimetic knees show where those assumptions fail. The methods develop corrections for length offsets, attachment compliance, and wrapping loss, then explain how actuator-placement searches use the improved prediction. Validation tests evaluate the correction terms, and physical tests assess whether the redesigned routes meet selected human-muscle torque targets.
 
 \section{Methods}
 
-I built a modular test stand to measure flexor and extensor torque with either a pinned knee or a biomimetic four-bar knee. The tests varied actuator diameter and resting length, joint contact, and tendon attachment. I first compared measured torque with predictions based on the characterized BPA force model. I then set the length, compliance, and wrapping corrections using separate training and validation tests, and used the corrected model to redesign routes against human-muscle torque targets. Isometric tests evaluated the resulting hardware.
+I built a modular test stand to measure flexor and extensor torque with either a pinned knee or a biomimetic four-bar knee. The tests varied actuator diameter and resting length, joint contact, and tendon attachment. I first compared measured torque with predictions based on the characterized BPA force model. I then set the length, compliance, and wrapping corrections using separate training and validation tests, and used the improved model to redesign routes against human-muscle torque targets. Isometric tests evaluated the resulting hardware.
 \subsection{Robot Leg Model and Knee Test Stands}\label{sec:robot_model}
 
 
@@ -273,7 +273,7 @@ The actuator path can carry compliant hardware at both ends: the insertion-side 
 \end{figure}
 
 
-\subsubsection{BPA Fictive Contraction}\label{sec:fictive_contraction}
+\subsubsection{Actuator Bending}\label{sec:fictive_contraction}
 
 As the knee flexes, the extensor BPA contacts the anterior joint surface and bends around it (Figure~\ref{fig:bpaWrapping}). The rigid routed-length calculation does not account for the resulting change in usable contraction. I represent this effect with fictive strain: an empirical increase in the contraction seen by the force model, beyond the actuator's geometric contraction. The correction is phenomenological; it does not resolve wall stresses or the deformation of the braided actuator. A wrapping-loss term $\chi_3$ scales the associated reduction in usable length:
 \begin{equation}
@@ -463,7 +463,7 @@ where $m^{\mathrm{req}}_{j} = (\abs{M^{\mathrm{R}}_{j}} - (1+m_{r})\abs{M^{\math
 
 The flexor uses continuous bone-clearance constraints and penalties for off-axis torque and incomplete wrap release. The extensor uses the contact-elimination rule of Appendix~\ref{app:contact_release} and penalizes excessive torque and contraction. Both require torque magnitude of at least 1.05 times the human target; the prescribed 5\,\% allowance is a design requirement, not an experimentally established error bound. The two flexor BPA paths are evaluated separately, whereas the extensor scales the force of its shared route by actuator count. The final flexor uses a staggered-offset pair rather than a mirrored origin arrangement that conflicts with the pelvis.
 
-The redesign retains the objective of obtaining adequate torque from anatomically constrained routes, but changes both the prediction and the search formulation. Actuator and tendon lengths become independent design variables, geometry is constrained continuously, and pointwise torque shortfall is penalized using the corrected force model. Section~\ref{sec:route_redesign_results} quantifies the redesign, and Section~\ref{sec:redesign_physical} tests it.
+The redesign retains the objective of obtaining adequate torque from anatomically constrained routes, but changes both the prediction and the search formulation. Actuator and tendon lengths become independent design variables, geometry is constrained continuously, and pointwise torque shortfall is penalized using the improved force model. Section~\ref{sec:route_redesign_results} quantifies the redesign, and Section~\ref{sec:redesign_physical} tests it.
 
 \section{Results}\label{sec:results_torque}
 
@@ -477,7 +477,7 @@ The pinned-flexor results first compare the length-dependent actuator model of \
 
 The pre-optimization comparisons distinguish force-model error from errors in the predicted muscle geometry (Figure~\ref{fig:FlxPin_preopt}). The hybrid calculation uses measured length and moment arm, whereas the other predictions use the routed geometry. Flexion angles and torques are negative; the caption identifies the individual tests.
 
-Both pre-optimization force models overpredicted measured flexor-torque magnitude. On the common domain where both predictions are defined, the improved BPA characterization gives the smaller errors (Table~\ref{tab:FlxPinPreGof}). Those scores use a different domain from the full-test corrected-model scores in Table~\ref{tab:FlxPinGof}. The hybrid calculation, using measured length and moment arm, follows the measurements more closely, identifying the predicted geometry as an important source of torque error.
+Both pre-optimization force models overpredicted measured flexor-torque magnitude. On the common domain where both predictions are defined, the improved BPA characterization gives the smaller errors (Table~\ref{tab:FlxPinPreGof}). Those scores use a different domain from the full-test improved-model scores in Table~\ref{tab:FlxPinGof}. The hybrid calculation, using measured length and moment arm, follows the measurements more closely, identifying the predicted geometry as an important source of torque error.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -544,7 +544,7 @@ $\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\cm}) &
 \endgroup
 \end{table}
 
-The corrected model reduces mean torque-prediction error in both the training and validation tests, with the optimized curves tracking the measurements across the tested range (Figure~\ref{fig:FlxPin_optimized} and Table~\ref{tab:FlxPinGof}). The baseline uses the same kinematics and force model with the correction terms disabled; Figure~\ref{fig:FlxPin_preopt} separately compares the original rigid-body prediction.
+The improved model reduces mean torque-prediction error in both the training and validation tests, with the optimized curves tracking the measurements across the tested range (Figure~\ref{fig:FlxPin_optimized} and Table~\ref{tab:FlxPinGof}). The baseline uses the same kinematics and force model with the correction terms disabled; Figure~\ref{fig:FlxPin_preopt} separately compares the original rigid-body prediction.
 
 
 
@@ -642,7 +642,7 @@ Flexor, $\diameter\qty{20}{\mm}$ & 14.8064 & 3.3672 & 23.7218 & 2.2070 & 0.0748 
 
 \subsection{Reasons for the Correction Terms}\label{sec:disc_error}
 
-The correction terms of Section~\ref{sec:improved_model} exist because the physical transmission between the actuator and the joint is neither rigid nor lossless, and each term names one family of physical reasons. A constant length offset $\chi_{0}$ exists because of manufacturing and positioning tolerances: the printed bone segments, the machined knee links, and the end-cap fittings each carry dimensional tolerance, and the accumulated discrepancy appears as a length that is consistently shorter than the predicted path at every joint angle, including at zero load where no compliance can act. The stiffness terms $\chi_{1}$ and $\chi_{2}$ exist because loaded components displace: the isometric system is not rigid, and there is compliance in the winch cable of the test stand, the artificial tendons, and the cantilevered attachment brackets. The wrapping-loss term $\chi_{3}$ exists because a BPA that bends over the joint loses usable contraction length that no straight-line model accounts for; at high flexion the same loading was observed to stretch and compress shorter-$l_{0}$ actuators and to slip the BPA off the anterior head of the femur bolt by up to \qty{\pm 20}{\mm}, changing both the force vector and the torque.
+The correction terms of Section~\ref{sec:improved_model} exist because the mechanical connection between the actuator and the joint is compliant and changes under load, and each term names one family of physical reasons. A constant length offset $\chi_{0}$ exists because of manufacturing and positioning tolerances: the printed bone segments, the machined knee links, and the end-cap fittings each carry dimensional tolerance, and the accumulated discrepancy appears as a length that is consistently shorter than the predicted path at every joint angle, including at zero load where no compliance can act. The stiffness terms $\chi_{1}$ and $\chi_{2}$ exist because loaded components displace: the isometric system is not rigid, and there is compliance in the winch cable of the test stand, the artificial tendons, and the cantilevered attachment brackets. The wrapping-loss term $\chi_{3}$ exists because a BPA that bends over the joint loses usable contraction length that no straight-line model accounts for; at high flexion the same loading was observed to stretch and compress shorter-$l_{0}$ actuators and to slip the BPA off the anterior head of the femur bolt by up to \qty{\pm 20}{\mm}, changing both the force vector and the torque.
 
 Wrapping a BPA around the knee remains an approximation with inherent error (Figure~\ref{fig:Ext_passthru}): high actuator force and a short moment arm make the torque sensitive to attachment deflection and small geometric errors \citep{young_analyzing_2019}. The pinned-knee tests therefore separate actuator-force error from attachment-compliance and routed-geometry error, and applying the identified terms to the biomimetic knee tests them where the moment arm and the instantaneous center of rotation move with knee angle. Isometric testing establishes a static capacity envelope; velocity dependence, damping, and behavior under controlled speed and load remain unidentified.
 
@@ -664,7 +664,7 @@ Extensor & $-0.00638$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & $0.158$\\
 \end{tabular}
 \end{table}
 
-The original placement methods selected routes by predicted torque under rigid-attachment assumptions; the isometric tests show those predictions require the compliance corrections before they can guide hardware selection, so the redesigned routes evaluate every candidate through the corrected force balance. On the biomimetic knee the shared terms transfer at an FVU of 0.8835 for the \qty{10}{\mm} flexor and 0.0748 for the \qty{20}{\mm} flexor (Table~\ref{tab:BioTorqueGof}); the larger error for the smaller actuator limits transfer across configurations, and the redesigned two-BPA routes provide the further physical test of Section~\ref{sec:redesign_physical}.
+The original placement methods selected routes by predicted torque under rigid-attachment assumptions; the isometric tests show those predictions require the compliance corrections before they can guide hardware selection, so the redesigned routes evaluate every candidate through the force balance with the identified terms. On the biomimetic knee the shared terms transfer at an FVU of 0.8835 for the \qty{10}{\mm} flexor and 0.0748 for the \qty{20}{\mm} flexor (Table~\ref{tab:BioTorqueGof}); the larger error for the smaller actuator limits transfer across configurations, and the redesigned two-BPA routes provide the further physical test of Section~\ref{sec:redesign_physical}.
 
 \subsection{Redesigned Routes for the Biomimetic Robot Model}\label{sec:route_redesign_results}
 
@@ -780,24 +780,24 @@ This trade can extend the RoM over which a route meets its torque requirement. A
 \label{fig:reverse_pulley_principle}
 \end{figure}
 
-\subsection{Whole-Leg Transmission Capability}
+\subsection{Whole-Leg Actuator and Tackle Capability}
 
-As a proof of concept for the whole tool chain, I applied the transmission search to the robot-leg muscle routing of my master's model \citep{bolen_determination_2019}: the expanded design selects the best transmission configuration at each of the 27 actuator sites (Table~\ref{tab:survey_dofs_sizes}) and re-solves actuator and tendon lengths on the inherited routing.\label{sec:masters_updated} Each site is evaluated against its same-named Gait2392 muscle \citep{delp_opensim_2007,seth_opensim_2018} on a $5\times5$ grid sampling combinations of two joint coordinates at \qty{620}{\kPa} \citep{bolen_2026}: a cell meets the requirement when the taut BPA's torque has the human torque's sign and at least its magnitude, and the reported coverage is the unweighted mean over sites. The baseline substitutes four parallel \qty{20}{\mm} BPAs at the eight nominal \qty{40}{\mm} sites. Under matched ideal pressure, braid geometry, and contraction, maximum force scales with diameter squared, giving this parallel group the same theoretical maximum force as one \qty{40}{\mm} BPA. The comparison combines transmission, actuator sizing, and the diameter substitution; it does not isolate any one contribution.
+As a proof of concept for the whole tool chain, I applied the actuator and tackle search to the robot-leg muscle routing of my master's model \citep{bolen_determination_2019}: the expanded design selects the best transmission configuration at each of the 27 actuator sites (Table~\ref{tab:survey_dofs_sizes}) and re-solves actuator and tendon lengths on the inherited routing.\label{sec:masters_updated} Each site is evaluated against its same-named Gait2392 muscle \citep{delp_opensim_2007,seth_opensim_2018} on a $5\times5$ grid sampling combinations of two joint coordinates at \qty{620}{\kPa} \citep{bolen_2026}: a sampled configuration meets the requirement when the taut BPA's torque has the human torque's sign and at least its magnitude, and the reported coverage is the equal-site mean of angular-domain fractions, estimated with trapezoidal area weights (Appendix~\ref{app:model_geometry}). The baseline substitutes four parallel \qty{20}{\mm} BPAs at the eight nominal \qty{40}{\mm} sites. Under matched ideal pressure, braid geometry, and contraction, maximum force scales with diameter squared, giving this parallel group the same theoretical maximum force as one \qty{40}{\mm} BPA. The comparison combines transmission, actuator sizing, and the diameter substitution; it does not isolate any one contribution.
 
-Mean human-torque coverage improves from \qty{37.28}{\percent} to \qty{65.19}{\percent}, improving at 23 sites and tying at four, while mean active-force coverage (positive insertion tension, regardless of torque) rises from \qty{92.44}{\percent} to \qty{98.81}{\percent}; positive tension alone does not meet the torque requirement. Table~\ref{tab:CapabilitySurvey} summarizes the means, and Table~\ref{tab:capability_by_site} gives the per-site coverage.
+Mean area-weighted human-torque coverage improves from \qty{37.35}{\percent} to \qty{65.81}{\percent}, improving at 23 sites and tying at four, while mean active-force coverage (positive insertion tension, regardless of torque) rises from \qty{93.00}{\percent} to \qty{99.31}{\percent}; positive tension alone does not meet the torque requirement. Table~\ref{tab:CapabilitySurvey} summarizes the means, and Table~\ref{tab:capability_by_site} gives the per-site coverage.
 
 \begin{table}[htbp]
 \centering
-\caption{Mean torque and active-force coverage across 27 actuator sites at \qty{620}{\kPa}.}
+\caption{Mean angular-domain torque and active-force coverage across 27 actuator sites at \qty{620}{\kPa}.}
 \label{tab:CapabilitySurvey}
 \begin{tabular}{@{}lcc@{}}
 \toprule
 \textbf{Configuration} & \textbf{Human torque met (\%)} & \textbf{Active force (\%)} \\
 \midrule
-Baseline & 37.28 & 92.44 \\
-Transmission configurations & 65.19 & 98.81 \\
+Baseline & 37.35 & 93.00 \\
+Selected configurations & 65.81 & 99.31 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-With the actuator side of the leg corrected, physically validated, and redesigned to meet human-scale torque, the dissertation turns to the sensory side: Chapter~\ref{ch:database} assembles the measured afferent responses that the synthetic nervous system of Chapter~\ref{ch:sns} draws on.
+With actuator force characterized, knee torque tested, and routes redesigned to meet selected human-muscle torque targets, the dissertation turns to the sensory side: Chapter~\ref{ch:database} assembles the measured afferent responses that the synthetic nervous system of Chapter~\ref{ch:sns} draws on.

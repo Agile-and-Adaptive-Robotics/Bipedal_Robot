@@ -1,3 +1,5 @@
+Current dissertation update: Table 4.12 and Appendix C now use angular-domain trapezoidal quadrature, with torque means **37.35 / 65.81%** and active-force means **93.00 / 99.31%**. Reproducible postprocessing and input hashes: Sources/area_coverage_20261031.py, .json, and .csv. No design or mechanical model was rerun. The original report and frozen point-count aggregates below are retained as history and do not describe the current table metric.
+
 # REPORT — Geometry and configurations behind dissertation Table 4.12
 
 Generated 2026-10-31 on easteregg2. Read-only provenance extraction; no

@@ -1,3 +1,11 @@
+## Current author abstract and area-coverage delivery - 31 October 2026
+
+Dissertation **303 pages**, clean final build. Author's supplied abstract applied verbatim, with space-testing filler excluded; one paragraph on one page. Table 4.12 and per-site Appendix C table now use trapezoidal angular-domain coverage: torque 37.35 -> 65.81%, active force 93.00 -> 99.31%. No optimizer/model/simulation runs; all 54 input MAT hashes unchanged. Saved-mask point counts agree with the canonical replay. Source-generator and results retained in KompareXXVII/Sources/area_coverage_20261031.*. Background, protected Chapter 3, and paper unchanged. Direct easteregg2 retrieval confirmed source-network SVG, comparison PNG, and the 108-neuron MuJoCo PF-pulse plot; diagram selection and native/drop identity remain explicit pending items. Current yellow audit v9; separate six-page PDF displays all 58 Leo messages. No Overleaf upload or commit. Earlier checkpoints below are historical.
+
+## Latest merged dissertation and extended Leo review - 31 October 2026
+
+Current local dissertation **302 pages**, zero LaTeX warnings or undefined references. All five import conflicts are resolved and staged; no unmerged index entries. Incoming routing/SNS material retained; paper files and protected Chapter 3 unchanged. Leo review extended to **58 messages / 57 threads through 9:07 pm Pacific**, including 14 later Chapter 6 comments. Chapter 6 framing and interface explanations revised; targeted torque terminology and SADb clarity edits applied. Abstract/background frozen by Ben; no further edits or automatic rollback. Current deliveries: output/pdf/Bolen_Dissertation_Leo_Final_20261031.pdf and pending-only yellow audit v8; full per-comment ledger: Notes/figure_polish_20261030/CONSOLIDATED_SUBMISSION_AUDIT_20261031.md. No commit, push, live comment resolution, or Overleaf upload. Earlier checkpoints are historical.
+
 ## Latest audit v3 corrections - 2026-10-30
 
 Current local dissertation: **298 pages**, clean stabilized build with no unresolved references or oversized floats. Appendix C has the bone context first, eight no-bone route poses, and 2D pressure isobars; the former margin figure is archived. Table 6.2 distinguishes mechanical models/controllers/support; graded-versus-spiking output comparison is explained. Remaining unit expressions use siunitx. Chapter 4 publication scope and the blank contribution workbook are ready. Paper 32 pages plus supplement 11, targeted figure typography and psi fixes only. Current report: `Notes/figure_polish_20261030/AUDIT_V3_CORRECTIONS_20261030.md`; **one-page pending-only yellow audit v6**. New Gait2392 pathway diagram is a preview, pending Ben's insertion decision. Original ZIPs, published Chapter 20, bibliography, and Zotero preserved. No live upload, commits, or pushes. Earlier checkpoints below are historical.
@@ -160,3 +168,8 @@ Full record — verdicts, checks run/not run, figure QC, Ben queue, Overleaf gat
 
 ## Consolidation completed — 2026-10-28
 311-page local/live dissertation; 33-page paper and 10-page supplement; zero errors or undefined references. See committee_revision_20261027/CONSOLIDATION_COMPLETED_20261028.md for applied edits, retained comments, conservation checks, and bounded visual coverage. No tracked changes accepted/rejected; no commits/pushes.
+
+
+## Targeted author annotations - 31 October 2026
+
+Rebuilt local dissertation: 304 pages, no compile errors or undefined references. Delivery: output/pdf/Bolen_Dissertation_Reviewed_Corrections_20261031.pdf (also Submission alias). All 28 latest author annotations have individual dispositions in figure_polish_20261030/BEN_28_COMMENT_DISPOSITIONS_20261031.md and output/pdf/Dissertation_28_Comment_Responses_20261031.pdf. Pending audit v10 has three remaining groups. Author abstract, background, and published muscle chapter unchanged. No source changes to the torque paper. No Overleaf upload or commit.

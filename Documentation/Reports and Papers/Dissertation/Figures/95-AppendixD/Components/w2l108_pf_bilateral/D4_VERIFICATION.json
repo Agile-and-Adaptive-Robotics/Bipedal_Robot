@@ -1,0 +1,953 @@
+{
+  "machine": "easteregg2",
+  "simulation_reruns": 0,
+  "working_manuscript_unchanged": true,
+  "working_source_hashes": {
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\60-sns.tex": "0437625fcb6d9abaec1ccdef7fa0b309a88d95bd8bc51f4574728c799ea0e64c",
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\95-AppendixD.tex": "a430f9a2982a75fe3c5e5089477f3ba3cbb3c3ea9b52c9ed3f5719c261e73093",
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\main.tex": "f42804d1d8331db80fe390b1bd244bb346fcc4c88051b864abb3256135c79f99",
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\thesis.bib": "fde9e904beb9e64b33263a650c0ad90b2a95b3702065328bd1f0974d262c2ae0",
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\20-muscles.tex": "6c8c2fadb4f896e59e028bb9ec81025502e325386d442c98eddcc53d5b8badf5"
+  },
+  "input_hashes": {
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\sns_rebuild_session1_20261030\\EDITOR_D4_CURRENT.pdf": "885f014a1d9200fc2619a4b28b2354c1ff3f247b9f5decb37613e48cbacf3628",
+    "C:\\Users\\Ben Bolen\\Documents\\ME603 Dissertation\\Defense\\Bolen_Dissertation.pdf": "76e23a2c5eaa025ee19c1bc08266d954ea8b4a7230a09a17c21b0e495308f3c0",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\stimulus_long_controls\\baseline.npz": "8730270431ec333bfce679be050bd488aee4880a89ba0940d288abd8da73b5f6",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\stimulus_long_controls\\PF_plus50_2cycles.npz": "2830a62e8c0157fe214b8f6a7cd55b969759097dd76ee926da9d292975889a62",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\stimulus_long_controls\\stimulus_results.json": "0be1fd0b17d5ae09536ee0913676f5563ca926bc32dec7697032a51c01d0b4f4",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\w2l_mujoco\\w2l_air.xml": "d92268efe9e473e6af5de65ff32d863266dee19268f71395861f1c218e2eef2f",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\run_virtual_walker.py": "fb61de141f3cf0c084e8ab368f9c24b202cf61d4672e51473f702fdf44afb61b",
+    "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_VirtualWalker_Newer_20261031\\W2L_VirtualWalker_Newer_Standalone.asim": "01ece6edcbcf17c274410b23f1ce7603eab288aadb946d6b548c5102ed5c1154",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_baseline_v2\\trajectory.npz": "1c76131e1129ddd6f0ae9c2db40a67d3fd73969ea8fb9e362d6f1e0abb0f74c8",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_PF_minus10nA_100ms_v1\\trajectory.npz": "ca1866b52dcbd112e8b32d1e4adccf46221b05d6d79d6867380e16da87a52e6b",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_PF_minus10nA_100ms_v1\\RESULT.json": "a3866ed6a1f18a6bceb272a547f013d9246348b5d725c460fa21964ef9d2f03e",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_PF_minus10nA_100ms_v1\\model.xml": "a99c2700e38ebf0c630d69c9074e495844602a39414c3e28d6faeb992fc40d7a"
+  },
+  "saved_array_hashes": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\stimulus_long_controls\\baseline.npz": {
+      "t": {
+        "shape": [
+          12001
+        ],
+        "dtype": "float64",
+        "sha256": "31e7c176796630c2c4f0aee58e34b1296c123e4672cb48a013c479f1ce357052"
+      },
+      "V": {
+        "shape": [
+          12001,
+          14
+        ],
+        "dtype": "float64",
+        "sha256": "ee25af68e81a1fd7a9c0cb1ae83c54e610937f9429852167d27348f7c2b739be"
+      },
+      "motor": {
+        "shape": [
+          12001,
+          2
+        ],
+        "dtype": "float64",
+        "sha256": "08daec17f80c113f15f6c86d16e91e24d3ec8239449e07d24f91f5f11c654847"
+      },
+      "q": {
+        "shape": [
+          12001,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "cb102404b5aaad00973fb3401fe1d2d4bcba1f3c34ff02392335dd6b3fd57dfd"
+      }
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\stimulus_long_controls\\PF_plus50_2cycles.npz": {
+      "t": {
+        "shape": [
+          12001
+        ],
+        "dtype": "float64",
+        "sha256": "31e7c176796630c2c4f0aee58e34b1296c123e4672cb48a013c479f1ce357052"
+      },
+      "V": {
+        "shape": [
+          12001,
+          14
+        ],
+        "dtype": "float64",
+        "sha256": "bd802e6d7db20d84d097452439284576cdaf4a60744fd42ec8b62149077e638c"
+      },
+      "motor": {
+        "shape": [
+          12001,
+          2
+        ],
+        "dtype": "float64",
+        "sha256": "2569a05e326a15c90966285e735012c023a4360ca0e882f470ad96e4a8b662ec"
+      },
+      "q": {
+        "shape": [
+          12001,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "7c09bd5b49241b53cc991b30e82f943731a434b0b0b0164d7690b0247e8d008c"
+      }
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_baseline_v2\\trajectory.npz": {
+      "t": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "1a9be090236dcf485688e98e223d98b1d75de4c209ebd411b4b2bc3ca503bada"
+      },
+      "q": {
+        "shape": [
+          6000,
+          10
+        ],
+        "dtype": "float64",
+        "sha256": "ab64ca7986fd07c406118bfd81f106fdb7ee76569d542a3746a316c638053270"
+      },
+      "angles": {
+        "shape": [
+          6000,
+          6
+        ],
+        "dtype": "float64",
+        "sha256": "1db94202c5fbfccd13347b9be40d84550e277404e22627cd7677a71669187869"
+      },
+      "neuro": {
+        "shape": [
+          6000,
+          108
+        ],
+        "dtype": "float64",
+        "sha256": "c9964825134fb0ad2be0c8f250672bab5a0a87498e944473977c2f927a9dce72"
+      },
+      "forces": {
+        "shape": [
+          6000,
+          24
+        ],
+        "dtype": "float64",
+        "sha256": "4221ece6cdb2ed02298f8d72382871b8b0da00523acc8c9830976120f8908783"
+      },
+      "root": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "4c675857011f126e88e3fb339c86d472acd3f113e7e756149730f90517629671"
+      },
+      "rail_vertical": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "foot_vertical": {
+        "shape": [
+          6000,
+          2
+        ],
+        "dtype": "float64",
+        "sha256": "55873fecc61a79e87ca550c7072e38ccdd7ecb600ace286fe4717952a97c42b0"
+      },
+      "foot_clearance": {
+        "shape": [
+          6000,
+          4
+        ],
+        "dtype": "float64",
+        "sha256": "3d96fef690603ce7db3b74e0fd6f76be11c4221efa29a9e1e26f1bac975e245b"
+      },
+      "harness_force": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "harness_torque": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "pelvis_quaternion": {
+        "shape": [
+          6000,
+          4
+        ],
+        "dtype": "float64",
+        "sha256": "9e3207817c0d31d871a43da20c5e74f4534642a33fd5ba04415386bed893f6e1"
+      },
+      "pelvis_euler_XYZ_deg": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "389814ea476bfd96ede47b5a82381eff79f9575af10ff6207842826c8f53b4e3"
+      },
+      "pelvis_omega_world": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "pelvis_rotational_energy_J": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "com_position": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "afb2835c7e34f3dd44d86370de2c093450e0be785254e53efb5e97b9e3366175"
+      },
+      "com_velocity": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "ec8b4bd6d8e25a33d5601241ff635470ca13a0e77b2319aa6c5d3a7089dd8524"
+      },
+      "rail_force_world": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "rail_torque_about_pelvis": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "guide_force_world": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "guide_torque_about_pelvis": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "guide_contact_count": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "foot_force_world": {
+        "shape": [
+          6000,
+          2,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513"
+      },
+      "foot_region_force_world": {
+        "shape": [
+          6000,
+          4,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "30fafbdc0facf210a26498db982f7ff8ad1e0b9a805816731c72e356a768c162"
+      },
+      "foot_cop_world": {
+        "shape": [
+          6000,
+          2,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "9dee687e0a46113cd5456a41ccc9d2bd6307027bf364c0f08c004e7b1986d95d"
+      },
+      "foot_body_position": {
+        "shape": [
+          6000,
+          2,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "329f86435893ae77416490aab14f998a601b8296040d5e0340ec233f056b0d06"
+      },
+      "guide_carriage_x": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "dcc09e02182818711f92e16d0618f902d59c7d9a6454316232b9532406699d83"
+      },
+      "guide_carriage_vx": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "dcc09e02182818711f92e16d0618f902d59c7d9a6454316232b9532406699d83"
+      },
+      "guide_carriage_kinetic_J": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "perturb_torque": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "contact_sensor_binary": {
+        "shape": [
+          6000,
+          4
+        ],
+        "dtype": "float64",
+        "sha256": "ea0787f65f73b0013d03b359490e3125211b28ad5c1502ffb1544c0ded4192f5"
+      },
+      "neural_stimulus_nA": {
+        "shape": [
+          6000,
+          108
+        ],
+        "dtype": "float64",
+        "sha256": "b17dd236c176539d99bd6c7f535a4210280d149d86d2a6fb2ca32eb1676e5f88"
+      },
+      "neuron_names": {
+        "shape": [
+          108
+        ],
+        "dtype": "<U30",
+        "sha256": "71bde8090c1ed39ab35c2ae587836ea13fb85b90529c2f3f1d7b9326b867752c"
+      },
+      "muscle_names": {
+        "shape": [
+          24
+        ],
+        "dtype": "<U15",
+        "sha256": "25150be8b18573a620a2824fe9e3f2d8043814887992fa01595749ee5056f8d8"
+      },
+      "joint_names": {
+        "shape": [
+          6
+        ],
+        "dtype": "<U7",
+        "sha256": "497195796b6e70a6b75c966e9ace2e55ce4a061641ac16ba94ccb7c7f4bf7449"
+      }
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\W2L_VirtualWalker_Newer\\canonical108_air_PF_minus10nA_100ms_v1\\trajectory.npz": {
+      "t": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "1a9be090236dcf485688e98e223d98b1d75de4c209ebd411b4b2bc3ca503bada"
+      },
+      "q": {
+        "shape": [
+          6000,
+          10
+        ],
+        "dtype": "float64",
+        "sha256": "d3f344cfa8e635e040adebd06e72db206ef7205b4df9891dc62565ddf2efbfc2"
+      },
+      "angles": {
+        "shape": [
+          6000,
+          6
+        ],
+        "dtype": "float64",
+        "sha256": "2debcfe1c9dfa15b4309557f687ca56759b08f4e51f1c6f6da16385bfb90928a"
+      },
+      "neuro": {
+        "shape": [
+          6000,
+          108
+        ],
+        "dtype": "float64",
+        "sha256": "bf2bff9b73071a071987aef8faf281fe2be8b7639c065ceec8e1a69f1b71b251"
+      },
+      "forces": {
+        "shape": [
+          6000,
+          24
+        ],
+        "dtype": "float64",
+        "sha256": "4546f8f2db3c0c02db1e91554f140ef403381f734d86f65d0351216ad9e19425"
+      },
+      "root": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "4c675857011f126e88e3fb339c86d472acd3f113e7e756149730f90517629671"
+      },
+      "rail_vertical": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "foot_vertical": {
+        "shape": [
+          6000,
+          2
+        ],
+        "dtype": "float64",
+        "sha256": "55873fecc61a79e87ca550c7072e38ccdd7ecb600ace286fe4717952a97c42b0"
+      },
+      "foot_clearance": {
+        "shape": [
+          6000,
+          4
+        ],
+        "dtype": "float64",
+        "sha256": "7ace5b2c473db1d4cf44729dd7b8c6f1867752c98c0acb093bc51873ee627675"
+      },
+      "harness_force": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "harness_torque": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "pelvis_quaternion": {
+        "shape": [
+          6000,
+          4
+        ],
+        "dtype": "float64",
+        "sha256": "9e3207817c0d31d871a43da20c5e74f4534642a33fd5ba04415386bed893f6e1"
+      },
+      "pelvis_euler_XYZ_deg": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "389814ea476bfd96ede47b5a82381eff79f9575af10ff6207842826c8f53b4e3"
+      },
+      "pelvis_omega_world": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "pelvis_rotational_energy_J": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "com_position": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "df9209a03708ba3dac2343a43c1aff5a41afa7bb1eb50706bf35a0d8767521dd"
+      },
+      "com_velocity": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "a8db7148a5e5a36338907b3013d8f2d7a8d702cc38ee0f623b7e6de3af037038"
+      },
+      "rail_force_world": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "rail_torque_about_pelvis": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "guide_force_world": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "guide_torque_about_pelvis": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "guide_contact_count": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "foot_force_world": {
+        "shape": [
+          6000,
+          2,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "0e89e5d755de20a0a96681c385ffcd1c64e8ae3b7d56d1c7c0c351a81cc46513"
+      },
+      "foot_region_force_world": {
+        "shape": [
+          6000,
+          4,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "30fafbdc0facf210a26498db982f7ff8ad1e0b9a805816731c72e356a768c162"
+      },
+      "foot_cop_world": {
+        "shape": [
+          6000,
+          2,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "9dee687e0a46113cd5456a41ccc9d2bd6307027bf364c0f08c004e7b1986d95d"
+      },
+      "foot_body_position": {
+        "shape": [
+          6000,
+          2,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "9d1b505b4f5a7e00fa6e06c0a6105f933f33765e935232eb7ac85a3605490a64"
+      },
+      "guide_carriage_x": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "dcc09e02182818711f92e16d0618f902d59c7d9a6454316232b9532406699d83"
+      },
+      "guide_carriage_vx": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "dcc09e02182818711f92e16d0618f902d59c7d9a6454316232b9532406699d83"
+      },
+      "guide_carriage_kinetic_J": {
+        "shape": [
+          6000
+        ],
+        "dtype": "float64",
+        "sha256": "bb918147fe10391b43adeba4bd21b9ef32e5bd6c5076c3517733a05ed6dd0569"
+      },
+      "perturb_torque": {
+        "shape": [
+          6000,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "09d70dfa508c78be6e37aecd90919b4e01452ff385a3329c4a7beaca85f291f5"
+      },
+      "contact_sensor_binary": {
+        "shape": [
+          6000,
+          4
+        ],
+        "dtype": "float64",
+        "sha256": "ea0787f65f73b0013d03b359490e3125211b28ad5c1502ffb1544c0ded4192f5"
+      },
+      "neural_stimulus_nA": {
+        "shape": [
+          6000,
+          108
+        ],
+        "dtype": "float64",
+        "sha256": "8279be9aafbdc92eeec53010b077807e5c49122dd210d9431f2715d1f059f9d6"
+      },
+      "neuron_names": {
+        "shape": [
+          108
+        ],
+        "dtype": "<U30",
+        "sha256": "71bde8090c1ed39ab35c2ae587836ea13fb85b90529c2f3f1d7b9326b867752c"
+      },
+      "muscle_names": {
+        "shape": [
+          24
+        ],
+        "dtype": "<U15",
+        "sha256": "25150be8b18573a620a2824fe9e3f2d8043814887992fa01595749ee5056f8d8"
+      },
+      "joint_names": {
+        "shape": [
+          6
+        ],
+        "dtype": "<U7",
+        "sha256": "497195796b6e70a6b75c966e9ace2e55ce4a061641ac16ba94ccb7c7f4bf7449"
+      }
+    }
+  },
+  "legacy": {
+    "channel_order": [
+      "RG_HC_ext",
+      "RG_HC_flx",
+      "RG_IN_ext",
+      "RG_IN_flx",
+      "PF_hip_HC_ext",
+      "PF_hip_HC_flx",
+      "PF_ka_HC_ext",
+      "PF_ka_HC_flx",
+      "PF_hip_IN_ext",
+      "PF_hip_IN_flx",
+      "PF_ka_IN_ext",
+      "PF_ka_IN_flx",
+      "MN_hip_ext",
+      "MN_hip_flx"
+    ],
+    "record_dt_s": 0.0019999999999997797,
+    "onsets_at_minus45mV": {
+      "0": [
+        0.146,
+        1.942,
+        3.88,
+        5.8180000000000005,
+        7.756,
+        9.692,
+        11.63,
+        13.568,
+        15.506,
+        17.444,
+        19.382,
+        21.32,
+        23.258
+      ],
+      "1": [
+        0.964,
+        2.91,
+        4.848,
+        6.7860000000000005,
+        8.724,
+        10.662,
+        12.6,
+        14.538,
+        16.476,
+        18.412,
+        20.35,
+        22.288
+      ],
+      "4": [
+        0.154,
+        1.934,
+        3.87,
+        5.808,
+        7.746,
+        9.684000000000001,
+        11.622,
+        13.56,
+        15.498000000000001,
+        17.436,
+        19.372,
+        21.31,
+        23.248
+      ],
+      "5": [
+        0.962,
+        2.902,
+        4.84,
+        6.7780000000000005,
+        8.716,
+        10.652000000000001,
+        12.59,
+        14.528,
+        16.466,
+        18.404,
+        20.342,
+        22.28
+      ],
+      "12": [
+        0.14400000000000002,
+        1.93,
+        3.866,
+        5.8020000000000005,
+        7.74,
+        9.678,
+        11.616,
+        13.554,
+        15.492,
+        17.43,
+        19.368000000000002,
+        21.306,
+        23.244
+      ],
+      "13": [
+        0.9540000000000001,
+        2.892,
+        4.83,
+        6.768,
+        8.706,
+        10.644,
+        12.58,
+        14.518,
+        16.456,
+        18.394000000000002,
+        20.332,
+        22.27
+      ]
+    },
+    "same_cell_period_after8s": 1.9379999999999988,
+    "alternating_E_F_interval_after8s": 0.968,
+    "nominal_ankle_range_deg": [
+      -20.00000000006498,
+      -5.000000000016245
+    ],
+    "metrics": {
+      "baseline": {
+        "ankle_min_max_deg": [
+          -154.8434799779551,
+          146.87161318542903
+        ],
+        "display_zero_upcrossings": 67,
+        "display_duration_s": 7.998000000000001,
+        "fraction_outside_nominal_limits_by_over_2deg": 0.9347554370469128
+      },
+      "PF_plus50_2cycles": {
+        "ankle_min_max_deg": [
+          -154.8434799779551,
+          148.33171659930883
+        ],
+        "display_zero_upcrossings": 64,
+        "display_duration_s": 7.998000000000001,
+        "fraction_outside_nominal_limits_by_over_2deg": 0.9369219231730689
+      }
+    },
+    "saved_stimulus": {
+      "condition": "PF_plus50_2cycles",
+      "target": "PF_hip_HC_ext",
+      "current_nA": 50.0,
+      "start_s": 10.1765,
+      "duration_s": 3.8759999999999977,
+      "baseline_period_s": 1.9379999999999988,
+      "baseline_active_ms": 1924.0,
+      "lost_active_ms": 1924.0,
+      "motor_phase_residual_cycles": 0.0,
+      "RG_phase_residual_cycles": 0.0,
+      "classification": "non-resetting deletion",
+      "finite": true
+    }
+  },
+  "canonical108": {
+    "source_sha256": "01ece6edcbcf17c274410b23f1ce7603eab288aadb946d6b548c5102ed5c1154",
+    "pulse": {
+      "targets": [
+        "L Hip PF ext"
+      ],
+      "amplitude_nA": -10.0,
+      "start_s": 4.534,
+      "duration_s": 0.1
+    },
+    "anatomical_offset_deg": [
+      -10.0,
+      10.0,
+      0.0,
+      20.0,
+      55.0,
+      0.0
+    ],
+    "joint_names": [
+      "hip_L",
+      "knee_L",
+      "ankle_L",
+      "hip_R",
+      "knee_R",
+      "ankle_R"
+    ],
+    "nominal_anatomical_bounds_deg": [
+      [
+        -17.999984796050597,
+        20.000008571513423
+      ],
+      [
+        3.0000070774155034,
+        63.00014738351531
+      ],
+      [
+        -11.999798919176682,
+        3.0002075094585723
+      ],
+      [
+        -17.99998479605067,
+        20.000008571513593
+      ],
+      [
+        3.000007077415404,
+        63.00014738351521
+      ],
+      [
+        -11.999798919176682,
+        3.0002075094585723
+      ]
+    ],
+    "metrics": {
+      "baseline": {
+        "hip_min_max_deg": [
+          [
+            -18.190060552495392,
+            -17.21918170346894
+          ],
+          [
+            20.34767664311526,
+            20.711086805150615
+          ]
+        ],
+        "hip_min_max_deg_display": [
+          [
+            -18.139027648487392,
+            -17.21918170346894
+          ],
+          [
+            20.301485800908658,
+            20.711086805150615
+          ]
+        ],
+        "hip_fraction_within_half_degree_upper_limit_full12s": [
+          0.37966666666666665,
+          0.4256666666666667
+        ],
+        "hip_fraction_within_half_degree_upper_limit_display": [
+          0.364379827351204,
+          0.41481144934120856
+        ],
+        "knee_min_deg": [
+          1.7998743915004152,
+          1.9387086197397139
+        ],
+        "ankle_min_max_deg": [
+          [
+            -12.82695896016241,
+            -12.73722830595423
+          ],
+          [
+            5.2774478804387845,
+            5.453984323285128
+          ]
+        ]
+      },
+      "PF_minus10nA_100ms": {
+        "hip_min_max_deg": [
+          [
+            -18.18838814392773,
+            -17.237099857825832
+          ],
+          [
+            20.37276227122243,
+            20.711088494114772
+          ]
+        ],
+        "hip_min_max_deg_display": [
+          [
+            -18.18838814392773,
+            -17.237099857825832
+          ],
+          [
+            20.31854224963724,
+            20.711088494114772
+          ]
+        ],
+        "hip_fraction_within_half_degree_upper_limit_full12s": [
+          0.3873333333333333,
+          0.42583333333333334
+        ],
+        "hip_fraction_within_half_degree_upper_limit_display": [
+          0.38482507950931394,
+          0.41481144934120856
+        ],
+        "knee_min_deg": [
+          1.8013221194996092,
+          1.9387086197397139
+        ],
+        "ankle_min_max_deg": [
+          [
+            -12.841758558646315,
+            -12.7400919866349
+          ],
+          [
+            6.017052780755744,
+            5.445004705921403
+          ]
+        ]
+      }
+    },
+    "prestimulus_neural_and_angle_arrays_identical": true,
+    "plot_window_s": [
+      3.4,
+      7.8
+    ],
+    "plot_has_no_smoothing_or_time_warp": true,
+    "minimum_font_pt": 10,
+    "plot_native_inches": [
+      6.5,
+      7.2
+    ]
+  },
+  "preview_hashes": {
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\sns_rebuild_session1_20261030\\editor_D4_verification\\W2L108_PF_BILATERAL_LIMITS.pdf": "a2bf07f503f469d5176b0d24edeb8bae89e3534a9f8c15bbfb12a181b33f4580",
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\sns_rebuild_session1_20261030\\editor_D4_verification\\W2L108_PF_BILATERAL_LIMITS.png": "5c394f53394bcaef22d93a377c93caf2a945a38103e9a24b70e32ab8613200d4",
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\sns_rebuild_session1_20261030\\editor_D4_verification\\W2L108_PF_BILATERAL_LIMITS.svg": "85fe7eb80d61c017a02018807b7b3c8fc5574cd1affff9fede69723a2f6dd949"
+  }
+}
