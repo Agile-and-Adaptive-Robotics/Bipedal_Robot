@@ -1,8 +1,56 @@
 # Session 1 handoff — 31 October 2026
 
+## Editor coordination: submitting manuscript stays unchanged
+
+Ben supplied the latest 304-page PDF at
+`C:\Users\Ben Bolen\Documents\ME603 Dissertation\Defense\Bolen_Dissertation.pdf`
+and explicitly instructed Session 1 to answer the editor's coordination request,
+leaving working manuscript sources unchanged. Reply:
+`D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Notes\sns_rebuild_session1_20261030\EDITOR_SNS_COORDINATION_REPLY_20261031.md`.
+It resolves the 1.938 s full-cycle versus approximately 0.969 s half-cycle question,
+documents the old D4 ankle's gross limit violations, proposes an existing-data
+canonical108 bilateral PF preview with visible hip limits, and gives the exact
+source/run hashes and v5-versus-captured-remote diffs. Preview and verification
+JSON are in the adjacent `editor_D4_verification` folder. No simulation was rerun
+for this coordination analysis. The editor owns integration and compilation.
+Native-style current subnetwork vectors and parameter tables are staged in
+`current_W2L_results\native_schematic`; the main plate now preserves at least
+10 pt lettering at nine-inch placement. Original Figure 6.1B still requires the
+editor's own-page sideways placement. Ben prioritizes Gait2392 and CAD/BPA robot
+integration over extended W2L or weak production-controller comparisons.
+
+## Latest: lower hip effort after the Rustuna fit
+
+Machine: **easteregg2**. Preferred lower-effort replay/configuration:
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\GENTLE_HIP_0P6_FLEX_0P5.json`.
+This post-fit adjustment uses bilateral hip PF-to-MN factors 0.6 and an additional
+flexor-only factor 0.5: hip extensor input gains are 60%, and flexor gains 30%,
+of the original trained setting. Other recruitment, contact, posture, and physics
+settings are retained. In the 10 s trial, qualified swings remain 9/8 with 100%
+alternation; mean net assistance is 40.50% BW. Measured hip tension RMS decreases
+from about 403 to 277 N, and positive hip muscle work from 683 to 413 J.
+Knee minima are 2.453/2.256 degrees. A fresh-process repeat is numerically identical.
+Hip flexion-limit dwell remains 34.5%/39.9%; this is a lower-effort result, with
+remaining angle plateaus and no uniform acceleration improvement.
+
+```powershell
+& 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\run_virtual_walker.py' --config 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\GENTLE_HIP_0P6_FLEX_0P5.json' --duration 10 --tag my_fresh_lower_hip_w2l
+```
+
+Replay folder:
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\runs\W2L_VirtualWalker_Newer\canonical108_ground_hip0p6_flex0p5_fresh_v1`.
+It contains `SUPPORTED_STEPPING_REPLAY.gif` (3.00–7.24 s),
+`SUPPORTED_STEPPING_STILL.png` (4.84 s), and
+`HIP_ANGLE_TORQUE_COMPARISON.png/.pdf/.svg`.
+Settings, derived mechanics, and trial comparisons are recorded separately in
+`D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\EXPERIMENT_RECORD.md`
+and `CANONICAL108_GROUND_GRAPHS.md` in that directory.
+The original 39.24% BW Rustuna winner and staged paper figures below retain their
+original data and captions; the 40.50% result is an explicitly separate refinement.
+
 ## Current priority and completed results
 
-**Latest completed ground result:** the corrected physical initial pose and four
+**Earlier ground calibration:** the corrected physical initial pose and four
 explicit ankle-PF target swaps produce 9/8 qualified swings with 100% alternation
 and 42.24% BW mean net assistance over 10 s. A fresh-process repeat is byte-exact.
 The untuned crossed reference also passes 20 s (18/17 swings); the finite-belt
@@ -15,7 +63,7 @@ alternation while reducing mean net assistance to 39.24% BW. Fresh-process and
 actual CLI replay checks are byte-identical. Training and rendering jobs have
 finished. This supersedes the earlier within-day failed-ground status below.
 
-**Run this tested configuration on easteregg2:**
+**Original Rustuna configuration used in the staged paper package:**
 
 ```powershell
 & 'D:\Anaconda\envs\myo\python.exe' 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\run_virtual_walker.py' --config 'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RUSTUNA108_GROUND_WINNER.json' --duration 10 --tag my_fresh_trained_w2l
@@ -328,3 +376,13 @@ Session 1's numerical and native AnimatLab jobs have finished; no background
 simulation from these tasks remains running. The referenced documentation and
 model/media paths were checked on disk before this handoff. Agent completion
 records remain with their experiments. Resume explicitly from the steps above.
+
+
+## Session 1 — final live submission revision, 2026-10-31
+
+Ben authorized direct live Overleaf edits. Final PDF: 310 pages; Errors 0 / Warnings 0. Figure 6.1 pairs original walker and fall; original controller is standalone sideways Figure 6.2. Added W2L108 contact/type-II and rat subnetwork plates, supported treadmill still, human geometry, headless/GUI explanation, scoped speed table, and actuator fidelity paragraph. Detailed engine and IK plots moved to Appendix D. Current complete source ZIP and PDF preserved in Dissertation/Archive/session1_submission_20261031. Full change record: D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Notes\sns_rebuild_session1_20261030\submission_live_20261031\SESSION1_FINAL_HANDOFF.md. No new training in this final publication pass.
+
+
+## Session 1 — urgent chapter opening and final knee orientation correction
+
+Live Ch. 6 now has 6.1 compact AnimatLab motivation, 6.2 compact gap/framing, and 6.3 Gait2392. Bold Verification labels removed; Background circuit figures cross-referenced; clean vector SNS library diagram replaces distorted icons/tiny wiring; curriculum rows spaced. Neural-only 100.17x/56.55x and Python-to-Numba 584.33x timings added with explicit scopes. Final knee panel C: flexor LEFT, extensor RIGHT. Live compile Errors 0 / Warnings 0. Use live download for final PDF; last browser download attempt timed out. Full handoff: D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Notes\sns_rebuild_session1_20261030\structure_revision_20261031\SESSION1_STRUCTURE_HANDOFF.md.

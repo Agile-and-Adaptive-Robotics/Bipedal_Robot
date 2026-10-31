@@ -1,0 +1,1875 @@
+{
+  "source_project": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_VirtualWalker_Newer_20261031\\W2L_VirtualWalker_Newer.aproj",
+  "source_project_sha256": "1880c2e4041deebd05d861c2b78dddcc3a3c8c66648b125d668035a77f1b34d4",
+  "executed_connectome": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\runs\\GENTLE108_EFFECTIVE_CONNECTOME.json",
+  "executed_connectome_sha256": "b7308effe140b26ef0b5e4d82c770d03258be956a9ccc9bface877a5397839f9",
+  "neurons": 108,
+  "chemical_edges": 216,
+  "landscape_inches": [
+    11,
+    8.5
+  ],
+  "minimum_font_pt": 10,
+  "publication_labels": {
+    "136ad874-087e-448a-a97c-a0544690f7c3": {
+      "saved_name": "L RG flx IN",
+      "publication_label": "I-F",
+      "page": "LH_RG",
+      "resolved_neuron_ID": "136ad874-087e-448a-a97c-a0544690f7c3",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "17fdb1f6-d678-48b0-b90c-d604cb2b3115": {
+      "saved_name": "L RG ext",
+      "publication_label": "E",
+      "page": "LH_RG",
+      "resolved_neuron_ID": "17fdb1f6-d678-48b0-b90c-d604cb2b3115",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "6e188aac-b074-4541-92ab-7ce4a38f83cc": {
+      "saved_name": "L RG ext IN",
+      "publication_label": "I-E",
+      "page": "LH_RG",
+      "resolved_neuron_ID": "6e188aac-b074-4541-92ab-7ce4a38f83cc",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "7bd02f2b-2d71-42cf-b856-e7fef1ee05e6": {
+      "saved_name": "L RG flx",
+      "publication_label": "F",
+      "page": "LH_RG",
+      "resolved_neuron_ID": "7bd02f2b-2d71-42cf-b856-e7fef1ee05e6",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0001-0000-4000-8000-900000000001": {
+      "saved_name": "R RG ext",
+      "publication_label": "E",
+      "page": "RH_RG",
+      "resolved_neuron_ID": "cafe0001-0000-4000-8000-900000000001",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0002-0000-4000-8000-900000000002": {
+      "saved_name": "R RG ext IN",
+      "publication_label": "I-E",
+      "page": "RH_RG",
+      "resolved_neuron_ID": "cafe0002-0000-4000-8000-900000000002",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0003-0000-4000-8000-900000000003": {
+      "saved_name": "R RG flx",
+      "publication_label": "F",
+      "page": "RH_RG",
+      "resolved_neuron_ID": "cafe0003-0000-4000-8000-900000000003",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0004-0000-4000-8000-900000000004": {
+      "saved_name": "R RG flx IN",
+      "publication_label": "I-F",
+      "page": "RH_RG",
+      "resolved_neuron_ID": "cafe0004-0000-4000-8000-900000000004",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "2846ef38-5513-40e9-96d2-ee932fb217ed": {
+      "saved_name": "L Hip MN flx RE",
+      "publication_label": "RE-F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "2846ef38-5513-40e9-96d2-ee932fb217ed",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "4a70bdeb-59a2-459d-bfdb-1ef9257354f7": {
+      "saved_name": "L Hip PF flx IN",
+      "publication_label": "PF-F\nIN",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "4a70bdeb-59a2-459d-bfdb-1ef9257354f7",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "57b344bf-3b61-4652-9a11-91db1a5d43d6": {
+      "saved_name": "L Hip PF ext",
+      "publication_label": "PF-E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "57b344bf-3b61-4652-9a11-91db1a5d43d6",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "64083a38-fde0-4930-927d-cef8ef09f6d0": {
+      "saved_name": "L Hip MN ext",
+      "publication_label": "MN-E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "64083a38-fde0-4930-927d-cef8ef09f6d0",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "9dd0be60-2130-4fab-8609-cd6cdbec9ce3": {
+      "saved_name": "L Hip MN ext RE",
+      "publication_label": "RE-E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "9dd0be60-2130-4fab-8609-cd6cdbec9ce3",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "d647775f-505a-4d60-938c-fcaedb44cb9c": {
+      "saved_name": "L Hip PF ext IN",
+      "publication_label": "PF-E\nIN",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "d647775f-505a-4d60-938c-fcaedb44cb9c",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "f5ba89bb-6ead-4ea7-a5f2-5aa0034674e4": {
+      "saved_name": "L Hip PF flx",
+      "publication_label": "PF-F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "f5ba89bb-6ead-4ea7-a5f2-5aa0034674e4",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "f6b42566-ef31-4b3d-95d6-90c2f7c1202b": {
+      "saved_name": "L Hip MN flx",
+      "publication_label": "MN-F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "f6b42566-ef31-4b3d-95d6-90c2f7c1202b",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "1302a7f8-3a99-5e38-b0ae-6d6618d184a6": {
+      "saved_name": "L Hip extensor II relay",
+      "publication_label": "II-E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "1302a7f8-3a99-5e38-b0ae-6d6618d184a6",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "b193cc7b-afb8-5696-882b-f490b701d75f": {
+      "saved_name": "L Hip flexor II relay",
+      "publication_label": "II-F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "b193cc7b-afb8-5696-882b-f490b701d75f",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "35296b3b-b161-50b0-ac95-af76a4b95f3b": {
+      "saved_name": "R Hip extensor II relay",
+      "publication_label": "II-E",
+      "page": "RH_HipZ",
+      "resolved_neuron_ID": "35296b3b-b161-50b0-ac95-af76a4b95f3b",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "ce5625ea-cc17-522a-a02d-f869d710d488": {
+      "saved_name": "R Hip flexor II relay",
+      "publication_label": "II-F",
+      "page": "RH_HipZ",
+      "resolved_neuron_ID": "ce5625ea-cc17-522a-a02d-f869d710d488",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "2d66fb1d-dc5c-50e9-baa4-a725ac666899": {
+      "saved_name": "L Knee flexor II relay",
+      "publication_label": "II-F",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "2d66fb1d-dc5c-50e9-baa4-a725ac666899",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "8ecebf6b-e6a8-50ba-b146-a6f99f3b2916": {
+      "saved_name": "L Knee extensor II relay",
+      "publication_label": "II-E",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "8ecebf6b-e6a8-50ba-b146-a6f99f3b2916",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "4202cc3e-fb6e-512a-ae03-429cbf9c0675": {
+      "saved_name": "R Knee extensor II relay",
+      "publication_label": "II-E",
+      "page": "RH_Knee Motoneuron",
+      "resolved_neuron_ID": "4202cc3e-fb6e-512a-ae03-429cbf9c0675",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "503885c6-edfc-557c-b2c0-7781015e92f6": {
+      "saved_name": "R Knee flexor II relay",
+      "publication_label": "II-F",
+      "page": "RH_Knee Motoneuron",
+      "resolved_neuron_ID": "503885c6-edfc-557c-b2c0-7781015e92f6",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "6283d63b-7ac4-5a4d-9185-46d3a916487b": {
+      "saved_name": "L Ankle dorsiflexor II relay",
+      "publication_label": "II-E",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "6283d63b-7ac4-5a4d-9185-46d3a916487b",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "72461066-f1ad-536c-8695-ffd4665933c5": {
+      "saved_name": "L Ankle plantarflexor II relay",
+      "publication_label": "II-F",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "72461066-f1ad-536c-8695-ffd4665933c5",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "60d0ccfb-3dd9-570c-9a76-d76c35ec0809": {
+      "saved_name": "R Ankle plantarflexor II relay",
+      "publication_label": "II-F",
+      "page": "RH_Anklez Motoneuron",
+      "resolved_neuron_ID": "60d0ccfb-3dd9-570c-9a76-d76c35ec0809",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "e314d0c8-e1bb-53eb-bd8d-6248372e0af0": {
+      "saved_name": "R Ankle dorsiflexor II relay",
+      "publication_label": "II-E",
+      "page": "RH_Anklez Motoneuron",
+      "resolved_neuron_ID": "e314d0c8-e1bb-53eb-bd8d-6248372e0af0",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0005-0000-4000-8000-900000000005": {
+      "saved_name": "L c1",
+      "publication_label": "L c1",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0005-0000-4000-8000-900000000005",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0006-0000-4000-8000-900000000006": {
+      "saved_name": "R c1",
+      "publication_label": "R c1",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0006-0000-4000-8000-900000000006",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0007-0000-4000-8000-900000000007": {
+      "saved_name": "L V3",
+      "publication_label": "L V3",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0007-0000-4000-8000-900000000007",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0008-0000-4000-8000-900000000008": {
+      "saved_name": "R V3",
+      "publication_label": "R V3",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0008-0000-4000-8000-900000000008",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "ce8641d6-c97b-5578-b8cf-9ee4b8c8c7af": {
+      "saved_name": "R heel contact",
+      "publication_label": "R heel\ncontact",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0203-0000-4000-8000-900000000203",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "11649034-a41d-54ce-be95-7759a48db757": {
+      "saved_name": "L RG flx",
+      "publication_label": "L RG-F",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "7bd02f2b-2d71-42cf-b856-e7fef1ee05e6",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "e787ec2d-7e3b-5f29-b757-20a6670f4a93": {
+      "saved_name": "L heel contact",
+      "publication_label": "L heel\ncontact",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0201-0000-4000-8000-900000000201",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "848e4f4c-74b7-5f69-b4b4-2406d8d0618b": {
+      "saved_name": "R RG flx",
+      "publication_label": "R RG-F",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0003-0000-4000-8000-900000000003",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "9603a8ee-4f2f-5635-8f5d-4f2895bb6513": {
+      "saved_name": "L RG ext",
+      "publication_label": "L RG-E",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "17fdb1f6-d678-48b0-b90c-d604cb2b3115",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "2f3b84a0-a243-5b3f-ac60-4ef34ce781b1": {
+      "saved_name": "R RG ext IN",
+      "publication_label": "R RG-E\nIN",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0002-0000-4000-8000-900000000002",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "a9defb9c-2594-5381-b638-ade38e5eb345": {
+      "saved_name": "R RG ext",
+      "publication_label": "R RG-E",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "cafe0001-0000-4000-8000-900000000001",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "5be8f958-8383-5dde-bd22-c147f02b3c86": {
+      "saved_name": "L RG ext IN",
+      "publication_label": "L RG-E\nIN",
+      "page": "Commissural coordination",
+      "resolved_neuron_ID": "6e188aac-b074-4541-92ab-7ce4a38f83cc",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "1f211dd4-b137-422d-a2fc-9bea77e4c543": {
+      "saved_name": "HeelContact",
+      "publication_label": "Heel\nsensor",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "1f211dd4-b137-422d-a2fc-9bea77e4c543",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.RigidBody"
+    },
+    "404ffc76-3b9c-46a7-8c4e-f5ba161f4dd8": {
+      "saved_name": "9",
+      "publication_label": "map",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "404ffc76-3b9c-46a7-8c4e-f5ba161f4dd8",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "a7677e26-5d86-4c3a-bd4a-8363d1d494ce": {
+      "saved_name": "6",
+      "publication_label": "Toe\nsensor",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "a7677e26-5d86-4c3a-bd4a-8363d1d494ce",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.RigidBody"
+    },
+    "cafe0201-0000-4000-8000-900000000201": {
+      "saved_name": "L heel contact",
+      "publication_label": "heel\ncontact",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "cafe0201-0000-4000-8000-900000000201",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0202-0000-4000-8000-900000000202": {
+      "saved_name": "L toe contact",
+      "publication_label": "toe\ncontact",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "cafe0202-0000-4000-8000-900000000202",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "ea5361f0-6cd5-4758-9f21-8c0da0fb689d": {
+      "saved_name": "7",
+      "publication_label": "map",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "ea5361f0-6cd5-4758-9f21-8c0da0fb689d",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "0113f992-9348-519d-9cfa-d821eb8b1732": {
+      "saved_name": "L Ank MN ext",
+      "publication_label": "Ankle\nMN-E",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "65bf92e8-ac16-4e97-9673-597b9223c141",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "5557315d-accf-528c-87bb-8ec3a1112e94": {
+      "saved_name": "L RG ext",
+      "publication_label": "RG-E",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "17fdb1f6-d678-48b0-b90c-d604cb2b3115",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "104b963e-734c-5abc-acd5-476135edfb9f": {
+      "saved_name": "L Hip PF ext",
+      "publication_label": "Hip\nPF-E",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "57b344bf-3b61-4652-9a11-91db1a5d43d6",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "a52df708-b2aa-5cd7-ba54-48a19206737c": {
+      "saved_name": "L Knee PF ext",
+      "publication_label": "K/A\nPF-E",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "f336ecdc-a3f4-4ae2-b9fb-a765296574bf",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "57b1aa82-c904-5dbd-9872-7c7932bbffdf": {
+      "saved_name": "L Hip MN ext",
+      "publication_label": "Hip\nMN-E",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "64083a38-fde0-4930-927d-cef8ef09f6d0",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "59ff3da2-47c6-55b3-b4f8-f618f7cd3bf7": {
+      "saved_name": "L Knee MN ext",
+      "publication_label": "Knee\nMN-E",
+      "page": "LH_Contact feedback",
+      "resolved_neuron_ID": "c0986b70-8c6d-4d8b-88d1-3211822e9ddd",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "1afd244b-1bc2-438f-9859-079495c45295": {
+      "saved_name": "L Hip flx Ia Adapter",
+      "publication_label": "map",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "1afd244b-1bc2-438f-9859-079495c45295",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "1b9f5ea4-f6b5-4a06-a3a0-f431b082a58b": {
+      "saved_name": "L Hip ext Ia",
+      "publication_label": "M-E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "1b9f5ea4-f6b5-4a06-a3a0-f431b082a58b",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"
+    },
+    "20dad3ca-1205-4dc7-aad4-e9759c6c698f": {
+      "saved_name": "L Hip flx Ia IN",
+      "publication_label": "Ia-F\nIN",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "20dad3ca-1205-4dc7-aad4-e9759c6c698f",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "24a2c9e1-b182-4708-835d-dcf9c075ab32": {
+      "saved_name": "L Hip ext Ia",
+      "publication_label": "Ia-E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "24a2c9e1-b182-4708-835d-dcf9c075ab32",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "34cece3a-dba9-4906-bd4b-466071390be7": {
+      "saved_name": "L Hip flx Ia",
+      "publication_label": "M-F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "34cece3a-dba9-4906-bd4b-466071390be7",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"
+    },
+    "52f07ede-884c-4aa4-bae0-7623d6f91a0b": {
+      "saved_name": "L Hip flx",
+      "publication_label": "F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "52f07ede-884c-4aa4-bae0-7623d6f91a0b",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.Muscle"
+    },
+    "5bbd1761-3a41-4beb-8c6d-6a9beb362784": {
+      "saved_name": "L Hip flx Ib",
+      "publication_label": "Ib-F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "5bbd1761-3a41-4beb-8c6d-6a9beb362784",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "8be8703b-e33e-4916-8be3-c2ef3b8179be": {
+      "saved_name": "L Hip ext Ia IN",
+      "publication_label": "Ia-E\nIN",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "8be8703b-e33e-4916-8be3-c2ef3b8179be",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "aeb26bc7-2ecb-4c0c-a566-615b4a9b8b40": {
+      "saved_name": "L Hip flx Ib Adapter",
+      "publication_label": "map",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "aeb26bc7-2ecb-4c0c-a566-615b4a9b8b40",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "c0632a4e-b4fe-4b06-865b-88ce5dc7c2a5": {
+      "saved_name": "3",
+      "publication_label": "drive",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "c0632a4e-b4fe-4b06-865b-88ce5dc7c2a5",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter"
+    },
+    "c755dfb7-9c1e-447a-b38d-c086f439c278": {
+      "saved_name": "L Hip ext Ia Adapter",
+      "publication_label": "map",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "c755dfb7-9c1e-447a-b38d-c086f439c278",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "c92518bf-f0d8-4b43-b154-4fee1f469002": {
+      "saved_name": "L Hip flx Ia",
+      "publication_label": "Ia-F",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "c92518bf-f0d8-4b43-b154-4fee1f469002",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cae540f6-5a83-4e7c-9cb3-1ceefaea56ae": {
+      "saved_name": "L Hip ext Ib",
+      "publication_label": "Ib-E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "cae540f6-5a83-4e7c-9cb3-1ceefaea56ae",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0101-0000-4000-8000-900000000101": {
+      "saved_name": "L Hip flx II",
+      "publication_label": "II-F\nphase",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "cafe0101-0000-4000-8000-900000000101",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0111-0000-4000-8000-900000000111": {
+      "saved_name": "L Hip flx II Adapter",
+      "publication_label": "map",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "cafe0111-0000-4000-8000-900000000111",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "dc8476a2-3ba4-4dc9-99c4-42351809164e": {
+      "saved_name": "2",
+      "publication_label": "drive",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "dc8476a2-3ba4-4dc9-99c4-42351809164e",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter"
+    },
+    "f3825461-eea7-4f03-9c39-b0acf8cc8c8a": {
+      "saved_name": "L Hip ext",
+      "publication_label": "E",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "f3825461-eea7-4f03-9c39-b0acf8cc8c8a",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.Muscle"
+    },
+    "fc7b9788-54b3-4d5e-ba92-7bca73405683": {
+      "saved_name": "L Hip ext Ib Adapter",
+      "publication_label": "map",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "fc7b9788-54b3-4d5e-ba92-7bca73405683",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "7aac8b23-6dbb-5941-983f-6926e9e91d1c": {
+      "saved_name": "L Hip flexor II relay adapter",
+      "publication_label": "map",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "7aac8b23-6dbb-5941-983f-6926e9e91d1c",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "853ed236-c9f4-559d-93e5-93832fb801ce": {
+      "saved_name": "L Hip extensor II relay adapter",
+      "publication_label": "map",
+      "page": "LH_HipZ",
+      "resolved_neuron_ID": "853ed236-c9f4-559d-93e5-93832fb801ce",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "070475b2-182c-49af-8860-9c421bf4c8f0": {
+      "saved_name": "L Knee MN flx",
+      "publication_label": "MN-F",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "070475b2-182c-49af-8860-9c421bf4c8f0",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "13516570-c8ec-48c7-aaf3-b415076723ee": {
+      "saved_name": "L Knee flx Ia Adapter",
+      "publication_label": "map",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "13516570-c8ec-48c7-aaf3-b415076723ee",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "19e379d8-3573-4809-b025-0f9be06596e2": {
+      "saved_name": "L Knee MN flx RE",
+      "publication_label": "RE-F",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "19e379d8-3573-4809-b025-0f9be06596e2",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "2b5c58ce-40fe-4f2a-9a45-74952e00d883": {
+      "saved_name": "L_knee  flexion ",
+      "publication_label": "L_knee  flexion",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "2b5c58ce-40fe-4f2a-9a45-74952e00d883",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.Muscle"
+    },
+    "53077442-140c-4527-b8ee-f4280aecd01c": {
+      "saved_name": "L Knee ext Ia",
+      "publication_label": "Ia-E",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "53077442-140c-4527-b8ee-f4280aecd01c",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "53e970e5-c07e-4927-aaef-3c3477d64cac": {
+      "saved_name": "3",
+      "publication_label": "map",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "53e970e5-c07e-4927-aaef-3c3477d64cac",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "5b4fe4db-abba-438f-bf71-8b4887accacd": {
+      "saved_name": "L_knee extension",
+      "publication_label": "L_knee-Eension",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "5b4fe4db-abba-438f-bf71-8b4887accacd",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.Muscle"
+    },
+    "612ba6d9-3383-4376-b32c-0c80ea499631": {
+      "saved_name": "L Knee ext Ia IN",
+      "publication_label": "Ia-E\nIN",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "612ba6d9-3383-4376-b32c-0c80ea499631",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "643d57f3-0f74-477a-80ae-14d784df4478": {
+      "saved_name": "1",
+      "publication_label": "map",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "643d57f3-0f74-477a-80ae-14d784df4478",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "74806c88-73de-4809-b92e-ba53412fdfb0": {
+      "saved_name": "L Knee flx Ia IN",
+      "publication_label": "Ia-F\nIN",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "74806c88-73de-4809-b92e-ba53412fdfb0",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "7d681a6f-f7e7-48b8-8174-736f0c8e5284": {
+      "saved_name": "L Knee flx Ia",
+      "publication_label": "Ia-F",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "7d681a6f-f7e7-48b8-8174-736f0c8e5284",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "853b3716-f386-454b-8a4a-d3f39f79b9d0": {
+      "saved_name": "L Knee flx Ib",
+      "publication_label": "Ib-F",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "853b3716-f386-454b-8a4a-d3f39f79b9d0",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "86b1e0d8-f731-47f4-83be-e76488d866b7": {
+      "saved_name": "4",
+      "publication_label": "drive",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "86b1e0d8-f731-47f4-83be-e76488d866b7",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter"
+    },
+    "9d3feda8-6197-4418-8daf-b91ad107bd63": {
+      "saved_name": "L Knee flx Ia",
+      "publication_label": "M-F",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "9d3feda8-6197-4418-8daf-b91ad107bd63",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"
+    },
+    "b51f816f-daab-49a8-94e3-97ca244707da": {
+      "saved_name": "L Knee ext Ib",
+      "publication_label": "Ib-E",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "b51f816f-daab-49a8-94e3-97ca244707da",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "c0986b70-8c6d-4d8b-88d1-3211822e9ddd": {
+      "saved_name": "L Knee MN ext",
+      "publication_label": "MN-E",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "c0986b70-8c6d-4d8b-88d1-3211822e9ddd",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0103-0000-4000-8000-900000000103": {
+      "saved_name": "L Knee flx II",
+      "publication_label": "II-F\nphase",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "cafe0103-0000-4000-8000-900000000103",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0113-0000-4000-8000-900000000113": {
+      "saved_name": "L Knee flx II Adapter",
+      "publication_label": "map",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "cafe0113-0000-4000-8000-900000000113",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "d50e0395-d298-4458-b026-cd0208be0866": {
+      "saved_name": "L Knee ext Ia",
+      "publication_label": "M-E",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "d50e0395-d298-4458-b026-cd0208be0866",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"
+    },
+    "efa2eb22-b96c-4254-b206-1de42edc3e8c": {
+      "saved_name": "L Knee MN ext RE",
+      "publication_label": "RE-E",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "efa2eb22-b96c-4254-b206-1de42edc3e8c",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "f2ad5b22-8326-473b-9e71-f922e6f0dc21": {
+      "saved_name": "2",
+      "publication_label": "drive",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "f2ad5b22-8326-473b-9e71-f922e6f0dc21",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter"
+    },
+    "f7d467e7-a2a0-4bab-9a43-e4295ca043dc": {
+      "saved_name": "L Knee ext Ia Adapter",
+      "publication_label": "map",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "f7d467e7-a2a0-4bab-9a43-e4295ca043dc",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "960b2a2e-7a8b-5032-8762-c6fecb91b7f5": {
+      "saved_name": "L Knee PF ext",
+      "publication_label": "K/A\nPF-E",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "f336ecdc-a3f4-4ae2-b9fb-a765296574bf",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "f0e62199-190c-555e-bce8-21ee5a1094a9": {
+      "saved_name": "L Knee PF flx",
+      "publication_label": "K/A\nPF-F",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "9bc35128-6169-478c-b777-a6d83ecde667",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "24d88831-6747-5996-933b-da0d6dbd57fc": {
+      "saved_name": "L Knee extensor II relay adapter",
+      "publication_label": "map",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "24d88831-6747-5996-933b-da0d6dbd57fc",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "b50fb5ff-a7e6-514e-bf07-8545299a5912": {
+      "saved_name": "L Knee flexor II relay adapter",
+      "publication_label": "map",
+      "page": "LH_Knee Motoneuron",
+      "resolved_neuron_ID": "b50fb5ff-a7e6-514e-bf07-8545299a5912",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "28caa0e2-fc1b-4d87-af82-ba8e6b3c9dd4": {
+      "saved_name": "L Ank flx Ia Adapter",
+      "publication_label": "map",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "28caa0e2-fc1b-4d87-af82-ba8e6b3c9dd4",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "2da7fd48-8181-4d5e-8202-7d0e91e9d38c": {
+      "saved_name": "L Ank flx Ib",
+      "publication_label": "Ib-F",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "2da7fd48-8181-4d5e-8202-7d0e91e9d38c",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "3a9e64b3-849a-46e7-9a8a-5f17c9ce84c2": {
+      "saved_name": "L Ank ext Ia",
+      "publication_label": "Ia-E",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "3a9e64b3-849a-46e7-9a8a-5f17c9ce84c2",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "3c7d0a82-a0a4-4f8e-aed5-b40165b8c0bc": {
+      "saved_name": "L_ankle plantarflexion ",
+      "publication_label": "L_ankle plantarflexion",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "3c7d0a82-a0a4-4f8e-aed5-b40165b8c0bc",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.Muscle"
+    },
+    "47a48469-d146-4b34-a1ee-e7157fa31cf9": {
+      "saved_name": "L Ank flx Ia IN",
+      "publication_label": "Ia-F\nIN",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "47a48469-d146-4b34-a1ee-e7157fa31cf9",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "4dce5be2-7df6-46b1-a401-b378ee231b7a": {
+      "saved_name": "L Ank ext Ib",
+      "publication_label": "Ib-E",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "4dce5be2-7df6-46b1-a401-b378ee231b7a",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "4ff1d95e-3360-4604-9180-8f606158bb83": {
+      "saved_name": "2",
+      "publication_label": "drive",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "4ff1d95e-3360-4604-9180-8f606158bb83",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter"
+    },
+    "65bf92e8-ac16-4e97-9673-597b9223c141": {
+      "saved_name": "L Ank MN ext",
+      "publication_label": "MN-E",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "65bf92e8-ac16-4e97-9673-597b9223c141",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "6a00c612-0a7d-4541-944e-ffe92a8df8d8": {
+      "saved_name": "L Ank MN ext RE",
+      "publication_label": "RE-E",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "6a00c612-0a7d-4541-944e-ffe92a8df8d8",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "743556b9-95c4-4a22-80b5-d80bb70d7aea": {
+      "saved_name": "L Ank ext Ia IN",
+      "publication_label": "Ia-E\nIN",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "743556b9-95c4-4a22-80b5-d80bb70d7aea",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "79351546-b548-492e-8d09-3ad9c65baf39": {
+      "saved_name": "L_ankle dorsiflexion",
+      "publication_label": "L_ankle dorsiflexion",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "79351546-b548-492e-8d09-3ad9c65baf39",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.Muscle"
+    },
+    "89de348e-1014-45e1-a553-99b11b8c182f": {
+      "saved_name": "1",
+      "publication_label": "drive",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "89de348e-1014-45e1-a553-99b11b8c182f",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter"
+    },
+    "8b68c52c-fb22-4968-a2c7-833b55774670": {
+      "saved_name": "L Ank MN flx RE",
+      "publication_label": "RE-F",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "8b68c52c-fb22-4968-a2c7-833b55774670",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "964d3c10-fc3e-4f8f-beb7-197d88c60101": {
+      "saved_name": "L Ank ext Ia",
+      "publication_label": "M-E",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "964d3c10-fc3e-4f8f-beb7-197d88c60101",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"
+    },
+    "a10a992a-b8b4-49de-a9aa-780a3e33bbaa": {
+      "saved_name": "L Ank flx Ia",
+      "publication_label": "Ia-F",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "a10a992a-b8b4-49de-a9aa-780a3e33bbaa",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "b73a3b36-cae9-4081-89d2-280eaab7f452": {
+      "saved_name": "L Ank flx Ia",
+      "publication_label": "M-F",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "b73a3b36-cae9-4081-89d2-280eaab7f452",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.StretchReceptor"
+    },
+    "de91322a-b88b-470d-b4d7-99e1966b9fc1": {
+      "saved_name": "L Ank ext Ia Adapter",
+      "publication_label": "map",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "de91322a-b88b-470d-b4d7-99e1966b9fc1",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "e5b9b5df-752a-4b0d-9389-f4042e42fa0a": {
+      "saved_name": "4",
+      "publication_label": "map",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "e5b9b5df-752a-4b0d-9389-f4042e42fa0a",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "e7a9e6dd-dfda-451a-8eab-51c41d548a65": {
+      "saved_name": "3",
+      "publication_label": "map",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "e7a9e6dd-dfda-451a-8eab-51c41d548a65",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "f87d0d00-b5fe-4100-8049-572f1496c142": {
+      "saved_name": "L Ank MN flx",
+      "publication_label": "MN-F",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "f87d0d00-b5fe-4100-8049-572f1496c142",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "fb3d4a8b-008f-5813-8d4f-bc40a4afe40e": {
+      "saved_name": "L Knee PF flx",
+      "publication_label": "K/A\nPF-F",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "9bc35128-6169-478c-b777-a6d83ecde667",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "8bf611ad-940f-5a5b-80e8-35427ac91052": {
+      "saved_name": "L Knee PF ext",
+      "publication_label": "K/A\nPF-E",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "f336ecdc-a3f4-4ae2-b9fb-a765296574bf",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "62c58bfb-44f6-5bfd-a8c8-49bc9f6235ae": {
+      "saved_name": "L Ankle plantarflexor II relay adapter",
+      "publication_label": "map",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "62c58bfb-44f6-5bfd-a8c8-49bc9f6235ae",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "a8145c6b-ba75-5a3d-a9c3-e63fa701910f": {
+      "saved_name": "L Ankle dorsiflexor II relay adapter",
+      "publication_label": "map",
+      "page": "LH_Anklez Motoneuron",
+      "resolved_neuron_ID": "a8145c6b-ba75-5a3d-a9c3-e63fa701910f",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "40608d35-806d-4f6a-8a45-0cc4d958f0da": {
+      "saved_name": "3",
+      "publication_label": "map",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "40608d35-806d-4f6a-8a45-0cc4d958f0da",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "7350863a-49d0-4fb5-9a29-a826781de08c": {
+      "saved_name": "5",
+      "publication_label": "map",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "7350863a-49d0-4fb5-9a29-a826781de08c",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "ba5548ea-184b-4f2d-a38f-911a052029b3": {
+      "saved_name": "4",
+      "publication_label": "4",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "ba5548ea-184b-4f2d-a38f-911a052029b3",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.RigidBody"
+    },
+    "cafe0203-0000-4000-8000-900000000203": {
+      "saved_name": "R heel contact",
+      "publication_label": "heel\ncontact",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "cafe0203-0000-4000-8000-900000000203",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cafe0204-0000-4000-8000-900000000204": {
+      "saved_name": "R toe contact",
+      "publication_label": "toe\ncontact",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "cafe0204-0000-4000-8000-900000000204",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "f24ca0a3-b673-46f1-951b-5c2afcf6e43d": {
+      "saved_name": "1",
+      "publication_label": "1",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "f24ca0a3-b673-46f1-951b-5c2afcf6e43d",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.RigidBody"
+    },
+    "d78a86c2-2167-56c2-841b-6cba8107bdc5": {
+      "saved_name": "R Ank MN ext",
+      "publication_label": "Ankle\nMN-E",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "35bc7f96-0690-4ff4-99c5-b204520cbc75",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "7248c959-e2fe-5e62-add9-b0531e7b3f4c": {
+      "saved_name": "R RG ext",
+      "publication_label": "RG-E",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "cafe0001-0000-4000-8000-900000000001",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "04c9801b-6257-5ff9-8b2d-c03de3c3956f": {
+      "saved_name": "R Hip PF ext",
+      "publication_label": "Hip\nPF-E",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "aa4d0055-de9c-4647-94e8-963a8f076fc6",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "bd380f77-0b12-54c6-b80c-300b9c53ed16": {
+      "saved_name": "R Knee PF ext",
+      "publication_label": "K/A\nPF-E",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "eb127c29-8bd8-4b77-bc39-18746157f693",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "6812ea69-81a3-549a-85ac-c0c84801fb78": {
+      "saved_name": "R Hip MN ext",
+      "publication_label": "Hip\nMN-E",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "56e26621-8a71-45c7-9bf2-5895a6d0a8f5",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "ad4a143c-9729-5e77-9210-8970086c5e86": {
+      "saved_name": "R Knee MN ext",
+      "publication_label": "Knee\nMN-E",
+      "page": "RH_Contact feedback",
+      "resolved_neuron_ID": "cabac9d1-2420-4426-bfaf-a621cef5b7f2",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.OffPage"
+    },
+    "56e26621-8a71-45c7-9bf2-5895a6d0a8f5": {
+      "saved_name": "R Hip MN ext",
+      "publication_label": "MN-E",
+      "page": "RH_HipZ",
+      "resolved_neuron_ID": "56e26621-8a71-45c7-9bf2-5895a6d0a8f5",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "75846cb5-213b-4501-86ba-91af8edd82da": {
+      "saved_name": "R Hip MN flx",
+      "publication_label": "MN-F",
+      "page": "RH_HipZ",
+      "resolved_neuron_ID": "75846cb5-213b-4501-86ba-91af8edd82da",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "21a60081-677d-5696-9889-c4776e9d65ba": {
+      "saved_name": "R Hip flexor II relay adapter",
+      "publication_label": "map",
+      "page": "RH_HipZ",
+      "resolved_neuron_ID": "21a60081-677d-5696-9889-c4776e9d65ba",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "23b9c90e-a4dc-5e1d-95b0-261a4b38cae7": {
+      "saved_name": "R Hip extensor II relay adapter",
+      "publication_label": "map",
+      "page": "RH_HipZ",
+      "resolved_neuron_ID": "23b9c90e-a4dc-5e1d-95b0-261a4b38cae7",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "5bb16fbc-1ea8-4fd3-b501-d2ecd9943568": {
+      "saved_name": "R Knee MN flx",
+      "publication_label": "MN-F",
+      "page": "RH_Knee Motoneuron",
+      "resolved_neuron_ID": "5bb16fbc-1ea8-4fd3-b501-d2ecd9943568",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "cabac9d1-2420-4426-bfaf-a621cef5b7f2": {
+      "saved_name": "R Knee MN ext",
+      "publication_label": "MN-E",
+      "page": "RH_Knee Motoneuron",
+      "resolved_neuron_ID": "cabac9d1-2420-4426-bfaf-a621cef5b7f2",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "45d0d1b3-ea0a-52be-9e8e-a30f4440c281": {
+      "saved_name": "R Knee extensor II relay adapter",
+      "publication_label": "map",
+      "page": "RH_Knee Motoneuron",
+      "resolved_neuron_ID": "45d0d1b3-ea0a-52be-9e8e-a30f4440c281",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "7080490a-8af8-5ba6-ab4e-44422199f3fa": {
+      "saved_name": "R Knee flexor II relay adapter",
+      "publication_label": "map",
+      "page": "RH_Knee Motoneuron",
+      "resolved_neuron_ID": "7080490a-8af8-5ba6-ab4e-44422199f3fa",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "35bc7f96-0690-4ff4-99c5-b204520cbc75": {
+      "saved_name": "R Ank MN ext",
+      "publication_label": "MN-E",
+      "page": "RH_Anklez Motoneuron",
+      "resolved_neuron_ID": "35bc7f96-0690-4ff4-99c5-b204520cbc75",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "a7ca0f7b-c135-4647-8b5f-c4ad9936c18e": {
+      "saved_name": "R Ank MN flx",
+      "publication_label": "MN-F",
+      "page": "RH_Anklez Motoneuron",
+      "resolved_neuron_ID": "a7ca0f7b-c135-4647-8b5f-c4ad9936c18e",
+      "class": "IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking"
+    },
+    "7da31995-c243-5356-ab30-ab35eeda50e1": {
+      "saved_name": "R Ankle dorsiflexor II relay adapter",
+      "publication_label": "map",
+      "page": "RH_Anklez Motoneuron",
+      "resolved_neuron_ID": "7da31995-c243-5356-ab30-ab35eeda50e1",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    },
+    "ad9558cb-fa74-5a4a-8d08-03933a8ddf02": {
+      "saved_name": "R Ankle plantarflexor II relay adapter",
+      "publication_label": "map",
+      "page": "RH_Anklez Motoneuron",
+      "resolved_neuron_ID": "ad9558cb-fa74-5a4a-8d08-03933a8ddf02",
+      "class": "AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter"
+    }
+  },
+  "page_views": [
+    {
+      "page": "LH_RG",
+      "title": "(A) Left RG",
+      "selected_nodes": [
+        "7bd02f2b-2d71-42cf-b856-e7fef1ee05e6",
+        "17fdb1f6-d678-48b0-b90c-d604cb2b3115",
+        "136ad874-087e-448a-a97c-a0544690f7c3",
+        "6e188aac-b074-4541-92ab-7ce4a38f83cc"
+      ],
+      "drawn_connections": [
+        "05e7572a-8027-4c1f-810e-8d2c42c8892c",
+        "1d78cd73-3f15-40f3-b8fe-33a2dfa0a9bd",
+        "1f9a26c6-5cec-4634-b97b-849ad82a48d1",
+        "2058fb62-4a62-4a80-9377-17b750f4ffe0",
+        "21fe3708-b797-4f4b-8614-8b423730ace1",
+        "a7d3c6c9-04fb-4d1d-914f-f1f7fe545a51"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_RG",
+      "title": "Right RG",
+      "selected_nodes": [
+        "cafe0002-0000-4000-8000-900000000002",
+        "cafe0003-0000-4000-8000-900000000003",
+        "cafe0001-0000-4000-8000-900000000001",
+        "cafe0004-0000-4000-8000-900000000004"
+      ],
+      "drawn_connections": [
+        "cafe0011-0000-4000-8000-900000000011",
+        "cafe0012-0000-4000-8000-900000000012",
+        "cafe0013-0000-4000-8000-900000000013",
+        "cafe0014-0000-4000-8000-900000000014",
+        "cafe0015-0000-4000-8000-900000000015",
+        "cafe0016-0000-4000-8000-900000000016"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_HipZ",
+      "title": "(B) Hip PF/MN core",
+      "selected_nodes": [
+        "57b344bf-3b61-4652-9a11-91db1a5d43d6",
+        "9dd0be60-2130-4fab-8609-cd6cdbec9ce3",
+        "64083a38-fde0-4930-927d-cef8ef09f6d0",
+        "f5ba89bb-6ead-4ea7-a5f2-5aa0034674e4",
+        "4a70bdeb-59a2-459d-bfdb-1ef9257354f7",
+        "d647775f-505a-4d60-938c-fcaedb44cb9c",
+        "2846ef38-5513-40e9-96d2-ee932fb217ed",
+        "f6b42566-ef31-4b3d-95d6-90c2f7c1202b"
+      ],
+      "drawn_connections": [
+        "11676423-d425-44c0-bb8f-1be78f86cb45",
+        "515e22af-42af-4c9c-bb3b-2bd05ba6de08",
+        "61847de2-b985-488a-bd95-24b7e8f57047",
+        "69922c4d-c742-41ff-bc03-a2580261194c",
+        "7f560313-6251-428c-9b6a-523322402f91",
+        "88ee814e-042c-4ceb-b1e1-c840ad1a6ab3",
+        "9f5172e9-f956-487c-8053-db31f8dbd8f9",
+        "c3041f0c-9cdd-4179-bb56-a20e84385dda",
+        "c97c117c-dc5f-4974-ba68-1e5cf7efcfb5",
+        "cc452fee-729f-49b3-bb0b-4203260b4798",
+        "e8470cf0-b57d-4d70-b46e-22496bda07f7",
+        "fff5ec81-f47c-4231-9c65-61b076fbb171"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_HipZ",
+      "title": "(C) L Hip",
+      "selected_nodes": [
+        "1302a7f8-3a99-5e38-b0ae-6d6618d184a6",
+        "b193cc7b-afb8-5696-882b-f490b701d75f"
+      ],
+      "drawn_connections": [],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_HipZ",
+      "title": "R Hip",
+      "selected_nodes": [
+        "35296b3b-b161-50b0-ac95-af76a4b95f3b",
+        "ce5625ea-cc17-522a-a02d-f869d710d488"
+      ],
+      "drawn_connections": [],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Knee Motoneuron",
+      "title": "L Knee",
+      "selected_nodes": [
+        "2d66fb1d-dc5c-50e9-baa4-a725ac666899",
+        "8ecebf6b-e6a8-50ba-b146-a6f99f3b2916"
+      ],
+      "drawn_connections": [],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_Knee Motoneuron",
+      "title": "R Knee",
+      "selected_nodes": [
+        "4202cc3e-fb6e-512a-ae03-429cbf9c0675",
+        "503885c6-edfc-557c-b2c0-7781015e92f6"
+      ],
+      "drawn_connections": [],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Anklez Motoneuron",
+      "title": "L Ankle",
+      "selected_nodes": [
+        "6283d63b-7ac4-5a4d-9185-46d3a916487b",
+        "72461066-f1ad-536c-8695-ffd4665933c5"
+      ],
+      "drawn_connections": [],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_Anklez Motoneuron",
+      "title": "R Ankle",
+      "selected_nodes": [
+        "e314d0c8-e1bb-53eb-bd8d-6248372e0af0",
+        "60d0ccfb-3dd9-570c-9a76-d76c35ec0809"
+      ],
+      "drawn_connections": [],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "Commissural coordination",
+      "title": "(D) Commissural pathways and contralateral heel input",
+      "selected_nodes": [
+        "cafe0005-0000-4000-8000-900000000005",
+        "11649034-a41d-54ce-be95-7759a48db757",
+        "e787ec2d-7e3b-5f29-b757-20a6670f4a93",
+        "ce8641d6-c97b-5578-b8cf-9ee4b8c8c7af",
+        "9603a8ee-4f2f-5635-8f5d-4f2895bb6513",
+        "848e4f4c-74b7-5f69-b4b4-2406d8d0618b",
+        "a9defb9c-2594-5381-b638-ade38e5eb345",
+        "cafe0007-0000-4000-8000-900000000007",
+        "cafe0008-0000-4000-8000-900000000008",
+        "5be8f958-8383-5dde-bd22-c147f02b3c86",
+        "2f3b84a0-a243-5b3f-ac60-4ef34ce781b1",
+        "cafe0006-0000-4000-8000-900000000006"
+      ],
+      "drawn_connections": [
+        "77acd39d-eb6a-40d9-8b20-2318cb1c6c6c",
+        "c3c2e321-3fed-42ac-adfa-75933fdc22f2",
+        "cafe0023-0000-4000-8000-900000000023",
+        "cafe0025-0000-4000-8000-900000000025",
+        "cafe0026-0000-4000-8000-900000000026",
+        "cafe0027-0000-4000-8000-900000000027",
+        "cafe0028-0000-4000-8000-900000000028",
+        "cafe0029-0000-4000-8000-900000000029"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Contact feedback",
+      "title": "(E) Heel/toe contact subnetwork (left shown; right counterpart retained)",
+      "selected_nodes": [
+        "0113f992-9348-519d-9cfa-d821eb8b1732",
+        "57b1aa82-c904-5dbd-9872-7c7932bbffdf",
+        "cafe0202-0000-4000-8000-900000000202",
+        "cafe0201-0000-4000-8000-900000000201",
+        "a52df708-b2aa-5cd7-ba54-48a19206737c",
+        "104b963e-734c-5abc-acd5-476135edfb9f",
+        "1f211dd4-b137-422d-a2fc-9bea77e4c543",
+        "5557315d-accf-528c-87bb-8ec3a1112e94",
+        "ea5361f0-6cd5-4758-9f21-8c0da0fb689d",
+        "404ffc76-3b9c-46a7-8c4e-f5ba161f4dd8",
+        "a7677e26-5d86-4c3a-bd4a-8363d1d494ce",
+        "59ff3da2-47c6-55b3-b4f8-f618f7cd3bf7"
+      ],
+      "drawn_connections": [
+        "35e70e7e-1f81-4de8-964f-dfaa6866617a",
+        "8050c1ee-1cbc-4001-9ac6-2bf9d364e042",
+        "cafe0231-0000-4000-8000-900000000231",
+        "cafe0232-0000-4000-8000-900000000232",
+        "cafe0233-0000-4000-8000-900000000233",
+        "cafe0234-0000-4000-8000-900000000234",
+        "cafe0235-0000-4000-8000-900000000235",
+        "09a18d91-de9d-4093-a7b3-070d5e56c102",
+        "2cec0e01-0c1b-4862-95d8-b6bd283ad7fd",
+        "40c41fcc-f9fc-45da-8368-a59a49ff7a79",
+        "d02697c2-3514-43d1-9025-5369ffcbe0fb"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_HipZ",
+      "title": "Expanded left hip: PF, MN, Ia/Ib, Renshaw, and separate II-E/F relays",
+      "selected_nodes": [
+        "c0632a4e-b4fe-4b06-865b-88ce5dc7c2a5",
+        "1afd244b-1bc2-438f-9859-079495c45295",
+        "4a70bdeb-59a2-459d-bfdb-1ef9257354f7",
+        "dc8476a2-3ba4-4dc9-99c4-42351809164e",
+        "24a2c9e1-b182-4708-835d-dcf9c075ab32",
+        "2846ef38-5513-40e9-96d2-ee932fb217ed",
+        "34cece3a-dba9-4906-bd4b-466071390be7",
+        "5bbd1761-3a41-4beb-8c6d-6a9beb362784",
+        "1b9f5ea4-f6b5-4a06-a3a0-f431b082a58b",
+        "cae540f6-5a83-4e7c-9cb3-1ceefaea56ae",
+        "c92518bf-f0d8-4b43-b154-4fee1f469002",
+        "f6b42566-ef31-4b3d-95d6-90c2f7c1202b",
+        "7aac8b23-6dbb-5941-983f-6926e9e91d1c",
+        "c755dfb7-9c1e-447a-b38d-c086f439c278",
+        "9dd0be60-2130-4fab-8609-cd6cdbec9ce3",
+        "f3825461-eea7-4f03-9c39-b0acf8cc8c8a",
+        "64083a38-fde0-4930-927d-cef8ef09f6d0",
+        "f5ba89bb-6ead-4ea7-a5f2-5aa0034674e4",
+        "cafe0111-0000-4000-8000-900000000111",
+        "8be8703b-e33e-4916-8be3-c2ef3b8179be",
+        "aeb26bc7-2ecb-4c0c-a566-615b4a9b8b40",
+        "cafe0101-0000-4000-8000-900000000101",
+        "52f07ede-884c-4aa4-bae0-7623d6f91a0b",
+        "fc7b9788-54b3-4d5e-ba92-7bca73405683",
+        "1302a7f8-3a99-5e38-b0ae-6d6618d184a6",
+        "853ed236-c9f4-559d-93e5-93832fb801ce",
+        "b193cc7b-afb8-5696-882b-f490b701d75f",
+        "d647775f-505a-4d60-938c-fcaedb44cb9c",
+        "20dad3ca-1205-4dc7-aad4-e9759c6c698f",
+        "57b344bf-3b61-4652-9a11-91db1a5d43d6"
+      ],
+      "drawn_connections": [
+        "11676423-d425-44c0-bb8f-1be78f86cb45",
+        "26e9b424-4343-4a86-8c56-17227d4af295",
+        "280be7f4-031e-4d2b-b6ee-1e6be68de186",
+        "28e98c29-bea5-4969-9028-8e5dc5877132",
+        "2b4a9661-d98b-4a28-895a-cea5001c82e3",
+        "2f4f5833-b3bb-4c46-817e-5ecd50cf2890",
+        "2fce576a-3dcb-4245-9aca-686678c4e728",
+        "3369b1a0-1a21-40c5-aa50-0b22d81a3627",
+        "43cefbf2-1f14-4e86-a232-2589599c372d",
+        "490545fc-3bb1-435b-a3ea-68e827b819b5",
+        "515e22af-42af-4c9c-bb3b-2bd05ba6de08",
+        "5e31b414-8f9d-4e61-a898-0ccf0d0baf35",
+        "61847de2-b985-488a-bd95-24b7e8f57047",
+        "64e416aa-fefa-4a2a-b773-ab3b650fe9a7",
+        "69922c4d-c742-41ff-bc03-a2580261194c",
+        "7a00b0c9-a6bd-4093-a8b9-51882c8b0248",
+        "7f560313-6251-428c-9b6a-523322402f91",
+        "88475176-4615-4710-992b-3bda5e11c557",
+        "88ee814e-042c-4ceb-b1e1-c840ad1a6ab3",
+        "98c8dfec-cb69-41ee-ae8a-fa2eaa89d9e9",
+        "9bfc3396-88d1-4a41-b9a2-42038ca8b2bc",
+        "9f5172e9-f956-487c-8053-db31f8dbd8f9",
+        "9f89185f-49c9-476b-b087-431c78ac720d",
+        "9fc6b37e-d6c9-4462-a310-876915c90be3",
+        "a207e267-88f1-4062-9372-e8c63723b54e",
+        "a91ecbfa-6591-4a84-941e-a39765b88b72",
+        "b39d18f5-220e-4cce-a0e6-13e57f84917a",
+        "c3041f0c-9cdd-4179-bb56-a20e84385dda",
+        "c4ab3c7e-2c64-474f-9ac6-0b8a012473ea",
+        "c97c117c-dc5f-4974-ba68-1e5cf7efcfb5",
+        "cafe0121-0000-4000-8000-900000000121",
+        "cafe0122-0000-4000-8000-900000000122",
+        "cafe0131-0000-4000-8000-900000000131",
+        "cafe0139-0000-4000-8000-900000000139",
+        "cafe0147-0000-4000-8000-900000000147",
+        "cbeb60db-38b8-45dc-8040-ff250b74ea8f",
+        "cc452fee-729f-49b3-bb0b-4203260b4798",
+        "e8470cf0-b57d-4d70-b46e-22496bda07f7",
+        "ea8dce65-15ae-41fe-9b19-39b446642ef6",
+        "f93c41cf-cba4-45ef-9989-951b3f25d74b",
+        "fff5ec81-f47c-4231-9c65-61b076fbb171",
+        "7703d8be-02ba-5638-a186-14c7459427cc",
+        "d94bb1ff-ffb0-5ac6-9fdb-870e13800941",
+        "4b412506-a448-5221-8b82-f8d05f54db1e",
+        "07ed7251-d9e2-515a-84d3-1a4863117cfa",
+        "607646bf-b2fa-59b1-a90a-c9778d8e024b",
+        "f2a4f72c-94bd-52bc-b9fd-15ba3e7f320d"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Knee Motoneuron",
+      "title": "(A) Left knee: inherited MN/reflex subsystem",
+      "selected_nodes": [
+        "74806c88-73de-4809-b92e-ba53412fdfb0",
+        "612ba6d9-3383-4376-b32c-0c80ea499631",
+        "86b1e0d8-f731-47f4-83be-e76488d866b7",
+        "b51f816f-daab-49a8-94e3-97ca244707da",
+        "19e379d8-3573-4809-b025-0f9be06596e2",
+        "9d3feda8-6197-4418-8daf-b91ad107bd63",
+        "7d681a6f-f7e7-48b8-8174-736f0c8e5284",
+        "efa2eb22-b96c-4254-b206-1de42edc3e8c",
+        "2b5c58ce-40fe-4f2a-9a45-74952e00d883",
+        "8ecebf6b-e6a8-50ba-b146-a6f99f3b2916",
+        "cafe0103-0000-4000-8000-900000000103",
+        "f2ad5b22-8326-473b-9e71-f922e6f0dc21",
+        "960b2a2e-7a8b-5032-8762-c6fecb91b7f5",
+        "f0e62199-190c-555e-bce8-21ee5a1094a9",
+        "070475b2-182c-49af-8860-9c421bf4c8f0",
+        "13516570-c8ec-48c7-aaf3-b415076723ee",
+        "5b4fe4db-abba-438f-bf71-8b4887accacd",
+        "53077442-140c-4527-b8ee-f4280aecd01c",
+        "cafe0113-0000-4000-8000-900000000113",
+        "c0986b70-8c6d-4d8b-88d1-3211822e9ddd",
+        "b50fb5ff-a7e6-514e-bf07-8545299a5912",
+        "53e970e5-c07e-4927-aaef-3c3477d64cac",
+        "853b3716-f386-454b-8a4a-d3f39f79b9d0",
+        "643d57f3-0f74-477a-80ae-14d784df4478",
+        "24d88831-6747-5996-933b-da0d6dbd57fc",
+        "f7d467e7-a2a0-4bab-9a43-e4295ca043dc",
+        "2d66fb1d-dc5c-50e9-baa4-a725ac666899",
+        "d50e0395-d298-4458-b026-cd0208be0866"
+      ],
+      "drawn_connections": [
+        "147f9f00-1799-4e89-a002-a4358d158684",
+        "d925a861-a1e4-47e7-9779-9e1d04222620",
+        "02bc822a-6611-4ac4-83a2-b3154458f846",
+        "05fb007a-03de-4152-9e33-eee9add9202d",
+        "09e62f0e-f947-46b8-a57b-0708bc9b7a74",
+        "231b5a57-afb3-4219-a1a7-633c4d91d19a",
+        "30e2cde0-5460-474d-abd7-e6876bf379cd",
+        "32f03d10-81b1-4d9b-a657-67d176811832",
+        "3d9ef036-cb80-4250-9e46-e23f9f85cc9b",
+        "47676bc2-3d40-4d03-abad-f399eb8585d7",
+        "4afd50ab-1dc3-4b87-ac36-9ed41246e6a8",
+        "4f6ab4a4-c746-4aaf-8072-7a79dff0052f",
+        "5b71a7ab-710f-422a-8c32-4d975cd264cd",
+        "617344f7-d440-413f-9894-92e0fc6f137f",
+        "623af58f-326b-4153-a4ff-c93261f6b730",
+        "74b85c1f-ae5e-40b4-ab90-559597f692d9",
+        "77a14c81-9f5e-4ae1-9d62-11e810c41c1d",
+        "8225d831-b403-437f-a2d6-d3d58ab760d6",
+        "9cccf20e-22aa-4f96-b3a6-61d8a271ace6",
+        "a6cf5c96-1ae6-4eb8-aa15-93eaafd7f8dd",
+        "aa51ec34-bc4a-4911-a051-77a71a396aad",
+        "b4118159-89a5-497b-983b-e5c41fbfa576",
+        "b542035a-051b-49c9-bbed-91922253f245",
+        "b7d4832a-08c9-418e-8b8d-273304c74bc4",
+        "cafe0125-0000-4000-8000-900000000125",
+        "cafe0126-0000-4000-8000-900000000126",
+        "d19c7210-7e30-4ee1-82ec-de79f34e8dd1",
+        "d2ef4603-c4cd-4c37-88b7-f4e2af3bc8c3",
+        "e5325fe7-9b63-4832-ab06-f6d759b768e9",
+        "f189479a-99f5-4477-a3eb-d093d8a5b2e1",
+        "f6e1432f-9e4e-48bd-9302-409a66878d41",
+        "fcbde353-3b74-4dd8-991c-b3c5edd07259",
+        "02b87554-fa07-5f16-b81d-f3105a1c86e4",
+        "cea93aab-aec4-5af0-94b2-31fb4cf28438",
+        "541649b1-4b68-5bbf-b38a-fd8f9106ac22",
+        "46ba2ebd-c9eb-5fac-b9f2-ec37cee6e68f",
+        "e4234993-fd46-5150-8d45-0ec39c2675d1",
+        "bd1ecd34-a5c6-5e74-b4ec-99950577f9ef"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Anklez Motoneuron",
+      "title": "(B) Left ankle: executed PF target overlay",
+      "selected_nodes": [
+        "3c7d0a82-a0a4-4f8e-aed5-b40165b8c0bc",
+        "964d3c10-fc3e-4f8f-beb7-197d88c60101",
+        "f87d0d00-b5fe-4100-8049-572f1496c142",
+        "fb3d4a8b-008f-5813-8d4f-bc40a4afe40e",
+        "6a00c612-0a7d-4541-944e-ffe92a8df8d8",
+        "a8145c6b-ba75-5a3d-a9c3-e63fa701910f",
+        "2da7fd48-8181-4d5e-8202-7d0e91e9d38c",
+        "8bf611ad-940f-5a5b-80e8-35427ac91052",
+        "47a48469-d146-4b34-a1ee-e7157fa31cf9",
+        "4ff1d95e-3360-4604-9180-8f606158bb83",
+        "e7a9e6dd-dfda-451a-8eab-51c41d548a65",
+        "65bf92e8-ac16-4e97-9673-597b9223c141",
+        "62c58bfb-44f6-5bfd-a8c8-49bc9f6235ae",
+        "8b68c52c-fb22-4968-a2c7-833b55774670",
+        "89de348e-1014-45e1-a553-99b11b8c182f",
+        "72461066-f1ad-536c-8695-ffd4665933c5",
+        "743556b9-95c4-4a22-80b5-d80bb70d7aea",
+        "de91322a-b88b-470d-b4d7-99e1966b9fc1",
+        "e5b9b5df-752a-4b0d-9389-f4042e42fa0a",
+        "a10a992a-b8b4-49de-a9aa-780a3e33bbaa",
+        "b73a3b36-cae9-4081-89d2-280eaab7f452",
+        "4dce5be2-7df6-46b1-a401-b378ee231b7a",
+        "79351546-b548-492e-8d09-3ad9c65baf39",
+        "28caa0e2-fc1b-4d87-af82-ba8e6b3c9dd4",
+        "3a9e64b3-849a-46e7-9a8a-5f17c9ce84c2",
+        "6283d63b-7ac4-5a4d-9185-46d3a916487b"
+      ],
+      "drawn_connections": [
+        "6644233e-2c25-478e-8459-9f6edbfcd71b",
+        "f5020126-50ff-4700-a2c4-4c7f32f70774",
+        "1022be1c-1b0b-4e41-a307-53663bae0995",
+        "23277baf-99d2-49e5-b602-0a5a0ec590ee",
+        "2cfc6a0b-9c08-4d76-8100-a0e2035c41bb",
+        "2ef93a9e-4b1d-480e-b6fc-496f4945788f",
+        "42df15ca-c192-46a8-b0ab-acf370474c2e",
+        "47d3d4cf-4401-4962-bfdd-3bca82ab7bd3",
+        "4ffcae78-bc84-4fa5-ac93-97a53dbb23b8",
+        "5419f88d-5911-4d11-95a7-38a86e4a167b",
+        "552f13f0-21e8-4900-bde5-04c498d30491",
+        "736c037c-3a41-40b0-9e87-c19461ae30a3",
+        "77314e83-a277-48db-83a8-947902ccf025",
+        "79965e4e-698c-4886-8dfa-a5848398f585",
+        "815e7473-b57c-40b0-8a28-fb3e54ab0d13",
+        "8f99dc50-eb2b-4dd6-9925-167497ada8f1",
+        "9c935eeb-37e7-4e8e-bb6c-492d3d5aaaae",
+        "aa1aea00-6716-4c92-8af5-afa5ceccf73f",
+        "ad355a6e-1074-4e0c-88fb-968d38a2967f",
+        "b2e69a28-8fb5-48c8-93d5-cc474a372399",
+        "b66c45c0-5936-4f7a-9608-20da9d2c9c0a",
+        "bd4f3473-a245-4127-932e-bc98ffb3aa16",
+        "c077565a-3eec-4ae5-be63-d456bc65c629",
+        "c4c9d0bc-f543-42db-9308-66ea2be577e4",
+        "d329d711-8166-40db-a15d-947ae81a7e1a",
+        "d4156339-67be-4033-ac3e-a265e72109e0",
+        "e4a04331-9a74-4780-8b09-3ec934b5b7d9",
+        "e699569b-4596-4c41-9a61-da049586e518",
+        "ec4d5052-5f5a-4e29-8f2e-2e5825ded950",
+        "f6e5772c-eac3-4c43-b5d8-4179485542f6",
+        "e17836b5-9be7-57aa-bd06-ab87613832a4",
+        "164492de-5c68-59b1-8f39-3f0e80fe64bc",
+        "a843716d-098b-56aa-ab9d-6e2f06716b3f",
+        "4ee330db-98a2-5dde-8bf0-6821deda0709",
+        "b20fae6d-0d52-58c3-8420-2286465e3bd1",
+        "cc8572cc-8e22-52df-ba80-934176ec5dfa"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Contact feedback",
+      "title": "(A) Left heel/toe contact conversion and ipsilateral targets",
+      "selected_nodes": [
+        "0113f992-9348-519d-9cfa-d821eb8b1732",
+        "57b1aa82-c904-5dbd-9872-7c7932bbffdf",
+        "cafe0202-0000-4000-8000-900000000202",
+        "cafe0201-0000-4000-8000-900000000201",
+        "a52df708-b2aa-5cd7-ba54-48a19206737c",
+        "104b963e-734c-5abc-acd5-476135edfb9f",
+        "1f211dd4-b137-422d-a2fc-9bea77e4c543",
+        "5557315d-accf-528c-87bb-8ec3a1112e94",
+        "ea5361f0-6cd5-4758-9f21-8c0da0fb689d",
+        "404ffc76-3b9c-46a7-8c4e-f5ba161f4dd8",
+        "a7677e26-5d86-4c3a-bd4a-8363d1d494ce",
+        "59ff3da2-47c6-55b3-b4f8-f618f7cd3bf7"
+      ],
+      "drawn_connections": [
+        "35e70e7e-1f81-4de8-964f-dfaa6866617a",
+        "8050c1ee-1cbc-4001-9ac6-2bf9d364e042",
+        "cafe0231-0000-4000-8000-900000000231",
+        "cafe0232-0000-4000-8000-900000000232",
+        "cafe0233-0000-4000-8000-900000000233",
+        "cafe0234-0000-4000-8000-900000000234",
+        "cafe0235-0000-4000-8000-900000000235",
+        "09a18d91-de9d-4093-a7b3-070d5e56c102",
+        "2cec0e01-0c1b-4862-95d8-b6bd283ad7fd",
+        "40c41fcc-f9fc-45da-8368-a59a49ff7a79",
+        "d02697c2-3514-43d1-9025-5369ffcbe0fb"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_Contact feedback",
+      "title": "(B) Right heel/toe contact conversion and ipsilateral targets",
+      "selected_nodes": [
+        "cafe0204-0000-4000-8000-900000000204",
+        "f24ca0a3-b673-46f1-951b-5c2afcf6e43d",
+        "cafe0203-0000-4000-8000-900000000203",
+        "d78a86c2-2167-56c2-841b-6cba8107bdc5",
+        "7248c959-e2fe-5e62-add9-b0531e7b3f4c",
+        "04c9801b-6257-5ff9-8b2d-c03de3c3956f",
+        "7350863a-49d0-4fb5-9a29-a826781de08c",
+        "bd380f77-0b12-54c6-b80c-300b9c53ed16",
+        "6812ea69-81a3-549a-85ac-c0c84801fb78",
+        "ba5548ea-184b-4f2d-a38f-911a052029b3",
+        "ad4a143c-9729-5e77-9210-8970086c5e86",
+        "40608d35-806d-4f6a-8a45-0cc4d958f0da"
+      ],
+      "drawn_connections": [
+        "8f0dc32b-c3ff-4c37-85aa-0d1204c895d4",
+        "9699ef3a-25bf-47ed-93cf-a34dc5ad501f",
+        "cafe0241-0000-4000-8000-900000000241",
+        "cafe0242-0000-4000-8000-900000000242",
+        "cafe0243-0000-4000-8000-900000000243",
+        "cafe0244-0000-4000-8000-900000000244",
+        "cafe0245-0000-4000-8000-900000000245",
+        "14345160-fad5-465f-82eb-e1d9df3c22ab",
+        "52d8f3c9-207d-45c2-8a4c-4e0c940cb798",
+        "b00bce7a-c86a-4851-8b59-e8f6f0646ebf",
+        "d4a1a0d5-59c9-4b06-8fa8-238f3ed04c83"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_HipZ",
+      "title": "(L) hip II-E and II-F to homonymous MN",
+      "selected_nodes": [
+        "7aac8b23-6dbb-5941-983f-6926e9e91d1c",
+        "64083a38-fde0-4930-927d-cef8ef09f6d0",
+        "1302a7f8-3a99-5e38-b0ae-6d6618d184a6",
+        "b193cc7b-afb8-5696-882b-f490b701d75f",
+        "853ed236-c9f4-559d-93e5-93832fb801ce",
+        "f6b42566-ef31-4b3d-95d6-90c2f7c1202b"
+      ],
+      "drawn_connections": [
+        "7703d8be-02ba-5638-a186-14c7459427cc",
+        "4b412506-a448-5221-8b82-f8d05f54db1e",
+        "07ed7251-d9e2-515a-84d3-1a4863117cfa",
+        "f2a4f72c-94bd-52bc-b9fd-15ba3e7f320d"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_HipZ",
+      "title": "(R) hip II-E and II-F to homonymous MN",
+      "selected_nodes": [
+        "23b9c90e-a4dc-5e1d-95b0-261a4b38cae7",
+        "75846cb5-213b-4501-86ba-91af8edd82da",
+        "56e26621-8a71-45c7-9bf2-5895a6d0a8f5",
+        "ce5625ea-cc17-522a-a02d-f869d710d488",
+        "35296b3b-b161-50b0-ac95-af76a4b95f3b",
+        "21a60081-677d-5696-9889-c4776e9d65ba"
+      ],
+      "drawn_connections": [
+        "66f4f5de-f902-589a-b3b2-a2cd5be58351",
+        "110cbca3-6ec3-542c-8d26-8c5622ef0b48",
+        "58bd4ba7-fd6d-5efc-9cf2-a6a452e88daa",
+        "cb087056-f807-5cd0-9836-e10775d4eeda"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Knee Motoneuron",
+      "title": "(L) knee II-E and II-F to homonymous MN",
+      "selected_nodes": [
+        "070475b2-182c-49af-8860-9c421bf4c8f0",
+        "c0986b70-8c6d-4d8b-88d1-3211822e9ddd",
+        "b50fb5ff-a7e6-514e-bf07-8545299a5912",
+        "8ecebf6b-e6a8-50ba-b146-a6f99f3b2916",
+        "24d88831-6747-5996-933b-da0d6dbd57fc",
+        "2d66fb1d-dc5c-50e9-baa4-a725ac666899"
+      ],
+      "drawn_connections": [
+        "02b87554-fa07-5f16-b81d-f3105a1c86e4",
+        "541649b1-4b68-5bbf-b38a-fd8f9106ac22",
+        "46ba2ebd-c9eb-5fac-b9f2-ec37cee6e68f",
+        "bd1ecd34-a5c6-5e74-b4ec-99950577f9ef"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_Knee Motoneuron",
+      "title": "(R) knee II-E and II-F to homonymous MN",
+      "selected_nodes": [
+        "45d0d1b3-ea0a-52be-9e8e-a30f4440c281",
+        "cabac9d1-2420-4426-bfaf-a621cef5b7f2",
+        "4202cc3e-fb6e-512a-ae03-429cbf9c0675",
+        "5bb16fbc-1ea8-4fd3-b501-d2ecd9943568",
+        "7080490a-8af8-5ba6-ab4e-44422199f3fa",
+        "503885c6-edfc-557c-b2c0-7781015e92f6"
+      ],
+      "drawn_connections": [
+        "38ebb7b5-be5b-5c65-bae7-2cac28bdfb41",
+        "3ba060fc-de14-5b9b-b4b5-063ea204f9fb",
+        "6c03b44a-e07c-54d7-bcab-991e4a40b0d6",
+        "9a32b48d-ae8c-5d27-8f1e-09cdd3e1d4a7"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "LH_Anklez Motoneuron",
+      "title": "(L) ankle II-E and II-F to homonymous MN",
+      "selected_nodes": [
+        "f87d0d00-b5fe-4100-8049-572f1496c142",
+        "72461066-f1ad-536c-8695-ffd4665933c5",
+        "62c58bfb-44f6-5bfd-a8c8-49bc9f6235ae",
+        "a8145c6b-ba75-5a3d-a9c3-e63fa701910f",
+        "65bf92e8-ac16-4e97-9673-597b9223c141",
+        "6283d63b-7ac4-5a4d-9185-46d3a916487b"
+      ],
+      "drawn_connections": [
+        "e17836b5-9be7-57aa-bd06-ab87613832a4",
+        "a843716d-098b-56aa-ab9d-6e2f06716b3f",
+        "4ee330db-98a2-5dde-8bf0-6821deda0709",
+        "cc8572cc-8e22-52df-ba80-934176ec5dfa"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    },
+    {
+      "page": "RH_Anklez Motoneuron",
+      "title": "(R) ankle II-E and II-F to homonymous MN",
+      "selected_nodes": [
+        "ad9558cb-fa74-5a4a-8d08-03933a8ddf02",
+        "60d0ccfb-3dd9-570c-9a76-d76c35ec0809",
+        "a7ca0f7b-c135-4647-8b5f-c4ad9936c18e",
+        "35bc7f96-0690-4ff4-99c5-b204520cbc75",
+        "7da31995-c243-5356-ab30-ab35eeda50e1",
+        "e314d0c8-e1bb-53eb-bd8d-6248372e0af0"
+      ],
+      "drawn_connections": [
+        "f7c66d62-83b8-5c70-a5e5-97065655a253",
+        "ed132e51-c633-5eaa-8203-72182cd9e06d",
+        "e75ccebc-d6cd-5fc2-badf-7ebe992b62e6",
+        "4ef18736-6027-50a7-a9d5-925b1193d8ae"
+      ],
+      "native_node_centers_and_internal_route_points_retained": true,
+      "neural_offpage_glyph_scale": 1.4
+    }
+  ],
+  "missing_native_chemical_heads_completed": [],
+  "target_overlays": [
+    {
+      "page": "LH_Anklez Motoneuron",
+      "edge_ID": "6644233e-2c25-478e-8459-9f6edbfcd71b",
+      "source": "L Knee PF flx",
+      "GUI_target_ID": "f87d0d00-b5fe-4100-8049-572f1496c142",
+      "executed_target": "L Ank MN ext",
+      "preserved_route_points": 2
+    },
+    {
+      "page": "LH_Anklez Motoneuron",
+      "edge_ID": "f5020126-50ff-4700-a2c4-4c7f32f70774",
+      "source": "L Knee PF ext",
+      "GUI_target_ID": "65bf92e8-ac16-4e97-9673-597b9223c141",
+      "executed_target": "L Ank MN flx",
+      "preserved_route_points": 2
+    }
+  ],
+  "scope": "Selected native subnetworks retain node centers, styles, and internal route control points. Neural/off-page glyphs are enlarged 40% around unchanged centers for publication typography; sensor/adapter glyphs retain native sizes. Four ankle destination overlays and14 short ID-backed cross-page display stubs are explicitly distinguished from unchanged internal routes.",
+  "native_node_centers_retained": true,
+  "publication_node_glyph_scale": 1.4,
+  "print_font_pt_at9inch_width": 10.0,
+  "abstracted_crosspage_edges": [
+    {
+      "edge_ID": "ba20e6bc-d27f-49bf-98e3-ce8ede9ee38e",
+      "source_ID": "17fdb1f6-d678-48b0-b90c-d604cb2b3115",
+      "target_ID": "57b344bf-3b61-4652-9a11-91db1a5d43d6",
+      "source": "L RG ext",
+      "target": "L Hip PF ext",
+      "view": "RG-to-hip-PF off-page input stub"
+    },
+    {
+      "edge_ID": "02ae1797-5f31-4105-91e8-bd5e4df3ddd4",
+      "source_ID": "7bd02f2b-2d71-42cf-b856-e7fef1ee05e6",
+      "target_ID": "f5ba89bb-6ead-4ea7-a5f2-5aa0034674e4",
+      "source": "L RG flx",
+      "target": "L Hip PF flx",
+      "view": "RG-to-hip-PF off-page input stub"
+    },
+    {
+      "edge_ID": "7703d8be-02ba-5638-a186-14c7459427cc",
+      "source_ID": "1302a7f8-3a99-5e38-b0ae-6d6618d184a6",
+      "target_ID": "64083a38-fde0-4930-927d-cef8ef09f6d0",
+      "source": "L Hip extensor II relay",
+      "target": "L Hip MN ext",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "07ed7251-d9e2-515a-84d3-1a4863117cfa",
+      "source_ID": "b193cc7b-afb8-5696-882b-f490b701d75f",
+      "target_ID": "f6b42566-ef31-4b3d-95d6-90c2f7c1202b",
+      "source": "L Hip flexor II relay",
+      "target": "L Hip MN flx",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "58bd4ba7-fd6d-5efc-9cf2-a6a452e88daa",
+      "source_ID": "35296b3b-b161-50b0-ac95-af76a4b95f3b",
+      "target_ID": "56e26621-8a71-45c7-9bf2-5895a6d0a8f5",
+      "source": "R Hip extensor II relay",
+      "target": "R Hip MN ext",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "66f4f5de-f902-589a-b3b2-a2cd5be58351",
+      "source_ID": "ce5625ea-cc17-522a-a02d-f869d710d488",
+      "target_ID": "75846cb5-213b-4501-86ba-91af8edd82da",
+      "source": "R Hip flexor II relay",
+      "target": "R Hip MN flx",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "46ba2ebd-c9eb-5fac-b9f2-ec37cee6e68f",
+      "source_ID": "2d66fb1d-dc5c-50e9-baa4-a725ac666899",
+      "target_ID": "070475b2-182c-49af-8860-9c421bf4c8f0",
+      "source": "L Knee flexor II relay",
+      "target": "L Knee MN flx",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "02b87554-fa07-5f16-b81d-f3105a1c86e4",
+      "source_ID": "8ecebf6b-e6a8-50ba-b146-a6f99f3b2916",
+      "target_ID": "c0986b70-8c6d-4d8b-88d1-3211822e9ddd",
+      "source": "L Knee extensor II relay",
+      "target": "L Knee MN ext",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "6c03b44a-e07c-54d7-bcab-991e4a40b0d6",
+      "source_ID": "4202cc3e-fb6e-512a-ae03-429cbf9c0675",
+      "target_ID": "cabac9d1-2420-4426-bfaf-a621cef5b7f2",
+      "source": "R Knee extensor II relay",
+      "target": "R Knee MN ext",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "38ebb7b5-be5b-5c65-bae7-2cac28bdfb41",
+      "source_ID": "503885c6-edfc-557c-b2c0-7781015e92f6",
+      "target_ID": "5bb16fbc-1ea8-4fd3-b501-d2ecd9943568",
+      "source": "R Knee flexor II relay",
+      "target": "R Knee MN flx",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "e17836b5-9be7-57aa-bd06-ab87613832a4",
+      "source_ID": "6283d63b-7ac4-5a4d-9185-46d3a916487b",
+      "target_ID": "65bf92e8-ac16-4e97-9673-597b9223c141",
+      "source": "L Ankle dorsiflexor II relay",
+      "target": "L Ank MN ext",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "4ee330db-98a2-5dde-8bf0-6821deda0709",
+      "source_ID": "72461066-f1ad-536c-8695-ffd4665933c5",
+      "target_ID": "f87d0d00-b5fe-4100-8049-572f1496c142",
+      "source": "L Ankle plantarflexor II relay",
+      "target": "L Ank MN flx",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "e75ccebc-d6cd-5fc2-badf-7ebe992b62e6",
+      "source_ID": "e314d0c8-e1bb-53eb-bd8d-6248372e0af0",
+      "target_ID": "35bc7f96-0690-4ff4-99c5-b204520cbc75",
+      "source": "R Ankle dorsiflexor II relay",
+      "target": "R Ank MN ext",
+      "view": "II-to-homonymous-MN off-page stub"
+    },
+    {
+      "edge_ID": "f7c66d62-83b8-5c70-a5e5-97065655a253",
+      "source_ID": "60d0ccfb-3dd9-570c-9a76-d76c35ec0809",
+      "target_ID": "a7ca0f7b-c135-4647-8b5f-c4ad9936c18e",
+      "source": "R Ankle plantarflexor II relay",
+      "target": "R Ank MN flx",
+      "view": "II-to-homonymous-MN off-page stub"
+    }
+  ],
+  "all_executed_target_changes": [
+    {
+      "source_connection_ID": "63333d57-2b63-408c-8884-983d154b1bc3",
+      "source_ID": "fbda99c8-62c2-4aa6-b614-9c0880da7cc7",
+      "target_ID": "35bc7f96-0690-4ff4-99c5-b204520cbc75",
+      "source": "R Knee PF flx",
+      "target": "R Ank MN ext",
+      "reference_target_ID": "a7ca0f7b-c135-4647-8b5f-c4ad9936c18e",
+      "reference_synapse_type_ID": "1b626f63-5e05-4fb9-bb9b-6507a5b7b4d5",
+      "reference_synapse_type_name": "PF to MN Excite",
+      "gmax_uS": 3.5898187589937716,
+      "threshold_mV": -60.0,
+      "saturation_mV": -50.0,
+      "reversal_mV": -10.0,
+      "target_changed": true
+    },
+    {
+      "source_connection_ID": "7d015fbc-ab5a-4a6b-9b93-5b9a91eac608",
+      "source_ID": "eb127c29-8bd8-4b77-bc39-18746157f693",
+      "target_ID": "a7ca0f7b-c135-4647-8b5f-c4ad9936c18e",
+      "source": "R Knee PF ext",
+      "target": "R Ank MN flx",
+      "reference_target_ID": "35bc7f96-0690-4ff4-99c5-b204520cbc75",
+      "reference_synapse_type_ID": "1b626f63-5e05-4fb9-bb9b-6507a5b7b4d5",
+      "reference_synapse_type_name": "PF to MN Excite",
+      "gmax_uS": 3.5898187589937716,
+      "threshold_mV": -60.0,
+      "saturation_mV": -50.0,
+      "reversal_mV": -10.0,
+      "target_changed": true
+    },
+    {
+      "source_connection_ID": "6644233e-2c25-478e-8459-9f6edbfcd71b",
+      "source_ID": "9bc35128-6169-478c-b777-a6d83ecde667",
+      "target_ID": "65bf92e8-ac16-4e97-9673-597b9223c141",
+      "source": "L Knee PF flx",
+      "target": "L Ank MN ext",
+      "reference_target_ID": "f87d0d00-b5fe-4100-8049-572f1496c142",
+      "reference_synapse_type_ID": "1b626f63-5e05-4fb9-bb9b-6507a5b7b4d5",
+      "reference_synapse_type_name": "PF to MN Excite",
+      "gmax_uS": 3.5898187589937716,
+      "threshold_mV": -60.0,
+      "saturation_mV": -50.0,
+      "reversal_mV": -10.0,
+      "target_changed": true
+    },
+    {
+      "source_connection_ID": "f5020126-50ff-4700-a2c4-4c7f32f70774",
+      "source_ID": "f336ecdc-a3f4-4ae2-b9fb-a765296574bf",
+      "target_ID": "f87d0d00-b5fe-4100-8049-572f1496c142",
+      "source": "L Knee PF ext",
+      "target": "L Ank MN flx",
+      "reference_target_ID": "65bf92e8-ac16-4e97-9673-597b9223c141",
+      "reference_synapse_type_ID": "1b626f63-5e05-4fb9-bb9b-6507a5b7b4d5",
+      "reference_synapse_type_name": "PF to MN Excite",
+      "gmax_uS": 3.5898187589937716,
+      "threshold_mV": -60.0,
+      "saturation_mV": -50.0,
+      "reversal_mV": -10.0,
+      "target_changed": true
+    }
+  ],
+  "display_completed_head_unique_connections": 0,
+  "source_project_unchanged_after_render": true,
+  "visual_QA": {
+    "main_png_inspected": true,
+    "expanded_left_hip_inspected": true,
+    "left_knee_ankle_overlay_inspected": true,
+    "parameter_table_page1_inspected": true,
+    "limitations": [
+      "The14 cross-page stubs abstract actual connections; full original routes/endpoints remain in source and companion mapping.",
+      "Final main figure is9x5.5in with10pt minimum type.",
+      "This is a selection of actual native pages, not a single complete108-neuron sheet."
+    ]
+  },
+  "main_canvas_inches": [
+    9,
+    5.5
+  ]
+}

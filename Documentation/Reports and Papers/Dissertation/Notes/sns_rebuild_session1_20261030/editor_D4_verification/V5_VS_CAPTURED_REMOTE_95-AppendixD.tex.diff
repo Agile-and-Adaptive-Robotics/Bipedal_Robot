@@ -1,0 +1,237 @@
+--- D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Archive\session1_sns_20261031\inputs_eb475ws4\95-AppendixD_remote.tex
++++ D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\ProofFinal\chapters\95-AppendixD.tex
+@@ -20,13 +20,18 @@
+ \par\medskip
+ \textbf{(C) Sensorimotor organization}\par\smallskip
+ \includegraphics[width=0.76\textwidth,height=0.39\textheight,keepaspectratio]{sensoryMotor_Network.PNG}
+-\caption[AnimatLab neural subsystems]{AnimatLab neural subsystems: \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx denote antagonist pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferents. Triangles and circles distinguish excitatory and inhibitory connections.}
++\caption[AnimatLab controller reference schematics]{Archived AnimatLab neural subsystems: \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx denote antagonist pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferents. Triangles and circles distinguish excitatory and inhibitory connections.}
+ \label{fig:animatlab_controller_motifs}
+ \end{figure}
+ 
+-A \qty{10}{\second} instrumented run recorded joint, neural, sensory, and body-motion channels at a \qty{0.2}{\milli\second} interval. Contact-sensory recordings are membrane voltages, not contact forces. The initial external horizontal force and the limited window prevent the joint traces from establishing stable walking. Figure~\ref{fig:animatlab_phase1_preliminary} in Chapter~\ref{ch:sns} aligns a short window of neural and joint recordings. The platform was present, but no timed vertical release was recorded; these traces therefore do not establish a drop or touchdown response.
+-
+-
++A \qty{10}{\second} instrumented run recorded joint, neural, sensory, and body-motion channels at a \qty{0.2}{\milli\second} interval. Contact-sensory recordings are membrane voltages, not contact forces. The initial external horizontal force and the limited window prevent the joint traces from establishing stable walking. Figure~\ref{fig:animatlab_phase1_preliminary} shows the recorded hip, knee, and ankle trajectories.
++
++\begin{figure}[htbp]
++\centering
++\includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{animatlab_phase1_joint_angles.pdf}
++\caption[AnimatLab phase-1 hip, knee, and ankle recordings]{Bilateral hip (A), knee (B), and ankle (C) angles in the recorded joint conventions. All 50,001 samples in the \qty{10}{\second} window are retained. An external horizontal force acts during the first second. The recordings show motion, not validated walking or ground-contact gating.}
++\label{fig:animatlab_phase1_preliminary}
++\end{figure}
+ 
+ Figure~\ref{fig:mujoco_model_views} contrasts the converted Gait2392 robot geometry with the reduced-order knee model used in the SNS-Simscape demonstration.
+ 
+@@ -54,7 +59,7 @@
+ 
+ \subsection{Transient Knee Sensory-Current Response}\label{sec:app_knee_transient}
+ 
+-The knee block model was tested from a settled operating point using a rectangular current pulse added after the spindle transducer and before the extensor Ia sensory-neuron membrane input. Stimulus and no-stimulus cases start from the same initial conditions and run continuously for \qty{50}{\second}; the \qty{2}{\nano\ampere} pulse acts from \qty{30.000}{\second} to \qty{30.030}{\second}. The original configuration did not settle: its knee angle spanned \ang{0.712} during the \qtyrange{25}{30}{\second} baseline window. Its former startup comparison is therefore not used to demonstrate transient reflex recovery.
++The knee block model was tested from a settled operating point using a rectangular current pulse added after the spindle transducer and before the extensor Ia sensory-neuron membrane input. Stimulus and no-stimulus cases start from the same initial conditions and run continuously for \qty{50}{\second}; the \qty{2}{\nano\ampere} pulse acts from 30.000 to \qty{30.030}{\second}. The original configuration did not settle: its knee angle spanned \ang{0.712} during the \qtyrange{25}{30}{\second} baseline window. Its former startup comparison is therefore not used to demonstrate transient reflex recovery.
+ 
+ The graded-response comparison changes exactly six parameters: the two MN output ramp widths from 1 to \qty{10}{\milli\volt}, and the four Ia synaptic ramp widths from 0.5 to \qty{10}{\milli\volt}. Equations, thresholds, conductances, wiring, mechanics, tonic drives, and activation dynamics are retained. This reduces loop gain as an explicit engineering comparison, rather than fitting physiological parameters. The simple actuator-force law is distinct from the characterized BPA model of Chapter~\ref{ch:muscles}. The flexor activation is zero at baseline, so the experiment does not establish suppression of a tonically active antagonist.
+ 
+@@ -73,11 +78,11 @@
+ 
+ \subsection{RG, PF, and MN Stimulus Tests}\label{sec:app_layer_stimulus}
+ 
+-The fourteen-neuron Deng-derived implementation follows the circuit used in SNS-Toolbox demonstrations \citep{deng_neuromechanical_2019,nourse_sns_2023}. A \qty{0.1}{\milli\second} Euler step reproduced the existing neural integrator's complete \qty{24}{\second} baseline voltage trace exactly in the tested process. The baseline period was \qty{1.938}{\second}. Neural output drove the existing suspended, unilateral W2L mechanical model without afferent return. Hip commands came from the MN outputs; knee and ankle commands used the existing PF-to-activation mapping. This configuration tests transmitted circuit effects, not the original rat mechanics or bilateral walking.
+-
+-The initial sweep applied \qty{+2}{\nano\ampere} and \qty{+10}{\nano\ampere} to each layer for \qtylist{0.1;0.5}{\second}, together with two direct MN inhibitory controls. None met the deletion criterion. Subsequent stronger-current control series, including stimuli lasting two baseline periods (\qty{3.876}{\second}), retained the same circuit and mechanical parameters (Table~\ref{tab:layer_stimulus}). RG and PF stimuli began one-quarter cycle after a baseline RG onset; MN inhibition began \qty{0.05}{\second} into a baseline motor burst. Positive currents target the extensor RG or hip-PF population; negative currents target the hip-flexor MN. These currents are mechanistic controls, not experimentally calibrated physiological stimuli.
+-
+-A deletion required at least \qty{20}{\milli\second} of baseline motor activity in the stimulus window and suppression of at least half of that activity, using an activation threshold of 0.5. Phase residuals compare the final four recovered onsets with the nearest baseline onset, normalized by the baseline period. Residuals at or below 0.05 cycles were classified as non-resetting, and those at or above 0.15 as shifted; intermediate values remained indeterminate. RG and motor residuals were assessed separately. The two-cycle stimuli suppressed both expected flexor burst onsets at all three layers. Baseline and stimulated neural and mechanical trajectories were identical before stimulus onset. The \qty{1}{\second} PF pulse shifted the motor pattern without resetting the RG clock, whereas the two-cycle PF pulse preserved both schedules. The duration dependence cautions against treating every motor phase shift as an RG reset. Figure~\ref{fig:layer_stimulus_validation} aligns the RG, PF, and MN responses with joint motion during the two-cycle PF stimulus.
++The fourteen-neuron Deng-derived implementation follows the circuit used in SNS-Toolbox demonstrations \citep{deng_neuromechanical_2019,nourse_sns_2023}. A \qty{0.1}{\milli\second} Euler step reproduced the existing neural integrator's complete 24-second baseline voltage trace exactly in the tested process. The baseline period was \qty{1.938}{\second}. Neural output drove the existing suspended, unilateral W2L mechanical model without afferent return. Hip commands came from the MN outputs; knee and ankle commands used the existing PF-to-activation mapping. This configuration tests transmitted circuit effects, not the original rat mechanics or bilateral walking.
++
++The initial sweep applied \qty{+2}{\nano\ampere} and \qty{+10}{\nano\ampere} to each layer for 0.1 and 0.5 seconds, together with two direct MN inhibitory controls. None met the deletion criterion. Subsequent stronger-current control series, including stimuli lasting two baseline periods (\qty{3.876}{\second}), retained the same circuit and mechanical parameters (Table~\ref{tab:layer_stimulus}). RG and PF stimuli began one-quarter cycle after a baseline RG onset; MN inhibition began 0.05 seconds into a baseline motor burst. Positive currents target the extensor RG or hip-PF population; negative currents target the hip-flexor MN. These currents are mechanistic controls, not experimentally calibrated physiological stimuli.
++
++A deletion required at least \qty{20}{\milli\second} of baseline motor activity in the stimulus window and suppression of at least half of that activity, using an activation threshold of 0.5. Phase residuals compare the final four recovered onsets with the nearest baseline onset, normalized by the baseline period. Residuals at or below 0.05 cycles were classified as non-resetting, and those at or above 0.15 as shifted; intermediate values remained indeterminate. RG and motor residuals were assessed separately. The two-cycle stimuli suppressed both expected flexor burst onsets at all three layers. Baseline and stimulated neural and mechanical trajectories were identical before stimulus onset. The one-second PF pulse shifted the motor pattern without resetting the RG clock, whereas the two-cycle PF pulse preserved both schedules. The duration dependence cautions against treating every motor phase shift as an RG reset. Figure~\ref{fig:layer_stimulus_validation} compares RG voltage and motor activation for the two-cycle stimuli.
+ 
+ \begin{table}[htbp]
+ \centering\small
+@@ -85,7 +90,7 @@
+ \label{tab:layer_stimulus}
+ \begin{tabularx}{\textwidth}{@{}lrrcc>{\raggedright\arraybackslash}X@{}}
+ \toprule
+-Target & \unit{\nano\ampere} & \unit{\second} & RG phase & MN phase & Outcome \\
++Target & nA & s & RG phase & MN phase & Outcome \\
+ \midrule
+ RG & $+50$ & 0.5 & 0.052 & 0.052 & Brief suppression; phase indeterminate \\
+ RG & $+50$ & 1.0 & 0.307 & 0.307 & Suppression; RG and MN shifted \\
+@@ -102,8 +107,8 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{deng_neuromechanical_stimulus.pdf}
+-\caption[Neural and mechanical response to PF stimulation]{Reduced Deng-derived circuit coupled to a suspended model. Rows align RG, hip PF, and hip MN voltages with hip, knee, and ankle angles and applied current. The extensor PF receives \qty{+50}{\nano\ampere} for two baseline periods; shading marks the stimulus. Neural traces pair extensor (orange solid) and flexor (blue dashed) populations. Joint angles overlay the stimulated run (green solid) and matched baseline (gray dashed). Time is relative to stimulus onset. These are responses of the translated test model, not measured rat kinematics.}
++\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{layer_stimulus_validation.pdf}
++\caption[Layer-specific stimuli and downstream responses]{Matched baseline and stimulus responses in the reduced Deng-derived circuit coupled to a suspended model. All stimuli last two baseline periods. Rows show RG stimulation, PF stimulation, and direct flexor-MN inhibition; columns show RG voltage and flexor-MN activation. Shading marks the applied stimulus. The RG intervention shifts subsequent timing, whereas the displayed PF and MN interventions preserve the RG schedule.}
+ \label{fig:layer_stimulus_validation}
+ \end{figure}
+ 
+@@ -111,45 +116,43 @@
+ 
+ \subsection{Archived AnimatLab Models}\label{sec:animatlab_validation}
+ 
+-Headless reruns tested whether archived models reproduced their reference behavior in the original simulator. Eleven targetable rhythm and gait metrics passed their acceptance bands. The bilateral contact-driven model's rhythm generators had periods of \qtylist{0.450;0.467}{\second}; the modern W2L model showed joint oscillations at \qty{2.25}{\Hz}. The Li-model rerun reached \qty{0.637}{\meter\per\second} with step periods near \qty{1.3}{\second} \citep{li_bipedal_2017}. These are reference-model checks, not results for the combined Deng--Li model or evidence of unsupported walking.
+-
+-A separate MuJoCo translation of the Li controller and body did not reproduce that original-simulator walking result. In a \qty{20}{\second} ground test, mean forward speed was \qty{0.040}{\meter\per\second}, with eleven detected right-foot stance episodes and none on the left. The right-side period of \qty{1.294}{\second} alone therefore did not establish bilateral stepping. This failure distinguishes reproduction of the source model from successful transfer to another simulator.
++Headless reruns tested whether archived models reproduced their reference behavior in the original simulator. Eleven targetable rhythm and gait metrics passed their acceptance bands. The bilateral contact-driven model's rhythm generators had periods of \qty{0.450}{} and \qty{0.467}{\second}; the modern W2L model showed joint oscillations at \qty{2.25}{\Hz}. The Li-model rerun reached \qty{0.637}{\meter\per\second} with step periods near \qty{1.3}{\second} \citep{li_bipedal_2017}. These are reference-model checks, not results for the combined Deng--Li model or evidence of unsupported walking.
++
++A separate MuJoCo translation of the Li controller and body did not reproduce that original-simulator walking result. In a 20-second ground test, mean forward speed was \qty{0.040}{\meter\per\second}, with eleven detected right-foot stance episodes and none on the left. The right-side period of \qty{1.294}{\second} alone therefore did not establish bilateral stepping. This failure distinguishes reproduction of the source model from successful transfer to another simulator.
+ 
+ \section{Tuning and Supported Evaluations}\label{sec:sns_tuning_methods}\label{sec:sns_curriculum}
+ 
+ Free network gains were searched with a tree-structured Parzen estimator, with each candidate evaluated through simulation. The staged procedure separates suspended rhythm generation, sensory feedback, standing, and ground evaluations (Table~\ref{tab:sns_curriculum}). Finalists were checked under \qty{1}{\percent} multiplicative parameter perturbations and changes in drive. Such checks probe the neighborhood of a selected configuration; they do not establish robustness to untested loads or removal of the harness.
+ 
+-A run without detectable cycles returns $-25$ as a reserved failure value. Because this value is numerically greater than the genuine-gait scores below, failed runs must be identified before ranking scores. That value itself is not a valid measure of gait quality.
++The cycle-shape metric assigns zero to perfect agreement. A run without detectable cycles returns $-25$ as a reserved failure value. Because this value is numerically greater than the genuine-gait scores below, failed runs must be identified before ranking scores. That value itself is not a valid measure of gait quality.
+ 
+ The curriculum is shown in Table~\ref{tab:sns_curriculum} in Chapter~\ref{ch:sns}.
+ 
+ \subsection{Reference-Library Comparison}\label{sec:gait_library_results}
+ 
+-The 43-cycle library contains 32 running trials from eight subjects at four speeds, ten walking references, and a predicted-walking cycle. The walking references span prescribed speeds of \qtyrange{0.5}{2.0}{\meter\per\second} and self-selected trials. The full graded controller, a pruned version with fewer connections, a six-synergy controller, and a controller using the W2L organization were compared on their tuning reference and the broader library. Library scores were substantially more negative (Table~\ref{tab:gait_sweep}), and the evaluations showed unilateral or asymmetric gait. The joint trajectories and contact patterns identify which aspects of the movement transferred to each reference.
+-
+-Table~\ref{tab:gait_sweep} reports the saved kinematic comparison scores. Less-negative values indicate closer agreement within a scoring configuration; these scores are not percentages or a stand-alone criterion for successful walking. The tuning-reference column uses each controller's selected reference, while the library mean averages its scores over all 43 cycles. The direct angle overlays and errors in Section~\ref{sec:app_ik_overlay} provide the more readily interpretable joint-level comparison.
+-
+-\begin{table}[htbp]
+-\caption{Four controller configurations evaluated on their tuning reference and the 43-cycle reference library. Larger recorded scores indicate closer agreement; absolute values depend on the evaluation conditions.}
++The 43-cycle library contains 32 running trials from eight subjects at four speeds, ten walking references, and a predicted-walking cycle. The walking references span prescribed speeds of \qtyrange{0.5}{2.0}{\meter\per\second} and self-selected trials. The production network (\texttt{s3k}), reduced-connection network (\texttt{s3kpruned}), six-group activation network (\texttt{syn6}), and W2L-organization network (\texttt{w2lvar}) were scored without treating a good tuning-reference score as evidence of generalization. Library scores were substantially more negative (Table~\ref{tab:gait_sweep}), and the evaluations showed unilateral or asymmetric gait. This comparison bounds transfer to the available references; it does not validate normal human walking.
++
++Table~\ref{tab:gait_sweep} uses the production pipeline's cycle-shape kinematic score. The tuning-reference column reports each configuration on its tuning reference; the library mean averages that score over all 43 reference cycles.
++
++\begin{table}[htbp]
++\caption{Four controller configurations evaluated on their tuning reference and the 43-cycle reference library. For genuine gait cycles, larger kinematic scores indicate closer agreement; zero is perfect agreement.}
+ \label{tab:gait_sweep}
+-\begin{tabularx}{\textwidth}{@{}lrr>{\raggedright\arraybackslash}X@{}}
++\begin{tabular}{@{}lrrl@{}}
+ \toprule
+  & \textbf{Tuning-ref.} & \textbf{Library mean} & \textbf{Most negative reference} \\
+  & \textbf{score} & \textbf{score (43 refs)} & \textbf{(score)} \\
+ \midrule
+-Full graded        & $-186.4$ & $-8776$ & Falisse predicted walking ($-8841$) \\
+-Pruned graded  & $-176.1$ & $-6924$ & Falisse predicted walking ($-6986$) \\
+-Six-synergy       & $-200.4$ & $-9961$ & Falisse predicted walking ($-10040$) \\
+-W2L organization     & $-144.5$ & $-5808$ & Subject 8 running trial ($-5896$) \\
+-\bottomrule
+-\end{tabularx}
+-\end{table}
+-
+-A later matched human-model comparison also varied controller organization and feedback gains. The full graded baseline generated nine detected right-leg cycles and no left-leg cycles, while the W2L organization generated five and seven, respectively. Halving the Ia, II, and Ib gains into its central pathways reduced these to three and four. These are separate configurations from the reference-library sweep above; their value is the controlled comparison of controller dependence, not a replacement ranking of the earlier scores.
++\texttt{s3k}        & $-186.4$ & $-8776$ & \texttt{Case\_40\_motion} ($-8841$) \\
++\texttt{s3kpruned}  & $-176.1$ & $-6924$ & \texttt{Case\_40\_motion} ($-6986$) \\
++\texttt{syn6}       & $-200.4$ & $-9961$ & \texttt{Case\_40\_motion} ($-10040$) \\
++\texttt{w2lvar}     & $-144.5$ & $-5808$ & \texttt{subject08\_Run\_20002} ($-5896$) \\
++\bottomrule
++\end{tabular}
++\end{table}
+ 
+ \subsection{Direct Kinematics Overlay}\label{sec:app_ik_overlay}
+ 
+-The saved human-model controller reproduced its cycle-shape score of $-145.07$ in an independent process. The direct overlay in Figure~\ref{fig:gait2392_ik_overlay} uses the Gait2392 walking inverse-kinematics trajectory and its paired ground-reaction-force file. Model cycles begin when vertical foot loading crosses \qty{50}{\newton}; reference stance is defined using the same force threshold. Ten cycles per side, with durations between \qty{0.35}{\second} and \qty{2.5}{\second}, were retained using the existing cycle detector. Each leg was aligned to its own onset and resampled over the gait cycle, without fitting phase, subtracting the mean angle, or scaling amplitude.
++The saved human-model controller reproduced its cycle-shape score of $-145.07$ in an independent process. The direct overlay in Figure~\ref{fig:gait2392_ik_overlay} uses the Gait2392 walking inverse-kinematics trajectory and its paired ground-reaction-force file. Model cycles begin when vertical foot loading crosses \qty{50}{\newton}; reference stance is defined using the same force threshold. Ten cycles per side, with durations between 0.35 and 2.5 seconds, were retained using the existing cycle detector. Each leg was aligned to its own onset and resampled over the gait cycle, without fitting phase, subtracting the mean angle, or scaling amplitude.
+ 
+ Mean cycle periods were \qty{1.285}{\second} on the right and \qty{1.254}{\second} on the left, compared with \qty{1.233}{\second} and \qty{1.213}{\second} in the reference. Model stance fractions were 0.710 and 0.649, compared with 0.610 in the reference. Table~\ref{tab:ik_absolute_rmse} reports absolute-angle errors between mean cycles. These errors retain posture offsets and are distinct from the mean-removed cycle-shape errors used in tuning. The hip and knee mismatches show why cycle counts and a scalar score must be accompanied by the trajectories and contact timing.
+ 
+@@ -203,14 +206,14 @@
+ 
+ The spiking variants replace afferent, rhythm-generator, and interneuron populations while retaining graded motor neurons. Synapses onto motor neurons are calibrated by mean conductance, preserving the continuous activation interface. This construction does not require the network dynamics or resulting movement to remain unchanged. Calibration and full conversion tables are in Appendix~\ref{app:neuron_equations}.
+ 
+-Action potentials introduce voltage fluctuations absent from a graded signal, so raw membrane-voltage variability is not an equivalent measure of controller output. Figure~\ref{fig:spike_ground} compares filtered neural readouts, muscle activation, and joint motion under the same drive, support, and selected parameters. For a hardware comparison using pulse-width modulation (PWM), both signals would need to pass through the same command encoder and valve limits.
+-
+ \subsection{MuJoCo Network and Ground Evaluation}
+ 
+-Under constant drive, the non-spiking and spiking rhythm periods were \qtylist{0.399;0.621}{\second}, respectively. The spiking period is \qty{55.6}{\percent} longer. Timing agreement therefore requires more than copying the selected parameters. The untuned spiking variant produced bilateral cycling in a ground evaluation where the non-spiking winner cycled predominantly on one side (Table~\ref{tab:spike_ground}; Figure~\ref{fig:spike_ground}). This individual comparison motivates further controlled testing; it does not establish superiority of spiking control.
+-
+-\begin{table}[htbp]
+-\caption{Supported ground evaluation at the same selected parameters (\qty{16}{\second}), with no spiking re-tuning. The knee minimum is the minimum of the right leg's mean detected cycle. Contact fraction is the fraction of samples with foot normal force above \qty{20}{\newton} during the post-startup evaluation window, whether or not cycles were detected. Thus, the non-spiking left leg can remain in contact for a fraction of 0.985 while completing no detected cycles. The recorded kinematic score summarizes the cycle comparison; less-negative scores indicate closer agreement within this matched test.}
++Under constant drive, the non-spiking and spiking rhythm periods were \qty{0.399}{} and \qty{0.621}{\second}, respectively. The spiking period is \qty{55.6}{\percent} longer. Timing agreement therefore requires more than copying the selected parameters. The untuned spiking variant produced bilateral cycling in a ground evaluation where the non-spiking winner cycled predominantly on one side (Table~\ref{tab:spike_ground}; Figure~\ref{fig:spike_ground}). This individual comparison motivates further controlled testing; it does not establish superiority of spiking control.
++
++
++
++\begin{table}[htbp]
++\caption{Supported ground evaluation at the same selected parameters (\qty{16}{\second}), with no spiking re-tuning. The knee minimum is the minimum of the right leg's mean detected cycle. Contact fraction is the fraction of samples with foot normal force above \qty{20}{\newton} during the post-startup evaluation window, whether or not cycles were detected. Thus, the non-spiking left leg can remain in contact for a fraction of 0.985 while completing no detected cycles. The kinematic score is a cycle-shape error metric: zero denotes perfect agreement, and less negative scores indicate closer agreement.}
+ \label{tab:spike_ground}
+ \begin{tabular}{@{}lcc@{}}
+ \toprule
+@@ -229,8 +232,8 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics.pdf}
+-\caption[Short-window graded and spiking neuromechanics]{Matched \qtyrange{10}{14}{\second} ground-evaluation window: graded controller (left) and untuned spiking controller (right). Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural readouts pair extensor (orange solid) and flexor (blue dashed) channels; mechanical traces pair right (orange solid) and left (blue dashed) legs. Spiking populations are displayed through their filtered readout channels.}
++\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
++\caption[Matched neural and mechanical responses with graded and spiking controllers]{Matched \qtyrange{10}{12.5}{\second} ground-trial window: graded controller (left) and untuned spiking controller (right), at the same selected parameters and support settings. Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural rows pair extensor (orange solid) and flexor (blue dashed) outputs; joint rows pair right (orange solid) and left (blue dashed) legs. Spiking signals are filtered readouts, and muscle activation is the actuator state.}
+ \label{fig:spike_rhythm}\label{fig:spike_ground}
+ \end{figure}
+ 
+@@ -238,7 +241,7 @@
+ 
+ The earlier \qty{5}{\second} knee startup comparison used a graded baseline and a spiking twin. Its final-window statistics describe startup activity; the settled, matched-control test in Section~\ref{sec:app_knee_transient} instead measures recovery from a brief sensory-current pulse. The earlier startup figure and its numerical table are retained with the supporting source records rather than repeated here.
+ 
+-In the beverage example, the spiking implementation retained approximately the same sag, \ang{2.02} versus \ang{2.00} in the graded implementation, compared with \ang{7.85} without the reflex. This comparison demonstrates transfer of the tested response after calibration, not invariance of all controlled behavior to neural coding.
++In the beverage example, the spiking implementation retained approximately the same sag, \ang{2.02} versus \ang{2.00} in the graded implementation, compared with \ang{7.85} without the reflex. This comparison demonstrates transfer of the tested response after calibration.
+ 
+ \subsection{AnimatLab Conversions}
+ 
+@@ -254,7 +257,7 @@
+ \midrule
+ Two-layer walker     & \qty{0.443}{\second} rhythm;   & no sustained rhythm (2 spikes; \\
+                      & hip $-15$ to $+23$, knee $-1$ to $+60$ & hip pinned near $+6$) \\
+-Bilateral variant    & \qty{0.462}{\second}; antiphase $-0.42$ cycle & sustained unilateral firing; one side at \qtyrange{442}{450}{\hertz} \\
++Bilateral variant    & \qty{0.462}{\second}; antiphase $-0.42$ cycle & sustained unilateral firing; one side at \qty{442}{\hertz}--\qty{450}{\hertz} \\
+ Reorganized project  & no alternation under tonic drives & synchronous \qty{11.8}{\hertz} co-bursting; \\
+ (standalone export)  &                        & same-leg envelopes $r = 1.000$ at lag 0 \\
+ Thresholds only      & \multirow{2}{=}{hip $-15$ to $+23$, knee $-1$ to $+60$} & oscillates: hip $-15.1$ to $+23.2$, \\
+@@ -265,7 +268,9 @@
+ 
+ \section{Supported BPA-Robot Evaluations}\label{sec:sns_controller_comparison}
+ 
+-The BPA-actuated walker exercised the chain from neural activation through the actuator force model to multi-joint motion. In the supported air-stepping run, the virtual harness carried \qty{70}{\percent} of the \qty{411}{\newton} body weight. The period was \qty{1.542}{\second}, knee RoM was \ang{63.5}, and peak forces were \qtylist{880;1372}{\newton}, at a peak pressure of \qty{372}{\kPa}.
++An early supported software-interface experiment recorded neural activity, actuator commands, and multi-joint motion. Its nominal vertical-support setting was \qty{70}{\percent} of the \qty{411}{\newton} body weight. The recorded period was \qty{1.542}{\second}, knee RoM was \ang{63.5}, and peak foot-contact forces were \qty{880}{} and \qty{1372}{\newton}, at a peak commanded pressure of \qty{372}{\kPa}.
++
++Component tests now check tensile-force application against native MuJoCo actuators. Together with the characterized force law, this interface supports simulated BPA control and provides a basis for future work on dynamic actuator models, sensory compensation, and physical BPA control.
+ 
+ With split left/right drives and retuned feedback, the W2L robot progressed \qty{1.72}{\meter} over \qty{30}{\second} under the support protocol. It retained progression at \qty{60}{\percent} drive and passed 12 of 12 perturbed reruns, but did not satisfy the strict contact-duty walking criterion; below that drive the gait ceased. The mechanical support was not weaned.
+ 
+@@ -277,7 +282,7 @@
+ 
+ A separate W2L configuration was evaluated after correcting the delivery of saved per-target gains to the evaluator. Four independent \qty{30}{\second} replays produced identical trajectories. Over the \qtyrange{4.5}{30}{\second} analysis window, the run had 28 left and 21 right contact events, a median bilateral phase of 0.496 cycles, forward displacement of \qty{2.246}{\meter}, and fitted speed of \qty{0.0918}{\meter\per\second}. All twelve independent reruns with \qty{1}{\percent} parameter perturbations passed the supported-stepping criterion. These are results for this configuration, distinct from the drive-weaning study above.
+ 
+-Removing nominal constant weight support did not remove the position-control harness: its mean vertical force still supplied approximately \qty{16.76}{\percent} of body weight. Contact duty remained below the strict walking criterion. These trials demonstrate repeatable stepping with that remaining assistance. An accelerated neural backend preserved the complete reference trajectories and reduced the isolated neural-step cost by a factor of 1.425; this does not establish the same speed improvement for the complete neuromechanical simulation.
++Removing nominal constant weight support did not remove the position-control harness: its mean vertical force still supplied approximately \qty{16.76}{\percent} of body weight. Contact duty remained below the strict walking criterion. Thus, repeatable supported stepping was demonstrated, while harness-free walking was not. An accelerated neural backend preserved the complete reference trajectories and reduced the isolated neural-step cost by a factor of 1.425; this does not establish the same speed improvement for the complete neuromechanical simulation.
+ 
+ \subsection{Pathway Deletions and Stimulus Tests}\label{sec:app_w2l_perturbations}
+ 
+@@ -300,9 +305,9 @@
+ 
+ A separate CAD-derived robot model retained the four-bar knees and spherical hips, with 27 selected actuator routes per side. Its anatomical frame is $x$ anterior, $y$ superior, and $z$ right; explicit frame transformations distinguish it from older converted models. The controller drives simulated reference tensions rather than calibrated BPA forces, so this model does not yet validate the complete actuator-to-controller integration proposed in Chapter~\ref{ch:overall}.
+ 
+-The model completed a \qty{20}{\second} supported crouched-stance test. During the final \qty{5}{\second}, knee excursions were \ang{1.35} right and \ang{0.95} left, while the vertical rig carried \qty{94.68}{\percent} of body weight and angular stabilization remained active. Disabling muscle forces under the same support settings caused lumbar failure after \qty{0.202}{\second}. This comparison establishes a contribution of the muscle controller under strong assistance, not independent balance. A separate run with rhythmic drive completed its horizon, but alternating gait and progression after settling have not been verified.
+-
+-A subsequent matched \qty{40}{\second} comparison retained the same geometry, initial pose, reference-tension capacities, and external assistance in both conditions. During \qtyrange{15}{40}{\second}, vertical assistance supplied 80\% of body weight. The additional control combines muscle-mediated separation feedback (\qty{160}{\newton\per\meter}, capped at \qty{20}{\newton}) with a 6\% activation floor on currently abducting routes, compared with the 5\% global floor (Table~\ref{tab:cad_abductor}). Full recorded trajectories reproduce bit for bit between fresh reference and accelerated runs. This is numerical replay within the specified model, rather than a robustness test.
++The model completed a \qty{20}{\second} supported crouched-stance test. During the final five seconds, knee excursions were \ang{1.35} right and \ang{0.95} left, while the vertical rig carried \qty{94.68}{\percent} of body weight and angular stabilization remained active. Disabling muscle forces under the same support settings caused lumbar failure after \qty{0.202}{\second}. This comparison establishes a contribution of the muscle controller under strong assistance, not independent balance. A separate run with rhythmic drive completed its horizon, but alternating gait and progression after settling have not been verified.
++
++A subsequent matched 40-second comparison retained the same geometry, initial pose, reference-tension capacities, and external assistance in both conditions. During \qtyrange{15}{40}{\second}, vertical assistance supplied 80\% of body weight. The additional control combines muscle-mediated separation feedback (\qty{160}{\newton\per\meter}, capped at \qty{20}{\newton}) with a 6\% activation floor on currently abducting routes, compared with the 5\% global floor (Table~\ref{tab:cad_abductor}). Full recorded trajectories reproduce bit for bit between fresh reference and accelerated runs. This is numerical replay within the specified model, rather than a robustness test.
+ 
+ \begin{table}[htbp]
+ \centering\small
+@@ -327,7 +332,7 @@
+ 
+ The foot attachment is an unverified assembly datum. A separate hypothesis translates each whole foot \qty{60}{\mm} toward the proximal shank, retaining tibial geometry and mass. With otherwise unchanged hybrid control, median ankle separation changes from 159.0 to \qty{57.3}{\milli\meter}, and sampled interleg penetration reaches \qty{1.316}{\milli\meter}. A separate W2L-organization timing probe has 544 neurons and 230 inputs; the knee and ankle pattern-formation outputs share four neurons, which are counted once in this total. Its shifted-foot condition passes bilateral unloading and lifting counts but fails repeated alternating foot apices and forward progression. The inherited MN compensation remains active, so this is not a full PF-driven controller comparison.
+ 
+-Route sites can lie outside CAD surfaces and transmit force through their named parent bodies, equivalent to ideal rigid offset brackets or guides. Bracket mass, compliance, packaging, and collision-aware wrapping remain unmodeled. These attachment assumptions are separate from verification of the source moving-point functions and complete path derivatives. The older \qty{20}{\second} stance test and newer 80\%-assistance comparison are different configurations, not a matched support-reduction experiment.
++Route sites can lie outside CAD surfaces and transmit force through their named parent bodies, equivalent to ideal rigid offset brackets or guides. Bracket mass, compliance, packaging, and collision-aware wrapping remain unmodeled. These attachment assumptions are separate from verification of the source moving-point functions and complete path derivatives. The older 20-second stance test and newer 80\%-assistance comparison are different configurations, not a matched support-reduction experiment.
+ 
+ The W2L replay metrics and support accounting are archived in \nolinkurl{Code/MuJoCo_SNS/spinal/reports_20261027_codex/verification.json} and the accompanying support-ladder records. CAD-model stance metrics are in \nolinkurl{Code/MuJoCo_SNS/robot_torso/controller_assessment.json}. These records retain the configurations and evaluation conditions needed to distinguish the two models.
+ 
+@@ -376,7 +381,7 @@
+ 
+ Figure~\ref{fig:force-compare} shows representative force sequences normalized to each curve's peak. Table~\ref{tab:force-r2} retains the saved per-muscle statistics: $R^2=1-\mathrm{SSE}/\mathrm{SST}$, squared Pearson correlation, and the best-aligning lag in analysis frames. The calculation and saved values are in \nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \nolinkurl{muscle_force_compare.csv}.
+ 
+-\begin{table}[h]
++\begin{table}[htbp]
+   \centering
+   \caption{MuJoCo vs.\ OpenSim muscle force along the subject01 walk at
+   matched activations. Lag in analysis frames ($\approx 17$\,ms each).}
