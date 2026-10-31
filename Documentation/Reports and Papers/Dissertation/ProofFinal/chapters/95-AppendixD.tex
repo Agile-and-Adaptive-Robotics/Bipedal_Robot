@@ -20,7 +20,7 @@ The archived AnimatLab projects provide reference circuits for implementation co
 \par\medskip
 \textbf{(C) Sensorimotor organization}\par\smallskip
 \includegraphics[width=0.76\textwidth,height=0.39\textheight,keepaspectratio]{sensoryMotor_Network.PNG}
-\caption[AnimatLab controller reference schematics]{Archived AnimatLab motifs: rhythm generation (A), pattern formation (B), and sensorimotor organization (C). Ext and Flx denote antagonist pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferents. Triangles and circles distinguish excitatory and inhibitory connections.}
+\caption[AnimatLab controller reference schematics]{Archived AnimatLab neural subsystems: \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx denote antagonist pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferents. Triangles and circles distinguish excitatory and inhibitory connections.}
 \label{fig:animatlab_controller_motifs}
 \end{figure}
 
@@ -208,15 +208,9 @@ The spiking variants replace afferent, rhythm-generator, and interneuron populat
 
 \subsection{MuJoCo Network and Ground Evaluation}
 
-Under constant drive, the non-spiking and spiking rhythm periods were \qty{0.399}{} and \qty{0.621}{\second}, respectively (Figure~\ref{fig:spike_rhythm}). The spiking period is \qty{55.6}{\percent} longer. Timing agreement therefore requires more than copying the selected parameters. The untuned spiking variant produced bilateral cycling in a ground evaluation where the non-spiking winner cycled predominantly on one side (Table~\ref{tab:spike_ground}; Figure~\ref{fig:spike_ground}). This individual comparison motivates further controlled testing; it does not establish superiority of spiking control.
+Under constant drive, the non-spiking and spiking rhythm periods were \qty{0.399}{} and \qty{0.621}{\second}, respectively. The spiking period is \qty{55.6}{\percent} longer. Timing agreement therefore requires more than copying the selected parameters. The untuned spiking variant produced bilateral cycling in a ground evaluation where the non-spiking winner cycled predominantly on one side (Table~\ref{tab:spike_ground}; Figure~\ref{fig:spike_ground}). This individual comparison motivates further controlled testing; it does not establish superiority of spiking control.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{spiking_mirror_rhythm.pdf}
-% ALT TEXT: see spiking_mirror_rhythm_alt.txt beside the figure file.
-\caption[Constant-drive rhythm, non-spiking versus spiking]{Constant-drive rhythm in the non-spiking network (A) and spiking variant (B). The observed periods are \qty{0.399}{} and \qty{0.621}{\second}; the latter is \qty{55.6}{\percent} longer. The panels use different neural readouts: graded population difference versus individual spiking cells.}
-\label{fig:spike_rhythm}
-\end{figure}
+
 
 \begin{table}[htbp]
 \caption{Supported ground evaluation at the same selected parameters (\qty{16}{\second}), with no spiking re-tuning. The knee minimum is the minimum of the right leg's mean detected cycle. Contact fraction is the fraction of samples with foot normal force above \qty{20}{\newton} during the post-startup evaluation window, whether or not cycles were detected. Thus, the non-spiking left leg can remain in contact for a fraction of 0.985 while completing no detected cycles. The kinematic score is a cycle-shape error metric: zero denotes perfect agreement, and less negative scores indicate closer agreement.}
@@ -236,42 +230,18 @@ Fell                            & no                  & no \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
+\begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{spiking_mirror_ground_gait.pdf}
-% ALT TEXT: see spiking_mirror_ground_gait_alt.txt beside the figure file.
-\caption[Ground gait, non-spiking winner versus untuned spiking mirror]{Ground-evaluation joint angles at the non-spiking winner parameters. The non-spiking model cycles predominantly on the right (A, C), while the untuned spiking variant cycles both legs (B, D). Solid indigo denotes left, and dashed orange right. Both use the supported evaluation protocol.}
-\label{fig:spike_ground}
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
+\caption[Matched neural and mechanical responses with graded and spiking controllers]{Matched \qtyrange{10}{12.5}{\second} ground-trial window: graded controller (left) and untuned spiking controller (right), at the same selected parameters and support settings. Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural rows pair extensor (orange solid) and flexor (blue dashed) outputs; joint rows pair right (orange solid) and left (blue dashed) legs. Spiking signals are filtered readouts, and muscle activation is the actuator state.}
+\label{fig:spike_rhythm}\label{fig:spike_ground}
 \end{figure}
 
 \subsection{Simulink Demonstrations}
 
-The graded and spiking knee-reflex demonstrations were compared over matched \qty{5}{\second} runs (Table~\ref{tab:spike_knee}; Figure~\ref{fig:spike_knee}). The beverage example retained approximately the same sag, \ang{2.02} versus \ang{2.00}, compared with \ang{7.85} without the reflex. These examples demonstrate transfer of particular reflex responses after calibration, not invariance of all controlled behavior to neural coding.
+The earlier \qty{5}{\second} knee startup comparison used a graded baseline and a spiking twin. Its final-window statistics describe startup activity; the settled, matched-control test in Section~\ref{sec:app_knee_transient} instead measures recovery from a brief sensory-current pulse. The earlier startup figure and its numerical table are retained with the supporting source records rather than repeated here.
 
-\begin{table}[htbp]
-\caption{Knee-reflex demonstration, graded baseline versus spiking twin at the matched operating point (\qty{5}{\second} runs; settle statistics over the last \qty{2}{\second}).}
-\label{tab:spike_knee}
-\small\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.42\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
-\toprule
-\textbf{Metric} & \textbf{Baseline} & \textbf{Spiking twin} \\
-\midrule
-Knee angle at \qty{0.05}{\second}   & \ang{15.79} & \ang{15.79} \\
-Settle mean (last \qty{2}{\second}) & \ang{43.5}  & \ang{44.4} \\
-Settle range                        & \ang{41.6}--\ang{44.9} & \ang{41.9}--\ang{46.7} \\
-Extensor / flexor activation (window means) & 0.53 / 0.53 & 0.58 / 0.56 \\
-Antagonist alternation              & \qty{0.5}{\hertz}--\qty{2}{\hertz} & \qty{7.4}{\hertz} (dominant peak) \\
-Ia interneuron firing at settle     & graded, subthreshold & \qty{95}{\hertz}; Ib \qty{0}{\hertz} \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=\textwidth]{simulink_knee_spiking_twin.pdf}
-% ALT TEXT: see simulink_knee_spiking_twin_alt.txt beside the figure file.
-\caption[Simulink knee-reflex twin, baseline versus spiking]{Knee-reflex demonstration at the matched operating point: graded baseline (solid indigo) and spiking variant (dashed orange). Full \qty{5}{\second} run (A) and final \qty{2}{\second} window (B). The spiking response has a slightly wider oscillation band.}
-\label{fig:spike_knee}
-\end{figure}
+In the beverage example, the spiking implementation retained approximately the same sag, \ang{2.02} versus \ang{2.00} in the graded implementation, compared with \ang{7.85} without the reflex. This comparison demonstrates transfer of the tested response after calibration.
 
 \subsection{AnimatLab Conversions}
 
@@ -281,7 +251,7 @@ The tested spiking conversions did not preserve the graded models' rhythm (Table
 \caption{AnimatLab spiking conversions versus their graded baselines (\qty{5.1}{\second} simulations; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the graded synapses.}
 \label{tab:spike_animatlab}
 \small
-\begin{tabular}{@{}lcc@{}}
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Variant} & \textbf{Baseline (graded)} & \textbf{Spiking copy} \\
 \midrule
@@ -290,15 +260,17 @@ Two-layer walker     & \qty{0.443}{\second} rhythm;   & no sustained rhythm (2 s
 Bilateral variant    & \qty{0.462}{\second}; antiphase $-0.42$ cycle & sustained unilateral firing; one side at \qty{442}{\hertz}--\qty{450}{\hertz} \\
 Reorganized project  & no alternation under tonic drives & synchronous \qty{11.8}{\hertz} co-bursting; \\
 (standalone export)  &                        & same-leg envelopes $r = 1.000$ at lag 0 \\
-Thresholds only      & \multirow{2}{*}{hip $-15$ to $+23$, knee $-1$ to $+60$} & oscillates: hip $-15.1$ to $+23.2$, \\
+Thresholds only      & \multirow{2}{=}{hip $-15$ to $+23$, knee $-1$ to $+60$} & oscillates: hip $-15.1$ to $+23.2$, \\
 (graded synapses)    &                        & knee $-0.8$ to $+47.9$ \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 \section{Supported BPA-Robot Evaluations}\label{sec:sns_controller_comparison}
 
-The BPA-actuated walker exercised the chain from neural activation through the actuator force model to multi-joint motion. In the supported air-stepping run, the virtual harness carried \qty{70}{\percent} of the \qty{411}{\newton} body weight. The period was \qty{1.542}{\second}, knee RoM was \ang{63.5}, and peak forces were \qty{880}{} and \qty{1372}{\newton}, at a peak pressure of \qty{372}{\kPa}. 
+An early supported software-interface experiment recorded neural activity, actuator commands, and multi-joint motion. Its nominal vertical-support setting was \qty{70}{\percent} of the \qty{411}{\newton} body weight. The recorded period was \qty{1.542}{\second}, knee RoM was \ang{63.5}, and peak foot-contact forces were \qty{880}{} and \qty{1372}{\newton}, at a peak commanded pressure of \qty{372}{\kPa}.
+
+Component tests now check tensile-force application against native MuJoCo actuators. Together with the characterized force law, this interface supports simulated BPA control and provides a basis for future work on dynamic actuator models, sensory compensation, and physical BPA control.
 
 With split left/right drives and retuned feedback, the W2L robot progressed \qty{1.72}{\meter} over \qty{30}{\second} under the support protocol. It retained progression at \qty{60}{\percent} drive and passed 12 of 12 perturbed reruns, but did not satisfy the strict contact-duty walking criterion; below that drive the gait ceased. The mechanical support was not weaned.
 
@@ -409,7 +381,7 @@ The comparison script reads OpenSim static-optimization forces and activations a
 
 Figure~\ref{fig:force-compare} shows representative force sequences normalized to each curve's peak. Table~\ref{tab:force-r2} retains the saved per-muscle statistics: $R^2=1-\mathrm{SSE}/\mathrm{SST}$, squared Pearson correlation, and the best-aligning lag in analysis frames. The calculation and saved values are in \nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \nolinkurl{muscle_force_compare.csv}.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \caption{MuJoCo vs.\ OpenSim muscle force along the subject01 walk at
   matched activations. Lag in analysis frames ($\approx 17$\,ms each).}

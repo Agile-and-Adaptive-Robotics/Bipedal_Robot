@@ -1,0 +1,472 @@
+ppt/slides/slide1.xml
+Real-time control of dynamic walking in a dog-like robot
+Dr. Alex Hunt
+Agile and Adaptive Robotics Lab
+1
+
+ppt/slides/slide2.xml
+Most of the neurons involved in walking are located in the spinal cord
+2
+
+ppt/slides/slide3.xml
+ 
+    (most) Robots 	     vs  	 Animals
+3
+Sensors
+Brain
+Actuation
+Sensors
+Actuation
+Brain
+Intermediate
+Networks
+
+ppt/slides/slide4.xml
+We are building functional models of the nervous system, simulating neural populations and the connections between them.
+4
+Sensors
+Actuation
+Brain
+Intermediate
+Networks
+
+ppt/slides/slide5.xml
+Initial work concentrates on Intermediate networks, 
+Sensors
+, and 
+Actuation
+5
+Sensors
+Actuation
+Intermediate
+Networks
+
+ppt/slides/slide6.xml
+Networks in most mammals are likely VERY similar
+6
+
+ppt/slides/slide7.xml
+Combining biomechanics with neural modeling to produce adaptive walking
+7
+
+ppt/slides/slide8.xml
+8
+Maya Animation
+30° from 
+underneath
+90° from 
+the
+ 
+side
+
+ppt/slides/slide9.xml
+Biomechanical models – Rat simulation and dog robots with artificial muscles
+9
+Simulation
+‘Puppy’ at CWRU
+‘Puppy 2’ at PSU
+
+ppt/slides/slide10.xml
+So what do we know about the neural system?
+10
+
+ppt/slides/slide11.xml
+We know (infer) a lot about the organization
+11
+G. 
+Zhong
+, N. A. 
+Shevtsova
+, I. A. 
+Rybak
+, and R. M. Harris-Warrick, “Neuronal activity in the isolated mouse spinal cord during spontaneous deletions in fictive locomotion: insights into locomotor central pattern generator organization.,” 
+The Journal of physiology
+, vol. 590, no. Pt 19, pp. 4735–59, Oct. 2012.
+
+ppt/slides/slide12.xml
+Joint network from literature
+CPG-PF & MN Network
+Sensory Feedback
+12
+
+ppt/slides/slide13.xml
+Central Pattern Generator
+Sensory Feedback
+Motoneurons
+Interneurons
+The 
+neural 
+network is composed 
+of:
+13
+
+ppt/slides/slide14.xml
+Central 
+Pattern 
+Generators (CPGs) are a set 
+of neurons that go through active and inactive 
+phases without 
+external 
+input.
+14
+
+ppt/slides/slide15.xml
+Sensory feedback reshapes CPG behavior and period
+15
+.
+.
+
+ppt/slides/slide16.xml
+Motoneurons activate muscles in the 
+simulation or robot
+16
+
+ppt/slides/slide17.xml
+Interneurons provide inhibitory Renshaw cell and muscle 
+Ia
+ (velocity) feedback
+17
+
+ppt/slides/slide18.xml
+Neuron model captures dynamic capabilities of neurons
+Nonspiking
+ model that encodes average voltage of a population
+18
+
+ppt/slides/slide19.xml
+With computer training (synapse strengths), neural model performs self-supported, forward walking
+19
+48
+ inter-neurons
+12
+ motor neurons
+36
+ sensory neurons
+106
+ Neurons
+168
+ Synapses
+
+ppt/slides/slide20.xml
+Same network, parameters tuned to robot dynamics and desired kinematics
+20
+
+ppt/slides/slide21.xml
+Mathematical Operations Can Be Performed By 
+Subnetworks
+From 
+left to right: Addition, Subtraction, Multiplication and Derivative Subnetworks are shown
+21
+
+ppt/slides/slide22.xml
+A PD controller can be easily built using these 
+subfunctions
+22
+
+ppt/slides/slide23.xml
+And Used to control an inverted Pendulum (matches human balance responses)
+23
+
+ppt/slides/slide24.xml
+We need spiking neurons for 
+Loihi
+…
+24
+
+ppt/slides/slide25.xml
+Could use 
+Nengo
+ to initialize populations that give the input-output relationships that we want.
+25
+
+ppt/slides/slide26.xml
+To reduce number of neurons even further, we are developing a direct encoding-decoding process for adaptive threshold neurons
+26
+
+ppt/slides/slide27.xml
+We have developed methods that enable direct translation from a single non-spiking neuron to a single spiking neuron
+27
+
+ppt/slides/slide28.xml
+Not all neural firing is rate coding – adaptive thresholds reduce or increase firing over time
+28
+
+ppt/slides/slide29.xml
+Results show we can produce the desired encoding behavior, however fluctuations persist
+29
+
+ppt/slides/slide30.xml
+Current work is involved in eliminating fluctuations with (small) populations
+30
+
+ppt/slides/slide31.xml
+We also need to determine how to actuate artificial 
+muscles with spikes
+31
+
+ppt/slides/slide32.xml
+We will control them like regular muscles!
+32
+MN Spikes
+Muscle contracts
+Force builds, peaks, and dies off
+Valve opens then closes
+Pressurized Air enters muscle for brief time, then exhaust when not filling
+Force builds, peaks, and dies off
+
+ppt/slides/slide33.xml
+Why do we need 
+Loihi
+?
+33
+
+ppt/slides/slide34.xml
+Scalability- Need more neurons to do more interesting behaviors – need real time computation
+34
+
+ppt/slides/slide35.xml
+Sensor Processing – 
+Hundreds
+ 
+Thousands 
+Millions (Billions?) of sensors, best processed in parallel
+35
+For example, Bat and Bird wings process dispersed flow data across wings to…
+
+ppt/slides/slide36.xml
+…mitigate 
+turbulence
+36
+
+ppt/slides/slide37.xml
+We are developing a small airplane platform for mimicking this capability
+37
+
+ppt/slides/slide38.xml
+Thank
+ 
+You
+Case Western Reserve University
+Roger Quinn
+Nicholas 
+Szczecinski
+38
+University of Jena
+Martin Fischer
+Manuella
+ Schmidt
+Emanuel 
+Andrada
+Dirk Arnold
+Portland State University
+Cody 
+Scharzenberger
+Andreas 
+Natsis
+Funding
+NSF: IIS160811
+Portland State University
+DARPA 
+M3: DI-MISC-81612A
+NASA: NNX12AN24H 
+
+
+ppt/slides/slide39.xml
+The motor neuron is the interface between the neural ‘controller’ and physical movements
+Animal
+Neural System
+Training
+Dynamics
+MN
+39
+
+ppt/slides/slide40.xml
+Inverse solving for muscle tension
+(Rat)
+40
+
+ppt/slides/slide41.xml
+Inverse solving for MN activation
+(Rat)
+41
+
+ppt/slides/slide42.xml
+Desired MN activity
+Hip
+Knee
+Ankle
+42
+
+ppt/slides/slide43.xml
+Set parameters based on desired functionality
+CPG should produce rhythm around stepping frequency
+Sensory feedback should modify rhythm to match exact timing
+Feed forward activations account for 70%+ of total MN activity
+Sensory feedback modulates activity
+43
+
+ppt/slides/slide44.xml
+My 4 step approach to training joint networks for forward walking
+1. Picked a CPG which oscillates at ~2x the period of the stepping animal without drive.
+2. Using Matlab, trained input connections from afferent feedback (based on expected feedback) to cause transitions at speed of walking animal.
+3. Trained output of CPG-PF to MNs to match peaks
+4. Trained afferent feedback (
+Ib
+ and 
+Ia
+) to more closely match desired activation
+1
+2
+2
+3
+3
+4
+4
+44
+
+ppt/slides/slide45.xml
+Training Results
+45
+
+ppt/slides/slide46.xml
+Training whole network at once produces locally minimum solution highly dependent on expected feedback
+Train
+46
+
+ppt/slides/slide47.xml
+Robot - Puppy
+47
+
+ppt/slides/slide48.xml
+Inverse solving for actuator force
+Tension = ??????????????????
+Muscle Force
+(Robot)
+Desired Kinematics
+Desired Torques
+48
+
+ppt/slides/slide49.xml
+Tension = T(P,L)
+Festo
+ 
+McKibben
+ Actuator
+Inflation (Activation) causes contraction
+Tension is a function of internal pressure and actuator strain
+Current models do not account for original actuator length
+49
+
+ppt/slides/slide50.xml
+Low Level Controller
+Built in 
+Labview
+ and implemented on 
+sbRIO
+ and FPGA 
+50
+
+ppt/slides/slide51.xml
+Collecting 
+Festo
+ data
+Build model of 
+Festo
+ actuators on Puppy
+Test stand used in data collection. 
+Actuator 
+Shaft rotation 
+Potentiometer 
+Shaft counterweight 
+Weights
+51
+
+ppt/slides/slide52.xml
+Fitting a model to the data
+52
+
+ppt/slides/slide53.xml
+Model success: Feed forward dynamic positioning
+Submitted to IROS 2015 
+53
+
+ppt/slides/slide54.xml
+Inverse solving for actuator tension
+Muscle Force
+(Robot)
+P = a
+1
++a
+2
+F+a
+3
+S+
+a
+4
+ tan(a
+5
+(k/(a
+6
+F+max(k))+a
+7
+)
+54
+
+ppt/slides/slide55.xml
+Methods: Collecting Rat Locomotion Data
+55
+Stecker 
+Referenz
+/ Erde 
+EMG 
+Elektroden
+Freely walking rats subjected to  perturbations
+Bi-planar high-speed x-ray video
+EMG recordings
+
+ppt/slides/slide56.xml
+Methods: Build Neuromechanical Model
+56
+Stecker 
+Referenz
+/ Erde 
+EMG 
+Elektroden
+Neuroscience literature guides neural structure
+Signals transmitted between neurons
+Joint motion, 
+muscle activations and functional synergy groups
+Functional subnetwork design
+C
+membrane
+ 
+dV
+/
+dt
+ 
+= 
+I
+leak
+ 
++ 
+∑ 
+I
+synaptic
+  
++ 
+I
+applied
+
+ppt/slides/slide57.xml
+Methods: Test Results, Design New Experiments
+57
+Stecker 
+Referenz
+/ Erde 
+EMG 
+Elektroden
+Simulations 
+r
+esults compared with animal data
+Results suggest 
+avenues for future biological experiments

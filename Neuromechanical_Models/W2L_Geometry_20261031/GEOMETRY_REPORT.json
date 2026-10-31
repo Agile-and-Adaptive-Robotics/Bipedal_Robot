@@ -1,0 +1,491 @@
+{
+  "source": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_Treadmill_FrozenRoot",
+  "poses_deg": {
+    "L": {
+      "hip": -10,
+      "knee_flexion": 10
+    },
+    "R": {
+      "hip": 20,
+      "knee_flexion": 55
+    }
+  },
+  "models": {
+    "asim": {
+      "original": {
+        "L": {
+          "original_proximal_tibia_anchor_in_femur_m": [
+            0.01151393727336898,
+            -0.21030150832061212,
+            4.4746696575447864e-05
+          ],
+          "femur_distal_face_in_femur_m": [
+            0,
+            -0.21,
+            0
+          ],
+          "original_offset_m": [
+            0.01151393727336898,
+            -0.00030150832061212607,
+            4.4746696575447864e-05
+          ],
+          "original_proximal_tibia_box_face_in_femur_m": [
+            0.010990576488215845,
+            -0.22028780339694792,
+            4.271275582201841e-05
+          ]
+        },
+        "R": {
+          "original_proximal_tibia_anchor_in_femur_m": [
+            0.01151393727336898,
+            -0.21030150832061212,
+            4.4746696575447864e-05
+          ],
+          "femur_distal_face_in_femur_m": [
+            0,
+            -0.21,
+            0
+          ],
+          "original_offset_m": [
+            0.01151393727336898,
+            -0.00030150832061212607,
+            4.4746696575447864e-05
+          ],
+          "original_proximal_tibia_box_face_in_femur_m": [
+            0.010990576488215845,
+            -0.22028780339694792,
+            4.271275582201841e-05
+          ]
+        }
+      },
+      "checks": [
+        {
+          "leg": "L",
+          "hip_anchor_world_m": [
+            -3.454,
+            0.9228845719299837,
+            0.06
+          ],
+          "distal_femur_world_m": [
+            -3.526932234620111,
+            0.5092653156648564,
+            0.06
+          ],
+          "proximal_tibia_world_m": [
+            -3.526932234620111,
+            0.5092653156648561,
+            0.06000000000000073
+          ],
+          "knee_anchor_world_m": [
+            -3.526932234620111,
+            0.5092653156648561,
+            0.06000000000000073
+          ],
+          "knee_face_gap_m": 8.074201422896752e-16,
+          "ankle_anchor_world_m": [
+            -3.6705806948168918,
+            0.1145944149347746,
+            0.05999999999999929
+          ],
+          "foot_sole_y_m": 0.029930471472280736
+        },
+        {
+          "leg": "R",
+          "hip_anchor_world_m": [
+            -3.454,
+            0.9228845719299837,
+            -0.06
+          ],
+          "distal_femur_world_m": [
+            -3.3103515398032193,
+            0.5282136711999023,
+            -0.06
+          ],
+          "proximal_tibia_world_m": [
+            -3.310351539803219,
+            0.528213671199902,
+            -0.05999999999999956
+          ],
+          "knee_anchor_world_m": [
+            -3.310351539803219,
+            0.528213671199902,
+            -0.05999999999999956
+          ],
+          "knee_face_gap_m": 6.615281034191894e-16,
+          "ankle_anchor_world_m": [
+            -3.551253643070658,
+            0.18416981259852544,
+            -0.06000000000000041
+          ],
+          "foot_sole_y_m": 0.08004121151632632
+        }
+      ],
+      "root_position_m": [
+        -3.454,
+        0.9828845719299841,
+        0.0
+      ],
+      "floor_top_y_m": 0.005000000000000018,
+      "minimum_solid_foot_to_floor_gap_m": 0.01,
+      "foot_clearance_definition": "minimum rotated corner of solid foot/toe boxes; contact sensor boxes excluded",
+      "hinge_limit_changes": [
+        {
+          "joint": "hip_L",
+          "old_anatomical_zero_deg": -3.0000070153049903,
+          "new_anatomical_zero_deg": -10.0,
+          "relative_limit_shift_deg": 6.99999298469501,
+          "old_relative_limits_deg": [
+            -14.99997778074544,
+            23.000015586818584
+          ],
+          "new_relative_limits_deg": [
+            -7.99998479605043,
+            30.000008571513593
+          ],
+          "preserved_anatomical_limits_deg": [
+            -17.99998479605043,
+            20.000008571513593
+          ]
+        },
+        {
+          "joint": "knee_L",
+          "old_anatomical_zero_deg": 3.0000070774156327,
+          "new_anatomical_zero_deg": 10.0,
+          "relative_limit_shift_deg": -6.999992922584367,
+          "old_relative_limits_deg": [
+            0.0,
+            60.0001403060998
+          ],
+          "new_relative_limits_deg": [
+            -6.999992922584367,
+            53.00014738351544
+          ],
+          "preserved_anatomical_limits_deg": [
+            3.0000070774156327,
+            63.00014738351544
+          ]
+        },
+        {
+          "joint": "ankle_L",
+          "old_anatomical_zero_deg": 8.000209652336965,
+          "new_anatomical_zero_deg": 0.0,
+          "relative_limit_shift_deg": 8.000209652336965,
+          "old_relative_limits_deg": [
+            -20.000008571513593,
+            -5.000002142878398
+          ],
+          "new_relative_limits_deg": [
+            -11.999798919176628,
+            3.0002075094585665
+          ],
+          "preserved_anatomical_limits_deg": [
+            -11.999798919176628,
+            3.0002075094585665
+          ]
+        },
+        {
+          "joint": "hip_R",
+          "old_anatomical_zero_deg": -3.0000070153049903,
+          "new_anatomical_zero_deg": 20.0,
+          "relative_limit_shift_deg": -23.00000701530499,
+          "old_relative_limits_deg": [
+            -14.99997778074544,
+            23.000015586818584
+          ],
+          "new_relative_limits_deg": [
+            -37.99998479605043,
+            8.571513593830403e-06
+          ],
+          "preserved_anatomical_limits_deg": [
+            -17.99998479605043,
+            20.000008571513593
+          ]
+        },
+        {
+          "joint": "knee_R",
+          "old_anatomical_zero_deg": 3.0000070774156327,
+          "new_anatomical_zero_deg": 55.0,
+          "relative_limit_shift_deg": -51.99999292258437,
+          "old_relative_limits_deg": [
+            0.0,
+            60.0001403060998
+          ],
+          "new_relative_limits_deg": [
+            -51.99999292258437,
+            8.000147383515431
+          ],
+          "preserved_anatomical_limits_deg": [
+            3.0000070774156327,
+            63.00014738351544
+          ]
+        },
+        {
+          "joint": "ankle_R",
+          "old_anatomical_zero_deg": 8.000209652336965,
+          "new_anatomical_zero_deg": 0.0,
+          "relative_limit_shift_deg": 8.000209652336965,
+          "old_relative_limits_deg": [
+            -20.000008571513593,
+            -5.000002142878398
+          ],
+          "new_relative_limits_deg": [
+            -11.999798919176628,
+            3.0002075094585665
+          ],
+          "preserved_anatomical_limits_deg": [
+            -11.999798919176628,
+            3.0002075094585665
+          ]
+        }
+      ],
+      "diagram_xml_valid": true,
+      "changed_bodies": [
+        "femur_L",
+        "tibia_L",
+        "foot_L",
+        "femur_R",
+        "tibia_R",
+        "foot_R"
+      ],
+      "neural_payload_sha256": "de2d797519d8013602684349f7ab4d476d333268b447f634e4caf8baaca85832"
+    },
+    "aproj": {
+      "original": {
+        "L": {
+          "original_proximal_tibia_anchor_in_femur_m": [
+            0.011513910373447643,
+            -0.210301507172521,
+            4.6013545410910135e-05
+          ],
+          "femur_distal_face_in_femur_m": [
+            0,
+            -0.21,
+            0
+          ],
+          "original_offset_m": [
+            0.011513910373447643,
+            -0.0003015071725210039,
+            4.6013545410910135e-05
+          ],
+          "original_proximal_tibia_box_face_in_femur_m": [
+            0.010990550811018206,
+            -0.22028780230104278,
+            4.392202061950513e-05
+          ]
+        },
+        "R": {
+          "original_proximal_tibia_anchor_in_femur_m": [
+            0.011513910373447643,
+            -0.210301507172521,
+            4.6013545410910135e-05
+          ],
+          "femur_distal_face_in_femur_m": [
+            0,
+            -0.21,
+            0
+          ],
+          "original_offset_m": [
+            0.011513910373447643,
+            -0.0003015071725210039,
+            4.6013545410910135e-05
+          ],
+          "original_proximal_tibia_box_face_in_femur_m": [
+            0.010990550811018206,
+            -0.22028780230104278,
+            4.392202061950513e-05
+          ]
+        }
+      },
+      "checks": [
+        {
+          "leg": "L",
+          "hip_anchor_world_m": [
+            -3.454,
+            0.9228847952724647,
+            0.06
+          ],
+          "distal_femur_world_m": [
+            -3.526932234620111,
+            0.5092655390073374,
+            0.06
+          ],
+          "proximal_tibia_world_m": [
+            -3.526932234620111,
+            0.5092655390073371,
+            0.06
+          ],
+          "knee_anchor_world_m": [
+            -3.526932234620111,
+            0.5092655390073371,
+            0.06
+          ],
+          "knee_face_gap_m": 3.3306690738754696e-16,
+          "ankle_anchor_world_m": [
+            -3.6705806948168918,
+            0.11459463827725555,
+            0.060000000000000026
+          ],
+          "foot_sole_y_m": 0.02993069481476183
+        },
+        {
+          "leg": "R",
+          "hip_anchor_world_m": [
+            -3.454,
+            0.9228847952724647,
+            -0.06
+          ],
+          "distal_femur_world_m": [
+            -3.3103515398032193,
+            0.5282138945423832,
+            -0.06
+          ],
+          "proximal_tibia_world_m": [
+            -3.310351539803219,
+            0.528213894542383,
+            -0.05999999999999999
+          ],
+          "knee_anchor_world_m": [
+            -3.310351539803219,
+            0.528213894542383,
+            -0.05999999999999999
+          ],
+          "knee_face_gap_m": 4.965553152773373e-16,
+          "ankle_anchor_world_m": [
+            -3.551253643070658,
+            0.18417003594100645,
+            -0.05999999999999997
+          ],
+          "foot_sole_y_m": 0.08004143485880741
+        }
+      ],
+      "root_position_m": [
+        -3.454,
+        0.9828847952724648,
+        0.0
+      ],
+      "floor_top_y_m": 0.005000000000000018,
+      "minimum_solid_foot_to_floor_gap_m": 0.01,
+      "foot_clearance_definition": "minimum rotated corner of solid foot/toe boxes; contact sensor boxes excluded",
+      "hinge_limit_changes": [
+        {
+          "joint": "hip_L",
+          "old_anatomical_zero_deg": -3.0000000000000004,
+          "new_anatomical_zero_deg": -10.0,
+          "relative_limit_shift_deg": 6.999999999999999,
+          "old_relative_limits_deg": [
+            -14.999999999999998,
+            23.0
+          ],
+          "new_relative_limits_deg": [
+            -7.999999999999998,
+            29.999999999999996
+          ],
+          "preserved_anatomical_limits_deg": [
+            -18.0,
+            20.0
+          ]
+        },
+        {
+          "joint": "knee_L",
+          "old_anatomical_zero_deg": 3.0000000656771717,
+          "new_anatomical_zero_deg": 10.0,
+          "relative_limit_shift_deg": -6.999999934322828,
+          "old_relative_limits_deg": [
+            0.0,
+            59.99999999999999
+          ],
+          "new_relative_limits_deg": [
+            -6.999999934322828,
+            53.00000006567717
+          ],
+          "preserved_anatomical_limits_deg": [
+            3.0000000656771717,
+            63.00000006567717
+          ]
+        },
+        {
+          "joint": "ankle_L",
+          "old_anatomical_zero_deg": 7.999999956570803,
+          "new_anatomical_zero_deg": 0.0,
+          "relative_limit_shift_deg": 7.999999956570803,
+          "old_relative_limits_deg": [
+            -20.0,
+            -5.0
+          ],
+          "new_relative_limits_deg": [
+            -12.000000043429196,
+            2.999999956570803
+          ],
+          "preserved_anatomical_limits_deg": [
+            -12.000000043429196,
+            2.999999956570803
+          ]
+        },
+        {
+          "joint": "hip_R",
+          "old_anatomical_zero_deg": -3.0000000000000004,
+          "new_anatomical_zero_deg": 20.0,
+          "relative_limit_shift_deg": -23.0,
+          "old_relative_limits_deg": [
+            -14.999999999999998,
+            23.0
+          ],
+          "new_relative_limits_deg": [
+            -38.0,
+            0.0
+          ],
+          "preserved_anatomical_limits_deg": [
+            -18.0,
+            20.0
+          ]
+        },
+        {
+          "joint": "knee_R",
+          "old_anatomical_zero_deg": 3.0000000656771717,
+          "new_anatomical_zero_deg": 55.0,
+          "relative_limit_shift_deg": -51.99999993432283,
+          "old_relative_limits_deg": [
+            0.0,
+            59.99999999999999
+          ],
+          "new_relative_limits_deg": [
+            -51.99999993432283,
+            8.000000065677169
+          ],
+          "preserved_anatomical_limits_deg": [
+            3.0000000656771717,
+            63.00000006567717
+          ]
+        },
+        {
+          "joint": "ankle_R",
+          "old_anatomical_zero_deg": 7.999999956570803,
+          "new_anatomical_zero_deg": 0.0,
+          "relative_limit_shift_deg": 7.999999956570803,
+          "old_relative_limits_deg": [
+            -20.0,
+            -5.0
+          ],
+          "new_relative_limits_deg": [
+            -12.000000043429196,
+            2.999999956570803
+          ],
+          "preserved_anatomical_limits_deg": [
+            -12.000000043429196,
+            2.999999956570803
+          ]
+        }
+      ],
+      "diagram_xml_valid": true,
+      "changed_bodies": [
+        "femur_L",
+        "tibia_L",
+        "foot_L",
+        "femur_R",
+        "tibia_R",
+        "foot_R"
+      ],
+      "neural_payload_sha256": "31aa9210e7b655cf8ef161f5732e516877703c22a3b6c0de1b838f84f43ae4f5"
+    }
+  }
+}

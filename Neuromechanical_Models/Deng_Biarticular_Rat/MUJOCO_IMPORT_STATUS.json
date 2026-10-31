@@ -1,0 +1,29 @@
+{
+  "source": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\Deng_Biarticular_Rat\\Biarticular_net_Standalone.asim",
+  "body_types": [
+    "Attachment",
+    "Box",
+    "LinearHillMuscle",
+    "LinearHillStretchReceptor",
+    "Plane"
+  ],
+  "joint_types": [
+    "Hinge"
+  ],
+  "unsupported_bodies": [],
+  "unsupported_joints": [],
+  "length_units_note": "Serialized physical lengths match .aproj Actual SI values, despite the display distance unit Decimeters; mass values are grams.",
+  "frozen_source_root": true,
+  "scope": "Mechanical import only. Native linear-Hill and neural signals require separate coupled runtime validation.",
+  "xml": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\Deng_Biarticular_Rat\\Deng_Biarticular_Rat.xml",
+  "compiled": true,
+  "nq": 7,
+  "nv": 7,
+  "nu": 16,
+  "source_frozen_root_preserved": true,
+  "deviations": [
+    "Physics target 2 ms; source 50 microseconds, so convergence is not yet established.",
+    "Contact law and collision handling use explicit MuJoCo assumptions; source neural/force trajectory equivalence not claimed.",
+    "Imported from source muscles/routes; no third muscle added or dropped."
+  ]
+}

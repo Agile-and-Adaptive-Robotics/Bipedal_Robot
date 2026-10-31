@@ -1,0 +1,7 @@
+import json
+import numpy as np
+from pathlib import Path
+base=Path(__file__).resolve().parent/'runs/W2L_VirtualWalker';a=np.load(base/'guides_v1_t2_c0.01_h0_p5/trajectory.npz');b=np.load(base/'physical_guide_fresh_cli/trajectory.npz');result=json.loads((base/'physical_guide_fresh_cli/RESULT.json').read_text());keys=['q','angles','neuro','forces','root','foot_force_world','guide_force_world','guide_torque_about_pelvis','pelvis_quaternion','com_position'];diff={k:float(np.max(abs(a[k]-b[k]))) for k in keys};assert all(v==0 for v in diff.values());assert result['yaw_perturb_nm']==5 and result['sagittal_harness_scale']==0 and result['guide_clearance_m']==.01
+mask=b['t']>=1.;force=b['rail_force_world']+b['guide_force_world']+b['harness_force']+b['foot_force_world'].sum(axis=1);mean=float(np.mean(force[mask,1])/(result['robot_mass_kg']*9.81));v=b['com_velocity'][mask,1];tt=b['t'][mask];expected=1.+float((v[-1]-v[0])/(tt[-1]-tt[0]))/9.81
+out=dict(fresh_process_bit_identical=True,maximum_abs_differences=diff,explicit_CLI_overrides_config=True,mean_total_external_vertical_force_BW=mean,expected_from_gravity_plus_COM_velocity_change_BW=expected,vertical_force_closure_error_BW=mean-expected,scope='Force closure is a mean diagnostic; post-step contact forces are not a pointwise integration residual.')
+(base.parent/'FRESH_GUIDE_CLI_PARITY.json').write_text(json.dumps(out,indent=2));print(json.dumps(out,indent=2))
