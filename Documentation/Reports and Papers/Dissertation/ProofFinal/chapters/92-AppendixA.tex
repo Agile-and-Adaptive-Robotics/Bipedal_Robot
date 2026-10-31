@@ -76,7 +76,7 @@ The fiber-velocity relation and its shortening/lengthening denominator are
  \label{eq:app_thelen7}
 \end{equation}
 
-Here $\bar F^M$ is the normalized active fiber force entering the force--velocity relation, $V^M=\dot L^M$ is negative during shortening, and $V^M_{\max}$ is the maximum shortening-speed scale. Table~\ref{tab:app_thelen_symbols} defines the curve parameters. A shape factor is a dimensionless parameter controlling a curve's curvature or width; it is not a stiffness in N/m. For example, increasing $\gamma$ broadens the active force--length curve while preserving its peak at $\bar L^M=1$. Changing $k^{PE}$ changes the passive curve's shape while retaining unit force at strain $\varepsilon_0^M$.
+Here $\bar F^M$ is the normalized active fiber force entering the force--velocity relation, $V^M=\dot L^M$ is negative during shortening, and $V^M_{\max}$ is the maximum shortening-speed scale. Table~\ref{tab:app_thelen_symbols} defines the curve parameters. A shape factor is a dimensionless parameter controlling a curve's curvature or width; it is not a stiffness in \unit{\newton\per\meter}. For example, increasing $\gamma$ broadens the active force--length curve while preserving its peak at $\bar L^M=1$. Changing $k^{PE}$ changes the passive curve's shape while retaining unit force at strain $\varepsilon_0^M$.
 
 \begin{table}[htbp]
 \centering\small
@@ -168,12 +168,12 @@ The normalized isometric force surface of Equation~(\ref{eq:Fstar}) is implement
     \qquad F^{*}\le 0 \;\Rightarrow\; 0,
     \label{eq:app_fstar}
 \end{equation}
-with $P^{*} = P/\qty{620}{\kPa}$. The zero-clamp $F^{*}\le 0 \Rightarrow 0$ is applied by the callers (e.g.\ \nolinkurl{Functions/festo4.m} line 35), not inside \nolinkurl{f_festo.m} itself. The coefficients were fitted with \texttt{fittype} nonlinear least squares and least-absolute-residual robustness (\nolinkurl{Testing_Data/bpaFits.m}, lines 45--60 and 115--140, lower bounds $[0,0,0]$) and are reported in Table~\ref{tab:Fstar}. The code additionally holds a 40\,mm fit not used in this dissertation ($c_0 = 0.1224$, $c_1 = 10.47$, $c_2 = 2.023$; \nolinkurl{f_festo.m} lines 17--20).
+with $P^{*} = P/\qty{620}{\kPa}$. The zero-clamp $F^{*}\le 0 \Rightarrow 0$ is applied by the callers (e.g.\ \nolinkurl{Functions/festo4.m} line 35), not inside \nolinkurl{f_festo.m} itself. The coefficients were fitted with \texttt{fittype} nonlinear least squares and least-absolute-residual robustness (\nolinkurl{Testing_Data/bpaFits.m}, lines 45--60 and 115--140, lower bounds $[0,0,0]$) and are reported in Table~\ref{tab:Fstar}. The code additionally holds a \qty{40}{\mm} fit not used in this dissertation ($c_0 = 0.1224$, $c_1 = 10.47$, $c_2 = 2.023$; \nolinkurl{f_festo.m} lines 17--20).
 
 At runtime the torque model may alternatively evaluate a spline interpolation of the manufacturer's datasheet curves (\nolinkurl{Functions/festo4.m}, backed by \texttt{FestoLookup.mat}), with force clamped to zero for $\varepsilon^{*}>1$ or $F^{*}<0$. Equation~(\ref{eq:app_fstar}) replaced this lookup in the corrected model.
 
 \subsection{Maximum Force}
-The resting-length-dependent maximum force of Equation~(\ref{eq:Fmax_3D}) is implemented in \nolinkurl{Functions/maxBPAforce.m} (10\,mm: line 46; 20\,mm: line 57; duplicate for 20\,mm in \nolinkurl{Functions/Fmax20.m}) with the fixed \qty{7.5}{\mm} end-contact offset. The fitted 20\,mm coefficients carry confidence intervals $a_1 \in [1.4745, 1.5011]$\,\si{\N\per\kPa} and $a_2 \in [0.0238, 0.0258]$\,\si{\per\kPa\per\metre} (\texttt{Fmax20.m} lines 26--27). Total force is the product $F = F^{*}(\varepsilon^{*},P^{*})\,F_{620}(l_{0})$, resolved into a vector along the force direction (\texttt{MonoPamDataExplicit.m} lines 283--287).
+The resting-length-dependent maximum force of Equation~(\ref{eq:Fmax_3D}) is implemented in \nolinkurl{Functions/maxBPAforce.m} (\qty{10}{\mm}: line 46; \qty{20}{\mm}: line 57; duplicate for \qty{20}{\mm} in \nolinkurl{Functions/Fmax20.m}) with the fixed \qty{7.5}{\mm} end-contact offset. The fitted \qty{20}{\mm} coefficients carry confidence intervals $a_1 \in [1.4745, 1.5011]$\,\si{\N\per\kPa} and $a_2 \in [0.0238, 0.0258]$\,\si{\per\kPa\per\metre} (\texttt{Fmax20.m} lines 26--27). Total force is the product $F = F^{*}(\varepsilon^{*},P^{*})\,F_{620}(l_{0})$, resolved into a vector along the force direction (\texttt{MonoPamDataExplicit.m} lines 283--287).
 
 \section{Muscle Path Length and Moment Arm}
 
@@ -202,7 +202,7 @@ The artificial tendon is modeled as an axial spring with stiffness
     k_{ten} \;=\; \frac{n\,A_{c}\,E}{L_{ten}},
     \label{eq:app_tendon}
 \end{equation}
-with $n=2$ parallel cable strands ($\times 6$ for the 20\,mm assembly), $A_{c} = \qty{1.51e-6}{\metre\squared}$ (19-strand cable), and $E = \qty{193e9}{\pascal}$ (\nolinkurl{MonoPam_mult.m}, function \texttt{Spr()}, lines 627--637; the evaluators obtain the spring rate through \nolinkurl{Spr(bpa_i)}, \texttt{minimizeFlxPin.m} line 156). Series combination with the projected bracket compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1} + c_{b2}\right)^{-1}$ (\texttt{minimizeFlxPin.m} lines 394--409).
+with $n=2$ parallel cable strands ($\times 6$ for the \qty{20}{\mm} assembly), $A_{c} = \qty{1.51e-6}{\metre\squared}$ (19-strand cable), and $E = \qty{193e9}{\pascal}$ (\nolinkurl{MonoPam_mult.m}, function \texttt{Spr()}, lines 627--637; the evaluators obtain the spring rate through \nolinkurl{Spr(bpa_i)}, \texttt{minimizeFlxPin.m} line 156). Series combination with the projected bracket compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1} + c_{b2}\right)^{-1}$ (\texttt{minimizeFlxPin.m} lines 394--409).
 
 The scalar compliance displacement $\delta$ of Equation~(\ref{eq:complianceforcebalance}) is found numerically with \texttt{fzero} on the bracket $[0,\, l_{m}-l_{620}]$,
 \begin{equation}
@@ -213,5 +213,5 @@ with $\delta \equiv 0$ when the uncorrected relative strain already exceeds unit
 
 \section{Wrapping-Loss Implementation}
 
-For the pinned-knee extensor, Equation~(\ref{eq:deltaL}) is implemented segment-wise over the wrap arc with radii $R_1 = \qty{12}{\mm}$ and $R_2 = \qty{40}{\mm}$ and segment boundaries $\theta_{1} = \ang{27}$ and $\theta_{2} = \ang{-23}$ (\texttt{minimizeExtX3.m}, nested \texttt{Contraction}, lines 327--370). For the biomimetic-knee 20\,mm cell, the arc-length factor is the routed bend measure $b(\theta_{k})$ (arc length swept by the wrap, built with the \texttt{wRap} bend radius in \texttt{buildKneeFlexorRoute20mm.m} lines 265--268), giving $\Delta l = \chi_{3}\, b(\theta_{k})\,(1-\varepsilon^{*})^{2}$ (\nolinkurl{MonoPam_mult.m} lines 398--441), with a hardcoded-geometry fallback for degenerate routes (lines 428--434). The loss enters only the force-producing strain; the kinematic (prediction) strain excludes it (\texttt{minimizeExtX3.m} lines 236--240).
+For the pinned-knee extensor, Equation~(\ref{eq:deltaL}) is implemented segment-wise over the wrap arc with radii $R_1 = \qty{12}{\mm}$ and $R_2 = \qty{40}{\mm}$ and segment boundaries $\theta_{1} = \ang{27}$ and $\theta_{2} = \ang{-23}$ (\texttt{minimizeExtX3.m}, nested \texttt{Contraction}, lines 327--370). For the biomimetic-knee \qty{20}{\mm} cell, the arc-length factor is the routed bend measure $b(\theta_{k})$ (arc length swept by the wrap, built with the \texttt{wRap} bend radius in \texttt{buildKneeFlexorRoute20mm.m} lines 265--268), giving $\Delta l = \chi_{3}\, b(\theta_{k})\,(1-\varepsilon^{*})^{2}$ (\nolinkurl{MonoPam_mult.m} lines 398--441), with a hardcoded-geometry fallback for degenerate routes (lines 428--434). The loss enters only the force-producing strain; the kinematic (prediction) strain excludes it (\texttt{minimizeExtX3.m} lines 236--240).
 

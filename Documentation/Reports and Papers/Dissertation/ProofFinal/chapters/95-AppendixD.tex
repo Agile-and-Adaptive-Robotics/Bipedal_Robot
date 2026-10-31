@@ -5,7 +5,7 @@ This appendix supplies supporting model records and evaluation sets for Chapter~
 
 \section{Model Construction and Recording}
 
-The archived AnimatLab projects provide reference circuits for implementation comparisons. Figure~\ref{fig:animatlab_controller_motifs} shows their neural organization. A later reorganized bilateral project added commissural and biarticular pathways; it ran headless but latched under the tested drives. That assembly result is not evidence of stepping. The phase-1 recordings below concern an earlier instrumented configuration, not the reorganized network.
+The archived AnimatLab projects provide reference circuits for implementation comparisons. Figure~\ref{fig:animatlab_controller_motifs} shows their neural organization. A later reorganized bilateral project added commissural and biarticular pathways; it completed simulation runs but did not sustain alternation under the tested drives. That assembly result is not evidence of stepping. The phase-1 recordings below concern an earlier instrumented configuration, not the reorganized network.
 
 \begin{figure}[p]
 \centering
@@ -59,11 +59,11 @@ The full exported network agreed with its NumPy reference to \qty{4.2e-06}{\mill
 
 \subsection{Transient Knee Sensory-Current Response}\label{sec:app_knee_transient}
 
-The knee block model was tested from a settled operating point using a rectangular current pulse added after the spindle transducer and before the extensor Ia sensory-neuron membrane input. Stimulus and no-stimulus cases start from the same initial conditions and run continuously for \qty{50}{\second}; the \qty{2}{\nano\ampere} pulse acts from 30.000 to \qty{30.030}{\second}. The original configuration did not settle: its knee angle spanned \ang{0.712} during the 25--30 s baseline window. Its former startup comparison is therefore not used to demonstrate transient reflex recovery.
+The knee block model was tested from a settled operating point using a rectangular current pulse added after the spindle transducer and before the extensor Ia sensory-neuron membrane input. Stimulus and no-stimulus cases start from the same initial conditions and run continuously for \qty{50}{\second}; the \qty{2}{\nano\ampere} pulse acts from 30.000 to \qty{30.030}{\second}. The original configuration did not settle: its knee angle spanned \ang{0.712} during the \qtyrange{25}{30}{\second} baseline window. Its former startup comparison is therefore not used to demonstrate transient reflex recovery.
 
 The graded-response comparison changes exactly six parameters: the two MN output ramp widths from 1 to \qty{10}{\milli\volt}, and the four Ia synaptic ramp widths from 0.5 to \qty{10}{\milli\volt}. Equations, thresholds, conductances, wiring, mechanics, tonic drives, and activation dynamics are retained. This reduces loop gain as an explicit engineering comparison, rather than fitting physiological parameters. The simple actuator-force law is distinct from the characterized BPA model of Chapter~\ref{ch:muscles}. The flexor activation is zero at baseline, so the experiment does not establish suppression of a tonically active antagonist.
 
-The modified configuration passes baseline settling tests for angle, velocity, all six membrane states, and both activations. Its paper-coordinate baseline is \ang{-42.6392}; positive excursions indicate extension. Extension peaks at \ang{1.0908} after \qty{111}{\milli\second}. Recovery requires displacement within \ang{0.01} of baseline and absolute angular velocity below \qty{1e-4}{\radian\per\second}; both remain within those bounds from \qty{6.355}{\second} after stimulus onset. The late residual is approximately \ang{9.3e-7}. A fresh-process replay reproduces the resampled pulse arrays exactly. Halving the ODE45 maximum step from 1 to \qty{0.5}{\milli\second}, at unchanged tolerances, changes the angle trace by at most \ang{5.21e-5}. Comparisons use linear interpolation onto a 1 ms grid, without smoothing. These checks establish numerical recovery in the model, not physiological reflex fidelity. Figure~\ref{fig:app_knee_transient} shows the stimulus, matched kinematics, neural signals, activations, and forces.
+The modified configuration passes baseline settling tests for angle, velocity, all six membrane states, and both activations. Its paper-coordinate baseline is \ang{-42.6392}; positive excursions indicate extension. Extension peaks at \ang{1.0908} after \qty{111}{\milli\second}. Recovery requires displacement within \ang{0.01} of baseline and absolute angular velocity below \qty{1e-4}{\radian\per\second}; both remain within those bounds from \qty{6.355}{\second} after stimulus onset. The late residual is approximately \ang{9.3e-7}. A fresh-process replay reproduces the resampled pulse arrays exactly. Halving the ODE45 maximum step from 1 to \qty{0.5}{\milli\second}, at unchanged tolerances, changes the angle trace by at most \ang{5.21e-5}. Comparisons use linear interpolation onto a \qty{1}{\milli\second} grid, without smoothing. These checks establish numerical recovery in the model, not physiological reflex fidelity. Figure~\ref{fig:app_knee_transient} shows the stimulus, matched kinematics, neural signals, activations, and forces.
 
 \begin{figure}[p]
 \centering
@@ -80,7 +80,7 @@ The reduced Python implementation of the two-level circuit of \citet{rybak_model
 
 The fourteen-neuron Deng-derived implementation follows the circuit used in SNS-Toolbox demonstrations \citep{deng_neuromechanical_2019,nourse_sns_2023}. A \qty{0.1}{\milli\second} Euler step reproduced the existing neural integrator's complete 24-second baseline voltage trace exactly in the tested process. The baseline period was \qty{1.938}{\second}. Neural output drove the existing suspended, unilateral W2L mechanical model without afferent return. Hip commands came from the MN outputs; knee and ankle commands used the existing PF-to-activation mapping. This configuration tests transmitted circuit effects, not the original rat mechanics or bilateral walking.
 
-The initial sweep applied $+2$ and $+10$ nA to each layer for 0.1 and 0.5 seconds, together with two direct MN inhibitory controls. None met the deletion criterion. Subsequent stronger-current control series, including stimuli lasting two baseline periods (\qty{3.876}{\second}), retained the same circuit and mechanical parameters (Table~\ref{tab:layer_stimulus}). RG and PF stimuli began one-quarter cycle after a baseline RG onset; MN inhibition began 0.05 seconds into a baseline motor burst. Positive currents target the extensor RG or hip-PF population; negative currents target the hip-flexor MN. These currents are mechanistic controls, not experimentally calibrated physiological stimuli.
+The initial sweep applied \qty{+2}{\nano\ampere} and \qty{+10}{\nano\ampere} to each layer for 0.1 and 0.5 seconds, together with two direct MN inhibitory controls. None met the deletion criterion. Subsequent stronger-current control series, including stimuli lasting two baseline periods (\qty{3.876}{\second}), retained the same circuit and mechanical parameters (Table~\ref{tab:layer_stimulus}). RG and PF stimuli began one-quarter cycle after a baseline RG onset; MN inhibition began 0.05 seconds into a baseline motor burst. Positive currents target the extensor RG or hip-PF population; negative currents target the hip-flexor MN. These currents are mechanistic controls, not experimentally calibrated physiological stimuli.
 
 A deletion required at least \qty{20}{\milli\second} of baseline motor activity in the stimulus window and suppression of at least half of that activity, using an activation threshold of 0.5. Phase residuals compare the final four recovered onsets with the nearest baseline onset, normalized by the baseline period. Residuals at or below 0.05 cycles were classified as non-resetting, and those at or above 0.15 as shifted; intermediate values remained indeterminate. RG and motor residuals were assessed separately. The two-cycle stimuli suppressed both expected flexor burst onsets at all three layers. Baseline and stimulated neural and mechanical trajectories were identical before stimulus onset. The one-second PF pulse shifted the motor pattern without resetting the RG clock, whereas the two-cycle PF pulse preserved both schedules. The duration dependence cautions against treating every motor phase shift as an RG reset. Figure~\ref{fig:layer_stimulus_validation} compares RG voltage and motor activation for the two-cycle stimuli.
 
@@ -219,7 +219,7 @@ Under constant drive, the non-spiking and spiking rhythm periods were \qty{0.399
 \end{figure}
 
 \begin{table}[htbp]
-\caption{Supported ground evaluation at the same selected parameters (16 s), with no spiking re-tuning. Knee minima and contact duty are computed over detected cycles. The kinematic score is a cycle-shape error metric: zero denotes perfect agreement, and less negative scores indicate closer agreement.}
+\caption{Supported ground evaluation at the same selected parameters (\qty{16}{\second}), with no spiking re-tuning. The knee minimum is the minimum of the right leg's mean detected cycle. Contact fraction is the fraction of samples with foot normal force above \qty{20}{\newton} during the post-startup evaluation window, whether or not cycles were detected. Thus, the non-spiking left leg can remain in contact for a fraction of 0.985 while completing no detected cycles. The kinematic score is a cycle-shape error metric: zero denotes perfect agreement, and less negative scores indicate closer agreement.}
 \label{tab:spike_ground}
 \begin{tabular}{@{}lcc@{}}
 \toprule
@@ -228,9 +228,10 @@ Under constant drive, the non-spiking and spiking rhythm periods were \qty{0.399
 Kinematic score                & $-161.57$          & $-236.35$ \\
 Gait cycles, right / left      & 9 / 0 (left frozen) & 8 / 9 (bilateral) \\
 Cycle knee minimum             & \ang{-64.3}         & \ang{-79.8} \\
-Contact duty, right / left     & 0.637 / 0.985       & 0.799 / 0.856 \\
+Contact fraction, right / left     & 0.637 / 0.985       & 0.799 / 0.856 \\
 Maximum pelvis tilt            & \ang{22.1}          & \ang{19.2} \\
-Non-finite states / fell       & no / up             & no / up \\
+Non-finite states              & no                  & no \\
+Fell                            & no                  & no \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -248,7 +249,7 @@ Non-finite states / fell       & no / up             & no / up \\
 The graded and spiking knee-reflex demonstrations were compared over matched \qty{5}{\second} runs (Table~\ref{tab:spike_knee}; Figure~\ref{fig:spike_knee}). The beverage example retained approximately the same sag, \ang{2.02} versus \ang{2.00}, compared with \ang{7.85} without the reflex. These examples demonstrate transfer of particular reflex responses after calibration, not invariance of all controlled behavior to neural coding.
 
 \begin{table}[htbp]
-\caption{Knee-reflex demonstration, graded baseline versus spiking twin at the matched operating point (5 s runs; settle statistics over the last \qty{2}{\second}).}
+\caption{Knee-reflex demonstration, graded baseline versus spiking twin at the matched operating point (\qty{5}{\second} runs; settle statistics over the last \qty{2}{\second}).}
 \label{tab:spike_knee}
 \small\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.42\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
@@ -277,17 +278,17 @@ Ia interneuron firing at settle     & graded, subthreshold & \qty{95}{\hertz}; I
 The tested spiking conversions did not preserve the graded models' rhythm (Table~\ref{tab:spike_animatlab}). Converting thresholds while retaining graded synapses preserved near-baseline oscillations, whereas converting synaptic amplitudes and decay changed or eliminated alternation. These results identify the synapse conversion as a limitation of this mapping. They do not demonstrate that a suitably calibrated spiking implementation cannot reproduce the reference behavior.
 
 \begin{table}[htbp]
-\caption{AnimatLab spiking conversions versus their graded baselines (5.1 s headless runs; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the graded synapses.}
+\caption{AnimatLab spiking conversions versus their graded baselines (\qty{5.1}{\second} simulations; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the graded synapses.}
 \label{tab:spike_animatlab}
 \small
 \begin{tabular}{@{}lcc@{}}
 \toprule
 \textbf{Variant} & \textbf{Baseline (graded)} & \textbf{Spiking copy} \\
 \midrule
-Two-layer walker     & \qty{0.443}{\second} rhythm;   & dead (2 spikes; \\
+Two-layer walker     & \qty{0.443}{\second} rhythm;   & no sustained rhythm (2 spikes; \\
                      & hip $-15$ to $+23$, knee $-1$ to $+60$ & hip pinned near $+6$) \\
-Bilateral variant    & \qty{0.462}{\second}; antiphase $-0.42$ cycle & latched; one side at \qty{442}{\hertz}--\qty{450}{\hertz} \\
-Reorganized project  & latched (tonic drives) & synchronous \qty{11.8}{\hertz} co-bursting; \\
+Bilateral variant    & \qty{0.462}{\second}; antiphase $-0.42$ cycle & sustained unilateral firing; one side at \qty{442}{\hertz}--\qty{450}{\hertz} \\
+Reorganized project  & no alternation under tonic drives & synchronous \qty{11.8}{\hertz} co-bursting; \\
 (standalone export)  &                        & same-leg envelopes $r = 1.000$ at lag 0 \\
 Thresholds only      & \multirow{2}{*}{hip $-15$ to $+23$, knee $-1$ to $+60$} & oscillates: hip $-15.1$ to $+23.2$, \\
 (graded synapses)    &                        & knee $-0.8$ to $+47.9$ \\
@@ -301,7 +302,7 @@ The BPA-actuated walker exercised the chain from neural activation through the a
 
 With split left/right drives and retuned feedback, the W2L robot progressed \qty{1.72}{\meter} over \qty{30}{\second} under the support protocol. It retained progression at \qty{60}{\percent} drive and passed 12 of 12 perturbed reruns, but did not satisfy the strict contact-duty walking criterion; below that drive the gait ceased. The mechanical support was not weaned.
 
-In the separate human-model drive-weaning study, the selected score improved from $-161.57$ to $-145.07$, with ten contact cycles per leg and contact duties of 0.71 and 0.65. It passed eight of eight perturbed reruns and retained bilateral stepping down to zero hand drive. The motion remained in place under support. These two studies distinguish reduced neural assistance from reduced mechanical assistance.
+In the separate human-model drive-weaning study, the selected score improved from $-161.57$ to $-145.07$, with ten contact cycles per leg and contact duties of 0.71 and 0.65. It passed eight of eight perturbed reruns and retained bilateral stepping down to zero external neural drive. The motion remained in place under support. These two studies distinguish reduced neural assistance from reduced mechanical assistance.
 
 
 
@@ -334,30 +335,30 @@ A separate CAD-derived robot model retained the four-bar knees and spherical hip
 
 The model completed a \qty{20}{\second} supported crouched-stance test. During the final five seconds, knee excursions were \ang{1.35} right and \ang{0.95} left, while the vertical rig carried \qty{94.68}{\percent} of body weight and angular stabilization remained active. Disabling muscle forces under the same support settings caused lumbar failure after \qty{0.202}{\second}. This comparison establishes a contribution of the muscle controller under strong assistance, not independent balance. A separate run with rhythmic drive completed its horizon, but alternating gait and progression after settling have not been verified.
 
-A subsequent matched 40-second comparison retained the same geometry, initial pose, reference-tension capacities, and external assistance in both conditions. During 15--40 s, vertical assistance supplied 80\% of body weight. The additional control combines muscle-mediated separation feedback (160 N/m, capped at 20 N) with a 6\% activation floor on currently abducting routes, compared with the 5\% global floor (Table~\ref{tab:cad_abductor}). Full recorded trajectories reproduce bit for bit between fresh reference and accelerated runs. This is numerical replay within the specified model, rather than a robustness test.
+A subsequent matched 40-second comparison retained the same geometry, initial pose, reference-tension capacities, and external assistance in both conditions. During \qtyrange{15}{40}{\second}, vertical assistance supplied 80\% of body weight. The additional control combines muscle-mediated separation feedback (\qty{160}{\newton\per\meter}, capped at \qty{20}{\newton}) with a 6\% activation floor on currently abducting routes, compared with the 5\% global floor (Table~\ref{tab:cad_abductor}). Full recorded trajectories reproduce bit for bit between fresh reference and accelerated runs. This is numerical replay within the specified model, rather than a robustness test.
 
 \begin{table}[htbp]
 \centering\small
-\caption[Matched CAD-model separation-control comparison]{Matched CAD-model comparison over 15--40 s. Vertical assistance remains 80\% of body weight in both conditions.}
+\caption[Matched CAD-model separation-control comparison]{Matched CAD-model comparison over \qtyrange{15}{40}{\second}. Vertical assistance remains 80\% of body weight in both conditions.}
 \label{tab:cad_abductor}
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrr@{}}
 \toprule
 Measure & Control off & Control on \\
 \midrule
 Reversed ankle ordering (\%) & 67 & 0 \\
-Minimum ankle separation (mm) & $-38.3$ & 142.4 \\
-Median ankle separation (mm) & $-6.2$ & 159.0 \\
+Minimum ankle separation (\unit{\mm}) & $-38.3$ & 142.4 \\
+Median ankle separation (\unit{\mm}) & $-6.2$ & 159.0 \\
 Mean right TFL activation (\%) & 22.3 & 81.8 \\
 Mean left TFL activation (\%) & 99.6 & 99.8 \\
-Maximum sampled knee-loop error (mm) & 4.485 & 0.387 \\
-Maximum sampled interleg penetration (mm) & 2.700 & 0 \\
+Maximum sampled knee-loop error (\unit{\mm}) & 4.485 & 0.387 \\
+Maximum sampled interleg penetration (\unit{\mm}) & 2.700 & 0 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 The 262-neuron controller receives 230 inputs and drives 54 reference-tension actuators. Its MN target-current compensation cancels incoming PF and reflex synaptic currents to track the force allocator's targets. Consequently, the effective comparison concerns RG timing, engineered force allocation, and mechanical response, rather than normal PF/reflex authority over activation. Toe-out and small post-ramp knee excursions remain, and the stepping acceptance tests fail.
 
-The foot attachment is an unverified assembly datum. A separate hypothesis translates each whole foot 60 mm toward the proximal shank, retaining tibial geometry and mass. With otherwise unchanged hybrid control, median ankle separation changes from 159.0 to \qty{57.3}{\milli\meter}, and sampled interleg penetration reaches \qty{1.316}{\milli\meter}. A separate W2L-organization timing probe has 544 neurons and 230 inputs; four named ankle indices alias knee-PF cells and are not additional neurons. Its shifted-foot condition passes bilateral unloading and lifting counts but fails repeated alternating foot apices and forward progression. The inherited MN compensation remains active, so this is not a full PF-driven controller comparison.
+The foot attachment is an unverified assembly datum. A separate hypothesis translates each whole foot \qty{60}{\mm} toward the proximal shank, retaining tibial geometry and mass. With otherwise unchanged hybrid control, median ankle separation changes from 159.0 to \qty{57.3}{\milli\meter}, and sampled interleg penetration reaches \qty{1.316}{\milli\meter}. A separate W2L-organization timing probe has 544 neurons and 230 inputs; the knee and ankle pattern-formation outputs share four neurons, which are counted once in this total. Its shifted-foot condition passes bilateral unloading and lifting counts but fails repeated alternating foot apices and forward progression. The inherited MN compensation remains active, so this is not a full PF-driven controller comparison.
 
 Route sites can lie outside CAD surfaces and transmit force through their named parent bodies, equivalent to ideal rigid offset brackets or guides. Bracket mass, compliance, packaging, and collision-aware wrapping remain unmodeled. These attachment assumptions are separate from verification of the source moving-point functions and complete path derivatives. The older 20-second stance test and newer 80\%-assistance comparison are different configurations, not a matched support-reduction experiment.
 
@@ -380,7 +381,7 @@ The quadratus femoris, gemelli, and piriformis actuators were disabled on both s
 \label{tab:app_force_scale_repairs}
 \begin{tabular}{@{}lrr@{}}
 \toprule
-Muscle & Converted scale (N) & Restored scale (N) \\
+Muscle & Converted scale (\unit{\newton}) & Restored scale (\unit{\newton}) \\
 \midrule
 Erector spinae & 1 & 2500 \\
 Internal oblique & 1 & 900 \\

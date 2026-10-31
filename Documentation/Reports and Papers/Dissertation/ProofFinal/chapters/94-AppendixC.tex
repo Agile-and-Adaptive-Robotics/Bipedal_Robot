@@ -10,40 +10,40 @@ The static BPA model routes each actuator as a straight-segment polyline through
     \mathbf{d}=\mathbf{R}_{ft}^{\mathsf T}(\mathbf{p}_{C-1}-\mathbf{t}_{ft})-\mathbf{p}_{C},\qquad \hat{\mathbf{u}}=\frac{\mathbf{d}}{\lVert\mathbf{d}\rVert},
     \label{eq:app_forcedir}
 \end{equation}
-where $\mathbf{p}_{C}$ is expressed in the tibia frame, $\mathbf{p}_{C-1}$ in the femur frame, and $\mathbf{T}_{ft}=[\mathbf{R}_{ft},\mathbf{t}_{ft};\mathbf{0}^{\mathsf T},1]$ maps tibia coordinates to femur coordinates. The inverse transform includes both rotation and translation, as in the implemented point transformation [Provenance: \nolinkurl{minimizeFlxPin.m} lines 160 and 524--537 (\texttt{UD}) and 201--235 (\texttt{computeForceVector}); \nolinkurl{minimizeExtX3.m} lines 687--700; BPA struct fields, \nolinkurl{minimizeFlxPin.m} lines 28--35]. The pinned-knee test routes are archived as \nolinkurl{FlxPinBPASet.mat} (5 flexor tests, $M=2$, knee angle $-120^{\circ}$ to $+10^{\circ}$) and \nolinkurl{ExtPinBPASet.mat} (9 extensor tests, $M=7$, knee angle $-125^{\circ}$ to $+35^{\circ}$).
+where $\mathbf{p}_{C}$ is expressed in the tibia frame, $\mathbf{p}_{C-1}$ in the femur frame, and $\mathbf{T}_{ft}=[\mathbf{R}_{ft},\mathbf{t}_{ft};\mathbf{0}^{\mathsf T},1]$ maps tibia coordinates to femur coordinates. The inverse transform includes both rotation and translation, as in the implemented point transformation [Provenance: \nolinkurl{minimizeFlxPin.m} lines 160 and 524--537 (\texttt{UD}) and 201--235 (\texttt{computeForceVector}); \nolinkurl{minimizeExtX3.m} lines 687--700; BPA struct fields, \nolinkurl{minimizeFlxPin.m} lines 28--35]. The pinned-knee test routes are archived as \nolinkurl{FlxPinBPASet.mat} (5 flexor tests, $M=2$, knee angle $\ang{-120}$ to $\ang{+10}$) and \nolinkurl{ExtPinBPASet.mat} (9 extensor tests, $M=7$, knee angle $\ang{-125}$ to $\ang{+35}$).
 
-Table~\ref{tab:app_flxpin_tests} lists the five pinned-knee flexor tests; their routes are two points, femur-frame origin $\mathbf{p}_{1} = [-75.0,\,100.0,\,32.8]$~mm and tibia-frame insertion $\mathbf{p}_{2} = [-50.1,\,-45.0,\,32.3]$~mm (test 1; \nolinkurl{FlxPinBPASet.mat}, kf(1), frame 1). 
+Table~\ref{tab:app_flxpin_tests} lists the five pinned-knee flexor tests; their routes are two points, femur-frame origin $\mathbf{p}_{1} = [-75.0,\,100.0,\,32.8]\,\unit{\mm}$ and tibia-frame insertion $\mathbf{p}_{2} = [-50.1,\,-45.0,\,32.3]\,\unit{\mm}$ (test 1; \nolinkurl{FlxPinBPASet.mat}, kf(1), frame 1). 
 
-Table~\ref{tab:app_extpin_route} lists the extensor pinned-knee route of test 1 at $\theta_{\mathbf{k}}=-125^{\circ}$; rows 1--6 are femur-frame and row 7 is tibia-frame, and as the knee extends, rows 2--6 release onto $\mathbf{p}_{1}$ (wrap released at $+35^{\circ}$). 
+Table~\ref{tab:app_extpin_route} lists the extensor pinned-knee route of test 1 at $\theta_{\mathbf{k}}=\ang{-125}$; rows 1--6 are femur-frame and row 7 is tibia-frame, and as the knee extends, rows 2--6 release onto $\mathbf{p}_{1}$ (wrap released at $\ang{+35}$). 
 
 Table~\ref{tab:app_extpin_tests} lists the per-test constants of the nine extensor tests; the correction terms of Section~\ref{sec:improved_model} used tests \{1, 2, 5, 6, 7, 8\}, of which the adopted fit trained on \{5, 6, 7\} and held out tests 1, 2, and 8 for validation; tests 3, 4, and 9 were not used in identification; their retrospective predictions are reported below [Provenance: held-out columns of \nolinkurl{minimizeExt10mmX3_results.mat}; \nolinkurl{Dig_crossPredict.m} line 46].
 
-Table~\ref{tab:app_flxpin_tests} lists pinned-knee flexor test BPA constants, read directly from \nolinkurl{FlxPinBPASet.mat} (kf(1)--kf(5)). Labels are the laboratory shorthand used in the fitting logs (\nolinkurl{minimizeFlxPin10mm_2brk.m} line 51); $l_{0}$, tendon, and pressure are the values used by the model. All tests use $\diameter$\qty{10}{\mm} BPAs; the 47\,cm test's measured angles carry the $+5.3^{\circ}$ encoder correction at load time (\nolinkurl{minimizeFlxPin.m} lines 77--80). The test was not used in the two-bracket identification, and the corrected-model fit reported for it in Table~\ref{tab:app_gof} is a post hoc evaluation; of the remaining four, the adopted fit trained on kf(1) and kf(5) and held out kf(2) and kf(4) for validation.
+Table~\ref{tab:app_flxpin_tests} lists pinned-knee flexor test BPA constants, read directly from \nolinkurl{FlxPinBPASet.mat} (kf(1)--kf(5)). Labels are the laboratory shorthand used in the fitting logs (\nolinkurl{minimizeFlxPin10mm_2brk.m} line 51); $l_{0}$, tendon, and pressure are the values used by the model. All tests use $\diameter$\qty{10}{\mm} BPAs; the \qty{47}{\cm} test's measured angles carry the $\ang{+5.3}$ encoder correction at load time (\nolinkurl{minimizeFlxPin.m} lines 77--80). The test was not used in the two-bracket identification, and the corrected-model fit reported for it in Table~\ref{tab:app_gof} is a post hoc evaluation; of the remaining four, the adopted fit trained on kf(1) and kf(5) and held out kf(2) and kf(4) for validation.
 
 \begin{table}[htbp]
 \caption{Pinned-knee flexor test constants from \nolinkurl{FlxPinBPASet.mat}. All actuators have \qty{10}{\mm} diameter; test names use laboratory shorthand.}
 \label{tab:app_flxpin_tests}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
-\textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) & $F_{m}$ (N) & \textbf{Use} \\
+\textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (\unit{\meter}) & Tendon (\unit{\meter}) & $P$ (\unit{\kPa}) & $F_{m}$ (\unit{\newton}) & \textbf{Use} \\
 \midrule
-kf(1) & 48\,cm         & 0.485 & 0     & 605.7 & 443.4 & training \\
-kf(2) & 46\,cm         & 0.457 & 0     & 614.2 & 441.4 & validation \\
-kf(3) & 47\,cm         & 0.479 & 0     & 623.2 & 443.0 & not used \\
-kf(4) & 40\,cm-tendon  & 0.406 & 0.035 & 623.4 & 436.9 & validation \\
-kf(5) & 41\,cm         & 0.410 & 0     & 615.4 & 437.3 & training \\
+kf(1) & \qty{48}{\cm}         & 0.485 & 0     & 605.7 & 443.4 & training \\
+kf(2) & \qty{46}{\cm}         & 0.457 & 0     & 614.2 & 441.4 & validation \\
+kf(3) & \qty{47}{\cm}         & 0.479 & 0     & 623.2 & 443.0 & not used \\
+kf(4) & \qty{40}{\cm}-tendon  & 0.406 & 0.035 & 623.4 & 436.9 & validation \\
+kf(5) & \qty{41}{\cm}         & 0.410 & 0     & 615.4 & 437.3 & training \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The seed in Table~\ref{tab:app_ext_seed} follows my femoral-condyle ray construction. The saved direct-route elimination schedule releases p5 at $-89.8^{\circ}$, p4 at $-55.7^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$, and p8 at $+7.4^{\circ}$. These values come from \texttt{routeInfo.eliminatedAngleD} in \nolinkurl{Vas_Pam_20mm_Result_20260925.mat}; the seed construction is in \nolinkurl{buildKneeExtContext20mm.m}, lines 431--440.
+The seed in Table~\ref{tab:app_ext_seed} follows my femoral-condyle ray construction. The saved direct-route elimination schedule releases p5 at $\ang{-89.8}$, p4 at $\ang{-55.7}$, p6 at $\ang{-47.8}$, p7 at $\ang{-20.2}$, p3 at $\ang{+6.1}$, and p8 at $\ang{+7.4}$. These values come from \texttt{routeInfo.eliminatedAngleD} in \nolinkurl{Vas_Pam_20mm_Result_20260925.mat}; the seed construction is in \nolinkurl{buildKneeExtContext20mm.m}, lines 431--440.
 
 \begin{sidewaystable}
 \caption{Direct-route seed for the \qty{20}{\mm} biomimetic-knee extensor. Points p1--p5 use the femur frame; p6--p9 use the tibia frame.}
 \label{tab:app_ext_seed}
 \begin{tabular}{@{}lrrrll@{}}
 \toprule
-\textbf{Point} & $x$ (mm) & $y$ (mm) & $z$ (mm) & \textbf{Frame} & \textbf{Role} \\
+\textbf{Point} & $x$ (\unit{\mm}) & $y$ (\unit{\mm}) & $z$ (\unit{\mm}) & \textbf{Frame} & \textbf{Role} \\
 \midrule
 p1 & 40.00 & 35.00  & 0 & femur & BPA origin (attachment) \\
 p2 & 83.90 & $-274.76$ & 0 & femur & BPA contacts mounting base \\
@@ -59,11 +59,11 @@ p9 & 34.06 & $-66.87$ & 0 & tibia & patellar ligament ring (distal, pEnd) \\
 \end{sidewaystable}
 
 \begin{table}[htbp]
-\caption{Pinned-knee extensor BPA route of test 1 at $\theta_{\mathbf{k}}=-125^{\circ}$ (\nolinkurl{ExtPinBPASet.mat}, ke(1), frame 1; mm).}
+\caption{Pinned-knee extensor BPA route of test 1 at $\theta_{\mathbf{k}}=\ang{-125}$ (\nolinkurl{ExtPinBPASet.mat}, ke(1), frame 1; mm).}
 \label{tab:app_extpin_route}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-\textbf{Point} & $x$ (mm) & $y$ (mm) & $z$ (mm) \\
+\textbf{Point} & $x$ (\unit{\mm}) & $y$ (\unit{\mm}) & $z$ (\unit{\mm}) \\
 \midrule
 p1 & 30.00  & $-50.00$ & 0 \\
 p2 & 65.00  & $-350.00$ & 0 \\
@@ -76,29 +76,29 @@ p7 & 42.50  & $-75.90$ & 0 \\
 \end{tabular}
 \end{table}
 
-Table~\ref{tab:app_extpin_tests} lists pinned-knee extensor test BPA constants, read directly from \nolinkurl{ExtPinBPASet.mat} (ke(1)--ke(9)). Labels are the laboratory shorthand used in the fitting logs (\nolinkurl{Dig_resultsTable.m} line 32); $l_{0}$, tendon, and pressure are the values used by the model; the shorthand rounds several lengths (e.g.\ ``42\,cm'' is $l_{0}=0.415$~m and ``43\,cm-tendon'' is $l_{0}=0.432$~m). All tests use $\diameter$\qty{10}{\mm} BPAs. The correction terms of Section~\ref{sec:improved_model} used tests \{1, 2, 5, 6, 7, 8\}: the adopted fit trained on \{5, 6, 7\} and held out tests 1, 2, and 8 for validation; tests 3, 4, and 9 were not used in identification; their retrospective predictions are included in Table~\ref{tab:app_gof_ext_all}.
+Table~\ref{tab:app_extpin_tests} lists pinned-knee extensor test BPA constants, read directly from \nolinkurl{ExtPinBPASet.mat} (ke(1)--ke(9)). Labels are the laboratory shorthand used in the fitting logs (\nolinkurl{Dig_resultsTable.m} line 32); $l_{0}$, tendon, and pressure are the values used by the model; the shorthand rounds several lengths (e.g.\ ``\qty{42}{\cm}'' is $l_{0}=\qty{0.415}{\meter}$ and ``\qty{43}{\cm}-tendon'' is $l_{0}=\qty{0.432}{\meter}$). All tests use $\diameter$\qty{10}{\mm} BPAs. The correction terms of Section~\ref{sec:improved_model} used tests \{1, 2, 5, 6, 7, 8\}: the adopted fit trained on \{5, 6, 7\} and held out tests 1, 2, and 8 for validation; tests 3, 4, and 9 were not used in identification; their retrospective predictions are included in Table~\ref{tab:app_gof_ext_all}.
 
 \begin{table}[htbp]
 \caption{Pinned-knee extensor test constants from \nolinkurl{ExtPinBPASet.mat}. All actuators have \qty{10}{\mm} diameter; test names use laboratory shorthand.}
 \label{tab:app_extpin_tests}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
-\textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) & $F_{m}$ (N) & \textbf{Use} \\
+\textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (\unit{\meter}) & Tendon (\unit{\meter}) & $P$ (\unit{\kPa}) & $F_{m}$ (\unit{\newton}) & \textbf{Use} \\
 \midrule
-ke(1) & 40\,cm          & 0.400 & 0     & 624.9 & 436.3 & validation \\
-ke(2) & 40\,cm-tendon   & 0.400 & 0.040 & 618.4 & 436.3 & validation \\
-ke(3) & 42\,cm          & 0.415 & 0     & 605.2 & 437.8 & not used \\
-ke(4) & 42\,cm-tendon   & 0.415 & 0.040 & 605.2 & 437.8 & not used \\
-ke(5) & 43\,cm          & 0.436 & 0     & 621.8 & 439.7 & training \\
-ke(6) & 43\,cm-tendon   & 0.432 & 0.022 & 622.9 & 439.3 & training \\
-ke(7) & 46\,cm          & 0.457 & 0     & 605.9 & 441.4 & training \\
-ke(8) & 47\,cm          & 0.465 & 0     & 605.9 & 442.0 & validation \\
-ke(9) & 48\,cm          & 0.480 & 0     & 605.9 & 443.1 & not used \\
+ke(1) & \qty{40}{\cm}          & 0.400 & 0     & 624.9 & 436.3 & validation \\
+ke(2) & \qty{40}{\cm}-tendon   & 0.400 & 0.040 & 618.4 & 436.3 & validation \\
+ke(3) & \qty{42}{\cm}          & 0.415 & 0     & 605.2 & 437.8 & not used \\
+ke(4) & \qty{42}{\cm}-tendon   & 0.415 & 0.040 & 605.2 & 437.8 & not used \\
+ke(5) & \qty{43}{\cm}          & 0.436 & 0     & 621.8 & 439.7 & training \\
+ke(6) & \qty{43}{\cm}-tendon   & 0.432 & 0.022 & 622.9 & 439.3 & training \\
+ke(7) & \qty{46}{\cm}          & 0.457 & 0     & 605.9 & 441.4 & training \\
+ke(8) & \qty{47}{\cm}          & 0.465 & 0     & 605.9 & 442.0 & validation \\
+ke(9) & \qty{48}{\cm}          & 0.480 & 0     & 605.9 & 443.1 & not used \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The single-BPA biomimetic flexor tests in Figure~\ref{fig:FlxGrp}\textbf{(A)} and Figure~\ref{fig:FlxGrp}\textbf{(B)} use the femur-frame origin $\mathbf{p}_1=[-50.0,\,35.0,\,50.0]$~mm and tibia $\theta_1$ insertion $\mathbf{p}_2=[-12.24,\,-8.87,\,27.87]$~mm. The insertion is mapped first from the tibia $\theta_1$ frame into the knee-ICR frame and then into the femur frame at each knee angle. These endpoints also seed the later two-BPA redesign, with $l_0=415$~mm and a 25~mm design tendon parameter. The redesigned flexor route adds a moving tibial wrap point on a standoff surface of radius \texttt{bpaRb}, with its $z$ coordinate on the projected origin--insertion line. The extensor seed route and contact-release schedule are given in Table~\ref{tab:app_ext_seed}.
+The single-BPA biomimetic flexor tests in Figure~\ref{fig:FlxGrp}\textbf{(A)} and Figure~\ref{fig:FlxGrp}\textbf{(B)} use the femur-frame origin $\mathbf{p}_1=[-50.0,\,35.0,\,50.0]\,\unit{\mm}$ and tibia $\theta_1$ insertion $\mathbf{p}_2=[-12.24,\,-8.87,\,27.87]\,\unit{\mm}$. The insertion is mapped first from the tibia $\theta_1$ frame into the knee-ICR frame and then into the femur frame at each knee angle. These endpoints also seed the later two-BPA redesign, with $l_0=\qty{415}{\mm}$ and a \qty{25}{\mm} design tendon parameter. The redesigned flexor route adds a moving tibial wrap point on a standoff surface of radius \texttt{bpaRb}, with its $z$ coordinate on the projected origin--insertion line. The extensor seed route and contact-release schedule are given in Table~\ref{tab:app_ext_seed}.
 
 The biomimetic-knee evaluator inputs are listed in Tables~\ref{tab:app_flxbio_tests} and~\ref{tab:app_extbio_tests}. These tables report the saved model dimensions loaded by \texttt{minimizeFlx} and \texttt{minimizeExt}; the laboratory test names are nominal labels. The reduced-pressure flexor row identifies the reference model used with the separate pressure measurements.
 
@@ -108,35 +108,35 @@ The biomimetic-knee evaluator inputs are listed in Tables~\ref{tab:app_flxbio_te
 \label{tab:app_flxbio_tests}
 \begin{tabular}{lrrrrr}
 \toprule
-Model & Diameter (m) & $l_0$ (m) & Tendon (m) & $P$ (kPa) & $F_m$ (N) \\
+Model & Diameter (\unit{\meter}) & $l_0$ (\unit{\meter}) & Tendon (\unit{\meter}) & $P$ (\unit{\kPa}) & $F_m$ (\unit{\newton}) \\
 \midrule
-10 mm & 0.010 & 0.4150 & 0.0110 & 603.5 & 437.8 \\
-20 mm, full pressure & 0.020 & 0.4150 & 0.0140 & 620.0 & 1302.9 \\
-20 mm, reduced pressure & 0.020 & 0.4150 & 0.0140 & 325.0 & 1302.9 \\
+\qty{10}{\mm} & 0.010 & 0.4150 & 0.0110 & 603.5 & 437.8 \\
+\qty{20}{\mm}, full pressure & 0.020 & 0.4150 & 0.0140 & 620.0 & 1302.9 \\
+\qty{20}{\mm}, reduced pressure & 0.020 & 0.4150 & 0.0140 & 325.0 & 1302.9 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering\small
-\caption{Biomimetic-knee extensor inputs loaded by \texttt{minimizeExt} from the saved 10 mm actuator model.}
+\caption{Biomimetic-knee extensor inputs loaded by \texttt{minimizeExt} from the saved \qty{10}{\mm} actuator model.}
 \label{tab:app_extbio_tests}
 \begin{tabular}{lrrrrr}
 \toprule
-Model & Diameter (m) & $l_0$ (m) & Tendon (m) & $P$ (kPa) & $F_m$ (N) \\
+Model & Diameter (\unit{\meter}) & $l_0$ (\unit{\meter}) & Tendon (\unit{\meter}) & $P$ (\unit{\kPa}) & $F_m$ (\unit{\newton}) \\
 \midrule
-10 mm extensor & 0.010 & 0.5200 & 0.0380 & 596.4 & 445.7 \\
+\qty{10}{\mm} extensor & 0.010 & 0.5200 & 0.0380 & 596.4 & 445.7 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering\small
-\caption{Measured dimensions of the four BPAs used in the final physical tests. Resting lengths and tendon lengths are recorded separately for each actuator in the extensor and flexor test worksheets. All four BPAs have 20 mm diameter.}
+\caption{Measured dimensions of the four BPAs used in the final physical tests. Resting lengths and tendon lengths are recorded separately for each actuator in the extensor and flexor test worksheets. All four BPAs have \qty{20}{\mm} diameter.}
 \label{tab:final_test_dimensions}
 \begin{tabular}{lrr}
 \toprule
-Actuator & Resting length (mm) & Tendon length (mm) \\
+Actuator & Resting length (\unit{\mm}) & Tendon length (\unit{\mm}) \\
 \midrule
 Flexor 1 & 561 & 28 \\
 Flexor 2 & 560 & 30 \\
@@ -148,7 +148,7 @@ Extensor 2 & 826 & 85 \\
 
 \FloatBarrier
 
-The prediction inputs are distinct from the per-actuator measurements in Table~\ref{tab:final_test_dimensions}. The flexor predictions use a shared resting length of 561.49 mm, with the nominal 562 mm label retained on the physical-test plot. The saved route tendon parameter and the effective prediction input are related by
+The prediction inputs are distinct from the per-actuator measurements in Table~\ref{tab:final_test_dimensions}. The flexor predictions use a shared resting length of \qty{561.49}{\mm}, with the nominal \qty{562}{\mm} label retained on the physical-test plot. The saved route tendon parameter and the effective prediction input are related by
 \begin{equation}
 \begin{aligned}
 l_{\mathrm{ten,model}} &= l_{\mathrm{ten,design}}-\qty{20}{\mm}=\qty{5}{\mm},\\
@@ -156,11 +156,11 @@ l_{m,\mathrm{geom}}(\theta) &= L_{\mathrm{route}}(\theta)-l_{\mathrm{ten,model}}
 \end{aligned}
 \label{eq:app_flexor_tendon_inputs}
 \end{equation}
-Here $l_{\mathrm{ten,design}}=\qty{25}{\mm}$ is the route parameter and $L_{\mathrm{route}}$ is the total routed length. The geometric BPA length $l_{m,\mathrm{geom}}$ precedes the offset, compliance, and wrapping corrections. The \qty{20}{\mm} input adjustment is distinct from the \qty{21}{\mm} end-fitting length $l_{\mathrm{fitting}}$ subtracted at each end. The measured cable lengths in Table~\ref{tab:final_test_dimensions} are hardware dimensions, not replacements for this shared effective prediction input. The extensor predictions retain the shared resting length of 827.74 mm and approximate 92.49 mm tendon parameter. These original prediction inputs are retained; no new evaluation with the measured dimensions is implied.
+Here $l_{\mathrm{ten,design}}=\qty{25}{\mm}$ is the route parameter and $L_{\mathrm{route}}$ is the total routed length. The geometric BPA length $l_{m,\mathrm{geom}}$ precedes the offset, compliance, and wrapping corrections. The \qty{20}{\mm} input adjustment is distinct from the \qty{21}{\mm} end-fitting length $l_{\mathrm{fitting}}$ subtracted at each end. The measured cable lengths in Table~\ref{tab:final_test_dimensions} are hardware dimensions, not replacements for this shared effective prediction input. The extensor predictions retain the shared resting length of \qty{827.74}{\mm} and approximate \qty{92.49}{\mm} tendon parameter. These original prediction inputs are retained; no new evaluation with the measured dimensions is implied.
 
 \section{Joint Transformation Matrices}
 
-The knee transform is planar: every joint frame is a rotation about $z$ by the knee angle $\theta_{\mathbf{k}}$ composed with a translation fitted to robot CAD tables of the migrating instantaneous center of rotation. With $\mathbf{R} = \mathbf{R}_{z}(\theta_{\mathbf{k}})$, the robot (femur$\to$ICR) transform is $\mathbf{T}_{\text{Pam}} = [\mathbf{R},\; [f_{3}(\theta_{\mathbf{k}}),\,f_{4}(\theta_{\mathbf{k}}),\,0]^{\top};\; \mathbf{0}^{\top}\;1]$ with $f_{3}, f_{4}$ cubic-spline fits (ICR $x$: 23.30 to 10.47~mm; $y$: $-416.65$ to $-395.66$~mm over $\theta_{\mathbf{k}} = 0.17$ to $-2.62$~rad), and the ICR$\to$tibia transform is the pure translation $[f_{13}(\theta_{\mathbf{k}}),\,f_{14}(\theta_{\mathbf{k}}),\,0]^{\top}$ ($x$: 29.66 to $-7.58$~mm; $y$: 25.97 to 22.33~mm), composed as $\mathbf{T}_{t1\to f} = \mathbf{T}_{t1\to\text{ICR}}\;\mathbf{T}_{\text{Pam}}^{-1}$ over 100 frames spanning $\theta_{\mathbf{k}} \in [-120^{\circ}, +10^{\circ}]$ [Provenance: \nolinkurl{buildKneeFlexorContext20mm.m} lines 34--80; \nolinkurl{buildKneeExtContext20mm.m} lines 30--78; \nolinkurl{Functions/ModernRobotics/RpToTrans.m}]. In the archived test sets the per-frame transform maps tibia to femur/ICR and takes the form
+The knee transform is planar: every joint frame is a rotation about $z$ by the knee angle $\theta_{\mathbf{k}}$ composed with a translation fitted to robot CAD tables of the migrating instantaneous center of rotation. With $\mathbf{R} = \mathbf{R}_{z}(\theta_{\mathbf{k}})$, the robot (femur$\to$ICR) transform is $\mathbf{T}_{\text{Pam}} = [\mathbf{R},\; [f_{3}(\theta_{\mathbf{k}}),\,f_{4}(\theta_{\mathbf{k}}),\,0]^{\top};\; \mathbf{0}^{\top}\;1]$ with $f_{3}, f_{4}$ cubic-spline fits (ICR $x$: \qtyrange{23.30}{10.47}{\mm}; $y$: \qtyrange{-416.65}{-395.66}{\mm} over $\theta_{\mathbf{k}} = \qty{0.17}{\radian}$ to \qty{-2.62}{\radian}), and the ICR$\to$tibia transform is the pure translation $[f_{13}(\theta_{\mathbf{k}}),\,f_{14}(\theta_{\mathbf{k}}),\,0]^{\top}$ ($x$: \qtyrange{29.66}{-7.58}{\mm}; $y$: \qtyrange{25.97}{22.33}{\mm}), composed as $\mathbf{T}_{t1\to f} = \mathbf{T}_{t1\to\text{ICR}}\;\mathbf{T}_{\text{Pam}}^{-1}$ over 100 frames spanning $\theta_{\mathbf{k}} \in [\ang{-120}, \ang{+10}]$ [Provenance: \nolinkurl{buildKneeFlexorContext20mm.m} lines 34--80; \nolinkurl{buildKneeExtContext20mm.m} lines 30--78; \nolinkurl{Functions/ModernRobotics/RpToTrans.m}]. In the archived test sets the per-frame transform maps tibia to femur/ICR and takes the form
 \begin{equation}
     \mathbf{T}_{\mathbf{k}}(\theta_{\mathbf{k}}) \;=\;
     \begin{bmatrix}
@@ -171,7 +171,7 @@ The knee transform is planar: every joint frame is a rotation about $z$ by the k
     \end{bmatrix},
     \label{eq:app_Tk}
 \end{equation}
-with rotation block $\mathbf{R}_{z}(\theta_{\mathbf{k}})$ and translation components $d_{x}, d_{y}$ in meters. In the archived flexor test set the translation is constant across the sweep, $[d_{x},\,d_{y},\,0] = [4.5,\,-395.8,\,0]$~mm, and the rotation sweeps from $\mathbf{R}_{z}(-120^{\circ})$ at full flexion to $\mathbf{R}_{z}(+10^{\circ})$ at full extension (\nolinkurl{FlxPinBPASet.mat}, kf(1)).
+with rotation block $\mathbf{R}_{z}(\theta_{\mathbf{k}})$ and translation components $d_{x}, d_{y}$ in meters. In the archived flexor test set the translation is constant across the sweep, $[d_{x},\,d_{y},\,0] = [4.5,\,-395.8,\,0]\,\unit{\mm}$, and the rotation sweeps from $\mathbf{R}_{z}(\ang{-120})$ at full flexion to $\mathbf{R}_{z}(\ang{+10})$ at full extension (\nolinkurl{FlxPinBPASet.mat}, kf(1)).
 
 \section{Bracket Reference Points and Frames}
 
@@ -203,9 +203,9 @@ The frame's $x$ axis follows the nominal load path, with angles calculated from 
 Pbri & $-48.11$ & $-107.81$ & $13.80$ & pinned-knee flexor, insertion bracket (knee-ICR frame) \\
 Pbr2 & $-52.61$ & 0 & 75.06 & pinned-knee flexor, origin-side 2nd bracket (hip frame) \\
 Pbr  & $-3.84$  & $-46.44$ & 62.50 & pinned-knee extensor, rib midpoint, medial side (hip frame) \\
-Pbr  & 8.38 & 20.75 & 25.10 & biomimetic extensor 10\,mm, cantilever centroid \\
-Pbr  & 9.48 & $-33.38$ & 33.90 & biomimetic flexor 20\,mm, bolt-pattern centroid \\
-Pbr  & $-19.00$ & 22.00 & 27.60 & biomimetic flexor 10\,mm, cantilever centroid \\
+Pbr  & 8.38 & 20.75 & 25.10 & biomimetic extensor \qty{10}{\mm}, cantilever centroid \\
+Pbr  & 9.48 & $-33.38$ & 33.90 & biomimetic flexor \qty{20}{\mm}, bolt-pattern centroid \\
+Pbr  & $-19.00$ & 22.00 & 27.60 & biomimetic flexor \qty{10}{\mm}, cantilever centroid \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -214,12 +214,12 @@ Pbr  & $-19.00$ & 22.00 & 27.60 & biomimetic flexor 10\,mm, cantilever centroid 
 
 Every configuration models bracket compliance as a diagonal Hooke-law spring in the bracket frame, $\mathbf{K}_{br} = \operatorname{diag}(k_{1}, k_{2}, k_{3})$ newtons per meter. The force-path projection and series combination of the compliances are defined in Chapter~\ref{ch:torque}, Equations~\eqref{eq:bktstiffness}--\eqref{eq:keff}.
 
-When an artificial tendon is present, its axial spring ($\times2$ cables, effective steel area $1.51\times10^{-6}$~m$^2$, $E=193$~GPa) adds in series. The force balance of Equation~\eqref{eq:complianceforcebalance} is solved at each pose by \texttt{fzero} on the contraction interval. Table~\ref{tab:app_stiffness_arrays} gives the configuration-specific stiffness arrays.
+When an artificial tendon is present, its axial spring ($\times2$ cables, effective steel area \qty{1.51e-6}{\square\meter}, $E=\qty{193}{\giga\pascal}$) adds in series. The force balance of Equation~\eqref{eq:complianceforcebalance} is solved at each pose by \texttt{fzero} on the contraction interval. Table~\ref{tab:app_stiffness_arrays} gives the configuration-specific stiffness arrays.
 
-Table~\ref{tab:app_stiffness_arrays} assigns the fitted variables $X_1$ and $X_2$ to the bracket-frame axes, in N/m. The two pinned-flexor bracket frames follow Equation~\eqref{eq:app_bracketframe}; the final column identifies the stiffness-array assignments in the source, rather than a separate frame convention.
+Table~\ref{tab:app_stiffness_arrays} assigns the fitted variables $X_1$ and $X_2$ to the bracket-frame axes, in \unit{\newton\per\meter}. The two pinned-flexor bracket frames follow Equation~\eqref{eq:app_bracketframe}; the final column identifies the stiffness-array assignments in the source, rather than a separate frame convention.
 
 \begin{table}[htbp]
-\caption{Bracket-frame stiffness arrays by configuration, in N/m. The fitted variables $X_1$ and $X_2$ are assigned to the axes shown.}
+\caption{Bracket-frame stiffness arrays by configuration, in \unit{\newton\per\meter}. The fitted variables $X_1$ and $X_2$ are assigned to the axes shown.}
 \label{tab:app_stiffness_arrays}
 \begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.22\textwidth}X@{}}
 \toprule
@@ -235,22 +235,22 @@ Biomimetic flexor                   & $[X_{1},\,X_{2},\,X_{2}]$ & \nolinkurl{min
 \end{tabularx}
 \end{table}
 
-The wrapping-loss term $X_{3}$ (Equations~\ref{eq:deltaL}--\ref{eq:x3}) is evaluated as $X_{3}\,R\,\lvert\Delta\theta\rvert\,\zeta^{2}$ per contact arc. On the pinned extensor the two physical contact arcs use $R_{1} = 12$~mm ($27^{\circ}$ to $-23^{\circ}$) and $R_{2} = 40$~mm, with arc-length normalizers $27.75/(ang_{1} - ang_{2})$ and $92.46/(ang_{2}+120^{\circ})$; on the biomimetic configurations the bend measure is $w_{\text{rap}}\lvert\theta_{\text{turn}}\rvert$ with $w_{\text{rap}} = 25$~mm [Provenance: \nolinkurl{minimizeExtX3.m} lines 333--359; \nolinkurl{buildKneeFlexorRoute20mm.m} line 268; \nolinkurl{MonoPamDataExplicit_balanceX3.m} lines 489--494]. Table~\ref{tab:app_opt_bounds} records the optimizer parameterization and bounds of the adopted identification: the two-bracket flexor fit solves all three terms, and the extensor refit locks $(X_{1}, X_{2})$ to the adopted flexor-front values (the extensor front was generated with the pair fixed to the adopted values of Table~\ref{tab:AdoptedXi} and only $(X_{0}, X_{3})$ searched), enforcing a single stiffness pair across configurations.
+The wrapping-loss term $X_{3}$ (Equations~\ref{eq:deltaL}--\ref{eq:x3}) is evaluated as $X_{3}\,R\,\lvert\Delta\theta\rvert\,\zeta^{2}$ per contact arc. On the pinned extensor the two physical contact arcs use $R_{1} = \qty{12}{\mm}$ ($\ang{27}$ to $\ang{-23}$) and $R_{2} = \qty{40}{\mm}$, with arc-length normalizers $27.75/(ang_{1} - ang_{2})$ and $92.46/(ang_{2}+\ang{120})$; on the biomimetic configurations the bend measure is $w_{\text{rap}}\lvert\theta_{\text{turn}}\rvert$ with $w_{\text{rap}} = \qty{25}{\mm}$ [Provenance: \nolinkurl{minimizeExtX3.m} lines 333--359; \nolinkurl{buildKneeFlexorRoute20mm.m} line 268; \nolinkurl{MonoPamDataExplicit_balanceX3.m} lines 489--494]. Table~\ref{tab:app_opt_bounds} records the optimizer parameterization and bounds of the adopted identification: the two-bracket flexor fit solves all three terms, and the extensor refit locks $(X_{1}, X_{2})$ to the adopted flexor-front values (the extensor front was generated with the pair fixed to the adopted values of Table~\ref{tab:AdoptedXi} and only $(X_{0}, X_{3})$ searched), enforcing a single stiffness pair across configurations.
 
-The physical correction terms $X_i$ used elsewhere in this appendix correspond to $\chi_i$; the lowercase $x_i$ below are the optimizer coordinates. The initial flexor population in Table~\ref{tab:app_opt_bounds} used $X_0\in[5,15]$~mm, $X_1\in[5\times10^4,5\times10^5]$~N/m, and $X_2\in[7\times10^3,1.5\times10^4]$~N/m.
+The physical correction terms $X_i$ used elsewhere in this appendix correspond to $\chi_i$; the lowercase $x_i$ below are the optimizer coordinates. The initial flexor population in Table~\ref{tab:app_opt_bounds} used $X_0\in[\num{5},\num{15}]\,\unit{\mm}$, $X_1\in[\num{5e4},\num{5e5}]\,\unit{\newton\per\meter}$, and $X_2\in[\num{7e3},\num{1.5e4}]\,\unit{\newton\per\meter}$.
 
 \begin{table}[htbp]
-\caption{Optimizer coordinates and equivalent physical correction-term bounds. The numerical optimizer variables are $x_i$; length offsets $\chi_0$ are reported in millimeters, stiffnesses in N/m, and $\chi_3$ is dimensionless. The extensor refit fixes the stiffness pair at the adopted flexor values.}
+\caption{Optimizer coordinates and equivalent physical correction-term bounds. The numerical optimizer variables are $x_i$; length offsets $\chi_0$ are reported in millimeters, stiffnesses in \unit{\newton\per\meter}, and $\chi_3$ is dimensionless. The extensor refit fixes the stiffness pair at the adopted flexor values.}
 \label{tab:app_opt_bounds}
 \small
 \begin{tabularx}{\textwidth}{@{}l l >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X@{}}
 \toprule
 Identification & Variable & Optimizer bounds & Physical bounds / mapping \\
 \midrule
-Pinned flexor & $x_0$ & $[0,2]$ & $\chi_0=10x_0\in[0,20]$ mm \\
- & $x_1$ & $[\log_{10}(3\times10^4),6]$ & $\chi_1=10^{x_1}\in[3\times10^4,10^6]$ N/m \\
- & $x_2$ & $[\log_{10}(5\times10^3),\log_{10}(2\times10^4)]$ & $\chi_2=10^{x_2}\in[5\times10^3,2\times10^4]$ N/m \\
-Extensor refit & $x_0$ & $[-2,0.5]$ & $\chi_0=10x_0\in[-20,5]$ mm \\
+Pinned flexor & $x_0$ & $[0,2]$ & $\chi_0=10x_0\in[\num{0},\num{20}]\,\unit{\mm}$ \\
+ & $x_1$ & $[\log_{10}(3\times10^4),6]$ & $\chi_1=10^{x_1}\in[\num{3e4},\num{1e6}]\,\unit{\newton\per\meter}$ \\
+ & $x_2$ & $[\log_{10}(5\times10^3),\log_{10}(2\times10^4)]$ & $\chi_2=10^{x_2}\in[\num{5e3},\num{2e4}]\,\unit{\newton\per\meter}$ \\
+Extensor refit & $x_0$ & $[-2,0.5]$ & $\chi_0=10x_0\in[\num{-20},\num{5}]\,\unit{\mm}$ \\
  & $x_3$ & $[0,1]$ & $\chi_3=x_3\in[0,1]$ \\
 \bottomrule
 \end{tabularx}
@@ -264,7 +264,7 @@ The adopted correction terms are listed in Table~\ref{tab:AdoptedXi}. The flexor
 
 Tables~\ref{tab:app_gof} and~\ref{tab:app_gof_ext_all} report every recorded pinned-knee test before and after applying the adopted corrections. ``Before'' uses the characterized BPA force model with zero length and wrapping corrections and rigid attachments; ``after'' uses the adopted correction terms. Both predictions use the same measured angles and test inputs. RMSE and maximum absolute residual have units of N\,m, and FVU is dimensionless. The sample-size convention for FVU is given in Chapter~\ref{ch:torque}, Equation~\eqref{eq:gof_fvu}.
 
-The adopted flexor identification uses tests 1 and 5 for training and tests 2 and 4 for validation. Test 3 (47\,cm) was not used in identification. The extensor identification uses tests 5, 6, and 7 for training and tests 1, 2, and 8 for validation. Tests 3, 4, and 9 (42\,cm, 42\,cm with tendon, and 48\,cm) were excluded from identification. Results for unused tests are retrospective predictions, not held-out validation results.
+The adopted flexor identification uses tests 1 and 5 for training and tests 2 and 4 for validation. Test 3 (\qty{47}{\cm}) was not used in identification. The extensor identification uses tests 5, 6, and 7 for training and tests 1, 2, and 8 for validation. Tests 3, 4, and 9 (\qty{42}{\cm}, \qty{42}{\cm} with tendon, and \qty{48}{\cm}) were excluded from identification. Results for unused tests are retrospective predictions, not held-out validation results.
 
 \begin{table}[htbp]
 \centering\small\setlength{\tabcolsep}{3pt}
@@ -276,11 +276,11 @@ The adopted flexor identification uses tests 1 and 5 for training and tests 2 an
 \cmidrule(lr){3-5}\cmidrule(l){6-8}
 Test & Use & RMSE & FVU & Max. & RMSE & FVU & Max. \\
 \midrule
-1: 48 cm & Training & 7.617 & 2.1278 & 25.531 & 2.165 & 0.1718 & 5.467 \\
-2: 46 cm & Validation & 8.803 & 1.9380 & 26.264 & 1.368 & 0.0468 & 3.614 \\
-3: 47 cm & Unused & 7.670 & 1.8463 & 21.650 & 2.287 & 0.1641 & 7.818 \\
-4: 40 cm+tendon & Validation & 6.373 & 0.5935 & 16.859 & 1.611 & 0.0427 & 5.891 \\
-5: 41 cm & Training & 9.694 & 2.1149 & 21.076 & 1.084 & 0.0277 & 1.766 \\
+1: \qty{48}{\cm} & Training & 7.617 & 2.1278 & 25.531 & 2.165 & 0.1718 & 5.467 \\
+2: \qty{46}{\cm} & Validation & 8.803 & 1.9380 & 26.264 & 1.368 & 0.0468 & 3.614 \\
+3: \qty{47}{\cm} & Unused & 7.670 & 1.8463 & 21.650 & 2.287 & 0.1641 & 7.818 \\
+4: \qty{40}{\cm}+tendon & Validation & 6.373 & 0.5935 & 16.859 & 1.611 & 0.0427 & 5.891 \\
+5: \qty{41}{\cm} & Training & 9.694 & 2.1149 & 21.076 & 1.084 & 0.0277 & 1.766 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -295,20 +295,20 @@ Test & Use & RMSE & FVU & Max. & RMSE & FVU & Max. \\
 \cmidrule(lr){3-5}\cmidrule(l){6-8}
 Test & Use & RMSE & FVU & Max. & RMSE & FVU & Max. \\
 \midrule
-1: 40 cm & Validation & 3.092 & 0.5638 & 4.842 & 1.244 & 0.1303 & 2.196 \\
-2: 40 cm+tendon & Validation & 3.622 & 6.3919 & 7.845 & 1.350 & 0.8878 & 1.890 \\
-3: 42 cm & Unused & 3.528 & 2.2190 & 7.665 & 1.299 & 0.3418 & 2.700 \\
-4: 42 cm+tendon & Unused & 2.910 & 6.2250 & 6.367 & 1.289 & 1.2209 & 2.003 \\
-5: 43 cm & Training & 2.437 & 0.9618 & 4.284 & 0.978 & 0.1634 & 1.818 \\
-6: 43 cm+tendon & Training & 2.878 & 4.7304 & 4.817 & 1.525 & 1.3270 & 2.481 \\
-7: 46 cm & Training & 2.178 & 1.0586 & 4.974 & 0.490 & 0.0535 & 1.206 \\
-8: 47 cm & Validation & 0.949 & 0.3152 & 2.272 & 0.699 & 0.1714 & 1.559 \\
-9: 48 cm & Unused & 0.578 & 0.1085 & 1.569 & 0.784 & 0.1996 & 2.282 \\
+1: \qty{40}{\cm} & Validation & 3.092 & 0.5638 & 4.842 & 1.244 & 0.1303 & 2.196 \\
+2: \qty{40}{\cm}+tendon & Validation & 3.622 & 6.3919 & 7.845 & 1.350 & 0.8878 & 1.890 \\
+3: \qty{42}{\cm} & Unused & 3.528 & 2.2190 & 7.665 & 1.299 & 0.3418 & 2.700 \\
+4: \qty{42}{\cm}+tendon & Unused & 2.910 & 6.2250 & 6.367 & 1.289 & 1.2209 & 2.003 \\
+5: \qty{43}{\cm} & Training & 2.437 & 0.9618 & 4.284 & 0.978 & 0.1634 & 1.818 \\
+6: \qty{43}{\cm}+tendon & Training & 2.878 & 4.7304 & 4.817 & 1.525 & 1.3270 & 2.481 \\
+7: \qty{46}{\cm} & Training & 2.178 & 1.0586 & 4.974 & 0.490 & 0.0535 & 1.206 \\
+8: \qty{47}{\cm} & Validation & 0.949 & 0.3152 & 2.272 & 0.699 & 0.1714 & 1.559 \\
+9: \qty{48}{\cm} & Unused & 0.578 & 0.1085 & 1.569 & 0.784 & 0.1996 & 2.282 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The adopted corrections reduce all three errors on every test used in identification. The unused 48\,cm extensor test has larger errors after correction, as shown in Table~\ref{tab:app_gof_ext_all}. The 43\,cm-tendon extensor test retains an FVU above unity despite improvement over its baseline.
+The adopted corrections reduce all three errors on every test used in identification. The unused \qty{48}{\cm} extensor test has larger errors after correction, as shown in Table~\ref{tab:app_gof_ext_all}. The \qty{43}{\cm}-tendon extensor test retains an FVU above unity despite improvement over its baseline.
 
 The values were evaluated with \nolinkurl{minimizeFlxPin.m} and \nolinkurl{minimizeExtX3.m}. On the biomimetic extensor test ($l_0=\qty{51.8}{\cm}$), the shared adopted terms give RMSE \qty{1.17}{\N\m}, FVU 0.67, and maximum residual \qty{2.21}{\N\m}, compared with the rigid-model values \qty{3.03}{\N\m}, 4.49, and \qty{5.59}{\N\m}. Table~\ref{tab:BioTorqueGof} in Chapter~\ref{ch:torque} collects the biomimetic comparisons at the adopted terms.
 
@@ -316,7 +316,7 @@ The values were evaluated with \nolinkurl{minimizeFlxPin.m} and \nolinkurl{minim
 
 The direct redesigned extensor route is preserved in \nolinkurl{Vas_Pam_20mm_Result_20260925.mat}; the cam-assisted route supersedes it as the design of record. Figure~\ref{fig:app_route_geometry} shows the direct route at full flexion, immediately before each contact release, and at full extension. The plotted event pose precedes the first inactive grid pose used to report each release angle in Table~\ref{tab:app_ext_seed}. All route points, including p8, are present in the saved geometry; plotting-title metadata do not define the route.
 
-The optimized origin is $\mathbf p_1=[40.0,137.0,0]$~mm in the femur frame, and the insertion is $\mathbf p_{\mathrm{End}}=[34.4,-197.1,0]$~mm in the tibia frame. Resting length is \qty{827.7}{\mm}, and tendon length is \qty{36.8}{\mm}. The displayed envelopes and bend-radius checks explain the route's geometric constraints.
+The optimized origin is $\mathbf p_1=[40.0,137.0,0]\,\unit{\mm}$ in the femur frame, and the insertion is $\mathbf p_{\mathrm{End}}=[34.4,-197.1,0]\,\unit{\mm}$ in the tibia frame. Resting length is \qty{827.7}{\mm}, and tendon length is \qty{36.8}{\mm}. The displayed envelopes and bend-radius checks explain the route's geometric constraints.
 
 Figure~\ref{fig:app_bone_mesh} places the same optimized route on the OpenSim bone-surface point clouds (\texttt{Open\_Sim\_Bone\_Geometry}) at exactly zero knee angle: the full lower skeleton (femur, tibia, pelvis and hip, sacrum, lumbar spine, and foot) is drawn behind the three human vastus reference paths in light orange, the optimized p1-to-pEnd route is drawn in magenta with its endpoints circled, and the optimized route carries a total BPA-plus-tendon path length of \qty{0.784}{\m} at this pose. Animated sweeps of both redesigned routes over the full flexion range are archived with the optimization results (\texttt{Knee\_Extensor\_20mm.gif}, 2.3~MB, and \texttt{Knee\_Flexor\_20mm.gif}, 4.7~MB, in \texttt{Code/Matlab/Mesh\_Optimization/Results}).
 
@@ -332,7 +332,7 @@ Figure~\ref{fig:app_bone_mesh} places the same optimized route on the OpenSim bo
 \centering
 \includegraphics[width=0.85\textwidth]{bone_mesh_static_extensor20mm.png}
 % ALT TEXT: see bone_mesh_static_extensor20mm.alt.txt beside the figure file.
-\caption[Optimized 20 mm extensor route on the OpenSim bone meshes at zero knee angle]{Static bone-mesh view of the optimized 20 mm extensor route at $\theta_{\mathbf{k}}=0^{\circ}$, rendered by \nolinkurl{Export_AppendixBoneMesh.m}.}
+\caption[Optimized \qty{20}{\mm} extensor route on the OpenSim bone meshes at zero knee angle]{Static bone-mesh view of the optimized \qty{20}{\mm} extensor route at $\theta_{\mathbf{k}}=\ang{0}$, rendered by \nolinkurl{Export_AppendixBoneMesh.m}.}
 \label{fig:app_bone_mesh}
 \end{figure}
 
@@ -374,7 +374,7 @@ where $\operatorname{dist}$ is the planar clearance between the trimmed chord an
 \mathbf{q}(\vartheta) = \mathbf{e}(\vartheta) + R_{\mathrm{BPA}}\,\hat{\mathbf{n}}(\vartheta),
 \label{eq:app_offset_curve}
 \end{equation}
-where $\mathbf{e}(\vartheta)$ traces the physical profile and $\hat{\mathbf{n}}(\vartheta)$ is its outward normal; the offset curve shares the tangent of the physical profile, its radius of curvature is $\rho(\vartheta) = \rho_{\mathrm{phys}}(\vartheta) + R_{\mathrm{BPA}}$, and the candidate contact positions themselves are seeded at tangent points of this curve. Because the envelopes are drawn at the fully inflated radius while the routed BPA is contracted at the release angles, each envelope radius may be relaxed by $\rho = \qty{3}{\mm}$ inside the gate, floored at the bone profile plus \qty{0.5}{\mm}; a rotation-gate opening that still fails the relaxed collision gate indicates that the seed placement, not the gate, must move.
+where $\mathbf{e}(\vartheta)$ traces the physical profile and $\hat{\mathbf{n}}(\vartheta)$ is its outward normal; the offset curve shares the tangent of the physical profile, its radius of curvature is $\rho(\vartheta) = \rho_{\mathrm{phys}}(\vartheta) + R_{\mathrm{BPA}}$, and the candidate contact positions themselves are seeded at tangent points of this curve. Because the envelopes are drawn at the fully inflated radius while the routed BPA is contracted at the release angles, each envelope radius may be relaxed by $\delta_c = \qty{3}{\mm}$ inside the gate, floored at the bone profile plus \qty{0.5}{\mm}; a rotation-gate opening that still fails the relaxed collision gate indicates that the seed placement, not the gate, must move.
 
 At the first pose of the sweep, full flexion, the seed route is settled to a fixpoint: every contact whose two gates already open there is removed, and removals repeat until no further gate opens, so that the sweep starts from a valid topology; a colinearity guard may additionally remove a seed contact that starts the sweep already aligned with its neighbors, and its tolerance is zero in the design of record, so every seed row of Table~\ref{tab:app_ext_seed} starts active. At every later pose at most one contact is released: if several rows open both gates in the same pose, the row with the largest elimination margin, the one whose rotation rule is most decisively open, is released first, and the remaining rows are retested at the next pose. The release angle of row $j$ is recorded as the first grid pose at which the row is inactive. The activation angle is read from the same record with the sweep reversed, as the last pose at which the row is active, which is the pose at which the contact re-engages when the route is driven from extension toward flexion.
 
@@ -391,7 +391,7 @@ The transmission studies extend the route search by allowing an artificial tendo
 
 For the knee-flexor route, the pulley variant converged to a collision-feasible layout with zero bound violations and a peak predicted flexion torque of \qty{85.56}{\newton\meter} on the insertion-side measure, the torque applied at the insertion after the tackle's force loss. At unity transmission, the knee-flexor pulley route increased peak predicted knee-axis torque from \qty{81.23}{\newton\meter} to \qty{85.74}{\newton\meter}, while limiting off-axis torque to \qty{0.803}{\newton\meter}. This comparison measures the effect of the two optimized routing configurations; their different objective functions do not isolate the pulley alone. The pulley serves as a redirect in this configuration rather than a force multiplier.
 
-The robot-body model includes an adductor magnus attachment update to $\mathbf{P}_2=(-0.1357,-0.0929,0.0591)$~m. At this location, the model delivers \qty{34.28}{\newton\meter} of flexion torque, $1.12\times$ the human target of \qty{30.61}{\newton\meter}, and \qty{27.62}{\newton\meter} of adduction torque, $0.82\times$ the human target of \qty{33.60}{\newton\meter}. The OpenSim model retains its eight original moving-path-point vias for rectus-femoris and vastii patella tracking; the candidate pulley routes were not added to those paths, and the model contains no pulley entities. The MuJoCo conversion used for the simulation work predates this attachment update and the pulley batch. Physical tests of the redesigned knee routes are reported in Section~\ref{sec:redesign_physical}.
+The robot-body model includes an adductor magnus attachment update to $\mathbf{P}_2=(-0.1357,-0.0929,0.0591)\,\unit{\meter}$. At this location, the model delivers \qty{34.28}{\newton\meter} of flexion torque, $1.12\times$ the human target of \qty{30.61}{\newton\meter}, and \qty{27.62}{\newton\meter} of adduction torque, $0.82\times$ the human target of \qty{33.60}{\newton\meter}. The OpenSim model retains its eight original moving-path-point vias for rectus-femoris and vastii patella tracking; the candidate pulley routes were not added to those paths, and the model contains no pulley entities. The MuJoCo conversion used for the simulation work predates this attachment update and the pulley batch. Physical tests of the redesigned knee routes are reported in Section~\ref{sec:redesign_physical}.
 
 The attachment-route redesign was extended separately from the knee to all 27 muscle-actuators of the robot-body model and remains work in progress. The first pass reached 19 actuators. All but one selected route violated the feasibility constraints; the exception was the biceps femoris long-head pair, with a worst-angle margin of $+0.03\,\%$. The formulation was then restructured to enforce each route's joint-angle task envelope as a hard feasible set rather than a penalty.
 
@@ -442,7 +442,7 @@ This comparison extends the 27 actuator sites of my master's robot-leg model \ci
 \begingroup\small\renewcommand{\arraystretch}{1.1}
 \begin{tabular}{@{}lllll@{}}
 \toprule
-\textbf{Site} & \textbf{Primary DoF} & \textbf{Secondary DoF} & \textbf{Dia. (mm)} & \textbf{Baseline (mm)} \\
+\textbf{Site} & \textbf{Primary DoF} & \textbf{Secondary DoF} & \textbf{Dia. (\unit{\mm})} & \textbf{Baseline (\unit{\mm})} \\
 \midrule
 ercspn\_r & lumbar ext. & lumbar bend. & 40 & 4$\times$20 \\
 intobl\_r & lumbar ext. & lumbar bend. & 20 & 1$\times$20 \\
