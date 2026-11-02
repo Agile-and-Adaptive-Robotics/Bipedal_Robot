@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="" on="11/01/26||22:50:18" using="Simscape Multibody Link Version 7.4" from="SolidWorks 33.4.1"/>
+<ModelUnits mass="kilogram" length="inch"/>
+<DataUnits mass="kilogram" length="meter"/>
+<RootAssembly name="Foot Ankle" uid="Foot Ankle" version="655">
+<AssemblyFile name="Foot Ankle.SLDASM" type="SolidWorks Assembly"/>
+<InstanceTree>
+<Instance name="Ankle Middle Joint Shell-1" uid="Ankle Middle Joint Shell-1" entityUid="Ankle Middle Joint Shell*:*Default">
+<Transform>
+<Rotation>-1 -4.5982006502038588e-16 5.3705501689824714e-16 4.5982006502281941e-16 -1.0000000000000002 6.6613381477509392e-16 5.3705501689823935e-16 6.6613381477509392e-16 1.0000000000000002</Rotation>
+<Translation>0.030516228648483527 0.013846765931709689 0.051871104827402252</Translation>
+</Transform>
+</Instance>
+<Instance name="Ankle Exterior-1" uid="Ankle Exterior-1" grounded="true" entityUid="Ankle Exterior*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.020553771351516606 0.01333876593170923 0.022661104827402398</Translation>
+</Transform>
+</Instance>
+<Instance name="Toe-4" uid="Toe-4" entityUid="Toe*:*Default">
+<Transform>
+<Rotation>1 -7.2929083175292714e-16 4.3509185823816623e-16 8.1383835637952132e-16 0.98832918915696633 -0.15233323294781739 -3.1283103087756926e-16 0.15233323294781728 0.9883291891569661</Rotation>
+<Translation>-0.034478729191824285 -0.029432583983890318 0.20749207600261885</Translation>
+</Transform>
+</Instance>
+<Instance name="Toe-5" uid="Toe-5" entityUid="Toe*:*Default">
+<Transform>
+<Rotation>0.99999999999999967 -2.2907022573343663e-15 6.8636944767904534e-16 2.3685247815528265e-15 0.98832918915698009 -0.15233323294772672 -3.2940887910635595e-16 0.1523332329477268 0.98832918915698009</Rotation>
+<Translation>0.038246018407542645 -0.029432583983871292 0.20749207600262151</Translation>
+</Transform>
+</Instance>
+<Instance name="foot axle-1" uid="foot axle-1" entityUid="foot axle*:*Default">
+<Transform>
+<Rotation>0 -0.99999999999999989 -2.4208484315794697e-16 -0.68716252241616282 -1.4571677198205125e-16 0.72650372868049118 -0.72650372868049118 1.7842519748644589e-16 -0.68716252241616271</Rotation>
+<Translation>0.0043832708081764102 -0.015490234068293494 0.14554160482740297</Translation>
+</Transform>
+</Instance>
+<Instance name="Ankle Bottom Joint-1" uid="Ankle Bottom Joint-1" entityUid="Ankle Bottom Joint*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.010323228648483415 0.01130676593170859 0.03752810482740513</Translation>
+</Transform>
+</Instance>
+<Instance name="New Front foot-1" uid="New Front foot-1" entityUid="New Front foot*:*Default">
+<Transform>
+<Rotation>0.99999999999999989 7.0183819477760947e-16 -4.8424018591035507e-16 7.5530750784121892e-16 -0.9755979712632844 0.21956456559965251 -3.3720248585794873e-16 -0.21956456559965248 -0.97559797126328418</Rotation>
+<Translation>-0.021778729191823571 -0.023237536866347247 0.20888631099417884</Translation>
+</Transform>
+</Instance>
+<Instance name="Toe-1" uid="Toe-1" entityUid="Toe*:*Default">
+<Transform>
+<Rotation>1 -2.8965242728780691e-13 -1.9650501752338454e-13 2.5633770398895343e-13 0.98832918915699974 -0.15233323294759959 2.3833533531403953e-13 0.15233323294759959 0.98832918915699974</Rotation>
+<Translation>-0.0050147291918663092 -0.029432583983846353 0.20749207600262404</Translation>
+</Transform>
+</Instance>
+<Instance name="Ankle Interior Joint-1" uid="Ankle Interior Joint-1" entityUid="Ankle Interior Joint*:*Default">
+<Transform>
+<Rotation>-1 -3.8705682184619849e-16 9.7864557913784528e-16 3.8705682184863228e-16 -1.0000000000000002 6.6613381477509392e-16 9.7864557913783759e-16 6.6613381477509392e-16 1.0000000000000002</Rotation>
+<Translation>0.030770228648483524 0.013846765931709689 0.051871104827402252</Translation>
+</Transform>
+</Instance>
+<Instance name="New foot - Copy - Copy-1" uid="New foot - Copy - Copy-1" entityUid="New foot - Copy - Copy*:*Default">
+<Transform>
+<Rotation>1.9349416281499566e-16 -2.1510571102112136e-15 -0.99999999999999989 -1.5334269352560452e-16 0.99999999999999989 -2.1510571102112708e-15 1 1.5334269352561557e-16 1.9349416281498896e-16</Rotation>
+<Translation>0.024927963115868611 0.010564321085170709 0.016707036991806826</Translation>
+</Transform>
+</Instance>
+<Instance name="Left mid foot-1" uid="Left mid foot-1" entityUid="Left mid foot*:*Default">
+<Transform>
+<Rotation>-0.99999999999999989 -2.0696771047902773e-15 -5.3421102686896913e-16 -2.1364665966564912e-15 0.97559797126328429 0.21956456559965212 0 0.21956456559965215 -0.97559797126328418</Rotation>
+<Translation>0.043580018407542664 -0.01828149917233194 0.21000169898742554</Translation>
+</Transform>
+</Instance>
+<Instance name="Toe-2" uid="Toe-2" entityUid="Toe*:*Default">
+<Transform>
+<Rotation>1 -2.7327936558275969e-16 1.4011105621087716e-16 2.9143354396406652e-16 0.98832918915697998 -0.1523332329477281 0 0.1523332329477281 0.98832918915697998</Rotation>
+<Translation>0.023768018407542644 -0.029432583983871163 0.20749207600262151</Translation>
+</Transform>
+</Instance>
+<Instance name="Toe-3" uid="Toe-3" entityUid="Toe*:*Default">
+<Transform>
+<Rotation>1 -7.0630083401912533e-16 4.2814425703894336e-16 7.6327832942979473e-16 0.98832918915696588 -0.15233323294781759 -3.1555437692163728e-16 0.15233323294781759 0.98832918915696588</Rotation>
+<Translation>-0.020000729191824294 -0.029432583983890925 0.20749207600261874</Translation>
+</Transform>
+</Instance>
+<Instance name="small axle lock-1" uid="small axle lock-1" entityUid="small axle lock*:*Default">
+<Transform>
+<Rotation>4.789987942052686e-16 -7.2194024447402828e-16 -1 -0.21956456559965276 0.97559797126328396 -8.0949460005461829e-16 0.97559797126328396 0.21956456559965276 3.0879775569737224e-16</Rotation>
+<Translation>-0.042860729191823585 -0.035627631101390972 0.20609784101106327</Translation>
+</Transform>
+</Instance>
+<Instance name="small axle-1" uid="small axle-1" entityUid="small axle*:*Default">
+<Transform>
+<Rotation>-7.4382618448129338e-16 -0.99999999999999989 6.3858694365962686e-16 0.92938785453284178 -9.3675067702747563e-16 -0.36910461368945457 0.36910461368945457 3.1463187862446147e-16 0.92938785453284167</Rotation>
+<Translation>0.0061612708081764164 -0.029432583983870303 0.20749207600262087</Translation>
+</Transform>
+</Instance>
+<Instance name="large axle lock-1" uid="large axle lock-1" entityUid="large axle lock*:*Default">
+<Transform>
+<Rotation>1 -7.4083763455192223e-16 0 7.1899448671331552e-16 0.97559797126328407 -0.21956456559965251 1.793917513846219e-16 0.21956456559965251 0.97559797126328407</Rotation>
+<Translation>-0.027984417317519061 -0.024163300032821449 0.14358967583922158</Translation>
+</Transform>
+</Instance>
+<Instance name="Foot T Lock-1" uid="Foot T Lock-1" entityUid="Foot T Lock*:*Default">
+<Transform>
+<Rotation>1 -1.6371680575597855e-15 -1.637168057559805e-15 1.6371680575597851e-15 -1.2543463363675413e-14 1 -1.6371680575598062e-15 -1 -1.2543463363675409e-14</Rotation>
+<Translation>0.01088736919146154 -0.0082512340682908431 0.04921210482740522</Translation>
+</Transform>
+</Instance>
+<Instance name="Ankle Lock 1-1" uid="Ankle Lock 1-1" entityUid="Ankle Lock 1*:*Default">
+<Transform>
+<Rotation>2.6867039668316689e-16 1.1294818517185927e-15 -1 8.1375878258072021e-15 1 1.1294818517185943e-15 1 -8.1375878258072021e-15 2.686703966831485e-16</Rotation>
+<Translation>0.0096963953377658257 0.011306765931709699 0.050474104827402291</Translation>
+</Transform>
+</Instance>
+<Instance name="small axle - Copy-2" uid="small axle - Copy-2" entityUid="small axle - Copy*:*Default">
+<Transform>
+<Rotation>1.1407258172554323e-16 -1 1.771478195347485e-16 0.98931664331932667 0 -0.14578264386195242 0.14578264386195242 1.8961945631940321e-16 0.98931664331932623</Rotation>
+<Translation>0.049676018407542627 -0.029432583983868693 0.20749207600262098</Translation>
+</Transform>
+</Instance>
+<Instance name="foot axle-2" uid="foot axle-2" entityUid="foot axle*:*Default">
+<Transform>
+<Rotation>-1.088644113217433e-15 1 1.8818560966742524e-15 0.42113883514733436 2.1649348980190553e-15 -0.90699618606185228 -0.90699618606185217 -1.9324151653669797e-16 -0.42113883514733425</Rotation>
+<Translation>0.01741801840754267 -0.015490234068293406 0.14554160482740297</Translation>
+</Transform>
+</Instance>
+<Instance name="large axle lock-2" uid="large axle lock-2" entityUid="large axle lock*:*Default">
+<Transform>
+<Rotation>0.96585092479458445 -1.6819134558586423e-15 0.25909841966605307 0.056888831961534894 0.9755979712632844 -0.2120666387365448 -0.25277589258372407 0.21956456559965215 0.94228220277236374</Rotation>
+<Translation>0.04993001840755508 -0.024434052764653498 0.1433875815900284</Translation>
+</Transform>
+</Instance>
+<Instance name="small axle lock-2" uid="small axle lock-2" entityUid="small axle lock*:*Default">
+<Transform>
+<Rotation>0.47837573047498844 -6.1486158235237889e-16 -0.87815525990141474 -0.19281177816930251 0.97559797126328451 -0.1050343594551571 0.85672649001400258 0.21956456559965107 0.46670239215299036</Rotation>
+<Translation>0.056026018407533351 -0.036141922043820392 0.20598209654388447</Translation>
+</Transform>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Concentric name="Concentric1">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Middle Joint Shell-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0.00025400000000000075 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Middle Joint Shell-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0.00025400000000000075 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident2">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Middle Joint Shell-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 1.0000000000000002 6.9829626776862683e-15</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 -1.0000000000000002 -6.9388939039072284e-15</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Distance name="Distance1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0.00025400000000000075 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Exterior-1</Uid>
+</InstancePath>
+<Position>0.052070000000000005 0.0030480000000000125 0.0038100000000000009</Position>
+<Axis>-1 -2.826049648618203e-16 -1.3659239968321316e-16</Axis>
+</ConstraintGeometry>
+</Distance>
+<Angle name="LimitAngle1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Middle Joint Shell-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 1.0000000000000002 6.9829626776862683e-15</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Exterior-1</Uid>
+</InstancePath>
+<Position>0 0.010498408386542795 0.0017615785468436257</Position>
+<Axis>2.4368538686913784e-16 -0.93969262078590809 -0.34202014332566943</Axis>
+</ConstraintGeometry>
+</Angle>
+<Concentric name="Concentric4">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Exterior-1</Uid>
+</InstancePath>
+<Position>0.052070000000000005 0.00050800000000000671 0.02921</Position>
+<Axis>-1 -2.826049648618203e-16 -1.3659239968321316e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Middle Joint Shell-1</Uid>
+</InstancePath>
+<Position>0.040894 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric5">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0.020446999999999993 0.0025399999999998896 0.016510000000000004</Position>
+<Axis>-1.1150399974139129e-16 6.8296199841606606e-15 -1.0000000000000002</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Bottom Joint-1</Uid>
+</InstancePath>
+<Position>0 0 0.030352999999999998</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Distance name="Distance2">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Bottom Joint-1</Uid>
+</InstancePath>
+<Position>0 0 0.030352999999999998</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0.033781999999999993 0.0025399999999998896 0.016510000000000018</Position>
+<Axis>-1.1150399974139129e-16 6.8296199841606606e-15 -1.0000000000000002</Axis>
+</ConstraintGeometry>
+</Distance>
+<Coincident name="Coincident6">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Bottom Joint-1</Uid>
+</InstancePath>
+<Position>0.013645140542978102 0 0.0108585</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.031679567835598305 -0.010814555153462078 0.0030266081583450524</Position>
+<Axis>0 0 0.99999999999999989</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Parallel name="Parallel1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Bottom Joint-1</Uid>
+</InstancePath>
+<Position>0 -0.011049 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.036759567835598306 -0.010814555153462076 0.013969999999999996</Position>
+<Axis>0 0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Parallel>
+<Concentric name="Concentric9">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>0.024891999999999255 0.0063500000000000049 0</Position>
+<Axis>0.99999999999999989 -3.016263379656412e-13 -1.7680980603900202e-13</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Toe-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident10">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>0.024891999999997343 -7.5078832040276211e-15 -4.3853809472693683e-15</Position>
+<Axis>-0.99999999999999989 3.016263379656412e-13 1.7680980603900202e-13</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Toe-1</Uid>
+</InstancePath>
+<Position>0.0081279999999999998 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric10">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>0.010413999999999275 0.0063500000000000049 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Toe-3</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident11">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>0.0017779999999992802 0.006349999999999998 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Toe-3</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric11">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.0040640000000007198 0.0063500000000000015 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Toe-4</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident12">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.012700000000000714 0.006349999999999998 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Toe-4</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric12">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>0.011176000000000033 -0.011430000000000003 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Toe-2</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident13">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>0.019812000000000028 -0.011430000000000003 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Toe-2</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric13">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>-0.0033019999999999508 -0.011430000000000006 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Toe-5</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0.99999999999999967 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident14">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>0.0053340000000000332 -0.011430000000000003 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Toe-5</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>-0.99999999999999967 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric14">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.019811999999999993 0.0063499999999999876 0.063499999999999973</Position>
+<Axis>0.99999999999999989 0 -1.2601975963230377e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>foot axle-1</Uid>
+</InstancePath>
+<Position>0 0.029209999999999989 0</Position>
+<Axis>0 0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric15">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.024892000000000022 0.0063500000000000015 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>small axle-1</Uid>
+</InstancePath>
+<Position>0 0.045465999999999979 0</Position>
+<Axis>0 -0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric16">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>-0.016255999999999986 -0.011430000000000006 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>small axle - Copy-2</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric18">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>-0.010159999999999995 -0.011429999999999999 0.063499999999999973</Position>
+<Axis>-0.99999999999999989 0 1.2965799506315479e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>foot axle-2</Uid>
+</InstancePath>
+<Position>0 0.029209999999999996 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident20">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>0.027939999999999979 0.0063500000000000015 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>small axle-1</Uid>
+</InstancePath>
+<Position>0.003570145970405128 0 -0.0025400000000000145</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric20">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.021082000000000021 0.0025399999999999971 0</Position>
+<Axis>0 -1.0000000000000002 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>small axle lock-1</Uid>
+</InstancePath>
+<Position>0 0.012699999999999989 0</Position>
+<Axis>0 -0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric21">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>0.044129989304025091 0.0063500000000000049 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>small axle lock-1</Uid>
+</InstancePath>
+<Position>0 0.0063500000000000015 -0.0012700000000000003</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric24">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.010159999999999985 0.0063499999999999945 0.063500000000000001</Position>
+<Axis>0.99999999999999989 0 -1.1908535501224546e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>large axle lock-1</Uid>
+</InstancePath>
+<Position>-0.0012699999999999968 0.0088899999999999986 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident23">
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.0080300520825259888 0.00025088499477323237 0.061732715033443186</Position>
+<Axis>0 -1.0000000000000002 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>large axle lock-1</Uid>
+</InstancePath>
+<Position>0 0.01777999999999999 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric25">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.1288345678355983 -0.02605455515346207 -0.00011005529167397443</Position>
+<Axis>0 0 -0.99999999999999989</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>foot axle-2</Uid>
+</InstancePath>
+<Position>0 0.029209999999999996 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric26">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.1288345678355983 -0.02605455515346207 0.040356692307692274</Position>
+<Axis>0 0 0.99999999999999989</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>foot axle-1</Uid>
+</InstancePath>
+<Position>0 0.029209999999999989 0</Position>
+<Axis>0 -0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident24">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.1288345678355983 -0.02605455515346207 0.0075099447083260239</Position>
+<Axis>0 0 -0.99999999999999989</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>foot axle-2</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident25">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0 0 0.020544692307692281</Position>
+<Axis>0 0 0.99999999999999989</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>foot axle-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric28">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>0 -0.011429999999999999 0.063500000000000001</Position>
+<Axis>-0.99999999999999989 0 3.0616169978683851e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>foot axle-2</Uid>
+</InstancePath>
+<Position>0 0.029209999999999996 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident26">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.1288345678355983 -0.02605455515346207 -0.00011005529167395708</Position>
+<Axis>0 0 -0.99999999999999989</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>0.018541999999999986 -0.017780000000000001 0</Position>
+<Axis>0.99999999999999989 0 -1.0927391974657045e-16</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric29">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.010159999999999985 0.0063499999999999945 0.063500000000000001</Position>
+<Axis>0.99999999999999989 0 -1.1908535501224546e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>foot axle-1</Uid>
+</InstancePath>
+<Position>0 0.029209999999999989 0</Position>
+<Axis>0 -0.99999999999999989 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident27">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0 0 0.028164692307692279</Position>
+<Axis>0 0 0.99999999999999989</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>0.018541999999999989 0.012700000000000003 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric31">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Bottom Joint-1</Uid>
+</InstancePath>
+<Position>0.00056414054297810289 -0.019557999999999999 0.0040640000000000051</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.01135956783559831 -0.018815555153462081 0.014040593924407138</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident30">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>0.024384000000000006 -0.011430000000000003 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>small axle - Copy-2</Uid>
+</InstancePath>
+<Position>0 0.03047999999999999 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric32">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>-0.0063499999999999945 -0.05130800000000002 0.063637715033443176</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>large axle lock-2</Uid>
+</InstancePath>
+<Position>0 0.017780000000000001 0</Position>
+<Axis>0 -1.0000000000000002 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident31">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>-0.019811999999999989 -0.011429999999999999 0.063499999999999973</Position>
+<Axis>0.99999999999999989 0 -1.3659239968321314e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="point">
+<InstancePath>
+<Uid>large axle lock-2</Uid>
+</InstancePath>
+<Position>0.0012700000000000003 0.0030687433487261474 0.002199704525612467</Position>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric33">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>-0.012445999999999985 -0.05130800000000002 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>small axle lock-2</Uid>
+</InstancePath>
+<Position>0 0.012699999999999999 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident33">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>0.039049989304025055 -0.011430000000000006 0</Position>
+<Axis>-0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="point">
+<InstancePath>
+<Uid>small axle lock-2</Uid>
+</InstancePath>
+<Position>-0.0020517477915182325 0.0026955763792357035 -0.0012700000000000072</Position>
+</ConstraintGeometry>
+</Coincident>
+<UnknownConstraint name="Lock1">
+<ConstraintGeometry geomType="Unknown">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="Unknown">
+<InstancePath>
+<Uid>large axle lock-2</Uid>
+</InstancePath>
+</ConstraintGeometry>
+</UnknownConstraint>
+<UnknownConstraint name="Lock2">
+<ConstraintGeometry geomType="Unknown">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="Unknown">
+<InstancePath>
+<Uid>small axle lock-2</Uid>
+</InstancePath>
+</ConstraintGeometry>
+</UnknownConstraint>
+<Concentric name="Concentric34">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0.0063500000000000015 -0.010160000000000008 0.00012699999999993272</Position>
+<Axis>0 1.0000000000000002 6.9635341014971419e-15</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Ankle Lock 1-1</Uid>
+</InstancePath>
+<Position>0.0015239999999999976 0.014732 -0.014723833310717685</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Parallel name="Parallel8">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0.0050799999999999977 -0.010160000000000091 0.012572999999999925</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Lock 1-1</Uid>
+</InstancePath>
+<Position>-0.0099060000000000051 0.012700000000000001 -0.015739833310717682</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Parallel>
+<Coincident name="Coincident34">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Interior Joint-1</Uid>
+</InstancePath>
+<Position>0 -0.010160000000000001 0</Position>
+<Axis>0 1.0000000000000002 6.9386032817802466e-15</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="line">
+<InstancePath>
+<Uid>Ankle Lock 1-1</Uid>
+</InstancePath>
+<Position>-0.0099060000000000051 0.012700000000000005 -0.013707833310717685</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric35">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>New foot - Copy - Copy-1</Uid>
+</InstancePath>
+<Position>0.01135956783559831 -0.018815555153462081 0.014040593924407138</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>Foot T Lock-1</Uid>
+</InstancePath>
+<Position>0 0.012700000000000003 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident35">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Bottom Joint-1</Uid>
+</InstancePath>
+<Position>0.00056414054297810289 -0.019557999999999999 0.011684</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot T Lock-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Parallel name="Parallel9">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Exterior-1</Uid>
+</InstancePath>
+<Position>0.054610000000000006 0 0.05842</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Middle Joint Shell-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 1.0000000000000002 6.9829626776862683e-15</Axis>
+</ConstraintGeometry>
+</Parallel>
+<Parallel name="Parallel10">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Exterior-1</Uid>
+</InstancePath>
+<Position>0.054610000000000006 0 0.05842</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Ankle Bottom Joint-1</Uid>
+</InstancePath>
+<Position>0 -0.011049 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Parallel>
+<Tangent name="Tangent2">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Toe-5</Uid>
+</InstancePath>
+<Position>-0.038971920113908723 0.038045234980735435 0.020195699438059905</Position>
+<Axis>0.99999999999999967 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent3">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Toe-2</Uid>
+</InstancePath>
+<Position>-0.038971920113908751 0.038045234980735435 0.020195699438059933</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent5">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Left mid foot-1</Uid>
+</InstancePath>
+<Position>-0.016255999999999986 -0.011430000000000006 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent6">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>New Front foot-1</Uid>
+</InstancePath>
+<Position>-0.024892000000000022 0.0063500000000000015 0</Position>
+<Axis>0.99999999999999989 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent7">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Toe-5</Uid>
+</InstancePath>
+<Position>-0.038971920113908723 0.038045234980735435 0.020195699438059905</Position>
+<Axis>0.99999999999999967 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent8">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Toe-2</Uid>
+</InstancePath>
+<Position>-0.038971920113908751 0.038045234980735435 0.020195699438059933</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent9">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Toe-1</Uid>
+</InstancePath>
+<Position>-0.038971920113908751 0.038045234980735421 0.020195699438059905</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent10">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Toe-3</Uid>
+</InstancePath>
+<Position>-0.038971920113908751 0.038045234980735414 0.020195699438059933</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+<Tangent name="Tangent11">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>Toe-4</Uid>
+</InstancePath>
+<Position>-0.038971920113908758 0.038045234980735435 0.020195699438059878</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Foot Ankle</Uid>
+</InstancePath>
+<Position>0 -0.039592583983871027 0</Position>
+<Axis>2.1510571102112712e-15 -1 0</Axis>
+</ConstraintGeometry>
+</Tangent>
+</Constraints>
+</RootAssembly>
+<Assemblies>
+</Assemblies>
+<Parts>
+<Part name="Ankle Bottom Joint" uid="Ankle Bottom Joint*:*Default" version="1710">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Ankle Bottom Joint.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.013168929260936995</Mass>
+<CenterOfMass>0.00057677799462310263 -0.004326303936649966 0.01536571946169047</CenterOfMass>
+<Inertia>1.9700229409029113e-06 1.8680617030570412e-06 1.5230748198348476e-06 8.3250882545838157e-09 1.2088892626453577e-10 4.3729234864483344e-08</Inertia>
+</MassProperties>
+<GeometryFile name="Ankle Bottom Joint_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Ankle Exterior" uid="Ankle Exterior*:*Default" version="1251">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Ankle Exterior.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.12192384008158326</Mass>
+<CenterOfMass>0.031115001392070518 0.02645053929702974 0.029045326049179945</CenterOfMass>
+<Inertia>6.7374507176253044e-05 9.0164192932448649e-05 6.1400759788317997e-05 -2.4003686586914165e-07 -5.0084452318342786e-11 2.6832759507294921e-12</Inertia>
+</MassProperties>
+<GeometryFile name="Ankle Exterior_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Ankle Interior Joint" uid="Ankle Interior Joint*:*Default" version="3685">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Ankle Interior Joint.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.01794923410936473</Mass>
+<CenterOfMass>0.02147252018244819 -0.0088184126981341558 0.00039322126821084077</CenterOfMass>
+<Inertia>3.0954587528396711e-06 5.7524767342982455e-06 4.0848409065194076e-06 -1.0005614387373183e-07 -6.86379824326926e-09 -9.1171396397156726e-08</Inertia>
+</MassProperties>
+<GeometryFile name="Ankle Interior Joint_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Ankle Lock 1" uid="Ankle Lock 1*:*Default" version="187">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Ankle Lock 1.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0005912645598564407</Mass>
+<CenterOfMass>0.0014338920752332337 0.0064676981494964387 -0.014723833310717683</CenterOfMass>
+<Inertia>8.3936423095426706e-09 2.5347653929702422e-08 3.3332846586626493e-08 0 0 -2.2279093532080428e-10</Inertia>
+</MassProperties>
+<GeometryFile name="Ankle Lock 1_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Ankle Middle Joint Shell" uid="Ankle Middle Joint Shell*:*Default" version="483">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Ankle Middle Joint Shell.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.012631857024606435</Mass>
+<CenterOfMass>0.02049239634586255 -0.014050208705964932 0</CenterOfMass>
+<Inertia>4.0077697979124963e-06 5.2317517516893667e-06 2.4207445910721355e-06 0 0 3.2824119992026482e-09</Inertia>
+</MassProperties>
+<GeometryFile name="Ankle Middle Joint Shell_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Foot T Lock" uid="Foot T Lock*:*Default" version="113">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Foot T Lock.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00015959290680236151</Mass>
+<CenterOfMass>0 0.0063499999999999997 0</CenterOfMass>
+<Inertia>2.3046545683151019e-09 3.1918581360472294e-10 2.3046545683151019e-09 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Foot T Lock_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Left mid foot" uid="Left mid foot*:*Default" version="166">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Left mid foot.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.028945071427893498</Mass>
+<CenterOfMass>0.0051885911963115844 -0.010906172583075349 0.025875864899617539</CenterOfMass>
+<Inertia>1.2808838794607799e-05 1.6126586052092303e-05 4.5970809923964352e-06 -1.2091860141866642e-07 3.9344926948694957e-07 7.6428860343223267e-08</Inertia>
+</MassProperties>
+<GeometryFile name="Left mid foot_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="New Front foot" uid="New Front foot*:*Default" version="1922">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="New Front foot.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.033435102009916902</Mass>
+<CenterOfMass>0.0040590805783077312 0.0058316199578363941 0.02528332697235379</CenterOfMass>
+<Inertia>1.3780383114758285e-05 2.0115885139680365e-05 7.7903301583429629e-06 1.3046662191752745e-07 -1.9932725522861702e-07 -4.5381115525444231e-08</Inertia>
+</MassProperties>
+<GeometryFile name="New Front foot_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="New foot - Copy - Copy" uid="New foot - Copy - Copy*:*Default" version="14871">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="New foot - Copy - Copy.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.11544451399879704</Mass>
+<CenterOfMass>0.053016224636941167 -0.029358190889506294 0.013974865162642233</CenterOfMass>
+<Inertia>2.2603151911079311e-05 0.00032200667273955954 0.00031318327562966127 1.4110614892895212e-09 -6.4111658960018542e-08 -1.5596703861601627e-05</Inertia>
+</MassProperties>
+<GeometryFile name="New foot - Copy - Copy_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Toe" uid="Toe*:*Default" version="1094">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="Toe.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0037914944747527227</Mass>
+<CenterOfMass>0.0040627691473753644 0.00029637389499479714 0.018852127071781744</CenterOfMass>
+<Inertia>6.299818475453555e-07 5.9992754922679292e-07 7.1722657370410049e-08 -6.3254765442361444e-09 -6.0565768228474746e-11 -1.5857176847600766e-12</Inertia>
+</MassProperties>
+<GeometryFile name="Toe_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="foot axle" uid="foot axle*:*Default" version="142">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="foot axle.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0034815476923724066</Mass>
+<CenterOfMass>0 0.014605000000000002 0</CenterOfMass>
+<Inertia>2.8056702569903229e-07 6.6043985326144138e-08 2.8056702569903229e-07 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="foot axle_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="large axle lock" uid="large axle lock*:*Default" version="115">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="large axle lock.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00044007561614053812</Mass>
+<CenterOfMass>3.0061188570233877e-10 0.0088900001274630092 0.00072325463092665239</CenterOfMass>
+<Inertia>1.1774311635292194e-08 2.3277055648254264e-09 1.0697612414572768e-08 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="large axle lock_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="small axle - Copy" uid="small axle - Copy*:*Default" version="148">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="small axle - Copy.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.0016673998288551384</Mass>
+<CenterOfMass>0 0.01524 0</CenterOfMass>
+<Inertia>1.3768565827436886e-07 1.4816183773555176e-08 1.3530804715938997e-07 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="small axle - Copy_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="small axle lock" uid="small axle lock*:*Default" version="119">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="small axle lock.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.00025608685660253341</Mass>
+<CenterOfMass>-0.00028469457246014065 0.0063500000665651186 -1.6927086832167949e-10</CenterOfMass>
+<Inertia>3.5369663389667301e-09 8.9889544318237756e-10 3.732144626660279e-09 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="small axle lock_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+<Part name="small axle" uid="small axle*:*Default" version="143">
+<ModelUnits mass="kilogram" length="inch"/>
+<PartFile name="small axle.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>0.002487204744708915</Mass>
+<CenterOfMass>0 0.022733 0</CenterOfMass>
+<Inertia>4.4127729589288059e-07 2.2100807462219803e-08 4.3773069264637032e-07 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="small axle_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.3125</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

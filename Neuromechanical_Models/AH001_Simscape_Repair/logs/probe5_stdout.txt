@@ -1,0 +1,136 @@
+
+[x04_01_KT_R_001_1_RIGID]
+  L1 -> x03_01_FB_R_001_1_RIGID
+  L2 -> Cartesian1
+  L3 -> F44
+  L4 -> F45
+  L5 -> F48
+  L6 -> x04_02_KB_R_001_1_RIGID
+  R7 -> Revolute5
+  R8 -> Revolute4
+
+[x04_02_KB_R_001_1_RIGID]
+  L1 -> x05_01_TI_R_001_1_RIGID
+  L2 -> Cylindrical1
+  L3 -> x04_01_KT_R_001_1_RIGID
+  L4 -> F6
+  L5 -> F7
+  L6 -> F8
+  L7 -> Revolute
+
+[x04_03_KT_L_001_1_RIGID]
+  L1 -> x03_03_FB_L_001_1_RIGID
+  L2 -> x04_04_KB_L_001_1_RIGID
+  L3 -> F41
+  L4 -> F42
+  L5 -> F43
+  L6 -> Cartesian
+  R7 -> Revolute3
+  R8 -> Revolute2
+
+[x04_04_KB_L_001_1_RIGID]
+  L1 -> x05_02_TI_001_1_RIGID
+  L2 -> Cylindrical
+  L3 -> F
+  L4 -> F1
+  L5 -> F2
+  L6 -> x04_03_KT_L_001_1_RIGID
+  L7 -> Revolute1
+
+[x04_05_BL_001_1_RIGID]
+  L1 -> F56
+  L2 -> Revolute4
+  R3 -> Revolute
+
+[x04_05_BL_001_2_RIGID]
+  L1 -> F57
+  L2 -> Revolute2
+  R3 -> Revolute1
+
+[x04_06_FL_001_1_RIGID]
+  L1 -> F33
+  L2 -> Revolute5
+  R3 -> Cylindrical1
+
+[x04_06_FL_001_2_RIGID]
+  L1 -> F34
+  L2 -> Revolute3
+  R3 -> Cylindrical
+
+[x03_01_FB_R_001_1_RIGID]
+  L1 -> F3
+  L2 -> F4
+  L3 -> x03_02_FH_R_001_1_RIGID
+  L4 -> x04_01_KT_R_001_1_RIGID
+
+[x03_03_FB_L_001_1_RIGID]
+  L1 -> x03_04_FH_L_001_1_RIGID
+  L2 -> F49
+  L3 -> F50
+  L4 -> x04_03_KT_L_001_1_RIGID
+
+[x03_02_FH_R_001_1_RIGID]
+  L1 -> x03_01_FB_R_001_1_RIGID
+  L2 -> F35
+  L3 -> F46
+  L4 -> F47
+  L5 -> Revolute7
+
+[x03_04_FH_L_001_1_RIGID]
+  L1 -> Transform5
+  L2 -> F37
+  L3 -> F39
+  L4 -> F40
+  L5 -> x03_03_FB_L_001_1_RIGID
+  L6 -> Revolute9
+
+[x05_01_TI_R_001_1_RIGID]
+  L1 -> F5
+  L2 -> x04_02_KB_R_001_1_RIGID
+
+[x05_02_TI_001_1_RIGID]
+  L1 -> F15
+  L2 -> x04_04_KB_L_001_1_RIGID
+
+[x02_01_PE_001_1_RIGID]
+  L1 -> Transform4
+  L2 -> F18
+  L3 -> F19
+  L4 -> F20
+  L5 -> F21
+  L6 -> F22
+  L7 -> F23
+  L8 -> F24
+  L9 -> F25
+  L10 -> F26
+  L11 -> F27
+  L12 -> F9
+  L13 -> F28
+  L14 -> F29
+  L15 -> F30
+  L16 -> F31
+  L17 -> F32
+  L18 -> F51
+  L19 -> F52
+  L20 -> F53
+  L21 -> F54
+  L22 -> F55
+  L23 -> F10
+  L24 -> F11
+  L25 -> F12
+  L26 -> F13
+  L27 -> F14
+  L28 -> F16
+  L29 -> F17
+  R30 -> Spherical1
+  R31 -> Spherical
+
+=== Cartesian joint chains ===
+
+[Cartesian @ ah001_full_import/x09_BA_001_1]
+  LConn: chain=Transform2-> <loop>
+  RConn: chain=x04_03_KT_L_001_1_RIGID
+
+[Cartesian1 @ ah001_full_import/x09_BA_001_1]
+  LConn: chain=Transform3-> <loop>
+  RConn: chain=x04_01_KT_R_001_1_RIGID

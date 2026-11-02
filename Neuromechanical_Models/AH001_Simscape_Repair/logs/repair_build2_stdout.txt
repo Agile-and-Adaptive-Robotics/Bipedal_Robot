@@ -1,0 +1,237 @@
+STAGE A: ah001_repair
+  gravity set: ah001_repair/MechanismConfiguration
+  File Solid paths absolute: 75
+  compile FAIL: ['ah001_repair']: The following errors were found in the model ah001_repair.
+    cause: ['ah001_repair/x09_BA_001_1']: Cartesian Joint 'ah001_repair/x09_BA_001_1/Cartesian' has base and follower ports that are rigidly connected; it is ignored. Resolve this issue in order to simulate the model.
+    cause: ['ah001_repair/x09_BA_001_1']: Angle Constraint 'ah001_repair/x09_BA_001_1/Parallel' has base and follower ports that are rigidly connected. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.
+STAGE A compile (diagnostic): 0
+STAGE B: removing ah001_repair/x09_BA_001_1/Cartesian
+STAGE B: removing ah001_repair/x09_BA_001_1/Cartesian1
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform2' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 71)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform3' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 71)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 71)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 71)
+In run (line 112)] 
+  compile FAIL: ['ah001_repair']: The following errors were found in the model ah001_repair.
+    cause: ['ah001_repair/x09_BA_001_1']: Angle Constraint 'ah001_repair/x09_BA_001_1/Parallel' has base and follower ports that are rigidly connected. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.
+STAGE B compile: 0
+STAGE C: deleted KT-KB rigid line between x09_BA_001_1/x04_01_KT_R_001_1_RIGID(L6) and x09_BA_001_1/x04_02_KB_R_001_1_RIGID
+STAGE C: deleted KT-KB rigid line between x09_BA_001_1/x04_03_KT_L_001_1_RIGID(L2) and x09_BA_001_1/x04_04_KB_L_001_1_RIGID
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform2' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform3' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 91)
+In run (line 112)] 
+  compile FAIL: ['ah001_repair']: The following errors were found in the model ah001_repair.
+    cause: ['ah001_repair/x09_BA_001_1']: Angle Constraint 'ah001_repair/x09_BA_001_1/Parallel' has base and follower ports that are rigidly connected. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.
+STAGE C compile: 0
+STAGE D: ah001_repair/x09_BA_001_1/Cylindrical -> Revolute
+STAGE D: ah001_repair/x09_BA_001_1/Cylindrical1 -> Revolute
+  replaced: 2
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform2' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform3' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 114)
+In run (line 112)] 
+  compile FAIL: ['ah001_repair']: The following errors were found in the model ah001_repair.
+    cause: ['ah001_repair/x09_BA_001_1']: Angle Constraint 'ah001_repair/x09_BA_001_1/Parallel' has base and follower ports that are rigidly connected. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.
+STAGE D compile: 0
+STAGE D2: removing degenerate constraint ah001_repair/x09_BA_001_1/Parallel
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform1' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform2' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform3' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 128)
+In run (line 112)] 
+  compile OK
+STAGE D2 compile: 1
+STAGE E: skipped (attempted hip-spin welds reverted; see record)
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform1' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform2' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1'] : Rigid Transform 'ah001_repair/x09_BA_001_1/Transform3' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build2>tryCompile (line 163)
+In repair_build2 (line 141)
+In run (line 112)] 
+  compile OK
+STAGE E compile (GATE): 1
+
+STAGE F census:
+   1 x sm_lib/Joints/6-DOF Joint
+   2 x sm_lib/Joints/Cylindrical Joint
+   2 x sm_lib/Joints/Planar Joint
+  41 x sm_lib/Joints/Revolute Joint
+   2 x sm_lib/Joints/Spherical Joint
+REPAIR BUILD DONE. compiles A(d)=0 B=0 C=0 D=0 D2=1 E(gate)=1

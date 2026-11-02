@@ -1,0 +1,105 @@
+STAGE A: working on ah001_repair
+  File Solid paths made absolute: 75
+  gravity set on ah001_repair/MechanismConfiguration
+  solver configuration already present
+  compile FAIL:
+Error using repair_build>tryCompile (line 239)
+['ah001_repair']: The following errors were found in the model ah001_repair.
+
+Error in repair_build (line 92)
+okA = tryCompile(fid, mdl);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in run (line 112)
+evalin('caller', strcat(scriptStem, ';'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Caused by:
+    Error using repair_build>tryCompile (line 239)
+    ['ah001_repair/x09_BA_001_1']: Cartesian Joint 'ah001_repair/x09_BA_001_1/Cartesian' has base and follower ports that are rigidly connected; it is ignored. Resolve this issue in
+    order to simulate the model.
+    
+    Error in repair_build (line 92)
+    okA = tryCompile(fid, mdl);
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Error in run (line 112)
+    evalin('caller', strcat(scriptStem, ';'));
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Error using repair_build>tryCompile (line 239)
+    ['ah001_repair/x09_BA_001_1']: Angle Constraint 'ah001_repair/x09_BA_001_1/Parallel' has base and follower ports that are rigidly connected. You can configure this diagnostic in
+    the Simscape Multibody Configuration Parameters dialog.
+    
+    Error in repair_build (line 92)
+    okA = tryCompile(fid, mdl);
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Error in run (line 112)
+    evalin('caller', strcat(scriptStem, ';'));
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+STAGE A compile: 0
+STAGE B: deleted KT-KB line x09_BA_001_1/x04_01_KT_R_001_1_RIGID L6 <->  L120
+STAGE B: deleted KT-KB line 09_BA_001_1/x04_02_KB_R_001_1_RIGID L  port cleanup g1 (left dangling, tolerated): The class Simulink.SubSystem has no Constant property or Static method named 'delete_ports'.
+  port cleanup g2 (left dangling, tolerated): The class Simulink.SubSystem has no Constant property or Static method named 'delete_ports'.
+STAGE B: deleted KT-KB line x09_BA_001_1/x04_03_KT_L_001_1_RIGID L2 <->  L120
+STAGE B: deleted KT-KB line 09_BA_001_1/x04_04_KB_L_001_1_RIGID L  port cleanup g1 (left dangling, tolerated): The class Simulink.SubSystem has no Constant property or Static method named 'delete_ports'.
+  port cleanup g2 (left dangling, tolerated): The class Simulink.SubSystem has no Constant property or Static method named 'delete_ports'.
+[Warning: ['ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build>tryCompile (line 239)
+In repair_build (line 145)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_02_KB_R_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build>tryCompile (line 239)
+In repair_build (line 145)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Transform2' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build>tryCompile (line 239)
+In repair_build (line 145)
+In run (line 112)] 
+[Warning: ['ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID'] : Rigid Transform 'ah001_repair/x09_BA_001_1/x04_04_KB_L_001_1_RIGID/Transform3' has an unconnected F
+port; it is ignored. You can configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_build>tryCompile (line 239)
+In repair_build (line 145)
+In run (line 112)] 
+  compile FAIL:
+Error using repair_build>tryCompile (line 239)
+['ah001_repair']: The following errors were found in the model ah001_repair.
+
+Error in repair_build (line 145)
+okB = tryCompile(fid, mdl);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in run (line 112)
+evalin('caller', strcat(scriptStem, ';'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Caused by:
+    Error using repair_build>tryCompile (line 239)
+    ['ah001_repair/x09_BA_001_1']: Cartesian Joint 'ah001_repair/x09_BA_001_1/Cartesian' has base and follower ports that are rigidly connected; it is ignored. Resolve this
+    issue in order to simulate the model.
+    
+    Error in repair_build (line 145)
+    okB = tryCompile(fid, mdl);
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Error in run (line 112)
+    evalin('caller', strcat(scriptStem, ';'));
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Error using repair_build>tryCompile (line 239)
+    ['ah001_repair/x09_BA_001_1']: Angle Constraint 'ah001_repair/x09_BA_001_1/Parallel' has base and follower ports that are rigidly connected. You can configure this
+    diagnostic in the Simscape Multibody Configuration Parameters dialog.
+    
+    Error in repair_build (line 145)
+    okB = tryCompile(fid, mdl);
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Error in run (line 112)
+    evalin('caller', strcat(scriptStem, ';'));
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+STAGE B compile: 0
+STAGE C: replacing ah001_repair/x09_BA_001_1/Cylindrical
+{Error using repair_build (line 173)
+The second port already has a line connection
+
+Error in run (line 112)
+evalin('caller', strcat(scriptStem, ';'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - Show complete stack trace
+} 
+[Warning: Unable to close the model 'ah001_repair' because it has been changed. To save changes, use close_system('ah001_repair',1). To discard changes, use
+close_system('ah001_repair',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

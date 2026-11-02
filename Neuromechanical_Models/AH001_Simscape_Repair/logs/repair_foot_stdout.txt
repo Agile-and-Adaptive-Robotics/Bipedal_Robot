@@ -1,0 +1,421 @@
+[Warning: A file named 'foot_ankle_DataFile' already exists in the current folder. The data file was named 'foot_ankle_DataFile1' instead.] 
+[Warning: The set of constraints between 'Ankle_Interior_Joint_1_RIGID' and 'Ankle_Lock_1_1_RIGID' could not be mapped to a joint. A rigid connection has been added between port
+'F' of 'Ankle_Interior_Joint_1_RIGID' and port 'F' of 'Ankle_Lock_1_1_RIGID' for these constraints.] 
+[Warning: An unknown constraint exists between 'Left_mid_foot_1_RIGID' and 'large_axle_lock_2_RIGID'. A rigid connection has been added between port 'F' of 'Left_mid_foot_1_RIGID'
+and port 'F' of 'large_axle_lock_2_RIGID' for this constraint.] 
+[Warning: The set of constraints between 'Ankle_Bottom_Joint_1_RIGID' and 'New_foot_Copy_Copy_1_RIGID' could not be mapped to a joint. A rigid connection has been added between
+port 'F3' of 'Ankle_Bottom_Joint_1_RIGID' and port 'F' of 'New_foot_Copy_Copy_1_RIGID' for these constraints.] 
+[Warning: The set of constraints between 'New_Front_foot_1_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of
+'New_Front_foot_1_RIGID' and port 'F' of 'Transform' for these constraints.] 
+[Warning: The set of constraints between 'Left_mid_foot_1_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F2' of
+'Left_mid_foot_1_RIGID' and port 'F' of 'Transform1' for these constraints.] 
+[Warning: The set of constraints between 'Ankle_Middle_Joint_Shell_1_RIGID' and 'Ankle_Exterior_1_RIGID' could not be mapped to a joint. A rigid connection has been added between
+port 'F' of 'Ankle_Middle_Joint_Shell_1_RIGID' and port 'F2' of 'Ankle_Exterior_1_RIGID' for these constraints.] 
+[Warning: The set of constraints between 'New_Front_foot_1_RIGID' and 'small_axle_1_RIGID' could not be mapped to a joint. A rigid connection has been added between port 'F4' of
+'New_Front_foot_1_RIGID' and port 'F' of 'small_axle_1_RIGID' for these constraints.] 
+[Warning: An unknown constraint exists between 'Left_mid_foot_1_RIGID' and 'small_axle_lock_2_RIGID'. A rigid connection has been added between port 'F5' of 'Left_mid_foot_1_RIGID'
+and port 'F' of 'small_axle_lock_2_RIGID' for this constraint.] 
+[Warning: The set of constraints between 'Toe_1_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_1_RIGID' and port 'F'
+of 'Transform2' for these constraints.] 
+[Warning: The set of constraints between 'Toe_2_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_2_RIGID' and port 'F'
+of 'Transform3' for these constraints.] 
+[Warning: The set of constraints between 'Toe_3_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_3_RIGID' and port 'F'
+of 'Transform4' for these constraints.] 
+[Warning: The set of constraints between 'Toe_4_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_4_RIGID' and port 'F'
+of 'Transform5' for these constraints.] 
+[Warning: The set of constraints between 'Toe_5_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_5_RIGID' and port 'F'
+of 'Transform6' for these constraints.] 
+
+=== foot_L ===
+  WELD FAIL Planar: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Planar1: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Planar3: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Cylindrical1: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Cylindrical2: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute1: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute3: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute4: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute5: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute6: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute7: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute8: The first input to set_param must be of type 'double' or 'char'.
+  -> revolute Planar2
+  -> revolute Cylindrical
+  deleted Parallel
+  housing datum port branched
+  housing grounded to World for standalone compile (cut when mounted)
+[Warning: ['foot_L/Ankle_Bottom_Joint_1_RIGID'] : Rigid Transform 'foot_L/Ankle_Bottom_Joint_1_RIGID/Transform1' has an unconnected F port; it is ignored. You can
+configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_foot (line 149)
+In run (line 112)] 
+[Warning: ['foot_L/Ankle_Exterior_1_RIGID'] : Rigid Transform 'foot_L/Ankle_Exterior_1_RIGID/Transform' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_foot (line 149)
+In run (line 112)] 
+  compile FAIL: ['foot_L']: The following errors were found in the model foot_L.
+    cause: ['foot_L']: Rigid Transform 'foot_L/Transform7' is connected through B and F ports to the same frame; it is ignored. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Revolute5' (F -> B)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F6)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform6' (F -> B)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform2' (B -> F)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_L/Transform1' (F -> B)
+    Rigid Transform 'foot_L/Transform3' (B -> F)
+    Subsystem 'foot_L/Toe_2_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Toe_2_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_L/Toe_2_RIGID/Transform' (B -> F)
+    Subsystem 'foot_L/Toe_2_RIGID' (via port F)
+
+The connection from 'foot_L/Toe_2_RIGID' port F to frame Revolute5_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Revolute8' (F -> B)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F7)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform7' (F -> B)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform2' (B -> F)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_L/Transform1' (F -> B)
+    Rigid Transform 'foot_L/Transform6' (B -> F)
+    Subsystem 'foot_L/Toe_5_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Toe_5_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_L/Toe_5_RIGID/Transform' (B -> F)
+    Subsystem 'foot_L/Toe_5_RIGID' (via port F)
+
+The connection from 'foot_L/Toe_5_RIGID' port F to frame Revolute8_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Revolute4' (F -> B)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F6)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform6' (F -> B)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Transform' (F -> B)
+    Rigid Transform 'foot_L/Transform2' (B -> F)
+    Subsystem 'foot_L/Toe_1_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Toe_1_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_L/Toe_1_RIGID/Transform' (B -> F)
+    Subsystem 'foot_L/Toe_1_RIGID' (via port F)
+
+The connection from 'foot_L/Toe_1_RIGID' port F to frame Revolute4_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Revolute6' (F -> B)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F7)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform7' (F -> B)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Transform' (F -> B)
+    Rigid Transform 'foot_L/Transform4' (B -> F)
+    Subsystem 'foot_L/Toe_3_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Toe_3_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_L/Toe_3_RIGID/Transform' (B -> F)
+    Subsystem 'foot_L/Toe_3_RIGID' (via port F)
+
+The connection from 'foot_L/Toe_3_RIGID' port F to frame Revolute6_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Revolute7' (F -> B)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F8)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform8' (F -> B)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Transform' (F -> B)
+    Rigid Transform 'foot_L/Transform5' (B -> F)
+    Subsystem 'foot_L/Toe_4_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Toe_4_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_L/Toe_4_RIGID/Transform' (B -> F)
+    Subsystem 'foot_L/Toe_4_RIGID' (via port F)
+
+The connection from 'foot_L/Toe_4_RIGID' port F to frame Revolute7_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Planar1' (B -> F)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform2' (F -> B)
+    Rigid Transform 'foot_L/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_L/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Transform' (F -> B)
+    Rigid Transform 'foot_L/Transform1' (B -> F)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform2' (F -> B)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform3' (B -> F)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F3)
+    Rigid Transform 'foot_L/Planar3' (B -> F)
+    Subsystem 'foot_L/New_foot_Copy_Copy_1_RIGID' (via port F3)
+    Rigid Transform 'foot_L/New_foot_Copy_Copy_1_RIGID/Transform3' (F -> B)
+    Rigid Transform 'foot_L/New_foot_Copy_Copy_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_L/New_foot_Copy_Copy_1_RIGID' (via port F1)
+
+The connection from 'foot_L/New_foot_Copy_Copy_1_RIGID' port F1 to frame New_foot_Copy_Copy_1_RIGID_F1 is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Revolute3' (F -> B)
+    Subsystem 'foot_L/New_foot_Copy_Copy_1_RIGID' (via port F5)
+    Rigid Transform 'foot_L/New_foot_Copy_Copy_1_RIGID/Transform5' (F -> B)
+    Rigid Transform 'foot_L/New_foot_Copy_Copy_1_RIGID/Transform3' (B -> F)
+    Subsystem 'foot_L/New_foot_Copy_Copy_1_RIGID' (via port F3)
+    Rigid Transform 'foot_L/Planar3' (F -> B)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F3)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform3' (F -> B)
+    Rigid Transform 'foot_L/Left_mid_foot_1_RIGID/Transform4' (B -> F)
+    Subsystem 'foot_L/Left_mid_foot_1_RIGID' (via port F4)
+    Rigid Transform 'foot_L/Cylindrical2' (B -> F)
+    Subsystem 'foot_L/foot_axle_2_RIGID' (via port F)
+    Rigid Transform 'foot_L/foot_axle_2_RIGID/Transform' (F -> B)
+    Rigid Transform 'foot_L/foot_axle_2_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_L/foot_axle_2_RIGID' (via port F1)
+
+The connection from 'foot_L/foot_axle_2_RIGID' port F1 to frame Revolute3_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_L/Planar' (B -> F)
+    Subsystem 'foot_L/Foot_T_Lock_1_RIGID' (via port F)
+    Rigid Transform 'foot_L/Foot_T_Lock_1_RIGID/Transform' (F -> B)
+    Rigid Transform 'foot_L/Foot_T_Lock_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_L/Foot_T_Lock_1_RIGID' (via port F1)
+    Rigid Transform 'foot_L/Cylindrical1' (F -> B)
+    Subsystem 'foot_L/New_foot_Copy_Copy_1_RIGID' (via port F2)
+    Rigid Transform 'foot_L/New_foot_Copy_Copy_1_RIGID/Transform2' (F -> B)
+    Rigid Transform 'foot_L/New_foot_Copy_Copy_1_RIGID/Transform' (B -> F)
+    Subsystem 'foot_L/New_foot_Copy_Copy_1_RIGID' (via port F)
+    Subsystem 'foot_L/Ankle_Bottom_Joint_1_RIGID' (via port F3)
+    Rigid Transform 'foot_L/Ankle_Bottom_Joint_1_RIGID/Transform3' (F -> B)
+    Rigid Transform 'foot_L/Ankle_Bottom_Joint_1_RIGID/Transform' (B -> F)
+    Subsystem 'foot_L/Ankle_Bottom_Joint_1_RIGID' (via port F)
+
+The connection from 'foot_L/Ankle_Bottom_Joint_1_RIGID' port F to frame Ankle_Bottom_Joint_1_RIGID_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Revolute Joint 'foot_L/Planar2_rev' has base and follower ports that are rigidly connected; it is ignored. Resolve this issue in order to simulate the model.
+    cause: ['foot_L']: Revolute Joint 'foot_L/Revolute' has base and follower ports that are rigidly connected; it is ignored. Resolve this issue in order to simulate the model.
+    cause: ['foot_L/Solver Configuration']: *** Model not assembled: position violation *** Resolve this issue in order to simulate the model.
+  foot_L saved (compile=0)
+[Warning: A file named 'foot_ankle_DataFile' already exists in the current folder. The data file was named 'foot_ankle_DataFile2' instead.] 
+[Warning: The set of constraints between 'Ankle_Interior_Joint_1_RIGID' and 'Ankle_Lock_1_1_RIGID' could not be mapped to a joint. A rigid connection has been added
+between port 'F' of 'Ankle_Interior_Joint_1_RIGID' and port 'F' of 'Ankle_Lock_1_1_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: An unknown constraint exists between 'Left_mid_foot_1_RIGID' and 'large_axle_lock_2_RIGID'. A rigid connection has been added between port 'F' of
+'Left_mid_foot_1_RIGID' and port 'F' of 'large_axle_lock_2_RIGID' for this constraint.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Ankle_Bottom_Joint_1_RIGID' and 'New_foot_Copy_Copy_1_RIGID' could not be mapped to a joint. A rigid connection has been added
+between port 'F3' of 'Ankle_Bottom_Joint_1_RIGID' and port 'F' of 'New_foot_Copy_Copy_1_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'New_Front_foot_1_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of
+'New_Front_foot_1_RIGID' and port 'F' of 'Transform' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Left_mid_foot_1_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F2' of
+'Left_mid_foot_1_RIGID' and port 'F' of 'Transform1' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Ankle_Middle_Joint_Shell_1_RIGID' and 'Ankle_Exterior_1_RIGID' could not be mapped to a joint. A rigid connection has been
+added between port 'F' of 'Ankle_Middle_Joint_Shell_1_RIGID' and port 'F2' of 'Ankle_Exterior_1_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'New_Front_foot_1_RIGID' and 'small_axle_1_RIGID' could not be mapped to a joint. A rigid connection has been added between port
+'F4' of 'New_Front_foot_1_RIGID' and port 'F' of 'small_axle_1_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: An unknown constraint exists between 'Left_mid_foot_1_RIGID' and 'small_axle_lock_2_RIGID'. A rigid connection has been added between port 'F5' of
+'Left_mid_foot_1_RIGID' and port 'F' of 'small_axle_lock_2_RIGID' for this constraint.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Toe_1_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_1_RIGID'
+and port 'F' of 'Transform2' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Toe_2_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_2_RIGID'
+and port 'F' of 'Transform3' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Toe_3_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_3_RIGID'
+and port 'F' of 'Transform4' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Toe_4_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_4_RIGID'
+and port 'F' of 'Transform5' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+[Warning: The set of constraints between 'Toe_5_RIGID' and 'World' could not be mapped to a joint. A rigid connection has been added between port 'F1' of 'Toe_5_RIGID'
+and port 'F' of 'Transform6' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In repair_foot (line 30)
+In run (line 112)] 
+
+=== foot_R ===
+  WELD FAIL Planar: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Planar1: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Planar3: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Cylindrical1: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Cylindrical2: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute1: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute3: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute4: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute5: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute6: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute7: The first input to set_param must be of type 'double' or 'char'.
+  WELD FAIL Revolute8: The first input to set_param must be of type 'double' or 'char'.
+  -> revolute Planar2
+  -> revolute Cylindrical
+  deleted Parallel
+  housing datum port branched
+  housing grounded to World for standalone compile (cut when mounted)
+[Warning: ['foot_R/Ankle_Bottom_Joint_1_RIGID'] : Rigid Transform 'foot_R/Ankle_Bottom_Joint_1_RIGID/Transform1' has an unconnected F port; it is ignored. You can
+configure this diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_foot (line 149)
+In run (line 112)] 
+[Warning: ['foot_R/Ankle_Exterior_1_RIGID'] : Rigid Transform 'foot_R/Ankle_Exterior_1_RIGID/Transform' has an unconnected F port; it is ignored. You can configure this
+diagnostic in the Simscape Multibody Configuration Parameters dialog.] 
+[> In repair_foot (line 149)
+In run (line 112)] 
+  compile FAIL: ['foot_R']: The following errors were found in the model foot_R.
+    cause: ['foot_R']: Rigid Transform 'foot_R/Transform7' is connected through B and F ports to the same frame; it is ignored. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Revolute5' (F -> B)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F6)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform6' (F -> B)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform2' (B -> F)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_R/Transform1' (F -> B)
+    Rigid Transform 'foot_R/Transform3' (B -> F)
+    Subsystem 'foot_R/Toe_2_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Toe_2_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_R/Toe_2_RIGID/Transform' (B -> F)
+    Subsystem 'foot_R/Toe_2_RIGID' (via port F)
+
+The connection from 'foot_R/Toe_2_RIGID' port F to frame Revolute5_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Revolute8' (F -> B)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F7)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform7' (F -> B)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform2' (B -> F)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_R/Transform1' (F -> B)
+    Rigid Transform 'foot_R/Transform6' (B -> F)
+    Subsystem 'foot_R/Toe_5_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Toe_5_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_R/Toe_5_RIGID/Transform' (B -> F)
+    Subsystem 'foot_R/Toe_5_RIGID' (via port F)
+
+The connection from 'foot_R/Toe_5_RIGID' port F to frame Revolute8_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Revolute4' (F -> B)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F6)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform6' (F -> B)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Transform' (F -> B)
+    Rigid Transform 'foot_R/Transform2' (B -> F)
+    Subsystem 'foot_R/Toe_1_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Toe_1_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_R/Toe_1_RIGID/Transform' (B -> F)
+    Subsystem 'foot_R/Toe_1_RIGID' (via port F)
+
+The connection from 'foot_R/Toe_1_RIGID' port F to frame Revolute4_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Revolute6' (F -> B)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F7)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform7' (F -> B)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Transform' (F -> B)
+    Rigid Transform 'foot_R/Transform4' (B -> F)
+    Subsystem 'foot_R/Toe_3_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Toe_3_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_R/Toe_3_RIGID/Transform' (B -> F)
+    Subsystem 'foot_R/Toe_3_RIGID' (via port F)
+
+The connection from 'foot_R/Toe_3_RIGID' port F to frame Revolute6_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Revolute7' (F -> B)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F8)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform8' (F -> B)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Transform' (F -> B)
+    Rigid Transform 'foot_R/Transform5' (B -> F)
+    Subsystem 'foot_R/Toe_4_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Toe_4_RIGID/Transform1' (F -> B)
+    Rigid Transform 'foot_R/Toe_4_RIGID/Transform' (B -> F)
+    Subsystem 'foot_R/Toe_4_RIGID' (via port F)
+
+The connection from 'foot_R/Toe_4_RIGID' port F to frame Revolute7_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Planar1' (B -> F)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform2' (F -> B)
+    Rigid Transform 'foot_R/New_Front_foot_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_R/New_Front_foot_1_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Transform' (F -> B)
+    Rigid Transform 'foot_R/Transform1' (B -> F)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F2)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform2' (F -> B)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform3' (B -> F)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F3)
+    Rigid Transform 'foot_R/Planar3' (B -> F)
+    Subsystem 'foot_R/New_foot_Copy_Copy_1_RIGID' (via port F3)
+    Rigid Transform 'foot_R/New_foot_Copy_Copy_1_RIGID/Transform3' (F -> B)
+    Rigid Transform 'foot_R/New_foot_Copy_Copy_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_R/New_foot_Copy_Copy_1_RIGID' (via port F1)
+
+The connection from 'foot_R/New_foot_Copy_Copy_1_RIGID' port F1 to frame New_foot_Copy_Copy_1_RIGID_F1 is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Revolute3' (F -> B)
+    Subsystem 'foot_R/New_foot_Copy_Copy_1_RIGID' (via port F5)
+    Rigid Transform 'foot_R/New_foot_Copy_Copy_1_RIGID/Transform5' (F -> B)
+    Rigid Transform 'foot_R/New_foot_Copy_Copy_1_RIGID/Transform3' (B -> F)
+    Subsystem 'foot_R/New_foot_Copy_Copy_1_RIGID' (via port F3)
+    Rigid Transform 'foot_R/Planar3' (F -> B)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F3)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform3' (F -> B)
+    Rigid Transform 'foot_R/Left_mid_foot_1_RIGID/Transform4' (B -> F)
+    Subsystem 'foot_R/Left_mid_foot_1_RIGID' (via port F4)
+    Rigid Transform 'foot_R/Cylindrical2' (B -> F)
+    Subsystem 'foot_R/foot_axle_2_RIGID' (via port F)
+    Rigid Transform 'foot_R/foot_axle_2_RIGID/Transform' (F -> B)
+    Rigid Transform 'foot_R/foot_axle_2_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_R/foot_axle_2_RIGID' (via port F1)
+
+The connection from 'foot_R/foot_axle_2_RIGID' port F1 to frame Revolute3_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Cycle detected in rigidity graph:
+    Rigid Transform 'foot_R/Planar' (B -> F)
+    Subsystem 'foot_R/Foot_T_Lock_1_RIGID' (via port F)
+    Rigid Transform 'foot_R/Foot_T_Lock_1_RIGID/Transform' (F -> B)
+    Rigid Transform 'foot_R/Foot_T_Lock_1_RIGID/Transform1' (B -> F)
+    Subsystem 'foot_R/Foot_T_Lock_1_RIGID' (via port F1)
+    Rigid Transform 'foot_R/Cylindrical1' (F -> B)
+    Subsystem 'foot_R/New_foot_Copy_Copy_1_RIGID' (via port F2)
+    Rigid Transform 'foot_R/New_foot_Copy_Copy_1_RIGID/Transform2' (F -> B)
+    Rigid Transform 'foot_R/New_foot_Copy_Copy_1_RIGID/Transform' (B -> F)
+    Subsystem 'foot_R/New_foot_Copy_Copy_1_RIGID' (via port F)
+    Subsystem 'foot_R/Ankle_Bottom_Joint_1_RIGID' (via port F3)
+    Rigid Transform 'foot_R/Ankle_Bottom_Joint_1_RIGID/Transform3' (F -> B)
+    Rigid Transform 'foot_R/Ankle_Bottom_Joint_1_RIGID/Transform' (B -> F)
+    Subsystem 'foot_R/Ankle_Bottom_Joint_1_RIGID' (via port F)
+
+The connection from 'foot_R/Ankle_Bottom_Joint_1_RIGID' port F to frame Ankle_Bottom_Joint_1_RIGID_F is ignored for assembly. Break the cycle by explicitly removing this or a different block or connection to it. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Revolute Joint 'foot_R/Planar2_rev' has base and follower ports that are rigidly connected; it is ignored. Resolve this issue in order to simulate the model.
+    cause: ['foot_R']: Revolute Joint 'foot_R/Revolute' has base and follower ports that are rigidly connected; it is ignored. Resolve this issue in order to simulate the model.
+    cause: ['foot_R/Solver Configuration']: *** Model not assembled: position violation *** Resolve this issue in order to simulate the model.
+  foot_R saved (compile=0)
+FOOT REPAIR DONE

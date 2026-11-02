@@ -1,0 +1,514 @@
+=== configuration ===
+solver: VariableStepAuto
+SolverType: Variable-step
+Mechanism Configuration: mdl_humanoid_lower_ah001_imported/x09_BA_001_1/Mechanism Configuration
+   UniformGravity         = Constant
+   GravityVector          = [0 -9.80665 0]
+   GravityVector_conf     = compiletime
+   GravityVectorUnits     = m/s^2
+   LinearizationDelta     = 0.001
+   JointModeTransitionNonlinearIterations = 2
+   BlockFunction          = simmechanics.library.utilities.mechanism_configuration
+
+=== joints ===
+
+[mdl_humanoid_lower_ah001_imported/x09_BA_001_1/knee_hinge_L]
+   PositionTargetSpecify              = off
+   PositionTargetPriority             = High
+   PositionTargetValue                = 0
+   PositionTargetValue_conf           = compiletime
+   PositionTargetValueUnits           = deg
+   VelocityTargetSpecify              = off
+   VelocityTargetPriority             = High
+   VelocityTargetValue                = 0
+   VelocityTargetValue_conf           = compiletime
+   VelocityTargetValueUnits           = deg/s
+   LowerLimitSpecify                  = off
+   LowerLimitBound                    = -90
+   LowerLimitBound_conf               = compiletime
+   LowerLimitBoundUnits               = deg
+   LowerLimitStiffness                = 1e4
+   LowerLimitStiffness_conf           = compiletime
+   LowerLimitStiffnessUnits           = N*m/deg
+   LowerLimitDamping                  = 10
+   LowerLimitDamping_conf             = compiletime
+   LowerLimitDampingUnits             = N*m/(deg/s)
+   LowerLimitTransitionRegionWidth    = 0.1
+   LowerLimitTransitionRegionWidth_conf = compiletime
+   LowerLimitTransitionRegionWidthUnits = deg
+   UpperLimitSpecify                  = off
+   UpperLimitBound                    = 90
+   UpperLimitBound_conf               = compiletime
+   UpperLimitBoundUnits               = deg
+   UpperLimitStiffness                = 1e4
+   UpperLimitStiffness_conf           = compiletime
+   UpperLimitStiffnessUnits           = N*m/deg
+   UpperLimitDamping                  = 10
+   UpperLimitDamping_conf             = compiletime
+   UpperLimitDampingUnits             = N*m/(deg/s)
+   UpperLimitTransitionRegionWidth    = 0.1
+   UpperLimitTransitionRegionWidth_conf = compiletime
+   UpperLimitTransitionRegionWidthUnits = deg
+   MotionActuationMode                = ComputedMotion
+   SenseLowerLimitTorqueForce         = off
+   SenseUpperLimitTorqueForce         = off
+   port B : err Invalid Simulink object handle
+   port F : err Invalid Simulink object handle
+
+[mdl_humanoid_lower_ah001_imported/x09_BA_001_1/knee_hinge_R]
+   PositionTargetSpecify              = off
+   PositionTargetPriority             = High
+   PositionTargetValue                = 0
+   PositionTargetValue_conf           = compiletime
+   PositionTargetValueUnits           = deg
+   VelocityTargetSpecify              = off
+   VelocityTargetPriority             = High
+   VelocityTargetValue                = 0
+   VelocityTargetValue_conf           = compiletime
+   VelocityTargetValueUnits           = deg/s
+   LowerLimitSpecify                  = off
+   LowerLimitBound                    = -90
+   LowerLimitBound_conf               = compiletime
+   LowerLimitBoundUnits               = deg
+   LowerLimitStiffness                = 1e4
+   LowerLimitStiffness_conf           = compiletime
+   LowerLimitStiffnessUnits           = N*m/deg
+   LowerLimitDamping                  = 10
+   LowerLimitDamping_conf             = compiletime
+   LowerLimitDampingUnits             = N*m/(deg/s)
+   LowerLimitTransitionRegionWidth    = 0.1
+   LowerLimitTransitionRegionWidth_conf = compiletime
+   LowerLimitTransitionRegionWidthUnits = deg
+   UpperLimitSpecify                  = off
+   UpperLimitBound                    = 90
+   UpperLimitBound_conf               = compiletime
+   UpperLimitBoundUnits               = deg
+   UpperLimitStiffness                = 1e4
+   UpperLimitStiffness_conf           = compiletime
+   UpperLimitStiffnessUnits           = N*m/deg
+   UpperLimitDamping                  = 10
+   UpperLimitDamping_conf             = compiletime
+   UpperLimitDampingUnits             = N*m/(deg/s)
+   UpperLimitTransitionRegionWidth    = 0.1
+   UpperLimitTransitionRegionWidth_conf = compiletime
+   UpperLimitTransitionRegionWidthUnits = deg
+   MotionActuationMode                = ComputedMotion
+   SenseLowerLimitTorqueForce         = off
+   SenseUpperLimitTorqueForce         = off
+   port B : err Invalid Simulink object handle
+   port F : err Invalid Simulink object handle
+
+[mdl_humanoid_lower_ah001_imported/x09_BA_001_1/pelvis_free]
+   PxPositionTargetSpecify            = off
+   PxPositionTargetPriority           = High
+   PxPositionTargetValue              = 0
+   PxPositionTargetValue_conf         = compiletime
+   PxPositionTargetValueUnits         = m
+   PxVelocityTargetSpecify            = off
+   PxVelocityTargetPriority           = High
+   PxVelocityTargetValue              = 0
+   PxVelocityTargetValue_conf         = compiletime
+   PxVelocityTargetValueUnits         = m/s
+   PxLowerLimitSpecify                = off
+   PxLowerLimitBound                  = -1
+   PxLowerLimitBound_conf             = compiletime
+   PxLowerLimitBoundUnits             = m
+   PxLowerLimitStiffness              = 1e6
+   PxLowerLimitStiffness_conf         = compiletime
+   PxLowerLimitStiffnessUnits         = N/m
+   PxLowerLimitDamping                = 1e3
+   PxLowerLimitDamping_conf           = compiletime
+   PxLowerLimitDampingUnits           = N/(m/s)
+   PxLowerLimitTransitionRegionWidth  = 1e-4
+   PxLowerLimitTransitionRegionWidth_conf = compiletime
+   PxLowerLimitTransitionRegionWidthUnits = m
+   PxUpperLimitSpecify                = off
+   PxUpperLimitBound                  = 1
+   PxUpperLimitBound_conf             = compiletime
+   PxUpperLimitBoundUnits             = m
+   PxUpperLimitStiffness              = 1e6
+   PxUpperLimitStiffness_conf         = compiletime
+   PxUpperLimitStiffnessUnits         = N/m
+   PxUpperLimitDamping                = 1e3
+   PxUpperLimitDamping_conf           = compiletime
+   PxUpperLimitDampingUnits           = N/(m/s)
+   PxUpperLimitTransitionRegionWidth  = 1e-4
+   PxUpperLimitTransitionRegionWidth_conf = compiletime
+   PxUpperLimitTransitionRegionWidthUnits = m
+   PxMotionActuationMode              = ComputedMotion
+   PxSenseLowerLimitTorqueForce       = off
+   PxSenseUpperLimitTorqueForce       = off
+   PyPositionTargetSpecify            = off
+   PyPositionTargetPriority           = High
+   PyPositionTargetValue              = 0
+   PyPositionTargetValue_conf         = compiletime
+   PyPositionTargetValueUnits         = m
+   PyVelocityTargetSpecify            = off
+   PyVelocityTargetPriority           = High
+   PyVelocityTargetValue              = 0
+   PyVelocityTargetValue_conf         = compiletime
+   PyVelocityTargetValueUnits         = m/s
+   PyLowerLimitSpecify                = off
+   PyLowerLimitBound                  = -1
+   PyLowerLimitBound_conf             = compiletime
+   PyLowerLimitBoundUnits             = m
+   PyLowerLimitStiffness              = 1e6
+   PyLowerLimitStiffness_conf         = compiletime
+   PyLowerLimitStiffnessUnits         = N/m
+   PyLowerLimitDamping                = 1e3
+   PyLowerLimitDamping_conf           = compiletime
+   PyLowerLimitDampingUnits           = N/(m/s)
+   PyLowerLimitTransitionRegionWidth  = 1e-4
+   PyLowerLimitTransitionRegionWidth_conf = compiletime
+   PyLowerLimitTransitionRegionWidthUnits = m
+   PyUpperLimitSpecify                = off
+   PyUpperLimitBound                  = 1
+   PyUpperLimitBound_conf             = compiletime
+   PyUpperLimitBoundUnits             = m
+   PyUpperLimitStiffness              = 1e6
+   PyUpperLimitStiffness_conf         = compiletime
+   PyUpperLimitStiffnessUnits         = N/m
+   PyUpperLimitDamping                = 1e3
+   PyUpperLimitDamping_conf           = compiletime
+   PyUpperLimitDampingUnits           = N/(m/s)
+   PyUpperLimitTransitionRegionWidth  = 1e-4
+   PyUpperLimitTransitionRegionWidth_conf = compiletime
+   PyUpperLimitTransitionRegionWidthUnits = m
+   PyMotionActuationMode              = ComputedMotion
+   PySenseLowerLimitTorqueForce       = off
+   PySenseUpperLimitTorqueForce       = off
+   PzPositionTargetSpecify            = off
+   PzPositionTargetPriority           = High
+   PzPositionTargetValue              = 0
+   PzPositionTargetValue_conf         = compiletime
+   PzPositionTargetValueUnits         = m
+   PzVelocityTargetSpecify            = off
+   PzVelocityTargetPriority           = High
+   PzVelocityTargetValue              = 0
+   PzVelocityTargetValue_conf         = compiletime
+   PzVelocityTargetValueUnits         = m/s
+   PzLowerLimitSpecify                = off
+   PzLowerLimitBound                  = -1
+   PzLowerLimitBound_conf             = compiletime
+   PzLowerLimitBoundUnits             = m
+   PzLowerLimitStiffness              = 1e6
+   PzLowerLimitStiffness_conf         = compiletime
+   PzLowerLimitStiffnessUnits         = N/m
+   PzLowerLimitDamping                = 1e3
+   PzLowerLimitDamping_conf           = compiletime
+   PzLowerLimitDampingUnits           = N/(m/s)
+   PzLowerLimitTransitionRegionWidth  = 1e-4
+   PzLowerLimitTransitionRegionWidth_conf = compiletime
+   PzLowerLimitTransitionRegionWidthUnits = m
+   PzUpperLimitSpecify                = off
+   PzUpperLimitBound                  = 1
+   PzUpperLimitBound_conf             = compiletime
+   PzUpperLimitBoundUnits             = m
+   PzUpperLimitStiffness              = 1e6
+   PzUpperLimitStiffness_conf         = compiletime
+   PzUpperLimitStiffnessUnits         = N/m
+   PzUpperLimitDamping                = 1e3
+   PzUpperLimitDamping_conf           = compiletime
+   PzUpperLimitDampingUnits           = N/(m/s)
+   PzUpperLimitTransitionRegionWidth  = 1e-4
+   PzUpperLimitTransitionRegionWidth_conf = compiletime
+   PzUpperLimitTransitionRegionWidthUnits = m
+   PzMotionActuationMode              = ComputedMotion
+   PzSenseLowerLimitTorqueForce       = off
+   PzSenseUpperLimitTorqueForce       = off
+   SphPositionTargetSpecify           = off
+   SphPositionTargetPriority          = High
+   SphPositionTargetRotationMethod    = None
+   SphPositionTargetFollAlignAxisA    = +X
+   SphPositionTargetBaseAlignAxisA    = +Y
+   SphPositionTargetFollAlignAxisB    = +Y
+   SphPositionTargetBaseAlignAxisB    = +Z
+   SphPositionTargetRotationStandardAxis = +Z
+   SphPositionTargetRotationAngle     = 0
+   SphPositionTargetRotationAngle_conf = compiletime
+   SphPositionTargetRotationAngleUnits = deg
+   SphPositionTargetRotationArbitraryAxis = [0 0 1]
+   SphPositionTargetRotationArbitraryAxis_conf = compiletime
+   SphPositionTargetRotationSequenceAxes = FollowerAxes
+   SphPositionTargetRotationSequence  = XYX
+   SphPositionTargetRotationSequenceAngles = [0 0 0]
+   SphPositionTargetRotationSequenceAngles_conf = compiletime
+   SphPositionTargetRotationSequenceAnglesUnits = deg
+   SphPositionTargetRotationMatrix    = [1 0 0;0 1 0;0 0 1]
+   SphPositionTargetRotationMatrix_conf = compiletime
+   SphPositionTargetQuaternion        = [1 0 0 0]
+   SphPositionTargetQuaternion_conf   = compiletime
+   SphVelocityTargetSpecify           = off
+   SphVelocityTargetPriority          = High
+   SphVelocityTargetValue             = [0 0 0]
+   SphVelocityTargetValue_conf        = compiletime
+   SphVelocityTargetValueUnits        = deg/s
+   SphVelocityTargetInFollowerFrame   = on
+   SphEqPosFollAlignAxisA             = +X
+   SphEqPosBaseAlignAxisA             = +Y
+   SphEqPosFollAlignAxisB             = +Y
+   SphEqPosBaseAlignAxisB             = +Z
+   SphEqPosRotationStandardAxis       = +Z
+   SphEqPosRotationArbitraryAxis      = [0 0 1]
+   SphEqPosRotationArbitraryAxis_conf = compiletime
+   SphLowerLimitSpecify               = off
+   SphLowerLimitBound                 = 15
+   SphLowerLimitBound_conf            = compiletime
+   SphLowerLimitBoundUnits            = deg
+   SphLowerLimitStiffness             = 1e4
+   SphLowerLimitStiffness_conf        = compiletime
+   SphLowerLimitStiffnessUnits        = N*m/deg
+   SphLowerLimitDamping               = 10
+   SphLowerLimitDamping_conf          = compiletime
+   SphLowerLimitDampingUnits          = N*m/(deg/s)
+   SphLowerLimitTransitionRegionWidth = 0.1
+   SphLowerLimitTransitionRegionWidth_conf = compiletime
+   SphLowerLimitTransitionRegionWidthUnits = deg
+   SphUpperLimitSpecify               = off
+   SphUpperLimitBound                 = 45
+   SphUpperLimitBound_conf            = compiletime
+   SphUpperLimitBoundUnits            = deg
+   SphUpperLimitStiffness             = 1e4
+   SphUpperLimitStiffness_conf        = compiletime
+   SphUpperLimitStiffnessUnits        = N*m/deg
+   SphUpperLimitDamping               = 10
+   SphUpperLimitDamping_conf          = compiletime
+   SphUpperLimitDampingUnits          = N*m/(deg/s)
+   SphUpperLimitTransitionRegionWidth = 0.1
+   SphUpperLimitTransitionRegionWidth_conf = compiletime
+   SphUpperLimitTransitionRegionWidthUnits = deg
+   SphSenseLowerLimitTorqueMag        = off
+   SphSenseUpperLimitTorqueMag        = off
+   port B : err Invalid Simulink object handle
+   port F -> pelvis_free (SimscapeMultibodyBlock); x02_01_PE_001_1_RIGID (SubSystem); 
+
+=== solid ledger ===
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/foot_L                     dens=1200 mass=1
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/foot_R                     dens=1200 mass=1
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/spine_col                  dens=1200 mass=1
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/spine_lump                 dens=61090.6438814214 mass=61.0906438814214
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x02_01_PE_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(11).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_01_FB_R_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(4).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_02_FH_R_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(7).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_03_FB_L_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(18).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_04_FH_L_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(16).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(12).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_02_KB_R_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(15).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(13).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_04_KB_L_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(17).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_05_BL_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(8).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_05_BL_001_2_RIGID/Solid    dens=1000 mass=smiData.Solid(8).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_06_FL_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(5).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_06_FL_001_2_RIGID/Solid    dens=1000 mass=smiData.Solid(5).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x05_01_TI_R_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(14).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x05_02_TI_001_1_RIGID/Solid    dens=1000 mass=smiData.Solid(9).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_1_RIGID/Solid    dens=1000 mass=smiData.Solid(10).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_2_RIGID/Solid    dens=1000 mass=smiData.Solid(10).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x92997A108_CORROSION_RESISTANT_SETUP_STUD_1_RIGID/Solid    dens=1000 mass=smiData.Solid(6).mass
+  GEN   mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x92997A108_CORROSION_RESISTANT_SETUP_STUD_2_RIGID/Solid    dens=1000 mass=smiData.Solid(6).mass
+
+=== named aux blocks ===
+  EXT_L_BPA          BlockType=SubSystem        ref=SNS_Library/BPA_20mm
+  EXT_L_IF           BlockType=SimscapeMultibodyBlock ref=sm_lib/Forces and
+Torques/Internal Force
+  EXT_L_TS           BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Transform
+Sensor
+  EXT_L_c4           BlockType=SubSystem        ref=nesl_utility/PS-Simulink
+Converter
+  EXT_L_insT         BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  EXT_L_logL         BlockType=ToWorkspace      ref=
+  EXT_L_origT        BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  EXT_L_sps          BlockType=SubSystem        ref=nesl_utility/Simulink-PS
+Converter
+  EXT_R_BPA          BlockType=SubSystem        ref=SNS_Library/BPA_20mm
+  EXT_R_IF           BlockType=SimscapeMultibodyBlock ref=sm_lib/Forces and
+Torques/Internal Force
+  EXT_R_TS           BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Transform
+Sensor
+  EXT_R_c4           BlockType=SubSystem        ref=nesl_utility/PS-Simulink
+Converter
+  EXT_R_insT         BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  EXT_R_logL         BlockType=ToWorkspace      ref=
+  EXT_R_origT        BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  EXT_R_sps          BlockType=SubSystem        ref=nesl_utility/Simulink-PS
+Converter
+  FLX_L_BPA          BlockType=SubSystem        ref=SNS_Library/BPA_20mm
+  FLX_L_IF           BlockType=SimscapeMultibodyBlock ref=sm_lib/Forces and
+Torques/Internal Force
+  FLX_L_TS           BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Transform
+Sensor
+  FLX_L_c4           BlockType=SubSystem        ref=nesl_utility/PS-Simulink
+Converter
+  FLX_L_insT         BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  FLX_L_logL         BlockType=ToWorkspace      ref=
+  FLX_L_origT        BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  FLX_L_sps          BlockType=SubSystem        ref=nesl_utility/Simulink-PS
+Converter
+  FLX_R_BPA          BlockType=SubSystem        ref=SNS_Library/BPA_20mm
+  FLX_R_IF           BlockType=SimscapeMultibodyBlock ref=sm_lib/Forces and
+Torques/Internal Force
+  FLX_R_TS           BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Transform
+Sensor
+  FLX_R_c4           BlockType=SubSystem        ref=nesl_utility/PS-Simulink
+Converter
+  FLX_R_insT         BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  FLX_R_logL         BlockType=ToWorkspace      ref=
+  FLX_R_origT        BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  FLX_R_sps          BlockType=SubSystem        ref=nesl_utility/Simulink-PS
+Converter
+  N_E_L              BlockType=SubSystem        ref=SNS_Library/NonSpikingNeuron
+  N_E_R              BlockType=SubSystem        ref=SNS_Library/NonSpikingNeuron
+  N_F_L              BlockType=SubSystem        ref=SNS_Library/NonSpikingNeuron
+  N_F_R              BlockType=SubSystem        ref=SNS_Library/NonSpikingNeuron
+  S_EF_L             BlockType=SubSystem        ref=SNS_Library/NonSpikingSynapse
+  S_EF_R             BlockType=SubSystem        ref=SNS_Library/NonSpikingSynapse
+  S_FE_L             BlockType=SubSystem        ref=SNS_Library/NonSpikingSynapse
+  S_FE_R             BlockType=SubSystem        ref=SNS_Library/NonSpikingSynapse
+  Spherical          BlockType=SimscapeMultibodyBlock ref=sm_lib/Joints/Spherical
+Joint
+  Spherical1         BlockType=SimscapeMultibodyBlock ref=sm_lib/Joints/Spherical
+Joint
+  World_pelvis       BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/World Frame
+  foot_L             BlockType=SimscapeMultibodyBlock ref=sm_lib/Body Elements/Brick Solid
+  foot_R             BlockType=SimscapeMultibodyBlock ref=sm_lib/Body Elements/Brick Solid
+  foot_T_L           BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  foot_T_R           BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  knee_hinge_L       BlockType=SimscapeMultibodyBlock ref=sm_lib/Joints/Revolute Joint
+  knee_hinge_R       BlockType=SimscapeMultibodyBlock ref=sm_lib/Joints/Revolute Joint
+  lump_T             BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  pelvis_free        BlockType=SimscapeMultibodyBlock ref=sm_lib/Joints/6-DOF Joint
+  pinT_KB_L          BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  pinT_KB_R          BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  pinT_KT_L          BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  pinT_KT_R          BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  spine_T            BlockType=SimscapeMultibodyBlock ref=sm_lib/Frames and
+Transforms/Rigid
+Transform
+  spine_col          BlockType=SimscapeMultibodyBlock ref=sm_lib/Body Elements/Cylindrical Solid
+  spine_lump         BlockType=SimscapeMultibodyBlock ref=sm_lib/Body Elements/Brick Solid
+
+=== BPA + neural payload ===
+  EXT_L_BPA:
+     Rest             = 0.1281
+     Kmax             = 0.1057
+     TendonL          = 0
+     FittingL         = 0
+  EXT_R_BPA:
+     Rest             = 0.1281
+     Kmax             = 0.1057
+     TendonL          = 0
+     FittingL         = 0
+  FLX_L_BPA:
+     Rest             = 0.1281
+     Kmax             = 0.1057
+     TendonL          = 0
+     FittingL         = 0
+  FLX_R_BPA:
+     Rest             = 0.1281
+     Kmax             = 0.1057
+     TendonL          = 0
+     FittingL         = 0
+  N_E_L:
+     Vrest            = -52
+     Gm               = 0.1
+     Cm               = 5
+     Thr              = -55
+     Slope            = 1
+  N_E_R:
+     Vrest            = -52
+     Gm               = 0.1
+     Cm               = 5
+     Thr              = -55
+     Slope            = 1
+  N_F_L:
+     Vrest            = -52
+     Gm               = 0.1
+     Cm               = 5
+     Thr              = -55
+     Slope            = 1
+  N_F_R:
+     Vrest            = -52
+     Gm               = 0.1
+     Cm               = 5
+     Thr              = -55
+     Slope            = 1
+  S_EF_L:
+     gmax             = 1.5
+     Esyn             = -77
+     ThrPre           = -55
+     SlopePre         = 1
+  S_EF_R:
+     gmax             = 1.5
+     Esyn             = -77
+     ThrPre           = -55
+     SlopePre         = 1
+  S_FE_L:
+     gmax             = 1.5
+     Esyn             = -77
+     ThrPre           = -55
+     SlopePre         = 1
+  S_FE_R:
+     gmax             = 1.5
+     Esyn             = -77
+     ThrPre           = -55
+     SlopePre         = 1
+
+=== smiData.Solid mass ledger (per unique part) ===
+   1  91239A330_CLASS 10.9 STL BUTTON-HEAD SOCKET CAP SCREW*:*91239A330 mass=0.00103572482
+   2  91595A476_METRIC ALLOY STEEL DOWEL PIN*:*91595A476         mass=0.00110233232
+   3  94645A205_HIGH-STRENGTH STEEL NYLON-INSERT LOCKNUT*:*94645A205 mass=0.000362453746
+   4  03_01_FB_R_001*:*Default                                   mass=0.237465679
+   5  04_06_FL_001*:*Default                                     mass=0.00680867333
+   6  92997A108_CORROSION-RESISTANT SETUP STUD*:*92997A108       mass=0.0011864192
+   7  03_02_FH_R_001*:*Default                                   mass=0.0887495763
+   8  04_05_BL_001*:*Default                                     mass=0.00627795653
+   9  05_02_TI_001*:*Default                                     mass=0.231106352
+  10  6630T310_METRIC BLACK POLYPROPYLENE BALL KNOB*:*6630T31    mass=0.0284059929
+  11  02_01_PE_001*:*Default                                     mass=2.02524529
+  12  04_01_KT_R_001*:*Default                                   mass=0.262919002
+  13  04_03_KT_L_001*:*Default                                   mass=0.262908968
+  14  05_01_TI_R_001*:*Default                                   mass=0.231106383
+  15  04_02_KB_R_001*:*Default                                   mass=0.118296254
+  16  03_04_FH_L_001*:*Default                                   mass=0.0887506939
+  17  04_04_KB_L_001*:*Default                                   mass=0.118296178
+  18  03_03_FB_L_001*:*Default                                   mass=0.23746213
+  19  94510A255_BRASS SCREW-TO-EXPAND INSERTS*:*94510A255        mass=0.000346237938
+  20  97493A126_ METRIC PARTIALLY THREADED STUDS*:*97493A126     mass=0.000791932363
+  21  90695A038_CLASS 04 STEEL THIN HEX NUT - DIN 439B*:*90695A038 mass=0.000199857405
+
+AUDIT DONE.

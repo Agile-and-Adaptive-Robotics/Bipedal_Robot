@@ -1,0 +1,147 @@
+=== MATLAB environment ===
+MATLAB version: 25.2.0.2998904 (R2025b)
+  product: Simscape  version 25.2
+  product: Simscape Battery  version 25.2
+  product: Simscape Driveline  version 25.2
+  product: Simscape Electrical  version 25.2
+  product: Simscape Fluids  version 25.2
+  product: Simscape Multibody  version 25.2
+  product: Simscape Multibody Link  version 25.2
+
+=== Simscape Multibody runtime probes ===
+load_system('sm_lib'): OK
+scratch Mechanism Configuration add_block: OK (license usable at runtime)
+
+=== Model callbacks / workspace (copy of mdl_humanoid_lower_ah001_imported.slx) ===
+PreLoadFcn   = []
+PostLoadFcn  = []
+InitFcn      = []
+StartFcn     = []
+StopFcn      = []
+model workspace variables before DataFile: 1
+  struct     smiData
+model Dirty: off
+
+=== Block census ===
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+[Warning: Cannot find library called 'SNS_Library'.  ] 
+[> In probe_env_model (line 72)
+In run (line 112)] 
+total blocks: 416
+reference-block histogram (34 distinct):
+  163 x 
+    4 x nesl_utility/PS-Simulink
+Converter
+    4 x nesl_utility/PS-Simulink
+Converter/EVAL_KEY
+    4 x nesl_utility/PS-Simulink
+Converter/EVAL_KEY/Ground
+    4 x nesl_utility/PS-Simulink
+Converter/EVAL_KEY/output
+    4 x nesl_utility/PS-Simulink
+Converter/input
+    4 x nesl_utility/PS-Simulink
+Converter/output
+    4 x nesl_utility/Simulink-PS
+Converter
+    4 x nesl_utility/Simulink-PS
+Converter/EVAL_KEY
+    4 x nesl_utility/Simulink-PS
+Converter/EVAL_KEY/Terminator0
+    4 x nesl_utility/Simulink-PS
+Converter/EVAL_KEY/Terminator1
+    4 x nesl_utility/Simulink-PS
+Converter/EVAL_KEY/Terminator2
+    4 x nesl_utility/Simulink-PS
+Converter/EVAL_KEY/input0
+    4 x nesl_utility/Simulink-PS
+Converter/EVAL_KEY/input1
+    4 x nesl_utility/Simulink-PS
+Converter/EVAL_KEY/input2
+    4 x nesl_utility/Simulink-PS
+Converter/input0
+    4 x nesl_utility/Simulink-PS
+Converter/input1
+    4 x nesl_utility/Simulink-PS
+Converter/input2
+    4 x nesl_utility/Simulink-PS
+Converter/output
+    1 x nesl_utility/Solver
+Configuration
+    1 x nesl_utility/Solver
+Configuration/EVAL_KEY
+    1 x nesl_utility/Solver
+Configuration/port
+    3 x sm_lib/Body Elements/Brick Solid
+    1 x sm_lib/Body Elements/Cylindrical Solid
+   19 x sm_lib/Body Elements/File Solid
+    4 x sm_lib/Forces and
+Torques/Internal Force
+   20 x sm_lib/Frames and
+Transforms/Reference
+Frame
+  120 x sm_lib/Frames and
+Transforms/Rigid
+Transform
+    4 x sm_lib/Frames and
+Transforms/Transform
+Sensor
+    1 x sm_lib/Frames and
+Transforms/World Frame
+    1 x sm_lib/Joints/6-DOF Joint
+    2 x sm_lib/Joints/Revolute Joint
+    2 x sm_lib/Joints/Spherical
+Joint
+    1 x sm_lib/Utilities/Mechanism
+Configuration
+
+=== DataFile execution in model workspace ===
+DataFile run: OK; workspace variables after: 1
+  struct     smiData
+smiData fields: RigidTransform, Solid, CartesianJoint, CylindricalJoint, PlanarJoint, RevoluteJoint, SphericalJoint
+  smiData.RigidTransform : 169 entries
+  smiData.Solid : 21 entries
+  smiData.CartesianJoint : 2 entries
+  smiData.CylindricalJoint : 4 entries
+  smiData.PlanarJoint : 2 entries
+  smiData.RevoluteJoint : 39 entries
+  smiData.SphericalJoint : 2 entries
+
+=== Compile/sim(StopTime=0) attempt ===
+sim FAIL: Error due to multiple causes.
+  at probe_env_model (line 116)
+  at run (line 112)
+
+PROBE DONE.

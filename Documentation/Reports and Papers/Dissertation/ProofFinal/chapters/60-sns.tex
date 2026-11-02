@@ -184,8 +184,8 @@ A second demonstration tests feedback in an arm holding a beverage container as 
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.84\textheight,keepaspectratio]{sns_library_implementation_current.pdf}
-\caption[Simulink SNS library blocks and neuron implementation]{\textbf{(A)} Current SNS-Simscape library and \textbf{(B)} native non-spiking neuron implementation. The twelve library blocks include biological-muscle and diameter-specific BPA elements. Summed currents drive membrane integration; the threshold and saturation bound neural output.}
+\includegraphics[width=\textwidth,height=0.84\textheight,keepaspectratio]{sns_library_clean.pdf}
+\caption[Editable SNS blocks and graded-neuron signal flow]{\textbf{(A)} The twelve implemented SNS-Simscape library elements, redrawn as a functional block catalog. \textbf{(B)} Signal flow of the implemented graded neuron: synaptic conductance and reversal-potential products form the synaptic current, which is combined with applied and leak currents before membrane integration. Membrane voltage and normalized drive are separate outputs.}
 \label{fig:simulink_sns_implementation}
 \end{figure}
 
