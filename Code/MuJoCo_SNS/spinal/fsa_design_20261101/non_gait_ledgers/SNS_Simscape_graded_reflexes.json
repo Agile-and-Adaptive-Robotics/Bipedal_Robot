@@ -1,0 +1,89 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "SNS_Simscape_graded_reflexes",
+  "machine": "easteregg2",
+  "phase": "design_only",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\sns_build_library.m",
+      "exists": true,
+      "sha256": "50191f6ada028ccef108d5e88e10165bb43721b4698c3ca54a20b980c1abcaf3"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_demo.m",
+      "exists": true,
+      "sha256": "43054f4b2f94fc5f155ed888873c556d0dce65efb566c162e9d8349598abd128"
+    }
+  ],
+  "controlled_subspace": {
+    "source_control": "KneeReflexDemo is1DoFknee antagonisticreflex; RG/MNsubnetwork demo is notfullwalker.",
+    "global_support": "Analyticaljointorfixture, no free3Dwholebodybalance.",
+    "missing_human_CAD_control": [
+      "otherjointaxes",
+      "pelvis6DoF",
+      "lumbar3DoF",
+      "frontal/transversebalance"
+    ],
+    "free_3D_balance_demonstrated": false
+  },
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "blockers": [
+    "Perblockfunctionalranges/gains/transienttargets and actualmaskapplication proof remain required.",
+    "Onlysupportedisolatedjoint/reflex evidence; no3Dhuman/CADcoveragebyinheritance.",
+    "Oldspikingsynapses ADDgincandcapgmax; Table2moduleRESETStopeak. Eq28/29cannotbeinstalledasgincwithoutdeclaringchangedprimitive.",
+    "Source resetbelowrest andfixedthreshold not automaticallypureGLIFresetrest/equations; adaptive\u03b8block absent.",
+    "Existing knee match was firstorder+handtuned; configuredcap/rate notfull2020proof."
+  ],
+  "applicable_design_operations": {
+    "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
+    "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
+    "graded_synapse": "Exact single-path endpoint conductance derivation available; multiinput/transient/linearitychecks stillrequired.",
+    "ionic_burster": "Retain sourceNaP/Ca/gate law; pureGLIFTable2notapplicable.",
+    "GLIF_threshold_steps": "Notapplicableto gradedcells; separate pureGLIFprofile requiresall activation/transient/rate contracts.",
+    "spike_synapse": "Declare reset-to-peak vs additive/capped eventlaw beforeusingdelta/Eq28/29."
+  },
+  "desired_functional_contract": {
+    "input_domain": "ExistingnAafferentport with ownmusclegeometrycalibration; exactphysicalmaxmustbesavedperdemo.",
+    "output_domain": "Declaredpost-rest0..Rpresynapticsignal withsource[ g;gEsyn ]ports.",
+    "target_gain": "Endpointderivationavailableforexistingexc/inhibpath only.",
+    "target_transient_s": 0.03,
+    "target_bandwidth_hz": null,
+    "target_rate_hz": null,
+    "status": "Proposed30msphysicalpassiveMN/relayexample; installonlyafteractualblockpath/domainverified."
+  },
+  "opt_in_profile": {
+    "adapter": "simulink_mask_recipe",
+    "adopted": false,
+    "neurons": [],
+    "synapses": []
+  },
+  "application_recipe": {
+    "default_behavior": "No profile: literal no-op; no original source or topology changes.",
+    "production_hook_installed": false,
+    "unit_adapter_proof": "NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
+    "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
+    "example": {
+      "block": "SEPARATE_MODEL/SN_Ia_ext",
+      "mask_values": {
+        "Gm": 1.0,
+        "Cm": 30.0
+      },
+      "source_derivative": "1000/Cm in seconds-based Simulink",
+      "runtime_consumption_verified": false,
+      "warning": "Apply to a separate passive block/model via set_param; no whole-model or ionic rescaling."
+    }
+  },
+  "units": {
+    "clock": "Simulinkseconds",
+    "voltage": "AbsolutemV",
+    "current": "nA",
+    "conductance": "uS",
+    "capacitance": "PhysicalnF; derivative1000/Cm",
+    "synapse_output": "[g;g*Esyn], postsynapticcellcomputesIsyn"
+  }
+}

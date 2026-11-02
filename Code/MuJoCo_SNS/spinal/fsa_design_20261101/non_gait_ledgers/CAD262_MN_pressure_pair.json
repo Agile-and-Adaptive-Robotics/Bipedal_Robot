@@ -1,0 +1,211 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "CAD262_MN_pressure_pair",
+  "machine": "easteregg2",
+  "phase": "design_only",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\run_neural_robot.py",
+      "exists": true,
+      "sha256": "25662ee3a30331842d5da7be88417e64ea3f6c485330bad5a4861769782a898b"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\ah001_neural.xml",
+      "exists": true,
+      "sha256": "dc72f426d4a6ff542fda699775d51f869104acd081bea3200b314ff8b0c4d318"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network.py",
+      "exists": true,
+      "sha256": "f6c147ad2e8939e9065fa1ff25149478f376c4ccb678a8b3795139af8f4c0d99"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\params.py",
+      "exists": true,
+      "sha256": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\bpa_neural_coordination\\cad_pair_unclamped.py",
+      "exists": true,
+      "sha256": "be81413d31efb2575a45c128a8ced69bdc6c3ad1c0ab9ba968a02a788a02756d"
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\cad_bpa\\pair_neural_recruitment\\normalized_unclamped\\RECRUITMENT_PREREGISTRATION.json",
+      "exists": true,
+      "sha256": "3714a9e3ce26c91ca06a693e08d11aac1e84d1f6f0cea6091cc0a165cb5216b1"
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\cad_bpa\\pair_neural_recruitment\\normalized_unclamped\\support085\\mixed\\ASSUMED_PAIR_CONFIGURATION.json",
+      "exists": true,
+      "sha256": "1ab50e49a0210ccf00e6cf59a5da67fd33c6f9d7d5778507c3e1f67ca500907f"
+    }
+  ],
+  "controlled_subspace": {
+    "independent_full_model_DoF": 17,
+    "coordinates": "Floatingpelvis6+hips6+twofourbarcoordinates+lumbar3; physicallooprank4.",
+    "original_controller": "11internalposecoordinates viaexternalhybridallocator; global6D support uses apparatus.",
+    "pressure_pair": "Onlybilateralvas_med recruitment/pressure; no independenthipfrontal/transverse/lumbarbalance claim.",
+    "welded_foot_channels_without_joint_leverage": 20,
+    "uncertified_axes": [
+      "lumbar3axiscontrolcapacity",
+      "hipfrontal/transversecapacity",
+      "CADphysicalROM",
+      "ankle/subtalar/MTParticulation"
+    ],
+    "free_3D_balance_demonstrated": false
+  },
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "blockers": [
+    "Mechanical stance/loop/contact/collision repair remains prerequisite; laptophandoff has fullstatus.",
+    "Desired per-axis neural recruitment functions and actualsensor/actuator ranges are unassigned.",
+    "Externalallocator/currenttargeting cannot be counted as FSAderived wholebodyneuralcontrol.",
+    "Only2virtualpressureactuators; frozengeometry fails repairedstance domain. No mount/hardware/dynamic calibration.",
+    "Signed harness/support andcrossedlegacyfeet disallow cleanstanding/pairautonomous claims."
+  ],
+  "applicable_design_operations": {
+    "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
+    "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
+    "graded_synapse": "Exact single-path endpoint conductance derivation available; multiinput/transient/linearitychecks stillrequired.",
+    "ionic_burster": "Retain sourceNaP/Ca/gate law; pureGLIFTable2notapplicable.",
+    "GLIF_threshold_steps": "Notapplicableto gradedcells; separate pureGLIFprofile requiresall activation/transient/rate contracts.",
+    "spike_synapse": "Declare reset-to-peak vs additive/capped eventlaw beforeusingdelta/Eq28/29."
+  },
+  "desired_functional_contract": {
+    "input_domain": null,
+    "output_domain": null,
+    "target_gain": null,
+    "target_transient_s": null,
+    "target_bandwidth_hz": null,
+    "target_rate_hz": null,
+    "status": "Unassigned targets block application; inherited values are not independent desired functions."
+  },
+  "opt_in_profile": {
+    "adapter": "sns_passive",
+    "adopted": false,
+    "engineering_candidate": true,
+    "neurons": [
+      {
+        "name": "MN_vas_med_r",
+        "tau_s": 0.03,
+        "operating_synaptic_uS": 0.012658227848101266,
+        "response_policy": "exact_discrete_pole"
+      },
+      {
+        "name": "MN_vas_med_l",
+        "tau_s": 0.03,
+        "operating_synaptic_uS": 0.012658227848101266,
+        "response_policy": "exact_discrete_pole"
+      }
+    ],
+    "synapses": [
+      {
+        "source": "PF_E1_r",
+        "target": "MN_vas_med_r",
+        "gmax_uS": 0.0023014959723820483
+      },
+      {
+        "source": "PF_E2_r",
+        "target": "MN_vas_med_r",
+        "gmax_uS": 0.0034522439585730723
+      },
+      {
+        "source": "IBEXC_knee_ext_r",
+        "target": "MN_vas_med_r",
+        "gmax_uS": 0.006904487917146145
+      },
+      {
+        "source": "PF_E1_l",
+        "target": "MN_vas_med_l",
+        "gmax_uS": 0.0023014959723820483
+      },
+      {
+        "source": "PF_E2_l",
+        "target": "MN_vas_med_l",
+        "gmax_uS": 0.0034522439585730723
+      },
+      {
+        "source": "IBEXC_knee_ext_l",
+        "target": "MN_vas_med_l",
+        "gmax_uS": 0.006904487917146145
+      }
+    ]
+  },
+  "application_recipe": {
+    "default_behavior": "No profile: literal no-op; no original source or topology changes.",
+    "production_hook_installed": false,
+    "unit_adapter_proof": "NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
+    "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
+    "call": "apply_sns_passive_profile(net.compiled, ordered_names, explicit_profile, clock_unit=\"s\") aftercompile/beforewarmup; preserve sparsecache whenusingwrapper."
+  },
+  "source_census": {
+    "neurons": 262,
+    "inputs": 230,
+    "ionic_cells": 4,
+    "active_pairs": 650,
+    "actuators": 54
+  },
+  "units": {
+    "voltage": "Restrelative0..5mV signal domain; ionicceiling is separate.",
+    "time": "Compiled dt=.002seconds and clockcodedCm/Gm yields seconds; physicalnF equivalent is1000*Cmcode, not literalCmcode.",
+    "conductance": "uS in sourceconductance equation",
+    "current": "nA",
+    "actuator": "FixedreferenceF0*filteredstate, not physiological5percentactivation."
+  },
+  "source_passive_examples": {
+    "MN_vas_med_r": {
+      "clock_capacitance": 0.03,
+      "leak_uS": 1.0,
+      "tau_s": 0.03,
+      "bias_nA": 0.0
+    },
+    "PF_E1_r": {
+      "clock_capacitance": 0.048,
+      "leak_uS": 1.0,
+      "tau_s": 0.048,
+      "bias_nA": 0.0
+    },
+    "Ib_vas_med_r": {
+      "clock_capacitance": 0.04,
+      "leak_uS": 1.0,
+      "tau_s": 0.04,
+      "bias_nA": 0.0
+    }
+  },
+  "known_source_function": "Six mirrored existing PF_E1/PF_E2/IBEXC\u2192vas_medMN conductances normalized; pairPOSTzero, no pairoutputfloor. IBEXCdominantRGinput isadditivefeedforward, notmultiplicativeloadgate. Other52hybrid remains.",
+  "preserved_output_contract": {
+    "MN_voltage_range_mV": [
+      0.0,
+      5.0
+    ],
+    "normalized_command": "u=clip(V_MN/5,0,1)",
+    "reference_tension": "4530*u N for eachselectedroute",
+    "teaching_operating_target_u": 0.05,
+    "teaching_target_not_actual_forcefloor": true,
+    "pressure_interface": "Sameinverseforce/series-equilibrium pressureconversion,620kPacap,40/60msfillvent,4msdelay. No pressurestate/force projection.",
+    "physical_actuator_clock": "Remainsphysicaltime; notchangedbyneuralrateprofiles.",
+    "calibration_scope": "Sixengineeringweightswere fitted tosourceoperatingpoint, not fullfunctionderived range/transientproof."
+  },
+  "proposed_functional_components": {
+    "role": "Isolatedexistingthree-inputfeedforwardrecruitmentbranch only; otherneuralcurrentszeroatthisoperatingpoint.",
+    "input": "s=(.2*sPF1+.3*sPF2+.6*sIBEXC)/1.1, eachs=clip(Vpre/5,0,1)",
+    "desired_endpoint_MN_mV": 0.25,
+    "desired_endpoint_command": 0.05,
+    "desired_fullinput_pole_s": 0.03,
+    "derived_total_gmax_uS": 0.012658227848101266,
+    "source_ratios_preserved": {
+      "PF_E1": 0.2,
+      "PF_E2": 0.3,
+      "IBEXC_knee_ext": 0.6
+    },
+    "force_reference_at_endpoint_N": 226.5,
+    "not_force_floor": true,
+    "not_pressure_state_assignment": true,
+    "not_wholebody_gainclaim": true,
+    "rationale": "Retainprevious5%nominalteachingpointand30msMNresponse asdeclaredlocalengineeringcontract; deriveendpointconductancesexactlyratherthanreusetunednormalization. PreservepressureconversionandliteralSNSrecruitment."
+  }
+}

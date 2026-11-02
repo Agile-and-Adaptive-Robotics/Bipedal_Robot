@@ -1,0 +1,171 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "W2L704_hybrid_spiking",
+  "machine": "easteregg2",
+  "phase": "design_only",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\spiking_central_runtime.py",
+      "exists": true,
+      "sha256": "668373685f2d07156539bacaa4355fa9708107f520991ccb78758b3361a0e64c"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\spiking_sensory.py",
+      "exists": true,
+      "sha256": "34f14a04ccf8391b970d97e27baa16f30c1dfb41691d39e48d921df13a19d813"
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\spiking\\COMBINED_SPIKING_CHECKPOINT.json",
+      "exists": true,
+      "sha256": "f22cb2cfc2639a048600326022703a4097a1881a071fefcf5dd3833be3dd1b49"
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\spiking\\CENTRAL_RESET_REST_CANDIDATE.json",
+      "exists": true,
+      "sha256": "4857b17817e63111b84f6f949d4e9defe0e3dccd50ecfa9624e63c831b1127d9"
+    }
+  ],
+  "controlled_subspace": {
+    "limb_mechanics": "Three source limb hinge coordinates per side: hip/knee/ankle, six bilateral sagittal coordinates; not23DoFhuman.",
+    "global_support": "WalkingPath/rails plus case-specific apparatus constrain base sway/orientation; match active rung before transfer.",
+    "uncontrolled_human_CAD_axes": [
+      "hip ab/adduction",
+      "hip axial rotation",
+      "lumbar three-axis motion",
+      "ankle/subtalar frontal rotation",
+      "MTP"
+    ],
+    "free_3D_balance_demonstrated": false
+  },
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "blockers": [
+    "Ca/SFAcurrent burst mechanism is outsidepureGLIFTable2; no automatic m/tau_theta substitution.",
+    "Readoutnormalizer55.376Hz is not verifiedFmax over a declaredinputdomain.",
+    "NoEq27delta/Eq29functionderived synaptic port contract for allreplacedpaths; keep source spike-decoder architecture distinct.",
+    "All source-support/3Dcoverage gaps remain."
+  ],
+  "applicable_design_operations": {
+    "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
+    "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
+    "graded_synapse": "Exact single-path endpoint conductance derivation available; multiinput/transient/linearitychecks stillrequired.",
+    "ionic_burster": "Retain sourceNaP/Ca/gate law; pureGLIFTable2notapplicable.",
+    "GLIF_threshold_steps": "Notapplicableto gradedcells; separate pureGLIFprofile requiresall activation/transient/rate contracts.",
+    "spike_synapse": "Declare reset-to-peak vs additive/capped eventlaw beforeusingdelta/Eq28/29."
+  },
+  "desired_functional_contract": {
+    "input_domain": null,
+    "output_domain": null,
+    "target_gain": null,
+    "target_transient_s": null,
+    "target_bandwidth_hz": null,
+    "target_rate_hz": null,
+    "status": "Unassigned targets block application; inherited values are not independent desired functions."
+  },
+  "opt_in_profile": {
+    "adapter": "retained_CaLIF",
+    "adopted": false,
+    "neurons": [],
+    "synapses": []
+  },
+  "application_recipe": {
+    "default_behavior": "No profile: literal no-op; no original source or topology changes.",
+    "production_hook_installed": false,
+    "unit_adapter_proof": "NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
+    "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
+    "status": "Retainionicmechanism; onlyseparatelydeclaredplainports mayusepassive/pureGLIFdesign. No newpureGLIFprofileapplied."
+  },
+  "source_census": {
+    "source_populations": 108,
+    "central_spiking_populations": 12,
+    "central_cells_each": 16,
+    "sensory_spiking_populations": 16,
+    "sensory_cells_each": 32,
+    "actual_spiking_cells": 704,
+    "remaining_graded_cells": 80
+  },
+  "units": {
+    "neural_membrane": "Source native tau_ms with dt_s*1000",
+    "threshold": "AbsolutemVfixed, notGLIFthetaadaptation",
+    "adaptation": "Inhibitorycurrentjump/decay, not adaptive threshold",
+    "output": "Decoded spike-countproxyvoltage, notsomaVm",
+    "sensor_events": "NormalizedLIFreset0/threshold1/refractory1ms; populations encode II/contactinputs"
+  },
+  "source_parameters": {
+    "gCa_scale": 4.110920859745151,
+    "threshold_mV": -55.23693997773443,
+    "reset_mV": -60.63994767413323,
+    "syn_tau_s": 0.050886082234290635,
+    "readout_rate_max": 55.37602036895528,
+    "adapt_jump_nA": 0.41243162483529994,
+    "adapt_tau_s": 0.6700793369453123,
+    "pf_ca_scale": 0.6418752675776469,
+    "pf_adapt_jump_scale": 0.8367155070108852,
+    "pf_adapt_tau_scale": 0.6394085264880001,
+    "pf_output_scale": 0.2262021508414773,
+    "rg_reset_mV": -60.0
+  },
+  "proposed_functional_components": {
+    "role": "Existinginput-onlyII/contactcarriers, not centralCa/SFA replacement.",
+    "normalized_input": [
+      0.0,
+      1.0
+    ],
+    "physical_requested_rate_hz": [
+      0.0,
+      200.0
+    ],
+    "physical_LIF_tau_s": 0.005,
+    "physical_refractory_s": 0.001,
+    "physical_readout_tau_s": 0.01,
+    "source_proxy_range_relative_mV": [
+      0.0,
+      20.0
+    ],
+    "clock_separation_helper": "carrier_clock_parameters; pass derivedarguments intoexistingencode_step on an isolated/reusablecarrierport, notallneuralcells.",
+    "Table2_scope": "Countfilter readout is not a reset-to-peak conductancesynapse; carrierclock/ratecheckdoesnotcompleteEq27/29.",
+    "mechanism_retained": "Ca/SFA RG/PF andothergradedsourcecells unchanged.",
+    "preferred_clock_separation": "PhysicalCarrierPort advances unchangedsourceencode_step on actualphysicaltime. Centralbiologicalclockcannotalteritscarrier/filter/refractory. Existing runtimehooknotinstalled; oldmatchingencoder mustbedisabled, notduplicated."
+  },
+  "clock_contract": {
+    "definition": "t_biological=t_physical/c; parameterTimeConstants=p*sourceTimeConstants",
+    "duration_multiplier": 1.0,
+    "parameter_time_multiplier": 1.0,
+    "biological_rate_per_physical_rate": 1.0,
+    "passive_tau_physical_per_source_tau": 1.0,
+    "equations": [
+      "tau_physical=C_source/(G*lambda), lambda=1/c",
+      "C_source_for_target_physical_tau=tau_target*G*lambda (with clock-unit factor)",
+      "NativeTimeConst_ms_for_target=1000*tau_target*lambda*(1+declared_operating_synaptic_ratio)"
+    ],
+    "warning": "A biologicalclock change also changes sensory/MN filters, spikecarrier/refractory/readout and startupwindows if inside the same wrapper; it is not a computationalspeedup. Keep physics/actuator clocks explicit.",
+    "actual_source": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\spiking_central_runtime.py",
+      "exists": true,
+      "sha256": "668373685f2d07156539bacaa4355fa9708107f520991ccb78758b3361a0e64c",
+      "line_matches": [
+        128
+      ]
+    },
+    "physical_substep": "native_dt*clock_scale",
+    "all_affected": [
+      "gradedMN/IN/afferentmembranes",
+      "CaRG/PFkinetics",
+      "CaLIFSFAcurrentdecay",
+      "sensoryLIF5msmembraneand1msrefractory",
+      "sensoryfilterand200Hzcarrier",
+      "central50.886msfilterand55.376Hzreadout",
+      "startupstimuluswindows"
+    ],
+    "unaffected": [
+      "MuJoCo/Hillphysicalsteps",
+      "physicalafferentsampleintervalunlessexplicitlychanged"
+    ],
+    "source_neural_only_clock_is_one": true,
+    "separation_recipe": "NewcontractmustseparateRG/PFtimingfromsensory/MN/actuatorphysicalresponse. Plaincelladaptercancompensateexistingpassivecells; ionic/sensorycarrier/readoutneedtheir ownverifiedpolicies. Do notapplyoneuniversalrat-tohumanclock."
+  }
+}

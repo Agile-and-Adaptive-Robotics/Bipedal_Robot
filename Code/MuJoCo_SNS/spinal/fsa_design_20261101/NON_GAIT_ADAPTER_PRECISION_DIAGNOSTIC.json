@@ -1,0 +1,168 @@
+{
+  "scope": "Electrical adapter/sourceconsumption checks only; no wholemodel or training gate promotion.",
+  "passed": false,
+  "sns_default_noop": {
+    "applied": false,
+    "reason": "Default-off literal no-op"
+  },
+  "sns_default_arrays_exact": true,
+  "sns_consumption": {
+    "applied": true,
+    "consumed_fields": [
+      {
+        "kind": "neuron",
+        "name": "MN_vas_med_r",
+        "old_clock_capacitance": 0.03,
+        "new_clock_capacitance": 0.03,
+        "physical_leak_tau_s": 0.03,
+        "physical_operating_tau_s": 0.03
+      },
+      {
+        "kind": "synapse",
+        "source": "PF_E1_r",
+        "target": "MN_vas_med_r",
+        "old_gmax_uS": 0.2,
+        "new_gmax_uS": 0.0021767766805152913,
+        "sparse_cache_updated": true
+      },
+      {
+        "kind": "synapse",
+        "source": "PF_E2_r",
+        "target": "MN_vas_med_r",
+        "old_gmax_uS": 0.3,
+        "new_gmax_uS": 0.003265165020772937,
+        "sparse_cache_updated": true
+      },
+      {
+        "kind": "synapse",
+        "source": "IBEXC_knee_ext_r",
+        "target": "MN_vas_med_r",
+        "old_gmax_uS": 0.6,
+        "new_gmax_uS": 0.006530330041545874,
+        "sparse_cache_updated": true
+      },
+      {
+        "kind": "synapse",
+        "source": "PF_E1_l",
+        "target": "MN_vas_med_l",
+        "old_gmax_uS": 0.2,
+        "new_gmax_uS": 0.0021767766805152913,
+        "sparse_cache_updated": true
+      },
+      {
+        "kind": "synapse",
+        "source": "PF_E2_l",
+        "target": "MN_vas_med_l",
+        "old_gmax_uS": 0.3,
+        "new_gmax_uS": 0.003265165020772937,
+        "sparse_cache_updated": true
+      },
+      {
+        "kind": "synapse",
+        "source": "IBEXC_knee_ext_l",
+        "target": "MN_vas_med_l",
+        "old_gmax_uS": 0.6,
+        "new_gmax_uS": 0.006530330041545874,
+        "sparse_cache_updated": true
+      }
+    ],
+    "clock_unit": "s",
+    "neural_rate_multiplier": 1.0,
+    "added_neurons": 0,
+    "added_edges": 0,
+    "ionic_fields_changed": false
+  },
+  "source_pair_pathway": {
+    "source": "PF_E1_r",
+    "target": "MN_vas_med_r",
+    "single_step_expected_mV": 0.0011609475629414886,
+    "single_step_measured_mV": 0.0011609475629414886,
+    "absolute_error_mV": 0.0,
+    "other_presynaptic_cells_at_rest": true
+  },
+  "ionic_override_rejected": true,
+  "ionic_arrays_unchanged": true,
+  "native_default_noop": {
+    "applied": false,
+    "reason": "Default-off literal no-op"
+  },
+  "native_default_exact": true,
+  "native_consumption": {
+    "applied": true,
+    "consumed_fields": [
+      {
+        "kind": "neuron",
+        "name": "R Ank ext Ia",
+        "old_tau_ms": 10.0,
+        "new_tau_ms": 25.0,
+        "physical_operating_tau_s": 0.005
+      }
+    ],
+    "neural_rate_multiplier": 5.0,
+    "added_neurons": 0,
+    "added_edges": 0,
+    "Size_or_ionic_fields_changed": false
+  },
+  "native_singlecell": {
+    "source_name": "R Ank ext Ia",
+    "diagnostic_target_tau_s": 0.005,
+    "not_adopted_family_target": true,
+    "diagnostic_neural_rate_multiplier": 5.0,
+    "physical_dt_s": 0.0002,
+    "biological_dt_s": 0.001,
+    "expected_V_mV": -59.96078943915232,
+    "measured_V_mV": -59.96078943915232,
+    "error_mV": 0.0
+  },
+  "simulink_formula_example": {
+    "block": "UNRUN_UNIT_FIXTURE",
+    "mask_values": {
+      "Gm": 1.0,
+      "Cm": 30.0
+    },
+    "source_derivative": "1000/Cm in seconds-based Simulink",
+    "runtime_consumption_verified": false,
+    "warning": "Apply to a separate passive block/model via set_param; no whole-model or ionic rescaling."
+  },
+  "retained_Simulink_reset_LIF_analytical_inverse": [
+    {
+      "desired_Hz": 10.0,
+      "derived_current_nA": 2.4000000098935375,
+      "recovered_Hz": 9.999999997929793,
+      "error_Hz": 2.070207116844358e-09
+    },
+    {
+      "desired_Hz": 50.0,
+      "derived_current_nA": 2.4895553297461164,
+      "recovered_Hz": 50.000000000000114,
+      "error_Hz": 1.1368683772161603e-13
+    },
+    {
+      "desired_Hz": 100.0,
+      "derived_current_nA": 3.151284685198394,
+      "recovered_Hz": 99.99999999999991,
+      "error_Hz": 8.526512829121202e-14
+    },
+    {
+      "desired_Hz": 200.0,
+      "derived_current_nA": 5.193488192972769,
+      "recovered_Hz": 200.00000000000003,
+      "error_Hz": 2.842170943040401e-14
+    }
+  ],
+  "MATLAB_runtime_executed": false,
+  "physics_steps": 0,
+  "training_allowed": false,
+  "sources": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\non_gait_contracts.py",
+      "exists": true,
+      "sha256": "7ea85129a1e2695cfe24889b552cc49eb25f9e20523b585dc887d137ca64bc37"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\native_kernel.py",
+      "exists": true,
+      "sha256": "70523b6f462b5d304db0e5d96e95a75bb266ef4deac648c1c96045b93478f277"
+    }
+  ]
+}

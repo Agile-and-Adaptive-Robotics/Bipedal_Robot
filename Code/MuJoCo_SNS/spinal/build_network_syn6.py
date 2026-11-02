@@ -291,6 +291,7 @@ def _eq18_conductances(k_vals: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 @dataclass
 class Syn6Network(SNSpinal.SpinalNetwork):
+    graded_fsa_family = "syn6"
     """Drop-in replacement for SpinalNetwork under AARL_NET=syn6."""
 
     # evidence attributes (read by the gate scripts / report)
@@ -787,7 +788,7 @@ class Syn6Network(SNSpinal.SpinalNetwork):
 
 
 def build(model_actuators: list[str], dt: float = SNSpinal.DT,
-          interleg: bool = True) -> Syn6Network:
+          interleg: bool = True, graded_profile=None) -> Syn6Network:
     """Variant build: same contract as build_network.build."""
     muscles: dict[str, MuscleInfo] = {}
     for act in model_actuators:
@@ -797,5 +798,5 @@ def build(model_actuators: list[str], dt: float = SNSpinal.DT,
         muscles[act] = mi
     sides = tuple(sorted({mi.side for mi in muscles.values()}))
     net = Syn6Network(muscles=muscles, sides=sides, interleg=interleg)
-    net.compile(dt=dt)
+    net.compile(dt=dt, graded_profile=graded_profile)
     return net
