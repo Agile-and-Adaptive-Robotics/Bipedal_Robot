@@ -1,0 +1,2848 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "W2L108_graded",
+  "machine": "easteregg2",
+  "phase": "design_only",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_VirtualWalker_Newer_20261031\\W2L_VirtualWalker_Newer_Standalone.asim",
+      "exists": true,
+      "sha256": "01ece6edcbcf17c274410b23f1ce7603eab288aadb946d6b548c5102ed5c1154"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\native_kernel.py",
+      "exists": true,
+      "sha256": "70523b6f462b5d304db0e5d96e95a75bb266ef4deac648c1c96045b93478f277"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\SZCZECINSKI2020_SEVEN_STEP_CONTROLLER_AUDIT.md",
+      "exists": true,
+      "sha256": "46b4c772b971cc75adb8f8720b498798fb8905967c04280bb28e8b22f201622a"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\W2L_VirtualWalker_Newer_20261031\\CANONICAL_WORKING_PROFILE.json",
+      "exists": true,
+      "sha256": "cb6f9630c9f08531e547d06aafbec6d595def17e5210562263c6aa2781d58f98"
+    }
+  ],
+  "controlled_subspace": {
+    "limb_mechanics": "Three source limb hinge coordinates per side: hip/knee/ankle, six bilateral sagittal coordinates; not23DoFhuman.",
+    "global_support": "WalkingPath/rails plus case-specific apparatus constrain base sway/orientation; match active rung before transfer.",
+    "uncontrolled_human_CAD_axes": [
+      "hip ab/adduction",
+      "hip axial rotation",
+      "lumbar three-axis motion",
+      "ankle/subtalar frontal rotation",
+      "MTP"
+    ],
+    "free_3D_balance_demonstrated": false,
+    "coordinate_accounting": [
+      {
+        "name": "hip_L",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "knee_L",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "ankle_L",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "toe_L",
+        "kind": "Hinge",
+        "coverage": "passive"
+      },
+      {
+        "name": "hip_R",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "knee_R",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "ankle_R",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "toe_R",
+        "kind": "Hinge",
+        "coverage": "passive"
+      },
+      {
+        "name": "Treadmill Slide",
+        "kind": "Prismatic",
+        "coverage": "apparatus"
+      },
+      {
+        "name": "Passive guide X slider",
+        "kind": "Prismatic",
+        "coverage": "apparatus"
+      },
+      {
+        "name": "root6DoF",
+        "kind": "floating_base",
+        "coverage": "apparatus",
+        "note": "Source WalkingPath/rails and selected case harness/guides account for base freedom; no inferred free3Dneural balance."
+      }
+    ],
+    "all_source_coordinates_accounted": true
+  },
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "blockers": [],
+  "limitations": [
+    "This supported sagittal source does not establish free3Dhuman/CAD control. That is a transfer-scope limitation, not a prerequisite for its supported-subspace Hunt training.",
+    "Physical transduction and coordination can subsequently be calibrated in Hunt B/C within declared domains; old waveform passes are not new design proof."
+  ],
+  "design_scope_policy": "Account for every source coordinate as neural, passive, constraint, apparatus, or unsupported. Free3Dwalking/wholebody success is not a prerequisite for supported/reduced-scope Hunt training.",
+  "applicable_design_operations": {
+    "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
+    "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
+    "graded_synapse": "Exact single-path endpoint conductance derivation available; multiinput/transient/linearitychecks stillrequired.",
+    "ionic_burster": "Retain sourceNaP/Ca/gate law; pureGLIFTable2notapplicable.",
+    "GLIF_threshold_steps": "Notapplicableto gradedcells; separate pureGLIFprofile requiresall activation/transient/rate contracts.",
+    "spike_synapse": "Declare reset-to-peak vs additive/capped eventlaw beforeusingdelta/Eq28/29."
+  },
+  "desired_functional_contract": {
+    "input_domain": "Perselectednode actualadmissiblecurrentrange below; out-of-domaincurrents requireexplicitreview, notsilentclamping.",
+    "output_domain": "Actualsourcepresynapticwindows below.",
+    "target_gain": "1/Size fordeclaredinput-onlycells",
+    "target_transient_s": 0.01,
+    "target_bandwidth_hz": 15.915494309189533,
+    "target_rate_hz": null,
+    "status": "Explicitengineeringcandidate forselectedpassiveinputrelays. Remainingionic/sourcepathwaysretainedandscoped; notwholefamilyvalidated."
+  },
+  "opt_in_profile": {
+    "adapter": "native_passive",
+    "adopted": false,
+    "engineering_candidate": true,
+    "neurons": [
+      {
+        "name": "R Ank ext Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Ank flx Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Ank ext Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Ank flx Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Ankle plantarflexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Ankle dorsiflexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee flx Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee ext Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee ext Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee flx II",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee flx Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee flexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee extensor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip flx Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip flx Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip ext Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip ext Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip flx II",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip flexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip extensor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R toe contact",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R heel contact",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee flx Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee flx Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee ext Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee flx II",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee ext Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee extensor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee flexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ank flx Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ank ext Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ank ext Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ank flx Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ankle dorsiflexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ankle plantarflexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip flx Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip flx Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip ext Ia IN",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip flx II",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip ext Ib",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip extensor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip flexor II relay",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L heel contact",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L toe contact",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Ank MN flx",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Ank MN ext",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee MN flx",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Knee MN ext",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip MN flx",
+        "tau_s": 0.01
+      },
+      {
+        "name": "R Hip MN ext",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee MN flx",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Knee MN ext",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ank MN flx",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Ank MN ext",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip MN flx",
+        "tau_s": 0.01
+      },
+      {
+        "name": "L Hip MN ext",
+        "tau_s": 0.01
+      }
+    ],
+    "synapses": []
+  },
+  "application_recipe": {
+    "default_behavior": "No profile: literal no-op; no original source or topology changes.",
+    "production_hook_installed": false,
+    "unit_adapter_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "candidate_consumption_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_CANDIDATE_COMPONENT_CHECKS.json",
+    "fresh_process_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_FRESH_PROCESS_CHECK.json",
+    "Simulink_block_consumption_proof": null,
+    "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
+    "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
+    "call": "apply_native_passive_profile(controller, ledger_or_explicit_profile) after constructing actual sourcecontroller and before preparing states; no runner hook installed."
+  },
+  "source_census": {
+    "neurons": 108,
+    "graded_synapses": 216,
+    "ionic_cells": 24,
+    "neural_step_s": 0.0002
+  },
+  "actual_runtime_anchor": {
+    "constructor": "NativeController",
+    "source_sha256": "01ece6edcbcf17c274410b23f1ce7603eab288aadb946d6b548c5102ed5c1154",
+    "configuration": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\GENTLE_HIP_0P6_FLEX_0P5.json",
+    "contact_si": true,
+    "authored_clock_already_in_source": 2,
+    "runtime_neural_time_scale": 1.0,
+    "physical_clock_scale": 1.0,
+    "recruitment": {
+      "pf_mn_recruitment_scale": 1.305863499088313,
+      "hip_pf_mn_scale": 0.6,
+      "hip_flexor_pf_mn_scale": 0.5,
+      "hip_pf_mn_edges": [
+        {
+          "source": "R Hip PF ext",
+          "target": "R Hip MN ext",
+          "additional_scale": 0.6,
+          "extra_flexor_scale": 1.0,
+          "effective_gmax_uS": 2.153891255396263
+        },
+        {
+          "source": "R Hip PF flx",
+          "target": "R Hip MN flx",
+          "additional_scale": 0.6,
+          "extra_flexor_scale": 0.5,
+          "effective_gmax_uS": 1.0769456276981315
+        },
+        {
+          "source": "L Hip PF ext",
+          "target": "L Hip MN ext",
+          "additional_scale": 0.6,
+          "extra_flexor_scale": 1.0,
+          "effective_gmax_uS": 2.153891255396263
+        },
+        {
+          "source": "L Hip PF flx",
+          "target": "L Hip MN flx",
+          "additional_scale": 0.6,
+          "extra_flexor_scale": 0.5,
+          "effective_gmax_uS": 1.0769456276981315
+        }
+      ],
+      "hip_flexor_edges": [
+        {
+          "source": "R Hip PF flx",
+          "target": "R Hip MN flx",
+          "extra_flexor_scale": 0.5,
+          "effective_gmax_uS": 1.0769456276981315
+        },
+        {
+          "source": "L Hip PF flx",
+          "target": "L Hip MN flx",
+          "extra_flexor_scale": 0.5,
+          "effective_gmax_uS": 1.0769456276981315
+        }
+      ],
+      "pf_mn_edges": [
+        {
+          "source": "R Knee PF flx",
+          "target": "R Ank MN ext",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 3.5898187589937716
+        },
+        {
+          "source": "R Knee PF ext",
+          "target": "R Ank MN flx",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 3.5898187589937716
+        },
+        {
+          "source": "R Knee PF ext",
+          "target": "R Knee MN ext",
+          "source_gmax_uS": 4.930000000000001,
+          "effective_gmax_uS": 6.437907050505383
+        },
+        {
+          "source": "R Knee PF flx",
+          "target": "R Knee MN flx",
+          "source_gmax_uS": 1.516,
+          "effective_gmax_uS": 1.9796890646178824
+        },
+        {
+          "source": "R Hip PF ext",
+          "target": "R Hip MN ext",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 2.153891255396263
+        },
+        {
+          "source": "R Hip PF flx",
+          "target": "R Hip MN flx",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 1.0769456276981315
+        },
+        {
+          "source": "L Knee PF ext",
+          "target": "L Knee MN ext",
+          "source_gmax_uS": 4.930000000000001,
+          "effective_gmax_uS": 6.437907050505383
+        },
+        {
+          "source": "L Knee PF flx",
+          "target": "L Knee MN flx",
+          "source_gmax_uS": 1.516,
+          "effective_gmax_uS": 1.9796890646178824
+        },
+        {
+          "source": "L Knee PF flx",
+          "target": "L Ank MN ext",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 3.5898187589937716
+        },
+        {
+          "source": "L Knee PF ext",
+          "target": "L Ank MN flx",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 3.5898187589937716
+        },
+        {
+          "source": "L Hip PF ext",
+          "target": "L Hip MN ext",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 2.153891255396263
+        },
+        {
+          "source": "L Hip PF flx",
+          "target": "L Hip MN flx",
+          "source_gmax_uS": 2.7489999999999997,
+          "effective_gmax_uS": 1.0769456276981315
+        }
+      ],
+      "toe_mn_edges": [
+        {
+          "source": "R toe contact",
+          "target": "R Ank MN ext",
+          "effective_gmax_uS": 0.031839851437587975
+        },
+        {
+          "source": "L toe contact",
+          "target": "L Ank MN ext",
+          "effective_gmax_uS": 0.031839851437587975
+        }
+      ],
+      "scope": "Actual conductance edits, bilateral absolute equality asserted; no neuron bias or force allocation."
+    },
+    "physical_input_ports": 44,
+    "physical_motor_ports": 12
+  },
+  "units": {
+    "voltage": "Absolute mV",
+    "neural_runtime": "seconds converted to ms by dt*1000",
+    "TimeConst": "ms",
+    "current": "source nA with explicit Size normalization",
+    "conductance": "Actual native normalized SynAmp; do not claim measured physicaluS/Cm without normalization audit."
+  },
+  "source_operating_ranges": {
+    "rest_mV": [
+      -100.0,
+      -60.0
+    ],
+    "tau_ms": [
+      10.0,
+      10.0
+    ],
+    "Size": [
+      1.0,
+      1.0
+    ],
+    "synaptic_threshold_mV": [
+      -100.0,
+      -60.0
+    ],
+    "synaptic_saturation_mV": [
+      -55.0,
+      -10.0
+    ]
+  },
+  "source_ionic_names": [
+    "L Hip PF ext",
+    "R Knee PF flx",
+    "R Hip PF ext",
+    "L Knee PF ext",
+    "L Knee MN ext RE",
+    "L RG ext",
+    "R RG ext",
+    "L Hip MN ext RE",
+    "R Ank MN ext RE",
+    "L RG flx",
+    "R RG flx",
+    "L Knee MN flx RE",
+    "R Hip MN flx RE",
+    "L Ank MN flx RE",
+    "L Hip PF flx",
+    "L Knee MN ext RE",
+    "R Hip MN ext RE",
+    "L Knee PF flx",
+    "R Hip PF flx",
+    "L Ank MN ext RE",
+    "L Hip MN flx RE",
+    "R Knee MN flx RE",
+    "R Knee PF ext",
+    "R Ank MN flx RE"
+  ],
+  "proposed_functional_components": [
+    {
+      "name": "R Ank ext Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Ank flx Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank flx Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Ank ext Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank ext Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Ank flx Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Ankle plantarflexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Ankle dorsiflexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Knee flx Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Knee flx Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Knee ext Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Knee ext Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Knee ext Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Knee MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R RG ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R Knee PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Knee flx II",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R RG flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R Knee PF flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Knee flx Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Knee MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Knee flexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Knee MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Knee extensor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Knee MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Hip flx Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Hip flx Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Hip flx Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Hip MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Hip ext Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Hip PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R Hip MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R RG ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Hip ext Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Hip ext Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Hip flx II",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Hip PF flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R RG flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Hip flexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Hip MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R Hip extensor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Hip MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R toe contact",
+      "actual_physical_kinds": [
+        "ContactCount"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "R heel contact",
+      "actual_physical_kinds": [
+        "ContactCount"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "R Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R RG ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R Hip PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R Knee PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R Hip MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R Knee MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L RG flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Knee flx Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Knee flx Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Knee flx Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Knee MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Knee ext Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Knee MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L RG ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L Knee PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Knee flx II",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L RG flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L Knee PF flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Knee ext Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Knee ext Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Knee extensor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Knee MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Knee flexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Knee MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Ank flx Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank flx Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Ank ext Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank ext Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Ank ext Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Ank flx Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Ankle dorsiflexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Ankle plantarflexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Hip flx Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Hip flx Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Hip flx Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Hip MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Hip ext Ia IN",
+      "actual_physical_kinds": [
+        "Ia"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Hip ext Ia",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Hip flx II",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Hip PF flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L RG flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Hip ext Ib",
+      "actual_physical_kinds": [
+        "Tension"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Hip MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L Hip PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L RG ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Hip extensor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Hip MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L Hip flexor II relay",
+      "actual_physical_kinds": [
+        "II"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Hip MN flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L heel contact",
+      "actual_physical_kinds": [
+        "ContactCount"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L RG ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L Hip PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L Knee PF ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L Hip MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "L Knee MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        },
+        {
+          "target": "R RG flx",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    },
+    {
+      "name": "L toe contact",
+      "actual_physical_kinds": [
+        "ContactCount"
+      ],
+      "input_current_nA": [
+        0.0,
+        20.0
+      ],
+      "output_voltage_mV": [
+        -60.0,
+        -40.0
+      ],
+      "DC_gain_mV_per_source_nA": 1.0,
+      "physical_leak_tau_s": 0.01,
+      "physical_leak_bandwidth_Hz": 15.915494309189533,
+      "source_tau_ms": 10.0,
+      "incoming_central_edges": 0,
+      "physical_adapter_maps_unchanged": true,
+      "branch_windows": [
+        {
+          "target": "L Ank MN ext",
+          "lower_mV": -60.0,
+          "upper_mV": -40.0,
+          "baseline_fraction": 0.0
+        }
+      ],
+      "heterogeneous_windows_preserved": true
+    }
+  ],
+  "motor_output_contracts": [
+    {
+      "name": "R Ank MN flx",
+      "actuator": "ankle_R_ext",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 500.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "R Ank MN ext",
+      "actuator": "ankle_R_flx",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 1000.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "R Knee MN flx",
+      "actuator": "knee_R_flx",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 1000.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "R Knee MN ext",
+      "actuator": "knee_R_ext",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 800.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "R Hip MN flx",
+      "actuator": "hip_R_ext",
+      "source_sigmoid": {
+        "A": -0.07,
+        "B": 1500.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -84.72219489583222,
+          "muscle_stimulus_volts": -0.08472219489583221,
+          "adapter_input_volts": -0.08472219489583221,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.245004513516506e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -70.0,
+          "muscle_stimulus_volts": -0.07,
+          "adapter_input_volts": -0.07,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -55.2778051041678,
+          "muscle_stimulus_volts": -0.0552778051041678,
+          "adapter_input_volts": -0.0552778051041678,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "R Hip MN ext",
+      "actuator": "hip_R_flx",
+      "source_sigmoid": {
+        "A": -0.07,
+        "B": 1000.0,
+        "C": 100.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -99.4443897916644,
+          "muscle_stimulus_volts": -0.09944438979166441,
+          "adapter_input_volts": -0.09944438979166441,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-18
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -70.0,
+          "muscle_stimulus_volts": -0.07,
+          "adapter_input_volts": -0.07,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -40.555610208335594,
+          "muscle_stimulus_volts": -0.04055561020833559,
+          "adapter_input_volts": -0.04055561020833559,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "L Knee MN flx",
+      "actuator": "knee_L_flx",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 1000.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "L Knee MN ext",
+      "actuator": "knee_L_ext",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 800.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "L Ank MN flx",
+      "actuator": "ankle_L_ext",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 500.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "L Ank MN ext",
+      "actuator": "ankle_L_flx",
+      "source_sigmoid": {
+        "A": -0.05,
+        "B": 1000.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -64.7221948958322,
+          "muscle_stimulus_volts": -0.0647221948958322,
+          "adapter_input_volts": -0.0647221948958322,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -50.0,
+          "muscle_stimulus_volts": -0.05,
+          "adapter_input_volts": -0.05,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -35.2778051041678,
+          "muscle_stimulus_volts": -0.035277805104167795,
+          "adapter_input_volts": -0.035277805104167795,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "L Hip MN flx",
+      "actuator": "hip_L_flx",
+      "source_sigmoid": {
+        "A": -0.07,
+        "B": 1000.0,
+        "C": 100.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -99.4443897916644,
+          "muscle_stimulus_volts": -0.09944438979166441,
+          "adapter_input_volts": -0.09944438979166441,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.938893903907228e-18
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -70.0,
+          "muscle_stimulus_volts": -0.07,
+          "adapter_input_volts": -0.07,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -40.555610208335594,
+          "muscle_stimulus_volts": -0.04055561020833559,
+          "adapter_input_volts": -0.04055561020833559,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 1.1102230246251565e-16
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    },
+    {
+      "name": "L Hip MN ext",
+      "actuator": "hip_L_ext",
+      "source_sigmoid": {
+        "A": -0.07,
+        "B": 1500.0,
+        "C": 200.0,
+        "D": 0.0
+      },
+      "source_adapter_polynomial": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "source_voltage_conversion": "NeuralmV*0.001 BEFORE polynomial; sourcevoltsandneuronal mVnotinterchangeable.",
+      "voltage_active_domain": [
+        {
+          "active_plateau_fraction": 0.05,
+          "neural_voltage_mV": -84.72219489583222,
+          "muscle_stimulus_volts": -0.08472219489583221,
+          "adapter_input_volts": -0.08472219489583221,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 6.245004513516506e-17
+        },
+        {
+          "active_plateau_fraction": 0.5,
+          "neural_voltage_mV": -70.0,
+          "muscle_stimulus_volts": -0.07,
+          "adapter_input_volts": -0.07,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        },
+        {
+          "active_plateau_fraction": 0.95,
+          "neural_voltage_mV": -55.2778051041678,
+          "muscle_stimulus_volts": -0.0552778051041678,
+          "adapter_input_volts": -0.0552778051041678,
+          "within_source_adapter_limits": true,
+          "inverse_roundtrip_error": 0.0
+        }
+      ],
+      "physical_leak_tau_s": 0.01,
+      "scope": "Source-preserving motor voltage/currentconditioning; actualforcealsodependson length/velocity/series/passivetissue. Notforcefloor or biologicalactivationproof."
+    }
+  ],
+  "motor_clock_goal": "RetainactualsourceMNphysicalleak\u03c4 and actualSIvoltage\u2192sigmoidmap while RG/PFcadence is separatelydefined. AdaptercompensatesonlydeclaredMNs byactualneural_rate_multiplier.",
+  "engineering_target_rationale": "Preserve eachactual pure-input sensorycurrent\u2192voltage domain and DCgain fromsource Size/outgoingwindows; choose a10msphysicalpole (50samples at.2ms) toseparatefastsensoryconditioning fromsourcecadence. Relative to.292sfastestretainedratAcontext itisT/29.2, notmassscaling or a universalbiologicalbandwidthclaim.",
+  "clock_contract": {
+    "definition": "t_biological=t_physical/c; parameterTimeConstants=p*sourceTimeConstants",
+    "duration_multiplier": 1.0,
+    "parameter_time_multiplier": 1.0,
+    "biological_rate_per_physical_rate": 1.0,
+    "passive_tau_physical_per_source_tau": 1.0,
+    "equations": [
+      "tau_physical=C_source/(G*lambda), lambda=1/c",
+      "C_source_for_target_physical_tau=tau_target*G*lambda (with clock-unit factor)",
+      "NativeTimeConst_ms_for_target=1000*tau_target*lambda*(1+declared_operating_synaptic_ratio)"
+    ],
+    "warning": "A biologicalclock change also changes sensory/MN filters, spikecarrier/refractory/readout and startupwindows if inside the same wrapper; it is not a computationalspeedup. Keep physics/actuator clocks explicit.",
+    "canonical_authored_clock_scale": 2,
+    "canonical_parameters_already_serialized": true,
+    "runtime_neural_time_scale_default": 1.0,
+    "do_not_multiply_authored_clock_twice": true,
+    "source_time_scaler": "native_kernel.NativeController multipliesTimeConstandCaactivation/deactivationtimeconstants byneural_time_scale, includingpassiveafferents/MNs.",
+    "separation_recipe": "Retain declaredRG/PFionic clocks; override onlyselectedplain afferent/MN tau_phys throughthisadapter usingactualruntime lambda. Do notscale sourceparamswholesale tohumanmass/cadence."
+  },
+  "existing_reference_configuration": {
+    "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\GENTLE_HIP_0P6_FLEX_0P5.json",
+    "exists": true,
+    "sha256": "0ad3a31fc5b2209a083aaffffe2f7a12c0197af444de0719f6945cf28aaa271c"
+  },
+  "canonical_source_matches_existing_reference_hash": true,
+  "preserve_explicit_changes": [
+    "Sourceclock and imported sourcehash",
+    "anklePF targetswap is routing, not a universal biological correction",
+    "sharedPF\u2192MN/contact coefficients and groundedhome remain separate fromFSAderivation"
+  ],
+  "appropriate_design_evidence": {
+    "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NATIVE_ROLE_DESIGN_W2L108_graded_final.json",
+    "exists": true,
+    "sha256": "18e07f66bc995b9a674be113175f3d39b41c42e6797468dd0732b75393f8b6e6"
+  },
+  "appropriate_source_role_prerequisites_verified": true,
+  "verified_role_summary": {
+    "logical_source_populations": 108,
+    "independent_encoder_contracts": 44,
+    "remaining_passive_conditional_contracts": 40,
+    "retained_ionic_contracts": 24,
+    "first_entry_feedback_groups": 20,
+    "actual_physical_adapter_API": {
+      "synthetic_physical_array_cases": 3,
+      "source_actual_API": "NativeController.step(interval=0)",
+      "actual_cached_mapping_vs_source_tuple_error_nA": 0.0,
+      "sensory_spiking_dispatch": null,
+      "neural_time_advance_s": 0.0,
+      "physics_steps": 0
+    }
+  },
+  "feedback_budget_profile": {
+    "adapter": "native_passive",
+    "neurons": [],
+    "synapses": [
+      {
+        "source": "R Hip ext Ib",
+        "target": "R Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R Hip flx II",
+        "target": "R Hip PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "R RG ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "R Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "R Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R Hip ext Ib",
+        "target": "R RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Knee ext Ib",
+        "target": "R RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Hip flx II",
+        "target": "R RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Knee flx II",
+        "target": "R RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Knee ext Ib",
+        "target": "R Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R Knee flx II",
+        "target": "R Knee PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Hip ext Ib",
+        "target": "L Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Hip flx II",
+        "target": "L Hip PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "L RG ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "L Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "L Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Hip ext Ib",
+        "target": "L RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Knee ext Ib",
+        "target": "L RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Hip flx II",
+        "target": "L RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Knee flx II",
+        "target": "L RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Knee ext Ib",
+        "target": "L Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Knee flx II",
+        "target": "L Knee PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "L RG flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "R RG flx",
+        "gmax_normalized": 0.028571428571428567
+      }
+    ]
+  },
+  "source_roles": {
+    "R Ank ext Ia": "retained_passive_conductance_transfer",
+    "R Hip flx Ia": "retained_passive_conductance_transfer",
+    "R Hip flx II": "independent_fast_encoder",
+    "L RG flx IN": "retained_passive_conductance_transfer",
+    "R RG flx IN": "retained_passive_conductance_transfer",
+    "L Hip PF ext": "retained_nonlinear_Ca_burster",
+    "L Hip ext Ib": "independent_fast_encoder",
+    "L Hip flx Ib": "independent_fast_encoder",
+    "R Knee ext Ia IN": "independent_fast_encoder",
+    "R Knee MN ext": "physical_motor_voltage_interface",
+    "R Knee PF flx": "retained_nonlinear_Ca_burster",
+    "R Hip MN ext": "physical_motor_voltage_interface",
+    "R Hip PF flx IN": "retained_passive_conductance_transfer",
+    "R Hip PF ext": "retained_nonlinear_Ca_burster",
+    "R Hip PF ext IN": "retained_passive_conductance_transfer",
+    "R Ank MN ext": "physical_motor_voltage_interface",
+    "L Hip ext Ia": "retained_passive_conductance_transfer",
+    "R Knee ext Ia": "retained_passive_conductance_transfer",
+    "L Hip PF ext IN": "retained_passive_conductance_transfer",
+    "L Knee PF ext": "retained_nonlinear_Ca_burster",
+    "L Knee PF ext IN": "retained_passive_conductance_transfer",
+    "L Knee MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Ank ext Ib": "independent_fast_encoder",
+    "L Knee MN flx": "physical_motor_voltage_interface",
+    "L Ank ext Ia": "retained_passive_conductance_transfer",
+    "R Hip ext Ia IN": "independent_fast_encoder",
+    "L RG ext": "retained_nonlinear_Ca_burster",
+    "R RG ext": "retained_nonlinear_Ca_burster",
+    "L Knee ext Ia IN": "independent_fast_encoder",
+    "L Hip MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Ank MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Hip ext Ib": "independent_fast_encoder",
+    "L Ank MN ext": "physical_motor_voltage_interface",
+    "R Ank flx Ia IN": "independent_fast_encoder",
+    "L RG flx": "retained_nonlinear_Ca_burster",
+    "R RG flx": "retained_nonlinear_Ca_burster",
+    "L Knee PF flx IN": "retained_passive_conductance_transfer",
+    "R Knee flx Ib": "independent_fast_encoder",
+    "L Knee flx Ib": "independent_fast_encoder",
+    "R Ank MN flx": "physical_motor_voltage_interface",
+    "R Knee MN flx": "physical_motor_voltage_interface",
+    "L Hip PF flx IN": "retained_passive_conductance_transfer",
+    "L Knee MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Knee ext Ib": "independent_fast_encoder",
+    "L Hip MN flx": "physical_motor_voltage_interface",
+    "L Ank ext Ia IN": "independent_fast_encoder",
+    "L Knee flx Ia": "retained_passive_conductance_transfer",
+    "L Knee flx II": "independent_fast_encoder",
+    "R Hip MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Ank MN flx RE": "retained_nonlinear_Ca_burster",
+    "R Knee ext Ib": "independent_fast_encoder",
+    "L Hip PF flx": "retained_nonlinear_Ca_burster",
+    "R Knee PF flx IN": "retained_passive_conductance_transfer",
+    "R Hip MN flx": "physical_motor_voltage_interface",
+    "R Hip MN ext RE": "retained_nonlinear_Ca_burster",
+    "L Hip flx Ia": "retained_passive_conductance_transfer",
+    "L heel contact": "independent_fast_encoder",
+    "L toe contact": "independent_fast_encoder",
+    "R heel contact": "independent_fast_encoder",
+    "R toe contact": "independent_fast_encoder",
+    "L Hip flx II": "independent_fast_encoder",
+    "L Hip MN ext": "physical_motor_voltage_interface",
+    "L Knee PF flx": "retained_nonlinear_Ca_burster",
+    "R Hip flx Ib": "independent_fast_encoder",
+    "L RG ext IN": "retained_passive_conductance_transfer",
+    "R V3": "retained_passive_conductance_transfer",
+    "L V3": "retained_passive_conductance_transfer",
+    "R c1": "retained_passive_conductance_transfer",
+    "L c1": "retained_passive_conductance_transfer",
+    "R RG ext IN": "retained_passive_conductance_transfer",
+    "L Ank flx Ib": "independent_fast_encoder",
+    "L Knee MN ext": "physical_motor_voltage_interface",
+    "R Hip PF flx": "retained_nonlinear_Ca_burster",
+    "L Hip flx Ia IN": "independent_fast_encoder",
+    "L Hip ext Ia IN": "independent_fast_encoder",
+    "L Ank MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Ank flx Ib": "independent_fast_encoder",
+    "R Hip ext Ia": "retained_passive_conductance_transfer",
+    "R Ank flx Ia": "retained_passive_conductance_transfer",
+    "L Ank ext Ib": "independent_fast_encoder",
+    "R Knee PF ext IN": "retained_passive_conductance_transfer",
+    "R Ank ext Ia IN": "independent_fast_encoder",
+    "L Hip MN flx RE": "retained_nonlinear_Ca_burster",
+    "R Knee MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Knee ext Ia": "retained_passive_conductance_transfer",
+    "R Knee PF ext": "retained_nonlinear_Ca_burster",
+    "L Knee flx Ia IN": "independent_fast_encoder",
+    "R Knee flx Ia": "retained_passive_conductance_transfer",
+    "R Knee flx II": "independent_fast_encoder",
+    "L Ank MN flx": "physical_motor_voltage_interface",
+    "R Ank MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Ank flx Ia": "retained_passive_conductance_transfer",
+    "R Hip flx Ia IN": "independent_fast_encoder",
+    "R Knee flx Ia IN": "independent_fast_encoder",
+    "L Ank flx Ia IN": "independent_fast_encoder",
+    "R Ankle plantarflexor II relay": "independent_fast_encoder",
+    "R Ankle dorsiflexor II relay": "independent_fast_encoder",
+    "R Knee flexor II relay": "independent_fast_encoder",
+    "R Knee extensor II relay": "independent_fast_encoder",
+    "R Hip flexor II relay": "independent_fast_encoder",
+    "R Hip extensor II relay": "independent_fast_encoder",
+    "L Knee extensor II relay": "independent_fast_encoder",
+    "L Knee flexor II relay": "independent_fast_encoder",
+    "L Ankle dorsiflexor II relay": "independent_fast_encoder",
+    "L Ankle plantarflexor II relay": "independent_fast_encoder",
+    "L Hip extensor II relay": "independent_fast_encoder",
+    "L Hip flexor II relay": "independent_fast_encoder"
+  },
+  "review_required": "Parent must review declared current budgets/source-side patterns and release global training explicitly; no body performance prerequisite.",
+  "appropriate_local_design_checks_verified": true,
+  "body_performance_is_not_design_prerequisite": true,
+  "bilateral_design_accounting": {
+    "evidence": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_BILATERAL_DESIGN_v4.json",
+      "exists": true,
+      "sha256": "653d946e2ce644d94cb03844ef0009ffe5caee16fd9e0039a8ed1e973303fc2b"
+    },
+    "applicable": true,
+    "eligible_edge_pairs": 108,
+    "source_asymmetric_pair_count": 0,
+    "unmatched_right_edges": 0,
+    "ineligible_edges": 0,
+    "source_untouched": true,
+    "blanket_source_symmetry_claim": false,
+    "policy": "Baseline untouched. Explicit new candidate uses right canonical gain copied to verified left edge; unmatched/non-equivalent edges frozen, never independently fit."
+  }
+}

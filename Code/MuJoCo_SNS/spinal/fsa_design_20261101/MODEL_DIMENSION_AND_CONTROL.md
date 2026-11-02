@@ -51,6 +51,8 @@ For locally linearized stabilization around a posture, check the relevant constr
 
 Song and Geyer explicitly extended a sagittal reflex model to3D by adding lateral hip mechanics, abductor/adductor control, and lateral trunk balance; their later model included functional feedback modules and foot-placement control. This is a close precedent for a modular extension, rather than direct reuse of an unchanged reduced controller.
 
+Their2015human model has eight internal degrees of freedom, so this precedent does not by itself supply all17internal-coordinate pathways needed for our Gait2392 implementation.
+
 - Song and Geyer2013, *Generalization of a Muscle-Reflex Control Model to3D Walking*: https://publications.ri.cmu.edu/storage/publications/2017/11/SongGeyer13cIEEE_EMBC.pdf
 - Song and Geyer2015, *A neural circuitry that emphasizes spinal feedback generates diverse behaviours of human locomotion*: https://pmc.ncbi.nlm.nih.gov/articles/PMC4560581/
 
@@ -59,3 +61,11 @@ Suggested spoken answer: "The controller's source model was reduced, but we tran
 ## Current action
 
 Control-coverage verification is now required for every family in CAMPAIGN_GATE.json before the next Hunt/curriculum campaign. Existing reported trials remain unchanged. No new3D-walking result is asserted by this design note.
+
+### Static check of the existing syn6 basis
+
+The read-only diagnostic `syn6_torque_span.py` evaluated four postures (0%,25%,50%, and75%) from the existing walking-angle cache. It used the **raw, unpatched CVT3 model**, its native MuJoCo active-force derivative, equality-aware anatomical moment arms, and the unchanged K6 NMF basis. At every posture, the full92-muscle map had numerical rank17; the86muscles represented by the basis also had rank17; projecting through the12bilateral primitive inputs gave rank12. Runtime hip-axis, force, and other mechanical patches were not applied in this diagnostic; it is not a rank calculation of the final patched standing controller/model.
+
+This identifies a real reduction in independent instantaneous torque directions for that fixed activation basis. It does not mean the complete syn6 controller has only12control inputs: its additional reflex and posture pathways must be evaluated separately, and its conductance-based input/output function is not literally the NMF reconstruction. It also does not mean17independent primitive channels are necessary for a coordinated gait. Contact, passive dynamics, feedback, and the requested task determine what is sufficient.
+
+Full numerical record: `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design\SYN6_TORQUE_SPAN.json`. This was a static design calculation, without time integration, optimization, training, NMF refitting, or source-model changes.

@@ -675,7 +675,7 @@ class W2LVarnet(BN.SpinalNetwork):
                                      src, mn)
 
     # ------------------------------------------------------------------ run
-    def compile(self, dt: float = DT):
+    def compile(self, dt: float = DT, graded_profile=None):
         self.compiled = self.net.compile(dt=dt, backend="numpy")
         # fixed-tau_h stepper for the RG persistent-Na h-gates (Deng
         # semantics — the parent patch, single source of truth)
@@ -684,12 +684,15 @@ class W2LVarnet(BN.SpinalNetwork):
         # neuron count was captured in __post_init__ before aliasing)
         assert self.compiled.V.shape[0] == self._n_true, \
             "neuron index bookkeeping mismatch"
+        if graded_profile is not None:
+            from fsa_design_20261101.graded_profile import apply_profile
+            apply_profile(self, graded_profile, family="w2lvar")
         return self.compiled
 
 
 # ---------------------------------------------------------------------------
 def build(model_actuators: list[str], dt: float = DT,
-          interleg: bool = True) -> W2LVarnet:
+          interleg: bool = True, graded_profile=None) -> W2LVarnet:
     """Build + compile the w2lvar network. Applies the VARIANT_G overlay
     to params.G (documented; the variant process is dedicated — the
     runner scales HEEL_c/TOE_c port currents by G["heel_rge"]/["toe_rge"]
@@ -705,5 +708,5 @@ def build(model_actuators: list[str], dt: float = DT,
         muscles[act] = mi
     sides = tuple(sorted({mi.side for mi in muscles.values()}))
     net = W2LVarnet(muscles=muscles, sides=sides, interleg=interleg)
-    net.compile(dt=dt)
+    net.compile(dt=dt, graded_profile=graded_profile)
     return net

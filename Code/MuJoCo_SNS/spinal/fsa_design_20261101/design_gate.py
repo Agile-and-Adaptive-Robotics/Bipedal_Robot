@@ -52,6 +52,9 @@ def inspect_gate(path: Path = GATE) -> dict:
     path = Path(path).resolve()
     gate = _read(path)
     issues = []
+    approval = gate.get("user_training_approval", {})
+    if approval.get("approved") is not True or not approval.get("instruction"):
+        issues.append("Ben's explicit approval to start training/curriculum is pending")
     if gate.get("schema") != "aarl_all_controller_fsa_design_gate_v1":
         issues.append("unknown gate schema")
     if gate.get("all_families_required_before_training") is not True:
@@ -109,13 +112,19 @@ def inspect_gate(path: Path = GATE) -> dict:
         "released": not (issues or pending or closed_flags),
         "verified_families": verified, "pending_families": pending,
         "closed_flags": closed_flags, "issues": issues,
+        "user_training_approval": approval,
     }
 
 
-def require_calculation_release(operation: str, path: Path = GATE) -> dict:
+def require_calculation_release(operation: str, path: Path = GATE, *, physics_changes=()) -> dict:
     if operation not in OPERATIONS:
         raise ValueError(f"Unknown gated operation: {operation}")
     result = inspect_gate(path)
+    physics_policy = _read(Path(path)).get("optional_physics_changes", {})
+    unapproved = [key for key in physics_changes
+                  if physics_policy.get(key, {}).get("approved") is not True]
+    if unapproved:
+        raise RuntimeError("Ben's separate approval is required for: " + ", ".join(unapproved))
     if not result["released"]:
         raise RuntimeError(
             f"{operation} cannot start: all-family design/scaling/pathway/control-coverage "

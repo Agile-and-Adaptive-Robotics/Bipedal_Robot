@@ -1,0 +1,204 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "SNS_Simscape_spiking_reflexes",
+  "machine": "easteregg2",
+  "phase": "design_only",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\sns_build_library.m",
+      "exists": true,
+      "sha256": "50191f6ada028ccef108d5e88e10165bb43721b4698c3ca54a20b980c1abcaf3"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_demo.m",
+      "exists": true,
+      "sha256": "43054f4b2f94fc5f155ed888873c556d0dce65efb566c162e9d8349598abd128"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\sns_build_spiking.m",
+      "exists": true,
+      "sha256": "b98060a1f4e4e70b422892170c2bf1095b2859c1fe9148326fd1a85437640aac"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_knee_spiking.m",
+      "exists": true,
+      "sha256": "dd09aa28d36c8a8c3cc1bae4d27fb776e97a61b66c4b47bf4fefeb29590ecad3"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_rgmn_spiking.m",
+      "exists": true,
+      "sha256": "1ddd09a62b19dabcb535a3b0fcd17c20f1786dee331379a1708ff3cfa4628101"
+    }
+  ],
+  "controlled_subspace": {
+    "source_control": "KneeReflexDemo is1DoFknee antagonisticreflex; RG/MNsubnetwork demo is notfullwalker.",
+    "global_support": "Analyticaljointorfixture, no free3Dwholebodybalance.",
+    "missing_human_CAD_control": [
+      "otherjointaxes",
+      "pelvis6DoF",
+      "lumbar3DoF",
+      "frontal/transversebalance"
+    ],
+    "free_3D_balance_demonstrated": false,
+    "coordinate_accounting": [
+      {
+        "name": "knee_fixture",
+        "coverage": "neural",
+        "note": "1DoFantagonisticreflexdemo; no other mechanical coordinates instantiated"
+      }
+    ],
+    "all_source_coordinates_accounted": true
+  },
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "blockers": [],
+  "limitations": [
+    "Only the named reflex/mechanism coordinates are modeled; no3Dhuman/CAD coverage is inherited or required before scoped training.",
+    "Source fixed-reset LIF and additive/capped event synapses are tested as their exact functions; adaptive-threshold GLIF and reset-to-peak Eq.27/29 synapses are not claimed installed."
+  ],
+  "design_scope_policy": "Account for every source coordinate as neural, passive, constraint, apparatus, or unsupported. Free3Dwalking/wholebody success is not a prerequisite for supported/reduced-scope Hunt training.",
+  "applicable_design_operations": {
+    "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
+    "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
+    "graded_synapse": "Exact single-path endpoint conductance derivation available; multiinput/transient/linearitychecks stillrequired.",
+    "ionic_burster": "Retain sourceNaP/Ca/gate law; pureGLIFTable2notapplicable.",
+    "GLIF_threshold_steps": "Notapplicableto gradedcells; separate pureGLIFprofile requiresall activation/transient/rate contracts.",
+    "spike_synapse": "Declare reset-to-peak vs additive/capped eventlaw beforeusingdelta/Eq28/29."
+  },
+  "desired_functional_contract": {
+    "input_domain": "Declared electrical source input:0..5.3nA; fixedLIF threshold/deadband and exact nonlinear f-I retained.",
+    "output_domain": "Actual neuron Vm/rate plus chemical [g,gE]; mean signed currents atdeclaredVm fromeventrecipe.",
+    "target_gain": "Exact source RC and fixed-resetLIF functions; independent +/-1nA event-current target at100Hz.",
+    "target_transient_s": 0.01,
+    "target_bandwidth_hz": null,
+    "target_rate_hz": [
+      84.715107289687,
+      204.81109624082106
+    ],
+    "status": "Actual source block/chemical-port contracts; no pureGLIF adaptive-threshold replacement claimed."
+  },
+  "opt_in_profile": {
+    "adapter": "simulink_mask_recipe",
+    "adopted": false,
+    "neurons": [],
+    "synapses": []
+  },
+  "application_recipe": {
+    "default_behavior": "No profile: literal no-op; no original source or topology changes.",
+    "production_hook_installed": false,
+    "unit_adapter_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "candidate_consumption_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_CANDIDATE_COMPONENT_CHECKS.json",
+    "fresh_process_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_FRESH_PROCESS_CHECK.json",
+    "Simulink_block_consumption_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_SIMULINK_BLOCK_CHECK.json",
+    "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
+    "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
+    "example": {
+      "block": "SEPARATE_MODEL/SN_Ia_ext",
+      "mask_values": {
+        "Gm": 1.0,
+        "Cm": 30.0
+      },
+      "source_derivative": "1000/Cm in seconds-based Simulink",
+      "runtime_consumption_verified": false,
+      "warning": "Apply to a separate passive block/model via set_param; no whole-model or ionic rescaling."
+    }
+  },
+  "units": {
+    "clock": "Simulinkseconds",
+    "voltage": "AbsolutemV",
+    "current": "nA",
+    "conductance": "uS",
+    "capacitance": "PhysicalnF; derivative1000/Cm",
+    "synapse_output": "[g;g*Esyn], postsynapticcellcomputesIsyn"
+  },
+  "known_source_parameters": {
+    "rest_mV": -52,
+    "threshold_mV": -46,
+    "reset_mV": -58,
+    "leak_uS": 0.4,
+    "capacitance_nF": 2.0,
+    "membrane_tau_s": 0.005,
+    "synaptic_decay_s": 0.01
+  },
+  "source_preserving_rate_contract": {
+    "scope": "Analyticalinput-onlyLIF atsourcebaseline; noMATLABruntimeclaim orwholefamilyFSApass.",
+    "baseline_current_nA": [
+      2.9,
+      3.1,
+      5.2,
+      5.3
+    ],
+    "analytical_rates_hz": [
+      84.715107289687,
+      97.02035753461527,
+      200.2946674837038,
+      204.81109624082106
+    ],
+    "silent_input_upper_nA": 2.4,
+    "role": "Sensorycurrent\u2192spikerate\u2192additivehybridsynapse; lowcurrentdeadbandmustbeaccepted/redesignedexplicitly.",
+    "recipe": "Retainactualresetandderiveexactcurrent\u2194rate law forchosenrange, ORexplicitlydeclare newreset-at-restTable2primitive. Do not silentlyreplaceonewiththeother."
+  },
+  "event_mask_recipes": [
+    {
+      "block": "SEPARATE_MODEL/Exc",
+      "source_primitive": "additive/capped rising-event conductance, not reset-to-peak",
+      "values": {
+        "gmax": 0.12,
+        "ginc": 0.02,
+        "tau_syn": 10.0,
+        "Esyn": 0.0,
+        "ThrPre": -45.0
+      },
+      "mean_current_nA": 1.0,
+      "operating_voltage_mV": -50.0,
+      "event_rate_hz": 100.0,
+      "steady_peak_uS": 0.03163953413738653,
+      "physical_voltage_frame": "absolute mV source Simulink",
+      "adopted": false
+    },
+    {
+      "block": "SEPARATE_MODEL/Inh",
+      "source_primitive": "additive/capped rising-event conductance, not reset-to-peak",
+      "values": {
+        "gmax": 0.12,
+        "ginc": 0.03333333333333333,
+        "tau_syn": 10.0,
+        "Esyn": -80.0,
+        "ThrPre": -45.0
+      },
+      "mean_current_nA": -1.0,
+      "operating_voltage_mV": -50.0,
+      "event_rate_hz": 100.0,
+      "steady_peak_uS": 0.05273255689564421,
+      "physical_voltage_frame": "absolute mV source Simulink",
+      "adopted": false
+    }
+  ],
+  "actual_synaptic_port_evidence": {
+    "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_SYNAPSE_PORT_CHECK_endpoint_and_cap_v2.json",
+    "exists": true,
+    "sha256": "629cb574bd6e0c1c9a7a339171b012e771bddd6546e8d39fb64754e1ad56a5f6"
+  },
+  "appropriate_electrical_block_prerequisites_verified": true,
+  "review_required": "Parent review ofreflex/mechanism scope; no coupled wholebody or adaptation claim.",
+  "appropriate_local_design_checks_verified": true,
+  "body_performance_is_not_design_prerequisite": true,
+  "bilateral_design_accounting": {
+    "evidence": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_BILATERAL_DESIGN_v4.json",
+      "exists": true,
+      "sha256": "653d946e2ce644d94cb03844ef0009ffe5caee16fd9e0039a8ed1e973303fc2b"
+    },
+    "applicable": false,
+    "eligible_edge_pairs": 0,
+    "source_asymmetric_pair_count": 0,
+    "unmatched_right_edges": 0,
+    "ineligible_edges": 0,
+    "source_untouched": true,
+    "blanket_source_symmetry_claim": false,
+    "policy": "Unilateral antagonist primitive/mechanism; flexor/extensor cells are functionally different, not left/right homologues. No bilateral fitting variables exist."
+  }
+}
