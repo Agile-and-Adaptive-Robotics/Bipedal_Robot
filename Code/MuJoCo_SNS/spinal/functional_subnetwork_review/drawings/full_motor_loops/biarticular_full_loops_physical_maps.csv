@@ -1,0 +1,21 @@
+﻿id,source,target,kind,policy,units
+map:MN_rect_fem_l->AD_motor:rect_fem,MN_rect_fem_l,AD_motor:rect_fem,physical_signal,"clip(MN voltage / 5 mV,0,1)",mV to activation
+map:AD_motor:rect_fem->muscle:rect_fem,AD_motor:rect_fem,muscle:rect_fem,physical_signal,native activation and contraction dynamics,activation
+map:muscle:rect_fem->spindle:rect_fem,muscle:rect_fem,spindle:rect_fem,physical_signal,muscle-tendon length and length rate supplied to spindle-proxy encoders,m; m/s
+map:spindle:rect_fem->AD_Ia:rect_fem,spindle:rect_fem,AD_Ia:rect_fem,physical_signal,Ia length-rate encoder; saved AFF/MOD/G gating,m/s
+map:AD_Ia:rect_fem->Ia_rect_fem_l,AD_Ia:rect_fem,Ia_rect_fem_l,physical_signal,saved Ia input injection; weight 1,nA
+map:spindle:rect_fem->AD_II:rect_fem,spindle:rect_fem,AD_II:rect_fem,physical_signal,II length encoder relative to initial standing length; saved gating,m
+map:AD_II:rect_fem->II_rect_fem_l,AD_II:rect_fem,II_rect_fem_l,physical_signal,saved II input injection; weight 1,nA
+map:muscle:rect_fem->tendon:rect_fem,muscle:rect_fem,tendon:rect_fem,physical_signal,abs(native muscle force),N
+map:tendon:rect_fem->AD_Ib:rect_fem,tendon:rect_fem,AD_Ib:rect_fem,physical_signal,Ib force/Fmax encoder; saved AFF/MOD/G gating,N
+map:AD_Ib:rect_fem->Ib_rect_fem_l,AD_Ib:rect_fem,Ib_rect_fem_l,physical_signal,saved Ib input injection; weight 1,nA
+map:MN_semimem_l->AD_motor:semimem,MN_semimem_l,AD_motor:semimem,physical_signal,"clip(MN voltage / 5 mV,0,1)",mV to activation
+map:AD_motor:semimem->muscle:semimem,AD_motor:semimem,muscle:semimem,physical_signal,native activation and contraction dynamics,activation
+map:muscle:semimem->spindle:semimem,muscle:semimem,spindle:semimem,physical_signal,muscle-tendon length and length rate supplied to spindle-proxy encoders,m; m/s
+map:spindle:semimem->AD_Ia:semimem,spindle:semimem,AD_Ia:semimem,physical_signal,Ia length-rate encoder; saved AFF/MOD/G gating,m/s
+map:AD_Ia:semimem->Ia_semimem_l,AD_Ia:semimem,Ia_semimem_l,physical_signal,saved Ia input injection; weight 1,nA
+map:spindle:semimem->AD_II:semimem,spindle:semimem,AD_II:semimem,physical_signal,II length encoder relative to initial standing length; saved gating,m
+map:AD_II:semimem->II_semimem_l,AD_II:semimem,II_semimem_l,physical_signal,saved II input injection; weight 1,nA
+map:muscle:semimem->tendon:semimem,muscle:semimem,tendon:semimem,physical_signal,abs(native muscle force),N
+map:tendon:semimem->AD_Ib:semimem,tendon:semimem,AD_Ib:semimem,physical_signal,Ib force/Fmax encoder; saved AFF/MOD/G gating,N
+map:AD_Ib:semimem->Ib_semimem_l,AD_Ib:semimem,Ib_semimem_l,physical_signal,saved Ib input injection; weight 1,nA

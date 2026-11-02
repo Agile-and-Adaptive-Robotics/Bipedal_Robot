@@ -1,0 +1,21 @@
+﻿id,source,target,kind,policy,units
+map:MN_vas_med_l->AD_motor:vas_med,MN_vas_med_l,AD_motor:vas_med,physical_signal,"clip(MN voltage / 5 mV,0,1)",mV to activation
+map:AD_motor:vas_med->muscle:vas_med,AD_motor:vas_med,muscle:vas_med,physical_signal,native activation and contraction dynamics,activation
+map:muscle:vas_med->spindle:vas_med,muscle:vas_med,spindle:vas_med,physical_signal,muscle-tendon length and length rate supplied to spindle-proxy encoders,m; m/s
+map:spindle:vas_med->AD_Ia:vas_med,spindle:vas_med,AD_Ia:vas_med,physical_signal,Ia length-rate encoder; saved AFF/MOD/G gating,m/s
+map:AD_Ia:vas_med->Ia_vas_med_l,AD_Ia:vas_med,Ia_vas_med_l,physical_signal,saved Ia input injection; weight 1,nA
+map:spindle:vas_med->AD_II:vas_med,spindle:vas_med,AD_II:vas_med,physical_signal,II length encoder relative to initial standing length; saved gating,m
+map:AD_II:vas_med->II_vas_med_l,AD_II:vas_med,II_vas_med_l,physical_signal,saved II input injection; weight 1,nA
+map:muscle:vas_med->tendon:vas_med,muscle:vas_med,tendon:vas_med,physical_signal,abs(native muscle force),N
+map:tendon:vas_med->AD_Ib:vas_med,tendon:vas_med,AD_Ib:vas_med,physical_signal,Ib force/Fmax encoder; saved AFF/MOD/G gating,N
+map:AD_Ib:vas_med->Ib_vas_med_l,AD_Ib:vas_med,Ib_vas_med_l,physical_signal,saved Ib input injection; weight 1,nA
+map:MN_vas_lat_l->AD_motor:vas_lat,MN_vas_lat_l,AD_motor:vas_lat,physical_signal,"clip(MN voltage / 5 mV,0,1)",mV to activation
+map:AD_motor:vas_lat->muscle:vas_lat,AD_motor:vas_lat,muscle:vas_lat,physical_signal,native activation and contraction dynamics,activation
+map:muscle:vas_lat->spindle:vas_lat,muscle:vas_lat,spindle:vas_lat,physical_signal,muscle-tendon length and length rate supplied to spindle-proxy encoders,m; m/s
+map:spindle:vas_lat->AD_Ia:vas_lat,spindle:vas_lat,AD_Ia:vas_lat,physical_signal,Ia length-rate encoder; saved AFF/MOD/G gating,m/s
+map:AD_Ia:vas_lat->Ia_vas_lat_l,AD_Ia:vas_lat,Ia_vas_lat_l,physical_signal,saved Ia input injection; weight 1,nA
+map:spindle:vas_lat->AD_II:vas_lat,spindle:vas_lat,AD_II:vas_lat,physical_signal,II length encoder relative to initial standing length; saved gating,m
+map:AD_II:vas_lat->II_vas_lat_l,AD_II:vas_lat,II_vas_lat_l,physical_signal,saved II input injection; weight 1,nA
+map:muscle:vas_lat->tendon:vas_lat,muscle:vas_lat,tendon:vas_lat,physical_signal,abs(native muscle force),N
+map:tendon:vas_lat->AD_Ib:vas_lat,tendon:vas_lat,AD_Ib:vas_lat,physical_signal,Ib force/Fmax encoder; saved AFF/MOD/G gating,N
+map:AD_Ib:vas_lat->Ib_vas_lat_l,AD_Ib:vas_lat,Ib_vas_lat_l,physical_signal,saved Ib input injection; weight 1,nA
