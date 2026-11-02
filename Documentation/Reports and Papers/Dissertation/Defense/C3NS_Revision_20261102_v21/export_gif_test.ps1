@@ -10,6 +10,7 @@ try {
   foreach($n in ($deck.Slides.Count..1)) {if($n -notin $gifSlides){$deck.Slides.Item($n).Delete()}}
   foreach($s in $deck.Slides){$s.SlideShowTransition.Hidden=0}
   $path=Join-Path $PSScriptRoot 'build/route_gif_native_playback.mp4'
+  if(Test-Path -LiteralPath $path){Remove-Item -LiteralPath $path}
   $deck.CreateVideo($path,$false,12,720,20,80)
   $start=Get-Date
   do {

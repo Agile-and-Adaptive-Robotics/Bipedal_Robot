@@ -135,13 +135,12 @@ export async function apply(h) {
     'The force model accounts for initial length, pressure, and contraction. Experimentally identified design factors improve joint-torque prediction and guide knee designs that meet the selected human targets at measured angles. The neural tools enable inspectable controller construction and repeated, measured body experiments. The third panel shows the selected post-submission guided Gait2392 result: five right/four left qualifying clear unloaded swings, 48.8% BW net vertical assistance, and 115.6 N horizontal guidance. It is not unsupported walking. The contact-strength comparison demonstrates a specific controller-body experiment enabled by the workflow. Mechanical calibration, functional circuit checks, and supported stepping supply complementary evidence. Hardware/dynamic validation and further support reduction remain future work. Sources: dissertation conclusion and '+source+'.',
     'Dissertation contributions · New neural demonstration from the November 2 campaign');
   im(74,T('conclusion_force.png'),30,145,280,235);
-  im(74,T('conclusion_torque.png'),340,155,280,220);
+  im(74,a('mechanics/redesigned_flexor_publication.png'),340,155,280,220);
   im(74,N('ground9_rc_s4/PRESENTATION_STILL.png'),650,132,280,254,{left:.5,top:.1334,right:0,bottom:0});
   tx(74,'Supported Gait2392',650,101,280,30,21,true,GREEN,'center');
   tx(74,'Predict\nBPA force',30,410,280,64,26,true,GREEN,'center');
   tx(74,'Meet selected\nknee-torque targets',340,410,280,64,26,true,GREEN,'center');
   tx(74,'Test neural control\nwith measured support',650,408,280,70,24,true,GREEN,'center');
-  tx(74,'Thank you',390,480,180,30,25,true,GREEN,'center');
 
   let n=newSlide('neural_stage_evidence','The same selected controller passed the first four physical stages',
     scope+'The nominal RC-enabled saved controller passed fresh air stages 1–2, supported standing 3, and supported ground stepping 4. The quarter-strength S5 extension also passes, but its contact-PF scale differs from S4. Full-strength S5 and the next lower-lift rung fail clearance. Physical stage numbers do not identify Hunt A–D calibration operations. The result is a feasible tested candidate, not proof of global optimality or normal walking. Source: '+source+'; ALL_CONTROLLER_DISPOSITION_20261102.md.',
