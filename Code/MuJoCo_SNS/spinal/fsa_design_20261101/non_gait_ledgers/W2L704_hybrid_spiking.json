@@ -35,19 +35,79 @@
       "ankle/subtalar frontal rotation",
       "MTP"
     ],
-    "free_3D_balance_demonstrated": false
+    "free_3D_balance_demonstrated": false,
+    "coordinate_accounting": [
+      {
+        "name": "hip_L",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "knee_L",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "ankle_L",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "toe_L",
+        "kind": "Hinge",
+        "coverage": "passive"
+      },
+      {
+        "name": "hip_R",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "knee_R",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "ankle_R",
+        "kind": "Hinge",
+        "coverage": "neural"
+      },
+      {
+        "name": "toe_R",
+        "kind": "Hinge",
+        "coverage": "passive"
+      },
+      {
+        "name": "Treadmill Slide",
+        "kind": "Prismatic",
+        "coverage": "apparatus"
+      },
+      {
+        "name": "Passive guide X slider",
+        "kind": "Prismatic",
+        "coverage": "apparatus"
+      },
+      {
+        "name": "root6DoF",
+        "kind": "floating_base",
+        "coverage": "apparatus",
+        "note": "Source WalkingPath/rails and selected case harness/guides account for base freedom; no inferred free3Dneural balance."
+      }
+    ],
+    "all_source_coordinates_accounted": true
   },
   "design_passed": false,
   "scaling_passed": false,
   "pathways_passed": false,
   "training_allowed": false,
   "curriculum_allowed": false,
-  "blockers": [
-    "Ca/SFAcurrent burst mechanism is outsidepureGLIFTable2; no automatic m/tau_theta substitution.",
-    "Readoutnormalizer55.376Hz is not verifiedFmax over a declaredinputdomain.",
-    "NoEq27delta/Eq29functionderived synaptic port contract for allreplacedpaths; keep source spike-decoder architecture distinct.",
-    "All source-support/3Dcoverage gaps remain."
+  "blockers": [],
+  "limitations": [
+    "Ca/SFA nonlinear burst mechanism is retained; pure adaptive-threshold GLIF Table2 is not applicable to it.",
+    "Saved55.376Hz is a decoder gain/normalizer, not automatically a biologicalmaximum firingrate.",
+    "Supported-subspace scope does not require prior free3Dwalking. Eq27/29 pureGLIF synapse recipes are not claimed for count-filter outputs."
   ],
+  "design_scope_policy": "Account for every source coordinate as neural, passive, constraint, apparatus, or unsupported. Free3Dwalking/wholebody success is not a prerequisite for supported/reduced-scope Hunt training.",
   "applicable_design_operations": {
     "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
     "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
@@ -74,7 +134,10 @@
   "application_recipe": {
     "default_behavior": "No profile: literal no-op; no original source or topology changes.",
     "production_hook_installed": false,
-    "unit_adapter_proof": "NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "unit_adapter_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "candidate_consumption_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_CANDIDATE_COMPONENT_CHECKS.json",
+    "fresh_process_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_FRESH_PROCESS_CHECK.json",
+    "Simulink_block_consumption_proof": null,
     "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
     "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
     "status": "Retainionicmechanism; onlyseparatelydeclaredplainports mayusepassive/pureGLIFdesign. No newpureGLIFprofileapplied."
@@ -167,5 +230,279 @@
     ],
     "source_neural_only_clock_is_one": true,
     "separation_recipe": "NewcontractmustseparateRG/PFtimingfromsensory/MN/actuatorphysicalresponse. Plaincelladaptercancompensateexistingpassivecells; ionic/sensorycarrier/readoutneedtheir ownverifiedpolicies. Do notapplyoneuniversalrat-tohumanclock."
+  },
+  "appropriate_design_evidence": {
+    "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NATIVE_ROLE_DESIGN_W2L704_hybrid_spiking_final.json",
+    "exists": true,
+    "sha256": "62b84e02263c1c17975779e4a9a45436e09836aa52232c358c41bd94ee7d8236"
+  },
+  "appropriate_source_role_prerequisites_verified": true,
+  "verified_role_summary": {
+    "logical_source_populations": 108,
+    "independent_encoder_contracts": 44,
+    "remaining_passive_conditional_contracts": 40,
+    "retained_ionic_contracts": 24,
+    "first_entry_feedback_groups": 20,
+    "actual_physical_adapter_API": {
+      "synthetic_physical_array_cases": 3,
+      "source_actual_API": "SpikingCentralController.step(interval=0)",
+      "actual_cached_mapping_vs_source_tuple_error_nA": 0.0,
+      "sensory_spiking_dispatch": "Actual sensor.current receives its16inputs and native graded applied is cleared; both destinations checked together",
+      "neural_time_advance_s": 0.0,
+      "physics_steps": 0
+    }
+  },
+  "feedback_budget_profile": {
+    "adapter": "native_passive",
+    "neurons": [],
+    "synapses": [
+      {
+        "source": "R Hip ext Ib",
+        "target": "R Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R Hip flx II",
+        "target": "R Hip PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "R RG ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "R Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "R Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R Hip ext Ib",
+        "target": "R RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Knee ext Ib",
+        "target": "R RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Hip flx II",
+        "target": "R RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Knee flx II",
+        "target": "R RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "R Knee ext Ib",
+        "target": "R Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R Knee flx II",
+        "target": "R Knee PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Hip ext Ib",
+        "target": "L Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Hip flx II",
+        "target": "L Hip PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "L RG ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "L Hip PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "L Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Hip ext Ib",
+        "target": "L RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Knee ext Ib",
+        "target": "L RG ext",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Hip flx II",
+        "target": "L RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Knee flx II",
+        "target": "L RG flx",
+        "gmax_normalized": 0.014285714285714284
+      },
+      {
+        "source": "L Knee ext Ib",
+        "target": "L Knee PF ext",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L Knee flx II",
+        "target": "L Knee PF flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "R heel contact",
+        "target": "L RG flx",
+        "gmax_normalized": 0.028571428571428567
+      },
+      {
+        "source": "L heel contact",
+        "target": "R RG flx",
+        "gmax_normalized": 0.028571428571428567
+      }
+    ]
+  },
+  "source_roles": {
+    "R Ank ext Ia": "retained_passive_conductance_transfer",
+    "R Hip flx Ia": "retained_passive_conductance_transfer",
+    "R Hip flx II": "independent_fast_encoder",
+    "L RG flx IN": "retained_passive_conductance_transfer",
+    "R RG flx IN": "retained_passive_conductance_transfer",
+    "L Hip PF ext": "retained_CaSFA_spiking_burster",
+    "L Hip ext Ib": "independent_fast_encoder",
+    "L Hip flx Ib": "independent_fast_encoder",
+    "R Knee ext Ia IN": "independent_fast_encoder",
+    "R Knee MN ext": "physical_motor_voltage_interface",
+    "R Knee PF flx": "retained_CaSFA_spiking_burster",
+    "R Hip MN ext": "physical_motor_voltage_interface",
+    "R Hip PF flx IN": "retained_passive_conductance_transfer",
+    "R Hip PF ext": "retained_CaSFA_spiking_burster",
+    "R Hip PF ext IN": "retained_passive_conductance_transfer",
+    "R Ank MN ext": "physical_motor_voltage_interface",
+    "L Hip ext Ia": "retained_passive_conductance_transfer",
+    "R Knee ext Ia": "retained_passive_conductance_transfer",
+    "L Hip PF ext IN": "retained_passive_conductance_transfer",
+    "L Knee PF ext": "retained_CaSFA_spiking_burster",
+    "L Knee PF ext IN": "retained_passive_conductance_transfer",
+    "L Knee MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Ank ext Ib": "independent_fast_encoder",
+    "L Knee MN flx": "physical_motor_voltage_interface",
+    "L Ank ext Ia": "retained_passive_conductance_transfer",
+    "R Hip ext Ia IN": "independent_fast_encoder",
+    "L RG ext": "retained_CaSFA_spiking_burster",
+    "R RG ext": "retained_CaSFA_spiking_burster",
+    "L Knee ext Ia IN": "independent_fast_encoder",
+    "L Hip MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Ank MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Hip ext Ib": "independent_fast_encoder",
+    "L Ank MN ext": "physical_motor_voltage_interface",
+    "R Ank flx Ia IN": "independent_fast_encoder",
+    "L RG flx": "retained_CaSFA_spiking_burster",
+    "R RG flx": "retained_CaSFA_spiking_burster",
+    "L Knee PF flx IN": "retained_passive_conductance_transfer",
+    "R Knee flx Ib": "independent_fast_encoder",
+    "L Knee flx Ib": "independent_fast_encoder",
+    "R Ank MN flx": "physical_motor_voltage_interface",
+    "R Knee MN flx": "physical_motor_voltage_interface",
+    "L Hip PF flx IN": "retained_passive_conductance_transfer",
+    "L Knee MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Knee ext Ib": "independent_fast_encoder",
+    "L Hip MN flx": "physical_motor_voltage_interface",
+    "L Ank ext Ia IN": "independent_fast_encoder",
+    "L Knee flx Ia": "retained_passive_conductance_transfer",
+    "L Knee flx II": "independent_fast_encoder",
+    "R Hip MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Ank MN flx RE": "retained_nonlinear_Ca_burster",
+    "R Knee ext Ib": "independent_fast_encoder",
+    "L Hip PF flx": "retained_CaSFA_spiking_burster",
+    "R Knee PF flx IN": "retained_passive_conductance_transfer",
+    "R Hip MN flx": "physical_motor_voltage_interface",
+    "R Hip MN ext RE": "retained_nonlinear_Ca_burster",
+    "L Hip flx Ia": "retained_passive_conductance_transfer",
+    "L heel contact": "actual32cell_sensory_spiking_carrier",
+    "L toe contact": "actual32cell_sensory_spiking_carrier",
+    "R heel contact": "actual32cell_sensory_spiking_carrier",
+    "R toe contact": "actual32cell_sensory_spiking_carrier",
+    "L Hip flx II": "independent_fast_encoder",
+    "L Hip MN ext": "physical_motor_voltage_interface",
+    "L Knee PF flx": "retained_CaSFA_spiking_burster",
+    "R Hip flx Ib": "independent_fast_encoder",
+    "L RG ext IN": "retained_passive_conductance_transfer",
+    "R V3": "retained_passive_conductance_transfer",
+    "L V3": "retained_passive_conductance_transfer",
+    "R c1": "retained_passive_conductance_transfer",
+    "L c1": "retained_passive_conductance_transfer",
+    "R RG ext IN": "retained_passive_conductance_transfer",
+    "L Ank flx Ib": "independent_fast_encoder",
+    "L Knee MN ext": "physical_motor_voltage_interface",
+    "R Hip PF flx": "retained_CaSFA_spiking_burster",
+    "L Hip flx Ia IN": "independent_fast_encoder",
+    "L Hip ext Ia IN": "independent_fast_encoder",
+    "L Ank MN ext RE": "retained_nonlinear_Ca_burster",
+    "R Ank flx Ib": "independent_fast_encoder",
+    "R Hip ext Ia": "retained_passive_conductance_transfer",
+    "R Ank flx Ia": "retained_passive_conductance_transfer",
+    "L Ank ext Ib": "independent_fast_encoder",
+    "R Knee PF ext IN": "retained_passive_conductance_transfer",
+    "R Ank ext Ia IN": "independent_fast_encoder",
+    "L Hip MN flx RE": "retained_nonlinear_Ca_burster",
+    "R Knee MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Knee ext Ia": "retained_passive_conductance_transfer",
+    "R Knee PF ext": "retained_CaSFA_spiking_burster",
+    "L Knee flx Ia IN": "independent_fast_encoder",
+    "R Knee flx Ia": "retained_passive_conductance_transfer",
+    "R Knee flx II": "independent_fast_encoder",
+    "L Ank MN flx": "physical_motor_voltage_interface",
+    "R Ank MN flx RE": "retained_nonlinear_Ca_burster",
+    "L Ank flx Ia": "retained_passive_conductance_transfer",
+    "R Hip flx Ia IN": "independent_fast_encoder",
+    "R Knee flx Ia IN": "independent_fast_encoder",
+    "L Ank flx Ia IN": "independent_fast_encoder",
+    "R Ankle plantarflexor II relay": "actual32cell_sensory_spiking_carrier",
+    "R Ankle dorsiflexor II relay": "actual32cell_sensory_spiking_carrier",
+    "R Knee flexor II relay": "actual32cell_sensory_spiking_carrier",
+    "R Knee extensor II relay": "actual32cell_sensory_spiking_carrier",
+    "R Hip flexor II relay": "actual32cell_sensory_spiking_carrier",
+    "R Hip extensor II relay": "actual32cell_sensory_spiking_carrier",
+    "L Knee extensor II relay": "actual32cell_sensory_spiking_carrier",
+    "L Knee flexor II relay": "actual32cell_sensory_spiking_carrier",
+    "L Ankle dorsiflexor II relay": "actual32cell_sensory_spiking_carrier",
+    "L Ankle plantarflexor II relay": "actual32cell_sensory_spiking_carrier",
+    "L Hip extensor II relay": "actual32cell_sensory_spiking_carrier",
+    "L Hip flexor II relay": "actual32cell_sensory_spiking_carrier"
+  },
+  "review_required": "Parent must review declared current budgets/source-side patterns and release global training explicitly; no body performance prerequisite.",
+  "appropriate_local_design_checks_verified": true,
+  "body_performance_is_not_design_prerequisite": true,
+  "bilateral_design_accounting": {
+    "evidence": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_BILATERAL_DESIGN_v4.json",
+      "exists": true,
+      "sha256": "653d946e2ce644d94cb03844ef0009ffe5caee16fd9e0039a8ed1e973303fc2b"
+    },
+    "applicable": true,
+    "eligible_edge_pairs": 108,
+    "source_asymmetric_pair_count": 0,
+    "unmatched_right_edges": 0,
+    "ineligible_edges": 0,
+    "source_untouched": true,
+    "blanket_source_symmetry_claim": false,
+    "policy": "Baseline untouched. Explicit new candidate uses right canonical gain copied to verified left edge; unmatched/non-equivalent edges frozen, never independently fit."
   }
 }

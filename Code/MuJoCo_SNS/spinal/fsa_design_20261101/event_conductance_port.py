@@ -8,15 +8,26 @@ Host neurons retain their existing update method, including graded ion gates.
 """
 import copy,json,math,hashlib
 import numpy as np
-from table2_glif import ActivationDomain,derive_neuron,derive_synapse
-from graded_profile import assert_campaign_allowed
+if __package__:
+    from .table2_glif import ActivationDomain,derive_neuron,derive_synapse
+    from .graded_profile import assert_campaign_allowed,field_digest,population_names
+else:
+    from table2_glif import ActivationDomain,derive_neuron,derive_synapse
+    from graded_profile import assert_campaign_allowed,field_digest,population_names
 
 class EventConductanceInputPort:
     def __init__(self,compiled,names,input_names,*,input_max_nA=1.,fmax_hz=500.,range_mV=20.,theta0_mV=1.,delta=.01,cells=16,enabled=True,outgoing_off=False):
         assert_campaign_allowed('unit_and_individual_pathway_probes')
-        from sparse_pairwise_eval import SparsePairwiseForward
+        try:from sparse_pairwise_eval import SparsePairwiseForward
+        except ModuleNotFoundError as e:
+            if e.name!='sparse_pairwise_eval':raise
+            from w2l_cpg.sparse_pairwise_eval import SparsePairwiseForward
+        if not input_names or len(set(input_names))!=len(input_names):raise ValueError('Nonempty unique input names required')
+        if not isinstance(enabled,bool) or not isinstance(outgoing_off,bool):raise ValueError('Port switches must be explicit booleans')
+        if isinstance(cells,bool) or not math.isfinite(cells) or int(cells)!=cells:raise ValueError('Cell count must be an integer')
         raw=getattr(compiled,'c',compiled);self.names=list(names);self.indices=np.array([names.index(n) for n in input_names]);self.enabled=enabled;self.outgoing_off=outgoing_off;self.input_max=float(input_max_nA);self.dt=float(raw.dt);self.N=int(cells);self.time=0.;self.events=[];self.peaks=[];self.edge_specs=[];self.ports=[]
-        if self.input_max<=0 or self.N<1:raise ValueError('Positive declared current domain/population required')
+        if not math.isfinite(self.input_max) or self.input_max<=0 or self.N<1:raise ValueError('Positive finite declared current domain/population required')
+        if not 0<delta<1:raise ValueError('delta must lie strictly between0 and1')
         self.activation=ActivationDomain(fmax_hz,range_mV,theta0_mV);self.design=derive_neuron(self.activation,0.,1.,.01);self.U=np.tile(np.linspace(0,theta0_mV,self.N,endpoint=False),(len(self.indices),1));self.total_counts=np.zeros(len(self.indices),dtype=np.int64)
         modified=copy.deepcopy(raw)
         for p,i in enumerate(self.indices):
@@ -27,17 +38,19 @@ class EventConductanceInputPort:
             self.ports.append((int(ports[0]),float(raw.input_connectivity[i,ports[0]])))
             full_voltage=self.input_max/raw.g_m[i]
             for post in np.flatnonzero(raw.g_max_non[:,i]):
+                if abs(raw.e_lo[post,i])>1e-12 or full_voltage>raw.e_hi[post,i]+1e-12 or raw.e_hi[post,i]<=0:raise ValueError('Declared source domain must have zero-origin unsaturated linear outgoing activation; nonzero thresholds/saturation require a separately derived encoder')
                 fraction=float(np.clip((full_voltage-raw.e_lo[post,i])/(raw.e_hi[post,i]-raw.e_lo[post,i]),0,1));mean=float(raw.g_max_non[post,i]*fraction)
-                s=derive_synapse(self.activation,1.,0.,float(raw.del_e[post,i]),delta)
-                peak=mean/(s.tau_s*fmax_hz*(1-s.actual_delta_at_fmax));self.peaks.append(peak);self.edge_specs.append((p,int(post),float(raw.del_e[post,i]),s.tau_s,mean))
+                tau=-1/(fmax_hz*math.log(delta));actual=math.exp(-1/(tau*fmax_hz))
+                peak=mean/(tau*fmax_hz*(1-actual));self.peaks.append(peak);self.edge_specs.append((p,int(post),float(raw.del_e[post,i]),tau,mean))
             if enabled:modified.g_max_non[:,i]=0.
         self.inner=SparsePairwiseForward(modified);self.gstate=np.zeros((len(self.edge_specs),self.N));self.gs=np.zeros(len(raw.V));self.ge=np.zeros(len(raw.V));self.counts=np.zeros(len(self.indices),dtype=np.int64)
         self.policy=dict(input_names=input_names,input_max_nA=input_max_nA,fmax_physical_hz=fmax_hz,range_mV=range_mV,theta0_mV=theta0_mV,delta=delta,cells=cells,enabled=enabled,outgoing_off=outgoing_off,clock='Physical seconds only; no global neural clock/cadence multiplier',target='Match each copied graded edge mean conductance at the declared physical-input maximum; Eq28 event reset/decay, not Eq29 spiking receiver correction',scope='New graded FSA profile plus pure-input spiking port; graded RG/PF/MN retained. Not the old standing winner or a fully Table2-verified controller.')
         self.parameter_hash=self._parameter_hash()
     def __getattr__(self,name):return getattr(self.inner,name)
     def _parameter_hash(self):
-        h=hashlib.sha256()
-        for key in ('c_m','g_m','V_rest','i_b','time_factor_membrane','g_max_non','del_e','e_lo','e_hi','input_connectivity'):h.update(np.ascontiguousarray(getattr(self.inner.c,key)).tobytes())
+        h=hashlib.sha256(field_digest(self.inner.c).encode())
+        for v in (self.indices,self.ports,self.peaks,self.edge_specs,[self.input_max,self.dt,self.N,self.activation.fmax_hz,self.activation.range_mV,self.activation.theta0_mV]):h.update(np.ascontiguousarray(v,dtype=float).tobytes())
+        h.update(json.dumps(self.policy,sort_keys=True).encode())
         return h.hexdigest()
     def verify_consumption(self):
         if self._parameter_hash()!=self.parameter_hash:raise ValueError('Underlying weights/parameters changed after event-port design; rebuild from the final intended profile')
@@ -61,7 +74,7 @@ class EventConductanceInputPort:
         if not self.enabled:return self.inner.forward(x)
         if np.any(self.inner.c.g_max_non[:,self.indices]):raise ValueError('A replaced graded axon was reintroduced; no hidden graded carrier allowed')
         physical=np.array([np.asarray(x)[port]*weight for port,weight in self.ports]);fraction=physical/self.input_max
-        if np.any(fraction<0) or np.any(fraction>1+1e-12):raise ValueError('Actual physical-input current exceeds declared design range; no silent clamp')
+        if not np.isfinite(fraction).all() or np.any(fraction<0) or np.any(fraction>1+1e-12):raise ValueError('Actual physical-input current exceeds declared design range; no silent clamp')
         events=self._events(fraction*self.activation.range_mV);self.gs[:]=0.;self.ge[:]=0.;self.counts[:]=0
         for p,e in enumerate(events):self.counts[p]=sum(len(t) for t in e)
         for k,(p,post,rev,tau,mean) in enumerate(self.edge_specs):
@@ -83,6 +96,7 @@ class EventConductanceInputPort:
         for key in ('last_voltage','input_values','i_app','output_values','sums','acc','values'):state['sparse_'+key]=getattr(self.inner,key).copy()
         return state
     def import_state(self,state):
+        self.verify_consumption()
         if str(state['policy'])!=json.dumps(self.policy,sort_keys=True):raise ValueError('Port policy mismatch')
         self.time=float(state['time']);self.events=[tuple(v) for v in state['events']]
         for key in ('U','gstate','gs','ge','counts','total_counts'):np.copyto(getattr(self,key),state[key])
@@ -91,3 +105,41 @@ class EventConductanceInputPort:
         for key in ('last_voltage','input_values','i_app','output_values','sums','acc','values'):np.copyto(getattr(self.inner,key),state['sparse_'+key])
         self.inner.c.V_last=self.inner.last_voltage
         if self.inner.output_onehot:self.inner.c.outputs=self.inner.output_values
+
+PORT_SCHEMA='aarl_exact_event_input_conductance_port_v1'
+
+def steady_carrier_fraction(x,range_mV=20.,theta0_mV=1.,delta=.01):
+    """Exact steady event-reset conductance / declared full-input target.
+
+    Requires m0, Table2 bias, and zero-origin unsaturated source activation.
+    From log(1+z)<=z and log((a+.5)/(a-.5))>=1/a:
+    max(0,x-theta/(2R))<=f/Fmax<=x. Thus meanG error is bounded
+    below by -theta/(2R), above by delta/(1-delta), in full-scale units.
+    This DC bound does not establish small-signal transient bandwidth.
+    """
+    if not 0<=x<=1 or not 0<delta<1 or not 0<theta0_mV<range_mV:raise ValueError('Invalid steady carrier domain')
+    a=range_mV*x/theta0_mV
+    if a<=.5:return 0.
+    r=(theta0_mV/range_mV)/math.log((a+.5)/(a-.5))
+    return r*(-math.expm1(math.log(delta)/r))/(1-delta)
+
+def default_port_profile(family,all_afferents=False):
+    if family not in ('s3k','w2lvar','syn6'):raise ValueError('Unsupported actual Gait family')
+    classes=('Ia','II','Ib') if all_afferents else ('Ia',)
+    return dict(schema=PORT_SCHEMA,family=family,input_names=[k+'_soleus_'+s for k in classes for s in ('r','l')],input_max_nA=1.,fmax_hz=500.,range_mV=20.,theta0_mV=1.,delta=.01,cells=16,enabled=True,outgoing_off=False)
+
+def install_port_profile(spinal,profile,*,family):
+    """Explicit opt-in through the actual compiled/step API, design-only.
+
+    Source is copied after the final intended graded profile/projection. This
+    function does not authorize physical runs or release the all-family gate.
+    """
+    assert_campaign_allowed('optional_profile_implementation')
+    required=set(default_port_profile(family))
+    if set(profile)!=required:raise ValueError('Missing/unused event-port profile keys: '+str(set(profile)^required))
+    if profile['schema']!=PORT_SCHEMA or profile['family']!=family:raise ValueError('Port schema/family mismatch')
+    args={k:v for k,v in profile.items() if k not in ('schema','family')};names=population_names(spinal);old=spinal.compiled
+    port=EventConductanceInputPort(old,names,**args);spinal.compiled=port
+    spinal.fsa_spiking_port_profile=copy.deepcopy(profile)
+    spinal.fsa_spiking_port_ledger=dict(schema=PORT_SCHEMA,family=family,design_only=True,training_allowed=False,source_compiled_digest=field_digest(getattr(old,'c',old)),replacement_parameter_hash=port.parameter_hash,source_indices=port.indices.tolist(),source_names=profile['input_names'],actual_spiking_cells=port.N*len(port.indices) if port.enabled else 0,remaining_graded_cells=len(names)-len(port.indices) if port.enabled else len(names),consumption=port.verify_consumption())
+    return port

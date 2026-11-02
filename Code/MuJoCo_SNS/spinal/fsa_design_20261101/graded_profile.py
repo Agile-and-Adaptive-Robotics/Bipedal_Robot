@@ -271,11 +271,18 @@ def probe_encoder(spinal):
         H=(1-a)*np.exp(-1j*theta)/(1-a*np.exp(-1j*theta));predicted_phase=-float(np.angle(H))*180/math.pi
         if abs(measured_phase-predicted_phase)>1e-9:raise AssertionError('Discrete encoder phase mismatch')
         results.append(dict(frequency_Hz=frequency,measured_phase_deg=measured_phase,predicted_phase_deg=predicted_phase,measured_gain_mV_per_nA=float(np.hypot(fit[1],fit[2])/.5),input_range_nA=[min(inputs),max(inputs)],output_range_mV=[min(observed),max(observed)],additional_input_sample_age_0_to_dt_phase_deg=[0.,360*frequency*c.dt]))
+    steps=[]
+    for current in (0.,1.,2.,5.,20.):
+        tiny.V[:]=0.
+        for k in range(300):tiny.forward([current])
+        expected=current/c.g_m[i]
+        if abs(tiny.V[0]-expected)>1e-11:raise AssertionError('Encoder unit-current steady response mismatch')
+        steps.append(dict(input_nA=current,measured_voltage_mV=float(tiny.V[0]),outgoing_fraction=float(np.clip(tiny.V[0]/5,0,1))))
     pulse=[];tiny.V[:]=0.
     for step in range(75):
         current=20. if 10<=step<25 else 0.;tiny.forward([current]);pulse.append([float((step+1)*c.dt),current,float(tiny.V[0]),float(np.clip(tiny.V[0]/5,0,1))])
     release=[v for v in pulse if v[0]>.05 and v[2]<=5]
-    return dict(source='Actual SNS-Toolbox isolated encoder,1500 steps/frequency',results=results,
+    return dict(source='Actual SNS-Toolbox isolated encoder,1500 steps/frequency',results=results,steady_step_checks=steps,
         out_of_range_pulse=dict(current_nA=20.,current_clipped=False,voltage_peak_mV=max(v[2] for v in pulse),outgoing_fraction_peak=max(v[3] for v in pulse),first_post_release_voltage_below5_mV_s=release[0][0] if release else None,release_time_s=.05,trace=pulse),
         engineering_domain_verified=True,absolute_physical_maximum_inferred=False)
 

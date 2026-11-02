@@ -64,7 +64,7 @@ Control-coverage verification is now required for every family in CAMPAIGN_GATE.
 
 ### Static check of the existing syn6 basis
 
-The read-only diagnostic `syn6_torque_span.py` evaluated four postures (0%,25%,50%, and75%) from the existing walking-angle cache. It used the actual native MuJoCo active-force derivative, equality-aware anatomical moment arms, and the unchanged K6 NMF basis. At every posture, the full92-muscle map had numerical rank17; the86muscles represented by the basis also had rank17; projecting through the12bilateral primitive inputs gave rank12.
+The read-only diagnostic `syn6_torque_span.py` evaluated four postures (0%,25%,50%, and75%) from the existing walking-angle cache. It used the **raw, unpatched CVT3 model**, its native MuJoCo active-force derivative, equality-aware anatomical moment arms, and the unchanged K6 NMF basis. At every posture, the full92-muscle map had numerical rank17; the86muscles represented by the basis also had rank17; projecting through the12bilateral primitive inputs gave rank12. Runtime hip-axis, force, and other mechanical patches were not applied in this diagnostic; it is not a rank calculation of the final patched standing controller/model.
 
 This identifies a real reduction in independent instantaneous torque directions for that fixed activation basis. It does not mean the complete syn6 controller has only12control inputs: its additional reflex and posture pathways must be evaluated separately, and its conductance-based input/output function is not literally the NMF reconstruction. It also does not mean17independent primitive channels are necessary for a coordinated gait. Contact, passive dynamics, feedback, and the requested task determine what is sufficient.
 

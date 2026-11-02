@@ -8678,3 +8678,18 @@ Live Ch. 6 now has 6.1 compact AnimatLab motivation, 6.2 compact gap/framing, an
 ## Session 1 — stop after missed subnetwork deadline
 
 Ben said "too late". Stopped the refinement and interrupted the W2L figure agent. No refined subnetwork figure or caption was uploaded in this last pass. The promised readability requirement remains incomplete. Draft locations and current live status: Documentation\Reports and Papers\Dissertation\Notes\sns_rebuild_session1_20261030\SESSION1_STOP_RECORD.md.
+
+## Session 1 — all-controller FSA design checkpoint, 2026-11-01
+
+Ben returned; the hourly research automation remains paused. Current priority supersedes the earlier W2L-only pickup: apply appropriate functional design, units/scaling, individual pathway checks, and control coverage to ALL active families before new Hunt training or curriculum runs. No manuscript/Overleaf edits, new body trials, or NMF refitting in this design pass. ZCode owns K8; K6 is preserved.
+
+Primary pickup: D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_design_20261101\EXPERIMENT_RECORD.md. Exact saved-condition designations and manifests: same folder AUDIT_ANCHORS.md. All-family prerequisite remains closed in CAMPAIGN_GATE.json; component electrical passes do not release training. Optional work includes graded local functional profiles, Hunt's missing II-path correction, canonical-right syn6 mirroring, central afferent budgets, actual Ib/phase coincidence, physical-domain spiking ports, and a default-off inherited-damping repair. Raw records live under D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design and fsa_design_20261101. Negative and historical results are preserved.
+
+Committee-facing answers: DEFENSE_DESIGN_DECISIONS.md and MODEL_DIMENSION_AND_CONTROL.md in that folder. Other-machine schematic prompt: D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\FUNCTIONAL_SUBNETWORK_OTHER_MACHINE_PROMPT.md. Laptop CAD repair prompt: fsa_design_20261101\LAPTOP_CAD_SIMSCAPE_REPAIR_HANDOFF.md. Editor legacy entries are hidden by default; user drawings/localStorage were not changed.
+## Session 1 — dissertation-first wiring review and approval hold, 2026-11-01
+
+Current pickup: Code\MuJoCo_SNS\spinal\fsa_design_20261101\DISSERTATION_FIRST_PASS_FIX.md, DISSERTATION_MODEL_MAP.md, and separate EXPERIMENT_RECORD.md. Numerical FSA/operator/unit/cache checks passed their declared scopes, but full intended circuit wiring has NOT passed. Exact EB475WS4 standing ledgers are byte-identical to easteregg2: s3k/Syn6 have0directIa/II/Ib→central edges; W2L has152/152/216. Syn6 hardwires heel excitation to both ipsilateral RG inhibitory relays; silent standing contact inputs did not validate that reset logic. Source/default/condition audit: GAIT_TOPOLOGY_SOURCE_REVIEW.md and ROUTE_BUILDER_EXPORT_CHECK.md. Optional corrective neural policies are being prepared separately; historical models/exports unchanged.
+
+Submitted rat is the public120-neuron precursor, not the later134 prototype. New bilateral-biarticular122 electrical candidate retains/mirrors left integration and passes scoped fresh checks. Rat134 is a unilateral diagnostic prototype with mislabeled sensory modalities and disabled physical outputs; not adopted or passed for training. Preserve its diagnostic evidence, do not silently promote it.
+
+Ben explicitly requires his OK before Hunt/Szczecinski fitting or any curriculum. Compliant tendons, joint damping changes, and muscle damping changes each need separate OK. No such physics option is enabled. No manuscript/Overleaf edits or new body simulations in this review. The historical tendon_damping_physics worker currently performs neural pathway composition only.

@@ -1,4 +1,6 @@
-# Named conditions for the all-controller audit
+# Saved research reference conditions
+
+**These are current research references, not the dissertation submission's model list.** See `DISSERTATION_MODEL_MAP.md` for the submitted implementations and their priority. In particular, the submitted public rat precursor has 120 neurons; Rat134 is a later curated variant. The filename is retained so existing links continue to work.
 
 Session 1 designation, **easteregg2**, 2026-11-01. These are audit anchors, not a claim that every anchor has completed Hunt training or locomotion. Do not select a folder by modification time or combine parameters across versions. Preserve the saved source/configuration and its own acceptance criteria. A new FSA design is a separately named opt-in condition.
 
@@ -37,7 +39,7 @@ Trial3 passes the nominal four-RG-cell gate but fails both cadence and both ampl
 - File manifest: `D:\Users\Ben Bolen\NeuroCampaign_20261031\spiking\Gait_dynamic_readout_v4\FILE_MANIFEST.json`
 - Record: `D:\Users\Ben Bolen\NeuroCampaign_20261031\spiking\Gait_dynamic_readout_v4\EXPERIMENT_RECORD.md`
 
-Controller class: `TimingZeroSFA`. Parameters: `rg_adapt_jump_nA=0`, `rg_readout_C_rate=5`, `pf_rate_scale=1`, `rg_h_tau_scale=0.9496883348174533`; 16 cells per central population, 0.2 ms internal spiking step, 2 ms neural/physics interval, and 25 ms spike-history constant. Census: 256 central spiking cells and 778 graded cells. This named condition completed the recorded supported-standing protocol (0.6 s pinned preparation plus 7.4 s integration), with 82 arrays exact in a fresh process. Its measured mean upward support was 0.5937% BW, while lateral and rotational guidance remained.
+Controller class: `TimingZeroSFA`. Parameters: `rg_adapt_jump_nA=0`, `rg_readout_C_rate=5`, `pf_rate_scale=1`, `rg_h_tau_scale=0.9496883348174533`; 16 cells per central population, 0.2 ms internal spiking step, 2 ms neural/physics interval, and 25 ms spike-history constant. Census: 256 central spiking cells and 778 graded cells. This named condition completed the recorded supported-standing protocol (0.6 s pinned preparation plus 7.4 s integration), with 82 arrays exact in a fresh process. Its recorded mean upward support was 0.5937% BW, while lateral and rotational guidance remained. A separate denominator audit excludes 0.1 kg of fixed ground mass: the same saved support force is **0.5944% of the 78.3646 kg moving model's weight**. This changes no trajectory, raw result, or acceptance decision. Correction record: `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design\GAIT_V4_SUPPORT_MASS_CORRECTION.json`.
 
 `TIMING_CANDIDATE.json` is a frozen numerical artifact; its original pending metadata is superseded by `CENTRAL_CHECKPOINT.json` and `PHYSICAL_CHECKPOINT.json`. Do not edit the frozen configuration just to synchronize its descriptive status.
 

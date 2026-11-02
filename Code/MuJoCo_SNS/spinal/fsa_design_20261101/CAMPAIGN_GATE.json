@@ -3,7 +3,15 @@
   "machine": "easteregg2",
   "repository": "D:\\GitHub\\Bipedal_Robot",
   "phase": "design_and_user_handoff",
-  "design_priority": ["Gait2392", "other_active_controller_families"],
+  "user_training_approval": {
+    "approved": false,
+    "instruction": "Pending: Ben explicitly requires his OK after the design review, 2026-11-01."
+  },
+  "priority": "Controllers documented in the submitted dissertation, then other active variants",
+  "design_priority": [
+    "Gait2392",
+    "other_active_controller_families"
+  ],
   "all_families_required_before_training": true,
   "training_allowed": false,
   "curriculum_allowed": false,
@@ -12,8 +20,18 @@
   "all_family_pathways_verified": false,
   "all_family_control_coverage_verified": false,
   "family_evidence": {},
-  "allowed_during_design": ["source_audit", "analytical_derivation", "optional_profile_implementation", "unit_and_individual_pathway_probes", "schematic_validation"],
-  "forbidden_before_gate": ["Hunt_parameter_training", "curriculum_simulation", "whole_body_optimization"],
+  "allowed_during_design": [
+    "source_audit",
+    "analytical_derivation",
+    "optional_profile_implementation",
+    "unit_and_individual_pathway_probes",
+    "schematic_validation"
+  ],
+  "forbidden_before_gate": [
+    "Hunt_parameter_training",
+    "curriculum_simulation",
+    "whole_body_optimization"
+  ],
   "required_families": [
     "Gait2392_s3k_graded",
     "Gait2392_w2lvar_graded",
@@ -29,10 +47,31 @@
     "CAD262_hybrid_and_neural_pressure_pair",
     "SNS_Simscape_graded_reflexes",
     "SNS_Simscape_spiking_reflexes",
-    "reduced_Deng14"
+    "reduced_Deng14",
+    "public_rat120_precursor",
+    "reduced_Rybak_two_level"
   ],
-  "excluded_legacy": ["walker_v9", "walker_v10", "superseded_pruned_and_failed_snapshots"],
+  "excluded_legacy": [
+    "walker_v9",
+    "walker_v10",
+    "superseded_pruned_and_failed_snapshots"
+  ],
   "preserve_baselines": true,
   "ZCode_K8_study_owned_elsewhere": true,
-  "notes": "False until per-family evidence is reviewed. No family inherits a pass merely from sharing a builder or successful old simulation. Legacy records remain preserved but are not queued for redesign."
+  "notes": "False until per-family evidence is reviewed. No family inherits a pass merely from sharing a builder or successful old simulation. Legacy records remain preserved but are not queued for redesign.",
+  "optional_physics_changes": {
+    "compliant_tendons": {
+      "default_enabled": false,
+      "approved": false
+    },
+    "joint_damping_changes": {
+      "default_enabled": false,
+      "approved": false
+    },
+    "muscle_damping_changes": {
+      "default_enabled": false,
+      "approved": false
+    }
+  },
+  "physics_policy": "Reference mechanics unchanged; each optional physics change requires Ben's separate OK."
 }

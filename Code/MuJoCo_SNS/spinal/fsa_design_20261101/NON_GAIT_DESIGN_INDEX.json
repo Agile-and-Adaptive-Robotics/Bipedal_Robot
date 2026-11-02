@@ -3,11 +3,12 @@
   "covered_global_families": [
     "W2L108_graded",
     "W2L704_hybrid_spiking",
-    "rat134_GA_receptor_variant",
     "CAD262_hybrid_and_neural_pressure_pair",
     "SNS_Simscape_graded_reflexes",
     "SNS_Simscape_spiking_reflexes",
-    "reduced_Deng14"
+    "reduced_Deng14",
+    "public_rat120_precursor",
+    "reduced_Rybak_two_level"
   ],
   "ledgers": [
     {
@@ -16,7 +17,9 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
-      "blocker_count": 3
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
     },
     {
       "family": "rat134_GA_receptor_variant",
@@ -24,6 +27,8 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
+      "appropriate_local_design_checks_verified": false,
+      "global_review_pending": true,
       "blocker_count": 3
     },
     {
@@ -32,7 +37,9 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
-      "blocker_count": 3
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
     },
     {
       "family": "CAD262_MN_pressure_pair",
@@ -40,7 +47,9 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
-      "blocker_count": 5
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
     },
     {
       "family": "W2L704_hybrid_spiking",
@@ -48,7 +57,9 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
-      "blocker_count": 4
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
     },
     {
       "family": "SNS_Simscape_graded_reflexes",
@@ -56,7 +67,9 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
-      "blocker_count": 5
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
     },
     {
       "family": "SNS_Simscape_spiking_reflexes",
@@ -64,7 +77,9 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
-      "blocker_count": 2
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
     },
     {
       "family": "reduced_Deng14",
@@ -72,11 +87,37 @@
       "design_passed": false,
       "scaling_passed": false,
       "pathways_passed": false,
-      "blocker_count": 4
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
+    },
+    {
+      "family": "public_rat120_precursor",
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\non_gait_ledgers\\public_rat120_precursor.json",
+      "design_passed": false,
+      "scaling_passed": false,
+      "pathways_passed": false,
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
+    },
+    {
+      "family": "reduced_Rybak_two_level",
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\non_gait_ledgers\\reduced_Rybak_two_level.json",
+      "design_passed": false,
+      "scaling_passed": false,
+      "pathways_passed": false,
+      "appropriate_local_design_checks_verified": true,
+      "global_review_pending": true,
+      "blocker_count": 0
     }
   ],
-  "source_inventory_only": true,
+  "source_inventory_only": false,
+  "optin_contracts_and_component_checks": true,
   "training_allowed": false,
   "all_family_design_verified": false,
-  "no_model_copies": true
+  "no_model_copies": true,
+  "raw_electrical_evidence_root": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical",
+  "storage_move_manifest": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\MOVE_MANIFEST.json",
+  "historical_source_hashes_are_lineage": true
 }

@@ -1,0 +1,36 @@
+# Non-Gait authored choices and review dossiers
+
+Machine: **easteregg2**. No body simulations, training, curriculum, manuscript changes, or global gate release. **Ben's explicit OK remains required before training.**
+
+The hashed eight-check review bundle is `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design\non_gait_electrical\NON_GAIT_REVIEW_DOSSIERS_v2.json`. It covers W2L108, W2L704, CAD262 original-hybrid/pressure-pair scopes, SNS-Simscape graded/spiking primitives, reduced Deng14, original public rat120 with the new122 candidate, and reduced Rybak. Every listed file hash was verified. `reviewed_complete=false` leaves final review to the parent; training/curriculum remain false. Curated134 is recorded separately as audit-only, not silently passed or deleted.
+
+## Rat: source120 versus new122 versus diagnostic134
+
+The submitted/public source is `D:\GitHub\Bipedal_Robot\Neuromechanical_Models\Deng_Biarticular_Rat\Biarticular_net_Standalone.asim`, SHA256 `a7f67185c2c9ce11223f253bb1e0620554dd98c69d49f6d03d6afbbae0e97c23`: **120 neurons,238 edges,16 MN physical outputs**. Its actual source-role/physical-adapter checks and an independent fresh repeat pass. That does not erase the historical right-side latch or claim new physical success.
+
+The **NEW bilateral-biarticular122** candidate adds two actual passive interneuron counterparts derived from the LEFT BFP/RF integration cells. It retains the left integration architecture and mirrors it to the right, replacing direct right biarticular PF→MN/Ia branches. It does not add dummy cells or remove the requested integration module. Other genuine homologous modules use an explicit canonical counterpart; source phase names alone are not anatomical proof. The original `LF_RF IN EXT` typo is logically identified as LEFT by its complete graph neighbourhood; the native name and source remain unchanged.
+
+The new candidate has **122 neurons and216 full-field mirrored edges**. Original dynamic-state/buffer prefixes, intrinsic source parameters, physical input mapping,16 MN output bindings, and source files are preserved during structural installation. Appended passive states use their actual left source functions/initial conditions. Construction-time opt-in installation and default-None checks are explicit.
+
+Renshaw output uses a declared engineering contract: **−0.5 source-equivalent nA total per postsynaptic Renshaw-input pool at Vm=rest+2.5 mV**, with a20 mV inhibitory driving potential. This derives shared conductance budgets instead of selecting arbitrary left/right −70/−100 mV reversals. It is not presented as measured chloride physiology. Actual native-kernel operators verify the current budget and bilateral response. Source pure-input ranges, conditional passive functions, MN voltage domains, physical clocks, and all16 retained nonlinear Ca mechanisms are separately checked. New source-role timing overrides are explicit passive-profile conditions, not a hidden global clock rescaling.
+
+Full proof and independent fresh repeat are **byte identical**:
+
+- `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design\non_gait_electrical\BILATERAL_BIARTICULAR_INTEGRATION_public122_v2.json`
+- `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design\non_gait_electrical\BILATERAL_BIARTICULAR_INTEGRATION_public122_v2_fresh.json`
+
+Reusable constructor/consumer: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_design_20261101\bilateral_biarticular_integration.py`. `build('public_rat120_precursor')` performs electrical checks and returns the explicit structural/passive profiles; `install(controller, profile)` applies structural changes at construction. The CLI accepts a new output suffix and the source family name. No body launch is included.
+
+**Curated134 is not this source or candidate.** It contains the original120 plus twelve unilateral Biar1/HE engineering cells and two GA receptor cells. The Biar1/HE modules bind only LEFT BFP/BFA receptor signals and LEFT hip-PF-F. Their two MN→physical outputs are disabled. All six added Ia/II/Ib-named input adapters actually read the physical **Ia** channel. Therefore these are not a clean bilateral literature controller or six correctly named sensory modalities. Its mathematical electrical subchecks remain evidence, but whole-controller bilateral/pathway approval is **not passed**. It is excluded from the training queue pending a separate redesign; no136/148 candidate is adopted.
+
+The earlier right-copy-only rat candidate was **unadopted**, because it removed the left biarticular integration architecture. Its diagnostic records remain preserved; it is not the active new122 design.
+
+## Other source-specific decisions
+
+- **W2L108/704:** the apparent five unmatched knee connections were a mislabeled RIGHT knee extensor Renshaw cell. Exact source ID, complete incoming/outgoing neighbours, and upstream right-knee physical muscle binding prove its logical alias. All216 active edges then form108 equal homologous full-field pairs. Source names/IDs are unchanged. Evidence: `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design\non_gait_electrical\NON_GAIT_BILATERAL_DESIGN_v4.json`.
+- **CAD262:**325 mirrored active edge pairs; the original54-route current cancellation is explicitly hybrid. The pressure-pair scope remains two modeled pressure actuators plus52 external hybrid routes, not a fully BPA/neural robot. The actual model lacks IaIN/IIIN/Renshaw populations; optional builder code is not an implemented subsystem. See `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_design_20261101\DESCENDING_POSTURE_AUDIT.md` for actual descending routes and comparison with HuntPT.
+- **Reduced Rybak:** the actual source builder has14 populations; the earlier13 refers to verification checks, not neuron census. It is an activity-based literature-template reinterpretation, with four retained NaP populations and ten passive populations. Twenty milliseconds of neural-only physical-unit conversion/consumption matches the original within2.19e−12 mV; every actual chemical edge's physical current conversion is checked. No walker coordinates exist. Source: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\replication\rybak2006_standalone.py`; evidence: `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design\non_gait_electrical\SUBMITTED_ORIGINAL_DESIGN_CHECKS_v1.json`.
+- **Reduced Deng14:** retains its selected fixed-tau ODE source and selective passive-cell contract; it is not the rat model or Rybak circuit. No body result is required to finish that neural-mechanism design scope.
+- **SNS-Simscape:** actual graded RC/chemical ports and fixed-reset LIF/additive-capped event ports are tested under their own functions. They are not relabeled adaptive-threshold GLIF or reset-to-peak Eq.27/29. Their unary electrical/antagonist scopes do not require fictitious bilateral fitting variables.
+
+Coordinate coverage means each actual coordinate is assigned a neural, passive, constraint, or apparatus role. Free3D walking is not a prerequisite for supported/reduced-source Hunt training. CAD mechanical repair and hardware BPA characterization remain separate gates for corresponding new physical trials and claims. No component result silently releases training.
