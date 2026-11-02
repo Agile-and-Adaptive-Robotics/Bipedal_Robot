@@ -293,3 +293,38 @@ foot work. Ben's standing directives recorded: tibia MAY grow (002 naming
 rule: increment the trailing number); muscle attachment frames must sit at
 the proper foot locations (extract the 54-route foot-side sites and carry
 them onto the articulated foot's rear/fore segments when attaching).
+
+## 8. FEET ATTACHED — 23 DOF, ISB frame (2026-11-02, overnight assignment, done)
+
+`working/ah001_repair.slx` now carries BOTH articulated feet per Ben's spec
+(after the (A)-mate-cleanup path was blocked by the tangled undergrad foot
+mates, the feet were built directly from the foot CAD export data — segment
+bodies + the CAD's own joint interface frames — the same surgical pattern
+that fixed the knees):
+
+- **Per foot: 2-DOF subtalar-calcaneus** (Exterior–rev–Interior–rev–Bottom
+  Joint, using the CAD's own mate frames T26/T25 and T12/T11) **+ 1-DOF MTP**
+  (main plate–rev–axle1–rev–front foot, T39/T40 + T21/T22). Toes rigid on the
+  forefoot, mid foot rigid on the rearfoot. **NO welded feet anywhere.**
+- Census: 49 revolute (8 four-bar pins + 8 foot pins + 33 fastener spins),
+  3 spherical (2 hips + lumbar), 6-DOF base, hardware spins. **DOF = 23**
+  (6 + 6 hips + 2 knees + 3 lumbar + 6 feet).
+- **World frame = ISB/OpenSim (x anterior, y superior, z right), VERIFIED**:
+  free fall 0.5 s reads Px≈0, Py=−1.22583 m (ideal −1.2258), Pz≈0. Lesson
+  learned the hard way: the CAD→world rotation must sit AFTER the 6-DOF
+  follower (T_world_cad block) — rotating the root Transform rotates robot
+  and joint frame together and changes nothing.
+- Anatomical basis of the leg CAD (KT/KB are TOP/BOTTOM brackets per Ben):
+  superior = mean tibia axis; lateral = hip-ball line; anterior = sup × lat,
+  sign-checked against the four-bar FRONT link (FL) being anterior. Foot CAD
+  frame measured from instance map (x width, y up, z anterior-toes — the
+  undergrad design does NOT follow the x-forward convention, so everything
+  was measured, not assumed).
+- Mass: feet 0.3757169027 kg each; payload spheres auto-adjusted to
+  35.3782100846 kg per side; **total exactly 75.0000000000 kg**. Compiles;
+  integrates 0.5 s cleanly; knee and foot pins static in free fall (loops
+  consistent).
+- PROVISIONAL (documented, single-block fixes): foot mount position at the
+  tibia part datum (no clearance work per Ben's direction); right foot uses
+  the LEFT-foot CAD un-mirrored; mount height along tibia to be set when the
+  true housing datum is measured (ties to the tibia 002 decision).
