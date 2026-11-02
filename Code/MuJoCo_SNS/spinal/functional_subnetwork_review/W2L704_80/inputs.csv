@@ -1,0 +1,45 @@
+﻿target,target_index,source_kind,physical_route,route_index,polynomial_ABCD_A_per_raw,runtime_current_conversion_nA_per_A,raw_units,output_units
+R Ank ext Ib,22,Tension,ankle_R_flx,9,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+R Ank flx Ia IN,33,Ia,ankle_R_flx_rec,19,"[0.0, 0.0, 6.63e-13, -2e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Ank ext Ia IN,82,Ia,ankle_R_ext_rec,18,"[0.0, 0.0, 3.91e-13, -1.6e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Ank flx Ib,77,Tension,ankle_R_ext,7,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+R Ankle plantarflexor II relay,96,II,ankle_R_ext_rec,18,"[0.0, 0.0, 8.080808080808081e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Ankle dorsiflexor II relay,97,II,ankle_R_flx_rec,19,"[0.0, 0.0, 8.903133903133902e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Knee flx Ia IN,94,Ia,knee_R_flx_rec,20,"[0.0, 0.0, 6.63e-13, -2e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Knee ext Ia IN,8,Ia,knee_R_ext_rec,21,"[0.0, 0.0, 3.91e-13, -1.6e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Knee ext Ib,50,Tension,knee_R_ext,6,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+R Knee flx II,89,II,knee_R_flx_rec,20,"[0.0, 0.0, 6.63e-13, -2e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Knee flx Ib,37,Tension,knee_R_flx,8,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+R Knee flexor II relay,98,II,knee_R_flx_rec,20,"[0.0, 0.0, 5.819874872690237e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Knee extensor II relay,99,II,knee_R_ext_rec,21,"[0.0, 0.0, 5.751092707614446e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Hip flx Ia IN,93,Ia,hip_R_flx_rec,22,"[0.0, 0.0, 1.741e-09, -4e-10]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Hip flx Ib,64,Tension,hip_R_ext,10,"[0.0, 0.0, 1.3842e-11, 0.0]",1000000000.0,N,nA
+R Hip ext Ib,31,Tension,hip_R_flx,1,"[0.0, 0.0, 8.4025e-12, 0.0]",1000000000.0,N,nA
+R Hip ext Ia IN,25,Ia,hip_R_flx_rec,22,"[0.0, 0.0, 1.741e-09, -4e-10]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Hip flx II,2,II,hip_R_flx_rec,22,"[0.0, 0.0, 1.741e-09, -4e-10]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Hip flexor II relay,100,II,hip_R_ext_rec,17,"[0.0, 0.0, 1.2417732522041474e-09, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R Hip extensor II relay,101,II,hip_R_flx_rec,22,"[0.0, 0.0, 1.2754288629551686e-09, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+R toe contact,60,ContactCount,toe_R_contact,-1,"[0.0, 0.0, 1e-09, 0.0]",1000000000.0,contact count (geometric0/1),nA
+R heel contact,59,ContactCount,foot_R_contact,-1,"[0.0, 0.0, 1e-09, 0.0]",1000000000.0,contact count (geometric0/1),nA
+L Knee flx Ia IN,87,Ia,knee_L_flx_rec,14,"[0.0, 0.0, 6.63e-13, -2e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Knee flx Ib,38,Tension,knee_L_flx,2,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+L Knee ext Ib,43,Tension,knee_L_ext,5,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+L Knee flx II,47,II,knee_L_flx_rec,14,"[0.0, 0.0, 6.63e-13, -2e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Knee ext Ia IN,28,Ia,knee_L_ext_rec,13,"[0.0, 0.0, 3.91e-13, -1.6e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Knee extensor II relay,102,II,knee_L_ext_rec,13,"[0.0, 0.0, 5.848295221942804e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Knee flexor II relay,103,II,knee_L_flx_rec,14,"[0.0, 0.0, 5.819874872690237e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Ank flx Ia IN,95,Ia,ankle_L_flx_rec,15,"[0.0, 0.0, 6.63e-13, -2e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Ank ext Ia IN,45,Ia,ankle_L_ext_rec,16,"[0.0, 0.0, 3.91e-13, -1.6e-13]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Ank ext Ib,80,Tension,ankle_L_flx,4,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+L Ank flx Ib,71,Tension,ankle_L_ext,3,"[0.0, 0.0, 5.062e-12, 0.0]",1000000000.0,N,nA
+L Ankle dorsiflexor II relay,104,II,ankle_L_flx_rec,15,"[0.0, 0.0, 8.903133903133902e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Ankle plantarflexor II relay,105,II,ankle_L_ext_rec,16,"[0.0, 0.0, 8.080808080808081e-10, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Hip flx Ia IN,74,Ia,hip_L_flx_rec,12,"[0.0, 0.0, 1.741e-09, -4e-10]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Hip flx Ib,7,Tension,hip_L_flx,0,"[0.0, 0.0, 1.3842e-11, 0.0]",1000000000.0,N,nA
+L Hip ext Ia IN,75,Ia,hip_L_ext_rec,23,"[0.0, 0.0, 1.741e-09, -4e-10]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Hip flx II,61,II,hip_L_flx_rec,12,"[0.0, 0.0, 1.741e-09, -4e-10]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Hip ext Ib,6,Tension,hip_L_ext,11,"[0.0, 0.0, 8.4025e-12, 0.0]",1000000000.0,N,nA
+L Hip extensor II relay,106,II,hip_L_flx_rec,12,"[0.0, 0.0, 1.2740476493820868e-09, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L Hip flexor II relay,107,II,hip_L_ext_rec,23,"[0.0, 0.0, 1.2418503570319777e-09, 0.0]",1000000000.0,source receptor output: gain*series/parallel length or tension; not assumed Hz,nA
+L heel contact,57,ContactCount,foot_L_contact,-1,"[0.0, 0.0, 1e-09, 0.0]",1000000000.0,contact count (geometric0/1),nA
+L toe contact,58,ContactCount,toe_L_contact,-1,"[0.0, 0.0, 1e-09, 0.0]",1000000000.0,contact count (geometric0/1),nA

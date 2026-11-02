@@ -1,0 +1,204 @@
+[
+  {
+    "family": "s3k",
+    "ledger": "Neuromechanical_Models\\Mujoco_SNS_models\\Gait2392_standing_families\\s3k_graph_ledger.json",
+    "ledger_sha256": "0e232bd04001e342a774d3de08ba5d0ed378907673bc2c5ccfa81daae22ae743",
+    "census": {
+      "neurons": 410,
+      "inputs": 376,
+      "nonzero_chemical_pairs": 836,
+      "zero_conductance_defined_pairs": 350,
+      "spiking_neurons": 0,
+      "layer_counts": {
+        "Descending and commissural": 12,
+        "RG": 8,
+        "PF": 12,
+        "MN": 92,
+        "Afferents": 276,
+        "Reflex INs": 10
+      }
+    },
+    "nodes_exported": 410,
+    "edges_exported": 836,
+    "zero_pairs_exported": 350,
+    "endpoint_errors": [],
+    "source_checks": [
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\runner.py",
+        "expected": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+        "actual": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\params.py",
+        "expected": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+        "actual": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network.py",
+        "expected": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+        "actual": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network_w2lvar.py",
+        "expected": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+        "actual": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network_syn6.py",
+        "expected": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+        "actual": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+        "matches_saved": true
+      }
+    ],
+    "checkpoint_sha256": "727bf4fe726f5e844722c35d8b57507213b965998ca6248792c22e2e344541e0",
+    "scope": "Exact reconstructed graded biological standing candidate; not a gait/curriculum or spiking result.",
+    "review_complete": false
+  },
+  {
+    "family": "w2lvar",
+    "ledger": "Neuromechanical_Models\\Mujoco_SNS_models\\Gait2392_standing_families\\w2lvar_graph_ledger.json",
+    "ledger_sha256": "49b946c627222e030aa7bc741d7de20faeb804646d791b51548e6d3d704d4e2f",
+    "census": {
+      "neurons": 888,
+      "inputs": 382,
+      "nonzero_chemical_pairs": 7570,
+      "zero_conductance_defined_pairs": 296,
+      "spiking_neurons": 0,
+      "layer_counts": {
+        "Descending and commissural": 26,
+        "RG": 8,
+        "PF": 16,
+        "MN": 92,
+        "Afferents": 276,
+        "Reflex INs": 470
+      }
+    },
+    "nodes_exported": 888,
+    "edges_exported": 7570,
+    "zero_pairs_exported": 296,
+    "endpoint_errors": [],
+    "source_checks": [
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\runner.py",
+        "expected": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+        "actual": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\params.py",
+        "expected": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+        "actual": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network.py",
+        "expected": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+        "actual": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network_w2lvar.py",
+        "expected": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+        "actual": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network_syn6.py",
+        "expected": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+        "actual": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+        "matches_saved": true
+      }
+    ],
+    "checkpoint_sha256": "0e5de241bf3dccd0194285c9307053daad199f34c6ce00736bc95d5ab17f5fc5",
+    "scope": "Exact reconstructed graded biological standing candidate; not a gait/curriculum or spiking result.",
+    "review_complete": false
+  },
+  {
+    "family": "syn6",
+    "ledger": "Neuromechanical_Models\\Mujoco_SNS_models\\Gait2392_standing_families\\syn6_graph_ledger.json",
+    "ledger_sha256": "0843e32e4e5cf16de974720620c0101e05bf1424018c7815d21b8b1182d6e5b0",
+    "census": {
+      "neurons": 794,
+      "inputs": 382,
+      "nonzero_chemical_pairs": 2966,
+      "zero_conductance_defined_pairs": 134,
+      "spiking_neurons": 0,
+      "layer_counts": {
+        "Descending and commissural": 24,
+        "RG": 8,
+        "PF": 16,
+        "MN": 92,
+        "Afferents": 276,
+        "Reflex INs": 378
+      }
+    },
+    "nodes_exported": 794,
+    "edges_exported": 2966,
+    "zero_pairs_exported": 134,
+    "endpoint_errors": [],
+    "source_checks": [
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\runner.py",
+        "expected": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+        "actual": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\params.py",
+        "expected": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+        "actual": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network.py",
+        "expected": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+        "actual": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network_w2lvar.py",
+        "expected": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+        "actual": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+        "matches_saved": true
+      },
+      {
+        "file": "Code\\MuJoCo_SNS\\spinal\\build_network_syn6.py",
+        "expected": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+        "actual": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+        "matches_saved": true
+      }
+    ],
+    "checkpoint_sha256": "f75e8f1d821359216c7a74cf71530afa872cb3f7cc7f77a1e62e3e70f651d3c6",
+    "scope": "Exact reconstructed graded biological standing candidate; not a gait/curriculum or spiking result.",
+    "review_complete": false
+  },
+  {
+    "family": "W2L704_80",
+    "ledger": "Neuromechanical_Models\\Mujoco_SNS_models\\W2L_704_80_baseline\\W2L_704_80_graph_ledger.json",
+    "ledger_sha256": "591b1201cd8fb207fc2d110d23bc2502f1c051a82b3bb92a8e6a0f5d4c766100",
+    "census": {
+      "logical_channels": 108,
+      "chemical_pathways": 216,
+      "RG_populations": 4,
+      "PF_populations": 8,
+      "sensory_populations": 16,
+      "central_spiking_cells": 192,
+      "sensory_spiking_cells": 512,
+      "graded_cells": 80,
+      "actual_membranes": 784,
+      "population_readouts": 28
+    },
+    "nodes_exported": 108,
+    "edges_exported": 216,
+    "zero_pairs_exported": 0,
+    "endpoint_errors": [],
+    "source_checks": [],
+    "checkpoint_sha256": "47d79aab012f5ccd18b085d60123b61d8062083ac630c6e745716eac25193f92",
+    "scope": "ACTUAL LIVE704spiking/80graded controller, not motor-wave replay.216logical chemical pathways use population-mean filtered spike readouts; source and target populations broadcast shared activation. Do not invent784x784independent synapses or divide conductance without preserving the shared saturating decoder.12PF/RG calcium-LIF populations and16sensory LIF populations replace their graded channel outputs. Population proxies are not soma voltages. Named type variants retain exact effective G/Erev/threshold/saturation after runtime calibration. Source sign labels are shorthand; actual current=g(Erev\u2212Vpost).",
+    "review_complete": false
+  }
+]

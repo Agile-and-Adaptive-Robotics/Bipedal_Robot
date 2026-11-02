@@ -1,0 +1,1177 @@
+﻿id,all_native_fields_xml
+2674ec72-80f2-4a51-aee5-397a7c2dd6dd,"<Adapter>
+<ID>2674ec72-80f2-4a51-aee5-397a7c2dd6dd</ID>
+<Name>3</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>a7ca0f7b-c135-4647-8b5f-c4ad9936c18e</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>6014988f-d80a-445e-9479-3fa23c85288b</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>fa4aac68-6c98-4e87-a426-fa439c757a90</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+5f79e736-d4f7-446d-9287-402edaabdc89,"<Adapter>
+<ID>5f79e736-d4f7-446d-9287-402edaabdc89</ID>
+<Name>7</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>c3311d5c-774a-4a38-a722-820539d28981</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>ae224c18-2361-4742-99d4-9b2f5875405a</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>89c940b3-08ed-47f4-ab7c-e5225008c804</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+8bb06b3a-43a6-44dd-b198-ac1f61159844,"<Adapter>
+<ID>8bb06b3a-43a6-44dd-b198-ac1f61159844</ID>
+<Name>4</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>35bc7f96-0690-4ff4-99c5-b204520cbc75</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>c3311d5c-774a-4a38-a722-820539d28981</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>0e831596-4c3c-44ec-bada-59fa2bcc00c1</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+907ec6b5-81c4-4ebe-a3aa-b8d0aeb901b9,"<Adapter>
+<ID>907ec6b5-81c4-4ebe-a3aa-b8d0aeb901b9</ID>
+<Name>R Ank flx Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>f71f558b-e27c-4a87-992c-1092e0a042e9</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>8fc79764-15fa-4f64-92e3-361dc3ad4b9a</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>b757cb81-b4d9-4d44-92f1-d6c475d06c36</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>6.63e-013</C><D>-2e-013</D></Gain></Adapter>
+"
+be789e5c-4143-4585-896b-45422ac04fa6,"<Adapter>
+<ID>be789e5c-4143-4585-896b-45422ac04fa6</ID>
+<Name>R Ank ext Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>5b878559-e149-4361-84ed-9a9b7ee32c83</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>8321f254-41a6-4e85-b824-e0be9b4ab755</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>4de6c471-5374-4ead-83fe-9ac81a6ba53a</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>3.91e-013</C><D>-1.6e-013</D></Gain></Adapter>
+"
+e119db8f-a5f1-47d9-8400-7c50aa411a23,"<Adapter>
+<ID>e119db8f-a5f1-47d9-8400-7c50aa411a23</ID>
+<Name>8</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>6014988f-d80a-445e-9479-3fa23c85288b</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>8bb851b2-f4a8-455a-899a-53c0517fda72</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>de124278-e916-4828-8ca9-6ea1a7057e3f</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+ad9558cb-fa74-5a4a-8d08-03933a8ddf02,"<Adapter>
+<ID>ad9558cb-fa74-5a4a-8d08-03933a8ddf02</ID>
+<Name>R Ankle plantarflexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>5b878559-e149-4361-84ed-9a9b7ee32c83</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>60d0ccfb-3dd9-570c-9a76-d76c35ec0809</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>b39fd90e-5519-5b0a-b6d6-87493362e697</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>8.080808080808081e-10</C><D>0.0</D></Gain></Adapter>
+"
+7da31995-c243-5356-ab30-ab35eeda50e1,"<Adapter>
+<ID>7da31995-c243-5356-ab30-ab35eeda50e1</ID>
+<Name>R Ankle dorsiflexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>f71f558b-e27c-4a87-992c-1092e0a042e9</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>e314d0c8-e1bb-53eb-bd8d-6248372e0af0</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>d385a524-0000-551f-b117-233fd36aa21e</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>8.903133903133902e-10</C><D>0.0</D></Gain></Adapter>
+"
+1e6bae06-d1ce-457f-a302-14bc2f71e157,"<Adapter>
+<ID>1e6bae06-d1ce-457f-a302-14bc2f71e157</ID>
+<Name>R Knee flx Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>6939d51b-1c67-4082-b043-79e1d032604f</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>469266c2-7109-479b-8c2a-8dac2b7b278f</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>bd5352b9-3f26-44f6-afcf-3beae28df98e</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>6.63e-013</C><D>-2e-013</D></Gain></Adapter>
+"
+2bffb0b6-7dc4-4c17-80fb-f6197a46805f,"<Adapter>
+<ID>2bffb0b6-7dc4-4c17-80fb-f6197a46805f</ID>
+<Name>R Knee ext Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>f0a20192-d195-47d8-83d3-443975dddd91</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>188a4523-c52f-4a83-a0a9-eda38f85bb20</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>adac691b-a052-4f6f-9002-3895fc83affa</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>3.91e-013</C><D>-1.6e-013</D></Gain></Adapter>
+"
+5fe5d5c1-6ce6-468b-86dc-210ce3f1a7fa,"<Adapter>
+<ID>5fe5d5c1-6ce6-468b-86dc-210ce3f1a7fa</ID>
+<Name>6</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>5bb16fbc-1ea8-4fd3-b501-d2ecd9943568</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>ab982010-58ae-423f-8324-ef2041ecc614</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>c3a4d36e-b198-4fe9-bb74-99699dd19d2f</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+6f807892-7407-46e3-b0d3-21f70373f50f,"<Adapter>
+<ID>6f807892-7407-46e3-b0d3-21f70373f50f</ID>
+<Name>5</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>cabac9d1-2420-4426-bfaf-a621cef5b7f2</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>438315cb-1fdf-4e0d-a9b8-1070857b76ac</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>502f48cb-58e4-45fd-8cf8-50eeffcea44d</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+bfc931b3-afa2-4040-85c2-ac64a447868e,"<Adapter>
+<ID>bfc931b3-afa2-4040-85c2-ac64a447868e</ID>
+<Name>5</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>438315cb-1fdf-4e0d-a9b8-1070857b76ac</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>07e2aace-e4eb-47e3-acc1-c5897667227a</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>d6c19229-dbe7-4a8d-9746-c9b0bf08feb1</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+cafe0114-0000-4000-8000-900000000114,"<Adapter>
+<ID>cafe0114-0000-4000-8000-900000000114</ID>
+<Name>R Knee flx II Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>6939d51b-1c67-4082-b043-79e1d032604f</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0104-0000-4000-8000-900000000104</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>cafe1155-0000-4000-8000-900000001155</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>6.63e-013</C><D>-2e-013</D></Gain></Adapter>
+"
+cb7384f8-2845-4ceb-a18c-472d22e1b339,"<Adapter>
+<ID>cb7384f8-2845-4ceb-a18c-472d22e1b339</ID>
+<Name>6</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>ab982010-58ae-423f-8324-ef2041ecc614</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>99233b06-da2e-414c-adc3-7fe75ee91a27</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>49d91b7f-dbd2-40ef-a2fe-c625b2dbf809</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+7080490a-8af8-5ba6-ab4e-44422199f3fa,"<Adapter>
+<ID>7080490a-8af8-5ba6-ab4e-44422199f3fa</ID>
+<Name>R Knee flexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>6939d51b-1c67-4082-b043-79e1d032604f</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>503885c6-edfc-557c-b2c0-7781015e92f6</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>0e051214-6cb4-58bb-81ed-fe8c89897e33</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>5.819874872690237e-10</C><D>0.0</D></Gain></Adapter>
+"
+45d0d1b3-ea0a-52be-9e8e-a30f4440c281,"<Adapter>
+<ID>45d0d1b3-ea0a-52be-9e8e-a30f4440c281</ID>
+<Name>R Knee extensor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>f0a20192-d195-47d8-83d3-443975dddd91</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>4202cc3e-fb6e-512a-ae03-429cbf9c0675</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>0c17e571-804f-5db3-a0bd-229149e1ebed</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>5.751092707614446e-10</C><D>0.0</D></Gain></Adapter>
+"
+204f73d7-d1f8-4815-8143-eed34ff0c319,"<Adapter>
+<ID>204f73d7-d1f8-4815-8143-eed34ff0c319</ID>
+<Name>R Hip flx Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>9315d475-5965-42f4-865a-29985630c51f</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>a019720f-d680-4a0c-a95c-0238981b78bb</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>10a4c5be-8c08-4c86-81f0-2da3caa4cbe5</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.741e-009</C><D>-4e-010</D></Gain></Adapter>
+"
+551faab5-1b07-434a-bee4-2d58b9462709,"<Adapter>
+<ID>551faab5-1b07-434a-bee4-2d58b9462709</ID>
+<Name>5</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>75846cb5-213b-4501-86ba-91af8edd82da</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>92c80f34-50d1-4e5f-8b4f-c6d7e46e162a</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>ee598143-b5f5-457f-a229-738da9ffb813</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+8fc56823-f6fc-4738-be48-081ab535167d,"<Adapter>
+<ID>8fc56823-f6fc-4738-be48-081ab535167d</ID>
+<Name>6</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>56e26621-8a71-45c7-9bf2-5895a6d0a8f5</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>1704710c-9aed-4778-8b5f-e2b2e9ea6080</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>f3d5b5da-688b-410e-a09a-bf408a93cccf</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+aa00dab8-580a-4130-8070-2863dd2a5eb9,"<Adapter>
+<ID>aa00dab8-580a-4130-8070-2863dd2a5eb9</ID>
+<Name>R Hip flx Ib Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>92c80f34-50d1-4e5f-8b4f-c6d7e46e162a</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>de6333e3-c0a2-40b9-9a83-11ba0a3b2dc7</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>afdac917-e12e-46d5-8d1a-b01492a2d7fd</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.3842e-011</C><D>0</D></Gain></Adapter>
+"
+ab2584f7-071f-4622-8787-f4af5e78a8ab,"<Adapter>
+<ID>ab2584f7-071f-4622-8787-f4af5e78a8ab</ID>
+<Name>R Hip ext IB Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>1704710c-9aed-4778-8b5f-e2b2e9ea6080</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>6d50c8a7-323a-479b-987c-8c549a55fa01</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>89028202-05ab-4678-aa8d-57e779733a28</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.3842e-011</C><D>0</D></Gain></Adapter>
+"
+b92c60c0-7c8a-448e-accd-93fd758a3733,"<Adapter>
+<ID>b92c60c0-7c8a-448e-accd-93fd758a3733</ID>
+<Name>R Hip ext Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>9315d475-5965-42f4-865a-29985630c51f</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>0814b180-1f0a-4b6b-8d8c-a6a6547b044a</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>73e51094-4389-467a-a04f-d4b772793831</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.741e-009</C><D>-4e-010</D></Gain></Adapter>
+"
+cafe0112-0000-4000-8000-900000000112,"<Adapter>
+<ID>cafe0112-0000-4000-8000-900000000112</ID>
+<Name>R Hip flx II Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>9315d475-5965-42f4-865a-29985630c51f</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0102-0000-4000-8000-900000000102</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>cafe1149-0000-4000-8000-900000001149</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.741e-009</C><D>-4e-010</D></Gain></Adapter>
+"
+21a60081-677d-5696-9889-c4776e9d65ba,"<Adapter>
+<ID>21a60081-677d-5696-9889-c4776e9d65ba</ID>
+<Name>R Hip flexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>7779d96a-ae70-4a26-bff6-a03cc50cfa20</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>ce5625ea-cc17-522a-a02d-f869d710d488</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>f8bbf4cd-e76c-5f7f-8a58-a4a39699cf79</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>1.2417732522041474e-09</C><D>0.0</D></Gain></Adapter>
+"
+23b9c90e-a4dc-5e1d-95b0-261a4b38cae7,"<Adapter>
+<ID>23b9c90e-a4dc-5e1d-95b0-261a4b38cae7</ID>
+<Name>R Hip extensor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>9315d475-5965-42f4-865a-29985630c51f</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>35296b3b-b161-50b0-ac95-af76a4b95f3b</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>07bc020c-8891-5f13-8421-391f36fea0be</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>1.2754288629551686e-09</C><D>0.0</D></Gain></Adapter>
+"
+40608d35-806d-4f6a-8a45-0cc4d958f0da,"<Adapter>
+<ID>40608d35-806d-4f6a-8a45-0cc4d958f0da</ID>
+<Name>3</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>a5039b39-1b33-46a7-b215-32c7928d9caa</SourceID>
+<SourceDataType>ContactCount</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0204-0000-4000-8000-900000000204</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>19afe039-bc64-4860-95fa-775b5d5bd3a6</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-1000</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1e-09</C><D>0.0</D></Gain></Adapter>
+"
+7350863a-49d0-4fb5-9a29-a826781de08c,"<Adapter>
+<ID>7350863a-49d0-4fb5-9a29-a826781de08c</ID>
+<Name>5</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>c640122b-779e-497f-9f0a-7b3667d4c57b</SourceID>
+<SourceDataType>ContactCount</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0203-0000-4000-8000-900000000203</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>9a344c88-e68f-41a8-a2f1-27a1b9a3e10c</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-1000</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1e-09</C><D>0.0</D></Gain></Adapter>
+"
+13516570-c8ec-48c7-aaf3-b415076723ee,"<Adapter>
+<ID>13516570-c8ec-48c7-aaf3-b415076723ee</ID>
+<Name>L Knee flx Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>42ac990b-9cff-4ced-80ee-8d45a5ebc465</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>74806c88-73de-4809-b92e-ba53412fdfb0</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>dd3e1fc2-3354-463b-a7c0-c2a07d8cff64</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>6.63e-013</C><D>-2e-013</D></Gain></Adapter>
+"
+53e970e5-c07e-4927-aaef-3c3477d64cac,"<Adapter>
+<ID>53e970e5-c07e-4927-aaef-3c3477d64cac</ID>
+<Name>3</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>2b4761e8-186c-466b-b5c7-8d9359de0525</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>853b3716-f386-454b-8a4a-d3f39f79b9d0</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>6a4adaa8-8346-430c-884e-1dbfe2712fd7</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+643d57f3-0f74-477a-80ae-14d784df4478,"<Adapter>
+<ID>643d57f3-0f74-477a-80ae-14d784df4478</ID>
+<Name>1</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>c7d73eb3-943b-4986-9231-2990503447e6</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>b51f816f-daab-49a8-94e3-97ca244707da</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>5ba78019-1532-4d7f-95f2-01e5b2725946</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+86b1e0d8-f731-47f4-83be-e76488d866b7,"<Adapter>
+<ID>86b1e0d8-f731-47f4-83be-e76488d866b7</ID>
+<Name>4</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>070475b2-182c-49af-8860-9c421bf4c8f0</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>2b4761e8-186c-466b-b5c7-8d9359de0525</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>afb22c7a-7fee-403a-a221-6ad41cee5a75</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+cafe0113-0000-4000-8000-900000000113,"<Adapter>
+<ID>cafe0113-0000-4000-8000-900000000113</ID>
+<Name>L Knee flx II Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>42ac990b-9cff-4ced-80ee-8d45a5ebc465</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0103-0000-4000-8000-900000000103</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>cafe1152-0000-4000-8000-900000001152</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>6.63e-013</C><D>-2e-013</D></Gain></Adapter>
+"
+f2ad5b22-8326-473b-9e71-f922e6f0dc21,"<Adapter>
+<ID>f2ad5b22-8326-473b-9e71-f922e6f0dc21</ID>
+<Name>2</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>c0986b70-8c6d-4d8b-88d1-3211822e9ddd</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>c7d73eb3-943b-4986-9231-2990503447e6</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>d7be06af-3d92-4d81-babf-f003541e1c6d</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+f7d467e7-a2a0-4bab-9a43-e4295ca043dc,"<Adapter>
+<ID>f7d467e7-a2a0-4bab-9a43-e4295ca043dc</ID>
+<Name>L Knee ext Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>024b7cd1-58a0-4514-ac88-cf3df9179886</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>612ba6d9-3383-4376-b32c-0c80ea499631</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>72ee99cd-bac9-48cd-888a-093d1dc066c7</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>3.91e-013</C><D>-1.6e-013</D></Gain></Adapter>
+"
+24d88831-6747-5996-933b-da0d6dbd57fc,"<Adapter>
+<ID>24d88831-6747-5996-933b-da0d6dbd57fc</ID>
+<Name>L Knee extensor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>024b7cd1-58a0-4514-ac88-cf3df9179886</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>8ecebf6b-e6a8-50ba-b146-a6f99f3b2916</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>a191de72-18c5-53af-b7a5-4bc748691392</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>5.848295221942804e-10</C><D>0.0</D></Gain></Adapter>
+"
+b50fb5ff-a7e6-514e-bf07-8545299a5912,"<Adapter>
+<ID>b50fb5ff-a7e6-514e-bf07-8545299a5912</ID>
+<Name>L Knee flexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>42ac990b-9cff-4ced-80ee-8d45a5ebc465</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>2d66fb1d-dc5c-50e9-baa4-a725ac666899</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>5c24e1a5-bc2b-5840-a0c4-ee5e29b57959</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>5.819874872690237e-10</C><D>0.0</D></Gain></Adapter>
+"
+28caa0e2-fc1b-4d87-af82-ba8e6b3c9dd4,"<Adapter>
+<ID>28caa0e2-fc1b-4d87-af82-ba8e6b3c9dd4</ID>
+<Name>L Ank flx Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>07786a9f-16a4-43ac-a412-1ce40deac0cb</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>47a48469-d146-4b34-a1ee-e7157fa31cf9</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>db75bdca-9124-42b5-a755-08ca18e0949d</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>6.63e-013</C><D>-2e-013</D></Gain></Adapter>
+"
+4ff1d95e-3360-4604-9180-8f606158bb83,"<Adapter>
+<ID>4ff1d95e-3360-4604-9180-8f606158bb83</ID>
+<Name>2</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>f87d0d00-b5fe-4100-8049-572f1496c142</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>9765f0b1-f642-4b16-a5aa-348dc1e6228b</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>1ff75329-88c6-473c-8126-d1599618b4cf</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+89de348e-1014-45e1-a553-99b11b8c182f,"<Adapter>
+<ID>89de348e-1014-45e1-a553-99b11b8c182f</ID>
+<Name>1</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>65bf92e8-ac16-4e97-9673-597b9223c141</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>b12ca7b0-7242-417e-9ce0-2fdabb6b56f9</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>62688b8f-7f07-4045-9646-14150ffbd082</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+de91322a-b88b-470d-b4d7-99e1966b9fc1,"<Adapter>
+<ID>de91322a-b88b-470d-b4d7-99e1966b9fc1</ID>
+<Name>L Ank ext Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>a2c5ff85-18c6-42d9-ae2f-9ca7c3f8f571</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>743556b9-95c4-4a22-80b5-d80bb70d7aea</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>fc87fc92-be6c-443b-8b2b-00a3f7614747</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>3.91e-013</C><D>-1.6e-013</D></Gain></Adapter>
+"
+e5b9b5df-752a-4b0d-9389-f4042e42fa0a,"<Adapter>
+<ID>e5b9b5df-752a-4b0d-9389-f4042e42fa0a</ID>
+<Name>4</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>b12ca7b0-7242-417e-9ce0-2fdabb6b56f9</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>4dce5be2-7df6-46b1-a401-b378ee231b7a</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>1b40a0b7-64e1-474c-833b-ee07cc3f2ec7</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+e7a9e6dd-dfda-451a-8eab-51c41d548a65,"<Adapter>
+<ID>e7a9e6dd-dfda-451a-8eab-51c41d548a65</ID>
+<Name>3</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>9765f0b1-f642-4b16-a5aa-348dc1e6228b</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>2da7fd48-8181-4d5e-8202-7d0e91e9d38c</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>c0793530-6bc1-493f-83de-03f3443ce2c8</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>5.062e-012</C><D>0</D></Gain></Adapter>
+"
+a8145c6b-ba75-5a3d-a9c3-e63fa701910f,"<Adapter>
+<ID>a8145c6b-ba75-5a3d-a9c3-e63fa701910f</ID>
+<Name>L Ankle dorsiflexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>07786a9f-16a4-43ac-a412-1ce40deac0cb</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>6283d63b-7ac4-5a4d-9185-46d3a916487b</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>d3983d15-e38d-5e0e-8778-8f856775a533</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>8.903133903133902e-10</C><D>0.0</D></Gain></Adapter>
+"
+62c58bfb-44f6-5bfd-a8c8-49bc9f6235ae,"<Adapter>
+<ID>62c58bfb-44f6-5bfd-a8c8-49bc9f6235ae</ID>
+<Name>L Ankle plantarflexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>a2c5ff85-18c6-42d9-ae2f-9ca7c3f8f571</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>72461066-f1ad-536c-8695-ffd4665933c5</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>57976e86-0b31-51ce-8920-c4b71c543bfc</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>8.080808080808081e-10</C><D>0.0</D></Gain></Adapter>
+"
+1afd244b-1bc2-438f-9859-079495c45295,"<Adapter>
+<ID>1afd244b-1bc2-438f-9859-079495c45295</ID>
+<Name>L Hip flx Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>030c9c8f-00a6-449a-936f-e9026ce88971</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>20dad3ca-1205-4dc7-aad4-e9759c6c698f</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>c1b824e4-5ce8-4b9a-8665-23fad25d3a35</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.741e-009</C><D>-4e-010</D></Gain></Adapter>
+"
+aeb26bc7-2ecb-4c0c-a566-615b4a9b8b40,"<Adapter>
+<ID>aeb26bc7-2ecb-4c0c-a566-615b4a9b8b40</ID>
+<Name>L Hip flx Ib Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>13a0bcbd-6837-47d0-8a30-f9627b50be9b</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>5bbd1761-3a41-4beb-8c6d-6a9beb362784</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>ae8ab184-94fe-4e8f-927b-2eccd81f0e6a</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.3842e-011</C><D>0</D></Gain></Adapter>
+"
+c0632a4e-b4fe-4b06-865b-88ce5dc7c2a5,"<Adapter>
+<ID>c0632a4e-b4fe-4b06-865b-88ce5dc7c2a5</ID>
+<Name>3</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>f6b42566-ef31-4b3d-95d6-90c2f7c1202b</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>13a0bcbd-6837-47d0-8a30-f9627b50be9b</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>e54bacd6-882a-472e-9116-5e6a12e8979f</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+c755dfb7-9c1e-447a-b38d-c086f439c278,"<Adapter>
+<ID>c755dfb7-9c1e-447a-b38d-c086f439c278</ID>
+<Name>L Hip ext Ia Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>ac26380c-2fdd-484b-ba5e-a09ce5bf2d3e</SourceID>
+<SourceDataType>Ia</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>8be8703b-e33e-4916-8be3-c2ef3b8179be</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>596533f2-2c88-4bca-bea5-821745996f35</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.741e-009</C><D>-4e-010</D></Gain></Adapter>
+"
+cafe0111-0000-4000-8000-900000000111,"<Adapter>
+<ID>cafe0111-0000-4000-8000-900000000111</ID>
+<Name>L Hip flx II Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>030c9c8f-00a6-449a-936f-e9026ce88971</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0101-0000-4000-8000-900000000101</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>cafe1146-0000-4000-8000-900000001146</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1.741e-009</C><D>-4e-010</D></Gain></Adapter>
+"
+dc8476a2-3ba4-4dc9-99c4-42351809164e,"<Adapter>
+<ID>dc8476a2-3ba4-4dc9-99c4-42351809164e</ID>
+<Name>2</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>NodeToPhysical</Type>
+<SourceModule>IntegrateFireSim</SourceModule>
+<SourceID>64083a38-fde0-4930-927d-cef8ef09f6d0</SourceID>
+<SourceDataType>MembraneVoltage</SourceDataType>
+<TargetModule>AnimatLab</TargetModule>
+<TargetID>aca81da1-fab7-4dfa-be37-01858f75012b</TargetID>
+<TargetDataType>MembraneVoltage</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>bc00b157-3117-44b9-b54c-3889ce3eda1b</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-0.1</LowerLimit><UpperLimit>0.1</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1</C><D>0</D></Gain></Adapter>
+"
+fc7b9788-54b3-4d5e-ba92-7bca73405683,"<Adapter>
+<ID>fc7b9788-54b3-4d5e-ba92-7bca73405683</ID>
+<Name>L Hip ext Ib Adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>aca81da1-fab7-4dfa-be37-01858f75012b</SourceID>
+<SourceDataType>Tension</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cae540f6-5a83-4e7c-9cb3-1ceefaea56ae</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>ff86c534-c878-4fd2-bee6-23db15d658ba</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>2.963e-012</C><D>0</D></Gain></Adapter>
+"
+853ed236-c9f4-559d-93e5-93832fb801ce,"<Adapter>
+<ID>853ed236-c9f4-559d-93e5-93832fb801ce</ID>
+<Name>L Hip extensor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>030c9c8f-00a6-449a-936f-e9026ce88971</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>1302a7f8-3a99-5e38-b0ae-6d6618d184a6</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>fa525808-881d-507d-b0c8-ba828ab6e536</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>1.2740476493820868e-09</C><D>0.0</D></Gain></Adapter>
+"
+7aac8b23-6dbb-5941-983f-6926e9e91d1c,"<Adapter>
+<ID>7aac8b23-6dbb-5941-983f-6926e9e91d1c</ID>
+<Name>L Hip flexor II relay adapter</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>ac26380c-2fdd-484b-ba5e-a09ce5bf2d3e</SourceID>
+<SourceDataType>II</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>b193cc7b-afb8-5696-882b-f490b701d75f</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>9e03cfd5-1c68-5c2e-8999-8c48380cac29</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>0</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0.0</A><B>0.0</B><C>1.2418503570319777e-09</C><D>0.0</D></Gain></Adapter>
+"
+404ffc76-3b9c-46a7-8c4e-f5ba161f4dd8,"<Adapter>
+<ID>404ffc76-3b9c-46a7-8c4e-f5ba161f4dd8</ID>
+<Name>9</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>fd58c11d-cfd1-482f-8f63-73b7193e40c9</SourceID>
+<SourceDataType>ContactCount</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0201-0000-4000-8000-900000000201</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>1f316f90-230c-4a2e-b3e6-358e07606543</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-1000</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1e-09</C><D>0.0</D></Gain></Adapter>
+"
+ea5361f0-6cd5-4758-9f21-8c0da0fb689d,"<Adapter>
+<ID>ea5361f0-6cd5-4758-9f21-8c0da0fb689d</ID>
+<Name>7</Name>
+<Enabled>True</Enabled>
+<ModuleName />
+<Type>PhysicalToNode</Type>
+<SourceModule>AnimatLab</SourceModule>
+<SourceID>a9e22d9e-86c4-4cdf-a052-bd4f9f26f5e6</SourceID>
+<SourceDataType>ContactCount</SourceDataType>
+<TargetModule>IntegrateFireSim</TargetModule>
+<TargetID>cafe0202-0000-4000-8000-900000000202</TargetID>
+<TargetDataType>ExternalCurrent</TargetDataType>
+<DelayBufferMode>0</DelayBufferMode>
+<DelayBufferInterval>0.1</DelayBufferInterval>
+<RobotIOScale>1</RobotIOScale>
+<InitIODisableDuration>0</InitIODisableDuration>
+<SynchWithRobot>True</SynchWithRobot>
+<SynchUpdateInterval>0</SynchUpdateInterval>
+<SynchUpdateStartInterval>0</SynchUpdateStartInterval>
+<Gain><ID>31814f76-47d8-41eb-8f71-a1176007eaa2</ID><Type>Polynomial</Type><UseLimits>False</UseLimits><LowerLimit>-1000</LowerLimit><UpperLimit>1000</UpperLimit><LowerOutput>0</LowerOutput><UpperOutput>1</UpperOutput><IndependentUnits /><DependentUnits>Output Variable</DependentUnits><A>0</A><B>0</B><C>1e-09</C><D>0.0</D></Gain></Adapter>
+"

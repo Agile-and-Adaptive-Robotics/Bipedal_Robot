@@ -1,0 +1,175 @@
+{
+  "title": "3 \u00b7 A biarticular muscle receives separate inputs from two PF layers",
+  "source_connections": [
+    {
+      "source": "PF_HIP-F_l",
+      "target": "MN_rect_fem_l",
+      "gmax_uS": 0.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 2.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 2.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "id": "disabled:PF_HIP-F_l->MN_rect_fem_l",
+      "source_defined_gmax_uS": 2.0,
+      "sign_category": "exc",
+      "display_mode": "defined_but_disabled"
+    },
+    {
+      "source": "PF_KNEE-E_l",
+      "target": "MN_rect_fem_l",
+      "gmax_uS": 0.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.226641878183108,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 1.226641878183108,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "id": "disabled:PF_KNEE-E_l->MN_rect_fem_l",
+      "source_defined_gmax_uS": 1.226641878183108,
+      "sign_category": "exc",
+      "display_mode": "defined_but_disabled"
+    },
+    {
+      "source": "PF_HIP-E_l",
+      "target": "MN_semimem_l",
+      "gmax_uS": 0.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.9649551072052074,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 0.9649551072052074,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "id": "disabled:PF_HIP-E_l->MN_semimem_l",
+      "source_defined_gmax_uS": 0.9649551072052074,
+      "sign_category": "exc",
+      "display_mode": "defined_but_disabled"
+    },
+    {
+      "source": "PF_KNEE-F_l",
+      "target": "MN_semimem_l",
+      "gmax_uS": 0.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.4608892788225825,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 1.4608892788225825,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "id": "disabled:PF_KNEE-F_l->MN_semimem_l",
+      "source_defined_gmax_uS": 1.4608892788225825,
+      "sign_category": "exc",
+      "display_mode": "defined_but_disabled"
+    }
+  ],
+  "semicircular_bridges": 2,
+  "circuits_executed": 0
+}

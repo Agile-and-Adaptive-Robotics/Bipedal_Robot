@@ -1,0 +1,2767 @@
+{
+  "machine": "easteregg2",
+  "family": "w2lvar",
+  "scope": "Exact reconstructed graded biological standing candidate; not a gait/curriculum or spiking result.",
+  "saved_result": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\normalized_prepared_transfer\\w2lvar_bio_graded_v1.result.json",
+  "saved_result_sha256": "8f9dcc08ddff65796d689a740ce87c788e5bd3bb77a04a7e5657d207934f37f3",
+  "saved_configuration": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\group_diagnosis\\NORMALIZED_STANDING_CHECKPOINT.json",
+  "saved_configuration_sha256": "ca265bc5b4dcd065ada6aecaceafca85ea5ad3ed170da4c6bd89db71625ad346",
+  "settings": {
+    "pf_mn_gain": 0.0,
+    "ib_group_gain": 0.0,
+    "standing_bias_scale": 0.8333333333333334
+  },
+  "pathway_group_scales": {
+    "IIIN:hip_abd": 0.16666666666666666,
+    "IIIN:knee_flex": 0.25,
+    "IIIN:hip_flex": 0.14285714285714285,
+    "IIIN:hip_add": 0.16666666666666666,
+    "IIIN:hip_ext": 0.25,
+    "IIIN:knee_ext": 0.25,
+    "IIIN:ankle_pf": 0.3333333333333333,
+    "IIIN:ankle_df": 0.1111111111111111,
+    "IIIN:trunk_ext": 0.5,
+    "IIIN:trunk_flex": 1.0
+  },
+  "source_checks": {
+    "runner.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\runner.py",
+      "actual": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+      "saved": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5"
+    },
+    "params.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\params.py",
+      "actual": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+      "saved": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142"
+    },
+    "build_network.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network.py",
+      "actual": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+      "saved": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11"
+    },
+    "build_network_w2lvar.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network_w2lvar.py",
+      "actual": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+      "saved": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542"
+    },
+    "build_network_syn6.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network_syn6.py",
+      "actual": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+      "saved": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79"
+    }
+  },
+  "dependency_snapshot_checks": {
+    "muscle_map.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\muscle_map.py",
+      "sha256": "ad49ffb6b5e8c7b6e06a16d83f7f2c37128421f7a0e55d9e6af619bd0d629dc7",
+      "snapshot": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\followup_source_snapshot\\Code\\MuJoCo_SNS\\spinal\\muscle_map.py"
+    },
+    "joint_pf_weights.json": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\joint_pf_weights.json",
+      "sha256": "d2e9aa05032bf366e392b2580229293a370e86fbb0138ba922e5207380e5a5a1",
+      "snapshot": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\followup_source_snapshot\\Code\\MuJoCo_SNS\\spinal\\joint_pf_weights.json"
+    }
+  },
+  "saved_bilateral_projection_exact": true,
+  "saved_bilateral_projection_file": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\normalized_prepared_transfer\\w2lvar_bio_graded_v1_projection.json",
+  "construction": "Actual AST-extracted F.run.build; actual two --reflex-stand prebuild flags. Captured after tying, candidate scaling, and64-step exact sparse parity, before any physics.",
+  "current_standing_runner_sha256": "3fe4de4a997f336a9af0fe7d399d3e8ecf6f5f9babaae79d4ed419559f1b6e81",
+  "saved_standing_runner_sha256": "3fe4de4a997f336a9af0fe7d399d3e8ecf6f5f9babaae79d4ed419559f1b6e81",
+  "standing_runner_scope": "Runner file has acquired subsequent optional experiments; selected flags and actual nested build are reconstructed. Core builder/parameter/physical-runner hashes match saved run exactly.",
+  "census": {
+    "neurons": 888,
+    "inputs": 382,
+    "nonzero_chemical_pairs": 7570,
+    "zero_conductance_defined_pairs": 296,
+    "spiking_neurons": 0,
+    "layer_counts": {
+      "Descending and commissural": 26,
+      "RG": 8,
+      "PF": 16,
+      "MN": 92,
+      "Afferents": 276,
+      "Reflex INs": 470
+    }
+  },
+  "compiled_flags": {
+    "interleg": true,
+    "joint_pf": true,
+    "renshaw": true,
+    "vest": false,
+    "sides": [
+      "l",
+      "r"
+    ],
+    "spiking": false,
+    "gated": true
+  },
+  "global_G": {
+    "rg_mutual_inh": 4.0,
+    "rg_adapt_inh": 2.5,
+    "rg_to_pf": 2.4,
+    "pf_recip_inh": 4.0,
+    "pf_to_mn": 2.0,
+    "posture_to_mn": 0.0,
+    "ia_to_mn": 0.6,
+    "ia_to_antagonist": 0.4,
+    "ii_to_mn": 0.4,
+    "ib_to_mn_inh": 0.35,
+    "ib_group_exc": 0.5,
+    "ib_exc_to_mn": 0.6,
+    "bal_lat_to_abd": 0.8,
+    "bal_trunk": 1.0,
+    "descend_to_rg_e": 1.7,
+    "descend_to_rg_f": 1.4,
+    "posture_to_rg_e": 0.8,
+    "drive_to_pf": 0.05,
+    "posture_gain": 1.0,
+    "phase_reset_e": 0.0,
+    "phase_reset_f": 0.0,
+    "f1_kneext_inh": 0.0,
+    "f1_anklepf_inh": 0.0,
+    "renshaw": 0.5,
+    "ankle_post_walk_trim": 1.0,
+    "heel_rge": 0.5,
+    "toe_rge": 0.5,
+    "ib_rge": 0.0,
+    "contact_onset": 0.0,
+    "contra_swing": 0.0,
+    "contra_kinh": 0.0,
+    "full_rules": 0.0,
+    "pm_gain": 0.0,
+    "pm_T": 1.2,
+    "pm_ws": 0.0,
+    "pm_add": 0.0,
+    "pm_aff": 0.0,
+    "ia_in": 0.5,
+    "c1_gain": 1.0,
+    "v3_gain": 0.0,
+    "rg_weak_exc": 0.0,
+    "joint_pf": 1.0,
+    "heel_pf_layer": 0.0,
+    "toe_df_inh": 0.0,
+    "heel_in_f_exc": 0.0,
+    "ia_pf_f": 0.0,
+    "ii_pf_f": 0.0,
+    "ib_e_central": 0.0,
+    "ia_f_central": 0.0,
+    "ii_f_central": 0.0,
+    "ii_e_central": 0.0,
+    "ia_f_contra_f": 0.0,
+    "v3_to_ibexc": 0.0,
+    "aff_e_rg": 0.0,
+    "aff_f_rg": 0.0,
+    "aff_e_pf": 0.0,
+    "aff_f_pf": 0.0,
+    "vest_ext": 0.0,
+    "vest_flex_inh": 0.0,
+    "vest_prop": 0.0,
+    "coact": 0.0,
+    "syn6": 0.0,
+    "syn6_brainstem": 0.0,
+    "gamma_l": 0.0,
+    "gamma_r": 0.0,
+    "alpha_l": 0.0,
+    "alpha_r": 0.0,
+    "alpha_to_mn": 0.5,
+    "contra_flex": 0.0,
+    "contact_ank_mn": 0.0,
+    "iain_pf_gate": 0.0,
+    "pf_mixed_recip": 0.0,
+    "ii_set_pose": 1.0,
+    "gamma_coact": 0.0
+  },
+  "dt_s": 0.002,
+  "voltage_reference": "SNS voltage relative to resting potential (0mV), not absolute\u221260mV.",
+  "compiled_matrix_sha256": {
+    "g_max_non": "77f33be8d7c02bee1b18f3a8486d4f1017ea09b25ccdeeb250766a625f18d2ad",
+    "del_e": "6cbc61871f577650076e8d1be4efda1bbf2b4817ba614cd212234fc594226d92",
+    "e_lo": "1ba8e0d3d85f6f1e6ce667a23d782f88130d70828f38177944414416c0b03aaa",
+    "e_hi": "6593fc73375fe1c84571623458608cfa8386f8579f86747f081d78a84b95c64d",
+    "input_connectivity": "ea7b5f202745872127363e0219fec0455589293ad0b9a5c1c85987b524130306"
+  },
+  "input_adapters": [
+    {
+      "input": "DRIVE",
+      "target": "DRIVE",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POSTURE",
+      "target": "POSTURE",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_PF",
+      "target": "BAL_PF",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_DF",
+      "target": "BAL_DF",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_TRK_EXT",
+      "target": "BAL_TRK_EXT",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_TRK_FLX",
+      "target": "BAL_TRK_FLX",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_LAT_R",
+      "target": "BAL_LAT_R",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_LAT_L",
+      "target": "BAL_LAT_L",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "HEEL_c_l",
+      "target": "HEEL_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "TOE_c_l",
+      "target": "TOE_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "LOAD_c_l",
+      "target": "LBIN_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "HEEL_c_r",
+      "target": "HEEL_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "TOE_c_r",
+      "target": "TOE_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "LOAD_c_r",
+      "target": "LBIN_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med1_r",
+      "target": "MN_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med1_r",
+      "target": "Ia_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med1_r",
+      "target": "II_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med1_r",
+      "target": "Ib_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med2_r",
+      "target": "MN_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med2_r",
+      "target": "Ia_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med2_r",
+      "target": "II_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med2_r",
+      "target": "Ib_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med3_r",
+      "target": "MN_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med3_r",
+      "target": "Ia_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med3_r",
+      "target": "II_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med3_r",
+      "target": "Ib_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min1_r",
+      "target": "MN_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min1_r",
+      "target": "Ia_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min1_r",
+      "target": "II_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min1_r",
+      "target": "Ib_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min2_r",
+      "target": "MN_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min2_r",
+      "target": "Ia_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min2_r",
+      "target": "II_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min2_r",
+      "target": "Ib_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min3_r",
+      "target": "MN_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min3_r",
+      "target": "Ia_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min3_r",
+      "target": "II_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min3_r",
+      "target": "Ib_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semimem_r",
+      "target": "MN_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semimem_r",
+      "target": "Ia_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semimem_r",
+      "target": "II_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semimem_r",
+      "target": "Ib_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semiten_r",
+      "target": "MN_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semiten_r",
+      "target": "Ia_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semiten_r",
+      "target": "II_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semiten_r",
+      "target": "Ib_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemlh_r",
+      "target": "MN_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemlh_r",
+      "target": "Ia_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemlh_r",
+      "target": "II_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemlh_r",
+      "target": "Ib_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemsh_r",
+      "target": "MN_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemsh_r",
+      "target": "Ia_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemsh_r",
+      "target": "II_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemsh_r",
+      "target": "Ib_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_sar_r",
+      "target": "MN_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_sar_r",
+      "target": "Ia_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_sar_r",
+      "target": "II_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_sar_r",
+      "target": "Ib_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_long_r",
+      "target": "MN_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_long_r",
+      "target": "Ia_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_long_r",
+      "target": "II_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_long_r",
+      "target": "Ib_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_brev_r",
+      "target": "MN_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_brev_r",
+      "target": "Ia_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_brev_r",
+      "target": "II_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_brev_r",
+      "target": "Ib_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag1_r",
+      "target": "MN_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag1_r",
+      "target": "Ia_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag1_r",
+      "target": "II_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag1_r",
+      "target": "Ib_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag2_r",
+      "target": "MN_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag2_r",
+      "target": "Ia_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag2_r",
+      "target": "II_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag2_r",
+      "target": "Ib_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag3_r",
+      "target": "MN_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag3_r",
+      "target": "Ia_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag3_r",
+      "target": "II_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag3_r",
+      "target": "Ib_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tfl_r",
+      "target": "MN_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tfl_r",
+      "target": "Ia_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tfl_r",
+      "target": "II_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tfl_r",
+      "target": "Ib_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_pect_r",
+      "target": "MN_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_pect_r",
+      "target": "Ia_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_pect_r",
+      "target": "II_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_pect_r",
+      "target": "Ib_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_grac_r",
+      "target": "MN_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_grac_r",
+      "target": "Ia_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_grac_r",
+      "target": "II_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_grac_r",
+      "target": "Ib_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max1_r",
+      "target": "MN_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max1_r",
+      "target": "Ia_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max1_r",
+      "target": "II_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max1_r",
+      "target": "Ib_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max2_r",
+      "target": "MN_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max2_r",
+      "target": "Ia_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max2_r",
+      "target": "II_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max2_r",
+      "target": "Ib_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max3_r",
+      "target": "MN_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max3_r",
+      "target": "Ia_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max3_r",
+      "target": "II_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max3_r",
+      "target": "Ib_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_iliacus_r",
+      "target": "MN_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_iliacus_r",
+      "target": "Ia_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_iliacus_r",
+      "target": "II_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_iliacus_r",
+      "target": "Ib_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_psoas_r",
+      "target": "MN_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_psoas_r",
+      "target": "Ia_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_psoas_r",
+      "target": "II_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_psoas_r",
+      "target": "Ib_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_quad_fem_r",
+      "target": "MN_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_quad_fem_r",
+      "target": "Ia_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_quad_fem_r",
+      "target": "II_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_quad_fem_r",
+      "target": "Ib_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_gem_r",
+      "target": "MN_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_gem_r",
+      "target": "Ia_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_gem_r",
+      "target": "II_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_gem_r",
+      "target": "Ib_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_peri_r",
+      "target": "MN_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_peri_r",
+      "target": "Ia_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_peri_r",
+      "target": "II_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_peri_r",
+      "target": "Ib_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_rect_fem_r",
+      "target": "MN_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_rect_fem_r",
+      "target": "Ia_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_rect_fem_r",
+      "target": "II_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_rect_fem_r",
+      "target": "Ib_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_med_r",
+      "target": "MN_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_med_r",
+      "target": "Ia_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_med_r",
+      "target": "II_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_med_r",
+      "target": "Ib_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_int_r",
+      "target": "MN_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_int_r",
+      "target": "Ia_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_int_r",
+      "target": "II_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_int_r",
+      "target": "Ib_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_lat_r",
+      "target": "MN_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_lat_r",
+      "target": "Ia_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_lat_r",
+      "target": "II_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_lat_r",
+      "target": "Ib_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_med_gas_r",
+      "target": "MN_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_med_gas_r",
+      "target": "Ia_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_med_gas_r",
+      "target": "II_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_med_gas_r",
+      "target": "Ib_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_lat_gas_r",
+      "target": "MN_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_lat_gas_r",
+      "target": "Ia_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_lat_gas_r",
+      "target": "II_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_lat_gas_r",
+      "target": "Ib_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_soleus_r",
+      "target": "MN_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_soleus_r",
+      "target": "Ia_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_soleus_r",
+      "target": "II_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_soleus_r",
+      "target": "Ib_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_post_r",
+      "target": "MN_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_post_r",
+      "target": "Ia_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_post_r",
+      "target": "II_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_post_r",
+      "target": "Ib_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_dig_r",
+      "target": "MN_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_dig_r",
+      "target": "Ia_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_dig_r",
+      "target": "II_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_dig_r",
+      "target": "Ib_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_hal_r",
+      "target": "MN_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_hal_r",
+      "target": "Ia_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_hal_r",
+      "target": "II_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_hal_r",
+      "target": "Ib_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_ant_r",
+      "target": "MN_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_ant_r",
+      "target": "Ia_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_ant_r",
+      "target": "II_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_ant_r",
+      "target": "Ib_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_brev_r",
+      "target": "MN_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_brev_r",
+      "target": "Ia_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_brev_r",
+      "target": "II_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_brev_r",
+      "target": "Ib_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_long_r",
+      "target": "MN_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_long_r",
+      "target": "Ia_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_long_r",
+      "target": "II_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_long_r",
+      "target": "Ib_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_tert_r",
+      "target": "MN_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_tert_r",
+      "target": "Ia_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_tert_r",
+      "target": "II_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_tert_r",
+      "target": "Ib_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_dig_r",
+      "target": "MN_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_dig_r",
+      "target": "Ia_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_dig_r",
+      "target": "II_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_dig_r",
+      "target": "Ib_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_hal_r",
+      "target": "MN_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_hal_r",
+      "target": "Ia_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_hal_r",
+      "target": "II_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_hal_r",
+      "target": "Ib_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med1_l",
+      "target": "MN_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med1_l",
+      "target": "Ia_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med1_l",
+      "target": "II_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med1_l",
+      "target": "Ib_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med2_l",
+      "target": "MN_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med2_l",
+      "target": "Ia_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med2_l",
+      "target": "II_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med2_l",
+      "target": "Ib_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med3_l",
+      "target": "MN_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med3_l",
+      "target": "Ia_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med3_l",
+      "target": "II_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med3_l",
+      "target": "Ib_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min1_l",
+      "target": "MN_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min1_l",
+      "target": "Ia_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min1_l",
+      "target": "II_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min1_l",
+      "target": "Ib_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min2_l",
+      "target": "MN_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min2_l",
+      "target": "Ia_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min2_l",
+      "target": "II_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min2_l",
+      "target": "Ib_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min3_l",
+      "target": "MN_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min3_l",
+      "target": "Ia_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min3_l",
+      "target": "II_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min3_l",
+      "target": "Ib_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semimem_l",
+      "target": "MN_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semimem_l",
+      "target": "Ia_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semimem_l",
+      "target": "II_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semimem_l",
+      "target": "Ib_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semiten_l",
+      "target": "MN_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semiten_l",
+      "target": "Ia_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semiten_l",
+      "target": "II_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semiten_l",
+      "target": "Ib_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemlh_l",
+      "target": "MN_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemlh_l",
+      "target": "Ia_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemlh_l",
+      "target": "II_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemlh_l",
+      "target": "Ib_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemsh_l",
+      "target": "MN_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemsh_l",
+      "target": "Ia_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemsh_l",
+      "target": "II_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemsh_l",
+      "target": "Ib_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_sar_l",
+      "target": "MN_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_sar_l",
+      "target": "Ia_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_sar_l",
+      "target": "II_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_sar_l",
+      "target": "Ib_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_long_l",
+      "target": "MN_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_long_l",
+      "target": "Ia_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_long_l",
+      "target": "II_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_long_l",
+      "target": "Ib_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_brev_l",
+      "target": "MN_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_brev_l",
+      "target": "Ia_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_brev_l",
+      "target": "II_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_brev_l",
+      "target": "Ib_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag1_l",
+      "target": "MN_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag1_l",
+      "target": "Ia_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag1_l",
+      "target": "II_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag1_l",
+      "target": "Ib_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag2_l",
+      "target": "MN_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag2_l",
+      "target": "Ia_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag2_l",
+      "target": "II_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag2_l",
+      "target": "Ib_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag3_l",
+      "target": "MN_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag3_l",
+      "target": "Ia_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag3_l",
+      "target": "II_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag3_l",
+      "target": "Ib_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tfl_l",
+      "target": "MN_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tfl_l",
+      "target": "Ia_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tfl_l",
+      "target": "II_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tfl_l",
+      "target": "Ib_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_pect_l",
+      "target": "MN_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_pect_l",
+      "target": "Ia_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_pect_l",
+      "target": "II_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_pect_l",
+      "target": "Ib_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_grac_l",
+      "target": "MN_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_grac_l",
+      "target": "Ia_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_grac_l",
+      "target": "II_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_grac_l",
+      "target": "Ib_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max1_l",
+      "target": "MN_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max1_l",
+      "target": "Ia_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max1_l",
+      "target": "II_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max1_l",
+      "target": "Ib_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max2_l",
+      "target": "MN_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max2_l",
+      "target": "Ia_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max2_l",
+      "target": "II_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max2_l",
+      "target": "Ib_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max3_l",
+      "target": "MN_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max3_l",
+      "target": "Ia_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max3_l",
+      "target": "II_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max3_l",
+      "target": "Ib_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_iliacus_l",
+      "target": "MN_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_iliacus_l",
+      "target": "Ia_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_iliacus_l",
+      "target": "II_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_iliacus_l",
+      "target": "Ib_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_psoas_l",
+      "target": "MN_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_psoas_l",
+      "target": "Ia_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_psoas_l",
+      "target": "II_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_psoas_l",
+      "target": "Ib_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_quad_fem_l",
+      "target": "MN_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_quad_fem_l",
+      "target": "Ia_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_quad_fem_l",
+      "target": "II_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_quad_fem_l",
+      "target": "Ib_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_gem_l",
+      "target": "MN_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_gem_l",
+      "target": "Ia_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_gem_l",
+      "target": "II_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_gem_l",
+      "target": "Ib_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_peri_l",
+      "target": "MN_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_peri_l",
+      "target": "Ia_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_peri_l",
+      "target": "II_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_peri_l",
+      "target": "Ib_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_rect_fem_l",
+      "target": "MN_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_rect_fem_l",
+      "target": "Ia_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_rect_fem_l",
+      "target": "II_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_rect_fem_l",
+      "target": "Ib_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_med_l",
+      "target": "MN_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_med_l",
+      "target": "Ia_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_med_l",
+      "target": "II_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_med_l",
+      "target": "Ib_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_int_l",
+      "target": "MN_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_int_l",
+      "target": "Ia_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_int_l",
+      "target": "II_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_int_l",
+      "target": "Ib_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_lat_l",
+      "target": "MN_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_lat_l",
+      "target": "Ia_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_lat_l",
+      "target": "II_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_lat_l",
+      "target": "Ib_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_med_gas_l",
+      "target": "MN_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_med_gas_l",
+      "target": "Ia_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_med_gas_l",
+      "target": "II_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_med_gas_l",
+      "target": "Ib_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_lat_gas_l",
+      "target": "MN_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_lat_gas_l",
+      "target": "Ia_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_lat_gas_l",
+      "target": "II_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_lat_gas_l",
+      "target": "Ib_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_soleus_l",
+      "target": "MN_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_soleus_l",
+      "target": "Ia_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_soleus_l",
+      "target": "II_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_soleus_l",
+      "target": "Ib_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_post_l",
+      "target": "MN_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_post_l",
+      "target": "Ia_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_post_l",
+      "target": "II_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_post_l",
+      "target": "Ib_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_dig_l",
+      "target": "MN_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_dig_l",
+      "target": "Ia_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_dig_l",
+      "target": "II_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_dig_l",
+      "target": "Ib_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_hal_l",
+      "target": "MN_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_hal_l",
+      "target": "Ia_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_hal_l",
+      "target": "II_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_hal_l",
+      "target": "Ib_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_ant_l",
+      "target": "MN_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_ant_l",
+      "target": "Ia_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_ant_l",
+      "target": "II_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_ant_l",
+      "target": "Ib_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_brev_l",
+      "target": "MN_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_brev_l",
+      "target": "Ia_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_brev_l",
+      "target": "II_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_brev_l",
+      "target": "Ib_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_long_l",
+      "target": "MN_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_long_l",
+      "target": "Ia_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_long_l",
+      "target": "II_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_long_l",
+      "target": "Ib_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_tert_l",
+      "target": "MN_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_tert_l",
+      "target": "Ia_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_tert_l",
+      "target": "II_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_tert_l",
+      "target": "Ib_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_dig_l",
+      "target": "MN_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_dig_l",
+      "target": "Ia_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_dig_l",
+      "target": "II_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_dig_l",
+      "target": "Ib_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_hal_l",
+      "target": "MN_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_hal_l",
+      "target": "Ia_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_hal_l",
+      "target": "II_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_hal_l",
+      "target": "Ib_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ercspn_r",
+      "target": "MN_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ercspn_r",
+      "target": "Ia_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ercspn_r",
+      "target": "II_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ercspn_r",
+      "target": "Ib_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ercspn_l",
+      "target": "MN_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ercspn_l",
+      "target": "Ia_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ercspn_l",
+      "target": "II_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ercspn_l",
+      "target": "Ib_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_intobl_r",
+      "target": "MN_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_intobl_r",
+      "target": "Ia_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_intobl_r",
+      "target": "II_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_intobl_r",
+      "target": "Ib_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_intobl_l",
+      "target": "MN_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_intobl_l",
+      "target": "Ia_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_intobl_l",
+      "target": "II_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_intobl_l",
+      "target": "Ib_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_extobl_r",
+      "target": "MN_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_extobl_r",
+      "target": "Ia_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_extobl_r",
+      "target": "II_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_extobl_r",
+      "target": "Ib_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_extobl_l",
+      "target": "MN_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_extobl_l",
+      "target": "Ia_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_extobl_l",
+      "target": "II_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_extobl_l",
+      "target": "Ib_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    }
+  ],
+  "actuation": {
+    "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody_cvt3.xml",
+    "model_sha256": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae",
+    "actuator_entries": 92,
+    "motor_neurons": 92,
+    "biologically_force_pruned": [
+      "gem_l",
+      "gem_r",
+      "peri_l",
+      "peri_r",
+      "quad_fem_l",
+      "quad_fem_r"
+    ],
+    "biologically_active_routes": 86,
+    "policy": "All92 MNs and afferent arcs remain; runner zeros force parameters of six listed routes. This export is biological, not the86-route virtual BPA replacement.",
+    "motor_conversion": "clip(MN voltage / E_HI,0,1); E_HI=5.0 mV; native activation and contraction dynamics follow.",
+    "input_policy": "--reflex-stand: II setpoint at initial standing length; solved per-muscle POST_ bias with saved scale; supraspinal BAL surrogate inputs zero; posture_to_mn=0.",
+    "apparatus": "Existing pelvis springs; vertical stiffness0.01, damping multiplier4.2. Not harness-free.",
+    "frame": "Legacy converted Gait z-up; distinct from y-up CAD."
+  },
+  "effective_type_variants": [
+    {
+      "key": "T001",
+      "gmax_uS": 1.7,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T002",
+      "gmax_uS": 0.8,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T003",
+      "gmax_uS": 4.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T004",
+      "gmax_uS": 0.018518518518518517,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T005",
+      "gmax_uS": 0.04,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T006",
+      "gmax_uS": 1.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T007",
+      "gmax_uS": 0.027894736842105264,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T008",
+      "gmax_uS": 1.2,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T009",
+      "gmax_uS": 2.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T010",
+      "gmax_uS": 4.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T011",
+      "gmax_uS": 0.5,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T012",
+      "gmax_uS": 1.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T013",
+      "gmax_uS": 2.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T014",
+      "gmax_uS": 2.749,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T015",
+      "gmax_uS": 2.749,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T016",
+      "gmax_uS": 5.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T017",
+      "gmax_uS": 0.6,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T018",
+      "gmax_uS": 0.5,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T019",
+      "gmax_uS": 0.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T020",
+      "gmax_uS": 0.35,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T021",
+      "gmax_uS": 0.4,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T022",
+      "gmax_uS": 0.06666666666666667,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T023",
+      "gmax_uS": 0.1,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T024",
+      "gmax_uS": 0.05714285714285714,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T025",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T026",
+      "gmax_uS": 0.044444444444444446,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T027",
+      "gmax_uS": 0.2,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T028",
+      "gmax_uS": 2.8,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    }
+  ],
+  "encoder_parameters": {
+    "AFF": {
+      "i0_ii": 1.0,
+      "ia_vel_ref": 0.6,
+      "ii_len_ref": 0.04,
+      "ib_force_ref": 0.5,
+      "ia_gain": 1.6,
+      "ii_gain": 1.2,
+      "ib_gain": 1.5
+    },
+    "MOD": {
+      "ia": 0.8,
+      "ii": 0.6,
+      "ib": 0.5
+    },
+    "PHASE_RESET": {
+      "inh": 1.0,
+      "stance_gate": [
+        0.3,
+        0.7
+      ],
+      "adapt_g": 1.5
+    }
+  },
+  "encoder_units_and_signs": {
+    "length": "m",
+    "length_rate": "m/s",
+    "tension": "abs(native muscle force),N",
+    "current": "nA",
+    "Ia": "max(gIa * clip(length_rate/ia_vel_ref,\u22121,1),0)",
+    "II": "max(i0_ii*(0.3+0.7*RGstance)+gII*clip((length\u2212initial_pose_length)/half_length_range,\u22121,1),0)",
+    "Ib": "max(0.5*gIb*clip(abs(force)/Fmax,0,1.5),0)",
+    "gating": "Exact gIa/gII/gIb phase/drive/gamma factors are retained in the hashed runner.py and AFF/MOD/G dictionaries. No GRF is silently substituted for source tendon Ib."
+  },
+  "backend_parity_max_error_mV": 0.0,
+  "source_backend_parity_max_error_mV": 0.0,
+  "saved_release_replay": {
+    "steps": 64,
+    "max_error_mV": 0.0,
+    "input_file": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\normalized_prepared_transfer\\w2lvar_bio_graded_v1.inputs.npz",
+    "saved_input_offset": 300,
+    "replay_condition": "same biological case",
+    "scope": "Actual saved release state and actual saved currents; neural only, no mechanics replay or new physical simulation. A physical failure in a pressure sibling is not promoted by neural reconstruction parity."
+  }
+}

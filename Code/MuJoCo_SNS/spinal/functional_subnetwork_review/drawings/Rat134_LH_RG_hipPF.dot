@@ -1,0 +1,24 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="Rat134 | LH RG hipPF" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"LH_RG IN FLX" [id="100ced7b-708e-4107-a1df-4ecb93cf4eb7",label="LH RG IN FLX",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"LH_HipZ-Ext II" [id="bf2e4b79-b2a6-4405-80c7-3531a903bc52",label="LH HipZ-Ext II",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"LH_IP-    FLX Ia" [id="b82a7d43-e278-490b-9791-de2981283ea0",label="LH IP- FLX Ia",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"LH_RG FLX" [id="e995a396-cdbc-4368-b63f-0d63caf6a451",label="LH RG FLX",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"LH_SO- Ext Ib" [id="85e1e567-40d7-4779-b257-c2f1e8c9c2e1",label="LH SO- Ext Ib",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"LH_RG IN EXT" [id="5b8f3483-0d68-4182-a089-e6cb431a5f33",label="LH RG IN EXT",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"LH_RG EXT" [id="de363fdf-1d32-4e97-89d0-aca2c5649450",label="LH RG EXT",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"LH_HipZ-FLX II" [id="964db21b-7e40-4f6a-abfe-01a153a85a92",label="LH HipZ-FLX II",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"LH_RG EXT" -> "LH_RG FLX" [id="1be22da5-5449-4220-ba77-fdbe7e8cd8a8",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"LH_RG FLX" -> "LH_RG EXT" [id="2ce7e5ef-f1fd-4c17-8709-42a53b0c3dcd",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"LH_RG IN FLX" -> "LH_RG EXT" [id="7ec04893-f4cd-4586-b5ca-138b8c887df0",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"LH_RG IN EXT" -> "LH_RG FLX" [id="9f7d3747-9114-4ea0-b71c-21b773776bf1",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"LH_RG FLX" -> "LH_RG IN FLX" [id="b3aa5992-9824-40dd-91aa-afc94c4b3794",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"LH_HipZ-Ext II" -> "LH_RG FLX" [id="daf21b35-4986-498d-8c71-6abcc5ff1e26",arrowhead=odot,label="0.208",style="solid",color="#222222"];
+"LH_RG EXT" -> "LH_RG IN EXT" [id="ebe3be42-89cd-462a-9bed-84709696c160",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"LH_IP-    FLX Ia" -> "LH_RG EXT" [id="f21327d4-35c0-41fc-a4ba-29a3bb54a647",arrowhead=odot,label="0.241",style="solid",color="#222222"];
+"LH_HipZ-FLX II" -> "LH_RG EXT" [id="f39ccf1d-c2b3-4bbc-adea-865a413a4f58",arrowhead=odot,label="0.648",style="solid",color="#222222"];
+"LH_SO- Ext Ib" -> "LH_RG EXT" [id="f7529d35-6465-41b5-b444-457379ed1a95",arrowhead=inv,label="0.25",style="solid",color="#222222"];
+legend [shape=plaintext, fontsize=11, label="Curated134 | native source graph; arrows/circles classified at target rest. Boundary afferents retained.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}
