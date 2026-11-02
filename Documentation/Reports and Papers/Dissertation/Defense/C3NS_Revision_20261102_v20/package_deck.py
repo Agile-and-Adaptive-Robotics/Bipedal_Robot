@@ -10,11 +10,11 @@ B=W.parent/'C3NS_Revision_20261102_v19/output/Bolen_PhD_Defense_RoseGreen_202611
 base=read(B);src=read(W/'build/artifact_draft.pptx');bp=parts(base);sp=parts(src)
 changed=json.loads((W/'build/changed_slides.json').read_text())
 order=json.loads((W/'build/slide_order.json').read_text())
-assert len(order)==128 and set(order)==set(range(1,129))
+assert len(order)==128 and set(order)==set(range(1,130))-{14}
 pres=E.fromstring(base['ppt/presentation.xml']);presrels=E.fromstring(base['ppt/_rels/presentation.xml.rels'])
 ids=pres.find('p:sldIdLst',N);id_nodes=list(ids);nextid=max(int(x.get('id')) for x in ids)+1
 ct=E.fromstring(base['[Content_Types].xml']);CT='http://schemas.openxmlformats.org/package/2006/content-types'
-for n in range(124,129):
+for n in range(124,130):
  newpart=f'ppt/slides/slide{900+n}.xml';newnote=f'ppt/notesSlides/notesSlide{900+n}.xml'
  assert newpart not in base and newnote not in base
  template=bp[36];base[newpart]=base[template]
@@ -55,11 +55,11 @@ for old in order:ids.append(id_nodes[old-1])
 base['ppt/presentation.xml']=E.tostring(pres,xml_declaration=True,encoding='UTF-8',standalone=True)
 base['ppt/_rels/presentation.xml.rels']=E.tostring(presrels,xml_declaration=True,encoding='UTF-8',standalone=True)
 mapping={old:i for i,old in enumerate(order,1)}
-for old in range(1,129):
+for old in order:
  root=E.fromstring(base[bp[old-1]]);edited=False
  for s in root.findall('./p:cSld/p:spTree/p:sp',N):
   off=s.find('./p:spPr/a:xfrm/a:off',N);texts=s.findall('.//a:t',N)
-  if off is not None and int(off.get('y'))>4700000 and ''.join(x.text or '' for x in texts)==str(old):
+  if mapping[old]!=old and off is not None and int(off.get('y'))>4700000 and ''.join(x.text or '' for x in texts)==str(old):
    texts[0].text=str(mapping[old]);edited=True
  if edited:base[bp[old-1]]=E.tostring(root,xml_declaration=True,encoding='UTF-8',standalone=True)
 # Duplicate media share unchanged bytes; obsolete slide-6 animal image is removed
@@ -92,7 +92,7 @@ for p,data in original.items():
  if p.startswith(('ppt/charts/','ppt/embeddings/','ppt/slideMasters/','ppt/slideLayouts/')) or p.lower().endswith('.mp4'):
   assert base.get(p)==data,p
 for n,p in enumerate(bp[:123],1):
- if n not in changed and mapping[n]==n:assert base[p]==original[p],n
+ if n not in changed and mapping.get(n)==n:assert base[p]==original[p],n
 out=W/'build/candidate.pptx'
 with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED) as z:
  for p,data in base.items():z.writestr(p,data)

@@ -24,6 +24,9 @@ def verify(n,gate):
     result={'graded':GP.verify_profile(n),'central':CB.verify_runtime(n)}
     if gate:result['coincidence']=IB.verify_coincidence(n)
     if hasattr(n,'canonical_right_ledger'):result['canonical_right']=MC.verify_canonical(n)
+    if hasattr(n,'syn6_single_heel_in'):
+        import syn6_single_heel_in as SINGLE
+        result['single_heel_IN']=SINGLE.verify(n)
     return result
 
 
@@ -106,13 +109,21 @@ def coverage(n,condition):
     return {'base_ledger':GP.gait_coverage_ledger(n),'condition':condition,'active_PF_to_MN_slots':len(active_pf),'coordinate_status':rows,'physical_control_rank_not_inferred_from_paths':True,'free3Dwalking_is_not_a_design_prerequisite':True,'restraint_passive_or_unsupported_status_explicit':True}
 
 
-def compose(n,family,condition,anchor):
+def compose(n,family,condition,anchor,components=None):
     from sparse_pairwise_eval import SparsePairwiseForward
-    n.compiled=CB.core(n);c=n.compiled;before=states(c);names=GP.population_names(n);p=GP.default_profile(family)
+    n.compiled=CB.core(n);c=n.compiled;before=states(c);names=GP.population_names(n)
+    if components is not None:
+        GP.exact_keys(components,('single_heel_policy','graded_profile','central_profile','Ib_reference_current_nA'),'named composition components')
+        if family!='syn6':raise ValueError('The named single-IN composition is specific to Syn6')
+        import syn6_single_heel_in as SINGLE
+        SINGLE.install(n,components['single_heel_policy'])
+    p=GP.default_profile(family)if components is None else copy.deepcopy(components['graded_profile'])
     p['physical_input_domains_nA']={name:[0.,anchor['derived_source_upper_nA'][name.split('_')[0]]] for name in n.inputs if name.startswith(('Ia_','II_','Ib_'))}
-    GP.apply_profile(n,p,family=family);central=CB.install(n,CB.default_profile())
+    GP.apply_profile(n,p,family=family);central=CB.install(n,CB.default_profile()if components is None else components['central_profile'])
     ids=[i for i,name in enumerate(names) if name.startswith('IBEXC_')];active=[i for i in ids if np.any(c.g_max_non[:,i])];gate=None
-    if len(active)==len(ids):gate=IB.apply_coincidence(n,IB.make_policy(family,{name:.225 for name in IB.eligible_load_sources(n,family)},'Canonical full-stance runner AFF1.5*0.3*0.5 at F/Fmax1; engineering reference,not body-validated stance force'))
+    reference=.225 if components is None else float(components['Ib_reference_current_nA'])
+    if reference<=0 or not np.isfinite(reference):raise ValueError('Invalid declared Ib reference current')
+    if len(active)==len(ids):gate=IB.apply_coincidence(n,IB.make_policy(family,{name:reference for name in IB.eligible_load_sources(n,family)},'Canonical full-stance runner AFF1.5*0.3*0.5 at F/Fmax1; engineering reference,not body-validated stance force'))
     gate_inventory={'allocated':len(ids),'active_output_gates':[names[i] for i in active],'status':'applied' if gate else 'Inactive/partial outputs preserved; coincidence inventory only','masked_gates':[names[i] for i in ids if i not in active]}
     n.compiled=SparsePairwiseForward(c);GP.apply_profile(n,p,family=family);final=verify(n,gate)
     if any(not np.array_equal(v,getattr(c,k)) for k,v in before.items()):raise AssertionError('Design composition changed initial dynamic state')
@@ -158,5 +169,103 @@ def run(family,out):
     target.write_text(json.dumps(result,indent=2),encoding='utf-8');print(json.dumps({'family':family,'standing_gates':standing['coincidence_inventory']['status'],'standing_PF_slots':standing['PF_current_check']['active_slots'],'expression_PF_slots':expression['PF_current_check']['active_slots'],'central_groups':expression['central_current_checks']['groups'],'dense_sparse_exact':True,'physics_steps':0,'output':str(target)}))
 
 
+NAMED_SCHEMA='aarl_named_composed_gait_candidate_v1'
+
+
+def make_syn6_single_IN_profile():
+    """Explicit full-recipe candidate, separate from archived standing exports."""
+    import syn6_single_heel_in as SINGLE
+    _,recipe=SINGLE.source_fixture()
+    files=[Path(__file__),Path(SINGLE.__file__),Path(GP.__file__),Path(CB.__file__),Path(IB.__file__),Path(MC.__file__),HERE.parent/'w2l_cpg/sparse_pairwise_eval.py']
+    sources={**recipe['source_and_artifact_sha256'],**{str(p):CB.sha(p)for p in files}}
+    return dict(schema=NAMED_SCHEMA,name='Syn6_full_recipe_canonical_single_InE_FSA',family='syn6',
+                source_condition='Current-code dissertation full/WALK recipe reconstruction; not an old body result',
+                canonical_right_policy=MC.default_policy(),
+                components=dict(single_heel_policy=SINGLE.policy(),graded_profile=GP.default_profile('syn6'),
+                                central_profile=CB.default_profile(),Ib_reference_current_nA=.225),
+                source_sha256=sources,
+                scope='Explicit electrical composition. No new monoarticular-central overlay, caller event encoder, body success, or training result inherited.')
+
+
+def build_named_profile(value):
+    """Return an actually composed runnable net and proof, at original initial state.
+
+    This builder does not bind a body or step physics. It verifies electrical
+    components, then restores all initial neuronal/gate states for later use.
+    """
+    import syn6_single_heel_in as SINGLE
+    p=json.loads(Path(value).read_text())if isinstance(value,(str,Path))else copy.deepcopy(value)
+    GP.exact_keys(p,('schema','name','family','source_condition','canonical_right_policy','components','source_sha256','scope'),'named composed Gait candidate')
+    if p['schema']!=NAMED_SCHEMA or p['name']!='Syn6_full_recipe_canonical_single_InE_FSA'or p['family']!='syn6':
+        raise ValueError('Unsupported named composed candidate')
+    if not p['source_condition']or not p['scope']:raise ValueError('Explicit source/scope required')
+    for path,digest in p['source_sha256'].items():
+        if CB.sha(path)!=digest:raise ValueError('Named candidate source changed: '+path)
+    net,recipe=SINGLE.source_fixture();import params as P
+    if P.G.get('gamma_coact',0.)or P.G.get('vest_prop',0.):raise ValueError('Source afferent domain requires requalification')
+    bounds=dict(Ia=P.AFF['ia_gain']*(1+P.MOD['ia']),II=P.AFF['i0_ii']+P.AFF['ii_gain']*(1+P.MOD['ii']),Ib=.5*P.AFF['ib_gain']*1.5)
+    projection=MC.apply_canonical_right(net,p['canonical_right_policy'])
+    initial=states(CB.core(net))
+    anchor=dict(derived_source_upper_nA=bounds,source_recipe=recipe['recipe'],historical_result_inherited=False,
+                projection=projection,profile_name=p['name'])
+    checks=compose(net,'syn6',p['name'],anchor,components=p['components'])
+    core=CB.core(net)
+    for name,array in initial.items():getattr(core,name)[:]=array
+    if any(not np.array_equal(getattr(core,name),array)for name,array in initial.items()):raise AssertionError('Initial neuronal states were not restored')
+    final=verify(net,checks['coincidence_design'])
+    net.named_composed_gait_profile=copy.deepcopy(p)
+    return net,dict(profile=p,composition=checks,final_verification=final,
+                    initial_dynamic_states_restored=True,physics_steps=0,body_bindings=0,training=False)
+
+
+def export_named_graph(net,report,out):
+    """Export actual final operators and maps; never overwrite an old ledger."""
+    out=Path(out);out.mkdir(parents=True,exist_ok=True)
+    target=out/'FINAL_COMPILED_GRAPH.json'
+    if target.exists():raise FileExistsError('Preserve the existing final graph; select a new explicit output')
+    from mono_central_feedback import phase
+    c=CB.core(net);w=net.compiled;names=GP.population_names(net);nodes=[];edges=[]
+    for i,name in enumerate(names):
+        ionic=[]
+        for channel in range(c.g_ion.shape[0]):
+            if c.g_ion[channel,i]==0:continue
+            ionic.append({key:float(getattr(c,key)[channel,i])for key in('g_ion','e_ion','pow_a','k_a','slope_a','e_a','pow_b','k_b','slope_b','e_b','tau_max_b','pow_c','k_c','slope_c','e_c','tau_max_c')})
+        nodes.append(dict(index=i,name=name,C_microF=float(c.c_m[i]),G_uS=float(c.g_m[i]),rest_mV=float(c.V_rest[i]),bias_nA=float(c.i_b[i]),ionic_channels=ionic,PF_phase_role=phase(net,name)))
+    for post,pre in zip(*np.nonzero(c.g_max_non)):
+        edges.append(dict(source=names[pre],target=names[post],source_index=int(pre),target_index=int(post),
+                          gmax_uS=float(c.g_max_non[post,pre]),reversal_mV=float(c.del_e[post,pre]),threshold_mV=float(c.e_lo[post,pre]),saturation_mV=float(c.e_hi[post,pre])))
+    dense=np.array([[e['target_index'],e['source_index'],e['gmax_uS'],e['reversal_mV'],e['threshold_mV'],e['saturation_mV']]for e in edges],dtype=float)
+    cache=np.c_[w.post,w.pre,w.gmax,w.reversal,w.elo,w.elo+w.erange].astype(float)
+    if not np.array_equal(dense,cache):raise AssertionError('Final graph differs from actual sparse operators')
+    inputs=[dict(input=net.inputs[j],target=names[i],target_index=int(i),weight=float(c.input_connectivity[i,j]),units='nA')for i,j in zip(*np.nonzero(c.input_connectivity))]
+    motors=[dict(actuator=act,MN=net.mn_names[act],node_index=int(net.idx[net.mn_names[act]]),readout='clip(V_MN/5mV,0,1); caller actuator conversion is separate')for act in net.muscles]
+    graph=dict(schema='aarl_final_compiled_neural_graph_v1',machine='easteregg2',name=report['profile']['name'],
+               source_profile=report['profile'],nodes=nodes,chemical_edges=edges,input_adapters=inputs,motor_readouts=motors,
+               removed_branches=net.syn6_single_heel_in['changed'],
+               units=dict(time='s',voltage='mV',conductance='uS',current='nA',numeric_capacitance='microF'),
+               dt_s=float(c.dt),census=dict(nodes=len(nodes),inputs=len(net.inputs),active_chemical_edges=len(edges)),
+               edge_operator_sha256=hashlib.sha256(dense.tobytes()).hexdigest(),cache_operator_sha256=hashlib.sha256(cache.tobytes()).hexdigest(),
+               compiled_parameter_sha256=GP.field_digest(c),cache_exact=True,
+               initial_dynamic_states_restored=report['initial_dynamic_states_restored'],
+               source_drawing_policy='Draw these actual final numeric operators; the source builder and old syn6_graph_ledger.json are preserved historical graphs.',
+               body_run=False,training=False,claimed_missing_central_Ia_II_repair=False)
+    target.write_text(json.dumps(graph,indent=2,allow_nan=False),encoding='utf-8')
+    (out/'COMPOSED_VERIFICATION.json').write_text(json.dumps(report,indent=2,allow_nan=False),encoding='utf-8')
+    return graph
+
+
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--family',choices=('s3k','w2lvar','syn6'),required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();run(a.family,a.out)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--family',choices=('s3k','w2lvar','syn6'),required=True);p.add_argument('--out',type=Path,required=True)
+    p.add_argument('--named-syn6-single-in',action='store_true');p.add_argument('--profile',type=Path)
+    a=p.parse_args()
+    if a.named_syn6_single_in or a.profile:
+        if a.family!='syn6'or(a.named_syn6_single_in and a.profile):raise ValueError('Select one explicit Syn6 profile mode')
+        a.out.mkdir(parents=True,exist_ok=True)
+        if a.named_syn6_single_in:
+            profile=make_syn6_single_IN_profile();profile_path=a.out/'PROFILE.json'
+            if profile_path.exists():raise FileExistsError('Named profile already exists')
+            profile_path.write_text(json.dumps(profile,indent=2),encoding='utf-8')
+        else:profile_path=a.profile
+        net,report=build_named_profile(profile_path);graph=export_named_graph(net,report,a.out)
+        print(json.dumps(dict(profile=str(profile_path),graph=str(a.out/'FINAL_COMPILED_GRAPH.json'),census=graph['census'],cache_exact=graph['cache_exact'],physics_steps=0,training=False)))
+    else:run(a.family,a.out)

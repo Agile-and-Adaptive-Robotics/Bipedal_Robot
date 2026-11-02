@@ -183,7 +183,7 @@ def verify_coincidence(spinal):
     if gate_hash(c,ledger['rows'])!=ledger['protected_gate_sha256']:raise ValueError('Coincidence fields overwritten; no Hunt/dynamic-update persistence claim')
     wrapper=spinal.compiled
     if wrapper is not c:
-        if not np.array_equal(wrapper.gmax,c.g_max_non[wrapper.post,wrapper.pre]) or not np.array_equal(wrapper.reversal,c.del_e[wrapper.post,wrapper.pre]) or not np.array_equal(wrapper.erange,(c.e_hi-c.e_lo)[wrapper.post,wrapper.pre]) or not np.array_equal(wrapper.elo,c.e_lo[wrapper.post,wrapper.pre]):raise ValueError('Coincidence accelerator cache mismatch')
+        if not np.array_equal(wrapper.gmax,c.g_max_non[wrapper.post,wrapper.pre]) or not np.array_equal(wrapper.reversal,c.del_e[wrapper.post,wrapper.pre]) or not np.array_equal(wrapper.erange,c.e_hi[wrapper.post,wrapper.pre]-c.e_lo[wrapper.post,wrapper.pre]) or not np.array_equal(wrapper.elo,c.e_lo[wrapper.post,wrapper.pre]):raise ValueError('Coincidence accelerator cache mismatch')
     return dict(actual_gate_fields_match=True,protected_gate_sha256=ledger['protected_gate_sha256'])
 
 

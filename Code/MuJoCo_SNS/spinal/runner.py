@@ -45,6 +45,9 @@ import mujoco
 from scipy.optimize import nnls
 
 HERE = Path(__file__).parent
+# Optional read-only verification observer. Runs once after an accepted outer
+# physics interval (including adaptive stepping), never inside trial substeps.
+VERIFICATION_POST_PHYSICS = None
 # AARL_MODEL env override (2026-09-18): point the whole chain at a new
 # converted model (e.g. the scaled subject01 MJCF once it lands) without
 # editing code. Unset = the proven default.
@@ -1824,6 +1827,8 @@ def main(argv):
                 _adaptive_step(model, data, adaptive_tol)
             else:
                 mujoco.mj_step(model, data)
+        if VERIFICATION_POST_PHYSICS is not None:
+            VERIFICATION_POST_PHYSICS(model, data, net, k, t, DT, t < WARMUP)
         if k % 10 == 0:
             if viewer is not None:
                 if not viewer.is_running():

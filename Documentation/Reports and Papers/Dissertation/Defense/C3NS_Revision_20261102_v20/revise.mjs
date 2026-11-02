@@ -16,11 +16,11 @@ function tx(n,text,x,y,w,h,size=25,bold=false,color=INK,alignment='left'){
 }
 function im(n,file,x,y,w,h,crop){
  const blob=fss.readFileSync(file),ext=path.extname(file).toLowerCase();
- if(crop&&ext==='.png'){
-  const iw=blob.readUInt32BE(16)*(1-crop.left-crop.right),ih=blob.readUInt32BE(20)*(1-crop.top-crop.bottom),sc=Math.min(w/iw,h/ih);
+ if(crop&&(ext==='.png'||ext==='.gif')){
+  const iw=(ext==='.png'?blob.readUInt32BE(16):blob.readUInt16LE(6))*(1-crop.left-crop.right),ih=(ext==='.png'?blob.readUInt32BE(20):blob.readUInt16LE(8))*(1-crop.top-crop.bottom),sc=Math.min(w/iw,h/ih);
   const nw=iw*sc,nh=ih*sc;x+=(w-nw)/2;y+=(h-nh)/2;w=nw;h=nh;
  }
- return d.slides.getItem(n-1).images.add({blob,contentType:ext==='.jpg'?'image/jpeg':ext==='.gif'?'image/gif':'image/png',fit:'contain',alt:path.basename(file),position:{left:x,top:y,width:w,height:h},...(crop?{crop}:{})});
+ return d.slides.getItem(n-1).images.add({blob,contentType:(ext==='.jpg'||ext==='.jpeg')?'image/jpeg':ext==='.gif'?'image/gif':'image/png',fit:'contain',alt:path.basename(file),position:{left:x,top:y,width:w,height:h},...(crop?{crop}:{})});
 }
 function line(n,x1,y1,x2,y2,arrow=true){
  return d.slides.getItem(n-1).shapes.add({geometry:'connector',kind:'straight',position:{left:Math.min(x1,x2),top:Math.min(y1,y2),width:Math.abs(x2-x1),height:Math.abs(y2-y1),horizontalFlip:x2<x1,verticalFlip:y2<y1},line:{fill:GREEN,width:2.5},...(arrow?{tail:{type:'triangle',width:'med',length:'med'}}:{})});
@@ -46,7 +46,7 @@ line(5,350,255,610,255);tx(5,'Motor output',375,211,210,36,25,false,INK,'center'
 line(5,730,305,730,418,false);line(5,730,418,615,418);
 tx(5,'Muscle length, force,\nand foot contact',745,326,200,78,22,false,INK);
 line(5,385,418,230,418,false);line(5,230,418,230,305);
-tx(5,'Sensory feedback',112,345,250,36,23,false,INK);
+tx(5,'Sensory\nfeedback',35,337,175,62,23,false,INK,'center');
 begin(6,'Biomimetic robots let us test hypotheses about human movement','A second research goal is to use biomimetic robots to study biomechanics and neuroscience. We can change actuator mechanics or sensory feedback and observe the resulting movement under controlled conditions. The human model supplies anatomical reference geometry; the robot provides an experimental system.','Dissertation Chapters 1 and 2');
 im(6,fig('Gait2392_human_reference_oblique.png'),80,115,350,310);im(6,fig('aarl_bpa_biped.png'),560,115,300,310);
 tx(6,'Human musculoskeletal model',35,437,440,36,24,true,GREEN,'center');tx(6,'Biomimetic robot',520,437,380,36,24,true,GREEN,'center');
@@ -57,7 +57,7 @@ im(11,a('bpas.png'),35,160,265,175);im(11,a('knee_cutout_approved.png'),345,160,
 ['Predict BPA force','Predict and validate\njoint torque','Test neuromechanical\nmodels'].forEach((t,i)=>tx(11,t,30+310*i,383,285,78,26,true,GREEN,'center'));
 function mechanicsMap(n,title,question){
  begin(n,title,question+' This section concerns the actuator and joint mechanics.','Dissertation Chapters 3 and 4');
- im(n,a('bpas.png'),35,151,330,200);im(n,a('knee_cutout_approved.png'),455,120,445,230);
+ im(n,a('bpas.png'),35,151,330,200);im(n,a('knee_cutout_approved.png'),455,169,445,191);
  tx(n,'BPA force',35,115,330,40,28,n===12,GREEN,'center');tx(n,'Joint torque',490,115,355,40,28,n===28,GREEN,'center');
  tx(n,question,75,400,810,68,30,true,GREEN,'center');
 }
@@ -77,9 +77,9 @@ for(const [n,title,file,eq,note] of [
  [20,'Shorter 10 mm BPAs produce less maximum force','s020_img0.png','max_force_b.png','The general arctangent form is F620(l0)=b1 atan[b2(l0-b3)]. The coefficients determine the force scale, length scale, and length offset. This slide shows the 10 mm results; the next slide shows the 20 mm results.'],
  [22,'Pressure and initial length jointly determine maximum BPA force','s022_img0.png','max_force_a.png','The pressure-dependent model uses a1 and a2 with P in both the prefactor and the arctangent argument: Fmax(l0,P)=a1 P atan[a2 P(l0-0.0075 m)]. The 7.5 mm offset is fixed in the published equation, not introduced here as a newly fitted coefficient.']]){
  begin(n,title,note+' Source: Bolen et al. (2026), submitted Chapter 3.','Bolen et al. (2026), Actuators 15(5):230');
- im(n,old(file),170,104,620,300);im(n,a(eq),n===20?185:100,423,n===20?590:760,46);
+ im(n,old(file),150,104,660,320);im(n,a(eq),n===20?200:135,435,n===20?560:690,34);
 }
-begin(30,'The force path determines the moment arm about the joint','Original dissertation background figure, unchanged. Panel A shows the force-moment construction; panel B shows the signed moment-arm projection used in the torque calculation. The joint axis points out of the page. The force is in the illustrated plane; out-of-plane forces require the knee-axis projection stated in Chapter 4.','Dissertation Ch. 2, equivalent geometric constructions of joint torque');
+begin(30,'Muscle geometry determines the joint’s moment arm','Original dissertation background figure, unchanged. Panel A shows the force-moment construction; panel B shows the signed moment-arm projection used in the torque calculation. The joint axis points out of the page. The force is in the illustrated plane; out-of-plane forces require the knee-axis projection stated in Chapter 4.','Dissertation Ch. 2, equivalent geometric constructions of joint torque');
 im(30,a('moment_arm_methods.png'),30,106,900,365);
 begin(35,'A signed offset corrects the predicted BPA length','Chi0 is a signed constant correction to predicted current BPA length, not to measured resting length l0 and not an elastic deflection. lm=lLMT-2lfitting-chi0. lLMT is the routed origin-to-insertion length and lfitting is an end-fitting length. The adopted offsets are +3.94 mm for the flexor and -6.38 mm for the extensor. No geometric length discrepancy is dimensioned on the stock photograph. Source: Chapter 4, equation Lm and adopted parameter table.','Dissertation Ch. 4, length offset and system stiffness');
 im(35,a('bpas.png'),130,115,700,130,{left:0,top:.5,right:0,bottom:0});
@@ -93,9 +93,9 @@ im(37,a('length_offset.png'),25,304,288,45);tx(37,'Constant offset',35,400,270,4
 d.slides.getItem(36).speakerNotes.text='Chi0 corrects the unloaded length discrepancy and is signed. The source equation defines the correction; the stock BPA photograph is not a dimensional drawing. Chi1 and chi2 describe effective system stiffness, including brackets, fixtures, artificial tendons, and loading hardware. The middle callout identifies the attachment system, not a coordinate axis. Chi3 scales length loss due to bending along the wrapped R alpha arc. Source: dissertation Chapter 4 and Appendix C.';
 changed.push(37);
 begin(39,'The design factors improve all three measures of pinned-flexor fit','Native table reproduces the dissertation pinned-flexor goodness-of-fit values before and after correction, with all three reported measures. Fitting tests: 48.5 cm and 41.0 cm. Validation tests: 45.7 cm and 40.6 cm with a 3.5 cm artificial tendon. Means are the source table means, not newly computed pooled residuals. RMSE and maximum absolute residual are in N m; FVU is dimensionless and lower is better. Source: Chapter 4, Table FlxPinGof.','Dissertation Ch. 4, pinned-knee flexor goodness of fit');
-tx(39,'Before correction',230,118,310,35,26,true,GREEN,'center');tx(39,'With design factors',570,118,325,35,26,true,GREEN,'center');
+tx(39,'Before correction',229,118,348,35,26,true,GREEN,'center');tx(39,'With design factors',577,118,348,35,26,true,GREEN,'center');
 const gof=[
- ['l₀; lten (cm)','RMSE','FVU','Max.','RMSE','FVU','Max.'],
+ ['l₀; lₜₑₙ (cm)','RMSE','FVU','Max.','RMSE','FVU','Max.'],
  ['Fit: 48.5; —','7.617','2.1278','25.531','2.165','0.1718','5.467'],
  ['Fit: 41.0; —','9.694','2.1149','21.076','1.084','0.0277','1.766'],
  ['Fit mean','8.656','2.1213','23.303','1.624','0.0998','3.617'],
@@ -111,12 +111,6 @@ for(let r=0;r<7;r++)for(let c=0;c<7;c++){
  table.getCell(r,c).text.style={fontFamily:'Arial',fontSize:23,color:r===0?'#FFFFFF':INK,alignment:'center',bold:r===0||r===3||r===6};
 }
 tx(39,'RMSE and Max.: N·m     FVU: dimensionless',130,447,700,30,21,false,INK,'center');
-// Substitute the requested actual pinned-extensor photograph; keep result plots intact.
-const extPhoto=rec.get(42).elements.filter(e=>e.kind==='image'&&e.position?.left>195&&e.position?.left<320&&e.position?.top<180).map(e=>e.id);
-if(extPhoto.length)d.delete(extPhoto);
-const pin=im(42,'D:/GitHub/Bipedal_Robot/Pictures/PictureAnalysis/20220307_222908.jpg',220,102,80,85);pin.rotation=180;
-d.slides.getItem(41).speakerNotes.text='The plots report the biomimetic-knee extensor and flexor validation from dissertation Figures 4.10 and 4.11. The upper-left inset is the actual pinned-knee extensor test setup requested for apparatus context, from 20220307_222908.jpg; it is not identified as the photographed configuration underlying the biomimetic-knee curve. Explain that the original route optimization predicted meeting or exceeding human torque but failed in physical testing, requiring the route optimization to be modified.';
-changed.push(42);
 begin(36,'Bracket stiffness is expressed in the local attachment frame','The dissertation CAD schematics show the local bracket-frame axes for the pinned flexor and the biomimetic flexor with a 20 mm BPA. The fitted stiffness values represent the combined attachment system. The next method slide explains the coordinate rotations before force is projected into these directions. Source: Chapter 4, Figure bktFrame, panels A and D.','Dissertation Ch. 4, bracket-frame orientations');
 im(36,a('bktFrame.png'),40,120,410,320,{left:0,top:0,right:.5,bottom:.5});
 im(36,a('bktFrame.png'),515,120,405,320,{left:.5,top:.5,right:0,bottom:0});
@@ -147,7 +141,9 @@ newSlide(127,'The redesigned flexor route can be checked across knee motion','Or
 im(127,'D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization/Results/Knee_Flexor_20mm.gif',45,110,870,360);
 newSlide(128,'The direct extensor route met the model target but overloaded hardware','Original direct-route extensor animation, not the later cam route. The generator loads Vas_Pam_20mm_Result.mat and uses the direct-route distal-ring geometry. The direct route met the predicted torque envelope at actuator forces that broke printed and machined parts. The following slide explains why the cam was added to increase moment arm and reduce the required BPA force; the physical cam results follow.','Repository model animation · direct 20 mm knee extensor');
 im(128,'D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization/Results/Knee_Extensor_20mm.gif',45,110,870,360);
-const order=[...Array.from({length:37},(_,i)=>i+1),124,125,38,39,40,41,42,126,43,127,45,128,46,47,44,48,...Array.from({length:75},(_,i)=>i+49)];
+await (await import('./pass2_content.mjs')).apply({d,rec,begin,newSlide,im,tx,line,block,a,old,fig,changed,GREEN,INK,W});
+await (await import('./pass3_content.mjs')).apply({d,rec,begin,im,tx,a,old,changed,GREEN,INK});
+const order=[...Array.from({length:37},(_,i)=>i+1),124,125,129,38,39,40,41,42,126,43,127,45,128,46,47,44,48,...Array.from({length:75},(_,i)=>i+49)].filter(n=>![14,50].includes(n));
 await fs.writeFile('build/slide_order.json',JSON.stringify(order));
 await fs.writeFile('build/changed_slides.json',JSON.stringify([...new Set(changed)].sort((a,b)=>a-b)));
 await (await PresentationFile.exportPptx(d)).save(path.join(W,'build/artifact_draft.pptx'));

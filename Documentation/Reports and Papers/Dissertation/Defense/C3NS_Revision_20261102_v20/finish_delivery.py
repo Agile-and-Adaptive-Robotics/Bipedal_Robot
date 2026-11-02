@@ -1,0 +1,19 @@
+from pathlib import Path
+import json,hashlib
+
+W=Path(__file__).resolve().parent
+def read(name):return json.loads((W/name).read_text(encoding='utf-8-sig'))
+d=read('build/delivery_checks.json');v=read('build/native_video_playback.json');g=read('build/native_gif_playback.json');r=read('build/visual_review_coverage.json')
+assert d['passed'] and d['review_pdf_pages']==127 and r['individual_inspection_coverage']==127
+assert len(v)==3 and all(x['advances'] and (not x['loop_required'] or x['loop_restarted']) for x in v)
+assert len(g)==3 and all(x['motion_verified'] for x in g)
+deck=Path(d['deck']);assert hashlib.sha256(deck.read_bytes()).hexdigest()==d['sha256']
+gif_samples={46:[1,7],47:[3,9],49:[3,9]}
+for x in g:x['individually_viewed_export_frames_seconds']=gif_samples[x['slide']];x['visible_crop_status']='Full femur, lower leg, foot, and route visible at inspected flexed and extended poses.'
+(W/'build/native_gif_playback.json').write_text(json.dumps(g,indent=2),encoding='utf-8')
+receipt={'revision':20,'current_deck':str(deck),'pdf':str(W/'output/Bolen_PhD_Defense_RoseGreen_20261102_v20.pdf'),'sha256':d['sha256'],'file_bytes':d['bytes'],'status':'Final native export, all-slide visual review, package preservation, and bounded media checks completed. Spoken timing is not rehearsed.','baseline':str(W.parent/'C3NS_Revision_20261102_v19/output/Bolen_PhD_Defense_RoseGreen_20261102_v19.pptx'),'submitted_dissertation':r'C:\Users\Ben Bolen\Documents\ME603 Dissertation\Defense\Bolen_Dissertation.pdf','submitted_dissertation_unchanged':True,'core_slides':74,'question_slides':53,'planned_minutes_at_30_seconds':37,'pacing_target_minutes':39,'hard_cap_minutes':45,'pacing_rehearsed':False,'palette':{'leaf':'#58D51B','deep':'#174D24','name':'Rose green','background':'#FFFFFF'},'original_branding_preserved':True,'original_title_honeycomb_preserved':True,'plot_colors_preserved_except_requested_others_group':True,'rendered_slides':127,'individually_inspected_slides':127,'contact_sheets_inspected':0,'pdf_pages':127,'native_chart_owners':[15,25,30,52,101,102],'native_chart_count':7,'chart_workbooks':7,'native_walker_media_slide':56,'native_offline_demo_slide':127,'native_video_playback_report':str(W/'build/native_video_playback.json'),'route_gif_native_export_report':str(W/'build/native_gif_playback.json'),'sadb_positions':list(range(121,128)),'sadb_main_absent':True,'generated_outputs_git_ignored':True,'validation':str(W/'build/validation_delivery.json'),'preservation_checks':str(W/'build/delivery_checks.json'),'visual_review':str(W/'build/visual_review_coverage.json'),'handoff':str(W/'HANDOFF.md'),'compliance':str(W/'DIRECTIVE_COMPLIANCE.md'),'committee_perspective_reviews':['committee_hunt_review.md','committee_turcic_review.md','committee_reddy_review.md','committee_jiang_review.md'],'review_role_boundary':'Independent agent perspectives informed by the named disciplines; not comments or approval from the actual committee.','supervisor_review':str(W/'build/SUPERVISOR_ACCEPTANCE_CHECKLIST.md'),'assertion_evidence_skill':r'C:\Users\Ben Bolen\Documents\Github\ZCode_Skills\assertion-evidence\SKILL.md','retained_final_revisions':[19,20],'source_assets_retained_from_v18':True,'cleanup_complete':False}
+receipt['cleanup_complete']=not (W.parent/'C3NS_Revision_20261031_v18/output/Bolen_PhD_Defense_RoseGreen_20261031_v18.pptx').exists() and not (W/'build/artifact_draft.pptx').exists() and not (W/'build/candidate.pptx').exists()
+if (W/'build/cleanup.json').exists():receipt['bytes_removed_this_cleanup']=sum(x['bytes'] for x in read('build/cleanup.json'))
+(W.parent/'current_deck.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
+(W/'build/final_delivery_receipt.json').write_text(json.dumps(receipt,indent=2),encoding='utf-8')
+print(json.dumps({'current_deck':str(deck),'sha256':d['sha256'],'total_slides':127,'main':74,'hidden_questions':53,'all_checks':True}))

@@ -1,0 +1,19 @@
+--- a/Code/MuJoCo_SNS/spinal/hunt_training/physical_eval.py
++++ b/Code/MuJoCo_SNS/spinal/hunt_training/physical_eval.py
+@@ -126,6 +126,16 @@
+             raise ValueError('Explicit integrated gain checkpoint conflicts with additional caller gain scales; serialize the intended fitted gains instead')
+         capture['integrated_fsa_design']=integrated.apply_to_network(n,integrated_profile,protocol_stage=stage)
+         integrated_check=integrated.verify
++    if cfg.get('renshaw_autogenic_profile'):
++        if not cfg.get('integrated_fsa_profile'):
++            raise ValueError('The named RC candidate requires its reviewed integrated Hunt source')
++        from fsa_design_20261101 import renshaw_autogenic_design as renshaw
++        rc_path=Path(cfg['renshaw_autogenic_profile']).resolve()
++        rc_proof=renshaw.install(n,renshaw.load_profile(rc_path))
++        rc_helper=Path(renshaw.__file__).resolve()
++        source_hashes['renshaw_autogenic_design.py']=hashlib.sha256(rc_helper.read_bytes()).hexdigest()
++        source_hashes['renshaw_autogenic_profile']=hashlib.sha256(rc_path.read_bytes()).hexdigest()
++        capture['renshaw_autogenic_design']={**rc_proof,'profile_file':str(rc_path),'profile_file_sha256':source_hashes['renshaw_autogenic_profile'],'helper_file':str(rc_helper),'helper_file_sha256':source_hashes['renshaw_autogenic_design.py']}
+     native_step=n.step
+     event_state=dict(loaded=np.zeros(2,dtype=bool),unloaded_s=np.zeros(2),trace=np.zeros(2),whole_unloaded_s=np.zeros(2))
+     if cfg.get('diagnose_swing',False):

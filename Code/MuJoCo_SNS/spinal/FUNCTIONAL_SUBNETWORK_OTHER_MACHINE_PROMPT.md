@@ -1,3 +1,17 @@
+# Current source update — Session 1, 2 November 2026
+
+Use these sources before any older condition named below. Graphics work may run on **EB475WS4**; the checked current files are on **easteregg2**. A similarly named local file is not a substitute. Transfer the exact source files and preserve their hashes before drawing.
+
+- Current reviewed Syn6 graph on easteregg2: `D:\Users\Ben Bolen\NeuroCampaign_20261102_9h\integration\syn6_single_in_mono22\composed\FINAL_COMPILED_GRAPH.json`. Expected 794 cells, 382 inputs, 3,200 active pairs; SHA256 `697678b3281d7fb3b2a9322c2bc77b0671e7d05beb932fcb4364b8aa5ddaddea`. Heel excites ipsilateral InE only; InE inhibits RG-F. Heel→InF is absent.
+- Do not use `D:\GitHub\Bipedal_Robot\Neuromechanical_Models\Mujoco_SNS_models\Gait2392_standing_families\syn6_graph_ledger.json` as that controller: it is a historical standing snapshot with dual-IN heel wiring. Preserve it as historical evidence.
+- Actual selected human RF/HAM module: `D:\Users\Ben Bolen\NeuroCampaign_20261102_9h\figures\rfham_selected_subnetwork\EXECUTED_SUBNETWORK_LEDGER.json`. Its existing editable drawing is `D:\Users\Ben Bolen\NeuroCampaign_20261102_9h\figures\rfham_selected_subnetwork\RFHAM_FOURCELL_SELECTED.svg`. Field table and applicability audit are adjacent. Sartorius and gracilis remain separate.
+- Selected whole-body controller identity and exact caller/profile paths: `D:\Users\Ben Bolen\NeuroCampaign_20261102_9h\RESULTS_AND_FILES.md`. This graded biw2lvar-Hunt-PT example is not W2L108, historical Syn6, or the source rat model.
+
+Draw functional subnetworks with the historical LH Biped_2xCPG layout as the style reference: consistent neuron spacing, purposeful routed connections, explicit boundary ports, and no lines disappearing off the page. Preserve actual node IDs, directions, signs, source/target roles, named synapse types, reversal potentials, maximum conductances, thresholds, and saturation values. Do not invent physiological pathways to make the drawing look complete. Label command-controlled gains explicitly. Supply readable vector SVG/PDF and a full-precision field table; no artificial muscle pennation over labels. A compiled-graph JSON is not automatically a native editor import: if adapting its schema, verify round-trip node/edge counts and all numerical fields. Do not overwrite user drawings or localStorage.
+
+Place outputs in an owned durable folder such as `D:\Users\Ben Bolen\NeuroGraphics_20261102` on EB475WS4, not disposable repo tmp. This is a schematic-only task: no training, manuscript edits, source-controller modifications, or physics changes. Earlier instructions follow as historical context; current source identity above takes precedence.
+
+---
 # Prompt for the other machine: functional subnetworks before training
 
 Copy the following prompt into the other coding session. This is a design/audit task, not authorization to start training.

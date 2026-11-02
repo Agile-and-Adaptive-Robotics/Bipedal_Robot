@@ -7,7 +7,7 @@ equations={
  'length_offset':r'$l_m=l_{LMT}-2l_{\mathrm{fitting}}-\chi_0$',
  'max_force_b':r'$F_{620}(l_0)=b_1\,\arctan\!\left[b_2(l_0-b_3)\right]$',
  'max_force_a':r'$F_{\max}(l_0,P)=a_1P\,\arctan\!\left[a_2P(l_0-0.0075\,\mathrm{m})\right]$',
- 'force_balance':r'$F_{\max}F_{\mathrm{BPA}}\!\left(\varepsilon^*(\delta),P^*\right)-k_{eq}\delta=0$',
+ 'force_balance':r'$F_{620}(l_0)\,F_{\mathrm{BPA}}\!\left(\varepsilon^*(\delta),P^*\right)-k_{eq}\delta=0$',
  'route_target':r'$|M^{\mathrm{robot}}(\theta)|\ \geq\ 1.05\,|M^{\mathrm{human}}(\theta)|$',
  'route_variables':r'$\mathbf{x}=[\,\mathbf{p}_{1},\ \mathbf{p}_{\mathrm{end}},\ l_0,\ l_{\mathrm{tendon}}\,]$',
 }

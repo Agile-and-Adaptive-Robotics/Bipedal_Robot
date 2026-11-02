@@ -4,8 +4,10 @@ Model-specific source binding, measurements, baseline acceptance, and objective
 belong in the adapter. This script never invents missing muscle correspondences.
 """
 import argparse,sys,os,json,time,hashlib,math,subprocess,threading,queue,platform,importlib.metadata
+from datetime import datetime
 from pathlib import Path
 from rustuna_runtime import load_rustuna
+from owned_process import OwnedProcessJob
 HERE=Path(__file__).resolve().parent
 MYO=r'D:\Anaconda\envs\myo\python.exe'
 
@@ -14,6 +16,7 @@ class Worker:
   self.log=(folder/'worker_stderr.log').open('a',encoding='utf-8');env=os.environ.copy();env['CONDA_PREFIX']=str(Path(MYO).parent)
   for k in ('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS'):env[k]='1'
   self.process=subprocess.Popen([MYO,'-u',str(HERE/'rustuna_myo_worker.py'),'--adapter',str(adapter)],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=self.log,text=True,encoding='utf-8',env=env,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+  self.process_job=OwnedProcessJob(self.process)
   self.lines=queue.Queue()
   def read():
    for line in self.process.stdout:self.lines.put(line)
@@ -28,10 +31,12 @@ class Worker:
   if not out.get('ok'):raise RuntimeError('Scientific worker rejected request: '+json.dumps(out))
   return out
  def close(self):
-  if self.process.poll() is None:
-   try:self.request({'op':'shutdown'},5.);self.process.wait(timeout=5.)
-   except Exception:self.process.terminate();self.process.wait(timeout=5.)
-  self.log.close()
+  try:
+   if self.process.poll() is None:
+    try:self.request({'op':'shutdown'},5.);self.process.wait(timeout=5.)
+    except Exception:self.process_job.close();self.process.wait(timeout=5.)
+  finally:
+   self.process_job.close();self.log.close()
 
 def sample_parameters(trial,fixed,space):
  params=dict(fixed)
@@ -46,12 +51,13 @@ def replay_completed(study,rows,fixed,space):
   study.tell(trial.number,float(row['value']))
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--manifest',required=True);p.add_argument('--probe-only',action='store_true');p.add_argument('--resume',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--manifest',required=True);p.add_argument('--probe-only',action='store_true');p.add_argument('--resume',action='store_true');p.add_argument('--batch-trials',type=int);a=p.parse_args()
  manifest_path=Path(a.manifest).resolve();raw=manifest_path.read_bytes();cfg=json.loads(raw);adapter=Path(cfg['adapter_path']).resolve();folder=Path(cfg['output_dir']).resolve()
- approved_external=Path(r'D:\Users\Ben Bolen\NeuroCampaign_20261031').resolve()
- if not (folder.is_relative_to(HERE/'runs') or folder.is_relative_to(approved_external)):raise ValueError('Raw study outputs must remain in ignored runs or the user-authorized external campaign root')
+ approved_external=[Path(p).resolve() for p in (r'D:\Users\Ben Bolen\NeuroCampaign_20261031',r'D:\Users\Ben Bolen\NeuroCampaign_20261102_9h')]
+ if not (folder.is_relative_to(HERE/'runs') or any(folder.is_relative_to(p) for p in approved_external)):raise ValueError('Raw study outputs must remain in ignored runs or an explicitly user-authorized external campaign root')
  if not adapter.is_file():raise FileNotFoundError(adapter)
  folder.mkdir(parents=True,exist_ok=True);trialpath=folder/'TRIALS.jsonl'
+ if not a.resume and any((folder/name).exists() for name in ('PROVENANCE.json','MANIFEST.json','ADAPTER_SOURCE.py','TRIALS.jsonl','BEST.json','SUMMARY.json')):raise RuntimeError('Existing study artifacts are preserved, including probe-only runs; use --resume with matching provenance')
  if not a.probe_only and trialpath.exists() and not a.resume:raise RuntimeError('Output already has trials; use --resume for exact seeded replay')
  maxtrials=int(cfg.get('max_trials',64));budget=float(cfg.get('wall_budget_s',900.));timeout=float(cfg.get('trial_timeout_s',180.))
  if not 1<=maxtrials<=256 or not 0<budget<=10800 or not 0<timeout<=900:raise ValueError('Bounded study limits exceeded')
@@ -74,14 +80,24 @@ def main():
   for key,value in provenance.items():
    if old.get(key)!=value:raise RuntimeError('Resume provenance mismatch: '+key)
   provenance=old;rows=[json.loads(line) for line in trialpath.read_text().splitlines() if line.strip()] if trialpath.exists() else []
-  if rows:best=min(rows,key=lambda r:r['value'])
+  if rows:
+   best=min(rows,key=lambda r:r['value']);(folder/'BEST.json').write_text(json.dumps(dict(provenance=provenance,trial=best),indent=2))
  else:provenance['started_epoch_s']=time.time()
  deadline=provenance['started_epoch_s']+budget
+ if cfg.get('absolute_deadline_utc'):
+  absolute=datetime.fromisoformat(cfg['absolute_deadline_utc'].replace('Z','+00:00'))
+  if absolute.tzinfo is None:raise ValueError('Absolute deadline must include a time zone')
+  deadline=min(deadline,absolute.timestamp())
+  if time.time()>=deadline:raise TimeoutError('Absolute campaign deadline exhausted')
  if not a.probe_only and time.time()>=deadline:raise TimeoutError('Original study wall-time budget exhausted; no new evaluations')
  worker=Worker(adapter,folder)
  (folder/'MANIFEST.json').write_bytes(raw);priorpath.write_text(json.dumps(provenance,indent=2));(folder/'ADAPTER_SOURCE.py').write_bytes(adapter.read_bytes())
  try:
-  preflight=worker.request({'op':'preflight','manifest':cfg},timeout);(folder/'PREFLIGHT.json').write_text(json.dumps(preflight,indent=2))
+  preflight_remaining=deadline-time.time()
+  if preflight_remaining<=0:raise TimeoutError('Study deadline exhausted before preflight')
+  preflight_request={'op':'preflight','manifest':cfg}
+  if cfg.get('absolute_deadline_utc'):preflight_request['deadline_epoch_s']=min(deadline,time.time()+timeout)
+  preflight=worker.request(preflight_request,min(timeout,preflight_remaining));(folder/'PREFLIGHT.json').write_text(json.dumps(preflight,indent=2))
   if a.probe_only:print(json.dumps(preflight,indent=2));return
   if preflight.get('ready_for_optimization') is not True:raise RuntimeError('Baseline/mapping gate has not passed: '+json.dumps(preflight))
   startup=int(cfg.get('n_startup_trials',min(10,maxtrials)))
@@ -89,10 +105,14 @@ def main():
   study=backend.create_study(direction='minimize',sampler=backend.samplers.TPESampler(seed=provenance['seed'],n_startup_trials=startup,multivariate=False))
   for candidate in initial:study.enqueue_trial(candidate)
   replay_completed(study,rows,fixed,space)
-  while len(rows)<maxtrials and time.time()<deadline:
+  if a.batch_trials is not None and not 1<=a.batch_trials<=maxtrials:raise ValueError('Batch size must be within the fixed total trial cap')
+  batch_stop=min(maxtrials,len(rows)+a.batch_trials) if a.batch_trials is not None else maxtrials
+  while len(rows)<batch_stop and time.time()<deadline:
    remaining=deadline-time.time();trial=study.ask();params=sample_parameters(trial,fixed,space)
    evaluation_id='trial_%04d_%d'%(trial.number,time.time_ns())
-   request=dict(op='evaluate',trial_number=trial.number,evaluation_id=evaluation_id,evaluation_seed=provenance['seed']+trial.number,params=params,manifest=cfg);(folder/'LAST_REQUEST.json').write_text(json.dumps(request,indent=2))
+   request=dict(op='evaluate',trial_number=trial.number,evaluation_id=evaluation_id,evaluation_seed=provenance['seed']+trial.number,params=params,manifest=cfg)
+   if cfg.get('absolute_deadline_utc'):request['deadline_epoch_s']=min(deadline,time.time()+timeout)
+   (folder/'LAST_REQUEST.json').write_text(json.dumps(request,indent=2))
    tick=time.perf_counter();out=worker.request(request,min(timeout,remaining));value=float(out['value'])
    if not math.isfinite(value):raise ValueError('Worker objective must be finite and carry explicit failure diagnostics')
    row=dict(number=trial.number,evaluation_id=evaluation_id,evaluation_seed=request['evaluation_seed'],params=params,value=value,evaluation_wall_s=time.perf_counter()-tick,diagnostics=out.get('diagnostics',{}));rows.append(row)

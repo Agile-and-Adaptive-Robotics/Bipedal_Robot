@@ -69,3 +69,11 @@ Ben's supplied PDF exists at `C:\Users\Ben Bolen\Documents\ME603 Dissertation\De
 Use concise demonstrations: a few cycles aligned across RG, PF, MN, and joint kinematics; readable functional subnetworks; actual support forces; and explicit stimulus timing. Separate recorded results, electrical design checks, and proposed wiring. Emphasize the implemented toolchain, scoped measured acceleration, transfer methodology, and the concrete corrections. Do not invent unmatched engine timings or present a neural-only speed-up as a complete-loop speed-up.
 
 Scope-specific raw records live under `D:\Users\Ben Bolen\NeuroCampaign_20261031\fsa_design` and `fsa_design_20261101`. No new training, curriculum, tendon, or damping experiment should be launched by the deck builder.
+
+## November 2 scoped continuation
+
+Ben explicitly authorized completion of the comparison/wiring/FSA work, short accelerated body verification, and then small training within nine hours from 2026-11-02 10:13:22 UTC. The final deadline is 19:13:22 UTC (11:13:22 a.m. PST); fitting stops90 minutes earlier. Earlier blanket training holds remain historical; this is a separately recorded selected campaign. No tendon/damping or manuscript changes are authorized.
+
+Live campaign: `D:\Users\Ben Bolen\NeuroCampaign_20261102_9h\EXPERIMENT_RECORD.md` and `CAMPAIGN_MANIFEST.json`. New decisions: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_design_20261101\DISSERTATION_WIRING_DECISIONS_20261102.md`.
+
+Source Hunt/PT passes current stages1/2 with exact numeric tonic1.2 settings. New composed FSA S1 is identical; S2 remains finite/safe but has irregular knee expression despite regular RG/PF timing, so local sensory refinement is the next fit target. Source S3 stays upright but misses sway/load gates. Do not combine these with a different controller's standing pass. The user-directed Syn6 single-IN repair now preserves ipsilateral heel→InE and removes heel→InF, including in a fresh-verified composed runnable profile; see `SYN6_SINGLE_IN_COMPOSED_20261102.md` in the same design folder.
