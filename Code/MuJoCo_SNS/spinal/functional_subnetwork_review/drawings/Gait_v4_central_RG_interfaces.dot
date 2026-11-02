@@ -1,0 +1,34 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="Gait_v4 | central RG interfaces" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"DRIVE" [id="syn6:0",label="DRIVE",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"POSTURE" [id="syn6:1",label="POSTURE",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"RG_E_l" [id="syn6:8",label="RG E l\n16 spiking somas\nNaP h retained",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_F_l" [id="syn6:9",label="RG F l\n16 spiking somas\nNaP h retained",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"InE_l" [id="syn6:10",label="InE l",shape=pentagon,style="dashed,filled",fillcolor="#C3DEF0"];
+"InF_l" [id="syn6:11",label="InF l",shape=pentagon,style="dashed,filled",fillcolor="#C3DEF0"];
+"V0D_l" [id="syn6:26",label="V0D l",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"V3E_l" [id="syn6:27",label="V3E l",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"RG_E_r" [id="syn6:28",label="RG E r\n16 spiking somas\nNaP h retained",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_F_r" [id="syn6:29",label="RG F r\n16 spiking somas\nNaP h retained",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"InE_r" [id="syn6:30",label="InE r",shape=pentagon,style="dashed,filled",fillcolor="#C3DEF0"];
+"InF_r" [id="syn6:31",label="InF r",shape=pentagon,style="dashed,filled",fillcolor="#C3DEF0"];
+"V0D_r" [id="syn6:46",label="V0D r",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"V3E_r" [id="syn6:47",label="V3E r",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"DRIVE" -> "RG_E_l" [id="syn6:edge:0",arrowhead=inv,label="1.7",style="solid",color="#222222"];
+"POSTURE" -> "RG_E_l" [id="syn6:edge:1",arrowhead=inv,label="0.8",style="solid",color="#222222"];
+"InF_l" -> "RG_E_l" [id="syn6:edge:2",arrowhead=odot,label="4",style="solid",color="#222222"];
+"V3E_r" -> "RG_E_l" [id="syn6:edge:3",arrowhead=inv,label="0.02",style="solid",color="#222222"];
+"DRIVE" -> "RG_F_l" [id="syn6:edge:4",arrowhead=inv,label="1.4",style="solid",color="#222222"];
+"InE_l" -> "RG_F_l" [id="syn6:edge:5",arrowhead=odot,label="4",style="solid",color="#222222"];
+"V0D_r" -> "RG_F_l" [id="syn6:edge:6",arrowhead=odot,label="0.07",style="solid",color="#222222"];
+"DRIVE" -> "RG_E_r" [id="syn6:edge:37",arrowhead=inv,label="1.7",style="solid",color="#222222"];
+"POSTURE" -> "RG_E_r" [id="syn6:edge:38",arrowhead=inv,label="0.8",style="solid",color="#222222"];
+"V3E_l" -> "RG_E_r" [id="syn6:edge:39",arrowhead=inv,label="0.02",style="solid",color="#222222"];
+"InF_r" -> "RG_E_r" [id="syn6:edge:40",arrowhead=odot,label="4",style="solid",color="#222222"];
+"DRIVE" -> "RG_F_r" [id="syn6:edge:41",arrowhead=inv,label="1.4",style="solid",color="#222222"];
+"V0D_l" -> "RG_F_r" [id="syn6:edge:42",arrowhead=odot,label="0.07",style="solid",color="#222222"];
+"InE_r" -> "RG_F_r" [id="syn6:edge:43",arrowhead=odot,label="4",style="solid",color="#222222"];
+legend [shape=plaintext, fontsize=11, label="TimingZeroSFA | source population interfaces; each RG contains16 spiking somas.\nChemical edges use spike-derived proxy voltage; these are NOT event synapses.\nZero extra SFA; h tau multiplier0.9496883348174533; 0.2ms internal clock.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}

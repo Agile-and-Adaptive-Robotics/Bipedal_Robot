@@ -1,0 +1,19 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="s3k | connection overview" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"Descending and commissural" [id="Descending and commissural",label="Descending and commissural\n12 neurons",shape=box,style="rounded,filled",fillcolor="#F3E5B5"];
+"RG" [id="RG",label="RG\n8 neurons",shape=box,style="rounded,filled",fillcolor="#C3DEF0"];
+"PF" [id="PF",label="PF\n12 neurons",shape=box,style="rounded,filled",fillcolor="#D0E4BF"];
+"MN" [id="MN",label="MN\n92 neurons",shape=box,style="rounded,filled",fillcolor="#F4C5B8"];
+"Afferents" [id="Afferents",label="Afferents\n276 neurons",shape=box,style="rounded,filled",fillcolor="#E8D9ED"];
+"Reflex INs" [id="Reflex INs",label="Reflex INs\n10 neurons",shape=box,style="rounded,filled",fillcolor="#F3E5B5"];
+"Descending and commissural" -> "RG" [id="s3k:bundle:0",arrowhead=none,label="8 edges",style="solid",color="#555555"];
+"RG" -> "PF" [id="s3k:bundle:1",arrowhead=none,label="8 edges",style="solid",color="#555555"];
+"Descending and commissural" -> "MN" [id="s3k:bundle:2",arrowhead=none,label="18 edges",style="solid",color="#555555"];
+"Afferents" -> "MN" [id="s3k:bundle:3",arrowhead=none,label="712 edges",style="solid",color="#555555"];
+"RG" -> "Reflex INs" [id="s3k:bundle:4",arrowhead=none,label="10 edges",style="solid",color="#555555"];
+"Afferents" -> "Reflex INs" [id="s3k:bundle:5",arrowhead=none,label="54 edges",style="solid",color="#555555"];
+"RG" -> "Descending and commissural" [id="s3k:bundle:6",arrowhead=none,label="2 edges",style="solid",color="#555555"];
+legend [shape=plaintext, fontsize=11, label="Saved standing condition\nModule links bundle actual edges; within-module edges are in expanded panels/tables.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}

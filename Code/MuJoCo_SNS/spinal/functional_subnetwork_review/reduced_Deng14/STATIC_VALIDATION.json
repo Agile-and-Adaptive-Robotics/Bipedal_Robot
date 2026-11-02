@@ -1,0 +1,24 @@
+{
+  "source_sha256": "1e8e1e30046fdd0fcc0b2e2cc64ee122d87885c5912b331f5ecb22ea75e30abb",
+  "method": "AST literal extraction only; source not imported",
+  "neurons": 14,
+  "edges": 18,
+  "named_reference_call": "simulate('fixed', t_end=20000.0, dt=0.1, i_pulse=10.0, t_pulse=100.0, pulse_ms=1.0)",
+  "time_units": "ms",
+  "physical_feedback_edges": 0,
+  "outputs": [
+    "MN_hip_ext",
+    "MN_hip_flx"
+  ],
+  "PF_MN_ODE_uS": [
+    2.565,
+    3.632
+  ],
+  "PF_MN_Simulink_uS": [
+    2.6563,
+    3.6325
+  ],
+  "version_policy": "separate implementations; no merged parameter set",
+  "Table2": "graded model; NaP h is not GLIF adaptive threshold",
+  "simulation_executed": false
+}

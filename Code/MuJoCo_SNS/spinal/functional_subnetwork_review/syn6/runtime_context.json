@@ -1,0 +1,4215 @@
+{
+  "machine": "easteregg2",
+  "family": "syn6",
+  "scope": "Exact reconstructed graded biological standing candidate; not a gait/curriculum or spiking result.",
+  "saved_result": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\pinned_preparation\\syn6_prepared_bio_nominal_v1.result.json",
+  "saved_result_sha256": "4fc5708198e58540fbe51717669c0450bd1b7b32c78f307e91205b81ef9e927d",
+  "saved_configuration": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\rustuna_syn6_v1\\BEST.json",
+  "saved_configuration_sha256": "a821b83e2043de80bd0363b3ccb78db1e8d98ec0bb691f9fb2ed7cc7818b8dd6",
+  "settings": {
+    "pf_mn_gain": 0.013344897908126326,
+    "ib_group_gain": 0.9897272112995432,
+    "standing_bias_scale": 0.9619588149071685
+  },
+  "pathway_group_scales": null,
+  "source_checks": {
+    "runner.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\runner.py",
+      "actual": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5",
+      "saved": "585f4e6274df8d6e9aebf1160400e218420741bde1c34c11c6294c7755fad4a5"
+    },
+    "params.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\params.py",
+      "actual": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+      "saved": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142"
+    },
+    "build_network.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network.py",
+      "actual": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11",
+      "saved": "d0cc93e1dc0a346f8838eb9b3595a368b30a2e7f2b7cbce28ad6b8745245dd11"
+    },
+    "build_network_w2lvar.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network_w2lvar.py",
+      "actual": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542",
+      "saved": "ad679afaf16d47df11359416de0bcd019ad1e4232b37fbc62ce672186087a542"
+    },
+    "build_network_syn6.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network_syn6.py",
+      "actual": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79",
+      "saved": "a4c53a5c1d991d25500c651d77babcd28485099694e30defe8823f5dc0dcfb79"
+    }
+  },
+  "dependency_snapshot_checks": {
+    "muscle_map.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\muscle_map.py",
+      "sha256": "ad49ffb6b5e8c7b6e06a16d83f7f2c37128421f7a0e55d9e6af619bd0d629dc7",
+      "snapshot": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\followup_source_snapshot\\Code\\MuJoCo_SNS\\spinal\\muscle_map.py"
+    },
+    "synergy_basis.npz": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\synergy_basis.npz",
+      "sha256": "63f79c8803b023c9e5ebd5c4c62d571f88d5334df0637058ddc73bfe76c07f6b",
+      "snapshot": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\followup_source_snapshot\\Code\\MuJoCo_SNS\\spinal\\synergy_basis.npz"
+    },
+    "fsa_results/fsa_backsolve.npz": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_results\\fsa_backsolve.npz",
+      "sha256": "45519a6b166a6182c84eb262891ce21217c999fa298f74279c1220ab1517f470",
+      "snapshot": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\followup_source_snapshot\\Code\\MuJoCo_SNS\\spinal\\fsa_results\\fsa_backsolve.npz"
+    },
+    "fsa_backsolve.py": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_backsolve.py",
+      "sha256": "4375e555a753daccfc81265a98d8cdfa0c9e0d2bde8c881e0c5b641344e8e389",
+      "snapshot": null,
+      "scope": "Unarchived analytical helper; exact saved bilateral projection and actual saved neural-current response are separately required."
+    }
+  },
+  "saved_bilateral_projection_exact": true,
+  "saved_bilateral_projection_file": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\pinned_preparation\\syn6_prepared_bio_nominal_v1_projection.json",
+  "construction": "Actual AST-extracted F.run.build; actual two --reflex-stand prebuild flags. Captured after tying, candidate scaling, and64-step exact sparse parity, before any physics.",
+  "current_standing_runner_sha256": "3fe4de4a997f336a9af0fe7d399d3e8ecf6f5f9babaae79d4ed419559f1b6e81",
+  "saved_standing_runner_sha256": "1aef0a9d84c1a6e92f9e35db7c752b8e942fdb12831d5b5e504146bcd16cb254",
+  "standing_runner_scope": "Runner file has acquired subsequent optional experiments; selected flags and actual nested build are reconstructed. Core builder/parameter/physical-runner hashes match saved run exactly.",
+  "census": {
+    "neurons": 794,
+    "inputs": 382,
+    "nonzero_chemical_pairs": 2966,
+    "zero_conductance_defined_pairs": 134,
+    "spiking_neurons": 0,
+    "layer_counts": {
+      "Descending and commissural": 24,
+      "RG": 8,
+      "PF": 16,
+      "MN": 92,
+      "Afferents": 276,
+      "Reflex INs": 378
+    }
+  },
+  "compiled_flags": {
+    "interleg": true,
+    "joint_pf": false,
+    "renshaw": false,
+    "vest": false,
+    "sides": [
+      "l",
+      "r"
+    ],
+    "spiking": false,
+    "gated": true
+  },
+  "global_G": {
+    "rg_mutual_inh": 4.0,
+    "rg_adapt_inh": 2.5,
+    "rg_to_pf": 2.4,
+    "pf_recip_inh": 4.0,
+    "pf_to_mn": 2.0,
+    "posture_to_mn": 0.0,
+    "ia_to_mn": 0.6,
+    "ia_to_antagonist": 0.4,
+    "ii_to_mn": 0.4,
+    "ib_to_mn_inh": 0.35,
+    "ib_group_exc": 0.5,
+    "ib_exc_to_mn": 0.6,
+    "bal_lat_to_abd": 0.8,
+    "bal_trunk": 1.0,
+    "descend_to_rg_e": 1.7,
+    "descend_to_rg_f": 1.4,
+    "posture_to_rg_e": 0.8,
+    "drive_to_pf": 0.05,
+    "posture_gain": 1.0,
+    "phase_reset_e": 0.0,
+    "phase_reset_f": 0.0,
+    "f1_kneext_inh": 0.0,
+    "f1_anklepf_inh": 0.0,
+    "renshaw": 0.0,
+    "ankle_post_walk_trim": 1.0,
+    "heel_rge": 0.0,
+    "toe_rge": 0.0,
+    "ib_rge": 0.0,
+    "contact_onset": 0.0,
+    "contra_swing": 0.0,
+    "contra_kinh": 0.0,
+    "full_rules": 0.0,
+    "pm_gain": 0.0,
+    "pm_T": 1.2,
+    "pm_ws": 0.0,
+    "pm_add": 0.0,
+    "pm_aff": 0.0,
+    "ia_in": 0.0,
+    "c1_gain": 1.0,
+    "v3_gain": 0.0,
+    "rg_weak_exc": 0.0,
+    "joint_pf": 0.0,
+    "heel_pf_layer": 0.0,
+    "toe_df_inh": 0.0,
+    "heel_in_f_exc": 0.0,
+    "ia_pf_f": 0.0,
+    "ii_pf_f": 0.0,
+    "ib_e_central": 0.0,
+    "ia_f_central": 0.0,
+    "ii_f_central": 0.0,
+    "ii_e_central": 0.0,
+    "ia_f_contra_f": 0.0,
+    "v3_to_ibexc": 0.0,
+    "aff_e_rg": 0.0,
+    "aff_f_rg": 0.0,
+    "aff_e_pf": 0.0,
+    "aff_f_pf": 0.0,
+    "vest_ext": 0.0,
+    "vest_flex_inh": 0.0,
+    "vest_prop": 0.0,
+    "coact": 0.0,
+    "syn6": 0.0,
+    "syn6_brainstem": 0.0,
+    "gamma_l": 0.0,
+    "gamma_r": 0.0,
+    "alpha_l": 0.0,
+    "alpha_r": 0.0,
+    "alpha_to_mn": 0.5,
+    "contra_flex": 0.0,
+    "contact_ank_mn": 0.0,
+    "iain_pf_gate": 0.0,
+    "pf_mixed_recip": 0.0,
+    "ii_set_pose": 1.0,
+    "gamma_coact": 0.0
+  },
+  "dt_s": 0.002,
+  "voltage_reference": "SNS voltage relative to resting potential (0mV), not absolute\u221260mV.",
+  "compiled_matrix_sha256": {
+    "g_max_non": "892a03cd905b4486fde30e1d9c44a1889098ffe95da0a4a962ed475971e0128b",
+    "del_e": "c6f6c91b76c3befcc6e090b3c2d25fd39819dc0bffabe9dfe576ad16dfc1487e",
+    "e_lo": "391cbcb24267c1983864811282470a09726ea1c358d788be06409936e09035d8",
+    "e_hi": "40b28dff066192034ee85ca25bc471d6cd232b86b657929d837a226e80ef572a",
+    "input_connectivity": "7a57b9c6844ae742e9936d0a37bd8e9394629798c00c14c59a8b4a7b61125091"
+  },
+  "input_adapters": [
+    {
+      "input": "DRIVE",
+      "target": "DRIVE",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POSTURE",
+      "target": "POSTURE",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_PF",
+      "target": "BAL_PF",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_DF",
+      "target": "BAL_DF",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_TRK_EXT",
+      "target": "BAL_TRK_EXT",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_TRK_FLX",
+      "target": "BAL_TRK_FLX",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_LAT_R",
+      "target": "BAL_LAT_R",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "BAL_LAT_L",
+      "target": "BAL_LAT_L",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "HEEL_c_l",
+      "target": "HEEL_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "TOE_c_l",
+      "target": "TOE_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "LOAD_c_l",
+      "target": "LBIN_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "HEEL_c_r",
+      "target": "HEEL_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "TOE_c_r",
+      "target": "TOE_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "LOAD_c_r",
+      "target": "LBIN_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med1_r",
+      "target": "MN_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med1_r",
+      "target": "Ia_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med1_r",
+      "target": "II_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med1_r",
+      "target": "Ib_glut_med1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med2_r",
+      "target": "MN_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med2_r",
+      "target": "Ia_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med2_r",
+      "target": "II_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med2_r",
+      "target": "Ib_glut_med2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med3_r",
+      "target": "MN_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med3_r",
+      "target": "Ia_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med3_r",
+      "target": "II_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med3_r",
+      "target": "Ib_glut_med3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min1_r",
+      "target": "MN_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min1_r",
+      "target": "Ia_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min1_r",
+      "target": "II_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min1_r",
+      "target": "Ib_glut_min1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min2_r",
+      "target": "MN_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min2_r",
+      "target": "Ia_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min2_r",
+      "target": "II_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min2_r",
+      "target": "Ib_glut_min2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min3_r",
+      "target": "MN_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min3_r",
+      "target": "Ia_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min3_r",
+      "target": "II_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min3_r",
+      "target": "Ib_glut_min3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semimem_r",
+      "target": "MN_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semimem_r",
+      "target": "Ia_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semimem_r",
+      "target": "II_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semimem_r",
+      "target": "Ib_semimem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semiten_r",
+      "target": "MN_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semiten_r",
+      "target": "Ia_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semiten_r",
+      "target": "II_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semiten_r",
+      "target": "Ib_semiten_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemlh_r",
+      "target": "MN_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemlh_r",
+      "target": "Ia_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemlh_r",
+      "target": "II_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemlh_r",
+      "target": "Ib_bifemlh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemsh_r",
+      "target": "MN_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemsh_r",
+      "target": "Ia_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemsh_r",
+      "target": "II_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemsh_r",
+      "target": "Ib_bifemsh_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_sar_r",
+      "target": "MN_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_sar_r",
+      "target": "Ia_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_sar_r",
+      "target": "II_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_sar_r",
+      "target": "Ib_sar_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_long_r",
+      "target": "MN_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_long_r",
+      "target": "Ia_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_long_r",
+      "target": "II_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_long_r",
+      "target": "Ib_add_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_brev_r",
+      "target": "MN_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_brev_r",
+      "target": "Ia_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_brev_r",
+      "target": "II_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_brev_r",
+      "target": "Ib_add_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag1_r",
+      "target": "MN_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag1_r",
+      "target": "Ia_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag1_r",
+      "target": "II_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag1_r",
+      "target": "Ib_add_mag1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag2_r",
+      "target": "MN_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag2_r",
+      "target": "Ia_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag2_r",
+      "target": "II_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag2_r",
+      "target": "Ib_add_mag2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag3_r",
+      "target": "MN_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag3_r",
+      "target": "Ia_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag3_r",
+      "target": "II_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag3_r",
+      "target": "Ib_add_mag3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tfl_r",
+      "target": "MN_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tfl_r",
+      "target": "Ia_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tfl_r",
+      "target": "II_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tfl_r",
+      "target": "Ib_tfl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_pect_r",
+      "target": "MN_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_pect_r",
+      "target": "Ia_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_pect_r",
+      "target": "II_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_pect_r",
+      "target": "Ib_pect_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_grac_r",
+      "target": "MN_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_grac_r",
+      "target": "Ia_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_grac_r",
+      "target": "II_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_grac_r",
+      "target": "Ib_grac_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max1_r",
+      "target": "MN_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max1_r",
+      "target": "Ia_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max1_r",
+      "target": "II_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max1_r",
+      "target": "Ib_glut_max1_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max2_r",
+      "target": "MN_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max2_r",
+      "target": "Ia_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max2_r",
+      "target": "II_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max2_r",
+      "target": "Ib_glut_max2_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max3_r",
+      "target": "MN_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max3_r",
+      "target": "Ia_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max3_r",
+      "target": "II_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max3_r",
+      "target": "Ib_glut_max3_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_iliacus_r",
+      "target": "MN_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_iliacus_r",
+      "target": "Ia_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_iliacus_r",
+      "target": "II_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_iliacus_r",
+      "target": "Ib_iliacus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_psoas_r",
+      "target": "MN_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_psoas_r",
+      "target": "Ia_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_psoas_r",
+      "target": "II_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_psoas_r",
+      "target": "Ib_psoas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_quad_fem_r",
+      "target": "MN_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_quad_fem_r",
+      "target": "Ia_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_quad_fem_r",
+      "target": "II_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_quad_fem_r",
+      "target": "Ib_quad_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_gem_r",
+      "target": "MN_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_gem_r",
+      "target": "Ia_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_gem_r",
+      "target": "II_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_gem_r",
+      "target": "Ib_gem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_peri_r",
+      "target": "MN_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_peri_r",
+      "target": "Ia_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_peri_r",
+      "target": "II_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_peri_r",
+      "target": "Ib_peri_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_rect_fem_r",
+      "target": "MN_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_rect_fem_r",
+      "target": "Ia_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_rect_fem_r",
+      "target": "II_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_rect_fem_r",
+      "target": "Ib_rect_fem_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_med_r",
+      "target": "MN_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_med_r",
+      "target": "Ia_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_med_r",
+      "target": "II_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_med_r",
+      "target": "Ib_vas_med_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_int_r",
+      "target": "MN_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_int_r",
+      "target": "Ia_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_int_r",
+      "target": "II_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_int_r",
+      "target": "Ib_vas_int_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_lat_r",
+      "target": "MN_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_lat_r",
+      "target": "Ia_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_lat_r",
+      "target": "II_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_lat_r",
+      "target": "Ib_vas_lat_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_med_gas_r",
+      "target": "MN_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_med_gas_r",
+      "target": "Ia_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_med_gas_r",
+      "target": "II_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_med_gas_r",
+      "target": "Ib_med_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_lat_gas_r",
+      "target": "MN_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_lat_gas_r",
+      "target": "Ia_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_lat_gas_r",
+      "target": "II_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_lat_gas_r",
+      "target": "Ib_lat_gas_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_soleus_r",
+      "target": "MN_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_soleus_r",
+      "target": "Ia_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_soleus_r",
+      "target": "II_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_soleus_r",
+      "target": "Ib_soleus_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_post_r",
+      "target": "MN_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_post_r",
+      "target": "Ia_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_post_r",
+      "target": "II_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_post_r",
+      "target": "Ib_tib_post_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_dig_r",
+      "target": "MN_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_dig_r",
+      "target": "Ia_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_dig_r",
+      "target": "II_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_dig_r",
+      "target": "Ib_flex_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_hal_r",
+      "target": "MN_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_hal_r",
+      "target": "Ia_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_hal_r",
+      "target": "II_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_hal_r",
+      "target": "Ib_flex_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_ant_r",
+      "target": "MN_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_ant_r",
+      "target": "Ia_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_ant_r",
+      "target": "II_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_ant_r",
+      "target": "Ib_tib_ant_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_brev_r",
+      "target": "MN_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_brev_r",
+      "target": "Ia_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_brev_r",
+      "target": "II_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_brev_r",
+      "target": "Ib_per_brev_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_long_r",
+      "target": "MN_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_long_r",
+      "target": "Ia_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_long_r",
+      "target": "II_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_long_r",
+      "target": "Ib_per_long_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_tert_r",
+      "target": "MN_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_tert_r",
+      "target": "Ia_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_tert_r",
+      "target": "II_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_tert_r",
+      "target": "Ib_per_tert_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_dig_r",
+      "target": "MN_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_dig_r",
+      "target": "Ia_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_dig_r",
+      "target": "II_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_dig_r",
+      "target": "Ib_ext_dig_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_hal_r",
+      "target": "MN_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_hal_r",
+      "target": "Ia_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_hal_r",
+      "target": "II_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_hal_r",
+      "target": "Ib_ext_hal_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med1_l",
+      "target": "MN_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med1_l",
+      "target": "Ia_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med1_l",
+      "target": "II_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med1_l",
+      "target": "Ib_glut_med1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med2_l",
+      "target": "MN_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med2_l",
+      "target": "Ia_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med2_l",
+      "target": "II_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med2_l",
+      "target": "Ib_glut_med2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_med3_l",
+      "target": "MN_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_med3_l",
+      "target": "Ia_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_med3_l",
+      "target": "II_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_med3_l",
+      "target": "Ib_glut_med3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min1_l",
+      "target": "MN_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min1_l",
+      "target": "Ia_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min1_l",
+      "target": "II_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min1_l",
+      "target": "Ib_glut_min1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min2_l",
+      "target": "MN_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min2_l",
+      "target": "Ia_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min2_l",
+      "target": "II_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min2_l",
+      "target": "Ib_glut_min2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_min3_l",
+      "target": "MN_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_min3_l",
+      "target": "Ia_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_min3_l",
+      "target": "II_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_min3_l",
+      "target": "Ib_glut_min3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semimem_l",
+      "target": "MN_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semimem_l",
+      "target": "Ia_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semimem_l",
+      "target": "II_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semimem_l",
+      "target": "Ib_semimem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_semiten_l",
+      "target": "MN_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_semiten_l",
+      "target": "Ia_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_semiten_l",
+      "target": "II_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_semiten_l",
+      "target": "Ib_semiten_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemlh_l",
+      "target": "MN_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemlh_l",
+      "target": "Ia_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemlh_l",
+      "target": "II_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemlh_l",
+      "target": "Ib_bifemlh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_bifemsh_l",
+      "target": "MN_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_bifemsh_l",
+      "target": "Ia_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_bifemsh_l",
+      "target": "II_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_bifemsh_l",
+      "target": "Ib_bifemsh_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_sar_l",
+      "target": "MN_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_sar_l",
+      "target": "Ia_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_sar_l",
+      "target": "II_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_sar_l",
+      "target": "Ib_sar_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_long_l",
+      "target": "MN_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_long_l",
+      "target": "Ia_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_long_l",
+      "target": "II_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_long_l",
+      "target": "Ib_add_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_brev_l",
+      "target": "MN_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_brev_l",
+      "target": "Ia_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_brev_l",
+      "target": "II_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_brev_l",
+      "target": "Ib_add_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag1_l",
+      "target": "MN_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag1_l",
+      "target": "Ia_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag1_l",
+      "target": "II_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag1_l",
+      "target": "Ib_add_mag1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag2_l",
+      "target": "MN_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag2_l",
+      "target": "Ia_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag2_l",
+      "target": "II_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag2_l",
+      "target": "Ib_add_mag2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_add_mag3_l",
+      "target": "MN_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_add_mag3_l",
+      "target": "Ia_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_add_mag3_l",
+      "target": "II_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_add_mag3_l",
+      "target": "Ib_add_mag3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tfl_l",
+      "target": "MN_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tfl_l",
+      "target": "Ia_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tfl_l",
+      "target": "II_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tfl_l",
+      "target": "Ib_tfl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_pect_l",
+      "target": "MN_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_pect_l",
+      "target": "Ia_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_pect_l",
+      "target": "II_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_pect_l",
+      "target": "Ib_pect_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_grac_l",
+      "target": "MN_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_grac_l",
+      "target": "Ia_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_grac_l",
+      "target": "II_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_grac_l",
+      "target": "Ib_grac_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max1_l",
+      "target": "MN_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max1_l",
+      "target": "Ia_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max1_l",
+      "target": "II_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max1_l",
+      "target": "Ib_glut_max1_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max2_l",
+      "target": "MN_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max2_l",
+      "target": "Ia_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max2_l",
+      "target": "II_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max2_l",
+      "target": "Ib_glut_max2_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_glut_max3_l",
+      "target": "MN_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_glut_max3_l",
+      "target": "Ia_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_glut_max3_l",
+      "target": "II_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_glut_max3_l",
+      "target": "Ib_glut_max3_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_iliacus_l",
+      "target": "MN_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_iliacus_l",
+      "target": "Ia_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_iliacus_l",
+      "target": "II_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_iliacus_l",
+      "target": "Ib_iliacus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_psoas_l",
+      "target": "MN_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_psoas_l",
+      "target": "Ia_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_psoas_l",
+      "target": "II_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_psoas_l",
+      "target": "Ib_psoas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_quad_fem_l",
+      "target": "MN_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_quad_fem_l",
+      "target": "Ia_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_quad_fem_l",
+      "target": "II_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_quad_fem_l",
+      "target": "Ib_quad_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_gem_l",
+      "target": "MN_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_gem_l",
+      "target": "Ia_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_gem_l",
+      "target": "II_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_gem_l",
+      "target": "Ib_gem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_peri_l",
+      "target": "MN_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_peri_l",
+      "target": "Ia_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_peri_l",
+      "target": "II_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_peri_l",
+      "target": "Ib_peri_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_rect_fem_l",
+      "target": "MN_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_rect_fem_l",
+      "target": "Ia_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_rect_fem_l",
+      "target": "II_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_rect_fem_l",
+      "target": "Ib_rect_fem_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_med_l",
+      "target": "MN_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_med_l",
+      "target": "Ia_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_med_l",
+      "target": "II_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_med_l",
+      "target": "Ib_vas_med_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_int_l",
+      "target": "MN_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_int_l",
+      "target": "Ia_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_int_l",
+      "target": "II_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_int_l",
+      "target": "Ib_vas_int_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_vas_lat_l",
+      "target": "MN_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_vas_lat_l",
+      "target": "Ia_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_vas_lat_l",
+      "target": "II_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_vas_lat_l",
+      "target": "Ib_vas_lat_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_med_gas_l",
+      "target": "MN_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_med_gas_l",
+      "target": "Ia_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_med_gas_l",
+      "target": "II_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_med_gas_l",
+      "target": "Ib_med_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_lat_gas_l",
+      "target": "MN_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_lat_gas_l",
+      "target": "Ia_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_lat_gas_l",
+      "target": "II_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_lat_gas_l",
+      "target": "Ib_lat_gas_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_soleus_l",
+      "target": "MN_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_soleus_l",
+      "target": "Ia_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_soleus_l",
+      "target": "II_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_soleus_l",
+      "target": "Ib_soleus_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_post_l",
+      "target": "MN_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_post_l",
+      "target": "Ia_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_post_l",
+      "target": "II_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_post_l",
+      "target": "Ib_tib_post_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_dig_l",
+      "target": "MN_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_dig_l",
+      "target": "Ia_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_dig_l",
+      "target": "II_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_dig_l",
+      "target": "Ib_flex_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_flex_hal_l",
+      "target": "MN_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_flex_hal_l",
+      "target": "Ia_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_flex_hal_l",
+      "target": "II_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_flex_hal_l",
+      "target": "Ib_flex_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_tib_ant_l",
+      "target": "MN_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_tib_ant_l",
+      "target": "Ia_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_tib_ant_l",
+      "target": "II_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_tib_ant_l",
+      "target": "Ib_tib_ant_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_brev_l",
+      "target": "MN_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_brev_l",
+      "target": "Ia_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_brev_l",
+      "target": "II_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_brev_l",
+      "target": "Ib_per_brev_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_long_l",
+      "target": "MN_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_long_l",
+      "target": "Ia_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_long_l",
+      "target": "II_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_long_l",
+      "target": "Ib_per_long_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_per_tert_l",
+      "target": "MN_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_per_tert_l",
+      "target": "Ia_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_per_tert_l",
+      "target": "II_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_per_tert_l",
+      "target": "Ib_per_tert_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_dig_l",
+      "target": "MN_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_dig_l",
+      "target": "Ia_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_dig_l",
+      "target": "II_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_dig_l",
+      "target": "Ib_ext_dig_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ext_hal_l",
+      "target": "MN_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ext_hal_l",
+      "target": "Ia_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ext_hal_l",
+      "target": "II_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ext_hal_l",
+      "target": "Ib_ext_hal_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ercspn_r",
+      "target": "MN_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ercspn_r",
+      "target": "Ia_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ercspn_r",
+      "target": "II_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ercspn_r",
+      "target": "Ib_ercspn_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_ercspn_l",
+      "target": "MN_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_ercspn_l",
+      "target": "Ia_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_ercspn_l",
+      "target": "II_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_ercspn_l",
+      "target": "Ib_ercspn_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_intobl_r",
+      "target": "MN_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_intobl_r",
+      "target": "Ia_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_intobl_r",
+      "target": "II_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_intobl_r",
+      "target": "Ib_intobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_intobl_l",
+      "target": "MN_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_intobl_l",
+      "target": "Ia_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_intobl_l",
+      "target": "II_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_intobl_l",
+      "target": "Ib_intobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_extobl_r",
+      "target": "MN_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_extobl_r",
+      "target": "Ia_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_extobl_r",
+      "target": "II_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_extobl_r",
+      "target": "Ib_extobl_r",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "POST_extobl_l",
+      "target": "MN_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ia_extobl_l",
+      "target": "Ia_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "II_extobl_l",
+      "target": "II_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    },
+    {
+      "input": "Ib_extobl_l",
+      "target": "Ib_extobl_l",
+      "weight": 1.0,
+      "units": "nA"
+    }
+  ],
+  "actuation": {
+    "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody_cvt3.xml",
+    "model_sha256": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae",
+    "actuator_entries": 92,
+    "motor_neurons": 92,
+    "biologically_force_pruned": [
+      "gem_l",
+      "gem_r",
+      "peri_l",
+      "peri_r",
+      "quad_fem_l",
+      "quad_fem_r"
+    ],
+    "biologically_active_routes": 86,
+    "policy": "All92 MNs and afferent arcs remain; runner zeros force parameters of six listed routes. This export is biological, not the86-route virtual BPA replacement.",
+    "motor_conversion": "clip(MN voltage / E_HI,0,1); E_HI=5.0 mV; native activation and contraction dynamics follow.",
+    "input_policy": "--reflex-stand: II setpoint at initial standing length; solved per-muscle POST_ bias with saved scale; supraspinal BAL surrogate inputs zero; posture_to_mn=0.",
+    "apparatus": "Existing pelvis springs; vertical stiffness0.01, damping multiplier4.2. Not harness-free.",
+    "frame": "Legacy converted Gait z-up; distinct from y-up CAD."
+  },
+  "effective_type_variants": [
+    {
+      "key": "T001",
+      "gmax_uS": 1.7,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T002",
+      "gmax_uS": 0.8,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T003",
+      "gmax_uS": 4.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T004",
+      "gmax_uS": 0.02,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T005",
+      "gmax_uS": 1.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T006",
+      "gmax_uS": 0.07,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T007",
+      "gmax_uS": 4.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T008",
+      "gmax_uS": 0.5,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T009",
+      "gmax_uS": 0.6,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T010",
+      "gmax_uS": 1.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T011",
+      "gmax_uS": 2.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T012",
+      "gmax_uS": 0.984155426645092,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T013",
+      "gmax_uS": 1.4158445733549077,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T014",
+      "gmax_uS": 2.749,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T015",
+      "gmax_uS": 5.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T016",
+      "gmax_uS": 0.7,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T017",
+      "gmax_uS": 0.35,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T018",
+      "gmax_uS": 0.019921490079522212,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T019",
+      "gmax_uS": 0.0032939871016797353,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T020",
+      "gmax_uS": 0.0161407015969146,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T021",
+      "gmax_uS": 0.019903891665334288,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T022",
+      "gmax_uS": 0.004454842978546713,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T023",
+      "gmax_uS": 0.008345958685545402,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T024",
+      "gmax_uS": 2.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T025",
+      "gmax_uS": 0.5,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T026",
+      "gmax_uS": 0.4948636056497716,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T027",
+      "gmax_uS": 0.0026022071435322794,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T028",
+      "gmax_uS": 0.0032112616084657153,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T029",
+      "gmax_uS": 0.001363011734848171,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T030",
+      "gmax_uS": 0.002388753904310979,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T031",
+      "gmax_uS": 2.7565870269136426e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T032",
+      "gmax_uS": 0.002636476875015712,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T033",
+      "gmax_uS": 5.321406574885988e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T034",
+      "gmax_uS": 0.0005833317950906899,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T035",
+      "gmax_uS": 0.0007788561914186009,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T036",
+      "gmax_uS": 0.022340161613656356,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T037",
+      "gmax_uS": 0.00028051907077173934,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T038",
+      "gmax_uS": 0.011026907057355697,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T039",
+      "gmax_uS": 0.01681789885888987,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T040",
+      "gmax_uS": 0.0007588712293213569,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T041",
+      "gmax_uS": 0.0022654085211361013,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T042",
+      "gmax_uS": 0.00023350189322728752,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T043",
+      "gmax_uS": 0.0011251745386514135,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T044",
+      "gmax_uS": 0.006113679966065016,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T045",
+      "gmax_uS": 0.00010512910419018621,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T046",
+      "gmax_uS": 0.0010257556759431473,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T047",
+      "gmax_uS": 0.001045248572517668,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T048",
+      "gmax_uS": 0.0007148603573101087,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T049",
+      "gmax_uS": 0.0003591382478102992,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T050",
+      "gmax_uS": 0.0003897677395642825,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T051",
+      "gmax_uS": 0.00062342370771213,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T052",
+      "gmax_uS": 0.02762715960266581,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T053",
+      "gmax_uS": 0.020957487139261967,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T054",
+      "gmax_uS": 0.006544707720312266,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T055",
+      "gmax_uS": 7.631799798669127e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T056",
+      "gmax_uS": 0.005628249331224952,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T057",
+      "gmax_uS": 0.028271813825910576,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T058",
+      "gmax_uS": 0.01687527006427414,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T059",
+      "gmax_uS": 0.004001959589771479,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T060",
+      "gmax_uS": 0.0005551491359835806,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T061",
+      "gmax_uS": 0.0035927405343000062,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T062",
+      "gmax_uS": 0.02228023538671053,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T063",
+      "gmax_uS": 0.00016026013550519613,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T064",
+      "gmax_uS": 0.016212486850267212,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T065",
+      "gmax_uS": 0.00012309422906224237,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T066",
+      "gmax_uS": 0.0010648117543741922,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T067",
+      "gmax_uS": 0.00036648697791765545,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T068",
+      "gmax_uS": 0.02569778070387494,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T069",
+      "gmax_uS": 0.0007911339920154791,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T070",
+      "gmax_uS": 0.0030277212222307223,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T071",
+      "gmax_uS": 0.0015995420715959915,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T072",
+      "gmax_uS": 4.29944658973565e-06,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T073",
+      "gmax_uS": 0.0006530418288951651,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T074",
+      "gmax_uS": 0.012415407820633185,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T075",
+      "gmax_uS": 0.0005549921728490885,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T076",
+      "gmax_uS": 0.00010837445168751034,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T077",
+      "gmax_uS": 0.006545855844819225,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T078",
+      "gmax_uS": 0.0018127981124735394,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T079",
+      "gmax_uS": 0.0006403918357327517,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T080",
+      "gmax_uS": 0.00011556880047284221,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T081",
+      "gmax_uS": 0.023151923320481025,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T082",
+      "gmax_uS": 0.0008887980926125753,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T083",
+      "gmax_uS": 4.140881799783056e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T084",
+      "gmax_uS": 0.00022273014796124124,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T085",
+      "gmax_uS": 0.0006081075564323187,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T086",
+      "gmax_uS": 6.67049838456849e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T087",
+      "gmax_uS": 0.005932473608292368,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T088",
+      "gmax_uS": 0.00013610699792978133,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T089",
+      "gmax_uS": 0.00018311520365873633,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T090",
+      "gmax_uS": 0.000227084074605182,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T091",
+      "gmax_uS": 0.0002485243514814257,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T092",
+      "gmax_uS": 0.027328240709195577,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T093",
+      "gmax_uS": 0.0005070198911870542,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T094",
+      "gmax_uS": 0.00017227771700311503,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T095",
+      "gmax_uS": 0.012969310164622353,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T096",
+      "gmax_uS": 0.0011695935804725676,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T097",
+      "gmax_uS": 0.007278810277827739,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T098",
+      "gmax_uS": 0.0010041378179167424,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T099",
+      "gmax_uS": 0.0003830619520400653,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T100",
+      "gmax_uS": 0.0013685377574194002,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T101",
+      "gmax_uS": 0.00017857142082318954,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T102",
+      "gmax_uS": 5.928460048828805e-06,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T103",
+      "gmax_uS": 6.504962077283073e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T104",
+      "gmax_uS": 0.00617908265665937,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T105",
+      "gmax_uS": 0.00011406622201072633,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T106",
+      "gmax_uS": 0.00034084642566129393,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T107",
+      "gmax_uS": 5.5116846151910155e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T108",
+      "gmax_uS": 4.6405085571624705e-06,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T109",
+      "gmax_uS": 0.011189745426381613,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T110",
+      "gmax_uS": 0.00011371744637576443,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T111",
+      "gmax_uS": 0.0004791990718327355,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T112",
+      "gmax_uS": 0.0011950708414096725,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T113",
+      "gmax_uS": 0.0003950192985606505,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T114",
+      "gmax_uS": 0.00048808851134759954,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T115",
+      "gmax_uS": 0.005601906571851845,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T116",
+      "gmax_uS": 0.001520026583056012,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T117",
+      "gmax_uS": 6.694483280283288e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T118",
+      "gmax_uS": 0.013160651197676732,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T119",
+      "gmax_uS": 0.0011048511857147097,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T120",
+      "gmax_uS": 0.0007983302611913372,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T121",
+      "gmax_uS": 0.009120045377773315,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T122",
+      "gmax_uS": 0.018433938565639445,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T123",
+      "gmax_uS": 0.007275983215926481,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T124",
+      "gmax_uS": 0.0011448950940716894,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T125",
+      "gmax_uS": 0.007997747754792532,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T126",
+      "gmax_uS": 0.004861782751601018,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T127",
+      "gmax_uS": 0.008054764407337562,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T128",
+      "gmax_uS": 0.007152019533689358,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T129",
+      "gmax_uS": 4.04439490972869e-06,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T130",
+      "gmax_uS": 0.0007444887648589625,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T131",
+      "gmax_uS": 0.0002046839851354884,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T132",
+      "gmax_uS": 0.017474549251272016,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T133",
+      "gmax_uS": 0.0005132762679037526,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T134",
+      "gmax_uS": 0.00020667862384882553,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T135",
+      "gmax_uS": 0.01808664431619144,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T136",
+      "gmax_uS": 0.0005360331557833243,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T137",
+      "gmax_uS": 0.0003366277182544335,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T138",
+      "gmax_uS": 0.023690818394779614,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T139",
+      "gmax_uS": 0.0007459049997575691,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T140",
+      "gmax_uS": 1.796021388984749e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T141",
+      "gmax_uS": 0.0004166595691657961,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T142",
+      "gmax_uS": 0.03400265963768628,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T143",
+      "gmax_uS": 0.0002754144728626406,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T144",
+      "gmax_uS": 0.0003924074038799694,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T145",
+      "gmax_uS": 0.008892826272022657,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T146",
+      "gmax_uS": 9.864319482917669e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T147",
+      "gmax_uS": 0.027867280214564482,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T148",
+      "gmax_uS": 0.00011021962710296416,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T149",
+      "gmax_uS": 7.768951775587948e-06,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T150",
+      "gmax_uS": 0.0038739184521850226,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T151",
+      "gmax_uS": 0.00017097419017960463,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T152",
+      "gmax_uS": 0.03130532294585846,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T153",
+      "gmax_uS": 0.0002923281499456723,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T154",
+      "gmax_uS": 0.0002461024482650856,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T155",
+      "gmax_uS": 0.008638068426655515,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T156",
+      "gmax_uS": 0.00027306378290154376,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T157",
+      "gmax_uS": 0.02307829606997862,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T158",
+      "gmax_uS": 0.0007505680225934516,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T159",
+      "gmax_uS": 0.0041718333839088255,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T160",
+      "gmax_uS": 9.925882010970618e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T161",
+      "gmax_uS": 0.020068819596648618,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T162",
+      "gmax_uS": 0.000225837021198751,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T163",
+      "gmax_uS": 0.0002210681917720682,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T164",
+      "gmax_uS": 0.0007136399756975753,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T165",
+      "gmax_uS": 5.152406851133831e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T166",
+      "gmax_uS": 0.022787730312938508,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T167",
+      "gmax_uS": 0.00011893715156290858,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T168",
+      "gmax_uS": 2.4220953218628205e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T169",
+      "gmax_uS": 0.0009316403203368961,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T170",
+      "gmax_uS": 0.0006614080507799181,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T171",
+      "gmax_uS": 0.034551176471326966,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T172",
+      "gmax_uS": 0.0006943666204805313,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T173",
+      "gmax_uS": 0.0022178870212920965,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T174",
+      "gmax_uS": 0.0010618556764919714,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T175",
+      "gmax_uS": 0.0018365735254502274,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T176",
+      "gmax_uS": 0.0030386514456731926,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T177",
+      "gmax_uS": 0.003702571605473995,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T178",
+      "gmax_uS": 0.015944349059182805,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T179",
+      "gmax_uS": 0.014511148576752871,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T180",
+      "gmax_uS": 0.004291961702802894,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T181",
+      "gmax_uS": 0.009410677548917862,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T182",
+      "gmax_uS": 0.00011154959182245913,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T183",
+      "gmax_uS": 0.03186370161628648,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T184",
+      "gmax_uS": 0.0008536360471416827,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T185",
+      "gmax_uS": 0.002551167509847213,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T186",
+      "gmax_uS": 0.00012096792819705655,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T187",
+      "gmax_uS": 0.03303757099029279,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T188",
+      "gmax_uS": 3.0365359834702618e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T189",
+      "gmax_uS": 0.0011727957191639937,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T190",
+      "gmax_uS": 0.0016099216737733917,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T191",
+      "gmax_uS": 4.813520132892733e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T192",
+      "gmax_uS": 0.03273409145968462,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T193",
+      "gmax_uS": 2.429118341179515e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T194",
+      "gmax_uS": 9.365490283309901e-05,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T195",
+      "gmax_uS": 0.0011143991923455927,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T196",
+      "gmax_uS": 0.006611961402148306,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T197",
+      "gmax_uS": 0.0005823409979334235,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T198",
+      "gmax_uS": 0.0036016911363596755,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T199",
+      "gmax_uS": 0.0015056866371663835,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T200",
+      "gmax_uS": 0.019279983187075238,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T201",
+      "gmax_uS": 0.005160303471650337,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T202",
+      "gmax_uS": 0.010283577873291714,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T203",
+      "gmax_uS": 0.00903222897413427,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T204",
+      "gmax_uS": 0.0036544993327121736,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T205",
+      "gmax_uS": 0.009891859778131963,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T206",
+      "gmax_uS": 0.010555822911434306,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T207",
+      "gmax_uS": 0.0007456867491410006,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T208",
+      "gmax_uS": 0.019847661913935426,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    },
+    {
+      "key": "T209",
+      "gmax_uS": 0.004253991435929337,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "source_name": "Compiled effective chemical type"
+    }
+  ],
+  "encoder_parameters": {
+    "AFF": {
+      "i0_ii": 1.0,
+      "ia_vel_ref": 0.6,
+      "ii_len_ref": 0.04,
+      "ib_force_ref": 0.5,
+      "ia_gain": 1.6,
+      "ii_gain": 1.2,
+      "ib_gain": 1.5
+    },
+    "MOD": {
+      "ia": 0.8,
+      "ii": 0.6,
+      "ib": 0.5
+    },
+    "PHASE_RESET": {
+      "inh": 1.0,
+      "stance_gate": [
+        0.3,
+        0.7
+      ],
+      "adapt_g": 1.5
+    }
+  },
+  "encoder_units_and_signs": {
+    "length": "m",
+    "length_rate": "m/s",
+    "tension": "abs(native muscle force),N",
+    "current": "nA",
+    "Ia": "max(gIa * clip(length_rate/ia_vel_ref,\u22121,1),0)",
+    "II": "max(i0_ii*(0.3+0.7*RGstance)+gII*clip((length\u2212initial_pose_length)/half_length_range,\u22121,1),0)",
+    "Ib": "max(0.5*gIb*clip(abs(force)/Fmax,0,1.5),0)",
+    "gating": "Exact gIa/gII/gIb phase/drive/gamma factors are retained in the hashed runner.py and AFF/MOD/G dictionaries. No GRF is silently substituted for source tendon Ib."
+  },
+  "backend_parity_max_error_mV": 0.0,
+  "source_backend_parity_max_error_mV": 0.0,
+  "saved_release_replay": {
+    "steps": 64,
+    "max_error_mV": 0.0,
+    "input_file": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\prepared_spiking\\syn6_graded_bpa_current_v2.inputs.npz",
+    "saved_input_offset": 300,
+    "replay_condition": "same graded neural configuration in saved pressure-actuation sibling, not a biological/pressure state-equivalence claim",
+    "scope": "Actual saved release state and actual saved currents; neural only, no mechanics replay or new physical simulation. A physical failure in a pressure sibling is not promoted by neural reconstruction parity."
+  }
+}

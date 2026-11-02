@@ -1,0 +1,195 @@
+{
+  "title": "RF/HAM four-cell PF | right",
+  "nodes": [
+    {
+      "name": "PF_HIP-E_r",
+      "type": "HC-PF-E"
+    },
+    {
+      "name": "PF_HIP-F_r",
+      "type": "HC-PF-F"
+    },
+    {
+      "name": "PF_KNEE-E_r",
+      "type": "HC-PF-E"
+    },
+    {
+      "name": "PF_KNEE-F_r",
+      "type": "HC-PF-F"
+    },
+    {
+      "name": "PF_BI_JOINT_HAM_r",
+      "type": "HC-PF-F"
+    },
+    {
+      "name": "PF_BI_JOINT_RECT_r",
+      "type": "HC-PF-E"
+    },
+    {
+      "name": "MN_semimem_r",
+      "type": "MN"
+    },
+    {
+      "name": "MN_semiten_r",
+      "type": "MN"
+    },
+    {
+      "name": "MN_bifemlh_r",
+      "type": "MN"
+    },
+    {
+      "name": "MN_rect_fem_r",
+      "type": "MN"
+    },
+    {
+      "name": "PF_IN_BI_PAIR_HAM_r",
+      "type": "IN-PF"
+    },
+    {
+      "name": "PF_IN_BI_PAIR_RECT_r",
+      "type": "IN-PF"
+    }
+  ],
+  "edges": [
+    {
+      "from": "PF_HIP-E_r",
+      "to": "PF_BI_JOINT_HAM_r",
+      "sign": "exc",
+      "gain": 0.09386292474536223,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:0",
+      "source": "PF_HIP-E_r",
+      "target": "PF_BI_JOINT_HAM_r",
+      "gmax_uS": 0.09386292474536223
+    },
+    {
+      "from": "PF_KNEE-F_r",
+      "to": "PF_BI_JOINT_HAM_r",
+      "sign": "exc",
+      "gain": 1.2701315939838798,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:1",
+      "source": "PF_KNEE-F_r",
+      "target": "PF_BI_JOINT_HAM_r",
+      "gmax_uS": 1.2701315939838798
+    },
+    {
+      "from": "PF_IN_BI_PAIR_RECT_r",
+      "to": "PF_BI_JOINT_HAM_r",
+      "sign": "inh",
+      "gain": 0.02603713588443201,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:2",
+      "source": "PF_IN_BI_PAIR_RECT_r",
+      "target": "PF_BI_JOINT_HAM_r",
+      "gmax_uS": 0.02603713588443201
+    },
+    {
+      "from": "PF_HIP-F_r",
+      "to": "PF_BI_JOINT_RECT_r",
+      "sign": "exc",
+      "gain": 0.8177964163780587,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:3",
+      "source": "PF_HIP-F_r",
+      "target": "PF_BI_JOINT_RECT_r",
+      "gmax_uS": 0.8177964163780587
+    },
+    {
+      "from": "PF_KNEE-E_r",
+      "to": "PF_BI_JOINT_RECT_r",
+      "sign": "exc",
+      "gain": 0.05555650354208078,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:4",
+      "source": "PF_KNEE-E_r",
+      "target": "PF_BI_JOINT_RECT_r",
+      "gmax_uS": 0.05555650354208078
+    },
+    {
+      "from": "PF_IN_BI_PAIR_HAM_r",
+      "to": "PF_BI_JOINT_RECT_r",
+      "sign": "inh",
+      "gain": 0.023073903021199115,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:5",
+      "source": "PF_IN_BI_PAIR_HAM_r",
+      "target": "PF_BI_JOINT_RECT_r",
+      "gmax_uS": 0.023073903021199115
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_r",
+      "to": "MN_semimem_r",
+      "sign": "exc",
+      "gain": 0.035647257626280994,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 70
+        },
+        {
+          "x": 1060,
+          "y": 70
+        }
+      ],
+      "id": "fourcell:right:6",
+      "source": "PF_BI_JOINT_HAM_r",
+      "target": "MN_semimem_r",
+      "gmax_uS": 0.035647257626280994
+    },
+    {
+      "from": "PF_BI_JOINT_RECT_r",
+      "to": "MN_rect_fem_r",
+      "sign": "exc",
+      "gain": 0.42838915436624636,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 640
+        },
+        {
+          "x": 1060,
+          "y": 640
+        }
+      ],
+      "id": "fourcell:right:7",
+      "source": "PF_BI_JOINT_RECT_r",
+      "target": "MN_rect_fem_r",
+      "gmax_uS": 0.42838915436624636
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_r",
+      "to": "PF_IN_BI_PAIR_HAM_r",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:8",
+      "source": "PF_BI_JOINT_HAM_r",
+      "target": "PF_IN_BI_PAIR_HAM_r",
+      "gmax_uS": 1.0
+    },
+    {
+      "from": "PF_BI_JOINT_RECT_r",
+      "to": "PF_IN_BI_PAIR_RECT_r",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "gmax",
+      "pts": [],
+      "id": "fourcell:right:9",
+      "source": "PF_BI_JOINT_RECT_r",
+      "target": "PF_IN_BI_PAIR_RECT_r",
+      "gmax_uS": 1.0
+    }
+  ],
+  "boundary_references": [],
+  "source_scope": "Recorded Session1 editor projection, not a newly asserted current circuit.\nRF/HAM retained separately from sartorius/gracilis; supplied excitation/inhibition categories."
+}

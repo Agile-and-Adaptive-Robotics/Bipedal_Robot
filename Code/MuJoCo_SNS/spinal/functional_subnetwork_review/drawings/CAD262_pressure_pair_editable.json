@@ -1,0 +1,153 @@
+{
+  "title": "CAD262 | the two neural pressure-controlled routes",
+  "nodes": [
+    {
+      "name": "MN_vas_med_r"
+    },
+    {
+      "name": "PF_E1_r"
+    },
+    {
+      "name": "PF_E2_r"
+    },
+    {
+      "name": "IBEXC_knee_ext_r"
+    },
+    {
+      "name": "Inverse force to pressure r",
+      "display": "Inverse force to\npressure r",
+      "shape": "box"
+    },
+    {
+      "name": "Pressure dynamics r",
+      "display": "Pressure dynamics\nr",
+      "shape": "box"
+    },
+    {
+      "name": "vas med BPA r",
+      "display": "vastus medialis\nBPA r",
+      "shape": "box"
+    },
+    {
+      "name": "MN_vas_med_l"
+    },
+    {
+      "name": "PF_E1_l"
+    },
+    {
+      "name": "PF_E2_l"
+    },
+    {
+      "name": "IBEXC_knee_ext_l"
+    },
+    {
+      "name": "Inverse force to pressure l",
+      "display": "Inverse force to\npressure l",
+      "shape": "box"
+    },
+    {
+      "name": "Pressure dynamics l",
+      "display": "Pressure dynamics\nl",
+      "shape": "box"
+    },
+    {
+      "name": "vas med BPA l",
+      "display": "vastus medialis\nBPA l",
+      "shape": "box"
+    }
+  ],
+  "edges": [
+    {
+      "id": "CADpair:PF_E1_r:MN_vas_med_r",
+      "source": "PF_E1_r",
+      "target": "MN_vas_med_r",
+      "gmax_uS": 0.0021767766805152913,
+      "sign": "exc",
+      "source_evidence": "cad_pair_unclamped.py FreePair.__init__; RECRUITMENT_PREREGISTRATION.json; saved endpoint names"
+    },
+    {
+      "id": "CADpair:PF_E2_r:MN_vas_med_r",
+      "source": "PF_E2_r",
+      "target": "MN_vas_med_r",
+      "gmax_uS": 0.003265165020772937,
+      "sign": "exc",
+      "source_evidence": "cad_pair_unclamped.py FreePair.__init__; RECRUITMENT_PREREGISTRATION.json; saved endpoint names"
+    },
+    {
+      "id": "CADpair:IBEXC_knee_ext_r:MN_vas_med_r",
+      "source": "IBEXC_knee_ext_r",
+      "target": "MN_vas_med_r",
+      "gmax_uS": 0.006530330041545874,
+      "sign": "exc",
+      "source_evidence": "cad_pair_unclamped.py FreePair.__init__; RECRUITMENT_PREREGISTRATION.json; saved endpoint names"
+    },
+    {
+      "id": "CADpair:signal:r:Inverse force to pressure",
+      "source": "MN_vas_med_r",
+      "target": "Inverse force to pressure r",
+      "sign": "signal",
+      "source_evidence": "Saved assumed pressure-pair configuration and reproduction manifest; engineering signal path, not chemical synapse"
+    },
+    {
+      "id": "CADpair:signal:r:Pressure dynamics",
+      "source": "Inverse force to pressure r",
+      "target": "Pressure dynamics r",
+      "sign": "signal",
+      "source_evidence": "Saved assumed pressure-pair configuration and reproduction manifest; engineering signal path, not chemical synapse"
+    },
+    {
+      "id": "CADpair:signal:r:vas med BPA",
+      "source": "Pressure dynamics r",
+      "target": "vas med BPA r",
+      "sign": "signal",
+      "source_evidence": "Saved assumed pressure-pair configuration and reproduction manifest; engineering signal path, not chemical synapse"
+    },
+    {
+      "id": "CADpair:PF_E1_l:MN_vas_med_l",
+      "source": "PF_E1_l",
+      "target": "MN_vas_med_l",
+      "gmax_uS": 0.0021767766805152913,
+      "sign": "exc",
+      "source_evidence": "cad_pair_unclamped.py FreePair.__init__; RECRUITMENT_PREREGISTRATION.json; saved endpoint names"
+    },
+    {
+      "id": "CADpair:PF_E2_l:MN_vas_med_l",
+      "source": "PF_E2_l",
+      "target": "MN_vas_med_l",
+      "gmax_uS": 0.003265165020772937,
+      "sign": "exc",
+      "source_evidence": "cad_pair_unclamped.py FreePair.__init__; RECRUITMENT_PREREGISTRATION.json; saved endpoint names"
+    },
+    {
+      "id": "CADpair:IBEXC_knee_ext_l:MN_vas_med_l",
+      "source": "IBEXC_knee_ext_l",
+      "target": "MN_vas_med_l",
+      "gmax_uS": 0.006530330041545874,
+      "sign": "exc",
+      "source_evidence": "cad_pair_unclamped.py FreePair.__init__; RECRUITMENT_PREREGISTRATION.json; saved endpoint names"
+    },
+    {
+      "id": "CADpair:signal:l:Inverse force to pressure",
+      "source": "MN_vas_med_l",
+      "target": "Inverse force to pressure l",
+      "sign": "signal",
+      "source_evidence": "Saved assumed pressure-pair configuration and reproduction manifest; engineering signal path, not chemical synapse"
+    },
+    {
+      "id": "CADpair:signal:l:Pressure dynamics",
+      "source": "Inverse force to pressure l",
+      "target": "Pressure dynamics l",
+      "sign": "signal",
+      "source_evidence": "Saved assumed pressure-pair configuration and reproduction manifest; engineering signal path, not chemical synapse"
+    },
+    {
+      "id": "CADpair:signal:l:vas med BPA",
+      "source": "Pressure dynamics l",
+      "target": "vas med BPA l",
+      "sign": "signal",
+      "source_evidence": "Saved assumed pressure-pair configuration and reproduction manifest; engineering signal path, not chemical synapse"
+    }
+  ],
+  "boundary_references": [],
+  "source_scope": "Support085 mixed condition | only bilateral vas_med pair is expanded here.\nDashed blue arrows: engineering signal conversion. Pair POST current=0.\n52 other routes retain external hybrid allocation and documented force floor.\nMeasured upward support87.3372%BW; guidance retained; not an all-BPA controller."
+}

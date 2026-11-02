@@ -1,0 +1,24 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="W2L704_80 | connection overview" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"Sensory / reflex" [id="Sensory / reflex",label="Sensory / reflex\n52 neurons",shape=box,style="rounded,filled",fillcolor="#E8D9ED"];
+"Rhythm generator" [id="Rhythm generator",label="Rhythm generator\n8 neurons",shape=box,style="rounded,filled",fillcolor="#C3DEF0"];
+"Pattern formation" [id="Pattern formation",label="Pattern formation\n16 neurons",shape=box,style="rounded,filled",fillcolor="#D0E4BF"];
+"Motor / recurrent" [id="Motor / recurrent",label="Motor / recurrent\n24 neurons",shape=box,style="rounded,filled",fillcolor="#F4C5B8"];
+"Foot contact" [id="Foot contact",label="Foot contact\n4 neurons",shape=box,style="rounded,filled",fillcolor="#F3E5B5"];
+"Other source cells" [id="Other source cells",label="Other source cells\n4 neurons",shape=box,style="rounded,filled",fillcolor="#F3E5B5"];
+"Pattern formation" -> "Motor / recurrent" [id="W2L704_80:bundle:0",arrowhead=none,label="12 edges",style="solid",color="#555555"];
+"Sensory / reflex" -> "Motor / recurrent" [id="W2L704_80:bundle:1",arrowhead=none,label="36 edges",style="solid",color="#555555"];
+"Motor / recurrent" -> "Sensory / reflex" [id="W2L704_80:bundle:2",arrowhead=none,label="12 edges",style="solid",color="#555555"];
+"Pattern formation" -> "Sensory / reflex" [id="W2L704_80:bundle:3",arrowhead=none,label="12 edges",style="solid",color="#555555"];
+"Sensory / reflex" -> "Pattern formation" [id="W2L704_80:bundle:4",arrowhead=none,label="12 edges",style="solid",color="#555555"];
+"Foot contact" -> "Motor / recurrent" [id="W2L704_80:bundle:5",arrowhead=none,label="8 edges",style="solid",color="#555555"];
+"Foot contact" -> "Rhythm generator" [id="W2L704_80:bundle:6",arrowhead=none,label="4 edges",style="solid",color="#555555"];
+"Foot contact" -> "Pattern formation" [id="W2L704_80:bundle:7",arrowhead=none,label="4 edges",style="solid",color="#555555"];
+"Rhythm generator" -> "Other source cells" [id="W2L704_80:bundle:8",arrowhead=none,label="4 edges",style="solid",color="#555555"];
+"Rhythm generator" -> "Pattern formation" [id="W2L704_80:bundle:9",arrowhead=none,label="8 edges",style="solid",color="#555555"];
+"Sensory / reflex" -> "Rhythm generator" [id="W2L704_80:bundle:10",arrowhead=none,label="12 edges",style="solid",color="#555555"];
+"Other source cells" -> "Rhythm generator" [id="W2L704_80:bundle:11",arrowhead=none,label="4 edges",style="solid",color="#555555"];
+legend [shape=plaintext, fontsize=11, label="Saved W2L hybrid condition; source neuron interfaces shown, not 704 individual somas\nModule links bundle actual edges; within-module edges are in expanded panels/tables.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}

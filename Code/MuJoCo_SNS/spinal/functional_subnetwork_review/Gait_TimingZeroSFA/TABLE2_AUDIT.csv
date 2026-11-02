@@ -1,0 +1,8 @@
+﻿step,operation,finding,status
+1,"Fmax,R,theta0",No declared network-wide Table2 Fmax/R/theta0 contract. RG/PF soma thresholds and source voltage window differ. Encoding rate is not model bandwidth.,incomplete
+2,role-dependent m,"Soma thresholds fixed per cell, m=0 special case. RG NaP h is retained separately; zero adaptation increment does not imply removal of the h gate.",fixed-threshold special case; role design not demonstrated
+3,tau_theta,No adaptive-threshold state. 25ms AP-history and scaled NaP h time constant are not tau_theta.,not an adaptive-threshold implementation
+4,derived bias Eq21,Bias copied from source compiled neuron. No evidence of recalculation from Gmem*theta0/(2-m).,not demonstrated
+5,tau_mem and rate range Eq23,"Source C/G plus conductance and NaP dynamics retained. Fixed reset/refractory, nonlinear inverse passage-time decoder. No declared Fmax rate-range proof by Eq23.",not demonstrated
+6,tau_s/delta Eq27,25ms exponential spike-history estimator with event-marked conductance and h; no declared delta or equivalent reset-to-peak chemical event law. Do not relabel observer memory as compliant tau_s.,different interface; literal step not demonstrated
+7,functional Gmax Eq29,Saved syn6 graded chemical conductances consume spike-derived proxy voltage. They are not newly derived Eq29 spike-event conductances.,graded interface retained; literal step not demonstrated

@@ -1,0 +1,34 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="s3k | bilateral RG" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"DRIVE" [id="s3k:0",label="DRIVE",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"POSTURE" [id="s3k:1",label="POSTURE",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"RG_E_l" [id="s3k:8",label="RG E l",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_F_l" [id="s3k:9",label="RG F l",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"InE_l" [id="s3k:10",label="InE l",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"InF_l" [id="s3k:11",label="InF l",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_E_r" [id="s3k:18",label="RG E r",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_F_r" [id="s3k:19",label="RG F r",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"InE_r" [id="s3k:20",label="InE r",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"InF_r" [id="s3k:21",label="InF r",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"CIN_F_r" [id="s3k:406",label="CIN F r",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"CIN_F_l" [id="s3k:408",label="CIN F l",shape=pentagon,style="dashed,filled",fillcolor="#F3E5B5"];
+"DRIVE" -> "RG_E_l" [id="s3k:edge:0",arrowhead=inv,label="1.7",style="solid",color="#222222"];
+"POSTURE" -> "RG_E_l" [id="s3k:edge:1",arrowhead=inv,label="0.8",style="solid",color="#222222"];
+"InF_l" -> "RG_E_l" [id="s3k:edge:2",arrowhead=odot,label="4",style="solid",color="#222222"];
+"DRIVE" -> "RG_F_l" [id="s3k:edge:3",arrowhead=inv,label="1.4",style="solid",color="#222222"];
+"InE_l" -> "RG_F_l" [id="s3k:edge:4",arrowhead=odot,label="4",style="solid",color="#222222"];
+"CIN_F_r" -> "RG_F_l" [id="s3k:edge:5",arrowhead=odot,label="4",style="solid",color="#222222"];
+"RG_E_l" -> "InE_l" [id="s3k:edge:6",arrowhead=inv,label="4",style="solid",color="#222222"];
+"RG_F_l" -> "InF_l" [id="s3k:edge:7",arrowhead=inv,label="4",style="solid",color="#222222"];
+"DRIVE" -> "RG_E_r" [id="s3k:edge:20",arrowhead=inv,label="1.7",style="solid",color="#222222"];
+"POSTURE" -> "RG_E_r" [id="s3k:edge:21",arrowhead=inv,label="0.8",style="solid",color="#222222"];
+"InF_r" -> "RG_E_r" [id="s3k:edge:22",arrowhead=odot,label="4",style="solid",color="#222222"];
+"DRIVE" -> "RG_F_r" [id="s3k:edge:23",arrowhead=inv,label="1.4",style="solid",color="#222222"];
+"InE_r" -> "RG_F_r" [id="s3k:edge:24",arrowhead=odot,label="4",style="solid",color="#222222"];
+"CIN_F_l" -> "RG_F_r" [id="s3k:edge:25",arrowhead=odot,label="4",style="solid",color="#222222"];
+"RG_E_r" -> "InE_r" [id="s3k:edge:26",arrowhead=inv,label="4",style="solid",color="#222222"];
+"RG_F_r" -> "InF_r" [id="s3k:edge:27",arrowhead=inv,label="4",style="solid",color="#222222"];
+legend [shape=plaintext, fontsize=11, label="Saved standing condition | RG neurons and their actual incoming boundary connections.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}

@@ -1,0 +1,177 @@
+{
+  "title": "RF / HAM \u00b7 four-cell PF subnetwork (saved left-side projection)",
+  "source_connections": [
+    {
+      "from": "PF_HIP-E_l",
+      "to": "PF_BI_JOINT_HAM_l",
+      "sign": "exc",
+      "gain": 0.11838299119136543,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:0",
+      "source": "PF_HIP-E_l",
+      "target": "PF_BI_JOINT_HAM_l",
+      "gmax_uS": 0.11838299119136543,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_KNEE-F_l",
+      "to": "PF_BI_JOINT_HAM_l",
+      "sign": "exc",
+      "gain": 1.8166201384445286,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:1",
+      "source": "PF_KNEE-F_l",
+      "target": "PF_BI_JOINT_HAM_l",
+      "gmax_uS": 1.8166201384445286,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_IN_BI_PAIR_RECT_l",
+      "to": "PF_BI_JOINT_HAM_l",
+      "sign": "inh",
+      "gain": 0.14780009040026057,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:2",
+      "source": "PF_IN_BI_PAIR_RECT_l",
+      "target": "PF_BI_JOINT_HAM_l",
+      "gmax_uS": 0.14780009040026057,
+      "sign_category": "inh"
+    },
+    {
+      "from": "PF_HIP-F_l",
+      "to": "PF_BI_JOINT_RECT_l",
+      "sign": "exc",
+      "gain": 0.9228324574324517,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:3",
+      "source": "PF_HIP-F_l",
+      "target": "PF_BI_JOINT_RECT_l",
+      "gmax_uS": 0.9228324574324517,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_KNEE-E_l",
+      "to": "PF_BI_JOINT_RECT_l",
+      "sign": "exc",
+      "gain": 0.18288825903301048,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:4",
+      "source": "PF_KNEE-E_l",
+      "target": "PF_BI_JOINT_RECT_l",
+      "gmax_uS": 0.18288825903301048,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_IN_BI_PAIR_HAM_l",
+      "to": "PF_BI_JOINT_RECT_l",
+      "sign": "inh",
+      "gain": 0.501121310047061,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:5",
+      "source": "PF_IN_BI_PAIR_HAM_l",
+      "target": "PF_BI_JOINT_RECT_l",
+      "gmax_uS": 0.501121310047061,
+      "sign_category": "inh"
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_l",
+      "to": "MN_semimem_l",
+      "sign": "exc",
+      "gain": 0.564914381198741,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 70
+        },
+        {
+          "x": 1060,
+          "y": 70
+        }
+      ],
+      "id": "RFHAM:left:6",
+      "source": "PF_BI_JOINT_HAM_l",
+      "target": "MN_semimem_l",
+      "gmax_uS": 0.564914381198741,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_l",
+      "to": "MN_semiten_l",
+      "sign": "exc",
+      "gain": 0.017836530381322907,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 110
+        },
+        {
+          "x": 1060,
+          "y": 110
+        }
+      ],
+      "id": "RFHAM:left:7",
+      "source": "PF_BI_JOINT_HAM_l",
+      "target": "MN_semiten_l",
+      "gmax_uS": 0.017836530381322907,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_BI_JOINT_RECT_l",
+      "to": "MN_rect_fem_l",
+      "sign": "exc",
+      "gain": 0.4402096126566321,
+      "tag": "gmax",
+      "pts": [
+        {
+          "x": 940,
+          "y": 640
+        },
+        {
+          "x": 1060,
+          "y": 640
+        }
+      ],
+      "id": "RFHAM:left:8",
+      "source": "PF_BI_JOINT_RECT_l",
+      "target": "MN_rect_fem_l",
+      "gmax_uS": 0.4402096126566321,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_BI_JOINT_HAM_l",
+      "to": "PF_IN_BI_PAIR_HAM_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:9",
+      "source": "PF_BI_JOINT_HAM_l",
+      "target": "PF_IN_BI_PAIR_HAM_l",
+      "gmax_uS": 1.0,
+      "sign_category": "exc"
+    },
+    {
+      "from": "PF_BI_JOINT_RECT_l",
+      "to": "PF_IN_BI_PAIR_RECT_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "gmax",
+      "pts": [],
+      "id": "RFHAM:left:10",
+      "source": "PF_BI_JOINT_RECT_l",
+      "target": "PF_IN_BI_PAIR_RECT_l",
+      "gmax_uS": 1.0,
+      "sign_category": "exc"
+    }
+  ],
+  "semicircular_bridges": 3,
+  "circuits_executed": 0
+}

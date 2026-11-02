@@ -1,0 +1,38 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="Reduced Deng14 | full 14-neuron circuit" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"RG_HC_ext" [id="deng14:0",label="RG HC ext",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_HC_flx" [id="deng14:1",label="RG HC flx",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_IN_ext" [id="deng14:2",label="RG IN ext",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RG_IN_flx" [id="deng14:3",label="RG IN flx",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"PF_hip_HC_ext" [id="deng14:4",label="PF hip HC ext",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_hip_HC_flx" [id="deng14:5",label="PF hip HC flx",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_ka_HC_ext" [id="deng14:6",label="PF ka HC ext",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_ka_HC_flx" [id="deng14:7",label="PF ka HC flx",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_hip_IN_ext" [id="deng14:8",label="PF hip IN ext",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_hip_IN_flx" [id="deng14:9",label="PF hip IN flx",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_ka_IN_ext" [id="deng14:10",label="PF ka IN ext",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_ka_IN_flx" [id="deng14:11",label="PF ka IN flx",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"MN_hip_ext" [id="deng14:12",label="MN hip ext",shape=ellipse,style="filled",fillcolor="#F4C5B8"];
+"MN_hip_flx" [id="deng14:13",label="MN hip flx",shape=ellipse,style="filled",fillcolor="#F4C5B8"];
+"RG_HC_ext" -> "RG_IN_ext" [id="deng14:edge:0",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"RG_IN_ext" -> "RG_HC_flx" [id="deng14:edge:1",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"RG_HC_flx" -> "RG_IN_flx" [id="deng14:edge:2",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"RG_IN_flx" -> "RG_HC_ext" [id="deng14:edge:3",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"RG_HC_ext" -> "PF_hip_HC_ext" [id="deng14:edge:4",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"RG_HC_flx" -> "PF_hip_HC_flx" [id="deng14:edge:5",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"RG_HC_ext" -> "PF_ka_HC_ext" [id="deng14:edge:6",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"RG_HC_flx" -> "PF_ka_HC_flx" [id="deng14:edge:7",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"PF_hip_HC_ext" -> "PF_hip_IN_ext" [id="deng14:edge:8",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"PF_hip_IN_ext" -> "PF_hip_HC_flx" [id="deng14:edge:9",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"PF_hip_HC_flx" -> "PF_hip_IN_flx" [id="deng14:edge:10",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"PF_hip_IN_flx" -> "PF_hip_HC_ext" [id="deng14:edge:11",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"PF_ka_HC_ext" -> "PF_ka_IN_ext" [id="deng14:edge:12",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"PF_ka_IN_ext" -> "PF_ka_HC_flx" [id="deng14:edge:13",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"PF_ka_HC_flx" -> "PF_ka_IN_flx" [id="deng14:edge:14",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"PF_ka_IN_flx" -> "PF_ka_HC_ext" [id="deng14:edge:15",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"PF_hip_HC_ext" -> "MN_hip_ext" [id="deng14:edge:16",arrowhead=inv,label="2.56",style="solid",color="#222222"];
+"PF_hip_HC_flx" -> "MN_hip_flx" [id="deng14:edge:17",arrowhead=inv,label="3.63",style="solid",color="#222222"];
+legend [shape=plaintext, fontsize=11, label="Fixed-h direct ODE reference, 350ms h; no physical afferents or whole-body connection.\nArrow/circle classification is relative to resting Vm. ODE gains retained.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}
