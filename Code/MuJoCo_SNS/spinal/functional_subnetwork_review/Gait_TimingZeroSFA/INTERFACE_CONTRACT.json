@@ -1,0 +1,17 @@
+{
+  "configuration_sha256": "632926be243e972be69f90505d4af275d5e6d85dfffa95f1c1c5b46d908d4ea3",
+  "base_graph_sha256": "0843e32e4e5cf16de974720620c0101e05bf1424018c7815d21b8b1182d6e5b0",
+  "cells": {
+    "spiking": 256,
+    "graded": 778
+  },
+  "central_population_count": 16,
+  "source_graph_policy": "Preserve original syn6 graph at population interfaces; no invented all-to-all soma edges.",
+  "readout": "Causal rate/event-marked g/h inverse decoder; silent rate <0.1 maps to -4mV. Support weighting uses count=rate*16*(2*.025).",
+  "clocks": {
+    "internal_spike_s": 0.0002,
+    "neural_physics_s": 0.002
+  },
+  "source_state_warning": "Frozen physical continuation and initial compiled state were not reconstructed or stepped in this static extraction.",
+  "design_complete": false
+}

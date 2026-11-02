@@ -1,0 +1,907 @@
+{
+  "title": "syn6 \u00b7 RG and six NMF pattern-formation channels",
+  "source_connections": [
+    {
+      "index": 3,
+      "id": "syn6:edge:3",
+      "source_index": 47,
+      "target_index": 8,
+      "source": "V3E_r",
+      "target": "RG_E_l",
+      "gmax_uS": 0.02,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T004",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.02,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 0.02,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 6,
+      "id": "syn6:edge:6",
+      "source_index": 46,
+      "target_index": 9,
+      "source": "V0D_r",
+      "target": "RG_F_l",
+      "gmax_uS": 0.07,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T006",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.07,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 0.07,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": -5.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "inh"
+    },
+    {
+      "index": 8,
+      "id": "syn6:edge:8",
+      "source_index": 12,
+      "target_index": 10,
+      "source": "HEEL_l",
+      "target": "InE_l",
+      "gmax_uS": 0.5,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T008",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 0.5,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 10,
+      "id": "syn6:edge:10",
+      "source_index": 47,
+      "target_index": 10,
+      "source": "V3E_r",
+      "target": "InE_l",
+      "gmax_uS": 1.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T010",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 1.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 12,
+      "id": "syn6:edge:12",
+      "source_index": 12,
+      "target_index": 11,
+      "source": "HEEL_l",
+      "target": "InF_l",
+      "gmax_uS": 0.5,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T008",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 0.5,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 13,
+      "id": "syn6:edge:13",
+      "source_index": 9,
+      "target_index": 15,
+      "source": "RG_F_l",
+      "target": "PF_S1_l",
+      "gmax_uS": 2.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T011",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 2.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 2.4,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 14,
+      "id": "syn6:edge:14",
+      "source_index": 21,
+      "target_index": 15,
+      "source": "PF_IN_E_l",
+      "target": "PF_S1_l",
+      "gmax_uS": 4.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T003",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 4.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 4.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": -5.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "inh"
+    },
+    {
+      "index": 15,
+      "id": "syn6:edge:15",
+      "source_index": 8,
+      "target_index": 16,
+      "source": "RG_E_l",
+      "target": "PF_S2_l",
+      "gmax_uS": 2.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T011",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 2.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 2.4,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 16,
+      "id": "syn6:edge:16",
+      "source_index": 22,
+      "target_index": 16,
+      "source": "PF_IN_F_l",
+      "target": "PF_S2_l",
+      "gmax_uS": 4.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T003",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 4.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 4.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": -5.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "inh"
+    },
+    {
+      "index": 17,
+      "id": "syn6:edge:17",
+      "source_index": 8,
+      "target_index": 17,
+      "source": "RG_E_l",
+      "target": "PF_S3_l",
+      "gmax_uS": 2.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T011",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 2.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 2.4,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 18,
+      "id": "syn6:edge:18",
+      "source_index": 22,
+      "target_index": 17,
+      "source": "PF_IN_F_l",
+      "target": "PF_S3_l",
+      "gmax_uS": 4.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T003",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 4.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 4.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": -5.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "inh"
+    },
+    {
+      "index": 19,
+      "id": "syn6:edge:19",
+      "source_index": 9,
+      "target_index": 18,
+      "source": "RG_F_l",
+      "target": "PF_S4_l",
+      "gmax_uS": 2.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T011",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 2.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 2.4,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 20,
+      "id": "syn6:edge:20",
+      "source_index": 21,
+      "target_index": 18,
+      "source": "PF_IN_E_l",
+      "target": "PF_S4_l",
+      "gmax_uS": 4.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T003",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 4.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 4.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": -5.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "inh"
+    },
+    {
+      "index": 21,
+      "id": "syn6:edge:21",
+      "source_index": 8,
+      "target_index": 19,
+      "source": "RG_E_l",
+      "target": "PF_S5_l",
+      "gmax_uS": 0.984155426645092,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T012",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.984155426645092,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 0.984155426645092,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 22,
+      "id": "syn6:edge:22",
+      "source_index": 9,
+      "target_index": 19,
+      "source": "RG_F_l",
+      "target": "PF_S5_l",
+      "gmax_uS": 1.4158445733549077,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T013",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.4158445733549077,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 1.4158445733549077,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 23,
+      "id": "syn6:edge:23",
+      "source_index": 23,
+      "target_index": 19,
+      "source": "TOEDF_l",
+      "target": "PF_S5_l",
+      "gmax_uS": 2.749,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T014",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 2.749,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 2.749,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": -5.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "inh"
+    },
+    {
+      "index": 24,
+      "id": "syn6:edge:24",
+      "source_index": 8,
+      "target_index": 20,
+      "source": "RG_E_l",
+      "target": "PF_S6_l",
+      "gmax_uS": 2.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T011",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 2.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 2.4,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 25,
+      "id": "syn6:edge:25",
+      "source_index": 22,
+      "target_index": 20,
+      "source": "PF_IN_F_l",
+      "target": "PF_S6_l",
+      "gmax_uS": 4.0,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T003",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 4.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 4.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": -5.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "inh"
+    },
+    {
+      "index": 26,
+      "id": "syn6:edge:26",
+      "source_index": 12,
+      "target_index": 21,
+      "source": "HEEL_l",
+      "target": "PF_IN_E_l",
+      "gmax_uS": 0.5,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T008",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 0.5,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    },
+    {
+      "index": 32,
+      "id": "syn6:edge:32",
+      "source_index": 13,
+      "target_index": 23,
+      "source": "TOE_l",
+      "target": "TOEDF_l",
+      "gmax_uS": 5.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "type_key": "T015",
+      "source_type_name": "Non-Spiking Connection",
+      "source_connection_definitions": [
+        {
+          "name": "Non-Spiking Connection",
+          "type": {
+            "class_name": "NonSpikingSynapse",
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 5.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          },
+          "parameters": {
+            "spiking": false,
+            "pattern": false,
+            "matrix": false,
+            "electrical": false,
+            "max_conductance": 5.0,
+            "name": "Non-Spiking Connection",
+            "reversal_potential": 8.0,
+            "e_lo": 0.0,
+            "e_hi": 5.0
+          }
+        }
+      ],
+      "sign_category": "exc"
+    }
+  ],
+  "semicircular_bridges": 19,
+  "circuits_executed": 0
+}

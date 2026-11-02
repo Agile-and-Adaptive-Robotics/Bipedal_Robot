@@ -1,0 +1,32 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "reduced_Rybak_two_level",
+  "machine": "easteregg2",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\replication\\rybak2006_standalone.py",
+      "exists": true,
+      "sha256": "b6f6c6f7ba90cdc42fd2a50d5286f3f67a68cead3ab7c23b1cdc9f84cf13662d"
+    }
+  ],
+  "controlled_subspace": {
+    "coordinate_accounting": [],
+    "all_source_coordinates_accounted": true
+  },
+  "design_evidence": {
+    "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\SUBMITTED_ORIGINAL_DESIGN_CHECKS_v1.json",
+    "exists": true,
+    "sha256": "e28b4b80785192bc0e6eb1c51f8024b93b14cd958f38069e454ae4cfa48a076d"
+  },
+  "appropriate_local_design_checks_verified": true,
+  "body_performance_is_not_design_prerequisite": true,
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "blockers": [],
+  "limitations": [
+    "Unilateral14population activity-based literature-template mechanism; not14cellDeng orwholewalker."
+  ],
+  "review_required": "Parent review of original-submission roles, explicit source asymmetry, and opt-in profiles. UserOK required before any training."
+}

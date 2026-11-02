@@ -1,0 +1,128 @@
+{
+  "standalone_sha256": "e3206341b7f89f3cb97584359ca83f136b3c7881b9fc0cf6d6ecaf9853606888",
+  "neurons": 134,
+  "edges": 274,
+  "adapters": 62,
+  "enabled_physical_inputs": 44,
+  "duplicate_project_definition_IDs": [],
+  "saved_pages": [
+    {
+      "page_id": "9b917ad0-9d8d-4f36-85a3-ebac787c00a6",
+      "page": "Neural Subsystem",
+      "errors": []
+    },
+    {
+      "page_id": "061b74b2-b85c-4017-8146-e6d16f1495ae",
+      "page": "RH",
+      "errors": []
+    },
+    {
+      "page_id": "20e84b21-9cf0-479c-beae-1f5e91ee4257",
+      "page": "RH_Knee",
+      "errors": []
+    },
+    {
+      "page_id": "241aff18-6f2c-40e3-9500-823018cfe9ae",
+      "page": "RH_BFA&IP",
+      "errors": []
+    },
+    {
+      "page_id": "542d4d17-3ddc-49db-a99b-14fa1c0f6867",
+      "page": "RH_RG",
+      "errors": []
+    },
+    {
+      "page_id": "704efaea-2bd6-4461-94dc-45c3f5cb15ba",
+      "page": "RH_SO&TA",
+      "errors": []
+    },
+    {
+      "page_id": "92c9eb99-43b3-4bdc-b330-a2912cc88d1a",
+      "page": "RH_VA&GA",
+      "errors": []
+    },
+    {
+      "page_id": "bd8182a7-d591-47da-9d02-c150efe20e4d",
+      "page": "RH_BFP&RF",
+      "errors": []
+    },
+    {
+      "page_id": "c4e34edd-7177-4041-95f4-8f43e4854d76",
+      "page": "RH_Hip",
+      "errors": []
+    },
+    {
+      "page_id": "e8cea891-6224-4706-93b5-57f29bc41861",
+      "page": "RH_Ankle",
+      "errors": []
+    },
+    {
+      "page_id": "3fbba1d0-35df-4328-8a2c-6d5dba8cd00d",
+      "page": "LH",
+      "errors": []
+    },
+    {
+      "page_id": "0b5dab56-3c0d-47bf-96dc-abdadacfb08d",
+      "page": "LH_Ankle",
+      "errors": []
+    },
+    {
+      "page_id": "45877626-2bf4-493b-832f-8c4a64de5e43",
+      "page": "LH_RG",
+      "errors": []
+    },
+    {
+      "page_id": "6d453d61-ef10-44f3-bab9-348f68b0be92",
+      "page": "LH_BFA&IP",
+      "errors": []
+    },
+    {
+      "page_id": "7a1a7b02-4adf-48ac-8951-665b87c88668",
+      "page": "LH_Knee",
+      "errors": []
+    },
+    {
+      "page_id": "844e3587-bc1c-4128-8437-5c30ef6ec3c3",
+      "page": "LH_SO&TA",
+      "errors": []
+    },
+    {
+      "page_id": "85d38b65-e226-4984-9e9e-e1a8f8458fd8",
+      "page": "LH_Hip",
+      "errors": []
+    },
+    {
+      "page_id": "bb98c6c7-2683-496a-86bb-2d9b6d17110f",
+      "page": "LH_BFP&RF",
+      "errors": []
+    },
+    {
+      "page_id": "bee0ea7b-d02f-4393-b6ad-ccf62e6ae409",
+      "page": "Biar",
+      "errors": []
+    },
+    {
+      "page_id": "e7877a74-8ef1-4495-accf-2479c36adfe5",
+      "page": "LH_VA&GA",
+      "errors": []
+    },
+    {
+      "page_id": "e62a9480-8b71-4385-9667-2c2f7bd0946e",
+      "page": "1",
+      "errors": []
+    }
+  ],
+  "runtime_entry": "variant_controller()",
+  "runtime_source_sha256": "093385513dd2d64a1dc19b42626be73a1e9f4b3d1e8728b8ec12be05cabf100a",
+  "runtime_overlay": "Replaces source Hill bank/parameters and physical input polynomial/limits from curated asim; do not use rat134_core.controller() alone.",
+  "reference_condition": {
+    "original134_strict_all44_dynamic_gate": "Failed32/44; preserved.",
+    "receptor_variant_strict_passive_A_equals0_condition": "Not satisfied by the fixed\u2212.15V RH placeholder sigmoids. Exact-passive test remains failed.",
+    "receptor_variant_declared_low_drive_reference": "35 required informative channels pass all7cases;4 fixed low-drive channels have retained actual forces/maps and frozen neural weights;5 graph-unreachable channels remain explicitly optional/unqualified for intended biological roles. All44 actual raw signals are recorded.",
+    "expected_input_HuntB": "No fit/pass. Unfitted source feedback still leaves LH hip PF latched.",
+    "active_RF_BFP_reference": "Not qualified; no invented2019 targets.",
+    "coupled_body_air_or_drop": "Not performed."
+  },
+  "comparator": "refinement12 nominal trial3 only; do not install gains; failed cadence and amplitude holdouts",
+  "execution": "none; static audit only"
+}

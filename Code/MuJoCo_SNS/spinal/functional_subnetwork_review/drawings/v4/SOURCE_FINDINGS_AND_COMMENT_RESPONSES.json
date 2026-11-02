@@ -1,0 +1,171 @@
+{
+  "comment14": "Opposite c1\u2192RG flexor exists in saved W2L108 and is now included.",
+  "comments15_23_24": "Saved W2L108 heel targets extensor HCs, not extensor IN. Its ankle afferent edges target the local motor/reflex network. These are source discrepancies relative to Ben\u2019s expected diagram; no ankle or heel\u2192IN connection was silently invented.",
+  "comment28": "w2lvar PF_KNEE is explicitly the shared K&A PF pair per build_network_w2lvar.py; displayed as K&A.",
+  "comment29": "II_tib_ant names an afferent neuron. Each outgoing synapse is destination-specific. Four central edges currently share g=0.027894736842105264uS,Erev=8mV, while the local IIX/IIIN relay edges use1uS. Left/right equality is checked per table row, not assumed globally. Source IDs retain side suffixes; visual labels omit them.",
+  "comments30_31": "Saved syn6 contains HEEL_l\u2192InE_l and HEEL_l\u2192InF_l. The disputed latter edge is visibly marked red/dashed; no circuit or saved weights changed. No absent-route boxes are retained.",
+  "omitted_blank_page": "s3k absent-feedback page removed from this drawing pack.",
+  "II_tib_ant_rows": [
+    {
+      "source": "II_tib_ant_l",
+      "destination": "RG_F_l",
+      "gmax_uS": 0.027894736842105264,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:62"
+    },
+    {
+      "source": "II_tib_ant_l",
+      "destination": "InF_l",
+      "gmax_uS": 0.027894736842105264,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:134"
+    },
+    {
+      "source": "II_tib_ant_l",
+      "destination": "PF_HIP-F_l",
+      "gmax_uS": 0.027894736842105264,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:203"
+    },
+    {
+      "source": "II_tib_ant_l",
+      "destination": "PF_KNEE-F_l",
+      "gmax_uS": 0.027894736842105264,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:273"
+    },
+    {
+      "source": "II_tib_ant_l",
+      "destination": "IIX_tib_ant_l",
+      "gmax_uS": 1.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:7404"
+    },
+    {
+      "source": "II_tib_ant_l",
+      "destination": "IIIN_tib_ant_l",
+      "gmax_uS": 1.0,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:7405"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_med_gas_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5043"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_lat_gas_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5099"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_soleus_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5155"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_tib_post_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5211"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_flex_dig_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5267"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_flex_hal_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5323"
+    },
+    {
+      "source": "IIX_tib_ant_l",
+      "destination": "MN_tib_ant_l",
+      "gmax_uS": 0.4,
+      "reversal_mV": 8.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5388"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_per_brev_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5445"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_per_long_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5501"
+    },
+    {
+      "source": "IIIN_tib_ant_l",
+      "destination": "MN_per_tert_l",
+      "gmax_uS": 0.13333333333333333,
+      "reversal_mV": -5.0,
+      "threshold_mV": 0.0,
+      "saturation_mV": 5.0,
+      "left_right_equal": true,
+      "edge_id": "w2lvar:edge:5557"
+    }
+  ],
+  "circuits_executed": 0
+}

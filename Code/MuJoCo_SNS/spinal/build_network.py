@@ -228,6 +228,7 @@ def _group_weight(muscle: MuscleInfo, table: dict[str, float],
 
 @dataclass
 class SpinalNetwork:
+    graded_fsa_family = "s3k"
     muscles: dict[str, MuscleInfo]                  # actuator name -> info
     sides: tuple[str, ...]
     interleg: bool = True                           # cross-side RG coupling
@@ -1111,13 +1112,16 @@ class SpinalNetwork:
                                      vsrc, f"MN_{act}")
 
     # ------------------------------------------------------------------ run
-    def compile(self, dt: float = DT):
+    def compile(self, dt: float = DT, graded_profile=None):
         self.compiled = self.net.compile(dt=dt, backend="numpy")
         # swap in the FIXED-tau_h stepper for the RG persistent-Na
         # h-gates (Deng semantics; see SNS_NumpyFixedTau docstring)
         self.compiled.__class__ = SNS_NumpyFixedTau
         assert self.compiled.V.shape[0] == len(self.idx), \
             "neuron index bookkeeping mismatch"
+        if graded_profile is not None:
+            from fsa_design_20261101.graded_profile import apply_profile
+            apply_profile(self, graded_profile, family=self.graded_fsa_family)
         return self.compiled
 
     def step(self, input_currents: np.ndarray) -> np.ndarray:
@@ -1137,7 +1141,7 @@ class SpinalNetwork:
 
 
 def build(model_actuators: list[str], dt: float = DT,
-          interleg: bool = True) -> SpinalNetwork:
+          interleg: bool = True, graded_profile=None) -> SpinalNetwork:
     """Classify actuators and build + compile the spinal network.
 
     interleg=False removes all cross-side RG coupling (independent
@@ -1156,11 +1160,13 @@ def build(model_actuators: list[str], dt: float = DT,
     _aarl_net = _os.environ.get("AARL_NET", "").strip().lower()
     if _aarl_net == "w2lvar":
         import build_network_w2lvar as _w2lvar
-        return _w2lvar.build(model_actuators, dt=dt, interleg=interleg)
+        return _w2lvar.build(model_actuators, dt=dt, interleg=interleg, graded_profile=graded_profile)
     if _aarl_net == "syn6" or G.get("syn6", 0.0) > 0.0:
         import build_network_syn6 as _syn6
-        return _syn6.build(model_actuators, dt=dt, interleg=interleg)
+        return _syn6.build(model_actuators, dt=dt, interleg=interleg, graded_profile=graded_profile)
     if _aarl_net == "spiking":
+        if graded_profile is not None:
+            raise ValueError("A graded FSA profile cannot be silently applied to the spiking mirror")
         import build_network_spiking as _spk
         return _spk.build(model_actuators, dt=dt, interleg=interleg)
     muscles: dict[str, MuscleInfo] = {}
@@ -1171,5 +1177,5 @@ def build(model_actuators: list[str], dt: float = DT,
         muscles[act] = mi
     sides = tuple(sorted({mi.side for mi in muscles.values()}))
     net = SpinalNetwork(muscles=muscles, sides=sides, interleg=interleg)
-    net.compile(dt=dt)
+    net.compile(dt=dt, graded_profile=graded_profile)
     return net

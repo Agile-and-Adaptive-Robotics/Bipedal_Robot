@@ -1,0 +1,281 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "reduced_Deng14",
+  "machine": "easteregg2",
+  "phase": "design_only",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\deng_cpg_ode.py",
+      "exists": true,
+      "sha256": "1e8e1e30046fdd0fcc0b2e2cc64ee122d87885c5912b331f5ecb22ea75e30abb"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\deng_cpg_numpy.py",
+      "exists": true,
+      "sha256": "7b67c6faa9862437ff443f15ed7df3f8c7437a2f2ce022ea54ec813397d21a24"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_deng_cpg.m",
+      "exists": true,
+      "sha256": "ea5bdc103db64ab1d57c9b0cdef4410efdad78c61f1c78ad61ba23c050dfb4b5"
+    }
+  ],
+  "controlled_subspace": {
+    "mechanics": "Reduced neural demonstration only; RG/PF/IN andhipMNs, no completebodyloop.",
+    "source_neurons": "2RGHC+4PFHC+6IN+2hipMN=14; knee/anklePFsharesonebranch; nofullMNarray.",
+    "uncontrolled_axes": "All mechanicalaxes requireexplicitbodycoupling; no23DoFclaim.",
+    "free_3D_balance_demonstrated": false,
+    "coordinate_accounting": [],
+    "all_source_coordinates_accounted": true
+  },
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "blockers": [],
+  "limitations": [
+    "KeepNaP6cells/sourceh-gatemechanism distinctfromGLIFadaptive\u03b8; fixedtau_h350ms is nottau_theta.",
+    "ODE usesms internally(t_end=20000for20s); legacySNSNumPycompileDTsecondswithCM5 requiresclockaudit beforeequivalenceclaim.",
+    "PythonODEandSimulinkbuilderPF\u2192MNconductances differ (2.565/3.632 vs2.6563/3.6325); chooseversionandtargetexplicitly, no silentlymergeddefaults.",
+    "Selectivepassivewrappernowavailable; wholemechanism/crossplatform/bodyvalidationisnotimplied."
+  ],
+  "design_scope_policy": "Account for every source coordinate as neural, passive, constraint, apparatus, or unsupported. Free3Dwalking/wholebody success is not a prerequisite for supported/reduced-scope Hunt training.",
+  "applicable_design_operations": {
+    "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
+    "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
+    "graded_synapse": "Exact single-path endpoint conductance derivation available; multiinput/transient/linearitychecks stillrequired.",
+    "ionic_burster": "Retain sourceNaP/Ca/gate law; pureGLIFTable2notapplicable.",
+    "GLIF_threshold_steps": "Notapplicableto gradedcells; separate pureGLIFprofile requiresall activation/transient/rate contracts.",
+    "spike_synapse": "Declare reset-to-peak vs additive/capped eventlaw beforeusingdelta/Eq28/29."
+  },
+  "desired_functional_contract": {
+    "input_domain": null,
+    "output_domain": null,
+    "target_gain": null,
+    "target_transient_s": null,
+    "target_bandwidth_hz": null,
+    "target_rate_hz": null,
+    "status": "Unassigned targets block application; inherited values are not independent desired functions."
+  },
+  "opt_in_profile": {
+    "adapter": "deng14_passive",
+    "adopted": false,
+    "engineering_candidate": true,
+    "neurons": [
+      {
+        "name": "RG_IN_ext",
+        "tau_s": 0.005
+      },
+      {
+        "name": "RG_IN_flx",
+        "tau_s": 0.005
+      },
+      {
+        "name": "PF_hip_IN_ext",
+        "tau_s": 0.005
+      },
+      {
+        "name": "PF_hip_IN_flx",
+        "tau_s": 0.005
+      },
+      {
+        "name": "PF_ka_IN_ext",
+        "tau_s": 0.005
+      },
+      {
+        "name": "PF_ka_IN_flx",
+        "tau_s": 0.005
+      },
+      {
+        "name": "MN_hip_ext",
+        "tau_s": 0.01
+      },
+      {
+        "name": "MN_hip_flx",
+        "tau_s": 0.01
+      }
+    ],
+    "synapses": []
+  },
+  "application_recipe": {
+    "default_behavior": "No profile: literal no-op; no original source or topology changes.",
+    "production_hook_installed": false,
+    "unit_adapter_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "candidate_consumption_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_CANDIDATE_COMPONENT_CHECKS.json",
+    "fresh_process_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_FRESH_PROCESS_CHECK.json",
+    "Simulink_block_consumption_proof": null,
+    "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
+    "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
+    "call": "run_deng14_passive_profile(profile,duration_s=...,dt_s=.0001,pulse_time_s=.1,pulse_duration_s=.001,pulse_current_nA=10)",
+    "source_anchor": "Originalsimulate(fixed,t_end=20000ms,dt=.1ms,i_pulse10nA,t_pulse100ms,pulse_ms1)",
+    "default_none_delegates_exact_original": true,
+    "selective_C_via_original_vectorized_RHS": true,
+    "source_graph_or_ionic_parameters_changed": false
+  },
+  "units": {
+    "ODE": "ms,mV,nA,nF,uS; physicaltau=5nF/1uS=5ms",
+    "Simulink": "secondswith1000/Cm; gate350ms explicit",
+    "legacy_numpy": "Do not execute top-level20s script fordesignimport; clock/capacitance mismatch flagged."
+  },
+  "source_parameters": {
+    "capacitance_nF": 5,
+    "leak_uS": 1,
+    "rest_HC_mV": -60,
+    "rest_MN_mV": -100,
+    "NaP_uS": 1.5,
+    "NaP_reversal_mV": 50,
+    "h_time_constant_s": 0.35
+  },
+  "audit_anchor_primary": {
+    "source": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\deng_cpg_ode.py",
+      "exists": true,
+      "sha256": "1e8e1e30046fdd0fcc0b2e2cc64ee122d87885c5912b331f5ecb22ea75e30abb"
+    },
+    "function": "simulate(fixed,t_end=20000ms,dt=.1ms,i_pulse10nA,t_pulse100ms,pulse_ms1)",
+    "reference": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\deng_cpg_ref.mat",
+      "exists": true,
+      "sha256": "71ba01104afa352310d7ddc50ff1c4790e2c2100e249bb37fec7aa9da5db81fa"
+    },
+    "comparators_only": [
+      "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_deng_cpg.m",
+      "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\deng_cpg_numpy.py"
+    ],
+    "mechanical_walker_checkpoint": null
+  },
+  "proposed_functional_components": [
+    {
+      "name": "RG_IN_ext",
+      "source": "RG_HC_ext",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -25.0
+      ],
+      "desired_off_mV": -60.0,
+      "desired_on_mV": -45.334755934915975,
+      "preserved_DC_gmax_uS": 2.749,
+      "reconstructed_endpoint_gmax_uS": 2.749000000000002,
+      "physical_leak_tau_s": 0.005,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    },
+    {
+      "name": "RG_IN_flx",
+      "source": "RG_HC_flx",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -25.0
+      ],
+      "desired_off_mV": -60.0,
+      "desired_on_mV": -45.334755934915975,
+      "preserved_DC_gmax_uS": 2.749,
+      "reconstructed_endpoint_gmax_uS": 2.749000000000002,
+      "physical_leak_tau_s": 0.005,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    },
+    {
+      "name": "PF_hip_IN_ext",
+      "source": "PF_hip_HC_ext",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -25.0
+      ],
+      "desired_off_mV": -60.0,
+      "desired_on_mV": -45.334755934915975,
+      "preserved_DC_gmax_uS": 2.749,
+      "reconstructed_endpoint_gmax_uS": 2.749000000000002,
+      "physical_leak_tau_s": 0.005,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    },
+    {
+      "name": "PF_hip_IN_flx",
+      "source": "PF_hip_HC_flx",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -25.0
+      ],
+      "desired_off_mV": -60.0,
+      "desired_on_mV": -45.334755934915975,
+      "preserved_DC_gmax_uS": 2.749,
+      "reconstructed_endpoint_gmax_uS": 2.749000000000002,
+      "physical_leak_tau_s": 0.005,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    },
+    {
+      "name": "PF_ka_IN_ext",
+      "source": "PF_ka_HC_ext",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -25.0
+      ],
+      "desired_off_mV": -60.0,
+      "desired_on_mV": -45.334755934915975,
+      "preserved_DC_gmax_uS": 2.749,
+      "reconstructed_endpoint_gmax_uS": 2.749000000000002,
+      "physical_leak_tau_s": 0.005,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    },
+    {
+      "name": "PF_ka_IN_flx",
+      "source": "PF_ka_HC_flx",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -25.0
+      ],
+      "desired_off_mV": -60.0,
+      "desired_on_mV": -45.334755934915975,
+      "preserved_DC_gmax_uS": 2.749,
+      "reconstructed_endpoint_gmax_uS": 2.749000000000002,
+      "physical_leak_tau_s": 0.005,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    },
+    {
+      "name": "MN_hip_ext",
+      "source": "PF_hip_HC_ext",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -50.0
+      ],
+      "desired_off_mV": -100.0,
+      "desired_on_mV": -35.24544179523142,
+      "preserved_DC_gmax_uS": 2.565,
+      "reconstructed_endpoint_gmax_uS": 2.5650000000000004,
+      "physical_leak_tau_s": 0.01,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    },
+    {
+      "name": "MN_hip_flx",
+      "source": "PF_hip_HC_flx",
+      "presynaptic_domain_mV": [
+        -60.0,
+        -50.0
+      ],
+      "desired_off_mV": -100.0,
+      "desired_on_mV": -29.430051813471504,
+      "preserved_DC_gmax_uS": 3.632,
+      "reconstructed_endpoint_gmax_uS": 3.631999999999999,
+      "physical_leak_tau_s": 0.01,
+      "rationale": "RetainsourceIN5msleakpole; optionalMN10msreadoutfilteris1/35ofthe350mshgate, preservingDCandallupstreamionicclock. Engineeringcandidate, notauthorintent."
+    }
+  ],
+  "review_required": "PrimaryfixedODE selected and passive/sourceclock proof available; no legacy comparator or body outcome required for this mechanism scope.",
+  "appropriate_electrical_role_prerequisites_verified": true,
+  "appropriate_local_design_checks_verified": true,
+  "body_performance_is_not_design_prerequisite": true,
+  "bilateral_design_accounting": {
+    "evidence": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_BILATERAL_DESIGN_v4.json",
+      "exists": true,
+      "sha256": "653d946e2ce644d94cb03844ef0009ffe5caee16fd9e0039a8ed1e973303fc2b"
+    },
+    "applicable": false,
+    "eligible_edge_pairs": 0,
+    "source_asymmetric_pair_count": 0,
+    "unmatched_right_edges": 0,
+    "ineligible_edges": 0,
+    "source_untouched": true,
+    "blanket_source_symmetry_claim": false,
+    "policy": "Unilateral antagonist primitive/mechanism; flexor/extensor cells are functionally different, not left/right homologues. No bilateral fitting variables exist."
+  }
+}

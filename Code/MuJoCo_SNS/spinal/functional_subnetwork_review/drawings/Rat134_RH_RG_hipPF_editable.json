@@ -1,0 +1,267 @@
+{
+  "title": "Rat134 | RH RG hipPF",
+  "nodes": [
+    {
+      "id": "baa4f73f-29ce-4378-a691-40e65105e281",
+      "name": "RH_RG IN FLX"
+    },
+    {
+      "id": "a1887830-8178-48f2-9d07-3bed2cc9753d",
+      "name": "RH_HipZ-FLX II"
+    },
+    {
+      "id": "19b62819-0711-4e42-9b2b-12f7542103be",
+      "name": "RH_RG EXT"
+    },
+    {
+      "id": "811f6fed-01ca-4032-be95-83d576cdfdaf",
+      "name": "RH_Hip  PF FLX"
+    },
+    {
+      "id": "b1950b41-556a-4b4c-9ff1-5a6bc343bf1a",
+      "name": "RH_IP-    FLX Ia"
+    },
+    {
+      "id": "628440b5-8e64-4f28-ac44-586980a7b16b",
+      "name": "RH_RG FLX"
+    },
+    {
+      "id": "17cad4d1-e183-45c4-8e8d-cdd55bb69cbb",
+      "name": "RH_Hip PF IN FLX"
+    },
+    {
+      "id": "ce648e45-84d9-4588-bb44-8ea94324eefa",
+      "name": "RH_SO- Ext Ib"
+    },
+    {
+      "id": "9d333a50-e9cd-4534-a85f-2e581d3ec096",
+      "name": "RH_RG IN EXT"
+    },
+    {
+      "id": "59d1e92a-0b97-4528-9f52-e83ea94f0fc5",
+      "name": "RH_Hip PF EXT "
+    },
+    {
+      "id": "dc4a847d-b486-4c51-91f1-a5ab9f2702ca",
+      "name": "RH_HipZ-Ext II"
+    },
+    {
+      "id": "6ad728d2-66d2-4a43-8652-539bfc7d3930",
+      "name": "RH_Hip PF IN EXT "
+    }
+  ],
+  "edges": [
+    {
+      "id": "3bb5b1e4-4139-4dca-bf0c-61032fc4809b",
+      "source": "RH_RG FLX",
+      "target": "RH_RG IN FLX",
+      "gmax_uS": 2.7494,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -25.0,
+      "type_name": "RG-Excite",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "41904095-06a9-4374-b429-9343a9907aa1",
+      "source": "RH_HipZ-FLX II",
+      "target": "RH_RG EXT",
+      "gmax_uS": 0.64758,
+      "reversal_mV": -70.0,
+      "threshold_mV": -49.706,
+      "saturation_mV": -38.538999999999994,
+      "type_name": "RG_HF2I",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "4a1a5b89-3ce9-4482-a260-63b28cba9153",
+      "source": "RH_RG IN EXT",
+      "target": "RH_RG FLX",
+      "gmax_uS": 2.7494,
+      "reversal_mV": -70.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -25.0,
+      "type_name": "RG-Inhibit",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "5d08fbf8-2ba6-431d-a7b2-9b8545bf8763",
+      "source": "RH_RG EXT",
+      "target": "RH_RG IN EXT",
+      "gmax_uS": 2.7494,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -25.0,
+      "type_name": "RG-Excite",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "688b0ae9-83b5-4fc4-9245-1610ff475b77",
+      "source": "RH_SO- Ext Ib",
+      "target": "RH_RG EXT",
+      "gmax_uS": 0.25,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -50.0,
+      "type_name": "RG_AEbE",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "b4f3e5a7-81bf-45db-b7e7-ce3eac3a68be",
+      "source": "RH_HipZ-Ext II",
+      "target": "RH_RG FLX",
+      "gmax_uS": 0.20804999999999998,
+      "reversal_mV": -70.0,
+      "threshold_mV": -48.87,
+      "saturation_mV": -30.025,
+      "type_name": "RG_HE2I",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "b81bba56-e181-4385-b58e-d1c13bbb1947",
+      "source": "RH_RG FLX",
+      "target": "RH_RG EXT",
+      "gmax_uS": 0.09999999999999999,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -40.0,
+      "type_name": "RG-Excite 2",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "bf53e39f-34fa-4334-8d90-2e4a6a553713",
+      "source": "RH_RG EXT",
+      "target": "RH_RG FLX",
+      "gmax_uS": 0.09999999999999999,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -40.0,
+      "type_name": "RG-Excite 2",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "c4e90f03-9560-463d-aa5e-054fd8b07d33",
+      "source": "RH_IP-    FLX Ia",
+      "target": "RH_RG EXT",
+      "gmax_uS": 0.241,
+      "reversal_mV": -70.0,
+      "threshold_mV": -57.605999999999995,
+      "saturation_mV": -45.583,
+      "type_name": "RG_HFaI",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "edc18c02-f080-44bb-88b2-152126ca2523",
+      "source": "RH_RG IN FLX",
+      "target": "RH_RG EXT",
+      "gmax_uS": 2.7494,
+      "reversal_mV": -70.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -25.0,
+      "type_name": "RG-Inhibit",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "28eeabc0-a69f-4a75-8052-1349ed8632bb",
+      "source": "RH_HipZ-FLX II",
+      "target": "RH_Hip PF EXT ",
+      "gmax_uS": 0.64758,
+      "reversal_mV": -70.0,
+      "threshold_mV": -49.706,
+      "saturation_mV": -38.538999999999994,
+      "type_name": "Hip_HF2I",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "290682e4-8dee-48a3-8e2b-3098960dce77",
+      "source": "RH_Hip  PF FLX",
+      "target": "RH_Hip PF IN FLX",
+      "gmax_uS": 2.7494,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -25.0,
+      "type_name": "PF-Excite",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "30848dc7-603a-4f54-aa6e-b743ed2e40ff",
+      "source": "RH_Hip PF EXT ",
+      "target": "RH_Hip PF IN EXT ",
+      "gmax_uS": 2.7494,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -25.0,
+      "type_name": "PF-Excite",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "64bf8475-b27c-4455-988e-5b22b11e3eba",
+      "source": "RH_Hip PF IN FLX",
+      "target": "RH_Hip PF EXT ",
+      "gmax_uS": 2.7494,
+      "reversal_mV": -70.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -25.0,
+      "type_name": "PF-Inhibit",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "b0c08048-ede0-4619-a2b4-757a698cd720",
+      "source": "RH_IP-    FLX Ia",
+      "target": "RH_Hip PF EXT ",
+      "gmax_uS": 0.241,
+      "reversal_mV": -70.0,
+      "threshold_mV": -57.605999999999995,
+      "saturation_mV": -45.583,
+      "type_name": "Hip_HFaI",
+      "sign_category": "inh",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "b4079701-c921-4740-921f-333ab5018f75",
+      "source": "RH_SO- Ext Ib",
+      "target": "RH_Hip PF EXT ",
+      "gmax_uS": 0.17525000000000002,
+      "reversal_mV": -40.0,
+      "threshold_mV": -56.292,
+      "saturation_mV": -49.190999999999995,
+      "type_name": "Hip_AEbE",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    },
+    {
+      "id": "eb95fb85-f3a7-5c10-9173-a8e75eff0d35",
+      "source": "RH_RG EXT",
+      "target": "RH_Hip PF EXT ",
+      "gmax_uS": 0.09999999999999999,
+      "reversal_mV": -40.0,
+      "threshold_mV": -60.0,
+      "saturation_mV": -40.0,
+      "type_name": "2023-inspired RG to Hip PF",
+      "sign_category": "exc",
+      "sign_scope": "relative to target resting Vm only; operating Vm can change current sign"
+    }
+  ],
+  "boundary_references": [
+    "RH_Hip  PF FLX",
+    "RH_HipZ-Ext II",
+    "RH_HipZ-FLX II",
+    "RH_IP-    FLX Ia",
+    "RH_SO- Ext Ib"
+  ],
+  "source_scope": "Curated134 | native source graph; arrows/circles classified at target rest. Boundary afferents retained."
+}

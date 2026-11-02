@@ -21,6 +21,7 @@ class GateReleaseTests(unittest.TestCase):
         digest = hashlib.sha256(artifact.read_bytes()).hexdigest()
         self.gate = {
             "schema": "aarl_all_controller_fsa_design_gate_v1",
+            "user_training_approval": {"approved": True, "instruction": "Explicit approval test fixture only"},
             "all_families_required_before_training": True,
             "required_families": ["test_family"],
             "family_evidence": {"test_family": {
@@ -50,6 +51,19 @@ class GateReleaseTests(unittest.TestCase):
         self.save()
         with self.assertRaises(RuntimeError):
             require_calculation_release("Hunt_training", self.path)
+
+    def test_completed_design_without_user_approval_stays_closed(self):
+        self.gate["user_training_approval"]["approved"] = False
+        self.save()
+        with self.assertRaises(RuntimeError):
+            require_calculation_release("Hunt_training", self.path)
+
+    def test_optional_physics_needs_separate_approval(self):
+        self.save()
+        for change in ("compliant_tendons", "joint_damping_changes", "muscle_damping_changes"):
+            with self.assertRaises(RuntimeError):
+                require_calculation_release("curriculum", self.path, physics_changes=[change])
+        self.assertTrue(require_calculation_release("curriculum", self.path)["released"])
 
     def test_changed_source_invalidates_release(self):
         self.save()

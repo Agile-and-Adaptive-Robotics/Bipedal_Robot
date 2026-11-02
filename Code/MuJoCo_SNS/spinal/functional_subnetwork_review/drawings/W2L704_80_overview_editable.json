@@ -1,0 +1,275 @@
+{
+  "title": "W2L704_80 | connection overview",
+  "nodes": [
+    {
+      "name": "Sensory / reflex",
+      "layer": "Sensory / reflex",
+      "display": "Sensory / reflex\n52 neurons"
+    },
+    {
+      "name": "Rhythm generator",
+      "layer": "Rhythm generator",
+      "display": "Rhythm generator\n8 neurons"
+    },
+    {
+      "name": "Pattern formation",
+      "layer": "Pattern formation",
+      "display": "Pattern formation\n16 neurons"
+    },
+    {
+      "name": "Motor / recurrent",
+      "layer": "Motor / recurrent",
+      "display": "Motor / recurrent\n24 neurons"
+    },
+    {
+      "name": "Foot contact",
+      "layer": "Foot contact",
+      "display": "Foot contact\n4 neurons"
+    },
+    {
+      "name": "Other source cells",
+      "layer": "Other source cells",
+      "display": "Other source cells\n4 neurons"
+    }
+  ],
+  "edges": [
+    {
+      "id": "W2L704_80:bundle:0",
+      "source": "Pattern formation",
+      "target": "Motor / recurrent",
+      "count": 12,
+      "underlying_edge_ids": [
+        "63333d57-2b63-408c-8884-983d154b1bc3",
+        "7d015fbc-ab5a-4a6b-9b93-5b9a91eac608",
+        "60025372-c347-4c51-918b-3e87d0ed8e0c",
+        "75ab32a1-12fe-4225-973a-61c73c7fd0a4",
+        "23462955-b524-487a-bf93-ea7c50d20f5e",
+        "4be3236f-386a-42b5-9b8a-8d8a1e977b84",
+        "147f9f00-1799-4e89-a002-a4358d158684",
+        "d925a861-a1e4-47e7-9779-9e1d04222620",
+        "6644233e-2c25-478e-8459-9f6edbfcd71b",
+        "f5020126-50ff-4700-a2c4-4c7f32f70774",
+        "88ee814e-042c-4ceb-b1e1-c840ad1a6ab3",
+        "fff5ec81-f47c-4231-9c65-61b076fbb171"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:1",
+      "source": "Sensory / reflex",
+      "target": "Motor / recurrent",
+      "count": 36,
+      "underlying_edge_ids": [
+        "09801161-e709-4b89-917e-837a3d891630",
+        "1aff7b0a-6301-4414-b791-bce4b642cb05",
+        "4bc64112-dd47-4e9d-8084-8f18765945f1",
+        "b5d69fa5-6b20-4317-b43a-19e30da14949",
+        "f7c66d62-83b8-5c70-a5e5-97065655a253",
+        "e75ccebc-d6cd-5fc2-badf-7ebe992b62e6",
+        "0f04641b-9bf8-4a2a-9ad8-da66e8a0c079",
+        "15c8c754-8e8a-40b4-a4e4-f1b9890d9709",
+        "7b43721c-77d5-4f4e-951a-b66a0817cd90",
+        "7dec4382-54aa-41ab-ad2e-8de27808ce1b",
+        "38ebb7b5-be5b-5c65-bae7-2cac28bdfb41",
+        "6c03b44a-e07c-54d7-bcab-991e4a40b0d6",
+        "11483304-ff18-4119-90e3-eb969abc15ac",
+        "1186e5c0-e185-4a78-a180-f6282711f6fd",
+        "d1f00e7f-af8e-4ef6-adfd-bb5323852a6d",
+        "f3b2069a-1cd1-4c22-a30f-e7ab209db1cc",
+        "66f4f5de-f902-589a-b3b2-a2cd5be58351",
+        "58bd4ba7-fd6d-5efc-9cf2-a6a452e88daa",
+        "47676bc2-3d40-4d03-abad-f399eb8585d7",
+        "74b85c1f-ae5e-40b4-ab90-559597f692d9",
+        "9cccf20e-22aa-4f96-b3a6-61d8a271ace6",
+        "d2ef4603-c4cd-4c37-88b7-f4e2af3bc8c3",
+        "02b87554-fa07-5f16-b81d-f3105a1c86e4",
+        "46ba2ebd-c9eb-5fac-b9f2-ec37cee6e68f",
+        "2ef93a9e-4b1d-480e-b6fc-496f4945788f",
+        "77314e83-a277-48db-83a8-947902ccf025",
+        "9c935eeb-37e7-4e8e-bb6c-492d3d5aaaae",
+        "aa1aea00-6716-4c92-8af5-afa5ceccf73f",
+        "e17836b5-9be7-57aa-bd06-ab87613832a4",
+        "4ee330db-98a2-5dde-8bf0-6821deda0709",
+        "2fce576a-3dcb-4245-9aca-686678c4e728",
+        "3369b1a0-1a21-40c5-aa50-0b22d81a3627",
+        "43cefbf2-1f14-4e86-a232-2589599c372d",
+        "cbeb60db-38b8-45dc-8040-ff250b74ea8f",
+        "7703d8be-02ba-5638-a186-14c7459427cc",
+        "07ed7251-d9e2-515a-84d3-1a4863117cfa"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:2",
+      "source": "Motor / recurrent",
+      "target": "Sensory / reflex",
+      "count": 12,
+      "underlying_edge_ids": [
+        "915ab3e1-fbbf-465a-b847-5a676be12c76",
+        "ee98d927-405c-4b0b-a66b-cd599379dc1e",
+        "3b1620cd-2271-4e8e-b15f-ce68d3a4f91d",
+        "c12ac6ee-afaa-4ed9-8252-a5e17f97a579",
+        "9d3c5485-cf78-467f-9f69-23c01ddd5a61",
+        "d5c7a649-0521-4f8a-8c7e-047f339219a2",
+        "4f6ab4a4-c746-4aaf-8072-7a79dff0052f",
+        "f6e1432f-9e4e-48bd-9302-409a66878d41",
+        "ad355a6e-1074-4e0c-88fb-968d38a2967f",
+        "b2e69a28-8fb5-48c8-93d5-cc474a372399",
+        "5e31b414-8f9d-4e61-a898-0ccf0d0baf35",
+        "c4ab3c7e-2c64-474f-9ac6-0b8a012473ea"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:3",
+      "source": "Pattern formation",
+      "target": "Sensory / reflex",
+      "count": 12,
+      "underlying_edge_ids": [
+        "03755d3b-05b7-4a5e-9d49-a493f6eea184",
+        "5260fff4-3a5d-4bbc-b8b3-85e698223709",
+        "01bca731-91a6-41da-9bca-3300be76739f",
+        "56935886-d59f-4366-a106-ae61b6f51caa",
+        "c4008544-cae9-4aa8-bffc-30af018f00f9",
+        "efd44816-59e5-44bd-b9a6-dd5e49d141c1",
+        "2f4f5833-b3bb-4c46-817e-5ecd50cf2890",
+        "64e416aa-fefa-4a2a-b773-ab3b650fe9a7",
+        "1d7c3279-9545-4d35-b86e-1cc2f1bf818c",
+        "bcf867c4-3dae-4caa-b830-8b89629ab8de",
+        "d0631cbf-4e3a-4369-b193-0fa25a3a548f",
+        "f4f97dce-e94f-42e6-9c9a-10ece24dab0c"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:4",
+      "source": "Sensory / reflex",
+      "target": "Pattern formation",
+      "count": 12,
+      "underlying_edge_ids": [
+        "cafe0133-0000-4000-8000-900000000133",
+        "cafe0141-0000-4000-8000-900000000141",
+        "cafe0149-0000-4000-8000-900000000149",
+        "cafe0137-0000-4000-8000-900000000137",
+        "cafe0145-0000-4000-8000-900000000145",
+        "cafe0153-0000-4000-8000-900000000153",
+        "cafe0131-0000-4000-8000-900000000131",
+        "cafe0139-0000-4000-8000-900000000139",
+        "cafe0147-0000-4000-8000-900000000147",
+        "cafe0135-0000-4000-8000-900000000135",
+        "cafe0143-0000-4000-8000-900000000143",
+        "cafe0151-0000-4000-8000-900000000151"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:5",
+      "source": "Foot contact",
+      "target": "Motor / recurrent",
+      "count": 8,
+      "underlying_edge_ids": [
+        "8f0dc32b-c3ff-4c37-85aa-0d1204c895d4",
+        "9699ef3a-25bf-47ed-93cf-a34dc5ad501f",
+        "cafe0244-0000-4000-8000-900000000244",
+        "cafe0245-0000-4000-8000-900000000245",
+        "35e70e7e-1f81-4de8-964f-dfaa6866617a",
+        "8050c1ee-1cbc-4001-9ac6-2bf9d364e042",
+        "cafe0234-0000-4000-8000-900000000234",
+        "cafe0235-0000-4000-8000-900000000235"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:6",
+      "source": "Foot contact",
+      "target": "Rhythm generator",
+      "count": 4,
+      "underlying_edge_ids": [
+        "cafe0241-0000-4000-8000-900000000241",
+        "cafe0231-0000-4000-8000-900000000231",
+        "77acd39d-eb6a-40d9-8b20-2318cb1c6c6c",
+        "c3c2e321-3fed-42ac-adfa-75933fdc22f2"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:7",
+      "source": "Foot contact",
+      "target": "Pattern formation",
+      "count": 4,
+      "underlying_edge_ids": [
+        "cafe0242-0000-4000-8000-900000000242",
+        "cafe0243-0000-4000-8000-900000000243",
+        "cafe0232-0000-4000-8000-900000000232",
+        "cafe0233-0000-4000-8000-900000000233"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:8",
+      "source": "Rhythm generator",
+      "target": "Other source cells",
+      "count": 4,
+      "underlying_edge_ids": [
+        "cafe0024-0000-4000-8000-900000000024",
+        "cafe0022-0000-4000-8000-900000000022",
+        "cafe0026-0000-4000-8000-900000000026",
+        "cafe0028-0000-4000-8000-900000000028"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:9",
+      "source": "Rhythm generator",
+      "target": "Pattern formation",
+      "count": 8,
+      "underlying_edge_ids": [
+        "cafe0017-0000-4000-8000-900000000017",
+        "cafe0018-0000-4000-8000-900000000018",
+        "cafe0019-0000-4000-8000-900000000019",
+        "cafe0020-0000-4000-8000-900000000020",
+        "02ae1797-5f31-4105-91e8-bd5e4df3ddd4",
+        "ae4d62e0-0f01-43aa-9140-49a8d9680b6d",
+        "ba20e6bc-d27f-49bf-98e3-ce8ede9ee38e",
+        "e5acee49-ab03-4baa-a5f8-b74b391c6b56"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:10",
+      "source": "Sensory / reflex",
+      "target": "Rhythm generator",
+      "count": 12,
+      "underlying_edge_ids": [
+        "cafe0134-0000-4000-8000-900000000134",
+        "cafe0138-0000-4000-8000-900000000138",
+        "cafe0142-0000-4000-8000-900000000142",
+        "cafe0146-0000-4000-8000-900000000146",
+        "cafe0150-0000-4000-8000-900000000150",
+        "cafe0154-0000-4000-8000-900000000154",
+        "cafe0132-0000-4000-8000-900000000132",
+        "cafe0136-0000-4000-8000-900000000136",
+        "cafe0140-0000-4000-8000-900000000140",
+        "cafe0144-0000-4000-8000-900000000144",
+        "cafe0148-0000-4000-8000-900000000148",
+        "cafe0152-0000-4000-8000-900000000152"
+      ],
+      "sign": "unknown"
+    },
+    {
+      "id": "W2L704_80:bundle:11",
+      "source": "Other source cells",
+      "target": "Rhythm generator",
+      "count": 4,
+      "underlying_edge_ids": [
+        "cafe0023-0000-4000-8000-900000000023",
+        "cafe0025-0000-4000-8000-900000000025",
+        "cafe0027-0000-4000-8000-900000000027",
+        "cafe0029-0000-4000-8000-900000000029"
+      ],
+      "sign": "unknown"
+    }
+  ],
+  "boundary_references": [],
+  "source_scope": "Saved W2L hybrid condition; source neuron interfaces shown, not 704 individual somas\nModule links bundle actual edges; within-module edges are in expanded panels/tables."
+}

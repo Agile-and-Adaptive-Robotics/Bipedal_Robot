@@ -1,0 +1,55 @@
+{
+  "drawings": [
+    {
+      "drawing": "multiple_muscles_full_loops",
+      "neural_records": 46,
+      "physical_arrows": 20,
+      "all_local_and_descending_connections_between_displayed_neurons": true,
+      "physical_input_ports_verified": true,
+      "geometry_pass": true,
+      "central_afferent_to_RG_PF_paths": "See preceding RG/PF sheets; this view expands local motor circuits."
+    },
+    {
+      "drawing": "biarticular_full_loops",
+      "neural_records": 36,
+      "physical_arrows": 20,
+      "all_local_and_descending_connections_between_displayed_neurons": true,
+      "physical_input_ports_verified": true,
+      "geometry_pass": true,
+      "central_afferent_to_RG_PF_paths": "See preceding RG/PF sheets; this view expands local motor circuits."
+    }
+  ],
+  "source": "D:\\Github\\Bipedal_Robot\\Neuromechanical_Models\\Mujoco_SNS_models\\Gait2392_standing_families\\w2lvar_graph_ledger.json",
+  "source_sha256": "49b946c627222e030aa7bc741d7de20faeb804646d791b51548e6d3d704d4e2f",
+  "recorded_actuation": {
+    "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody_cvt3.xml",
+    "model_sha256": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae",
+    "actuator_entries": 92,
+    "motor_neurons": 92,
+    "biologically_force_pruned": [
+      "gem_l",
+      "gem_r",
+      "peri_l",
+      "peri_r",
+      "quad_fem_l",
+      "quad_fem_r"
+    ],
+    "biologically_active_routes": 86,
+    "policy": "All92 MNs and afferent arcs remain; runner zeros force parameters of six listed routes. This export is biological, not the86-route virtual BPA replacement.",
+    "motor_conversion": "clip(MN voltage / E_HI,0,1); E_HI=5.0 mV; native activation and contraction dynamics follow.",
+    "input_policy": "--reflex-stand: II setpoint at initial standing length; solved per-muscle POST_ bias with saved scale; supraspinal BAL surrogate inputs zero; posture_to_mn=0.",
+    "apparatus": "Existing pelvis springs; vertical stiffness0.01, damping multiplier4.2. Not harness-free.",
+    "frame": "Legacy converted Gait z-up; distinct from y-up CAD."
+  },
+  "recorded_encoder_policy": {
+    "length": "m",
+    "length_rate": "m/s",
+    "tension": "abs(native muscle force),N",
+    "current": "nA",
+    "Ia": "max(gIa * clip(length_rate/ia_vel_ref,\u00e2\u02c6\u20191,1),0)",
+    "II": "max(i0_ii*(0.3+0.7*RGstance)+gII*clip((length\u00e2\u02c6\u2019initial_pose_length)/half_length_range,\u00e2\u02c6\u20191,1),0)",
+    "Ib": "max(0.5*gIb*clip(abs(force)/Fmax,0,1.5),0)",
+    "gating": "Exact gIa/gII/gIb phase/drive/gamma factors are retained in the hashed runner.py and AFF/MOD/G dictionaries. No GRF is silently substituted for source tendon Ib."
+  },
+  "circuits_executed": 0
+}

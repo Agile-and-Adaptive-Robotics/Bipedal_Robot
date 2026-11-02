@@ -1,0 +1,76 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "public_rat120_precursor",
+  "machine": "easteregg2",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\Deng_Biarticular_Rat\\Biarticular_net_Standalone.asim",
+      "exists": true,
+      "sha256": "a7f67185c2c9ce11223f253bb1e0620554dd98c69d49f6d03d6afbbae0e97c23"
+    }
+  ],
+  "controlled_subspace": {
+    "coordinate_accounting": [
+      {
+        "name": "RH_hip",
+        "coverage": "neural"
+      },
+      {
+        "name": "RH_knee",
+        "coverage": "neural"
+      },
+      {
+        "name": "RH_ankle",
+        "coverage": "neural"
+      },
+      {
+        "name": "LH_hip",
+        "coverage": "neural"
+      },
+      {
+        "name": "LH_knee",
+        "coverage": "neural"
+      },
+      {
+        "name": "LH_ankle",
+        "coverage": "neural"
+      },
+      {
+        "name": "Mid_spine",
+        "coverage": "passive"
+      },
+      {
+        "name": "pelvis_root6DoF",
+        "coverage": "source/import fixed constraint"
+      }
+    ],
+    "all_source_coordinates_accounted": true
+  },
+  "design_evidence": {
+    "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\SUBMITTED_ORIGINAL_DESIGN_CHECKS_v1.json",
+    "exists": true,
+    "sha256": "e28b4b80785192bc0e6eb1c51f8024b93b14cd958f38069e454ae4cfa48a076d"
+  },
+  "appropriate_local_design_checks_verified": true,
+  "body_performance_is_not_design_prerequisite": true,
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "blockers": [],
+  "limitations": [
+    "Original rat120 source retains historical RH latch and is not curated134; no new physical success claim."
+  ],
+  "review_required": "Parent review of original-submission roles, explicit source asymmetry, and opt-in profiles. UserOK required before any training.",
+  "active_candidate": "NEWbilateral-biarticular122",
+  "baseline": "Originalpublicrat120",
+  "candidate_evidence": {
+    "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\BILATERAL_BIARTICULAR_INTEGRATION_public122_v2.json",
+    "exists": true,
+    "sha256": "517abf3432ff29824818280bccb7e8f4186b81ae684f5232216736d35e3d195b"
+  },
+  "candidate_fresh_exact": true,
+  "source_preserved": true,
+  "bilateral_parameterization_scope": "LEFTtwo-IN biartmodule mirroredtoRIGHT; other genuine modules right-canonical, shared RCcurrent budgets; original120states/physicalbindings retained.",
+  "training_requires_user_OK": true
+}

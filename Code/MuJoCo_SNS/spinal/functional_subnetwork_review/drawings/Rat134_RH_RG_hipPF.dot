@@ -1,0 +1,35 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="Rat134 | RH RG hipPF" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"RH_RG IN FLX" [id="baa4f73f-29ce-4378-a691-40e65105e281",label="RH RG IN FLX",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RH_HipZ-FLX II" [id="a1887830-8178-48f2-9d07-3bed2cc9753d",label="RH HipZ-FLX II",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"RH_RG EXT" [id="19b62819-0711-4e42-9b2b-12f7542103be",label="RH RG EXT",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RH_Hip  PF FLX" [id="811f6fed-01ca-4032-be95-83d576cdfdaf",label="RH Hip PF FLX",shape=pentagon,style="dashed,filled",fillcolor="#D0E4BF"];
+"RH_IP-    FLX Ia" [id="b1950b41-556a-4b4c-9ff1-5a6bc343bf1a",label="RH IP- FLX Ia",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"RH_RG FLX" [id="628440b5-8e64-4f28-ac44-586980a7b16b",label="RH RG FLX",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RH_Hip PF IN FLX" [id="17cad4d1-e183-45c4-8e8d-cdd55bb69cbb",label="RH Hip PF IN FLX",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"RH_SO- Ext Ib" [id="ce648e45-84d9-4588-bb44-8ea94324eefa",label="RH SO- Ext Ib",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"RH_RG IN EXT" [id="9d333a50-e9cd-4534-a85f-2e581d3ec096",label="RH RG IN EXT",shape=ellipse,style="filled",fillcolor="#C3DEF0"];
+"RH_Hip PF EXT " [id="59d1e92a-0b97-4528-9f52-e83ea94f0fc5",label="RH Hip PF EXT",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"RH_HipZ-Ext II" [id="dc4a847d-b486-4c51-91f1-a5ab9f2702ca",label="RH HipZ-Ext II",shape=pentagon,style="dashed,filled",fillcolor="#E8D9ED"];
+"RH_Hip PF IN EXT " [id="6ad728d2-66d2-4a43-8652-539bfc7d3930",label="RH Hip PF IN EXT",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"RH_RG FLX" -> "RH_RG IN FLX" [id="3bb5b1e4-4139-4dca-bf0c-61032fc4809b",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"RH_HipZ-FLX II" -> "RH_RG EXT" [id="41904095-06a9-4374-b429-9343a9907aa1",arrowhead=odot,label="0.648",style="solid",color="#222222"];
+"RH_RG IN EXT" -> "RH_RG FLX" [id="4a1a5b89-3ce9-4482-a260-63b28cba9153",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"RH_RG EXT" -> "RH_RG IN EXT" [id="5d08fbf8-2ba6-431d-a7b2-9b8545bf8763",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"RH_SO- Ext Ib" -> "RH_RG EXT" [id="688b0ae9-83b5-4fc4-9245-1610ff475b77",arrowhead=inv,label="0.25",style="solid",color="#222222"];
+"RH_HipZ-Ext II" -> "RH_RG FLX" [id="b4f3e5a7-81bf-45db-b7e7-ce3eac3a68be",arrowhead=odot,label="0.208",style="solid",color="#222222"];
+"RH_RG FLX" -> "RH_RG EXT" [id="b81bba56-e181-4385-b58e-d1c13bbb1947",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"RH_RG EXT" -> "RH_RG FLX" [id="bf53e39f-34fa-4334-8d90-2e4a6a553713",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+"RH_IP-    FLX Ia" -> "RH_RG EXT" [id="c4e90f03-9560-463d-aa5e-054fd8b07d33",arrowhead=odot,label="0.241",style="solid",color="#222222"];
+"RH_RG IN FLX" -> "RH_RG EXT" [id="edc18c02-f080-44bb-88b2-152126ca2523",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"RH_HipZ-FLX II" -> "RH_Hip PF EXT " [id="28eeabc0-a69f-4a75-8052-1349ed8632bb",arrowhead=odot,label="0.648",style="solid",color="#222222"];
+"RH_Hip  PF FLX" -> "RH_Hip PF IN FLX" [id="290682e4-8dee-48a3-8e2b-3098960dce77",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"RH_Hip PF EXT " -> "RH_Hip PF IN EXT " [id="30848dc7-603a-4f54-aa6e-b743ed2e40ff",arrowhead=inv,label="2.75",style="solid",color="#222222"];
+"RH_Hip PF IN FLX" -> "RH_Hip PF EXT " [id="64bf8475-b27c-4455-988e-5b22b11e3eba",arrowhead=odot,label="2.75",style="solid",color="#222222"];
+"RH_IP-    FLX Ia" -> "RH_Hip PF EXT " [id="b0c08048-ede0-4619-a2b4-757a698cd720",arrowhead=odot,label="0.241",style="solid",color="#222222"];
+"RH_SO- Ext Ib" -> "RH_Hip PF EXT " [id="b4079701-c921-4740-921f-333ab5018f75",arrowhead=inv,label="0.175",style="solid",color="#222222"];
+"RH_RG EXT" -> "RH_Hip PF EXT " [id="eb95fb85-f3a7-5c10-9173-a8e75eff0d35",arrowhead=inv,label="0.1",style="solid",color="#222222"];
+legend [shape=plaintext, fontsize=11, label="Curated134 | native source graph; arrows/circles classified at target rest. Boundary afferents retained.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}

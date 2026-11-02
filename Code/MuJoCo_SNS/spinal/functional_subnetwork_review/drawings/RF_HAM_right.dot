@@ -1,0 +1,28 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad="0.3", nodesep="0.4", ranksep="0.7", splines=polyline, outputorder=edgesfirst, fontname="Arial", fontsize=16, labelloc=t, label="RF/HAM four-cell PF | right" ];
+node [fontname="Arial", fontsize=12, margin="0.12,0.08", penwidth=1.2];
+edge [fontname="Arial", fontsize=10, arrowsize=0.75, penwidth=1.1];
+"PF_HIP-E_r" [id="PF_HIP-E_r",label="PF HIP-E r",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_HIP-F_r" [id="PF_HIP-F_r",label="PF HIP-F r",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_KNEE-E_r" [id="PF_KNEE-E_r",label="PF KNEE-E r",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_KNEE-F_r" [id="PF_KNEE-F_r",label="PF KNEE-F r",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_BI_JOINT_HAM_r" [id="PF_BI_JOINT_HAM_r",label="PF BI JOINT HAM r",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_BI_JOINT_RECT_r" [id="PF_BI_JOINT_RECT_r",label="PF BI JOINT RECT r",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"MN_semimem_r" [id="MN_semimem_r",label="MN semimem r",shape=ellipse,style="filled",fillcolor="#F4C5B8"];
+"MN_semiten_r" [id="MN_semiten_r",label="MN semiten r",shape=ellipse,style="filled",fillcolor="#F4C5B8"];
+"MN_bifemlh_r" [id="MN_bifemlh_r",label="MN bifemlh r",shape=ellipse,style="filled",fillcolor="#F4C5B8"];
+"MN_rect_fem_r" [id="MN_rect_fem_r",label="MN rect fem r",shape=ellipse,style="filled",fillcolor="#F4C5B8"];
+"PF_IN_BI_PAIR_HAM_r" [id="PF_IN_BI_PAIR_HAM_r",label="PF IN BI PAIR HAM\nr",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_IN_BI_PAIR_RECT_r" [id="PF_IN_BI_PAIR_RECT_r",label="PF IN BI PAIR RECT\nr",shape=ellipse,style="filled",fillcolor="#D0E4BF"];
+"PF_HIP-E_r" -> "PF_BI_JOINT_HAM_r" [id="fourcell:right:0",arrowhead=inv,label="0.0939",style="solid",color="#222222"];
+"PF_KNEE-F_r" -> "PF_BI_JOINT_HAM_r" [id="fourcell:right:1",arrowhead=inv,label="1.27",style="solid",color="#222222"];
+"PF_IN_BI_PAIR_RECT_r" -> "PF_BI_JOINT_HAM_r" [id="fourcell:right:2",arrowhead=odot,label="0.026",style="solid",color="#222222"];
+"PF_HIP-F_r" -> "PF_BI_JOINT_RECT_r" [id="fourcell:right:3",arrowhead=inv,label="0.818",style="solid",color="#222222"];
+"PF_KNEE-E_r" -> "PF_BI_JOINT_RECT_r" [id="fourcell:right:4",arrowhead=inv,label="0.0556",style="solid",color="#222222"];
+"PF_IN_BI_PAIR_HAM_r" -> "PF_BI_JOINT_RECT_r" [id="fourcell:right:5",arrowhead=odot,label="0.0231",style="solid",color="#222222"];
+"PF_BI_JOINT_HAM_r" -> "MN_semimem_r" [id="fourcell:right:6",arrowhead=inv,label="0.0356",style="solid",color="#222222"];
+"PF_BI_JOINT_RECT_r" -> "MN_rect_fem_r" [id="fourcell:right:7",arrowhead=inv,label="0.428",style="solid",color="#222222"];
+"PF_BI_JOINT_HAM_r" -> "PF_IN_BI_PAIR_HAM_r" [id="fourcell:right:8",arrowhead=inv,label="1",style="solid",color="#222222"];
+"PF_BI_JOINT_RECT_r" -> "PF_IN_BI_PAIR_RECT_r" [id="fourcell:right:9",arrowhead=inv,label="1",style="solid",color="#222222"];
+legend [shape=plaintext, fontsize=11, label="Recorded Session1 editor projection, not a newly asserted current circuit.\nRF/HAM retained separately from sartorius/gracilis; supplied excitation/inhibition categories.\nArrow: saved excitatory category. Open circle: saved inhibitory category.\nNeuron colours: RG blue; PF green; motor salmon; afferent purple.\nDashed pentagons: boundary references, not additional neurons.\nEdge numbers: gmax (uS). Full fields and IDs accompany each panel."];
+}

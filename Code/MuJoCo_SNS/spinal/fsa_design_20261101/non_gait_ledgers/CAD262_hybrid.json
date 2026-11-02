@@ -1,0 +1,198 @@
+{
+  "schema": "aarl_non_gait_functional_contract_v1",
+  "family": "CAD262_hybrid",
+  "machine": "easteregg2",
+  "phase": "design_only",
+  "source_evidence": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\run_neural_robot.py",
+      "exists": true,
+      "sha256": "25662ee3a30331842d5da7be88417e64ea3f6c485330bad5a4861769782a898b"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\ah001_neural.xml",
+      "exists": true,
+      "sha256": "dc72f426d4a6ff542fda699775d51f869104acd081bea3200b314ff8b0c4d318"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network.py",
+      "exists": true,
+      "sha256": "f6c147ad2e8939e9065fa1ff25149478f376c4ccb678a8b3795139af8f4c0d99"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\params.py",
+      "exists": true,
+      "sha256": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142"
+    }
+  ],
+  "controlled_subspace": {
+    "independent_full_model_DoF": 17,
+    "coordinates": "Floatingpelvis6+hips6+twofourbarcoordinates+lumbar3; physicallooprank4.",
+    "original_controller": "11internalposecoordinates viaexternalhybridallocator; global6D support uses apparatus.",
+    "pressure_pair": "Onlybilateralvas_med recruitment/pressure; no independenthipfrontal/transverse/lumbarbalance claim.",
+    "welded_foot_channels_without_joint_leverage": 20,
+    "uncertified_axes": [
+      "lumbar3axiscontrolcapacity",
+      "hipfrontal/transversecapacity",
+      "CADphysicalROM",
+      "ankle/subtalar/MTParticulation"
+    ],
+    "free_3D_balance_demonstrated": false,
+    "coordinate_accounting": [
+      {
+        "name": "root6DoF",
+        "coverage": "apparatus"
+      },
+      {
+        "name": "hip_balls_6axes",
+        "coverage": "apparatus",
+        "note": "External hybrid allocator plusSNS signals, not independent3Dneural control"
+      },
+      {
+        "name": "six_fourbar_hinges",
+        "coverage": "constraint",
+        "note": "Four closure constraints leave2effective knees; pairSNS and52hybridroutes contribute"
+      },
+      {
+        "name": "lumbar_ball3axes",
+        "coverage": "apparatus",
+        "note": "External hybrid posture/rotation guidance"
+      }
+    ],
+    "all_source_coordinates_accounted": true
+  },
+  "design_passed": false,
+  "scaling_passed": false,
+  "pathways_passed": false,
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "blockers": [],
+  "limitations": [
+    "Mechanical stance/loop/contact/collision repair remains prerequisite; laptophandoff has fullstatus."
+  ],
+  "design_scope_policy": "Account for every source coordinate as neural, passive, constraint, apparatus, or unsupported. Free3Dwalking/wholebody success is not a prerequisite for supported/reduced-scope Hunt training.",
+  "applicable_design_operations": {
+    "signal_scale": "Declare actualsource and independent desired domains; no inherited globalpass.",
+    "passive_membrane": "Derive localCfrom physicaltau and leak/backgroundconductance with actualclock.",
+    "graded_synapse": "Exact single-path endpoint conductance derivation available; multiinput/transient/linearitychecks stillrequired.",
+    "ionic_burster": "Retain sourceNaP/Ca/gate law; pureGLIFTable2notapplicable.",
+    "GLIF_threshold_steps": "Notapplicableto gradedcells; separate pureGLIFprofile requiresall activation/transient/rate contracts.",
+    "spike_synapse": "Declare reset-to-peak vs additive/capped eventlaw beforeusingdelta/Eq28/29."
+  },
+  "desired_functional_contract": {
+    "input_domain": null,
+    "output_domain": null,
+    "target_gain": null,
+    "target_transient_s": null,
+    "target_bandwidth_hz": null,
+    "target_rate_hz": null,
+    "status": "Unassigned targets block application; inherited values are not independent desired functions."
+  },
+  "opt_in_profile": {
+    "adapter": "sns_passive",
+    "adopted": false,
+    "neurons": [],
+    "synapses": []
+  },
+  "application_recipe": {
+    "default_behavior": "No profile: literal no-op; no original source or topology changes.",
+    "production_hook_installed": false,
+    "unit_adapter_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_ADAPTER_ELECTRICAL_CHECK.json",
+    "candidate_consumption_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_CANDIDATE_COMPONENT_CHECKS.json",
+    "fresh_process_proof": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_FRESH_PROCESS_CHECK.json",
+    "Simulink_block_consumption_proof": null,
+    "shared_GLIF_module": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_design_20261101\\table2_glif.py",
+    "ionic_exclusion": "NaP/Ca m/h and adaptation currents are not GLIF adaptive-threshold m/tau_theta; retain source mechanism unless a separately verified replacement is declared.",
+    "call": "apply_sns_passive_profile(net.compiled, ordered_names, explicit_profile, clock_unit=\"s\") aftercompile/beforewarmup; preserve sparsecache whenusingwrapper."
+  },
+  "source_census": {
+    "neurons": 262,
+    "inputs": 230,
+    "ionic_cells": 4,
+    "active_pairs": 650,
+    "actuators": 54
+  },
+  "units": {
+    "voltage": "Restrelative0..5mV signal domain; ionicceiling is separate.",
+    "time": "Compiled dt=.002seconds and clockcodedCm/Gm yields seconds; physicalnF equivalent is1000*Cmcode, not literalCmcode.",
+    "conductance": "uS in sourceconductance equation",
+    "current": "nA",
+    "actuator": "FixedreferenceF0*filteredstate, not physiological5percentactivation."
+  },
+  "source_passive_examples": {
+    "MN_vas_med_r": {
+      "clock_capacitance": 0.03,
+      "leak_uS": 1.0,
+      "tau_s": 0.03,
+      "bias_nA": 0.0
+    },
+    "PF_E1_r": {
+      "clock_capacitance": 0.048,
+      "leak_uS": 1.0,
+      "tau_s": 0.048,
+      "bias_nA": 0.0
+    },
+    "Ib_vas_med_r": {
+      "clock_capacitance": 0.04,
+      "leak_uS": 1.0,
+      "tau_s": 0.04,
+      "bias_nA": 0.0
+    }
+  },
+  "retained_engineering_target_contract": {
+    "source_function": "run_neural_robot.motor_target_current",
+    "desired_normalized_range": [
+      0.0,
+      1.0
+    ],
+    "desired_voltage": "5*u mV",
+    "actual_consumed_tracking_tau_s": 0.005,
+    "actual_discrete_tracking_tau_s": 0.003915230377942435,
+    "equation": "Vnext=V+(dt/motor_tau)*(5*u\u2212V) by explicitbackgroundcurrentcancellation.",
+    "downstream_actuator_state_filter_s": 0.03,
+    "not_pure_neural_coordination": true,
+    "note": "Sourcecommentmentions30ms, but functiondefault and reviewconsumedCLI motor_tau=.005 define5msEulertracking; passiveMN-Cm30ms andactuator30msareseparate."
+  },
+  "audit_anchor_primary": {
+    "manifest": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\review_20261101\\cad\\REPRODUCTION_MANIFEST.json",
+      "exists": true,
+      "sha256": "65c21470ce4c3b712bba801da16a53524704acb50a0e4eb28154b42b94086ae4"
+    },
+    "live_protocol": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\cad_bpa\\pair_neural_recruitment\\normalized_unclamped\\support085\\mixed\\mixed\\LIVE_PREREGISTRATION.json",
+      "exists": true,
+      "sha256": "0956697f8c2f57cad2e8a9321cc7c9d6e201a2ea0fe0ee0763abc8aea71e810a"
+    },
+    "body_summary": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\cad_bpa\\pair_neural_recruitment\\normalized_unclamped\\support085\\mixed\\mixed\\cad.json",
+      "exists": true,
+      "sha256": "55c692192e7200894756028a9c528d09a7d86b7b19513f295e3ed1da9725a844"
+    },
+    "scope": "Mixed2pressure/52hybrid historical85case; mechanicalrepairfixtures arenotwinners."
+  },
+  "appropriate_design_evidence": {
+    "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\CAD262_ROLE_DESIGN_final.json",
+    "exists": true,
+    "sha256": "5ad45bf3d69d1d2243b246ae5f156d3c9274da8522089556431c4eb1d7172431"
+  },
+  "appropriate_electrical_role_prerequisites_verified": true,
+  "review_required": "Parent review of hybrid/2pressure scope; mechanical defects remain separate body-trial gates, not electrical FSA failures.",
+  "appropriate_local_design_checks_verified": true,
+  "body_performance_is_not_design_prerequisite": true,
+  "bilateral_design_accounting": {
+    "evidence": {
+      "path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\fsa_design\\non_gait_electrical\\NON_GAIT_BILATERAL_DESIGN_v4.json",
+      "exists": true,
+      "sha256": "653d946e2ce644d94cb03844ef0009ffe5caee16fd9e0039a8ed1e973303fc2b"
+    },
+    "applicable": true,
+    "eligible_edge_pairs": 325,
+    "source_asymmetric_pair_count": 0,
+    "unmatched_right_edges": 0,
+    "ineligible_edges": 0,
+    "source_untouched": true,
+    "blanket_source_symmetry_claim": false,
+    "policy": "Baseline untouched. Explicit new candidate uses right canonical gain copied to verified left edge; unmatched/non-equivalent edges frozen, never independently fit."
+  }
+}

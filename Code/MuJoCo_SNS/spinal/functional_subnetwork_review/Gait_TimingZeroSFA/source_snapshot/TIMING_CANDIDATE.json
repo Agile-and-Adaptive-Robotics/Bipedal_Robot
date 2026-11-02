@@ -1,0 +1,59 @@
+{
+  "machine": "easteregg2",
+  "source_family": "syn6",
+  "source_standing_configuration": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\gait_bpa\\rustuna_syn6_v1\\BEST.json",
+  "source_standing_configuration_sha256": "a821b83e2043de80bd0363b3ccb78db1e8d98ec0bb691f9fb2ed7cc7818b8dd6",
+  "source_standing_parameters": {
+    "pf_mn_gain": 0.013344897908126326,
+    "ib_group_gain": 0.9897272112995432,
+    "standing_bias_scale": 0.9619588149071685
+  },
+  "source_graph": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\Mujoco_SNS_models\\Gait2392_standing_families\\syn6_graph_ledger.json",
+  "source_graph_sha256": "0843e32e4e5cf16de974720620c0101e05bf1424018c7815d21b8b1182d6e5b0",
+  "source_model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody_cvt3.xml",
+  "source_model_sha256": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae",
+  "controller_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\summarize_gait_dynamic.py",
+  "controller_class": "TimingZeroSFA",
+  "controller_numerical_core_sha256": "fa5f1af692b80ff1d6cee0cf19d5845ab055d0722138f3d07bf2b39fd0460db6",
+  "parameters": {
+    "rg_adapt_jump_nA": 0.0,
+    "rg_readout_C_rate": 5.0,
+    "pf_rate_scale": 1.0,
+    "rg_h_tau_scale": 0.9496883348174533
+  },
+  "observer_constants": {
+    "cells_per_population": 16,
+    "neural_step_s": 0.002,
+    "spiking_step_s": 0.0002,
+    "spike_history_tau_s": 0.025,
+    "support_min_events": 2
+  },
+  "actual_spiking_cells": 256,
+  "remaining_graded_cells": 778,
+  "dependencies": [
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\gait_dynamic_readout.py",
+      "sha256": "4b7bcba450d74ed08b4693367a621398f3699479df0986765073087c7913c175"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\gait_central_inverse.py",
+      "sha256": "5c334c2b9f6edac5ed7542dbf6230f5dd5801c34763131c688adbd67cfc1c97f"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\gait_central_meanfield.py",
+      "sha256": "b4d6859d2e2f05f7416ac3784989decf8727d818ec10aac50754007577c5412a"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\gait_central_spiking.py",
+      "sha256": "8fbbc677a50f930a38d0e5a1771290a2ea63de2d13b277999d8a6eac03c1e5ea"
+    },
+    {
+      "path": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\virtual_walker_20261031\\gait_spiking_reflex.py",
+      "sha256": "a7ed97f906bbbf1cb5f468a87a0c1ce694041f94dccbff9c0853b0843833ba59"
+    }
+  ],
+  "fresh_neural_arrays_exact": true,
+  "original_scorer_gate_pass": false,
+  "corrected_scorer_preview_pass": true,
+  "status": "Neural candidate; scorer review pending; physical_trials0. No automatic promotion."
+}

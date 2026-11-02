@@ -6,6 +6,8 @@ for key in ('OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','OMP_NUM_THREADS','NUMEXPR_
 os.environ['CONDA_PREFIX']=str(Path(sys.executable).parent);os.environ['AARL_NET']='w2lvar'
 sys.path[:0]=[str(H),str(S),str(S/'functional_gait2392')]
 path=Path(sys.argv[1]).resolve();cfg=json.loads(path.read_text());out=path.with_suffix('');os.environ['AARL_NPZ']=str(out)+'.npz'
+if cfg.get('suppress_inherited_posture',False) and cfg.get('suppress_inherited_posture_mn',False):
+    raise ValueError('Choose either the full POSTURE input diagnostic or the POSTURE-to-MN repair, not both')
 import numpy as np,mujoco
 import controller as C,runner as R,build_network as BN
 from mechanics import CoupledArms,JOINTS
@@ -111,6 +113,29 @@ def build(acts,dt,interleg):
         for i,(pre,post) in enumerate(zip(n.compiled.pre,n.compiled.post)):
             if n.names[post].startswith('PF_') and n.names[pre].startswith(('HEEL_','TOEDF_')):
                 n.compiled.gmax[i]=n.original_g[i]*cfg.get('contact_pf_scale',0.)
+    if cfg.get('suppress_inherited_posture_mn',False):
+        c=n.compiled
+        ids=np.array([i for i in n.stand_edges if n.names[c.pre[i]]=='POSTURE' and n.names[c.post[i]].startswith('MN_')],dtype=int)
+        n.original_g[ids]=0.;c.gmax[ids]=0.;n.sync()
+        capture['inherited_posture_mn_mask']=dict(edges=len(ids),source='POSTURE',targets='MN_',owner='original_g; subsequent command updates retain zeros',preserved='Direct POST_<act> inputs and POSTURE-to-RG paths')
+    integrated_check=None
+    if cfg.get('integrated_fsa_profile'):
+        from fsa_design_20261101 import integrated_hunt_design as integrated
+        integrated_profile=integrated.load_profile(cfg['integrated_fsa_profile'])
+        if integrated_profile['parameter_checkpoint'] is not None and (cfg.get('motor_scale',1.)!=1. or cfg.get('reflex_scale',1.)!=1. or cfg.get('motor_scales')):
+            raise ValueError('Explicit integrated gain checkpoint conflicts with additional caller gain scales; serialize the intended fitted gains instead')
+        capture['integrated_fsa_design']=integrated.apply_to_network(n,integrated_profile,protocol_stage=stage)
+        integrated_check=integrated.verify
+    if cfg.get('renshaw_autogenic_profile'):
+        if not cfg.get('integrated_fsa_profile'):
+            raise ValueError('The named RC candidate requires its reviewed integrated Hunt source')
+        from fsa_design_20261101 import renshaw_autogenic_design as renshaw
+        rc_path=Path(cfg['renshaw_autogenic_profile']).resolve()
+        rc_proof=renshaw.install(n,renshaw.load_profile(rc_path))
+        rc_helper=Path(renshaw.__file__).resolve()
+        source_hashes['renshaw_autogenic_design.py']=hashlib.sha256(rc_helper.read_bytes()).hexdigest()
+        source_hashes['renshaw_autogenic_profile']=hashlib.sha256(rc_path.read_bytes()).hexdigest()
+        capture['renshaw_autogenic_design']={**rc_proof,'profile_file':str(rc_path),'profile_file_sha256':source_hashes['renshaw_autogenic_profile'],'helper_file':str(rc_helper),'helper_file_sha256':source_hashes['renshaw_autogenic_design.py']}
     native_step=n.step
     event_state=dict(loaded=np.zeros(2,dtype=bool),unloaded_s=np.zeros(2),trace=np.zeros(2),whole_unloaded_s=np.zeros(2))
     if cfg.get('diagnose_swing',False):
@@ -167,7 +192,10 @@ def build(acts,dt,interleg):
         d.xfrc_applied[pb,0]=cfg.get('push_N',0.) if cfg.get('push_time',7.)<=count*dt<cfg.get('push_time',7.)+.1 else 0.
         d.xfrc_applied[pb,1]=cfg.get('lateral_push_N',0.) if cfg.get('push_time',7.)<=count*dt<cfg.get('push_time',7.)+.1 else 0.
         d.xfrc_applied[pb,2]=cfg.get('support_fraction',0.)*m.body_mass.sum()*9.81
+        if cfg.get('suppress_inherited_posture',False):
+            u[n.ports['POSTURE']]=0.
         step_start=time.perf_counter();native_step(u);capture['neural_step_wall_s']+=time.perf_counter()-step_start
+        if integrated_check is not None:integrated_check(n,full=(count%32==0),require_bound_PT=bool(stage!=1 and cfg.get('balance')))
         if hasattr(n,'swing_diagnostics'):n.swing_diagnostics.sample(count*dt)
         if hasattr(n,'motor_teacher'):n.motor_teacher.update(count*dt)
         if len(trace_indices) and count<len(cell_log):cell_log[count]=n.compiled.V[trace_indices]
@@ -203,7 +231,35 @@ args=['--eval','--drive','2.5']
 if stage in (1,2):args+=['--no-ground']
 if stage==1:args+=['--no-afferents','--no-interleg']
 if stage==3:args=['--stand-eval','8']
-start=time.perf_counter();metrics=R.main(args)
+verification=None
+verification_prep_intervals=0
+previous_observer=R.VERIFICATION_POST_PHYSICS
+if cfg.get('verification_capture'):
+    from verification_capture import AlignedCapture
+    def observe_verified_interval(model,data,network,step_index,logical_time_s,step_s,warmup):
+        global verification,verification_prep_intervals
+        if warmup:
+            verification_prep_intervals+=1
+            return # held-pose preparation is not a physical trajectory interval
+        if verification is None:
+            verification=AlignedCapture(model,network,int(cfg.get('verification_max_samples',20000)),
+                frame='legacy_z_up',cells=cfg.get('verification_cells'),
+                sample_phase='After accepted outer physics interval; warmup excluded. Neural input/start and force interval times retained separately.',
+                voltage_label=cfg.get('verification_voltage_label','graded model membrane depolarization (mV; rest-relative)'),
+                provenance=dict(configuration_file=str(path),configuration=cfg,source_hashes=source_hashes))
+            verification.metadata['excluded_held_pose_intervals']=verification_prep_intervals
+        verification.sample(data,state_time_s=logical_time_s+step_s,neural_time_s=logical_time_s+step_s,
+            neural_input_time_s=logical_time_s,force_interval_start_s=logical_time_s,
+            explicit_support_native=np.array([0.,0.,cfg.get('support_fraction',0.)*model.body_mass.sum()*9.81]),
+            sparse_current_backend=cfg.get('backend','sparse')if cfg.get('verification_sparse_currents',False)else None)
+    R.VERIFICATION_POST_PHYSICS=observe_verified_interval
+start=time.perf_counter()
+try:
+    metrics=R.main(args)
+finally:
+    R.VERIFICATION_POST_PHYSICS=previous_observer
+    if verification is not None:
+        verification.save(cfg['verification_capture'])
 assessment=assess(str(out)+'.npz',metrics,5 if stage in (4,5) else stage)
 assessment.update(assess_frontal(str(out)+'.npz'))
 assessment['accepted']=bool(assessment['accepted'] and assessment['frontal_gate'])
