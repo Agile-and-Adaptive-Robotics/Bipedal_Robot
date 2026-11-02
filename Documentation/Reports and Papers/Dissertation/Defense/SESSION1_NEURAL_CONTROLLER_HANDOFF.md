@@ -2,6 +2,8 @@
 
 **Machine: easteregg2. Repository: `D:\GitHub\Bipedal_Robot`.** This handoff is for Ben's defense-deck session on this same machine. Ben directs the content. Current work is controller design and verification; training and curriculum execution await his explicit OK. Compliant tendons, joint damping changes, and muscle damping changes are separate optional experiments, each requiring his OK. No manuscript or Overleaf edits are authorized by this handoff.
 
+**Latest review, November 2:** read `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_design_20261101\GAIT_DISSERTATION_RECIPE_REVIEW.md` for the six actual dissertation-recipe reconstructions and their passing static FSA checks. Circuit repairs remain separate candidates; they have not all been composed and dynamically validated as one runnable controller. The updated DEFENSE_DESIGN_DECISIONS.md explains why Di Russo is an architecture-specific comparison, not a universal wiring specification. Full Hunt/curriculum training is still on hold.
+
 ## Read these first, in order
 
 1. `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_design_20261101\DISSERTATION_TRIAL_PROVENANCE.md` — essential correction: dissertation trials differ from the later standing exports. Start here before describing missing pathways or drawing historical controllers.

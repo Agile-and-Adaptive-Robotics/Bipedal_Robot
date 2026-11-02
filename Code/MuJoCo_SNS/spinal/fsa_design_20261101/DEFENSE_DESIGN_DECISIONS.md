@@ -2,6 +2,16 @@
 
 Session 1, easteregg2. This is a review/handoff document, not manuscript text. Proposed questions reflect the expertise Ben described; they are not statements from committee members. Existing result/configuration records remain authoritative.
 
+## Readiness update, 2026-11-02
+
+The dissertation-recipe topology/static FSA review is complete for the six named recipes in GAIT_DISSERTATION_RECIPE_REVIEW.md. This is not completion of all circuit repairs: central-budget and heel-policy changes remain separate, and the new monoarticular central overlay covers 22 muscles only. It is a new default-template design, not a historical dissertation-s3k repair. Its individual current/graph/cache/fresh checks pass; final whole-controller composition and dynamic functional checks remain required. No full Hunt/curriculum release is justified yet. Bounded accelerated verification of one explicitly selected composed candidate is the next numerical step, after its paper-to-code/sign requirements are checked. No training or physics change is authorized by this status statement.
+
+### Targeted primary-paper check
+
+Di Russo et al. (2023), sections 2.2.1–2.2.3 and equations 6–9, use coupled phase oscillators, heel-strike phase resets, five raised-cosine primitives, signed primitive-to-MN weights, and local reflex/Renshaw circuits. Their CPG feedback is heel-event resetting; direct central Ia/II projections are not a universal requirement of that architecture. Therefore their absence alone is not a Di Russo replication defect. Our syn6 uses six NMF-based channels and a half-center network, and its reviewed recipe lacks RCs. It is an engineered hybrid, not a literal reproduction. These distinctions require an architecture-specific cross-check rather than adding every pathway seen in another model. [Primary paper](https://infoscience.epfl.ch/server/api/core/bitstreams/4e04db10-e21e-4aea-b772-4a50bf1585aa/content).
+
+The remaining narrow review should map each claimed subsystem to its intended source: primitive/MN/reflex/balance functions to Di Russo where appropriate; half-center, commissural, and biarticular functions to the actual Hunt/Deng/Rybak lineage. For each, record source signal, sign, target, laterality, delay, phase condition, and measured end-to-end effect. A passing conductance formula is not that check. The actual repository Di Russo implementations under `Code\MuJoCo_SNS\spinal\dirusso_gait2392` have not been newly certified by this initial paper comparison.
+
 ## Design choices that can be defended
 
 | Likely question | Defensible answer | Evidence to show |
