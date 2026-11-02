@@ -15,11 +15,14 @@ from numba import njit
 def force_at_pressure(length, pressure, p):
     lm=length-p[2]
     rel0=(p[0]-lm)/(p[0]*p[1])
-    if rel0 < 0.0:
-        return np.nan  # outside the declared fixture's contraction domain
     if rel0 >= 1.0:
         return 0.0
-    lo=0.0;hi=lm-p[0]*(1.0-p[1])
+    # The characterized domain belongs to the sleeve AFTER cable stretch,
+    # not to the total unloaded route. A stretched series cable may let a
+    # route exceed rest+fixed while the sleeve remains in its valid range.
+    lo=max(0.0,lm-p[0]);hi=lm-p[0]*(1.0-p[1])
+    if lo>0.0 and p[3]*(pressure/620.0)<p[4]*lo:
+        return np.nan  # even zero sleeve contraction cannot support this stretch
     for _ in range(46):
         r=0.5*(lo+hi)
         rel=(p[0]-lm+r)/(p[0]*p[1])
@@ -40,7 +43,7 @@ def inverse_pressure(target,length,p):
     if target<=0.0:return 0.0,0
     lm=length-p[2]
     rel=(p[0]-lm+target/p[4])/(p[0]*p[1])
-    if (p[0]-lm)<0.0:return 0.0,3
+    if rel<0.0:return 0.0,3  # requested T/K still leaves sleeve overextended
     if rel>=1.0:return p[8],2
     pressure=620.0*(target/p[3]-p[5]*(math.exp(-p[6]*rel)-1.0))*math.exp(p[7]*rel*rel)
     # Bisection roundoff in a forward-generated force can put the inverse a

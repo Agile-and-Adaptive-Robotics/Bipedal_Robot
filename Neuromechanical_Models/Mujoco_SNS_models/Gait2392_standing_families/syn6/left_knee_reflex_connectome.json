@@ -1,0 +1,973 @@
+{
+  "name": "syn6 standing candidate",
+  "nodes": [
+    {
+      "label": "PF_S1_l",
+      "type": "HC-PF-F",
+      "x": 300,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S2_l",
+      "type": "HC-PF-E",
+      "x": 540,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S3_l",
+      "type": "HC-PF-E",
+      "x": 780,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S4_l",
+      "type": "HC-PF-F",
+      "x": 1020,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S5_l",
+      "type": "HC-PF-F",
+      "x": 1260,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S6_l",
+      "type": "HC-PF-E",
+      "x": 1500,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "MN_bifemsh_l",
+      "type": "MN",
+      "x": 1200,
+      "y": 1380,
+      "gain": 1.0
+    },
+    {
+      "label": "Ia_bifemsh_l",
+      "type": "SN-Ia",
+      "x": 1020,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "II_bifemsh_l",
+      "type": "SN-II",
+      "x": 1200,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "Ib_bifemsh_l",
+      "type": "SN-Ib",
+      "x": 1380,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "IaIN_bifemsh_l",
+      "type": "IN-IaIN",
+      "x": 1020,
+      "y": 900,
+      "gain": 1.0
+    },
+    {
+      "label": "IIX_bifemsh_l",
+      "type": "IN-IaIN",
+      "x": 1200,
+      "y": 900,
+      "gain": 1.0
+    },
+    {
+      "label": "IIIN_bifemsh_l",
+      "type": "IN-IaIN",
+      "x": 1380,
+      "y": 1140,
+      "gain": 1.0
+    },
+    {
+      "label": "IBIN_bifemsh_l",
+      "type": "IN-IaIN",
+      "x": 1380,
+      "y": 900,
+      "gain": 1.0
+    },
+    {
+      "label": "MN_vas_lat_l",
+      "type": "MN",
+      "x": 540,
+      "y": 1380,
+      "gain": 1.0
+    },
+    {
+      "label": "Ia_vas_lat_l",
+      "type": "SN-Ia",
+      "x": 360,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "II_vas_lat_l",
+      "type": "SN-II",
+      "x": 540,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "Ib_vas_lat_l",
+      "type": "SN-Ib",
+      "x": 720,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "IaIN_vas_lat_l",
+      "type": "IN-IaIN",
+      "x": 360,
+      "y": 900,
+      "gain": 1.0
+    },
+    {
+      "label": "IIX_vas_lat_l",
+      "type": "IN-IaIN",
+      "x": 540,
+      "y": 900,
+      "gain": 1.0
+    },
+    {
+      "label": "IIIN_vas_lat_l",
+      "type": "IN-IaIN",
+      "x": 720,
+      "y": 1140,
+      "gain": 1.0
+    },
+    {
+      "label": "IBIN_vas_lat_l",
+      "type": "IN-IaIN",
+      "x": 720,
+      "y": 900,
+      "gain": 1.0
+    }
+  ],
+  "edges": [
+    {
+      "from": "PF_S1_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.00036648697791765545,
+      "tag": "T067 | G=0.00036648697791765545uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 15",
+      "pts": [
+        {
+          "x": 300,
+          "y": 360
+        },
+        {
+          "x": 300,
+          "y": 1320
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_S3_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.02569778070387494,
+      "tag": "T068 | G=0.025697780703874941uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 17",
+      "pts": [
+        {
+          "x": 780,
+          "y": 360
+        },
+        {
+          "x": 780,
+          "y": 1308
+        },
+        {
+          "x": 1200,
+          "y": 1308
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_S4_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.0007911339920154791,
+      "tag": "T069 | G=0.00079113399201547906uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 18",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 360
+        },
+        {
+          "x": 1140,
+          "y": 360
+        },
+        {
+          "x": 1140,
+          "y": 1296
+        },
+        {
+          "x": 1200,
+          "y": 1296
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_S5_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.0030277212222307223,
+      "tag": "T070 | G=0.0030277212222307223uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 19",
+      "pts": [
+        {
+          "x": 1260,
+          "y": 360
+        },
+        {
+          "x": 1260,
+          "y": 1320
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_S6_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.0015995420715959915,
+      "tag": "T071 | G=0.0015995420715959915uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 20",
+      "pts": [
+        {
+          "x": 1500,
+          "y": 360
+        },
+        {
+          "x": 1500,
+          "y": 1308
+        },
+        {
+          "x": 1212,
+          "y": 1308
+        },
+        {
+          "x": 1212,
+          "y": 1320
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "Ia_bifemsh_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 2.0,
+      "tag": "T024 | G=2uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 465",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 660
+        },
+        {
+          "x": 1128,
+          "y": 660
+        },
+        {
+          "x": 1128,
+          "y": 1284
+        },
+        {
+          "x": 1200,
+          "y": 1284
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IIX_bifemsh_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T008 | G=0.5uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 469",
+      "pts": [
+        {
+          "x": 1200,
+          "y": 960
+        },
+        {
+          "x": 1212,
+          "y": 960
+        },
+        {
+          "x": 1212,
+          "y": 1320
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IBIN_bifemsh_l",
+      "to": "MN_bifemsh_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 471",
+      "pts": [
+        {
+          "x": 1380,
+          "y": 960
+        },
+        {
+          "x": 1224,
+          "y": 960
+        },
+        {
+          "x": 1224,
+          "y": 1320
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IaIN_vas_lat_l",
+      "to": "MN_bifemsh_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 636",
+      "pts": [
+        {
+          "x": 420,
+          "y": 900
+        },
+        {
+          "x": 420,
+          "y": 1308
+        },
+        {
+          "x": 768,
+          "y": 1308
+        },
+        {
+          "x": 768,
+          "y": 1380
+        },
+        {
+          "x": 1140,
+          "y": 1380
+        }
+      ]
+    },
+    {
+      "from": "IIIN_vas_lat_l",
+      "to": "MN_bifemsh_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 464, col 638",
+      "pts": [
+        {
+          "x": 780,
+          "y": 1140
+        },
+        {
+          "x": 1116,
+          "y": 1140
+        },
+        {
+          "x": 1116,
+          "y": 1368
+        },
+        {
+          "x": 1140,
+          "y": 1368
+        },
+        {
+          "x": 1140,
+          "y": 1380
+        }
+      ]
+    },
+    {
+      "from": "Ia_bifemsh_l",
+      "to": "IaIN_bifemsh_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "T010 | G=1uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 468, col 465",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 660
+        },
+        {
+          "x": 1020,
+          "y": 840
+        }
+      ]
+    },
+    {
+      "from": "IaIN_vas_lat_l",
+      "to": "IaIN_bifemsh_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 468, col 636",
+      "pts": [
+        {
+          "x": 420,
+          "y": 900
+        },
+        {
+          "x": 420,
+          "y": 840
+        },
+        {
+          "x": 960,
+          "y": 840
+        },
+        {
+          "x": 960,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "II_bifemsh_l",
+      "to": "IIX_bifemsh_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "T010 | G=1uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 469, col 466",
+      "pts": [
+        {
+          "x": 1200,
+          "y": 660
+        },
+        {
+          "x": 1200,
+          "y": 840
+        }
+      ]
+    },
+    {
+      "from": "II_bifemsh_l",
+      "to": "IIIN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T008 | G=0.5uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 470, col 466",
+      "pts": [
+        {
+          "x": 1200,
+          "y": 660
+        },
+        {
+          "x": 1320,
+          "y": 660
+        },
+        {
+          "x": 1320,
+          "y": 1080
+        },
+        {
+          "x": 1380,
+          "y": 1080
+        }
+      ]
+    },
+    {
+      "from": "Ib_bifemsh_l",
+      "to": "IBIN_bifemsh_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "T010 | G=1uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 471, col 467",
+      "pts": [
+        {
+          "x": 1380,
+          "y": 660
+        },
+        {
+          "x": 1380,
+          "y": 840
+        }
+      ]
+    },
+    {
+      "from": "IBIN_vas_lat_l",
+      "to": "IBIN_bifemsh_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 471, col 639",
+      "pts": [
+        {
+          "x": 780,
+          "y": 900
+        },
+        {
+          "x": 948,
+          "y": 900
+        },
+        {
+          "x": 948,
+          "y": 840
+        },
+        {
+          "x": 1308,
+          "y": 840
+        },
+        {
+          "x": 1308,
+          "y": 900
+        },
+        {
+          "x": 1320,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "PF_S1_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.0003366277182544335,
+      "tag": "T137 | G=0.00033662771825443351uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 15",
+      "pts": [
+        {
+          "x": 300,
+          "y": 360
+        },
+        {
+          "x": 480,
+          "y": 360
+        },
+        {
+          "x": 480,
+          "y": 1296
+        },
+        {
+          "x": 540,
+          "y": 1296
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_S2_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.023690818394779614,
+      "tag": "T138 | G=0.023690818394779614uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 16",
+      "pts": [
+        {
+          "x": 540,
+          "y": 360
+        },
+        {
+          "x": 600,
+          "y": 360
+        },
+        {
+          "x": 600,
+          "y": 1296
+        },
+        {
+          "x": 552,
+          "y": 1296
+        },
+        {
+          "x": 552,
+          "y": 1320
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_S4_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.0007459049997575691,
+      "tag": "T139 | G=0.00074590499975756908uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 18",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 360
+        },
+        {
+          "x": 612,
+          "y": 360
+        },
+        {
+          "x": 612,
+          "y": 1284
+        },
+        {
+          "x": 540,
+          "y": 1284
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_S6_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 1.796021388984749e-05,
+      "tag": "T140 | G=1.7960213889847492e-05uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 20",
+      "pts": [
+        {
+          "x": 1500,
+          "y": 360
+        },
+        {
+          "x": 1152,
+          "y": 360
+        },
+        {
+          "x": 1152,
+          "y": 540
+        },
+        {
+          "x": 624,
+          "y": 540
+        },
+        {
+          "x": 624,
+          "y": 1272
+        },
+        {
+          "x": 528,
+          "y": 1272
+        },
+        {
+          "x": 528,
+          "y": 1320
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IaIN_bifemsh_l",
+      "to": "MN_vas_lat_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 468",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 960
+        },
+        {
+          "x": 540,
+          "y": 960
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IIIN_bifemsh_l",
+      "to": "MN_vas_lat_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 470",
+      "pts": [
+        {
+          "x": 1320,
+          "y": 1140
+        },
+        {
+          "x": 1320,
+          "y": 1440
+        },
+        {
+          "x": 600,
+          "y": 1440
+        },
+        {
+          "x": 600,
+          "y": 1380
+        }
+      ]
+    },
+    {
+      "from": "Ia_vas_lat_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 2.0,
+      "tag": "T024 | G=2uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 633",
+      "pts": [
+        {
+          "x": 360,
+          "y": 660
+        },
+        {
+          "x": 468,
+          "y": 660
+        },
+        {
+          "x": 468,
+          "y": 1284
+        },
+        {
+          "x": 516,
+          "y": 1284
+        },
+        {
+          "x": 516,
+          "y": 1320
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IIX_vas_lat_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T008 | G=0.5uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 637",
+      "pts": [
+        {
+          "x": 540,
+          "y": 960
+        },
+        {
+          "x": 552,
+          "y": 960
+        },
+        {
+          "x": 552,
+          "y": 1320
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IBIN_vas_lat_l",
+      "to": "MN_vas_lat_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 632, col 639",
+      "pts": [
+        {
+          "x": 720,
+          "y": 960
+        },
+        {
+          "x": 720,
+          "y": 1080
+        },
+        {
+          "x": 636,
+          "y": 1080
+        },
+        {
+          "x": 636,
+          "y": 1296
+        },
+        {
+          "x": 564,
+          "y": 1296
+        },
+        {
+          "x": 564,
+          "y": 1320
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "IaIN_bifemsh_l",
+      "to": "IaIN_vas_lat_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 636, col 468",
+      "pts": [
+        {
+          "x": 960,
+          "y": 900
+        },
+        {
+          "x": 960,
+          "y": 972
+        },
+        {
+          "x": 432,
+          "y": 972
+        },
+        {
+          "x": 432,
+          "y": 900
+        },
+        {
+          "x": 420,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "Ia_vas_lat_l",
+      "to": "IaIN_vas_lat_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "T010 | G=1uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 636, col 633",
+      "pts": [
+        {
+          "x": 360,
+          "y": 660
+        },
+        {
+          "x": 360,
+          "y": 840
+        }
+      ]
+    },
+    {
+      "from": "II_vas_lat_l",
+      "to": "IIX_vas_lat_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "T010 | G=1uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 637, col 634",
+      "pts": [
+        {
+          "x": 540,
+          "y": 660
+        },
+        {
+          "x": 540,
+          "y": 840
+        }
+      ]
+    },
+    {
+      "from": "II_vas_lat_l",
+      "to": "IIIN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T008 | G=0.5uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 638, col 634",
+      "pts": [
+        {
+          "x": 540,
+          "y": 660
+        },
+        {
+          "x": 660,
+          "y": 660
+        },
+        {
+          "x": 660,
+          "y": 1068
+        },
+        {
+          "x": 720,
+          "y": 1068
+        },
+        {
+          "x": 720,
+          "y": 1080
+        }
+      ]
+    },
+    {
+      "from": "IBIN_bifemsh_l",
+      "to": "IBIN_vas_lat_l",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T025 | G=0.5uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 639, col 471",
+      "pts": [
+        {
+          "x": 1320,
+          "y": 900
+        },
+        {
+          "x": 1272,
+          "y": 900
+        },
+        {
+          "x": 1272,
+          "y": 828
+        },
+        {
+          "x": 792,
+          "y": 828
+        },
+        {
+          "x": 792,
+          "y": 900
+        },
+        {
+          "x": 780,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "Ib_vas_lat_l",
+      "to": "IBIN_vas_lat_l",
+      "sign": "exc",
+      "gain": 1.0,
+      "tag": "T010 | G=1uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 639, col 635",
+      "pts": [
+        {
+          "x": 720,
+          "y": 660
+        },
+        {
+          "x": 720,
+          "y": 840
+        }
+      ]
+    }
+  ],
+  "groups": {}
+}

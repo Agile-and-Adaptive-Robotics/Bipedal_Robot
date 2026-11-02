@@ -1,0 +1,290 @@
+\chapter{Background}\label{ch:background}
+\graphicspath{{../Figures/15-background/}{figs/15-background/}}
+
+I review the robotics, actuation, biomechanics, and neural-control background needed for this dissertation, followed by simulation tools and the ethical rationale for robotic experiments. The Sensory Afferent Database, my earlier AnimatLab walker \citep{bolen_design_2020}, and the simulation interfaces I developed are described in Chapters~\ref{ch:database} and~\ref{ch:sns}.
+
+\section{Biomimetic and Musculoskeletal Robots}\label{sec:bg_robots}
+
+Biomimetic robots offer many potential applications, ranging from assisting in factories and environmental exploration to serving as physical models of human movement. By developing high-fidelity biomimetic robots, we can perform tests that help improve our understanding of both biomechanics and the underlying neuromechanical systems that control movement \citep{shin_constructive_2018, asano_musculoskeletal_2019, ijspeert_amphibious_2020, goldsmith_investigating_2021, hunt_development_2017, schilling_adaptive_2022}. A few such biomimetic robots exist, such as Kengoro and Kenshiro robots of \citet{asano_design_2017} and \citet{asano_musculoskeletal_2019}, which have proportionally human bodies, anatomically correct musculotendon arrangements, rolling-sliding joints, and joint ranges and output power comparable with human-measured values; their artificial muscles are implemented with brushless DC motors, wires as tendons, gears, and integrated tension measurement. Kengoro, the more recent of the two, stands \qty{1670}{\mm} tall, weighs \qty{56.5}{\kg}, and carries 174 degrees of freedom when the end effectors are included \citep{asano_design_2017}. A dog-like robot developed by \citet{aschenbeck_design_2006} and actuated with Festo BPAs was designed from a planar kinematic model scaled to an adult greyhound, with three sagittal degrees of freedom per leg driven by antagonistic BPA pairs; its front-leg pair alone lifted a \qty{13.5}{\kg} payload, almost double the complete robot's predicted mass. That platform was used to show how central pattern generators provide robust locomotion patterns that are adaptive to perturbations in ground speed \citep{hunt_development_2017}.
+
+Robots built with artificial muscles thus provide opportunities to investigate how muscles are controlled to produce desired motions; however, artificial muscles do not exactly replicate muscle properties, and existing robots do not capture all of the degrees of freedom and joint torques of the animal limbs they mimic. The biomimetic leg developed and tested in this dissertation builds on this approach: a human-proportioned skeleton, muscle-like actuators, and the goal of human-matched joint torques.
+
+Figure~\ref{fig:kengoro_humanoid} illustrates the human-scale skeletal structure and tendon routing of this approach.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.78\textwidth]{kengoro_humanoid_comparison.png}
+% ALT TEXT: Two frontal views of the Kengoro humanoid show its human-scale
+% skeletal frame, dense tendon routing, and musculoskeletal construction.
+\caption[Kengoro human-mimetic musculoskeletal humanoid]{Kengoro human-mimetic musculoskeletal humanoid in neutral and upper-limb poses, illustrating its human-scale skeletal structure and densely routed tendon-driven musculature \citep{asano_design_2017}.}
+\label{fig:kengoro_humanoid}
+\end{figure}
+
+\section{Robot Actuation Technologies}\label{sec:bg_actuation}
+
+\subsection{Overview}\label{sec:bg_actuation_overview}
+
+A wide range of actuation technologies have been explored in robotics, including electric motors, hydraulic systems, smart-material actuators, and artificial muscles \citep{he_mechanism_2020, liang_comparative_2020}. Electric motors (Figure~\ref{fig:actuator_technology_comparison}\textbf{(A)}) are widely used due to their controllability and maturity, but they are limited by thermal constraints, gearing requirements, and reduced compliance compared to muscle-like actuators \citep{veale_towards_2016, suzumori_trends_2018}. Hydraulic actuators (Figure~\ref{fig:actuator_technology_comparison}\textbf{(C)}) offer exceptionally high power density and have enabled highly dynamic legged systems, but they remain relatively heavy, less efficient than biological muscle, and require a dedicated fluid infrastructure \citep{suzumori_trends_2018}.
+
+Among smart-material actuators, dielectric elastomer actuators (DEAs), a class of electronic electroactive polymers, contract by a different mechanism: an applied voltage squeezes a soft polymer film between compliant electrodes through electrostatic stress, and the thinning and radial spreading of the film produces strains that can exceed biological muscle (Figure~\ref{fig:actuator_technology_comparison}\textbf{(D)}) \citep{madden_artificial_2004}. Comparative studies report high specific work and good bandwidth for DEAs \citep{liang_comparative_2020}, but their typically kilovolt-range driving voltages, electromechanical instability, and compliant-electrode requirements complicate integration into a human-scale leg. Thermally activated artificial muscles reach the most extreme performance figures of any technology surveyed by \citet{liang_comparative_2020}: twisted-fiber muscles support loads more than one hundred times those of a biological muscle of the same length and weight, with output stresses of \qty{22}{\mega\pascal}. Their activation route, however, is shared with shape-memory alloys, whose heating is fast but whose cooling is limited by heat transfer away from the element, and that asymmetry sets the cycle time.
+
+Closer to muscle, series-elastic and pneumatic actuators trade peak force and bandwidth for compliance, a trade that wearable and rehabilitation robotics exploit because force control and backdrivability matter most when a machine interacts with a human \citep{aksoz_design_2019, leibach_development_2020, li_influence_2020}. A recent review of pneumatic artificial muscle technology documents continued progress in actuator design and in assistive applications \citep{zhagiparova_recent_2025}. None of these technologies yet combines muscle-like force, strain, and compliance in one actuator, which is the combination a biomimetic humanoid leg demands and that braided pneumatic actuators approximate most closely.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{actuator_technology_comparison.pdf}
+% ALT TEXT: Four schematic panels compare an electric torque motor, a braided
+% pneumatic actuator, a hydraulic cylinder, and a dielectric elastomer actuator.
+% Arrows show each device's characteristic motion or applied pressure or voltage.
+\caption[Representative robotic actuator technologies]{Representative actuator mechanisms: electric motor (A), braided pneumatic actuator (B), hydraulic cylinder (C), and dielectric elastomer (D) \citep{suzumori_trends_2018, liang_comparative_2020}.}
+\label{fig:actuator_technology_comparison}
+\end{figure}
+
+\subsection{Braided Pneumatic Actuators}\label{sec:bg_bpa}
+
+In contrast to the technologies above, McKibben-style braided pneumatic actuators (BPAs) combine low mass, high force-to-weight ratio, and intrinsic compliance with a force--length curve that qualitatively resembles that of skeletal muscle \citep{liang_comparative_2020, hunt_modeling_2017}. A BPA consists of an inflatable bladder inside a braided sleeve; pressurizing the bladder expands the bladder radially and contracts the sleeve axially, producing tensile force (Figure~\ref{fig:actuator_technology_comparison}\textbf{(B)}). As shown by Chou and Hannaford, the force--length relationship of McKibben actuators is governed by geometric constraints imposed by the braided shell, leading to a nonlinear dependence of force on actuator length through the braid angle \citep{chou_measurement_1996}: actuator force is proportional to pressure and to a nonlinear geometric term $(3\cos^2\theta - 1)$, which governs both the maximum contraction limit and the curvature of the force--length relationship. Predicting their force as a function of length and pressure is therefore the first improvement of the torque tools developed in this dissertation, and the state of that prediction is the subject of the next subsection.
+
+Figure~\ref{fig:festo_bpa_cad} shows the change in actuator shape with inflation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.78\textwidth,height=0.54\textheight,angle=-90,origin=c,keepaspectratio]{festo_bpas_inflated_deflated.jpg}
+\caption[Festo BPAs with and without inflation]{Festo BPAs in the test fixture: the inflated actuator is wider and shorter than the deflated actuator beside it.}
+\label{fig:festo_bpa_cad}
+\end{figure}
+
+However, BPAs exhibit several important differences from biological muscle. First, BPA maximum tensile force occurs at resting (i.e., uninflated) length ($l_0$) rather than at an optimal fiber length \citep{liang_comparative_2020}. Second, their maximum contraction ratio is substantially lower than that of human muscle, presenting challenges for achieving biomimetic joint ranges of motion \citep{hunt_modeling_2017, sarosi_comparative_2017, liang_comparative_2020}. Third, BPAs have a highly nonlinear dependence on internal pressure ($P$), contraction ($\epsilon$), and loading state \citep{hunt_modeling_2017, martens_modeling_2017}, which complicates control and motivates high-fidelity force--length--pressure modeling. Despite these differences, their muscle-like properties have made them attractive for biomimetic quadrupeds \citep{aschenbeck_design_2006, scharzenberger_design_2019} and musculoskeletal arms \citep{hitzmann_anthropomorphic_2018, kurumaya_musculoskeletal_2016, chen_realizing_2019}.
+
+\subsection{BPA Force--Length--Pressure Models}\label{sec:bg_bpamodels}
+
+Previous studies have generated empirical models of the force--length--pressure relationship of BPAs. \citet{sarosi_comparative_2017} discuss several high-fidelity BPA force models. They present a static force model with a 21-coefficient polynomial function for a Festo MAS-20-200N (i.e., $\diameter$\qty{20}{\mm}, $l_0=\qty{200}{\mm}$) with an impressive $\text{R}^2=0.9994$, as well as S\'arosi's static force model for a Festo DMSP-20-400N-RM-RM (i.e., $\diameter$\qty{20}{\mm}, $l_0=\qty{400}{\mm}$), with six coefficients and a $\text{R}^2=0.9995$ \citep{sarosi_new_2012, sarosi_investigation_2013}. Martens and Boblan present an even more accurate model, in terms of absolute error, using five coefficients for a DMSP-10-250 (i.e., $\diameter$\qty{10}{\mm}, $l_0=\qty{250}{\mm}$) and a DMSP-20-300 (i.e., $\diameter$\qty{20}{\mm}, $l_0=\qty{300}{\mm}$) \citep{martens_modeling_2017}. However, as demonstrated in this work, different resting lengths produce different force--length curves, preventing the use of these single-length models for designing systems with different resting lengths.
+
+\citet{hunt_modeling_2017} looked at six resting lengths of $\diameter$\qty{10}{\mm} Festo BPAs, accounting for differences in maximum contractile percentages, and elucidated the force-length-pressure relationship. In particular, for a given contraction percent and force $F$ (in Newtons), the scalar pressure $P$ (in kPa) required to produce this force for a $\diameter$\qty{10}{\mm} Festo artificial muscle can be determined by solving the equation:
+
+\begin{equation}
+P = P_{0} + k_{F}\,F + k_{S}\,S + P_{t}\tan\!\left(c_{a}\left[\frac{\epsilon}{\epsilon_{\max} - k_{E}\,F} - c_{b}\right]\right) \label{eq:BPAFit}
+\end{equation}
+
+\noindent
+where $F$ is the required force, $\epsilon$ is the contraction, $S$ encodes hysteresis ($S=1$ shortening, $S=-1$ lengthening, $S=0$ static), and the seven coefficients are defined in Table~\ref{tab:BPAFit_coeff}. The coefficients have been updated with corrected values, as those reported in \citet{hunt_modeling_2017} contained typographical errors. The contraction $\epsilon$ and the maximum free-load contraction at \qty{620}{\kPa}, which appears as $\epsilon_{\max}$ in Equation~(\ref{eq:BPAFit}), are defined in Section~\ref{sec:force_model}, together with the relative contraction $\epsilon^{*} = \epsilon/\epsilon_{620}$ on which the force surface developed in this dissertation is built. Because Equation~(\ref{eq:BPAFit}) expresses pressure in closed form as a function of force and contraction, it can also be solved onto a grid of pressures and contractions to build a force--pressure--relative-contraction lookup table for design studies.
+
+\begin{table}[htbp]
+\centering
+\caption{Coefficients of the \qty{10}{\mm} Festo BPA pressure model of Equation~(\ref{eq:BPAFit}), corrected from \citet{hunt_modeling_2017}.}
+\label{tab:BPAFit_coeff}
+\begin{tabular}{lll}
+\hline
+Symbol & Value & Role \\
+\hline
+$P_{0}$ & \qty{254}{\kPa} & pressure offset \\
+$k_{F}$ & \qty{1.23}{\kPa\per\newton} & linear force-to-pressure gain \\
+$k_{S}$ & \qty{15.6}{\kPa} & hysteresis offset (sign of $S$) \\
+$P_{t}$ & \qty{192}{\kPa} & tangent-term amplitude \\
+$c_{a}$ & 2.03 & contraction-shape coefficient \\
+$c_{b}$ & 0.46 & contraction-shift coefficient \\
+$k_{E}$ & \qty{0.331e-3}{\per\newton} & force-dependent reduction of usable contraction \\
+\hline
+\end{tabular}
+\end{table}
+
+Festo provides a manufacturer tool, MuscleSIM, for predicting force as a function of pressure and contraction \citep{lang_robert_musclesim_2005}, but experimental comparisons indicate that it does not adequately account for variation in $l_0$ or actuator-specific contraction limits. Comparisons with experimental data indicate that none of the existing models effectively take into account differences in maximum force due to initial actuator length, and the Hunt model was taken with low external forces ($\leq$\qty{106}{\newton}), so it is unclear how well it captures actuator behavior at higher forces. Chapter~\ref{ch:muscles} compares these models with data collected for this dissertation and develops the improved characterization on which the torque and controller work of the later chapters depends.
+
+\section{Human Lower-Limb Biomechanics}\label{sec:bg_biomechanics}
+
+Designing a biomimetic leg requires a quantitative benchmark of human muscle--joint behavior. This dissertation uses OpenSim \citep{delp_opensim_2007, seth_opensim_2011, seth_opensim_2018} and the Gait2392 model, named for its 23 degrees of freedom and 92 musculotendon actuators. Gait2392 descends from the interactive lower-extremity model of \citet{delp_interactive_1990} and includes musculoskeletal geometry from \citet{hoy_musculoskeletal_1990} and planar knee kinematics from \citet{yamaguchi_planar_1989}; related lower-limb models of the same family are characterized and validated by \citet{arnold_model_2010}. Muscle moment arms, force-generating properties, and functional roles in such models have been characterized extensively \citep{zajac_determining_1989, brand_model_1982, menegaldo_moment_2004, millard_flexing_2013, sherman_what_2013, suderman_moving_2012}, and standard reporting conventions for kinematics and joint mechanics are established by the International Society of Biomechanics \citep{wu_for_1995, wu_isb_2002, wu_isb_2005, derrick_isb_2020}.
+
+Moment arms relate muscle force to joint torque. For a fixed-axis joint, the signed moment arm is $r_{\mathrm{m}}=\hat{\mathbf{a}}\cdot(\mathbf{r}\times\hat{\mathbf{u}})$, where $\hat{\mathbf{a}}$ is the joint-axis direction, $\mathbf{r}$ locates a point on the muscle's line of action relative to the joint, and $\hat{\mathbf{u}}$ is the force direction \citep{brand_model_1982}. The tendon-excursion method instead evaluates the sensitivity of musculotendon length to the joint coordinate, with sign determined by the coordinate and force conventions \citep{menegaldo_moment_2004}. For multiarticular muscles, the result also depends on adjacent-joint configurations \citep{zajac_determining_1989, young_analyzing_2019}. OpenSim uses length sensitivities, so the reference moment arms in this dissertation are properties of the Gait2392-derived geometry \citep{delp_opensim_2007, seth_opensim_2018}. Chapter~\ref{ch:torque} compares the robot's resulting torque predictions with test-stand measurements.
+
+Knee modeling requires particular care because the instantaneous center of rotation changes with flexion. Four-bar descriptions reproduce this behavior through linkage geometry \citep{romero_four-bar_2020, steele_biomimetic_2018}. Gait2392 instead prescribes planar translations as functions of knee flexion \citep{yamaguchi_planar_1989}. These different kinematics produce different moment arms for the same nominal attachment locations. Joint-coordinate conventions must therefore be stated consistently when comparing models and measurements \citep{wu_isb_2002}. Gait2392 provides the human reference in this dissertation, while Steele's four-bar mechanism supplies the physical robot knee.
+
+\section{Biomimetic Knee and Bipedal Robot Model}\label{sec:bg_knee}
+
+Steele's biomimetic knee joint supplies the physical knee used in this dissertation \citep{steele_development_2017, steele_biomimetic_2018, steele_biomimetic_2018-1}. It is a one-degree-of-freedom four-bar linkage whose crossed links reproduce the posterior migration of the human knee's instantaneous center of rotation (ICR) during flexion. The rolling-and-sliding behavior of the human joint therefore emerges from the link geometry itself rather than from cams or gear profiles, and the design was calculated to reproduce an average sliding-to-rolling ratio of 0.079 over a \ang{151} range of motion \citep{steele_biomimetic_2018-1}. Because the ICR migrates, muscle moment arms about the knee change with flexion angle in a human-like way, and a torque prediction tool for this knee must capture that variation rather than assume a constant arm. The biomimetic knee tests of Chapter~\ref{ch:torque} therefore exercise the improved torque model against this geometry, and Figure~\ref{fig:steele_knee} summarizes the mechanism.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{steeleknee.pdf}
+% ALT TEXT: Two panels reproduced from Steele et al. Figure 6. Panel (a) is a
+% sagittal cutaway of the biomimetic knee at full extension, showing the crossed
+% four-bar linkage. Panel (b) is an exploded view of the knee's mechanical stop.
+\caption[Steele biomimetic knee mechanism]{Biomimetic knee mechanism. \textbf{(A)} Sagittal cutaway at full extension showing the crossed four-bar linkage. \textbf{(B)} Exploded view of the mechanical stop. Reproduced from \citet[Fig.~6]{steele_biomimetic_2018-1} under CC BY 4.0.}
+\label{fig:steele_knee}
+\end{figure}
+
+In my master's work, muscle lengths, moment arms, and isometric joint torques were computed over the range of motion for both the Gait2392 model and a PAM-actuated robot leg model, demonstrating that several robot muscle torque profiles could closely match the human model while many fell far short for part of the RoM \citep{bolen_bipedal_2019, bolen_determination_2019}. Hand placement of muscle origins and insertions was a painstaking and iterative task. This resulted in the creation of a placement optimization algorithm \citep{morrow_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} places the laboratory skeleton beside the robot PAM routes and human muscle paths used in that comparison.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
+\raggedright\textbf{(A)}\par\smallskip
+\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{aarl_bpa_biped.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
+\raggedright\textbf{(B)}\par\smallskip
+\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{robot_pam_routes.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
+\raggedright\textbf{(C)}\par\smallskip
+\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{human_gait2392_paths.pdf}
+\end{minipage}
+\caption[Robot skeleton and robot/human muscle paths]{\textbf{(A)} Laboratory robot skeleton. \textbf{(B)} Robot PAM routes. \textbf{(C)} Human Gait2392 muscle paths used as design references \citep{bolen_bipedal_2019, morrow_optimization_2020}.}
+\label{fig:aarl_opensim_comparison}
+\end{figure}
+
+The comparison evaluated muscle-path lengths, moment arms, and isometric torques across the human and robot models \citep{bolen_bipedal_2019}. I adjusted BPA origins, insertions, and via-point locations to respect usable contraction and avoid interference. The biceps femoris long head illustrates the remaining mismatch: the robot path and its knee- and hip-torque surfaces differ substantially from the human reference. These discrepancies motivated placement optimization \citep{morrow_optimization_2020}. Figures~\ref{fig:masters_routing_and_arms} and~\ref{fig:masters_torque_comparison} show the moment-arm construction and the torque comparison.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{moment_arm_methods.pdf}
+\caption[Equivalent geometric constructions of joint torque]{Equivalent fixed-axis constructions. \textbf{(A)} The cross product gives the moment of a force about the joint. \textbf{(B)} Projecting a joint-to-path vector onto the force-path normal gives the signed moment arm used in Equation~\eqref{eq:project_ma}. The joint axis points out of the page.}
+\label{fig:masters_routing_and_arms}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.87\textheight,keepaspectratio]{masters_torque_comparison.pdf}
+% ALT TEXT: Six panels: biceps femoris long-head muscle paths in the human
+% and robot models, and four 3D isometric torque surfaces comparing knee and
+% hip-axis torque between the models.
+\caption{Biceps femoris long-head paths and isometric torque surfaces for the human OpenSim model and the robot model. \textbf{(A, B)} Muscle paths. \textbf{(C, D)} Knee torque. \textbf{(E, F)} Hip torque. The human model is shown in the left column and the robot model in the right column \citep[Fig.~8]{bolen_bipedal_2019}.}
+\label{fig:masters_torque_comparison}
+\end{figure}
+
+\FloatBarrier
+\section{Neural Control of Locomotion: Central Pattern Generators}\label{sec:bg_neural}
+
+Spinal central pattern generators (CPGs) can produce alternating flexor and extensor activity without rhythmic input or proprioceptive feedback \citep{brown_intrinsic_1911, rybak_modelling_2006}. Brown's half-center hypothesis attributes this alternation to reciprocally inhibitory central populations \citep{brown_intrinsic_1911}. In the model of \citet{deng_neuromechanical_2019}, persistent sodium currents with slow inactivation support alternating bursts in the rhythm-generating neurons.
+
+Experiments on the deafferented stick-insect thoracic nerve cord provide a direct example of central rhythm generation: application of pilocarpine induced alternating rhythmic activity in antagonistic leg motoneuron pools \citep{buschges_rhythmic_1995}. This preparation separates rhythm production in the nervous system from the sensory feedback generated by movement.
+
+The two-level model of \citet{rybak_modelling_2006} separates a rhythm generator (RG), which sets cycle timing, from a pattern-formation (PF) network, which regulates motor output (Figure~\ref{fig:rybak_cpg_circuit}). This distinction accounts for deletions of motoneuron activity that leave locomotor period and phase intact: an intervention can suppress pattern output without resetting the rhythm. Afferent inputs reach both levels. \citet{mccrea_organization_2008} reviewed the electrophysiological evidence for this organization, and \citet{rybak_organization_2015} related it to genetically identified interneuron classes. Commissural pathways coordinate the left and right networks \citep{molkov_mechanisms_2015, danner_central_2016}, while the rhythmogenic core remains under experimental investigation \citep{rancic_recent_2021}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.66\textheight,keepaspectratio]{rybak_cpg_circuit.pdf}
+% ALT TEXT: A three-tier schematic shows the rhythm-generator half-centers
+% above a pattern-formation network of interneuron populations that drive
+% motoneuron pools and muscles, with green afferent-feedback arrows
+% ascending to both levels.
+\caption[Rybak two-level locomotor CPG concept]{Two-level CPG: rhythm generation (RG), pattern formation (PF), motor output, and afferent feedback. Reproduced from \citet[Fig.~1]{rybak_modelling_2006}.}
+\label{fig:rybak_cpg_circuit}
+\end{figure}
+
+The extension of \citet{shevtsova_modeling_2016} includes dedicated pattern-formation populations for the two-joint posterior biceps--semitendinosus and rectus femoris muscles (Figure~\ref{fig:shevtsova_spinal_circuit}). Coordinating these muscle pools presents a convergence problem that also arises when a robot muscle crosses two joints. Section~\ref{sec:bg_sensory} shows how related circuit models incorporate afferent feedback; the controller developed in Chapter~\ref{ch:sns} uses this two-level organization.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth,height=0.80\textheight,keepaspectratio]{shevtsova_spinal_circuit.pdf}
+% ALT TEXT: A layered spinal circuit schematic shows rhythm-generator and
+% pattern-formation populations above motoneuron and Renshaw-cell pools,
+% with the two-joint-muscle extension for PBSt and RF outlined.
+\caption[Shevtsova extended CPG model with two-joint-muscle circuits]{Extended CPG with pattern-formation and motor populations for the two-joint posterior biceps--semitendinosus (PBSt) and rectus femoris (RF). Reproduced from \citet[Fig.~5.8]{shevtsova_modeling_2016}.}
+\label{fig:shevtsova_spinal_circuit}
+\end{figure}
+
+\section{Sensory Feedback in Locomotion}\label{sec:bg_sensory}
+
+Sensory feedback is an integral part of locomotor pattern generation. Reviews of afferent control of the CPG \citep{van_de_crommert_review_1998} and muscle proprioceptive feedback and spinal networks \citep{windhorst_muscle_2007, windhorst_spinal_2022} summarize the classical picture: group Ia afferents from muscle spindles signal muscle length and velocity, group Ib afferents from Golgi tendon organs signal force, and group II afferents signal length. Load-related feedback plays a role distinct from length-related feedback during locomotion \citep{dietz_significance_2000}.
+
+Primary experiments show how the effect of a sensory signal depends on the preparation and step phase. In decerebrate, paralyzed cats undergoing fictive locomotion, \citet{guertin_ankle_1995} found that stimulating ankle-extensor group I afferents enhanced hip, knee, and ankle extensor activity during extension and could reset flexion to extension. Group I includes both Ia and Ib afferents, making the stimulation conditions important when interpreting this result.
+
+Joint position also contributes to phase transitions. In chronic spinal cats, \citet{grillner_initiation_1978} found that moving a held hindlimb backward could initiate swing, with lift-off depending on hip position and contralateral step phase. In walking decerebrate cats, assisting hip flexion advanced the onset of ankle-extensor activity at the swing-to-stance transition \citep{mcvea_role_2005}. These experiments motivate testing position-dependent feedback while preserving the distinction between the two phase transitions.
+
+Removing proprioceptive feedback degrades locomotor patterns in mice \citep{akay_degradation_2014}; proprioceptive input regulates and adapts locomotor activity \citep{lam_role_2002}; and the relative contributions of proprioceptive and vestibular systems remain under study \citep{akay_relative_2021, akay_sensory_2020}. Coupled models show how feedback interacts with biomechanics to shape CPG output \citep{markin_afferent_2010, deng_biomechanical_2022}. Tonic central and sensory stimuli can facilitate involuntary air-stepping in humans \citep{selionov_tonic_2009}. The proprioceptive and contact feedback channels designed in Chapter~\ref{ch:sns} follow this afferent organization.
+
+The rat hindlimb controller of \citet{deng_neuromechanical_2019} combines RG/PF control with muscle-receptor pathways, interneurons, Renshaw cells, and motoneurons (Figure~\ref{fig:deng_connectome}). Its sensory and central pathways converge on the motor output rather than acting as separate controllers.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{deng_cpg_connectome.pdf}
+% ALT TEXT: A four-panel circuit schematic: single-limb control hierarchy,
+% rhythm-generator configuration, pattern-formation network, and a
+% sensory-motor network with extensor and flexor receptors, interneurons,
+% Renshaw cells, motoneurons, and muscles.
+\caption[Deng two-layer CPG and sensory--motor network]{Synthetic nervous system of the rat hindlimb model: \textbf{(A)} single limb control hierarchy, \textbf{(B)} rhythm-generator configuration, \textbf{(C)} pattern-formation network, and \textbf{(D)} sensory--motor network. Reproduced from \citet[Fig.~4]{deng_neuromechanical_2019} under CC BY 4.0.}
+\label{fig:deng_connectome}
+\end{figure}
+
+\FloatBarrier
+The human lower-limb model of \citet{dirusso_investigating_2023} represents Ia, II, and Ib reflex pathways and Renshaw cells for agonist--antagonist muscle pairs, with locomotor-pattern inputs reaching the same motoneuron pools (Figure~\ref{fig:afferent_connectomes}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{dirusso_spinal_network.pdf}
+% ALT TEXT: A spinal network between a muscle and its antagonist with pattern
+% nodes, interneurons, sensory neurons, motoneurons, and two muscles.
+\caption{Antagonist-muscle spinal network with Ia, II, and Ib reflex pathways, Renshaw cells, and locomotor-pattern input. Reproduced from \citet[Fig.~5]{dirusso_investigating_2023} under CC BY 4.0.}
+\label{fig:afferent_connectomes}
+\end{figure}
+
+The cat model of \citet{shinohara_mechanisms_2025} addresses interlimb coordination, coupling the two rhythm generators through V3 and commissural interneuron populations while force, length, and velocity feedback returns from the muscles (Figure~\ref{fig:shinohara_connectome}). Together, these examples show how the neural populations and feedback paths are selected for the hypothesis being tested.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.76\textheight,keepaspectratio]{shinohara_connectome.pdf}
+% ALT TEXT: A bilateral neuromusculoskeletal cat model: rhythm-generator and
+% pattern-formation layers, commissural and V3 interneurons, motoneuron
+% pools, and a cat hindlimb on a treadmill with labeled muscles.
+\caption[Shinohara bilateral neuromusculoskeletal model]{Neuromusculoskeletal cat model of \citet{shinohara_mechanisms_2025}: bilateral rhythm-generator and pattern-formation layers coupled by V3 and commissural interneurons, motoneuron pools for seven muscles per hindlimb, and force, length, and velocity afferent feedback. Reproduced from \citet[Fig.~1]{shinohara_mechanisms_2025} under CC BY 4.0.}
+\label{fig:shinohara_connectome}
+\end{figure}
+
+\section{Computational Neuroscience}\label{sec:bg_compneuro}
+
+Computational neuroscience expresses hypotheses about neural circuitry as executable models. In conductance-based models, membrane voltages evolve through capacitance, leak, synaptic, and applied currents, and connections represent identifiable pathways \citep{nourse_sns_2023}. Model predictions can be compared with recordings or with responses to stimulation and pathway removal. This provides a way to test a proposed mechanism rather than infer it from a wiring diagram alone. Synthetic nervous systems use this approach to control physical and simulated bodies.
+
+\section{Synthetic Nervous Systems}\label{sec:bg_sns}
+
+Synthetic nervous systems (SNSs) implement candidate neural circuits with conductance-based spiking and non-spiking neurons. Work in the Quinn laboratory at Case Western Reserve University and related laboratories, including my own, has applied this approach to pneumatic dog-robot control \citep{hunt_development_2017}, human balance \citep{hilts_dynamic_2019}, rat hindlimb mechanics \citep{young_analyzing_2019}, the neuromechanical walker of \citet{deng_neuromechanical_2019}, and Muscle Mutt, the canine-inspired BPA robot developed at the Agile and Adaptive Robotics Laboratory (AARL) at Portland State University \citep{scharzenberger_design_2019}. Related work includes sensory-entrained bipedal CPGs \citep{li_bipedal_2017}, insect-inspired inter-leg coordination \citep{nourse_analyzing_2019}, reinforcement-reflex hybrids \citep{goldsmith_investigating_2021}, and adaptive hindlimb walking controllers \citep{schilling_adaptive_2022}.
+
+The SNS-Toolbox \citep{nourse_sns_2023} makes such networks practical: it is an open-source Python package that simulates hundreds to thousands of spiking and non-spiking neurons in real time or faster, supports multiple software and hardware backends including GPUs and embedded platforms, and couples directly to physics simulators such as MuJoCo for musculoskeletal control. The field it serves is active and growing: the perspective review of \citet{szczecinski_perspective_2023} traces neuromorphic legged-locomotion control from its insect-robot beginnings through current platforms to open problems, and physical testbeds in this lineage now extend from insect-scale robots to a robotic cat hindlimb \citep{armstead_design_2025}.
+
+\section{Neuromechanical Simulation}\label{sec:bg_neuromech}
+
+Neuromechanical simulation couples a musculoskeletal model to a neural controller. Three partially overlapping approaches are relevant here. The first encodes muscle reflexes directly: \citet{geyer_musclereflex_2010} used muscle- and phase-specific pathways, including positive and negative force or length feedback, contact-dependent switching, and trunk-posture control, to produce human-like walking without a CPG. Hybrid work tests the contribution of feedback alongside other control signals: \citet{haeufle_benefit_2018} combined feed-forward muscle activations with neuronal reflex feedback and found that the robustness benefit of each depends on the muscle.
+
+The second line replaces hand-designed circuitry with machine learning. \citet{song_deep_2021} trained deep reinforcement learning policies on a physiologically realistic musculoskeletal model in OpenSim, reproducing human kinematics and muscle activations across locomotion tasks, with the learned policy re-usable for experiments that would be difficult in the laboratory. This approach inherits the fidelity of the musculoskeletal model but encodes control in opaque function approximations: the trained policy can reproduce behavior, but the individual ``neurons'' of the controller do not correspond to identifiable physiological circuits, so the class of scientific questions it can answer, such as lesions, deletions, and pathway stimulation, is narrower than its behavioral repertoire. Recent perspectives on predictive musculoskeletal simulation \citep{degroote_perspective_2021} place both learned and optimal-control approaches in the same frame: the models are mature, and the open problems are the cost of solving them and the biological interpretability of the control they find.
+
+The third approach uses physiological circuit models, including the CPG-plus-afferent-feedback models of \citet{markin_afferent_2010} and \citet{shevtsova_modeling_2016} (Sections~\ref{sec:bg_neural} and~\ref{sec:bg_sensory}). SNS-Toolbox supports conductance-based networks at speeds suitable for selected real-time robotic applications \citep{nourse_sns_2023}. Related work includes motor-module bipedal walkers \citep{ichimura_pathological_2019}, a musculoskeletal macaque model \citep{nishizaki_gait_2026}, and muscle-driven robotic hind legs \citep{fukuoka_autonomous_2021}. For the humanoid studied here, the methodological question is how to implement and verify candidate spinal circuits with human musculotendon mechanics and custom BPA actuation while distinguishing neural effects from conversion or coupling errors. Chapter~\ref{ch:sns} addresses that question through model implementations, graphical neural blocks, and controlled verification and feedback tests.
+
+\subsection{Simulation Tools}\label{sec:bg_tools}
+
+All three lines depend on a software substrate that is itself part of the method: elaborate musculoskeletal geometry and complex neural models. The tools used in this dissertation are the following.
+
+OpenSim \citep{delp_opensim_2007, seth_opensim_2018}, distributed through the SimTK (Simulation Toolkit) repository, provides the biomechanical modeling side: musculoskeletal models with detailed bone geometry, muscle routing, and force-generating properties, along with tools for analyzing moment arms and isometric torque. These models are approximations with known limits rather than exact anatomies: muscle paths are interpolations over discrete attachment and wrapping data \citep{bolen_bipedal_2019}. Their geometry is accurate for a purpose, namely moment arms and torque predictions over the functional range of motion, and that is the standard against which the robot model of this program is compared. 
+
+The same SimTK infrastructure hosts SCONE, an open-source package for predictive simulation and optimization of neuromuscular control of biological motion \citep{geijtenbeek_scone_2019}. 
+
+AnimatLab \citep{cofer_animatlab_2010} provides a graphical environment in which physical bodies and synthetic neural systems are constructed and co-simulated; the AARL's prior walker (Section~\ref{sec:prior_walker}) was built in it. 
+
+MuJoCo \citep{todorov_mujoco_2012} provides the physics-engine side: fast, accurate simulation of rigid-body dynamics with contacts, along with muscle-like actuators that include activation dynamics. 
+
+MyoConverter bridges the biomechanical and physics-engine worlds by converting OpenSim musculoskeletal models to MuJoCo format with optimized muscle kinematics and kinetics \citep{caggiano_myosuite_2022, wang_myosim_2022}. 
+
+SNS-Toolbox supplies the neuron and synapse models used to simulate the controller \citep{nourse_sns_2023}.
+
+I used these tools to develop a robotic OpenSim leg model, convert it to MuJoCo, and couple it to a synthetic nervous system. Chapter~\ref{ch:sns} describes the assembled interfaces and their evaluation. The coupled simulation supports repeated parameter, stimulation, and pathway-removal tests under controlled conditions. Whether those tests support a biological hypothesis depends on the model's validation and the experimental comparison, as well as simulation speed.
+
+\section{Testing Neuromechanical Hypotheses on Robots: The Ethical Case}\label{sec:bg_ethics}
+
+Destructive interventions, such as deleting a muscle or lesioning spinal circuitry, cannot be used as controlled experiments on healthy human volunteers. Tonic stimulation is a different case: human studies have used tonic central and sensory stimuli to facilitate air-stepping \citep{selionov_tonic_2009}. Robotic and computational models additionally permit selective, repeatable pathway stimulation and removal without invasive procedures on a living subject. The same experiments in animals also carry real moral cost, and their justification is governed by the Three Rs framework: replacement of animal subjects with non-animal methods, reduction of the numbers required, and refinement of the remaining procedures \citep{russell_principles_1959, tannenbaum_russell_2015}. Robotic and computational models allow proposed neural interventions to be tested under controlled conditions before corresponding animal experiments are considered. The same model and initial conditions can be reused across interventions to isolate the effect of a changed pathway. Repeating a model does not create independent biological subjects, and its relevance to animal experiments depends on validation against biological observations.
+
+The invasive preparations that motivate replacement are not always apparent in circuit schematics of decerebrate-cat locomotion, which emphasize the neural circuits under study but often leave the surgical preparation out of view. A simplified drawing of a walking cat can make the animal appear intact, alert, or even contented. That appearance should not be confused with the condition of the experimental animal: a brainstem transection has disconnected the forebrain, while neural circuits below the transection can still generate treadmill stepping \citep{brown_intrinsic_1911, severin_1967}. Figure~\ref{fig:decerebrate_cat}, taken from archival footage, shows the physical preparation behind the circuit diagrams \citep{decerebrate_cat_footage}. This distinction makes the ethical meaning of replacement concrete: the robotic experiments discussed here are intended, in part, to reproduce selected neural mechanisms without repeating these invasive preparations in living animals.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{decerebrate_cat_colorized.png}
+% ALT TEXT: A cat held in a stereotactic head holder with skull clamps and a
+% fixation pin beside the eye orbit stands on a moving treadmill belt in a
+% laboratory, supported by rigging, walking.
+\caption[Decerebrate cat treadmill experiment, restored footage frame]{Archival decerebrate-cat treadmill experiment \citep{decerebrate_cat_footage}. The frame is restored and machine colorized; color and fine detail are inferred. It provides documentary context, not gait evidence.}
+\label{fig:decerebrate_cat}
+\end{figure}
+
+The procedures behind that record are documented in films that remain publicly available. A \qty{50}{\minute} classroom recording posted by the UTHealth Houston School of Dentistry first shows an intact cat playing with its handler, righting itself when lowered and placing its paws accurately on the edge of a table, and then documents the decerebration performed for the class \citep{utherst_decerebrate_2025}: the animal is anesthetized with open-drop ether, more than the horse in the same demonstration series received, the carotid arteries are ligated and a tracheal cannula installed, and the skull is opened with a trephine before the brainstem is transected between the superior and inferior colliculi. The treadmill preparations that established locomotor neurophysiology are likewise preserved in the historical literature: \citet{stuart_reflections_2007} reproduce the arrangement of the high-decerebrate cat treadmill experiments, with electromyographic recording from the hindlimb muscles, from the original Russian-language reports \citep{severin_1967}.
+
+The honest accounting is murkier than the Three Rs framing alone suggests, because the models a robot implements are themselves products of animal experimentation. The half-center organization, the two-level rhythm and pattern architecture, and the length, force, and load signaling of the afferents were each established in preparations like the ones described above \citep{brown_intrinsic_1911, severin_1967, rybak_modelling_2006}, and the databases of afferent properties that parameterize sensory feedback are compiled from animal recordings \citep{bolen_sensory_2023}. A synthetic nervous system therefore replaces future experiments; it does not replace, and cannot repay, the animal work on which its architecture is built. Recognizing this inheritance sharpens rather than undermines the case for robotic subjects: the knowledge purchased at that cost is precisely what makes a robotic replacement scientifically meaningful, and the robot is the instrument that keeps that knowledge productive without adding to the ledger.
+
+For a robot to serve as a replacement subject, however, it must first earn standing as a scientific model. Webb's influential analyses of bio-robotic methodology \citep{webb_robots_2001, webb_robots_2002} argue that a robot is a good model of biological behavior when the mechanism it implements is tested at the same level of organization as the target phenomenon, matching dynamics, control structure, and sensory ecology rather than surface appearance. The validation chain of this dissertation is constructed to that standard: the actuator force model is validated against bench data (Section~\ref{sec:results_force}), the joint torque model against isometric measurements and human torque envelopes (Section~\ref{sec:results_torque}), and selected controller responses are compared with published tonic stimulation and deletion phenomena \citep{selionov_tonic_2009, rybak_modelling_2006}, the verification step that precedes locomotion tuning in this program. Only then can a robot experiment be read as evidence about the hypothesized biological circuit rather than about the robot.
+
+The argument is ultimately bidirectional, completing the loop described in Section~\ref{sec:project}. Experiments that are unethical, impractical, or statistically unreachable in humans and animals become routine on the robot; the resulting insights into neuromechanical control feed back into biology, into the design of the next robot iteration, and directly into prosthetic and orthotic devices that face the same problem of controlling muscle-like actuators for human users, whose central pattern generator controllers are an active topic in lower-limb exoskeleton research \citep{duan_gait_2024, pery_benchmarking_2026}. The ethical case and the scientific case are the same case: the robot is the instrument that makes these experiments possible.

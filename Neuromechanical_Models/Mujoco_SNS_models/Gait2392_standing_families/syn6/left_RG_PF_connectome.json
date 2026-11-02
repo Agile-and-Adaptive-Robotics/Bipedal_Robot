@@ -1,0 +1,601 @@
+{
+  "name": "syn6 standing candidate",
+  "nodes": [
+    {
+      "label": "RG_E_l",
+      "type": "HC-RG-E",
+      "x": 600,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "RG_F_l",
+      "type": "HC-RG-F",
+      "x": 1080,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "InE_l",
+      "type": "IN-IaIN",
+      "x": 600,
+      "y": 360,
+      "gain": 1.0
+    },
+    {
+      "label": "InF_l",
+      "type": "IN-IaIN",
+      "x": 1080,
+      "y": 360,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S1_l",
+      "type": "HC-PF-F",
+      "x": 360,
+      "y": 1200,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S2_l",
+      "type": "HC-PF-E",
+      "x": 552,
+      "y": 1200,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S3_l",
+      "type": "HC-PF-E",
+      "x": 744,
+      "y": 1200,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S4_l",
+      "type": "HC-PF-F",
+      "x": 936,
+      "y": 1200,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S5_l",
+      "type": "HC-PF-F",
+      "x": 1128,
+      "y": 1200,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_S6_l",
+      "type": "HC-PF-E",
+      "x": 1320,
+      "y": 1200,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_IN_E_l",
+      "type": "IN-PF",
+      "x": 480,
+      "y": 900,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_IN_F_l",
+      "type": "IN-PF",
+      "x": 1200,
+      "y": 900,
+      "gain": 1.0
+    }
+  ],
+  "edges": [
+    {
+      "from": "InF_l",
+      "to": "RG_E_l",
+      "sign": "inh",
+      "gain": 4.0,
+      "tag": "T003 | G=4uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 8, col 11",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 360
+        },
+        {
+          "x": 1020,
+          "y": 600
+        },
+        {
+          "x": 660,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "from": "InE_l",
+      "to": "RG_F_l",
+      "sign": "inh",
+      "gain": 4.0,
+      "tag": "T003 | G=4uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 9, col 10",
+      "pts": [
+        {
+          "x": 660,
+          "y": 360
+        },
+        {
+          "x": 660,
+          "y": 588
+        },
+        {
+          "x": 1020,
+          "y": 588
+        },
+        {
+          "x": 1020,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "from": "RG_E_l",
+      "to": "InE_l",
+      "sign": "exc",
+      "gain": 4.0,
+      "tag": "T007 | G=4uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 10, col 8",
+      "pts": [
+        {
+          "x": 600,
+          "y": 540
+        },
+        {
+          "x": 600,
+          "y": 420
+        }
+      ]
+    },
+    {
+      "from": "RG_F_l",
+      "to": "InF_l",
+      "sign": "exc",
+      "gain": 4.0,
+      "tag": "T007 | G=4uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 11, col 9",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 540
+        },
+        {
+          "x": 1080,
+          "y": 420
+        }
+      ]
+    },
+    {
+      "from": "RG_F_l",
+      "to": "PF_S1_l",
+      "sign": "exc",
+      "gain": 2.4,
+      "tag": "T011 | G=2.3999999999999999uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 15, col 9",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 600
+        },
+        {
+          "x": 1020,
+          "y": 1140
+        },
+        {
+          "x": 420,
+          "y": 1140
+        },
+        {
+          "x": 420,
+          "y": 1200
+        }
+      ]
+    },
+    {
+      "from": "PF_IN_E_l",
+      "to": "PF_S1_l",
+      "sign": "inh",
+      "gain": 4.0,
+      "tag": "T003 | G=4uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 15, col 21",
+      "pts": [
+        {
+          "x": 480,
+          "y": 960
+        },
+        {
+          "x": 360,
+          "y": 960
+        },
+        {
+          "x": 360,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "RG_E_l",
+      "to": "PF_S2_l",
+      "sign": "exc",
+      "gain": 2.4,
+      "tag": "T011 | G=2.3999999999999999uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 16, col 8",
+      "pts": [
+        {
+          "x": 600,
+          "y": 660
+        },
+        {
+          "x": 552,
+          "y": 660
+        },
+        {
+          "x": 552,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "PF_IN_F_l",
+      "to": "PF_S2_l",
+      "sign": "inh",
+      "gain": 4.0,
+      "tag": "T003 | G=4uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 16, col 22",
+      "pts": [
+        {
+          "x": 1140,
+          "y": 900
+        },
+        {
+          "x": 612,
+          "y": 900
+        },
+        {
+          "x": 612,
+          "y": 1200
+        }
+      ]
+    },
+    {
+      "from": "RG_E_l",
+      "to": "PF_S3_l",
+      "sign": "exc",
+      "gain": 2.4,
+      "tag": "T011 | G=2.3999999999999999uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 17, col 8",
+      "pts": [
+        {
+          "x": 600,
+          "y": 660
+        },
+        {
+          "x": 744,
+          "y": 660
+        },
+        {
+          "x": 744,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "PF_IN_F_l",
+      "to": "PF_S3_l",
+      "sign": "inh",
+      "gain": 4.0,
+      "tag": "T003 | G=4uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 17, col 22",
+      "pts": [
+        {
+          "x": 1140,
+          "y": 900
+        },
+        {
+          "x": 1140,
+          "y": 1128
+        },
+        {
+          "x": 804,
+          "y": 1128
+        },
+        {
+          "x": 804,
+          "y": 1200
+        }
+      ]
+    },
+    {
+      "from": "RG_F_l",
+      "to": "PF_S4_l",
+      "sign": "exc",
+      "gain": 2.4,
+      "tag": "T011 | G=2.3999999999999999uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 18, col 9",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 660
+        },
+        {
+          "x": 936,
+          "y": 660
+        },
+        {
+          "x": 936,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "PF_IN_E_l",
+      "to": "PF_S4_l",
+      "sign": "inh",
+      "gain": 4.0,
+      "tag": "T003 | G=4uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 18, col 21",
+      "pts": [
+        {
+          "x": 540,
+          "y": 900
+        },
+        {
+          "x": 540,
+          "y": 1116
+        },
+        {
+          "x": 876,
+          "y": 1116
+        },
+        {
+          "x": 876,
+          "y": 1200
+        }
+      ]
+    },
+    {
+      "from": "RG_E_l",
+      "to": "PF_S5_l",
+      "sign": "exc",
+      "gain": 0.984155426645092,
+      "tag": "T012 | G=0.98415542664509204uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 19, col 8",
+      "pts": [
+        {
+          "x": 600,
+          "y": 660
+        },
+        {
+          "x": 600,
+          "y": 1104
+        },
+        {
+          "x": 1128,
+          "y": 1104
+        },
+        {
+          "x": 1128,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "RG_F_l",
+      "to": "PF_S5_l",
+      "sign": "exc",
+      "gain": 1.4158445733549077,
+      "tag": "T013 | G=1.4158445733549077uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 19, col 9",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 660
+        },
+        {
+          "x": 1080,
+          "y": 1140
+        },
+        {
+          "x": 1128,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "RG_E_l",
+      "to": "PF_S6_l",
+      "sign": "exc",
+      "gain": 2.4,
+      "tag": "T011 | G=2.3999999999999999uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 20, col 8",
+      "pts": [
+        {
+          "x": 660,
+          "y": 600
+        },
+        {
+          "x": 660,
+          "y": 648
+        },
+        {
+          "x": 1008,
+          "y": 648
+        },
+        {
+          "x": 1008,
+          "y": 840
+        },
+        {
+          "x": 1260,
+          "y": 840
+        },
+        {
+          "x": 1260,
+          "y": 1200
+        }
+      ]
+    },
+    {
+      "from": "PF_IN_F_l",
+      "to": "PF_S6_l",
+      "sign": "inh",
+      "gain": 4.0,
+      "tag": "T003 | G=4uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 20, col 22",
+      "pts": [
+        {
+          "x": 1200,
+          "y": 960
+        },
+        {
+          "x": 1320,
+          "y": 960
+        },
+        {
+          "x": 1320,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "PF_S2_l",
+      "to": "PF_IN_E_l",
+      "sign": "exc",
+      "gain": 4.0,
+      "tag": "T007 | G=4uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 21, col 16",
+      "pts": [
+        {
+          "x": 552,
+          "y": 1140
+        },
+        {
+          "x": 552,
+          "y": 1128
+        },
+        {
+          "x": 480,
+          "y": 1128
+        },
+        {
+          "x": 480,
+          "y": 960
+        }
+      ]
+    },
+    {
+      "from": "PF_S3_l",
+      "to": "PF_IN_E_l",
+      "sign": "exc",
+      "gain": 4.0,
+      "tag": "T007 | G=4uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 21, col 17",
+      "pts": [
+        {
+          "x": 744,
+          "y": 1140
+        },
+        {
+          "x": 744,
+          "y": 1128
+        },
+        {
+          "x": 564,
+          "y": 1128
+        },
+        {
+          "x": 564,
+          "y": 960
+        },
+        {
+          "x": 480,
+          "y": 960
+        }
+      ]
+    },
+    {
+      "from": "PF_S6_l",
+      "to": "PF_IN_E_l",
+      "sign": "exc",
+      "gain": 4.0,
+      "tag": "T007 | G=4uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 21, col 20",
+      "pts": [
+        {
+          "x": 1260,
+          "y": 1200
+        },
+        {
+          "x": 1188,
+          "y": 1200
+        },
+        {
+          "x": 1188,
+          "y": 960
+        },
+        {
+          "x": 576,
+          "y": 960
+        },
+        {
+          "x": 576,
+          "y": 900
+        },
+        {
+          "x": 540,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "PF_S1_l",
+      "to": "PF_IN_F_l",
+      "sign": "exc",
+      "gain": 4.0,
+      "tag": "T007 | G=4uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 22, col 15",
+      "pts": [
+        {
+          "x": 420,
+          "y": 1200
+        },
+        {
+          "x": 420,
+          "y": 1260
+        },
+        {
+          "x": 1068,
+          "y": 1260
+        },
+        {
+          "x": 1068,
+          "y": 912
+        },
+        {
+          "x": 1140,
+          "y": 912
+        },
+        {
+          "x": 1140,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "PF_S4_l",
+      "to": "PF_IN_F_l",
+      "sign": "exc",
+      "gain": 4.0,
+      "tag": "T007 | G=4uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 22, col 18",
+      "pts": [
+        {
+          "x": 936,
+          "y": 1140
+        },
+        {
+          "x": 948,
+          "y": 1140
+        },
+        {
+          "x": 948,
+          "y": 972
+        },
+        {
+          "x": 1200,
+          "y": 972
+        },
+        {
+          "x": 1200,
+          "y": 960
+        }
+      ]
+    }
+  ],
+  "groups": {}
+}

@@ -9,10 +9,10 @@ Do not clean, reset, move, or regenerate the whole working tree. Several active 
 Recommended pickup order:
 
 1. Read this file and the records named below.
-2. Treat defense revision 17 as the current slide baseline. Do not rebuild it merely to prove reproducibility.
+2. Treat defense revision 18 as the current validated deck. Do not rebuild it merely to prove reproducibility.
 3. Open the requested AnimatLab project only after confirming Ben no longer has an unsaved AnimatLab window. The prior GUI-open check was deliberately skipped because the existing window contained unsaved edits.
-4. If Ben records a corrected walker or passive-guide run, make a new `v18` deck from `v17`. Do not overwrite `v17`.
-5. Render and inspect every slide in any new revision, verify native video playback in PowerPoint, export the full PDF including hidden question slides, and retain only the last two validated revisions. While building `v18`, keep `v16` until `v18` passes; then retain `v17` and `v18`.
+4. If Ben records a corrected walker or passive-guide run, make a new `v19` deck from `v18`. Do not overwrite `v18`.
+5. Render and inspect every slide in any new revision, verify native video playback in PowerPoint, export the full PDF including hidden question slides, and retain only the last two validated revisions.
 
 ## Current defense deck
 
@@ -22,58 +22,54 @@ Authoritative pointer:
 D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\current_deck.json
 ```
 
-Current deliverables, both intentionally Git-ignored:
+Current deliverables, intentionally Git-ignored:
 
 ```text
-D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\C3NS_Revision_20261031_v17\
+D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\C3NS_Revision_20261031_v18\
 ├── output\
-│   ├── Bolen_PhD_Defense_RoseGreen_20261031_v17.pptx
-│   ├── Bolen_PhD_Defense_RoseGreen_20261031_v17.pdf
-│   ├── AJH_Review_Response_v17.txt
-│   └── sadb_app.html
-├── build_deck.py
-├── add_recordings.py
+│   ├── Bolen_PhD_Defense_RoseGreen_20261031_v18.pptx
+│   └── Bolen_PhD_Defense_RoseGreen_20261031_v18.pdf
+├── revise_v18.mjs                 Artifact Tool visual rebuild
+├── transplant_v18.py              merges rebuilt slides into validated v17 package
 ├── finalize.mjs
 ├── render_review.ps1
 ├── check_video_playback.ps1
-├── assets\                         copied figures, posters, and embedded media
+├── make_contact_sheets.py
+├── submitted_figs\                 figures extracted from the submitted dissertation ZIP
+├── submitted_source\               submitted dissertation source snapshot
 └── build\
-    ├── main_story.json
-    ├── slide_order.json
-    ├── build_summary.json
-    ├── validation_delivery5.json
-    ├── preservation.json
-    ├── visual_review.json
-    ├── comment_compliance.json
-    ├── native_chart_owners.json
-    ├── native_recordings.json
+    ├── validation_delivery.json
+    ├── transplant_report.json
     ├── native_video_playback.json
     ├── native_text_geometry.json
-    ├── geometry_flags.json          expected: []
-    ├── render\slide_01.png ... slide_123.png
-    └── contact\sheet_001.jpg ... sheet_118.jpg
+    ├── render\slide_001.png ... slide_123.png
+    └── contact\contact_01.jpg ... contact_11.jpg
 ```
 
-Final `v17` facts:
+Final `v18` facts:
 
-- PPTX SHA-256: `9d9375e2f83cec31a40ef782edc530c4c4b1173aa3765bc29cb6d00c5ba61e09`
-- PPTX size: 94,467,329 bytes, below GitHub's 100 MB per-file limit but intentionally ignored.
+- PPTX SHA-256: `d7e0b9521e94ca391ff8470fb565ff9823acbcf2d0487ff3a5c122546fde738c`
+- PPTX size: 112,036,176 bytes. It exceeds GitHub's 100 MB per-file limit and must remain ignored or outside ordinary Git history.
 - 123 slides: 70 main-talk slides and 53 hidden question slides.
 - Planned main-talk time: 2,031 seconds, or 33 minutes 51 seconds. Hard cap: 45 minutes.
-- All 123 slides were rendered and visually inspected. The PDF has 123 pages.
+- All 123 slides were rendered at 1600 × 900, reviewed on 11 contact sheets, and individually inspected. The PDF has 123 pages.
 - Rose-green C3NS template, original honeycomb title treatment, smaller original logo/footer, and original plot colors are preserved.
 - SADb is last, on hidden question slides 117–123.
 - Slide 52 contains two native MP4s with autoplay, mute, and loop verified in PowerPoint.
 - Slide 74 contains Ben's newer bilateral-RG Root-fixed GIF.
-- The media already in `v17` predate the corrected body/joint geometry. Do not label them as corrected-geometry evidence.
+- The deck retains seven native charts and their embedded workbooks on owner slides 16, 26, 31, 44, 97, and 98.
+- Slide 44 uses the committee-submitted dissertation values: mean torque coverage 37.35% → 65.81%; mean active-force coverage 93.00% → 99.31%.
+- Slides 3, 4, 6, 8, 11, 49, 53–60, 64, 65, and 69 were rebuilt around the submitted dissertation's newer images and the advisor's narrative/figure comments.
+- The media predate the corrected body/joint geometry. Do not label them as corrected-geometry evidence.
 - The new flexor test photo remains pending.
 - The separate dissertation revision of the Hunt 2019 citation remains deferred. The correct source is A. J. Hunt, *Real-time control of dynamic walking in a dog-like robot*, 2nd Intel Neuromorphic Research Community meeting, Intel Labs, 15 February 2019.
+- The shared `assertion-evidence` skill now includes projected-figure rules from the advisor-linked Rougier et al. (2014) paper.
 
-Previous validated revision, retained under the two-revision rule:
+Previous validated revision retained under the two-revision rule:
 
 ```text
-D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\C3NS_Revision_20261030_v16\output\Bolen_PhD_Defense_RoseGreen_20261030_v16.pptx
-SHA-256 cfa20a90ee6216bb36acb9737586d91d6e93ff3a8a7a62e1c28c693fd1da59cd
+D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\C3NS_Revision_20261031_v17\output\Bolen_PhD_Defense_RoseGreen_20261031_v17.pptx
+SHA-256 9d9375e2f83cec31a40ef782edc530c4c4b1173aa3765bc29cb6d00c5ba61e09
 ```
 
 Advisor review inputs and extracted comments:
@@ -90,7 +86,8 @@ Local slide references:
 ```text
 C:\Users\Ben Bolen\Downloads\19_02_15 - INRC.pptx
 D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\Movement and Control of Biomimetic Humanoid Robots.pptx
-D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\ProofFinal\
+D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Bolen_Dissertation.pdf
+D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Bolen_Dissertation.zip
 D:\GitHub\Bipedal_Robot\Pictures\PictureAnalysis\20220308_032827.jpg
 D:\GitHub\Bipedal_Robot\Pictures\PictureAnalysis\20230419_225929.jpg
 D:\GitHub\Bipedal_Robot\Pictures\PictureAnalysis\20220308_031822.jpg
@@ -98,7 +95,7 @@ D:\GitHub\Bipedal_Robot\Pictures\PictureAnalysis\20220307_222908.jpg
 D:\GitHub\Bipedal_Robot\Code\Matlab\Colors.m
 ```
 
-For a new revision, copy the `v17` source tree to a new `v18` folder, make `v17` the baseline, change all hard-coded revision paths and receipt names, and write a new final file. `finalize.mjs` will not safely reuse an existing final/receipt as a new validation event. Preserve the package resources and native charts. Do not flatten the deck through PDF or screenshots.
+For a new revision, copy the `v18` source tree to a new `v19` folder and make the validated `v18` PPTX the baseline. Change hard-coded revision paths and receipt names, and write a new final file. `finalize.mjs` will not reuse an existing final/receipt as a new validation event. Preserve the package resources, native media, hidden-slide state, native charts, and embedded workbooks. Do not flatten the deck through PDF or screenshots.
 
 ## Local recordings
 

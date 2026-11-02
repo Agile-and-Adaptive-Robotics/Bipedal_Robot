@@ -1,0 +1,168 @@
+{
+  "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\spiking\\W2L_VirtualWalker_Newer\\pace_0p2_supported10_v1",
+  "source_sha256": "01ece6edcbcf17c274410b23f1ce7603eab288aadb946d6b548c5102ed5c1154",
+  "window_s": [
+    3.842,
+    7.488
+  ],
+  "selection_rule": "First5leftRG-F decoded-activity peaks after3s; four complete intervals, fixed minimum0.5speak spacing and prominence25%ofpost3ssignal range. No parameter/outcome selection.",
+  "RG_PF_signal": "normalized filtered spike population activity",
+  "MN_signal": "graded membrane voltage mV",
+  "joint_signal": "actual saved anatomical angles: positive hip/knee flexion and ankle dorsiflexion",
+  "clearance": "minimum of actual oriented main-foot/toe box clearance above moving floor",
+  "support": "Positive/negative reactions summed separately over rails,guides,harness; not net cancellation",
+  "all_data_hashes": {
+    "trajectory.npz": "6db4265ba9512098960d3a20e44945e6692a6b51c41969f169a101254141d8f6",
+    "central_spikes.npz": "4869bb3bc23db63095c7d2ad5f15dc2dde952aef375c3c23f7f0dfaa37d9c9bf",
+    "sensory_spikes.npz": "3ca412a19443dd1336296eac4137271e5bb0a9ad3a9c280eaff79ba0a885105a",
+    "SPIKING_COMPARISON.json": "a95800d34c8e79f3aa05549db5229f0ac8e1fc30185c002213c4707ec3c55903"
+  },
+  "mean_upward_BW": 0.40728881503352066,
+  "mean_downward_BW": 2.616817186729834e-05,
+  "full_run_assessment": {
+    "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\spiking\\W2L_VirtualWalker_Newer\\pace_0p2_supported10_v1",
+    "evaluation_start_s": 1.0,
+    "criteria": "Whole-foot clearance>1mm for80ms, peak≥10mm, load<.025BW; opposite foot bears>.05BW for≥half interval. ≥3 swings per leg and≥80% alternating transitions. Knee peaks separately reported.",
+    "legs": {
+      "L": {
+        "knee_peak_count": 10,
+        "period_median_s": 0.911999999999999,
+        "unloaded_clear_swings": 10,
+        "swing_intervals": [
+          {
+            "start_s": 1.444,
+            "end_s": 1.616,
+            "peak_clearance_m": 0.0210954904326089,
+            "other_stance_fraction": 1.0
+          },
+          {
+            "start_s": 2.154,
+            "end_s": 2.504,
+            "peak_clearance_m": 0.04914217688287795,
+            "other_stance_fraction": 1.0
+          },
+          {
+            "start_s": 3.11,
+            "end_s": 3.412,
+            "peak_clearance_m": 0.03919595805119446,
+            "other_stance_fraction": 0.8344370860927153
+          },
+          {
+            "start_s": 4.0280000000000005,
+            "end_s": 4.3340000000000005,
+            "peak_clearance_m": 0.0493831740171465,
+            "other_stance_fraction": 0.8169934640522876
+          },
+          {
+            "start_s": 4.926,
+            "end_s": 5.246,
+            "peak_clearance_m": 0.050312191427162756,
+            "other_stance_fraction": 0.8875
+          },
+          {
+            "start_s": 5.854,
+            "end_s": 6.154,
+            "peak_clearance_m": 0.04130583818258927,
+            "other_stance_fraction": 0.8066666666666666
+          },
+          {
+            "start_s": 6.7700000000000005,
+            "end_s": 7.0760000000000005,
+            "peak_clearance_m": 0.05389174189622067,
+            "other_stance_fraction": 0.738562091503268
+          },
+          {
+            "start_s": 7.644,
+            "end_s": 7.984,
+            "peak_clearance_m": 0.04739472791572959,
+            "other_stance_fraction": 0.9705882352941176
+          },
+          {
+            "start_s": 8.594,
+            "end_s": 8.894,
+            "peak_clearance_m": 0.04141294793400062,
+            "other_stance_fraction": 0.9533333333333334
+          },
+          {
+            "start_s": 9.522,
+            "end_s": 9.822000000000001,
+            "peak_clearance_m": 0.0410512426755051,
+            "other_stance_fraction": 1.0
+          }
+        ],
+        "loaded_fraction": 0.5093333333333333,
+        "max_whole_foot_clearance_m": 0.05389174189622067,
+        "min_anatomical_knee_flexion_deg": 2.270191787076774
+      },
+      "R": {
+        "knee_peak_count": 9,
+        "period_median_s": 0.9159999999999995,
+        "unloaded_clear_swings": 9,
+        "swing_intervals": [
+          {
+            "start_s": 1.83,
+            "end_s": 2.0100000000000002,
+            "peak_clearance_m": 0.015163489363115165,
+            "other_stance_fraction": 0.7555555555555555
+          },
+          {
+            "start_s": 2.674,
+            "end_s": 2.98,
+            "peak_clearance_m": 0.050043372745538314,
+            "other_stance_fraction": 0.738562091503268
+          },
+          {
+            "start_s": 3.5700000000000003,
+            "end_s": 3.878,
+            "peak_clearance_m": 0.04993579127608995,
+            "other_stance_fraction": 0.9025974025974026
+          },
+          {
+            "start_s": 4.498,
+            "end_s": 4.788,
+            "peak_clearance_m": 0.046995749771260406,
+            "other_stance_fraction": 0.9103448275862069
+          },
+          {
+            "start_s": 5.416,
+            "end_s": 5.704,
+            "peak_clearance_m": 0.04289929583965828,
+            "other_stance_fraction": 0.8125
+          },
+          {
+            "start_s": 6.312,
+            "end_s": 6.618,
+            "peak_clearance_m": 0.046708071283857934,
+            "other_stance_fraction": 0.8954248366013072
+          },
+          {
+            "start_s": 7.238,
+            "end_s": 7.5200000000000005,
+            "peak_clearance_m": 0.04317146560673892,
+            "other_stance_fraction": 0.8014184397163121
+          },
+          {
+            "start_s": 8.152000000000001,
+            "end_s": 8.458,
+            "peak_clearance_m": 0.0505492467299455,
+            "other_stance_fraction": 0.7973856209150327
+          },
+          {
+            "start_s": 9.062,
+            "end_s": 9.376,
+            "peak_clearance_m": 0.05173800917559621,
+            "other_stance_fraction": 0.7961783439490446
+          }
+        ],
+        "loaded_fraction": 0.5426666666666666,
+        "max_whole_foot_clearance_m": 0.05173800917559621,
+        "min_anatomical_knee_flexion_deg": 2.3122639649914163
+      }
+    },
+    "alternating_swing_transitions": 18,
+    "alternating_transition_fraction": 1.0,
+    "alternating_supported_stepping_gate": true,
+    "walking_claim": false,
+    "reason": "Passive support rails bear substantial weight; this gate does not establish independent walking."
+  }
+}

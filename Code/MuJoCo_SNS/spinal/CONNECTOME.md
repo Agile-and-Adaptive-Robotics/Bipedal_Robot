@@ -1,5 +1,11 @@
 # CONNECTOME.md — Ben owns the wiring, the machine tunes
 
+Current drawing editor: **`connectome_block_editor.html`**. Its curated template
+menu and Legacy switch are documented in [CONNECTOME_TEMPLATE_CATALOG.md](CONNECTOME_TEMPLATE_CATALOG.md).
+The workflow below describes the older rules/gains editor, retained for reference;
+it is not the current block editor's interaction guide. Current executed graphs
+must come from their actual exports, not a dated winner template.
+
 Established 2026-09-21 after the s3c–s3i verdict: output-level tuning
 cannot fix a mis-wired circuit, and architecture decisions are Ben's.
 

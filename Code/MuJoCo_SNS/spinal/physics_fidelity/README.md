@@ -4,6 +4,28 @@ Machine: easteregg2. Python: `D:\Anaconda\envs\myo\python.exe`.
 MuJoCo: 2.3.7, implicitfast, 2 ms. OpenSim Python: 4.4.1.
 No production runner, neural controller, model, timestep, or trained winner was changed.
 
+The new [full-Gait2392 replay experiment record](EXPERIMENT_RECORD.md) advances
+the prototype to a bounded full-model mechanics comparison. It records matched
+saved neural excitation, rigid/compliant controls, bilateral physical ties,
+strict knee guards, fresh-process parity, whole-mechanics runtime, timestep
+refinement, and a recovered native implicit muscle-velocity tangent. It is
+separate from the earlier isolated bank/one-joint results below. Its later
+sections also report actual live-SNS supported standing and stepping checks.
+
+The current section of that record includes the separate `thelen_dynamic.py`
+source-matched force–velocity extension and constitutive velocity tangent.
+Actual OpenSim dynamic checks pass, and an opt-in live SNS wrapper preserves
+accepted constrained syn6 standing under rigid and compliant source laws,
+with an exact fresh repeat. The unchanged Hunt controller initially loses
+ground clearance with both source laws. Shared bilateral recruitment scales
+now restore passing air1/air2 and supported-ground stepping with both laws.
+The compliant case has an exact fresh-process repeat; its bounded parameter
+basin is recorded separately. See external
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\hunt_motor_calibration_v1\HUNT_CALIBRATION_CHECKPOINT.json`.
+This is an opt-in human Gait2392 example, with measured apparatus assistance,
+not a production/default change. The earlier approximate prototype below is
+retained unchanged.
+
 The follow-up [matched-coordinate route and shared-force-law audit](MOMENT_FORCE_AUDIT.md)
 finds largely symmetric routes but substantial low-activation force asymmetry,
 and supplies a jointly fitted, opt-in six-family static surrogate parameter file.
@@ -184,3 +206,201 @@ From `D:\GitHub\Bipedal_Robot`, run each with
 - [OpenSim Thelen2003 source equations](https://github.com/opensim-org/opensim-core/blob/main/OpenSim/Actuators/Thelen2003Muscle.cpp).
 - [OpenSim damped equilibrium formulation](https://opensimconfluence.atlassian.net/wiki/spaces/OpenSim/pages/53090555/Millard%2B2012%2BMuscle%2BModels).
 - [MuJoCo 2.3.7 split-step integrator implementation](https://github.com/google-deepmind/mujoco/blob/2.3.7/src/engine/engine_forward.c).
+
+### Reference-constrained stance-load diagnosis
+
+On easteregg2, the separate current record is
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\hunt_ib_load_v1\EXPERIMENT_RECORD.md`,
+with numerical results in `CHECKPOINT.json`. The source-compliant engineering
+clearance result does not pass the saved IK envelope; no lower-support gait
+claim follows from it. The bounded new Ib study finds no fully accepted case.
+
+Reusable additions are `biomechanical_envelope.py` (frozen reference and route
+gates), `stance_ib.py` (opt-in source-normalized stance load pathway and bounded
+Rustuna adapter), and `pt_current_chain.py` (shadow neural/physical transfer
+audit without modifying the live standing trajectory). `balance_diagnostics.py`
+provides current reconstruction, exact-array comparison, and checkpoint tools.
+
+The subsequent source-afferent/hip–knee record is
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\hunt_spindle_v1\EXPERIMENT_RECORD.md`.
+`source_force_comparison.py --actual-torque-audit --reference-model <captured-model-dir>
+--folder <full-dynamics-replay> --out <external-output-dir>` reconstructs actual
+source active/passive torques, separates contact/stop reactions, checks conditional
+vasti capacity, and compares nine poses with original OpenSim. It changes no
+controller or trajectory. `--reference-model ... --prepare-contact-reference`
+declares offline pelvis-height diagnostics; these are not runtime clamps or an
+accepted ground reference. The next requirement is contact-feasible ground
+training data, not further ankle-only optimization.
+
+### Native contact calibration checkpoint
+
+`supported_step_teacher.py` now prepares explicitly declared in-place engineering
+references and native soft-contact standing/keyframe calibrations. The current
+external record is
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\supported_teacher_v1\EXPERIMENT_RECORD.md`.
+Read `PLANTAR_CONTACT_AUDIT.md` before treating the original-source92 force-law
+variant as equivalent to the legacy runner's six-muscle pruning policy.
+Native inverse contact balance, source recruitment, and actual forward holds
+are separate checks. The current successful single-support holds use 60% nominal
+upward support and are not neural-controller or alternating-step results.
+
+### Continuous source-muscle teacher
+
+Record and gates:
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\native_transition_v1\EXPERIMENT_RECORD.md`
+and its sibling `CHECKPOINT.json`. Both swing-initiation references and the
+complete left lift/return pass fresh/timestep checks; the opposite complete
+return remains rejected. This is not an SNS or alternating-gait result.
+
+On **easteregg2**, reproduce the accepted left reference into a new output
+folder with PowerShell:
+
+```powershell
+$physics = 'D:\Users\Ben Bolen\NeuroCampaign_20261031\physics'
+& 'D:\Anaconda\envs\myo\python.exe' `
+  'D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\physics_fidelity\source_force_comparison.py' `
+  --reference-model "$physics\hunt_spindle_v1\reference_inverse_v1\actual_model_binary" `
+  --transition-start "$physics\supported_teacher_v1\native_ds60_source_hold_v1" `
+  --transition-via "$physics\native_transition_v1\unloaded_left_nearflat_source_hold" `
+  --transition-end "$physics\supported_teacher_v1\native_right_ss60_fresh" `
+  --spec "$physics\hunt_ib_load_v1\IK_ENVELOPE_SPEC_V1.json" `
+  --transition-ramp 4 --transition-roundtrip --return-dwell .5 `
+  --transition-feedback --command-filter .05 --feedback-warmup `
+  --mtp-impedance-scaled `
+  --out "$physics\native_transition_v1\new_left_return_01"
+```
+
+The default is the captured 2 ms physics step. `--hold-dt .001 --trace-stride 20`
+tests 1 ms while preserving the 10 ms teacher clock. `--export-training-reference`
+adds one full compressed physical reference; use it for selected final cases,
+not exploratory trials. Completed output folders are protected against reruns.
+The source92/pruned actuation policy must match every endpoint. Shared MTP
+teacher impedance is computed from existing model stiffness and inertia;
+physical joint damping, contacts, source anatomy, and production code are
+unchanged. The accepted final reference exports actual excitation separately
+from end-step activation and the split-step activation used for source force.
+
+### Stationary-endpoint prerequisite
+
+The two-second holds above are bounded mechanical examples, not demonstrated
+stationary equilibria. They do not authorize bilateral Hunt C training. See
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\native_equilibrium_v2\EXPERIMENT_RECORD.md`
+for the newer full-native force balance and five-second validation. Every
+native follower residual is retained. New endpoint formats are rejected by
+transition training until `accepted_stationary_endpoint` is true.
+
+The first double-support endpoint passes all static and five-second gates,
+with a bit-identical fresh repeat. Its authoritative validation folder is
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\native_equilibrium_v2\double_support_source92_jacobian_scaled_5s`.
+This remains an original-source92, 60%-supported mechanical reference.
+It changes no source dimensions, native stiffness/damping, or contact geometry.
+
+Use `source_force_comparison.py --full-native-equilibrium` to fit a new endpoint;
+`--resume-equilibrium` restores saved variables while retaining the original
+target. `--static-force-priority` changes numerical objective weighting only.
+Run `native_equilibrium_validation.py --model <captured model folder> --endpoint
+<static fit folder> --spec <frozen envelope JSON> --out <new validation folder>`
+before transition use. `--physics-dt .001` is an isolated refinement check;
+the default captured physics step remains 2 ms.
+
+All three endpoint prerequisites now pass: double support, left stance, and
+right stance, each with exact fresh repeats and passing 1 ms checks. See the
+external `native_equilibrium_v2\CHECKPOINT.json` for authoritative folders.
+`--static-forward-acceleration` conditions the inverse fit with all actual
+native accelerations; `--feasibility-first` prioritizes declared physical goals
+over a soft posture preference. Neither changes the model or acceptance gates.
+The validator's `--initial-audit-only` records native forward/inverse consistency
+without another forward trial.
+
+Both continuous no-reset lift/return baselines clear the swing foot and recover
+double support, but touchdown slip remains above the 5 mm/s limit. Dynamic
+Hunt C fitting stays gated. Before using `NativeCartesianTeacher`, preserve
+loaded follower offsets in its reference and trial FK; its current ideal
+projection would discard the newly qualified geometry. No further physical or
+neural variant has been promoted.
+
+### Loaded Cartesian target repair
+
+The opt-in `--loaded-cartesian-followers` now preserves actual keyframe and
+live follower geometry/velocity. Add `--root-aware-cartesian` and optionally
+`--stance-posture-cartesian`; `--cartesian-tangential-clearance .005` separates
+horizontal/orientation settling from vertical touchdown without changing the
+stationary endpoints. This adapter explicitly uses the legacy captured human
+z-up frame, not a reinterpretation of the robot's anatomical y-up frame.
+
+`validate_loaded_cartesian.py` checks legacy/default-off replay, exact loaded
+FK, and independent world-velocity/profile derivatives. Full default-off
+physical replay is also exact. Current gates and rejected trials are in
+`D:\Users\Ben Bolen\NeuroCampaign_20261031\physics\native_touchdown_v3\CHECKPOINT.json`.
+No teacher passes all physical gates. `--native-impedance-acceleration` is an
+explicitly rejected experimental recruitment variant, not an adopted controller.
+No source dimensions, physical damping, masses, or contact settings changed.
+
+`predictive_source_recruitment.py --trace <existing full trace> --model <captured
+model folder> --out <new folder>` validates native activation and source-force
+forecasts without another physical run. `--snapshots <actuation_windows.npz>`
+instead checks complete augmented-state replay and its command Jacobian.
+Capture at most three short windows with `--actuation-audit-time <seconds>`.
+The experimental `--predictive-source-horizon .01` recruiter is rejected on
+physical gates: accurate conditional force prediction does not replace the
+full q/velocity/activation/fiber/filter transition. It remains default-off.
+
+Add `--inverse-reference-jacobian <jacobian_windows.npz> --spec <frozen ROM
+JSON>` to the snapshot audit for preallocated full-state derivatives,
+conditioning, bounded command authority, and one small regularized correction
+only when derivative checks pass. `--branch-derivatives` instead diagnoses
+one-sided derivatives and always disables the inverse. Current equilibrium
+directional checks fail; no live teacher uses this method. Read the separate
+`native_touchdown_v3` external experiment record for the measured scope.
+
+`--stationary-start <accepted DS> --stationary-target <accepted left stance>
+--spec <frozen ROM JSON>` runs the separate bounded nonlinear right-to-left
+load-transfer diagnostic. It uses shared functional-family corrections and
+native augmented rollouts. The initial 10 ms task fails; one analytically derived
+302 ms horizon passes a 1% BW transfer, fresh-process and 1 ms checks included.
+`--verify-stationary-inverse <saved inverse folder>` replays saved corrections
+without fitting; `--physics-dt .001` performs the isolated refinement check.
+This is an offline mechanical primitive, not a supported-step or neural pass.
+
+Add `--continuation-seed <preserved1% inverse>` for the state-continuous
+1→3→5% BW sequence. Both directions pass through 3% and stop at 5% under the
+unchanged diagnostic reference hold. `--verify-continuation <saved sequence>`
+replays only its accepted prefix with no fitting; an optional `--physics-dt
+.001` checks refinement. `--audit-transfer-geometry <saved sequence>` separately
+decomposes the loaded foot-body motion without another simulation search.
+The stopped 5% result is a reference-position limitation, not a demonstrated
+muscle-strength deficit. Read the separate external record before continuing.
+
+`--rolling-stance` selects the distinct contact-consistent stance task. It
+allows body-origin motion through rolling while retaining actual contact-slip,
+native friction/unilateral-force, mesh, source-envelope, root, and knee checks.
+The existing inverse-teacher subtalar/MTP +/-10 degree posture envelope is
+retained. Independent contact-kinematic checks and exact default-off replay
+precede the new runs. Both rolling sequences pass 1→3→5% BW transfer, fresh
+exact replay, and unchanged-command 1 ms gate checks. Right-toe acceleration
+remains resolution-sensitive. Both feet are still loaded; this is not a swing
+or full stepping-teacher pass. Historical body-position-hold failures remain.
+
+`--extend-transfer-from <accepted5% rolling sequence>` freezes that exact
+continuous prefix and attempts 7.5% then 10% BW with the unchanged 302 ms
+horizon and constraints. Both directions pass through 10%, fresh exact replay,
+and unchanged-command 1 ms gate checks. Both feet remain loaded, and detailed
+toe acceleration remains timestep-sensitive. Use the separate external record
+before treating these load-transfer primitives as a stepping reference.
+
+Extending an accepted 10% sequence with `--extend-transfer-from` attempts
+12.5% then 15% with the same policy. Both current directions pass 12.5% and
+stop at 15%: right force residual, left vertical-root drift. Accepted 12.5%
+prefixes pass fresh/1 ms checks but are not stationary endpoints. Separate
+actual-force and whole-foot-mesh unloading scores remain false.
+`--audit-transfer-authority <saved attempt>` diagnoses group command caps,
+delivered recruitment, root displacement, and contact ownership without a search.
+
+
+## Stationary loaded-reference validation
+The source92/60%-support12.5% load-split references now pass full-native105-coordinate static and5-second/fresh/1-ms checks. See external native_stationary_loadsplit_v1/EXPERIMENT_RECORD.md. Simple full-source activation interpolation fails dynamic gates; no swing or Hunt C claim. native_equilibrium_validation.py --campaign-summary curates repeatability and failed-motion evidence; loaded_contact_min_BW is an optional native_transition audit threshold with historical default .025 preserved.
+
+
+## Full-family derivative and branch audit
+On easteregg2, predictive_source_recruitment.py --full-family-audit --terminal-window --physics-dt .001 --finite-difference-step .001 --paired-rollout-budget 53 retains all 46 task-normalized family directions and deliberately performs no fit. Supply the frozen model,start,two stationary targets,spec,and external output directory through the existing flags. native_equilibrium_validation.py supplies --native-branch-audit,--plot-native-branches,and a zero-effect --predictor-branch-target/--predictor-branch-start shadow audit.
+The completed example is external physics/native_manifold_v1/full46_1ms_audit_v1. Right derivatives are consistent; left force/velocity blocks fail. Native constraint states remain fixed in the baseline,while a source-predictor FV branch mismatch is localized. The physical source law and production defaults are unchanged; no movement is promoted.

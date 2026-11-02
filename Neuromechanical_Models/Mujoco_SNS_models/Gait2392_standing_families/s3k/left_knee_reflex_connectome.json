@@ -1,0 +1,301 @@
+{
+  "name": "s3k standing candidate",
+  "nodes": [
+    {
+      "label": "PF_E1_l",
+      "type": "HC-PF-E",
+      "x": 300,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_E2_l",
+      "type": "HC-PF-E",
+      "x": 900,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "PF_F1_l",
+      "type": "HC-PF-F",
+      "x": 1500,
+      "y": 300,
+      "gain": 1.0
+    },
+    {
+      "label": "MN_bifemsh_l",
+      "type": "MN",
+      "x": 1200,
+      "y": 1380,
+      "gain": 1.0
+    },
+    {
+      "label": "Ia_bifemsh_l",
+      "type": "SN-Ia",
+      "x": 1020,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "II_bifemsh_l",
+      "type": "SN-II",
+      "x": 1200,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "Ib_bifemsh_l",
+      "type": "SN-Ib",
+      "x": 1380,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "MN_vas_lat_l",
+      "type": "MN",
+      "x": 540,
+      "y": 1380,
+      "gain": 1.0
+    },
+    {
+      "label": "Ia_vas_lat_l",
+      "type": "SN-Ia",
+      "x": 360,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "II_vas_lat_l",
+      "type": "SN-II",
+      "x": 540,
+      "y": 600,
+      "gain": 1.0
+    },
+    {
+      "label": "Ib_vas_lat_l",
+      "type": "SN-Ib",
+      "x": 720,
+      "y": 600,
+      "gain": 1.0
+    }
+  ],
+  "edges": [
+    {
+      "from": "Ia_bifemsh_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.6,
+      "tag": "T007 | G=0.59999999999999998uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 236, col 237",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 660
+        },
+        {
+          "x": 1200,
+          "y": 660
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "II_bifemsh_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.4,
+      "tag": "T008 | G=0.40000000000000002uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 236, col 238",
+      "pts": [
+        {
+          "x": 1200,
+          "y": 660
+        },
+        {
+          "x": 1212,
+          "y": 660
+        },
+        {
+          "x": 1212,
+          "y": 1320
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "Ib_bifemsh_l",
+      "to": "MN_bifemsh_l",
+      "sign": "inh",
+      "gain": 0.35,
+      "tag": "T009 | G=0.34999999999999998uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 236, col 239",
+      "pts": [
+        {
+          "x": 1380,
+          "y": 660
+        },
+        {
+          "x": 1380,
+          "y": 1320
+        },
+        {
+          "x": 1200,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "Ia_vas_lat_l",
+      "to": "MN_bifemsh_l",
+      "sign": "inh",
+      "gain": 0.4,
+      "tag": "T010 | G=0.40000000000000002uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 236, col 321",
+      "pts": [
+        {
+          "x": 420,
+          "y": 600
+        },
+        {
+          "x": 420,
+          "y": 1320
+        },
+        {
+          "x": 1140,
+          "y": 1320
+        },
+        {
+          "x": 1140,
+          "y": 1380
+        }
+      ]
+    },
+    {
+      "from": "Ia_bifemsh_l",
+      "to": "MN_vas_lat_l",
+      "sign": "inh",
+      "gain": 0.4,
+      "tag": "T010 | G=0.40000000000000002uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 320, col 237",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 660
+        },
+        {
+          "x": 540,
+          "y": 660
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "Ia_vas_lat_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.6,
+      "tag": "T007 | G=0.59999999999999998uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 320, col 321",
+      "pts": [
+        {
+          "x": 360,
+          "y": 660
+        },
+        {
+          "x": 360,
+          "y": 1308
+        },
+        {
+          "x": 540,
+          "y": 1308
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "II_vas_lat_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.4,
+      "tag": "T008 | G=0.40000000000000002uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 320, col 322",
+      "pts": [
+        {
+          "x": 540,
+          "y": 660
+        },
+        {
+          "x": 552,
+          "y": 660
+        },
+        {
+          "x": 552,
+          "y": 1320
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "Ib_vas_lat_l",
+      "to": "MN_vas_lat_l",
+      "sign": "inh",
+      "gain": 0.35,
+      "tag": "T009 | G=0.34999999999999998uS; Erev=-5mV; pre-threshold=0mV; pre-saturation=5mV | matrix row 320, col 323",
+      "pts": [
+        {
+          "x": 720,
+          "y": 660
+        },
+        {
+          "x": 720,
+          "y": 1308
+        },
+        {
+          "x": 540,
+          "y": 1308
+        },
+        {
+          "x": 540,
+          "y": 1320
+        }
+      ]
+    },
+    {
+      "from": "PF_E1_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.0,
+      "tag": "DISABLED source-defined PF→MN: G=0uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV. No synaptic current."
+    },
+    {
+      "from": "PF_F1_l",
+      "to": "MN_bifemsh_l",
+      "sign": "exc",
+      "gain": 0.0,
+      "tag": "DISABLED source-defined PF→MN: G=0uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV. No synaptic current."
+    },
+    {
+      "from": "PF_E1_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.0,
+      "tag": "DISABLED source-defined PF→MN: G=0uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV. No synaptic current."
+    },
+    {
+      "from": "PF_E2_l",
+      "to": "MN_vas_lat_l",
+      "sign": "exc",
+      "gain": 0.0,
+      "tag": "DISABLED source-defined PF→MN: G=0uS; Erev=8mV; pre-threshold=0mV; pre-saturation=5mV. No synaptic current."
+    }
+  ],
+  "groups": {}
+}

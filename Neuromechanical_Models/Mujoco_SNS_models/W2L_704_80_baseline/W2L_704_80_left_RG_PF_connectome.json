@@ -1,0 +1,2711 @@
+{
+  "nodes": [
+    {
+      "id": "57b344bf-3b61-4652-9a11-91db1a5d43d6",
+      "type": "HC-PF-E",
+      "label": "L Hip PF ext [16spk]",
+      "x": 420,
+      "y": 1140,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Hip PF ext cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF ext cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF ext cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "d647775f-505a-4d60-938c-fcaedb44cb9c",
+      "type": "IN-PF",
+      "label": "L Hip PF ext IN",
+      "x": 420,
+      "y": 960,
+      "grp": "actual"
+    },
+    {
+      "id": "f5ba89bb-6ead-4ea7-a5f2-5aa0034674e4",
+      "type": "HC-PF-F",
+      "label": "L Hip PF flx [16spk]",
+      "x": 720,
+      "y": 1140,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Hip PF flx cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Hip PF flx cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Hip PF flx cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "4a70bdeb-59a2-459d-bfdb-1ef9257354f7",
+      "type": "IN-PF",
+      "label": "L Hip PF flx IN",
+      "x": 720,
+      "y": 960,
+      "grp": "actual"
+    },
+    {
+      "id": "f336ecdc-a3f4-4ae2-b9fb-a765296574bf",
+      "type": "HC-PF-E",
+      "label": "L Knee PF ext [16spk]",
+      "x": 1140,
+      "y": 1140,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "4bf86de6-ba72-414a-8db0-6b93c7a304d4",
+      "type": "IN-PF",
+      "label": "L Knee PF ext IN",
+      "x": 1140,
+      "y": 960,
+      "grp": "actual"
+    },
+    {
+      "id": "9bc35128-6169-478c-b777-a6d83ecde667",
+      "type": "HC-PF-F",
+      "label": "L Knee PF flx [16spk]",
+      "x": 1440,
+      "y": 1140,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "dd557330-389f-4403-8632-f46d19d72ef1",
+      "type": "IN-PF",
+      "label": "L Knee PF flx IN",
+      "x": 1440,
+      "y": 960,
+      "grp": "actual"
+    },
+    {
+      "id": "17fdb1f6-d678-48b0-b90c-d604cb2b3115",
+      "type": "HC-RG-E",
+      "label": "L RG ext [16spk]",
+      "x": 780,
+      "y": 600,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-RG-E",
+            "label": "L RG ext cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG ext cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG ext cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "6e188aac-b074-4541-92ab-7ce4a38f83cc",
+      "type": "IN-InE",
+      "label": "L RG ext IN",
+      "x": 780,
+      "y": 420,
+      "grp": "actual"
+    },
+    {
+      "id": "7bd02f2b-2d71-42cf-b856-e7fef1ee05e6",
+      "type": "HC-RG-F",
+      "label": "L RG flx [16spk]",
+      "x": 1080,
+      "y": 600,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-RG-F",
+            "label": "L RG flx cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L RG flx cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L RG flx cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "136ad874-087e-448a-a97c-a0544690f7c3",
+      "type": "IN-InF",
+      "label": "L RG flx IN",
+      "x": 1080,
+      "y": 420,
+      "grp": "actual"
+    }
+  ],
+  "edges": [
+    {
+      "from": "L Knee PF ext IN",
+      "to": "L Knee PF flx [16spk]",
+      "sign": "inh",
+      "gain": 2.7489999999999997,
+      "tag": "T16 PF Inhibit | G=2.7489999999999997uS; E=-70mV; threshold=-60mV; saturation=-25mV | source-row 144",
+      "pts": [
+        {
+          "x": 1200,
+          "y": 960
+        },
+        {
+          "x": 1380,
+          "y": 960
+        },
+        {
+          "x": 1380,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "L Knee PF flx [16spk]",
+      "to": "L Knee PF flx IN",
+      "sign": "exc",
+      "gain": 2.7489999999999997,
+      "tag": "T17 PF Excite | G=2.7489999999999997uS; E=-40mV; threshold=-60mV; saturation=-25mV | source-row 145",
+      "pts": [
+        {
+          "x": 1440,
+          "y": 1080
+        },
+        {
+          "x": 1440,
+          "y": 1020
+        }
+      ]
+    },
+    {
+      "from": "L Knee PF flx IN",
+      "to": "L Knee PF ext [16spk]",
+      "sign": "inh",
+      "gain": 2.7489999999999997,
+      "tag": "T16 PF Inhibit | G=2.7489999999999997uS; E=-70mV; threshold=-60mV; saturation=-25mV | source-row 146",
+      "pts": [
+        {
+          "x": 1380,
+          "y": 960
+        },
+        {
+          "x": 1368,
+          "y": 960
+        },
+        {
+          "x": 1368,
+          "y": 1140
+        },
+        {
+          "x": 1200,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "L Knee PF ext [16spk]",
+      "to": "L Knee PF ext IN",
+      "sign": "exc",
+      "gain": 2.7489999999999997,
+      "tag": "T17 PF Excite | G=2.7489999999999997uS; E=-40mV; threshold=-60mV; saturation=-25mV | source-row 147",
+      "pts": [
+        {
+          "x": 1140,
+          "y": 1080
+        },
+        {
+          "x": 1140,
+          "y": 1020
+        }
+      ]
+    },
+    {
+      "from": "L RG flx [16spk]",
+      "to": "L RG ext [16spk]",
+      "sign": "exc",
+      "gain": 0.09999999999999999,
+      "tag": "T35 RG to RG Excite | G=0.099999999999999992uS; E=-40mV; threshold=-65mV; saturation=-40mV | source-row 148",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 600
+        },
+        {
+          "x": 840,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "from": "L RG flx IN",
+      "to": "L RG ext [16spk]",
+      "sign": "inh",
+      "gain": 2.7489999999999997,
+      "tag": "T34 RG Inhibit | G=2.7489999999999997uS; E=-70mV; threshold=-60mV; saturation=-25mV | source-row 149",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 420
+        },
+        {
+          "x": 840,
+          "y": 420
+        },
+        {
+          "x": 840,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "from": "L RG ext [16spk]",
+      "to": "L RG flx [16spk]",
+      "sign": "exc",
+      "gain": 0.09999999999999999,
+      "tag": "T35 RG to RG Excite | G=0.099999999999999992uS; E=-40mV; threshold=-65mV; saturation=-40mV | source-row 150",
+      "pts": [
+        {
+          "x": 840,
+          "y": 600
+        },
+        {
+          "x": 840,
+          "y": 612
+        },
+        {
+          "x": 1020,
+          "y": 612
+        },
+        {
+          "x": 1020,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "from": "L RG ext [16spk]",
+      "to": "L RG ext IN",
+      "sign": "exc",
+      "gain": 2.7489999999999997,
+      "tag": "T33 RG Excite | G=2.7489999999999997uS; E=-40mV; threshold=-60mV; saturation=-25mV | source-row 151",
+      "pts": [
+        {
+          "x": 780,
+          "y": 540
+        },
+        {
+          "x": 780,
+          "y": 480
+        }
+      ]
+    },
+    {
+      "from": "L RG flx [16spk]",
+      "to": "L RG flx IN",
+      "sign": "exc",
+      "gain": 2.7489999999999997,
+      "tag": "T33 RG Excite | G=2.7489999999999997uS; E=-40mV; threshold=-60mV; saturation=-25mV | source-row 152",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 540
+        },
+        {
+          "x": 1080,
+          "y": 480
+        }
+      ]
+    },
+    {
+      "from": "L RG ext IN",
+      "to": "L RG flx [16spk]",
+      "sign": "inh",
+      "gain": 2.7489999999999997,
+      "tag": "T34 RG Inhibit | G=2.7489999999999997uS; E=-70mV; threshold=-60mV; saturation=-25mV | source-row 153",
+      "pts": [
+        {
+          "x": 840,
+          "y": 420
+        },
+        {
+          "x": 840,
+          "y": 432
+        },
+        {
+          "x": 1020,
+          "y": 432
+        },
+        {
+          "x": 1020,
+          "y": 600
+        }
+      ]
+    },
+    {
+      "from": "L Hip PF flx IN",
+      "to": "L Hip PF ext [16spk]",
+      "sign": "inh",
+      "gain": 2.7489999999999997,
+      "tag": "T16 PF Inhibit | G=2.7489999999999997uS; E=-70mV; threshold=-60mV; saturation=-25mV | source-row 162",
+      "pts": [
+        {
+          "x": 660,
+          "y": 960
+        },
+        {
+          "x": 660,
+          "y": 1140
+        },
+        {
+          "x": 480,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "L Hip PF flx [16spk]",
+      "to": "L Hip PF flx IN",
+      "sign": "exc",
+      "gain": 2.7489999999999997,
+      "tag": "T17 PF Excite | G=2.7489999999999997uS; E=-40mV; threshold=-60mV; saturation=-25mV | source-row 167",
+      "pts": [
+        {
+          "x": 720,
+          "y": 1080
+        },
+        {
+          "x": 720,
+          "y": 1020
+        }
+      ]
+    },
+    {
+      "from": "L Hip PF ext [16spk]",
+      "to": "L Hip PF ext IN",
+      "sign": "exc",
+      "gain": 2.7489999999999997,
+      "tag": "T17 PF Excite | G=2.7489999999999997uS; E=-40mV; threshold=-60mV; saturation=-25mV | source-row 177",
+      "pts": [
+        {
+          "x": 420,
+          "y": 1080
+        },
+        {
+          "x": 420,
+          "y": 1020
+        }
+      ]
+    },
+    {
+      "from": "L Hip PF ext IN",
+      "to": "L Hip PF flx [16spk]",
+      "sign": "inh",
+      "gain": 2.7489999999999997,
+      "tag": "T16 PF Inhibit | G=2.7489999999999997uS; E=-70mV; threshold=-60mV; saturation=-25mV | source-row 178",
+      "pts": [
+        {
+          "x": 480,
+          "y": 960
+        },
+        {
+          "x": 480,
+          "y": 1128
+        },
+        {
+          "x": 660,
+          "y": 1128
+        },
+        {
+          "x": 660,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "L RG flx [16spk]",
+      "to": "L Hip PF flx [16spk]",
+      "sign": "exc",
+      "gain": 0.09999999999999999,
+      "tag": "T38 RG to PF Excite | G=0.099999999999999992uS; E=-40mV; threshold=-60mV; saturation=-40mV | source-row 191",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 660
+        },
+        {
+          "x": 1080,
+          "y": 1080
+        },
+        {
+          "x": 720,
+          "y": 1080
+        }
+      ]
+    },
+    {
+      "from": "L RG ext [16spk]",
+      "to": "L Knee PF ext [16spk]",
+      "sign": "exc",
+      "gain": 0.33299999999999996,
+      "tag": "T37 RG_K&A_EX | G=0.33299999999999996uS; E=-50mV; threshold=-60mV; saturation=-50mV | source-row 192",
+      "pts": [
+        {
+          "x": 780,
+          "y": 660
+        },
+        {
+          "x": 780,
+          "y": 1068
+        },
+        {
+          "x": 1140,
+          "y": 1068
+        },
+        {
+          "x": 1140,
+          "y": 1080
+        }
+      ]
+    },
+    {
+      "from": "L RG ext [16spk]",
+      "to": "L Hip PF ext [16spk]",
+      "sign": "exc",
+      "gain": 0.176,
+      "tag": "T36 RG_HIP_EX | G=0.17599999999999999uS; E=-40mV; threshold=-60mV; saturation=-40mV | source-row 193",
+      "pts": [
+        {
+          "x": 780,
+          "y": 660
+        },
+        {
+          "x": 492,
+          "y": 660
+        },
+        {
+          "x": 492,
+          "y": 1080
+        },
+        {
+          "x": 420,
+          "y": 1080
+        }
+      ]
+    },
+    {
+      "from": "L RG flx [16spk]",
+      "to": "L Knee PF flx [16spk]",
+      "sign": "exc",
+      "gain": 0.09999999999999999,
+      "tag": "T38 RG to PF Excite | G=0.099999999999999992uS; E=-40mV; threshold=-60mV; saturation=-40mV | source-row 200",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 660
+        },
+        {
+          "x": 1356,
+          "y": 660
+        },
+        {
+          "x": 1356,
+          "y": 1080
+        },
+        {
+          "x": 1440,
+          "y": 1080
+        }
+      ]
+    }
+  ],
+  "groups": {
+    "actual": "Actual channels/populations",
+    "boundary": "Boundary references; exact row IDs in tags"
+  },
+  "_scope": "Each edge tag preserves its actual individual source row and full four effective synaptic fields. Boundary duplicates are display references, not added neurons or weights."
+}

@@ -48,7 +48,8 @@ def replay_completed(study,rows,fixed,space):
 def main():
  p=argparse.ArgumentParser();p.add_argument('--manifest',required=True);p.add_argument('--probe-only',action='store_true');p.add_argument('--resume',action='store_true');a=p.parse_args()
  manifest_path=Path(a.manifest).resolve();raw=manifest_path.read_bytes();cfg=json.loads(raw);adapter=Path(cfg['adapter_path']).resolve();folder=Path(cfg['output_dir']).resolve()
- if not folder.is_relative_to(HERE/'runs'):raise ValueError('Raw study outputs must remain in this package\'s ignored runs folder')
+ approved_external=Path(r'D:\Users\Ben Bolen\NeuroCampaign_20261031').resolve()
+ if not (folder.is_relative_to(HERE/'runs') or folder.is_relative_to(approved_external)):raise ValueError('Raw study outputs must remain in ignored runs or the user-authorized external campaign root')
  if not adapter.is_file():raise FileNotFoundError(adapter)
  folder.mkdir(parents=True,exist_ok=True);trialpath=folder/'TRIALS.jsonl'
  if not a.probe_only and trialpath.exists() and not a.resume:raise RuntimeError('Output already has trials; use --resume for exact seeded replay')
@@ -78,12 +79,14 @@ def main():
  deadline=provenance['started_epoch_s']+budget
  if not a.probe_only and time.time()>=deadline:raise TimeoutError('Original study wall-time budget exhausted; no new evaluations')
  worker=Worker(adapter,folder)
- (folder/'MANIFEST.json').write_bytes(raw);priorpath.write_text(json.dumps(provenance,indent=2))
+ (folder/'MANIFEST.json').write_bytes(raw);priorpath.write_text(json.dumps(provenance,indent=2));(folder/'ADAPTER_SOURCE.py').write_bytes(adapter.read_bytes())
  try:
   preflight=worker.request({'op':'preflight','manifest':cfg},timeout);(folder/'PREFLIGHT.json').write_text(json.dumps(preflight,indent=2))
   if a.probe_only:print(json.dumps(preflight,indent=2));return
   if preflight.get('ready_for_optimization') is not True:raise RuntimeError('Baseline/mapping gate has not passed: '+json.dumps(preflight))
-  study=backend.create_study(direction='minimize',sampler=backend.samplers.TPESampler(seed=provenance['seed'],n_startup_trials=min(10,maxtrials),multivariate=False))
+  startup=int(cfg.get('n_startup_trials',min(10,maxtrials)))
+  if not 1<=startup<=maxtrials:raise ValueError('Invalid n_startup_trials')
+  study=backend.create_study(direction='minimize',sampler=backend.samplers.TPESampler(seed=provenance['seed'],n_startup_trials=startup,multivariate=False))
   for candidate in initial:study.enqueue_trial(candidate)
   replay_completed(study,rows,fixed,space)
   while len(rows)<maxtrials and time.time()<deadline:

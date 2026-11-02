@@ -1,0 +1,2887 @@
+{
+  "nodes": [
+    {
+      "id": "c0986b70-8c6d-4d8b-88d1-3211822e9ddd",
+      "type": "MN",
+      "label": "L Knee MN ext",
+      "x": 600,
+      "y": 960,
+      "grp": "actual"
+    },
+    {
+      "id": "efa2eb22-b96c-4254-b206-1de42edc3e8c",
+      "type": "RC",
+      "label": "L Knee MN ext RE",
+      "x": 600,
+      "y": 1200,
+      "grp": "actual"
+    },
+    {
+      "id": "070475b2-182c-49af-8860-9c421bf4c8f0",
+      "type": "MN",
+      "label": "L Knee MN flx",
+      "x": 1080,
+      "y": 960,
+      "grp": "actual"
+    },
+    {
+      "id": "19e379d8-3573-4809-b025-0f9be06596e2",
+      "type": "RC",
+      "label": "L Knee MN flx RE",
+      "x": 1080,
+      "y": 1200,
+      "grp": "actual"
+    },
+    {
+      "id": "f336ecdc-a3f4-4ae2-b9fb-a765296574bf",
+      "type": "HC-PF-E",
+      "label": "L Knee PF ext [16spk]",
+      "x": 600,
+      "y": 240,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-E",
+            "label": "L Knee PF ext cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF ext cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF ext cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "9bc35128-6169-478c-b777-a6d83ecde667",
+      "type": "HC-PF-F",
+      "label": "L Knee PF flx [16spk]",
+      "x": 1080,
+      "y": 240,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "HC-PF-F",
+            "label": "L Knee PF flx cell 16",
+            "x": 810,
+            "y": 450
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee PF flx cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee PF flx cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.0625,
+            "tag": "Population mean weight1/16; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual16dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "53077442-140c-4527-b8ee-f4280aecd01c",
+      "type": "SN-Ia",
+      "label": "L Knee ext Ia",
+      "x": 300,
+      "y": 720,
+      "grp": "actual"
+    },
+    {
+      "id": "612ba6d9-3383-4376-b32c-0c80ea499631",
+      "type": "IN-IaIN",
+      "label": "L Knee ext Ia IN",
+      "x": 600,
+      "y": 720,
+      "grp": "actual"
+    },
+    {
+      "id": "b51f816f-daab-49a8-94e3-97ca244707da",
+      "type": "SN-Ib",
+      "label": "L Knee ext Ib",
+      "x": 300,
+      "y": 960,
+      "grp": "actual"
+    },
+    {
+      "id": "8ecebf6b-e6a8-50ba-b146-a6f99f3b2916",
+      "type": "SN-II",
+      "label": "L Knee extensor II relay [32spk]",
+      "x": 300,
+      "y": 480,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 16",
+            "x": 810,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 17",
+            "x": 300,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 18",
+            "x": 470,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 19",
+            "x": 640,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 20",
+            "x": 810,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 21",
+            "x": 300,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 22",
+            "x": 470,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 23",
+            "x": 640,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 24",
+            "x": 810,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 25",
+            "x": 300,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 26",
+            "x": 470,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 27",
+            "x": 640,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 28",
+            "x": 810,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 29",
+            "x": 300,
+            "y": 890
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 30",
+            "x": 470,
+            "y": 890
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 31",
+            "x": 640,
+            "y": 890
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee extensor II relay cell 32",
+            "x": 810,
+            "y": 890
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 17",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 17",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 18",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 18",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 19",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 19",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 20",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 20",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 21",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 21",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 22",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 22",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 23",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 23",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 24",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 24",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 25",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 25",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 26",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 26",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 27",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 27",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 28",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 28",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 29",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 29",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 30",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 30",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 31",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 31",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee extensor II relay cell 32",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee extensor II relay cell 32",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual32dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "2d66fb1d-dc5c-50e9-baa4-a725ac666899",
+      "type": "SN-II",
+      "label": "L Knee flexor II relay [32spk]",
+      "x": 1380,
+      "y": 480,
+      "grp": "actual",
+      "sub": {
+        "nodes": [
+          {
+            "type": "PORT-load",
+            "label": "Common population input (not a neuron)",
+            "x": 80,
+            "y": 350
+          },
+          {
+            "type": "PORT-load",
+            "label": "Mean spike filter (not a neuron)",
+            "x": 1060,
+            "y": 350
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 01",
+            "x": 300,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 02",
+            "x": 470,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 03",
+            "x": 640,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 04",
+            "x": 810,
+            "y": 120
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 05",
+            "x": 300,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 06",
+            "x": 470,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 07",
+            "x": 640,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 08",
+            "x": 810,
+            "y": 230
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 09",
+            "x": 300,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 10",
+            "x": 470,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 11",
+            "x": 640,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 12",
+            "x": 810,
+            "y": 340
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 13",
+            "x": 300,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 14",
+            "x": 470,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 15",
+            "x": 640,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 16",
+            "x": 810,
+            "y": 450
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 17",
+            "x": 300,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 18",
+            "x": 470,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 19",
+            "x": 640,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 20",
+            "x": 810,
+            "y": 560
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 21",
+            "x": 300,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 22",
+            "x": 470,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 23",
+            "x": 640,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 24",
+            "x": 810,
+            "y": 670
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 25",
+            "x": 300,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 26",
+            "x": 470,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 27",
+            "x": 640,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 28",
+            "x": 810,
+            "y": 780
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 29",
+            "x": 300,
+            "y": 890
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 30",
+            "x": 470,
+            "y": 890
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 31",
+            "x": 640,
+            "y": 890
+          },
+          {
+            "type": "SN-II",
+            "label": "L Knee flexor II relay cell 32",
+            "x": 810,
+            "y": 890
+          }
+        ],
+        "edges": [
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 01",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 01",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 02",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 02",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 03",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 03",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 04",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 04",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 05",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 05",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 06",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 06",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 07",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 07",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 08",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 08",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 09",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 09",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 10",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 10",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 11",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 11",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 12",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 12",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 13",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 13",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 14",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 14",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 15",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 15",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 16",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 16",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 17",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 17",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 18",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 18",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 19",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 19",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 20",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 20",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 21",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 21",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 22",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 22",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 23",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 23",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 24",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 24",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 25",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 25",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 26",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 26",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 27",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 27",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 28",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 28",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 29",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 29",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 30",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 30",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 31",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 31",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          },
+          {
+            "from": "Common population input (not a neuron)",
+            "to": "L Knee flexor II relay cell 32",
+            "sign": "exc",
+            "gain": 1.0,
+            "tag": "Common input broadcast; NOT an additional chemical synapse",
+            "pts": []
+          },
+          {
+            "from": "L Knee flexor II relay cell 32",
+            "to": "Mean spike filter (not a neuron)",
+            "sign": "exc",
+            "gain": 0.03125,
+            "tag": "Population mean weight1/32; spike filter/normalization, NOTuS",
+            "pts": []
+          }
+        ],
+        "_scope": "Actual32dynamic spiking membranes plus2nonneural interface blocks; original population chemical pathways remain in parent graph. No invented cell-to-cell chemical matrix."
+      }
+    },
+    {
+      "id": "7d681a6f-f7e7-48b8-8174-736f0c8e5284",
+      "type": "SN-Ia",
+      "label": "L Knee flx Ia",
+      "x": 1380,
+      "y": 720,
+      "grp": "actual"
+    },
+    {
+      "id": "74806c88-73de-4809-b92e-ba53412fdfb0",
+      "type": "IN-IaIN",
+      "label": "L Knee flx Ia IN",
+      "x": 1080,
+      "y": 720,
+      "grp": "actual"
+    },
+    {
+      "id": "853b3716-f386-454b-8a4a-d3f39f79b9d0",
+      "type": "SN-Ib",
+      "label": "L Knee flx Ib",
+      "x": 1380,
+      "y": 960,
+      "grp": "actual"
+    }
+  ],
+  "edges": [
+    {
+      "from": "L Knee PF ext [16spk]",
+      "to": "L Knee MN ext",
+      "sign": "exc",
+      "gain": 1.456268421741829,
+      "tag": "T12 Knee Ext MN Excite | G=1.4562684217418289uS; E=-10mV; threshold=-60mV; saturation=-50mV | source-row 104",
+      "pts": [
+        {
+          "x": 600,
+          "y": 300
+        },
+        {
+          "x": 660,
+          "y": 300
+        },
+        {
+          "x": 660,
+          "y": 900
+        },
+        {
+          "x": 600,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "L Knee PF flx [16spk]",
+      "to": "L Knee MN flx",
+      "sign": "exc",
+      "gain": 0.4478099244139173,
+      "tag": "T13 Knee Flx MN Excite | G=0.44780992441391732uS; E=-10mV; threshold=-60mV; saturation=-50mV | source-row 105",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 300
+        },
+        {
+          "x": 1140,
+          "y": 300
+        },
+        {
+          "x": 1140,
+          "y": 900
+        },
+        {
+          "x": 1080,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN ext RE",
+      "to": "L Knee MN ext",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T05 RE to MN Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 106",
+      "pts": [
+        {
+          "x": 600,
+          "y": 1140
+        },
+        {
+          "x": 600,
+          "y": 1020
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN ext RE",
+      "to": "L Knee MN flx RE",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T10 RE Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 107",
+      "pts": [
+        {
+          "x": 660,
+          "y": 1200
+        },
+        {
+          "x": 1020,
+          "y": 1200
+        }
+      ]
+    },
+    {
+      "from": "L Knee flx Ib",
+      "to": "L Knee MN flx",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T14 Knee KFbE-6 | G=0.5uS; E=-10mV; threshold=-60mV; saturation=-40mV | source-row 108",
+      "pts": [
+        {
+          "x": 1320,
+          "y": 960
+        },
+        {
+          "x": 1140,
+          "y": 960
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN flx RE",
+      "to": "L Knee MN flx",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T05 RE to MN Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 109",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 1140
+        },
+        {
+          "x": 1080,
+          "y": 1020
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN flx RE",
+      "to": "L Knee flx Ia",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T09 RE to Ia Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 110",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 1140
+        },
+        {
+          "x": 1320,
+          "y": 1140
+        },
+        {
+          "x": 1320,
+          "y": 780
+        },
+        {
+          "x": 1380,
+          "y": 780
+        }
+      ]
+    },
+    {
+      "from": "L Knee ext Ia IN",
+      "to": "L Knee ext Ia",
+      "sign": "exc",
+      "gain": 0.59,
+      "tag": "T08 Hip_Ia_ext_Excite | G=0.58999999999999997uS; E=-10mV; threshold=-60mV; saturation=-40mV | source-row 111",
+      "pts": [
+        {
+          "x": 540,
+          "y": 720
+        },
+        {
+          "x": 360,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "from": "L Knee ext Ia",
+      "to": "L Knee MN flx",
+      "sign": "inh",
+      "gain": 2.0,
+      "tag": "T07 Ia to MN Inhibit | G=2uS; E=-100mV; threshold=-60mV; saturation=-40mV | source-row 112",
+      "pts": [
+        {
+          "x": 360,
+          "y": 720
+        },
+        {
+          "x": 360,
+          "y": 888
+        },
+        {
+          "x": 1020,
+          "y": 888
+        },
+        {
+          "x": 1020,
+          "y": 960
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN flx RE",
+      "to": "L Knee MN ext RE",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T10 RE Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 113",
+      "pts": [
+        {
+          "x": 1020,
+          "y": 1200
+        },
+        {
+          "x": 1020,
+          "y": 1188
+        },
+        {
+          "x": 660,
+          "y": 1188
+        },
+        {
+          "x": 660,
+          "y": 1200
+        }
+      ]
+    },
+    {
+      "from": "L Knee ext Ia",
+      "to": "L Knee flx Ia",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T06 Ia to Ia Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 114",
+      "pts": [
+        {
+          "x": 360,
+          "y": 720
+        },
+        {
+          "x": 360,
+          "y": 660
+        },
+        {
+          "x": 1320,
+          "y": 660
+        },
+        {
+          "x": 1320,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "from": "L Knee flx Ia",
+      "to": "L Knee MN ext",
+      "sign": "inh",
+      "gain": 2.0,
+      "tag": "T07 Ia to MN Inhibit | G=2uS; E=-100mV; threshold=-60mV; saturation=-40mV | source-row 115",
+      "pts": [
+        {
+          "x": 1320,
+          "y": 720
+        },
+        {
+          "x": 1152,
+          "y": 720
+        },
+        {
+          "x": 1152,
+          "y": 876
+        },
+        {
+          "x": 672,
+          "y": 876
+        },
+        {
+          "x": 672,
+          "y": 960
+        },
+        {
+          "x": 660,
+          "y": 960
+        }
+      ]
+    },
+    {
+      "from": "L Knee flx Ia IN",
+      "to": "L Knee flx Ia",
+      "sign": "exc",
+      "gain": 0.59,
+      "tag": "T08 Hip_Ia_ext_Excite | G=0.58999999999999997uS; E=-10mV; threshold=-60mV; saturation=-40mV | source-row 116",
+      "pts": [
+        {
+          "x": 1140,
+          "y": 720
+        },
+        {
+          "x": 1140,
+          "y": 708
+        },
+        {
+          "x": 1320,
+          "y": 708
+        },
+        {
+          "x": 1320,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN ext",
+      "to": "L Knee MN ext RE",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T04 MN to RE Excite | G=0.5uS; E=-40mV; threshold=-100mV; saturation=-10mV | source-row 117",
+      "pts": [
+        {
+          "x": 600,
+          "y": 1020
+        },
+        {
+          "x": 612,
+          "y": 1020
+        },
+        {
+          "x": 612,
+          "y": 1140
+        },
+        {
+          "x": 600,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN flx",
+      "to": "L Knee MN flx RE",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T04 MN to RE Excite | G=0.5uS; E=-40mV; threshold=-100mV; saturation=-10mV | source-row 118",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 1020
+        },
+        {
+          "x": 1068,
+          "y": 1020
+        },
+        {
+          "x": 1068,
+          "y": 1140
+        },
+        {
+          "x": 1080,
+          "y": 1140
+        }
+      ]
+    },
+    {
+      "from": "L Knee ext Ib",
+      "to": "L Knee MN ext",
+      "sign": "exc",
+      "gain": 0.589,
+      "tag": "T15 Knee KEbE-5 | G=0.58899999999999997uS; E=-10mV; threshold=-60mV; saturation=-40mV | source-row 119",
+      "pts": [
+        {
+          "x": 360,
+          "y": 960
+        },
+        {
+          "x": 540,
+          "y": 960
+        }
+      ]
+    },
+    {
+      "from": "L Knee MN ext RE",
+      "to": "L Knee ext Ia",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T09 RE to Ia Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 120",
+      "pts": [
+        {
+          "x": 600,
+          "y": 1140
+        },
+        {
+          "x": 360,
+          "y": 1140
+        },
+        {
+          "x": 360,
+          "y": 900
+        },
+        {
+          "x": 300,
+          "y": 900
+        },
+        {
+          "x": 300,
+          "y": 780
+        }
+      ]
+    },
+    {
+      "from": "L Knee flx Ia",
+      "to": "L Knee ext Ia",
+      "sign": "inh",
+      "gain": 0.5,
+      "tag": "T06 Ia to Ia Inhibit | G=0.5uS; E=-70mV; threshold=-60mV; saturation=-40mV | source-row 121",
+      "pts": [
+        {
+          "x": 1320,
+          "y": 720
+        },
+        {
+          "x": 1320,
+          "y": 780
+        },
+        {
+          "x": 372,
+          "y": 780
+        },
+        {
+          "x": 372,
+          "y": 720
+        },
+        {
+          "x": 360,
+          "y": 720
+        }
+      ]
+    },
+    {
+      "from": "L Knee extensor II relay [32spk]",
+      "to": "L Knee MN ext",
+      "sign": "exc",
+      "gain": 0.005,
+      "tag": "T11 Homonymous Type II excitation, weak | G=0.0050000000000000001uS; E=-10mV; threshold=-60mV; saturation=-40mV | source-row 122",
+      "pts": [
+        {
+          "x": 300,
+          "y": 540
+        },
+        {
+          "x": 540,
+          "y": 540
+        },
+        {
+          "x": 540,
+          "y": 900
+        },
+        {
+          "x": 600,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "L Knee flexor II relay [32spk]",
+      "to": "L Knee MN flx",
+      "sign": "exc",
+      "gain": 0.005,
+      "tag": "T11 Homonymous Type II excitation, weak | G=0.0050000000000000001uS; E=-10mV; threshold=-60mV; saturation=-40mV | source-row 123",
+      "pts": [
+        {
+          "x": 1380,
+          "y": 540
+        },
+        {
+          "x": 1164,
+          "y": 540
+        },
+        {
+          "x": 1164,
+          "y": 888
+        },
+        {
+          "x": 1080,
+          "y": 888
+        },
+        {
+          "x": 1080,
+          "y": 900
+        }
+      ]
+    },
+    {
+      "from": "L Knee PF flx [16spk]",
+      "to": "L Knee flx Ia",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T18 PF to Ia Excite | G=0.5uS; E=-40mV; threshold=-60mV; saturation=-55mV | source-row 201",
+      "pts": [
+        {
+          "x": 1080,
+          "y": 300
+        },
+        {
+          "x": 1080,
+          "y": 648
+        },
+        {
+          "x": 1380,
+          "y": 648
+        },
+        {
+          "x": 1380,
+          "y": 660
+        }
+      ]
+    },
+    {
+      "from": "L Knee flx Ia",
+      "to": "L Knee PF flx [16spk]",
+      "sign": "exc",
+      "gain": 0.01,
+      "tag": "T45 Ia_KneeFlx_to_KneePFflx_Excite | G=0.01uS; E=-40mV; threshold=-60mV; saturation=-40mV | source-row 203",
+      "pts": [
+        {
+          "x": 1380,
+          "y": 660
+        },
+        {
+          "x": 1380,
+          "y": 552
+        },
+        {
+          "x": 1092,
+          "y": 552
+        },
+        {
+          "x": 1092,
+          "y": 300
+        },
+        {
+          "x": 1080,
+          "y": 300
+        }
+      ]
+    },
+    {
+      "from": "L Knee ext Ib",
+      "to": "L Knee PF ext [16spk]",
+      "sign": "exc",
+      "gain": 0.01,
+      "tag": "T46 Ib_KneeExt_to_KneePFext_Excite | G=0.01uS; E=-40mV; threshold=-60mV; saturation=-40mV | source-row 204",
+      "pts": [
+        {
+          "x": 300,
+          "y": 900
+        },
+        {
+          "x": 240,
+          "y": 900
+        },
+        {
+          "x": 240,
+          "y": 300
+        },
+        {
+          "x": 600,
+          "y": 300
+        }
+      ]
+    },
+    {
+      "from": "L Knee PF ext [16spk]",
+      "to": "L Knee ext Ia",
+      "sign": "exc",
+      "gain": 0.5,
+      "tag": "T18 PF to Ia Excite | G=0.5uS; E=-40mV; threshold=-60mV; saturation=-55mV | source-row 206",
+      "pts": [
+        {
+          "x": 600,
+          "y": 300
+        },
+        {
+          "x": 600,
+          "y": 648
+        },
+        {
+          "x": 300,
+          "y": 648
+        },
+        {
+          "x": 300,
+          "y": 660
+        }
+      ]
+    }
+  ],
+  "groups": {
+    "actual": "Actual channels/populations",
+    "boundary": "Boundary references; exact row IDs in tags"
+  },
+  "_scope": "Each edge tag preserves its actual individual source row and full four effective synaptic fields. Boundary duplicates are display references, not added neurons or weights."
+}

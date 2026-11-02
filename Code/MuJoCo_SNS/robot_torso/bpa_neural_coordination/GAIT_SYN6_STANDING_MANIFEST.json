@@ -1,0 +1,23 @@
+{
+  "adapter_path": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/robot_torso/bpa_neural_coordination/gait_standing_objective.py",
+  "output_dir": "D:/Users/Ben Bolen/NeuroCampaign_20261031/gait_bpa/rustuna_syn6_v1",
+  "campaign_root": "D:/Users/Ben Bolen/NeuroCampaign_20261031/gait_bpa",
+  "family": "syn6",
+  "seed": 100031,
+  "max_trials": 12,
+  "n_startup_trials": 4,
+  "wall_budget_s": 600,
+  "trial_timeout_s": 150,
+  "search_space": {
+    "pf_mn_gain": {"low": 0.0, "high": 1.0},
+    "ib_group_gain": {"low": 0.0, "high": 1.0},
+    "standing_bias_scale": {"low": 0.25, "high": 2.0}
+  },
+  "fixed_parameters": {},
+  "initial_candidates": [
+    {"pf_mn_gain": 1.0, "ib_group_gain": 1.0, "standing_bias_scale": 1.0},
+    {"pf_mn_gain": 0.0, "ib_group_gain": 1.0, "standing_bias_scale": 1.0},
+    {"pf_mn_gain": 0.0, "ib_group_gain": 0.0, "standing_bias_scale": 0.8333333333333334}
+  ],
+  "scope": "Bilateral shared biological Gait standing calibration only. Existing stage3/frontal/knee/load gates; no walking or BPA result. Reuse completed identical baseline and PF-ablation observations."
+}

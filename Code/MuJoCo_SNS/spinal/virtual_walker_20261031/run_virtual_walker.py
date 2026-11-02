@@ -9,10 +9,13 @@ from contact_guides import add_guides,Measurements
 from physics_variants import apply_segment_mass_scale
 from recruitment import apply_recruitment
 
-def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,tag='',dt=.002,release_at=1.5,contact_si=False,pf_knee_flex_scale=1.,source=None,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,sagittal_harness=0.,rail_height_offset=0.,neural_time_scale=1.,guide_clearance=None,yaw_perturb_nm=0.,belt_motor_end_s=10.,v3_output_scale=1.,neural_pulse=None,segment_mass_scale=1.,contact_rg_scale=1.,contact_pf_scale=1.,contact_mn_scale=1.,contact_gmax=None,pf_mn_recruitment_scale=1.,toe_mn_gmax=None,initial_qpos=None,hip_pf_mn_scale=1.,hip_flexor_pf_mn_scale=1.):
- path=build(newer,source);folder=path.parent;meta=json.loads((folder/'IMPORT_AUDIT.json').read_text());bank=meta['muscles'];tree=E.parse(path);root=tree.getroot();root.find('option').set('timestep',str(dt))
+def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,tag='',dt=.002,release_at=1.5,contact_si=False,pf_knee_flex_scale=1.,source=None,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,sagittal_harness=0.,rail_height_offset=0.,neural_time_scale=1.,guide_clearance=None,yaw_perturb_nm=0.,belt_motor_end_s=10.,v3_output_scale=1.,neural_pulse=None,segment_mass_scale=1.,contact_rg_scale=1.,contact_pf_scale=1.,contact_mn_scale=1.,contact_gmax=None,pf_mn_recruitment_scale=1.,toe_mn_gmax=None,initial_qpos=None,hip_pf_mn_scale=1.,hip_flexor_pf_mn_scale=1.,output_root=None,fixed_root_pose=None,pool_inherited_hip_physics=False,belt_speed_m_s=.1):
+ path=build(newer,source,output_root);folder=path.parent;meta=json.loads((folder/'IMPORT_AUDIT.json').read_text());bank=meta['muscles'];tree=E.parse(path);root=tree.getroot();root.find('option').set('timestep',str(dt))
  if mode=='air':
-  b=root.find("worldbody/body[@name='Root']");b.remove(b.find('freejoint'));p=np.array(list(map(float,b.get('pos').split())));p[1]+=.3;b.set('pos',' '.join(map(str,p)))
+  b=root.find("worldbody/body[@name='Root']");b.remove(b.find('freejoint'));
+  if fixed_root_pose is not None:
+   fixed_root_pose=np.asarray(fixed_root_pose,dtype=float);assert fixed_root_pose.shape==(7,) and np.isfinite(fixed_root_pose).all() and abs(np.linalg.norm(fixed_root_pose[3:])-1)<1e-10;b.set('pos',' '.join(map(str,fixed_root_pose[:3])));b.set('quat',' '.join(map(str,fixed_root_pose[3:])))
+  p=np.array(list(map(float,b.get('pos').split())));p[1]+=.3;b.set('pos',' '.join(map(str,p)))
   for g in root.findall('.//geom'):g.set('contype','0');g.set('conaffinity','0')
  if rail_height_offset:
   for side in ('Left','Right'):
@@ -24,9 +27,13 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
   initial_qpos=np.asarray(initial_qpos,dtype=float);assert initial_qpos.shape==(m.nq,) and np.all(np.isfinite(initial_qpos));d.qpos[:]=initial_qpos
  mujoco.mj_forward(m,d)
  controller=K.NativeController(meta['source_snapshot'],bank,contact_si,pf_knee_flex_scale,ankle_pf_crossed,symmetric_rg_ext_tonic,neural_time_scale,v3_output_scale,contact_rg_scale,contact_pf_scale,contact_mn_scale,contact_gmax);params=K.bank_parameters(bank);nb=len(bank);n=round(duration/dt);nj=len(controller.v)
+ hip_physics_ledger=None
+ if pool_inherited_hip_physics:
+  from physics_variants import pool_inherited_hip_law
+  original_force_params=params.copy();hip_physics_ledger=pool_inherited_hip_law(controller,bank,params,m,d)
  recruitment=apply_recruitment(controller,pf_mn_recruitment_scale,toe_mn_gmax,hip_pf_mn_scale,hip_flexor_pf_mn_scale)
  source_profile_path=Path(meta['source']).parent/'CANONICAL_WORKING_PROFILE.json';source_profile=json.loads(source_profile_path.read_text()) if source_profile_path.exists() else {};source_guides=bool(root.findall(".//body[@name='Guide_carriage_cap']"))
- if source_profile.get('II_homonymous_relays')==12:assert nj==108 and len(controller.edges)==216,'Canonical108 census mismatch: refuse stale runtime export'
+ if source_profile.get('II_homonymous_relays')==12:assert nj==108+getattr(controller,'heteronymous_nodes',0)+(2 if getattr(controller,'balance',None) is not None else 0) and len(controller.edges)==216+getattr(controller,'heteronymous_edges',0)+(len(controller.balance.edge_specs) if getattr(controller,'balance',None) is not None else 0),'Canonical source plus explicit balance-addon census mismatch: refuse stale runtime export'
  if source_guides and guide_clearance is not None:raise ValueError('Canonical source already contains guides; do not inject a second apparatus')
  if neural_pulse is not None:
   for name in neural_pulse['targets']:
@@ -68,10 +75,13 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
    length=d.ten_length[tid];velocity[:]=(length-lastlength)/dt;lastlength[:]=length
    if mode=='replay':
     for pre,target,coeff in controller.outputs:vm[target]=K.polynomial(coeff,native_values[controller.names[pre]][step])
-   else:controller.step(t,ia,ii,ib,contacts,dt,feedback);controller.motor_voltages(vm);arrays['neural_stimulus_nA'][step]=controller.last_test_impulse_nA_s/dt
+   else:
+    if getattr(controller,'balance',None) is not None:controller.balance.observe(m,d,measured if step and feedback else None,t,dt)
+    if getattr(controller,'heteronymous_load_indices',[]):controller.observe_load_feedback(m,measured if step and feedback else None)
+    controller.step(t,ia,ii,ib,contacts,dt,feedback);controller.motor_voltages(vm);arrays['neural_stimulus_nA'][step]=controller.last_test_impulse_nA_s/dt
    hill(length,velocity,vm,params,internal,force,ia,ii,ib,dt)
    for b,a in act:d.ctrl[a]=force[b]
-   if motor>=0:d.ctrl[motor]=.1 if .5<=t<belt_motor_end_s else 0.
+   if motor>=0:d.ctrl[motor]=belt_speed_m_s if .5<=t<belt_motor_end_s else 0.
    d.xfrc_applied[rootid,:]=0.
    if sagittal_harness and mode not in ('air','native_kinematic'):
     mujoco.mj_objectVelocity(m,d,mujoco.mjtObj.mjOBJ_BODY,rootid,spatial_velocity,0);delta=d.xmat[rootid].reshape(3,3)@root_R0.T;mujoco.mju_mat2Quat(rotation_q,delta.ravel());mujoco.mju_quat2Vel(rotation_v,rotation_q,1.)
@@ -118,7 +128,10 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  summary.update(ankle_pf_crossed=ankle_pf_crossed,ankle_phase_edits=controller.ankle_phase_edits,symmetric_rg_ext_tonic_nA=symmetric_rg_ext_tonic,sagittal_harness_scale=sagittal_harness,harness_force_rms_N=np.sqrt(np.mean(arrays['harness_force']**2,axis=0)).tolist(),harness_torque_rms_Nm=np.sqrt(np.mean(arrays['harness_torque']**2,axis=0)).tolist())
  summary['neural_time_scale']=neural_time_scale
  summary['robot_mass_kg']=robot_mass
+ summary['pooled_inherited_hip_physics']=hip_physics_ledger
+ if hip_physics_ledger is not None:np.savez_compressed(trialdir/'POOLED_FORCE_PARAMETERS.npz',original=original_force_params,pooled=params,muscle_names=[b['name'] for b in bank])
  summary['belt_motor_end_s']=belt_motor_end_s
+ summary['fixed_air_root_pose']=None if fixed_root_pose is None else np.asarray(fixed_root_pose).tolist()
  summary.update(v3_output_scale=v3_output_scale,v3_output_edits=controller.v3_output_edits,rg_final_current_terms=controller.rg_current_terms(),rg_current_term_scope='Native-equivalent nA for Size1 source cells evaluated at final state, not the exact previous substep current; includes individually signed synaptic driving terms. Startup pulses have ended by final state.')
  summary.update(guide_clearance_m=guide_clearance,guide_geometry=guide_geometry,guide_force_rms_N=np.sqrt(np.mean(arrays['guide_force_world']**2,axis=0)).tolist(),guide_torque_rms_Nm=np.sqrt(np.mean(arrays['guide_torque_about_pelvis']**2,axis=0)).tolist(),guide_contact_fraction=float(np.mean(arrays['guide_contact_count']>0)),pelvis_euler_XYZ_range_deg=np.ptp(arrays['pelvis_euler_XYZ_deg'],axis=0).tolist(),pelvis_rotational_energy_max_J=float(np.max(arrays['pelvis_rotational_energy_J'])),yaw_perturb_nm=yaw_perturb_nm,yaw_perturb_start_s=perturb_start,yaw_perturb_duration_s=.1,mean_net_vertical_assistance_BW=float(np.mean(arrays['rail_force_world'][:,1]+arrays['guide_force_world'][:,1]+arrays['harness_force'][:,1])/((meta['total_dynamic_mass_kg']-4)*9.81)),measurement_axes='Euler XYZ decomposition Rz(pitchZ) Ry(yawY) Rx(rollX), world angular velocity; pelvis-only rotational energy using its world-oriented principal inertia. Foot forces include all environmental ground bodies, not just moving belt.')
  belt_q=m.jnt_qposadr[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,'Treadmill_Slide')];belt_dx=float(-(arrays['q'][-1,belt_q]-arrays['q'][0,belt_q]));summary.update(rail_height_offset_m=rail_height_offset,belt_world_x_change_m=belt_dx,root_forward_relative_to_belt_m=summary['root_x_change_m']-belt_dx)
@@ -133,6 +146,10 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  summary.update(source_neural_clock_scale=source_profile.get('neural_clock_scale',1.),source_profile=source_profile,source_embedded_guides=source_guides,neural_pulse=neural_pulse,neural_pulse_logged_integral_nA_s=np.sum(arrays['neural_stimulus_nA'],axis=0).tolist())
  summary['neural_pulse_logged_integral_nA_s']=(np.sum(arrays['neural_stimulus_nA'],axis=0)*dt).tolist()
  summary['mean_net_vertical_assistance_BW']=float(np.mean(arrays['rail_force_world'][:,1]+arrays['guide_force_world'][:,1]+arrays['harness_force'][:,1])/(robot_mass*9.81))
+ summary['belt_command_m_s']=float(belt_speed_m_s);summary['slide_travel_checks']={}
+ for j in range(m.njnt):
+  if m.jnt_type[j]!=mujoco.mjtJoint.mjJNT_SLIDE:continue
+  qa=int(m.jnt_qposadr[j]);observed=arrays['q'][:,qa];lower,upper=m.jnt_range[j];summary['slide_travel_checks'][mujoco.mj_id2name(m,mujoco.mjtObj.mjOBJ_JOINT,j)]=dict(range_m=[float(lower),float(upper)],observed_m=[float(observed.min()),float(observed.max())],near_limit=bool(m.jnt_limited[j] and (observed.min()<lower+.02 or observed.max()>upper-.02)))
  if source_guides:summary['guide_clearance_m']=source_profile.get('guide_clearance_m');summary['guide_geometry']=dict(source_embedded=True,side_foreaft_clearance_at_neutral_m=source_profile.get('guide_clearance_m'),scope='Actual canonical source apparatus, not additional runtime guidance')
  (trialdir/'RESULT.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary,indent=2));return summary
 if __name__=='__main__':

@@ -1,12 +1,15 @@
 """Actual delivered hip force, Jacobian torque, work, and limit dwell from saved runs."""
-import json
+import json,argparse
+from pathlib import Path
 import numpy as np
 from import_virtual_walker import HERE,mujoco
 base=HERE/'runs/W2L_VirtualWalker_Newer';rows=[]
+p=argparse.ArgumentParser();p.add_argument('--folder',action='append');p.add_argument('--summary-output');a0=p.parse_args()
 cases=[(1.,'canonical108_ground_rustuna_winner_fresh_v1')]+[(f,'canonical108_ground_gentle_hip_'+str(f).replace('.','p')+'_v1') for f in (.8,.6,.4)]
 cases += [(.6,'canonical108_ground_hip0p6_flex_'+str(f).replace('.','p')+'_v1') for f in (.67,.5)]
+if a0.folder:cases=[(None,str(Path(f).resolve())) for f in a0.folder]
 for factor,tag in cases:
- folder=base/tag;z=np.load(folder/'trajectory.npz');r=json.loads((folder/'RESULT.json').read_text());a=json.loads((folder/'ASSESSMENT.json').read_text());m=mujoco.MjModel.from_xml_path(str(folder/'model.xml'));d=mujoco.MjData(m);dt=r['physics_dt'];mask=z['t']>=1.;names=z['muscle_names'].tolist();muscles=['hip_L_flx','hip_L_ext','hip_R_flx','hip_R_ext'];bi=[names.index(x) for x in muscles];ti=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_TENDON,'route_'+x) for x in muscles];ji=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,'hip_'+s) for s in 'LR'];qa=m.jnt_qposadr[ji];da=m.jnt_dofadr[ji];q0=np.array(r['initial_qpos']);qprevious=np.vstack([q0,z['q'][:-1]]);dq=z['q'][:,qa]-qprevious[:,qa];velocity=dq/dt;accel=np.gradient(velocity,dt,axis=0);N=len(z['t']);length=np.empty((N+1,4));jac=np.empty((N+1,4,2))
+ folder=Path(tag) if factor is None else base/tag;z=np.load(folder/'trajectory.npz');r=json.loads((folder/'RESULT.json').read_text());a=json.loads((folder/'ASSESSMENT.json').read_text());m=mujoco.MjModel.from_xml_path(str(folder/'model.xml'));d=mujoco.MjData(m);dt=r['physics_dt'];mask=z['t']>=1.;names=z['muscle_names'].tolist();muscles=['hip_L_flx','hip_L_ext','hip_R_flx','hip_R_ext'];bi=[names.index(x) for x in muscles];ti=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_TENDON,'route_'+x) for x in muscles];ji=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_JOINT,'hip_'+s) for s in 'LR'];qa=m.jnt_qposadr[ji];da=m.jnt_dofadr[ji];q0=np.array(r['initial_qpos']);qprevious=np.vstack([q0,z['q'][:-1]]);dq=z['q'][:,qa]-qprevious[:,qa];velocity=dq/dt;accel=np.gradient(velocity,dt,axis=0);N=len(z['t']);length=np.empty((N+1,4));jac=np.empty((N+1,4,2))
  r['recruitment'].setdefault('hip_pf_mn_edges',[x for x in r['recruitment']['pf_mn_edges'] if ' Hip PF ' in x['source']])
  for i,q in enumerate(np.vstack([q0,z['q']])):
   d.qpos[:]=q;mujoco.mj_kinematics(m,d);mujoco.mj_comPos(m,d);mujoco.mj_tendon(m,d);length[i]=d.ten_length[ti];jac[i]=d.ten_J.reshape(m.ntendon,m.nv)[np.ix_(ti,da)]
@@ -14,5 +17,10 @@ for factor,tag in cases:
  row=dict(tag=tag,hip_factor=factor,gate=a['alternating_supported_stepping_gate'],swings={s:a['legs'][s]['unloaded_clear_swings'] for s in 'LR'},alternation=a['alternating_transition_fraction'],net_assistance_BW=r['mean_net_vertical_assistance_BW'],knee_min_deg=r['anatomical_knee_min_deg'],hip_range_deg=np.ptp(z['angles'][mask][:,[0,3]],axis=0).tolist(),hip_limit_dwell_within1deg_fraction=dwell.tolist(),hip_tension_rms_N=float(np.sqrt(np.mean(tension[mask]**2))),hip_tension_mean_sum_N=float(np.mean(np.sum(tension[mask],axis=1))),hip_tension_peak_N=float(np.max(tension[mask])),hip_torque_rms_Nm=np.sqrt(np.mean(torque[mask]**2,axis=0)).tolist(),hip_torque_peak_Nm=np.max(np.abs(torque[mask]),axis=0).tolist(),hip_positive_muscle_work_J=float(np.sum(np.maximum(muscle_work[mask],0))),hip_negative_muscle_work_J=float(-np.sum(np.minimum(muscle_work[mask],0))),hip_net_joint_work_J=np.sum(joint_work[mask],axis=0).tolist(),hip_speed_p95_deg_s=np.degrees(np.percentile(np.abs(velocity[mask]),95,axis=0)).tolist(),hip_acceleration_p95_deg_s2=np.degrees(np.percentile(np.abs(accel[mask]),95,axis=0)).tolist(),relative_belt_progress_m=r['root_forward_relative_to_belt_m'],neural=neural,effective_hip_synapses=r['recruitment']['hip_pf_mn_edges'],scope='Metrics after1s. Force is actual applied Hill tension, including passive contributions; tau=−d(length)/dq*T at pre-stepq. Work=−T*deltaLength at held per-step tension. Tension/force/work are engineering effort proxies, not a metabolic model. Acceleration finite-differencep95, not filtered hardware acceleration.')
  row.update(hip_flexor_factor=r.get('hip_flexor_pf_mn_scale',1.),hip_lower_limit_dwell_fraction=np.mean((qhip[mask]-limits[:,0])<=np.radians(1),axis=0).tolist(),hip_upper_limit_dwell_fraction=np.mean((limits[:,1]-qhip[mask])<=np.radians(1),axis=0).tolist())
  row['physical_moment_arm_range_m']={name:[float(np.min(-jac[:-1][mask,i,i//2])),float(np.max(-jac[:-1][mask,i,i//2]))] for i,name in enumerate(muscles)}
+ spiking=folder/'SPIKING_COMPARISON.json'
+ if spiking.exists():
+  info=json.loads(spiking.read_text()).get('spiking',{})
+  if info.get('architecture')=='AdaptiveCaLIF_RG_PF':row['effective_hip_synapses']=[e for e in info['output_gain_edits'] if ' Hip PF ' in e['source']];row['neural_voltage_scope']='PF channels are decoded spike proxies; MN channels remain graded membrane voltages.'
  np.savez_compressed(folder/'HIP_MECHANICS.npz',t=z['t'],hip_angle_deg=z['angles'][:,[0,3]],hip_velocity_deg_s=np.degrees(velocity),hip_torque_Nm=torque,hip_tension_N=tension,hip_muscle_work_J=muscle_work,hip_muscle_names=muscles);(folder/'HIP_MECHANICS.json').write_text(json.dumps(row,indent=2));rows.append(row);print(json.dumps({k:v for k,v in row.items() if k not in ('neural','scope','effective_hip_synapses')},indent=2),flush=True)
-(HERE/'runs/GENTLE_HIP_COMPARISON.json').write_text(json.dumps(rows,indent=2))
+if a0.summary_output:Path(a0.summary_output).write_text(json.dumps(rows,indent=2))
+elif not a0.folder:(HERE/'runs/GENTLE_HIP_COMPARISON.json').write_text(json.dumps(rows,indent=2))

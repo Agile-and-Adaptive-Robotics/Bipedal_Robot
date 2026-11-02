@@ -1,0 +1,80 @@
+# Synergy, functional-subnetwork, and 3D-control source review
+
+Session 1, easteregg2. Read-only literature/library and source inspection; no simulations, manuscript edits, Zotero writes, or controller changes.
+
+## Paper identity and source checks
+
+| Requested reference | Verified identity / local library evidence | Relevant source |
+| --- | --- | --- |
+| Stark2021 dog | Heiko Stark, Martin S. Fischer, Alexander Hunt, Fletcher Young, Roger Quinn, and Emanuel Andrada, *A three-dimensional musculoskeletal model of the dog*, Scientific Reports11:11335. Zotero UKRVAS3Q (2021); VDY6Y7L5 is a duplicate listing2020, not proof the published article is2020. Neither item exposes a child PDF through localAPI. | [Published article / DOI](https://doi.org/10.1038/s41598-021-90058-0), [full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC8166944/). Fig3 heatmap, Fig4 clusters, Methods “Hierarchical cluster-analysis.” |
+| Di Russo synergy controller | Andrea Di Russo et al., *Investigating the roles of reflexes and central pattern generators in the control and modulation of human locomotion using a physiologically plausible neuromechanical model*, J. Neural Eng.20:066006(2023), DOI10.1088/1741-2552/acfdcc. Zotero G2R8FIF8; requested fulltext read from attachment6XIT9MYM,19pages. | [Publisher DOI](https://doi.org/10.1088/1741-2552/acfdcc), [EPFL author-hosted full text](https://infoscience.epfl.ch/server/api/core/bitstreams/4e04db10-e21e-4aea-b772-4a50bf1585aa/content). Fig1 mechanics, Fig2 controller, Fig3 primitives; §§2.2.2,2.3. |
+| “Schwarzenberger transfer functions” | No matching local Zotero item or relevant primary-source search result. **Do not silently attribute another author's equations to this name.** The actual Gait FSA code explicitly uses Szczecinski, Hunt, and Quinn2017, *A Functional Subnetwork Approach to Designing Synthetic Nervous Systems That Control Legged Robot Locomotion*. Zotero723RUJG9. This is a possible intended reference, not a resolved spelling correction. | [Szczecinski2017 primary paper](https://www.frontiersin.org/journals/neurorobotics/articles/10.3389/fnbot.2017.00037/full), §3.1/Eq18 and §6.1. |
+| Geijtenbeek controller optimization | Geijtenbeek, van de Panne, and van der Stappen2013, *Flexible Muscle-Based Locomotion for Bipedal Creatures*, TOG32(6):206, DOI10.1145/2508363.2508399. Also Geijtenbeek2019, *SCONE: Open Source Software for Predictive Simulation of Biological Motion*. No local Zotero matches by creator. | [2013 primary author-hosted PDF](https://www.cs.ubc.ca/~van/papers/2013-TOG-MuscleBasedBipeds/2013-TOG-MuscleBasedBipeds.pdf), §5/Eqs32–37/Table2; [SCONE2019](https://joss.theoj.org/papers/10.21105/joss.01421). |
+| “Micklem2026 Advancements control” | Unresolved. Read-only local Zotero searches Micklem/Advancement returned no item, and exact/broader primary-web searches did not establish that title. Leo Micklem's verified2026 paper below is aquatic proprioception, not an assumed replacement for the requested control paper. Need an exact title/DOI or the actual file before assigning claims. | [Micklem et al.2026, *Harnessing proprioception in aquatic soft wings enables hybrid passive-active disturbance rejection*](https://doi.org/10.1038/s44182-026-00078-z). |
+
+Zotero9.0.6 localAPI was read-only. Default execution initially blocked local socket access; the authorized read-only call succeeded. No preference or library content was changed.
+
+## What each method means for this model
+
+**Stark is a useful visualization and clustering method, not evidence that six neural synergies were identified here.** Its3D dog activations were obtained through inverse dynamics/static optimization; the illustrated validation is the forelimb. Fig3 displays log2 activation over a stride. Fig4 groups muscles using Euclidean distances between logarithmic activation time series, Ward.D2 hierarchical clustering, and leaf ordering. Three main groups each split into two subgroups. These are descriptive activation-profile clusters, not six NMF latent primitives or six required PF circuits. Numerical zero needs a declared floor before log2. [Stark2021](https://doi.org/10.1038/s41598-021-90058-0).
+
+**Di Russo is a concrete staged optimization precedent, and its five patterns differ from our six NMF components.** Its sagittal nine-DoF model has nine muscle groups per side. Two contact-reset phase oscillators drive five equally spaced raised-cosine primitives, with weighted positive/negative MN inputs and continuous reflex pathways. Their first optimization imitates known simulated excitations without integrating body dynamics; later stages add dynamic stability/effort/limit/head costs and then remove imitation. Equations12–14 are suitable methodological templates, but do not establish our actual objective or a3D result. [Di Russo2023](https://doi.org/10.1088/1741-2552/acfdcc).
+
+**The FSA transformation is mathematically useful but not a universal fixed gain.** For a single fully activated input with desired gain k, activation range R, membrane conductance Gm, and reversal offset ΔE, Eq18 gives
+
+`gmax = k R Gm / (ΔE − k R)`.
+
+Positive conductance requires `ΔE > k R`. This selects a single-input steady-state operating point; simultaneous conductances affect both numerator and denominator of membrane equilibrium. Dynamics, inhibition, bias, and saturation therefore need forward validation. The equation applies to neural signal transmission regardless of mechanical dimension, but it does not solve3D coordination. [Szczecinski2017](https://www.frontiersin.org/journals/neurorobotics/articles/10.3389/fnbot.2017.00037/full).
+
+**Geijtenbeek demonstrates actual3D muscle-based optimization rather than merely suggesting extension from a planar model.** The2013 framework jointly optimizes routing and control parameters using CMA, with target-speed, head-orientation, head-velocity, sliding, and metabolic-effort terms. Table2 supplies priorities/thresholds; §5 separately terminates falling, excessive heading error, collision, and leg crossing. This supports explicit task/effort objectives and geometry-aware control, not importing its numerical weights blindly into the current robot/human model. SCONE is an optimization framework; its identity alone does not specify a controller objective. [Geijtenbeek2013](https://www.cs.ubc.ca/~van/papers/2013-TOG-MuscleBasedBipeds/2013-TOG-MuscleBasedBipeds.pdf), [Geijtenbeek2019](https://joss.theoj.org/papers/10.21105/joss.01421).
+
+## Existing Gait2392 artifacts versus proposed work
+
+Already present:
+
+- `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_backsolve.py` uses nonnegative factorization `A≈CW`, a centeredVAF90% rank criterion, an MN mapping `V=5mV·activation`, Eq18, and a separate dynamic nonnegative conductance fit. Lines132–137 implement the analytical transform; lines290–301 draw a **synergy×muscle spatial-weight heatmap**, not muscle×stride activation.
+- `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_results\fsa_backsolve_report.md` identifies121frames/0.5–2.5s and only one complete measured stride per side. Right/left minimum ranks5/6; common rank6. Centered NMFVAF0.9261/0.9126; dynamic FSA VAF0.8626/0.8350. The report explicitly separates backsolved requirements from forward neural generation. These are recorded results, not newly reproduced runs.
+- Existing heatmap-containing figures: `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\fsa_results\fsa_pf_synergies_r.pdf` and `_l.pdf`. Also `draw_circuit.py` produces PF→MN weight maps. They are not Stark-style activation clusters.
+- `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\synergy_model.py` documents basis export, coefficient reconstruction, and a suspended open-loop replay separately from the production controller. `build_network_syn6.py` builds six PF channels from that basis; the root agent is auditing its effective current objective and connection consumption.
+- `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\functional_gait2392\analyze_primitives.py` already separates kinematicPCA from activationNMF and distinguishes oracle activation reconstruction from IK prediction. Neither decomposition identifies a biological neural circuit by itself.
+
+Not found in bounded filename/content searches of `Code\MuJoCo_SNS` plus repository filenames: an implemented Ward.D2/Stark muscle×stride log2 activation heatmap with clustering. The existing weight maps should not be represented as that analysis. A renamed/unindexed plot elsewhere is not excluded.
+
+Proposed, not implemented in this review:
+
+1. Reproduce Stark's activation-profile plot and clustering from actual saved Gait activations using one consistent phase definition, a documented zero floor, and complete cycles. Keep the Ward dendrogram separate from the NMF rank/weights plot; compare cluster stability over speeds/subjects rather than equating cluster count to PF count.
+2. For3D, use actual moment arms `Rjm(q)=−∂lm/∂qj` and `τ=R(q)F`. Analyze how candidate groups cover sagittal, frontal, transverse, and trunk demands across postures. A muscle's named action can change with joint configuration. IK alone does not determine activation or Ib force; kinetics/force-law assumptions and redundancy resolution are required.
+3. A declared future objective could combine excitation imitation with physical stability, task velocity, limits, contact/slip, symmetry, and actuator effort. Metabolic cost requires a biological energy model; BPA pressure/work/air usage is a different engineering objective. Actual implemented weights must be reported from the executed code/configuration, not supplied by a literature analogy.
+
+The central distinction is **Ward clustering describes similar activation profiles; NMF extracts additive latent activation factors; a neural controller must generate those factors and close the mechanical loop**. All three can be used with3D data, but none independently demonstrates3D balance or validates the other two.
+
+## Actual controller mathematics and defense documentation gap
+
+The source audit supports an analytical design explanation, with important boundaries. These equations describe implemented identification/design steps; they do not imply that every forward controller reproduces the inverse target.
+
+1. **Inverse mechanical recruitment.** `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\bsolve_ik.py` solves `min_(0<=a<=1) ||B(q)a - (tau_ID - R(q)F_passive)||_2^2 + lambda^2||a||_2^2`. Here `B` contains moment arms times unit active force. Inverse torques use IK and measured external loads. The implementation is a regularized bounded torque fit; its source comment comparing it to OpenSim static optimization must not be expanded into a claim of mathematical identity with every OpenSim SO formulation. IK alone does not identify activation.
+
+2. **Six synergy factors.** `A ~= W H`, `W>=0`, `H>=0`; the factorization minimizes reconstruction error. `fsa_backsolve.py` chooses the smallest per-side rank with centered VAF >=0.90, then adopts common rank6 (right minimum5, left6). The source target is backsolved model activation, not measured EMG. One stride per side limits physiological identification and generalization. NMF factors have scaling/permutation ambiguities; normalization is part of the method.
+
+3. **Conductance mapping.** Relative membrane voltage obeys `C dU/dt = -Gm U + I_bias + sum_j(g_j s_j (DeltaE_j-U))`. For one fully active source and desired steady voltage `kR`, solving the equilibrium gives `g = k R Gm/(DeltaE-kR)`, requiring `DeltaE>kR`. The code uses R=5mV, DeltaE=8mV, Gm=1uS. Concurrent inputs change the total conductance and effective time constant, so a separate constrained dynamic fit and forward replay are necessary. Actual syn6 receives this synergy-derived table plus recorded global multipliers/projections; it is not Stark Ward clustering or Di Russo's five cosine primitives.
+
+4. **Dynamic conductance fitting.** `fsa_backsolve.py` fits nonnegative bias/conductances to the membrane-current residual with light Tikhonov regularization. The design matrix includes actual presynaptic fractions multiplied by `(Eexc - V_MN)`; it is not ordinary linear multiplication of a voltage by a weight.
+
+5. **Local control analysis.** Around a declared equilibrium with fixed active contact/threshold branches, `delta_xdot=A delta_x+B delta_r` and `G(s)=Cout(sI-A)^(-1)B+D`. A scalar passive neural stage has denominator `C_m s+G_effective`. This is a defensible next analytical characterization of standing and functional subnetworks, not a completed stability proof here. Walking crosses nonlinear synaptic/actuator/contact branches and follows a periodic orbit; its global stability is not established by a standing transfer function.
+
+6. **Executed standing objective.** `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\functional_gait2392\curriculum_metrics.py` defines `S3 = 100 - 2*tilt - 200*sway - 40*abs(b-.5) + 20*clip(L,0,1) - 20*max(L-1.2,0)`, plus a fall penalty. Tilt is degrees, sway is meters, b is right/total contact load, and L is normalized foot load. `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\robot_torso\bpa_neural_coordination\gait_standing_objective.py` minimizes `-S3 +1000*max(sway-.06,0)+3*max(tilt-15,0)+500*I_failed_gate`. Early numerical/short cases return their separate failure cost. Hard acceptance additionally checks knee extension, frontal separation, completion, measured ground load, and the underlying standing gates. The three fitted shared standing parameters are PF-to-MN gain, Ib-group gain, and standing-bias scale. These are engineering priorities, not a derived metabolic objective or proof of optimality.
+
+7. **Older gait objective differs.** `D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\kine_ref.py` scores phase-normalized hip/knee/ankle shape, means, ranges, knee extrema, period/CV, duty, interleg phase, double support, and explicit bilateral/no-cycle outcomes. `optuna_walk.py` is one historical search driver. Hunt/PT training and newer standing/BPA experiments have their own saved costs/gates. Do not label all campaigns as optimizing one common objective, or equate Rustuna/Optuna optimizer choice to controller design.
+
+## Submitted PDF inspection
+
+Inspected `C:\Users\Ben Bolen\Documents\ME603 Dissertation\Defense\Bolen_Dissertation.pdf` (311 PDF pages). Printed pp152-154 describe the bridge, Hunt operations, physical curriculum, and TPE procedure. Printed p264 / PDF285 begins the current detailed tuning discussion; following pages compare the six-synergy variant. These sections do not provide the full NMF-to-conductance derivation, complete numerical objective, parameter bounds, or a per-demonstration controller/actuator/harness specification. The new overnight experiments postdate that file. No manuscript was changed by this review.
+
+Recommended defense backup material: one controller-design chain (IK/kinetics -> inverse activation -> synergy factors -> conductances -> forward validation); one actual cost/constraints/parameter table; one assistance/actuator/controller provenance table. For dissertation revisions, put the concise derivation in Chapter6 and exact equations, thresholds, circuit diffs, and consumed configurations in AppendixD.
+
+Committee-facing questions to prepare, inferred from Ben's descriptions of expertise:
+
+- Turcic: controlled variables, measured feedback, operating point, delay, loop assistance, and local stability. Show the full neural-actuator-body-harness loop.
+- Reddy: literature-supported motifs versus engineered mappings, actual Ia/II/Ib source signals, and pathway-causality controls. Do not call NMF components identified spinal circuitry.
+- Jiang: objective domain, constraints, rank choice/nonuniqueness, solver convergence versus validation, and the scope of any analytical stability statement.
+- Hunt: what passed each of the four neural-training operations with the SAME configuration; where the physical curriculum fails; why a different controller's standing success does not complete the stepping controller's curriculum.

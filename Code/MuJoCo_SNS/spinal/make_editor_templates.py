@@ -1766,10 +1766,20 @@ def main():
     open(html_path, 'w', encoding='utf-8').write(html)
     print('embedded into connectome_block_editor.html (%d KB)' %
           (len(blob) // 1024))
+    # Menu curation is independent of historical graph generation. Never label
+    # a dated template as a current executed controller after regeneration.
+    from editor_template_catalog import refresh_catalog
+    refresh_catalog()
     for nm, spec in out.items():
         print('  %-14s %3d nodes %3d edges' %
               (nm, len(spec['nodes']), len(spec.get('edges', []))))
 
 
 if __name__ == '__main__':
-    main()
+    if '--catalog-only' in sys.argv:
+        from editor_template_catalog import refresh_catalog
+        catalog = refresh_catalog()
+        print('refreshed visibility metadata only: %d templates; no graph builds' %
+              len(catalog['entries']))
+    else:
+        main()

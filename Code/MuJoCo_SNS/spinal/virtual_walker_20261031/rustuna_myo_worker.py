@@ -5,8 +5,10 @@ from pathlib import Path
 def serve(adapter_path):
  # Keep one scientific interpreter and its imports/JIT cache alive across trials.
  sys.path.insert(0,str(adapter_path.parent))
- spec=importlib.util.spec_from_file_location('rat_gait_objective_adapter',adapter_path)
+ if not adapter_path.stem.isidentifier():raise ValueError('Adapter filename must be a valid Python module name for persistent JIT caching')
+ spec=importlib.util.spec_from_file_location(adapter_path.stem,adapter_path)
  adapter=importlib.util.module_from_spec(spec)
+ sys.modules[spec.name]=adapter  # Required for Numba's cached environment reload.
  with contextlib.redirect_stdout(sys.stderr):spec.loader.exec_module(adapter)
  for raw in sys.stdin:
   try:

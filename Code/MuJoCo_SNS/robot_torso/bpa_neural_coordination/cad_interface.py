@@ -41,9 +41,10 @@ class RoutedBPABank:
             p=packed_parameters(r['diameter_mm'],r['resting_length_m'],r['maximum_contraction_fraction'],r['nonmuscle_length_m'],r['series_stiffness_N_m'])
             p[3]*=r['parallel_count'];p[8]=r['pressure_max_kpa'];params.append(p)
             fill.append(r['tau_fill_s']);vent.append(r['tau_vent_s']);delay.append(round(r['delay_s']/dt));scales.append(r.get('force_command_scale_N',0.))
-        self.parameters=np.array(params);self.fill=np.array(fill);self.vent=np.array(vent);self.delay=np.array(delay,dtype=int);self.scales=np.array(scales)
+        self.parameters=np.array(params);self.force_parameters=self.parameters;self.fill=np.array(fill);self.vent=np.array(vent);self.delay=np.array(delay,dtype=int);self.scales=np.array(scales)
         self.pressure=np.zeros(len(names));self.command=np.zeros(len(names));self.force=np.zeros(len(names));self.flags=np.zeros(len(names),dtype=int)
-        self.history=np.zeros((len(names),int(max(delay,default=0))+1));self.step_count=0
+        capacity=max(int(max(delay,default=0)),round(configuration.get('pressure_history_capacity_s',0.)/dt))
+        self.history=np.zeros((len(names),capacity+1));self.step_count=0
 
     def step(self,normalized_neural_output,lengths):
         u=np.asarray(normalized_neural_output)
@@ -56,7 +57,7 @@ class RoutedBPABank:
             self.history[i,self.step_count%self.history.shape[1]]=self.command[i]
             delayed=self.history[i,(self.step_count-self.delay[i])%self.history.shape[1]] if self.step_count>=self.delay[i] else 0.
             self.pressure[i]=pressure_step(self.pressure[i],delayed,self.dt,self.fill[i],self.vent[i])
-            self.force[i]=force_at_pressure(lengths[i],self.pressure[i],self.parameters[i])
+            self.force[i]=force_at_pressure(lengths[i],self.pressure[i],self.force_parameters[i])
         self.step_count+=1
         if not np.isfinite(self.force).all():raise ValueError('BPA length is outside the declared contraction domain')
         return self.force

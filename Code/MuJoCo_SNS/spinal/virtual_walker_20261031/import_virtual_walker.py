@@ -23,10 +23,10 @@ def quat(R):
  q=np.empty(4);mujoco.mju_mat2Quat(q,np.array(R,order='C').ravel());return q
 def fmt(x):return ' '.join(f'{v:.14g}' for v in np.asarray(x).ravel())
 def safe(s):return re.sub(r'[^a-zA-Z0-9_]+','_',s)
-def build(newer=False,source_override=None):
+def build(newer=False,source_override=None,output_root=None):
  name='W2L_VirtualWalker'+('_Newer' if newer else '');source=REPO/'Neuromechanical_Models'/(name+'_20261031')/(name+'_Standalone.asim')
  if source_override:source=Path(source_override).resolve();name=source.stem.replace('_Standalone','')
- dest=HERE/'runs'/name;dest.mkdir(parents=True,exist_ok=True)
+ dest=(HERE/'runs' if output_root is None else Path(output_root))/name;dest.mkdir(parents=True,exist_ok=True)
  raw=source.read_bytes();sha=hashlib.sha256(raw).hexdigest();snap=dest/f'source_{sha[:12]}.asim'
  if not snap.exists():snap.write_bytes(raw)
  root=E.fromstring(raw);org=root.find('.//Organism');rb=org.find('RigidBody')

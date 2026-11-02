@@ -1,0 +1,19 @@
+"""Register new valve authority before fitting; previous studies remain frozen."""
+import json,hashlib,shutil
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;ROOT=Path(r'D:\Users\Ben Bolen\NeuroCampaign_20261031\gait_bpa');DEST=ROOT/'valve_authority'
+
+def main():
+ DEST.mkdir(exist_ok=True);old=json.loads((ROOT/'pressure_reserve_capacity/PREREGISTRATION.json').read_text());cfg={k:old[k] for k in ('machine','training','validation','common_preparation','gates','measurement')}
+ cfg.update(previous_validation_status='Both previous capacity/force studies have no alltraining passer. These four registered validation profiles/seeds remain untouched and are explicitly carried forward before new fitting.',frozen_estimator=dict(mode='pressure',capacity_gain=.75,preview_s=.18,reserve_target_N=1.,sensor_gain=1.),new_architecture='Only shared reserve-neuron voltage-to-valve-reference authority expanded from cap5 to cap6..10kPa. PhysicalFmax/pressuremax620kPa/lag/delay/rates/domain/geometry unchanged.',max_trials=4,initial_candidates=[dict(pressure_cap_kpa=x) for x in (6.,8.,10.)],search_space=dict(pressure_cap_kpa=dict(low=6.,high=10.)),fixed_parameters=dict(estimator_mode='pressure',capacity_gain=.75,preview_s=.18),selection='Minimum training objective among alltraining passers only; cap effort/saturation remains penalized. Frozen before fresh30s nominal and all numeric/state equality, then registered independent validation. No postvalidation reselection.',causal_controls='After successful fresh30s gate: nominal plus knownmid/strong matched reserve-input replay from frozen nominal, and output-zero under identical preparation. Original neural feedback remains live to isolate added reserve branch necessity. Nominal replay must reproduce physical trajectory prefix exactly. Positive necessity claim requires livepass and matched control failure; controller may compensate but branch necessity not assumed.',storage='Compact windowed search traces; full cap5parity/finalists only; inherited retention limited two unique causal failures.',objective='Existing hard domain/knee/load/mesh/apparatus gates plus actualpressure<=620kPa and native force parity0. Soft reference effort and saturation cost; not metabolicenergy.',nominal_uncertainty_semantics='Common nominal pinned preparation; declared uncertainty is switched at first released physics step without pressure/history reset.')
+ path=DEST/'PREREGISTRATION.json';data=json.dumps(cfg,indent=2)
+ if path.exists() and path.read_text()!=data:raise ValueError('Registered experiment changed')
+ path.write_text(data,encoding='utf-8');manifest=dict(adapter_path=str(HERE/'valve_authority_experiment.py'),output_dir=str(DEST/'pressure/rustuna'),registration_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),registration_path=str(path),search_space=cfg['search_space'],fixed_parameters=cfg['fixed_parameters'],initial_candidates=cfg['initial_candidates'],seed=1111031,max_trials=4,n_startup_trials=3,wall_budget_s=1800.,trial_timeout_s=450.)
+ (DEST/'RUSTUNA_MANIFEST.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8');snap=DEST/'source_snapshot';snap.mkdir(exist_ok=True);sources={}
+ for name in ('register_valve_authority.py','valve_authority_experiment.py','capacity_comparison_adapter.py','capacity_comparison_validation.py','capacity_estimator_neural.py','pressure_valve_neural.py','pressure_reserve_neural.py','reserve_valve_runner.py','compact_trial_traces.py','inverse_feasibility_policy.py'):
+  p=HERE/name;h=hashlib.sha256(p.read_bytes()).hexdigest();target=snap/(p.stem+'_'+h[:8]+p.suffix)
+  if not target.exists():shutil.copyfile(p,target)
+  sources[str(p)]=dict(sha256=h,snapshot=str(target))
+ (snap/'MANIFEST.json').write_text(json.dumps(sources,indent=2),encoding='utf-8');print(str(path))
+
+if __name__=='__main__':main()

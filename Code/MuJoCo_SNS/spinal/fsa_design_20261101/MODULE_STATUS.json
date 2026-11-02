@@ -1,0 +1,16 @@
+{
+  "stage": "design_preparation_only",
+  "families_first": ["s3k", "w2lvar", "syn6"],
+  "global_coverage_required": ["all_graded_families", "all_spiking_families", "W2L", "rat", "CAD"],
+  "training_allowed": false,
+  "curriculum_allowed": false,
+  "physical_trials_allowed": false,
+  "design_probes_executed": false,
+  "design_probes_require": "Separate root go after user design decisions; passing Gait alone never releases global training gate",
+  "global_registry_owner": "root",
+  "graded": "Existing pathways require function/range/bandwidth audit, not Table2 spiking claims",
+  "pure_GLIF": "Analytical Table2 equations and unverified probe runtime prepared",
+  "NaP_or_Ca_bursters": "Not covered by pure_GLIF derivation; graded RG first or separately designed ionic-spiking variant",
+  "NMF": "Existing K6 basis and results read-only; ZCode owns8-synergy redesign",
+  "winner_preservation": "No existing backend, standing winner, source graph, or canonical model edited"
+}
