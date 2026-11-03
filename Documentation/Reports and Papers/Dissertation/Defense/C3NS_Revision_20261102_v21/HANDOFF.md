@@ -1,6 +1,10 @@
 # Defense v21 handoff
 
+For transfer to EB475WS4, start with EB475WS4_PICKUP.md. The small handoff_context/ snapshots are Git-trackable; the asset-transfer inventory identifies the separate local files needed for source-driven rebuilding.
+
 Machine: easteregg2. The authoritative completion status and artifact hashes are in `../current_deck.json`. Do not promote a partial build by changing that pointer manually.
+
+In-place correction, November 2: the human/robot comparison on slides 8 and 33 now uses azimuth 142.5° and elevation 30°, a 180° rotation about z from the previous view. The existing v21 PowerPoint, PDF, and source PNG/PDF/FIG are updated. Data, shared scales, colors, and all other slide content are unchanged. `build/plot_rotation_180/` contains the MATLAB checks, package comparison, and current validation receipt. The original complete-build receipt is historical; use `current_deck.json` for the corrected file hash. `rotate_comparison_view.m` and the corrected view in `assets/mechanics/build_legacy_bflh.m` preserve the requested orientation for subsequent work.
 
 The deck has 77 main slides and 68 hidden questions. The 30-second baseline is 38.5 minutes; allow about 40 minutes, with a hard 45-minute limit. A spoken rehearsal is still needed. Suggested checkpoints: finish the force section at about 13–14 minutes (slide 28), the mechanics/AnimatLab transition by about 29 minutes (slide 59), and the neural demonstrations by about 35 minutes (slide 71). The conclusion is slide 77. SADb is only on 139–145.
 
