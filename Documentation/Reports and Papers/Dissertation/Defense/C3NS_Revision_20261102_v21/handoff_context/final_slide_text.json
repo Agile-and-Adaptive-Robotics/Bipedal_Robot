@@ -1,0 +1,727 @@
+[
+  {
+    "slide": 1,
+    "text": "Design and Modeling of Biomimetic Humanoid Robots Ben P. Bolen · PhD Defense November 6, 2026",
+    "notes": "This research develops actuator force models, joint-torque design factors, sensory-evidence resources, and neuromechanical tools for a biomimetic humanoid robot. The physical prototype on the cover establishes the long-term project. Source: dissertation Chapters 1 and 2; AARL robot photograph."
+  },
+  {
+    "slide": 2,
+    "text": "Amazon Robotics · DARPA Robotics Challenge (2015) Structured floors Obstacles and balance 2 Search-and-rescue robots must move reliably over uneven terrain",
+    "notes": "Wheels are an effective choice for warehouse robots operating on smooth, controlled floors. Search-and-rescue robots face a different problem: rubble, obstacles, uncertain contact, and balance. Biology offers useful mechanical and neural principles for that application. These clips motivate the research; they do not establish an energy-efficiency advantage for this robot. Sources: Amazon Robotics; DARPA Robotics Challenge, 2015."
+  },
+  {
+    "slide": 3,
+    "text": "Dissertation Ch. 2 · AARL Puppy robot from Bolen’s earlier talk 3 Braided pneumatic actuators provide lightweight, compliant actuation Pressure → shortening and tension",
+    "notes": "A braided pneumatic actuator expands radially and shortens when pressurized. Its low actuator mass, large tensile force, and compliance make it useful for muscle-like attachment arrangements. The Puppy photograph is an example of pneumatic actuation in a biomimetic robot, not an energy-efficiency experiment. Air supply and control hardware must be included in any system-level efficiency claim. Source: submitted dissertation background and Bolen, Movement and Control of Biomimetic Humanoid Robots, slide 9. Transition: the force is useful only if limb geometry produces the required joint torque."
+  },
+  {
+    "slide": 4,
+    "text": "Sutton et al. (2023), PNAS Nexus 2:pgad298, Fig. 1B 4 Actuator force and moment arm determine joint torque Joint torque M = F r⊥ Force × moment arm",
+    "notes": "Sutton and colleagues model a leg joint as a pendulum with muscle actuation, elastic forces, and damping. This is the paper’s generic leg-joint schematic, not a detailed human knee. The highlighted force and moment arm explain the conversion from actuator force to torque. This defense next asks whether compliant BPAs can provide enough force and contraction to reproduce biological joint movement. Source: Sutton, Szczecinski, Quinn, and Chiel (2023), PNAS Nexus 2, pgad298, Figure 1B. https://doi.org/10.1093/pnasnexus/pgad298"
+  },
+  {
+    "slide": 5,
+    "text": "Dissertation Chapters 1 and 6 5 Neural control depends on feedback from the moving body Neural controller Actuators and body Sensory pathways Descending drive Motor output Muscle length, force, and foot contact Sensory feedback",
+    "notes": "This is a functional control diagram. Descending drive enters the neural controller, whose motor output activates the actuators. Body motion and contact change muscle length, muscle force, and foot-contact signals; sensory pathways return those signals to the controller. No single negative-feedback summing junction is implied: the neural pathways include excitatory and inhibitory connections. Source: submitted dissertation, motivation and neuromechanical models."
+  },
+  {
+    "slide": 6,
+    "text": "Dissertation Ch. 2, human muscle paths and robot BPA paths 6 The robot reproduces selected human anatomy with pneumatic actuation Human muscle paths Robot BPA paths Physical robot",
+    "notes": "The human and robot models share the intended musculoskeletal organization, while the robot uses selected BPA paths and mechanical joints. This is an anatomical mapping, not a claim of identical force or movement. Transition: matching anatomy does not guarantee matching contraction range or joint torque."
+  },
+  {
+    "slide": 7,
+    "text": "Bolen, Movement and Control of Biomimetic Humanoid Robots · historical model comparison 7 Limited BPA contraction constrains the robot’s joint range",
+    "notes": "Historical model comparison from the older Movement and Control talk. The blue region is the OpenSim reference and the red region is the robot model. BPA contraction limits and mechanical interference constrain achievable hip angles; the plot is not a new physical range measurement and contraction is not the only limiting factor. Transition: joint torque can also fall short within the attainable range."
+  },
+  {
+    "slide": 8,
+    "text": "Bolen (2019), original BFLH calculations · shared torque and color scales 8 The robot’s available torque covers only part of the human range Human model Robot model",
+    "notes": "Historical human and robot biceps-femoris-long-head torque calculations are reproduced from the original geometry and force scripts and original input MAT files. Each retains its own original joint-angle domain. Both panels use identical torque limits and color limits; differences are not produced by separate scaling. These are the earlier baseline model calculations, not the later corrected redesign or a new experimental result. The coverage gap motivates improved BPA force prediction and joint design. See mechanics source manifest for generating scripts, input hashes, and shared scales."
+  },
+  {
+    "slide": 9,
+    "text": "Dissertation Ch. 1, research motivation and objectives 9 Biology guides robot design; robot experiments test movement hypotheses Biological evidence Biomimetic robot Mechanics and neural principles Robot experiments generate biological predictions Goal: Better autonomous movement on unstructured terrain",
+    "notes": "The first goal is to use biological principles to improve robots for unstructured environments. The reciprocal goal is to use increasingly biomimetic robots for controlled interventions that would be difficult or impossible in humans. For example, alter one actuator property or sensory pathway, measure the resulting movement, and generate a biological prediction to test. The return arrow represents a research process; this dissertation does not claim a new human experiment. Transition: the same understanding can inform devices that assist people."
+  },
+  {
+    "slide": 10,
+    "text": "BiOM T2 ankle prostheses · Photo: Bryce Vickmark / MIT News (2014) 10 Biological mechanics and control also inform prosthetic-limb design",
+    "notes": "A third, longer-term goal is to improve prosthetic and orthotic devices. Hugh Herr is shown wearing BiOM T2 powered ankle prostheses, an external example of biologically inspired mechanics and control. This dissertation does not claim a new clinical device. MIT News, April 17, 2014: https://news.mit.edu/2014/hugh-herr-bionic-ankle-emulates-nature-0417 . Photo: Bryce Vickmark / MIT News, CC BY-NC-ND, reproduced without alteration. Transition: this dissertation addresses the underlying actuator, joint, and modeling-tool gaps."
+  },
+  {
+    "slide": 11,
+    "text": "Main-talk research questions 11 Three gaps limit prediction and testing of a biomimetic biped Force across lengths, pressures, and contraction Joint torque with compliance and bending Tests of coupled neural and body models",
+    "notes": "The first gap is force prediction across initial BPA lengths, pressure, and contraction. The second is predicting joint torque when the hardware bends and attachment systems deform. The third is testing neural controllers with complex mechanical models in inspectable, reusable environments. These define the main talk."
+  },
+  {
+    "slide": 12,
+    "text": "Dissertation Chapters 3 and 4 12 Braided Pneumatic Actuator Modeling BPA force Joint torque How much force can a selected BPA produce?",
+    "notes": "How much force can a selected BPA produce? This section concerns the actuator and joint mechanics."
+  },
+  {
+    "slide": 13,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 13 BPA length is measured between the inner edges of the clamps Free contraction at 620 kPa Uninflated l₆₂₀ l₀ lₘ = current BPA length",
+    "notes": "Resting length l0 is measured between the inner edges of the hose clamps, excluding both end fittings. l620 is measured between the same boundaries after free contraction at 620 kPa. lm is the current inner-clamp distance in a general operating condition. The photographed product has integrated end fittings; the dimension ends are placed where the rubber section emerges from them. Source: submitted dissertation Chapter 3, definitions and test procedure; Bolen et al., Actuators 15(5):230."
+  },
+  {
+    "slide": 14,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 14 A force model must account for pressure, contraction, and initial length Initial length: l₀ Contraction: (l₀ − lₘ) / l₀ Internal pressure: P",
+    "notes": "Initial length is the active braid length between the inner hose-clamp edges. Contraction is the change from that initial length divided by the initial length. Internal pressure is supplied to the bladder. The next comparison tests whether existing force predictions are adequate. Source: Bolen et al., 2026."
+  },
+  {
+    "slide": 15,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 15 ⌀10 mm BPA   ·   l₀ = 112 mm   ·   P = 620 kPa The manufacturer tool overpredicts force by 42.1% in this short BPA",
+    "notes": "The manufacturer predicts 498.6 N for the 112 mm actuator, while the measured force is 350.9 N: a 42.1% overprediction. This is the concrete modeling problem before introducing the new fit. Source: published BPA Discussion, Effects of Resting Length."
+  },
+  {
+    "slide": 16,
+    "text": "Modified from Bolen (2026) 16 Existing models mispredict force for ⌀10 mm and ⌀20 mm BPAs l₀ = 450 mm, ⌀20 mm BPA",
+    "notes": "The measured force values remain on the horizontal axis. Only the proposed-model prediction points were removed. The plotted Sarosi and Martens–Boblan predictions are grouped as Others. This panel is the published 20 mm, 450 mm case; the 10 mm manufacturer example is on the previous slide, and the complete four-case numerical comparison follows later. The equality reference remains. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 17,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 17 The test jig measures force while pressure and length are controlled Current BPA length, lₘ",
+    "notes": "The actuator is clamped at a chosen length, pressure is set, and the load cell measures its isometric force. Repeating this procedure across lengths and pressures supplies the data for the model. Identify the load cell, hose clamp, and actuator in the photograph. Source: Bolen et al., 2026."
+  },
+  {
+    "slide": 18,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 18 We first measure maximum force at each initial BPA length Hold the BPA at lₘ = l₀ Pressurize to 620 kPa Measure F₆₂₀ across initial lengths",
+    "notes": "Before modeling the full pressure-contraction relation, we examine maximum isometric force at 620 kPa as a function of uninflated resting length. The test frame fixes the actuator length while the load cell measures force. The next slide presents the 10 mm actuators; the 20 mm results follow separately. Source: submitted Chapter 3, Maximum Force at 620 kPa. Maximum force is measured with the actuator held at its unloaded rest length, before allowing shortening. l_m=l_0 for this reference measurement."
+  },
+  {
+    "slide": 19,
+    "text": "Modified from Bolen (2026) 19 Shorter ⌀10 mm BPAs produce less maximum force b₁ = 303.5 N b₂ = 19.03 m⁻¹ b₃ = 0.0075 m",
+    "notes": "Published maximum force at P = 620 kPa. The arctangent form is F620(l0) = b1 atan[b2(l0-b3)], with b1 = 303.5 N, b2 = 19.03 m⁻¹, and b3 = 0.0075 m. The chart data, curves, and line colors are retained from the saved publication figure. The engineering diameter symbol replaces the old phi glyph. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 20,
+    "text": "Modified from Bolen (2026) 20 The ⌀20 mm BPAs show the same loss of force at short initial lengths b₁ = 922.4 N b₂ = 15.37 m⁻¹ b₃ = 0.013 m",
+    "notes": "Published maximum force at P = 620 kPa. The arctangent form is F620(l0) = b1 atan[b2(l0-b3)], with b1 = 922.4 N, b2 = 15.37 m⁻¹, and b3 = 0.013 m. The chart data, curves, and line colors are retained from the saved publication figure. The engineering diameter symbol replaces the old phi glyph. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 21,
+    "text": "Modified from Bolen (2026) 21 An arbitrary pressure limit Pₘₐₓ scales the magnitude and shape of the maximum-force response a₁ = 0.4895 N/kPa a₂ = 0.03068 (kPa·m)⁻¹",
+    "notes": "This is the pressure-dependent maximum-force result for the 10 mm dataset. Pmax appears both in the prefactor and in the arctangent argument, so changing the supply limit changes magnitude and length-dependent shape. The plotted values and colors are unchanged. The later normalized force model retains F/F620, P/(620 kPa), and epsilon/epsilon620; do not normalize pressure a second time. The paper supports pressures below 620 kPa and describes higher-pressure use as unconfirmed extrapolation. The fixed 7.5 mm offset is verbatim from the published pressure equation. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 22,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 22 Maximum free contraction still requires an individual measurement",
+    "notes": "The free-contraction measurements show substantial variance; the source does not establish a conclusive predictive relationship with initial length. The maximum contraction must be measured for each actuator. Source: published Chapter3, maximum contraction and discussion."
+  },
+  {
+    "slide": 23,
+    "text": "Modified from Bolen (2026) 23 Normalization combines measurements across initial lengths",
+    "notes": "The separate pressure key preserves the original blue, purple, pink, coral, and orange colors. Dashed lines are Festo predictions, solid lines are the new model, and dots are measured data. Definitions use the original 620 kPa force, pressure, and free-contraction references. Saved plot objects are re-exported without refitting or removing points. Force is normalized by the maximum reference force, and contraction by the measured free contraction. The two diameter classes retain their own fitted coefficients. The published study used 537 measured data points, with 80% for fitting and 20% for testing. The selected-length comparison is not a separately held-out-actuator study. Source: Bolen et al. (2026), Actuators15(5):230. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 24,
+    "text": "Modified from Bolen (2026) 24 The normalized model captures force for both tested BPA diameters ⌀10 mm: c₀ = 0.5682, c₁ = 4.254, c₂ = 0.5597 ⌀20 mm: c₀ = 0.2579, c₁ = 6.477, c₂ = 1.321",
+    "notes": "The generalized normalized equation is the published positive-force expression written as max(0, expression). The 10 mm coefficients are c0 = 0.5682, c1 = 4.254, and c2 = 0.5597; the 20 mm coefficients are c0 = 0.2579, c1 = 6.477, and c2 = 1.321. All source plot points, curves, and pressure colors are retained; repeated legends are removed as requested. Coefficients are checked against the final paper and the frozen submitted chapter. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 25,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 ⌀10 mm BPA   ·   l₀ = 112 mm 25 The new model reduces the short-BPA force error from 42.1% to 4.5%",
+    "notes": "Force uses the left axis. The narrow black bars show absolute prediction error using the right axis; they are not statistical uncertainty intervals. The manufacturer prediction retains the striped bar. At this 112 mm, 10 mm BPA comparison, error drops from 42.1 percent to 4.5 percent. Source: Bolen et al., 2026."
+  },
+  {
+    "slide": 26,
+    "text": "Bolen et al. (2026), Actuators 15(5):230 26 The new model improves force predictions for the 20 mm BPAs",
+    "notes": "The lower two panels of the published comparison show the 300 mm and 450 mm initial lengths. The 450 mm case closes the discrepancy introduced earlier. Proposed-model predictions are purple; existing model series retain the original plot colors here. These are comparisons against the source measurements, not a new test."
+  },
+  {
+    "slide": 27,
+    "text": "The new model lowers prediction error for ⌀10 mm BPAs Modified from Bolen (2026) 27 l₀ (mm) Model RMSE (N) FVU Max. error (N) 257 New model 22.9 0.0353 46.0 257 Sárosi 143.8 1.3903 235.8 257 Martens and Boblan 73.8 0.3668 122.9 233 New model 16.8 0.0187 30.3 233 Sárosi 132.7 1.1655 222.6 233 Martens and Boblan 62.6 0.2590 101.2 FVU: fraction of variance unexplained. Lower values indicate better agreement.",
+    "notes": "All values are transcribed from the published model-comparison table and independently matched to the frozen submitted Chapter 3. RMSE and maximum absolute error are in N; FVU is dimensionless. This is the reported comparison on these four actuator configurations, not a new optimization or a new held-out-actuator experiment. Smaller values indicate better agreement. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 28,
+    "text": "The new model lowers prediction error for ⌀20 mm BPAs Modified from Bolen (2026) 28 l₀ (mm) Model RMSE (N) FVU Max. error (N) 300 New model 35.6 0.0144 114.0 300 Sárosi 132.1 0.1992 313.4 300 Martens and Boblan 72.8 0.0605 137.8 450 New model 67.6 0.0258 166.6 450 Sárosi 177.7 0.1785 294.8 450 Martens and Boblan 862.1 4.2022 1321.1 FVU: fraction of variance unexplained. Lower values indicate better agreement.",
+    "notes": "All values are transcribed from the published model-comparison table and independently matched to the frozen submitted Chapter 3. RMSE and maximum absolute error are in N; FVU is dimensionless. This is the reported comparison on these four actuator configurations, not a new optimization or a new held-out-actuator experiment. Smaller values indicate better agreement. Bolen, Elzein, Pang, and Hunt (2026), Actuators 15(5):230. Published source and submitted Chapter 3 are unchanged."
+  },
+  {
+    "slide": 29,
+    "text": "Dissertation Chapters 3 and 4 29 Isometric Knee Torque BPA force Joint torque Does the selected BPA produce the required joint torque?",
+    "notes": "Does the selected BPA produce the required joint torque? This section concerns the actuator and joint mechanics."
+  },
+  {
+    "slide": 30,
+    "text": "Bolen and Hunt (2019); dissertation Chs. 2 and 4 30 Human muscle paths Robot BPA routes Human muscle geometry provides a starting point for BPA attachment locations",
+    "notes": "The earlier work matched robot geometry to the Gait2392 reference and compared muscle paths. The red paths show how muscle force is routed over the skeleton. The same skeletal geometry does not imply the same force–length behavior when muscles are replaced with BPAs. Sources: original talk and dissertation background."
+  },
+  {
+    "slide": 31,
+    "text": "Gait2392 OpenSim model · biceps femoris short head · Dissertation Ch. 4 31 OpenSim muscle paths determine the human knee-torque target",
+    "notes": "The actual Gait2392 knee and biceps-femoris-short-head path are shown at a specified knee coordinate. Force acts along the muscle path. OpenSim computes the moment arm for that generalized knee coordinate; multiplying by muscle force gives the muscle contribution to knee torque. The knee includes coupled translations, so a fixed hinge-center approximation must not be substituted silently for its generalized moment arm. The overlay is generated from the actual model geometry and state, with source and numeric checks recorded in the mechanics manifest."
+  },
+  {
+    "slide": 32,
+    "text": "OpenSim Gait2392 reference; Testing_Data/2022_02_Festo 32 Biceps femoris short head Knee angle (deg) Vastus medialis Knee angle (deg) Torque (N·m) Torque (N·m) OpenSim provides separate knee-torque targets for flexors and extensors",
+    "notes": "These reference queries provide the knee-torque profiles of biceps femoris short head and vastus medialis. They are model-derived isometric targets, not measured maximum voluntary human torques. The stored knee-angle column uses degrees in the established evaluators. Sources: OpenSim_Bifem_Results.txt, column bifemsh_r, and OpenSim_Vasti_Results.txt, column vas_med_r; dissertation Chapter 4."
+  },
+  {
+    "slide": 33,
+    "text": "Bolen (2019), original BFLH calculations · shared torque and color scales 33 The robot’s available torque covers only part of the human range Human model Robot model",
+    "notes": "Historical human and robot biceps-femoris-long-head torque calculations are reproduced from the original geometry and force scripts and original input MAT files. Each retains its own original joint-angle domain. Both panels use identical torque limits and color limits; differences are not produced by separate scaling. These are the earlier baseline model calculations, not the later corrected redesign or a new experimental result. The coverage gap motivates improved BPA force prediction and joint design. See mechanics source manifest for generating scripts, input hashes, and shared scales."
+  },
+  {
+    "slide": 34,
+    "text": "Dissertation Ch. 4, Isometric Knee Torque 34 The test stand measures knee torque at a fixed joint angle",
+    "notes": "The fixed femur is mounted to the test frame. The load cell connects the tibia to the swing arm; the winch string fixes the arm at each angle. The actuator is inflated and deflated with the winch locked, making the measurement as isometric as possible. The knee axis is coaxial with gravity, so gravity does not contribute knee torque. Keep swing arm, winch string, load-cell string, leg, BPA, and pneumatic lines visible. Source: submitted dissertation Chapter 4, Test Setup and Procedure."
+  },
+  {
+    "slide": 35,
+    "text": "Pinned-flexor test, l₀ = 485 mm · saved 48 cm test record 35 Improved BPA force prediction does not resolve the torque mismatch Hybrid: measured BPA length, pressure, and moment arm",
+    "notes": "This single example is the 48 cm file-label pinned-flexor test, with measured unloaded rest length 48.5 cm. The plotted torque and the next slide’s measured BPA length come from the same saved test. The rigid geometry is kept, while the BPA force characterization is improved; the residual discrepancy motivates loaded-length corrections. Measured blue points are drawn above hybrid predictions. The saved source identifies the separate load-cell and fish-scale measurements and their pressure readings. No correction factors were refitted. Hybrid calculation: BPA force is calculated from the measured inflated length and pressure, then multiplied by the measured ICR-to-muscle distance (moment arm). Source: Plot_KneeFlxPin10mm_48cm.m, lines 83–87. It is distinct from a pressure-only substitution."
+  },
+  {
+    "slide": 36,
+    "text": "Same pinned-flexor test · measured and predicted active BPA length 36 The measured BPA is shorter than the rigid-geometry prediction",
+    "notes": "Same pinned-flexor test as the preceding torque plot. Blue points are the measured inflated BPA lengths in the source InflatedLength array, with the same measured knee angles. The dashed curve is the geometric prediction from the source MuscleLength array. All lengths are converted from meters to millimeters. The mismatch motivates a signed constant offset, effective compliance, and bending corrections; the following slides explain these terms before their identification. This is not a comparison across different actuators or tests."
+  },
+  {
+    "slide": 37,
+    "text": "Dissertation Ch. 4, bracket-frame orientations 37 Effective stiffness is expressed in the local attachment frame Pinned-knee flexor Biomimetic-knee flexor",
+    "notes": "The dissertation CAD schematics show the local bracket-frame axes for the pinned flexor and the biomimetic flexor with a 20 mm BPA. The fitted stiffness values represent the combined attachment system. The next method slide explains the coordinate rotations before force is projected into these directions. Source: Chapter 4, Figure bktFrame, panels A and D."
+  },
+  {
+    "slide": 38,
+    "text": "Dissertation Ch. 4, Isometric Knee Torque 38 Offsets, compliance, and bending correct the predicted BPA length χ₁, χ₂: system stiffness χ₁, χ₂ χ₃: bending loss Δl Δl = χ₃ R α (1 − ε*)² χ₀: length offset Constant offset",
+    "notes": "Chi0 corrects the unloaded length discrepancy and is signed. The source equation defines the correction; the stock BPA photograph is not a dimensional drawing. Chi1 and chi2 describe effective system stiffness, including brackets, fixtures, artificial tendons, and loading hardware. The middle callout identifies the attachment system, not a coordinate axis. Chi3 scales length loss due to bending along the wrapped R alpha arc. Source: dissertation Chapter 4 and Appendix C. The displayed length equation is the no-artificial-tendon case; subtract artificial-tendon length when one is present. The magenta illustrative length-loss segment is shortened to one-fifth of the previous annotation; it is not a new measured bending loss."
+  },
+  {
+    "slide": 39,
+    "text": "Two rotations align the bracket frame with the attachment point Dissertation Ch. 4, bracket-frame transformation 39 1. Rotate toward the sagittal projection 2. Tilt toward the attachment point",
+    "notes": "Original dissertation Figure xiFrameTransform, split into its two panels without changing the geometry. First rotate about the fixed space-frame z axis toward the sagittal projection. Then pitch about the current bracket y axis to point the bracket x axis toward the attachment. The adopted transform is Rsb=Rz(theta_z)Ry(theta_y)^T. Frame orientation and the configuration-specific stiffness-axis assignments must be kept distinct."
+  },
+  {
+    "slide": 40,
+    "text": "Dissertation Ch. 4, displacement projection and force balance 40 Force and attachment displacement must be solved together Force displaces the attachments Displacement changes BPA length and force One bracket detail δ: displacement along the BPA path from the series compliance Normalized BPA force is dimensionless",
+    "notes": "Original source detail of one bracket. The3-D bracket displacement is projected along the BPA force. At both ends these projections, plus tendon extension, contribute to series displacement delta. At each pose and fixed chi, fzero solves the scalar force balance. The F620(l0) multiplier is the maximum force reference at620kPa; normalized FBPA contains pressure dependence. This avoids double pressure scaling. The result updates attachment positions, routed length, force direction, moment arm, and torque. Parameter identification is a separate outer problem on the next slide."
+  },
+  {
+    "slide": 41,
+    "text": "The design factors are fitted before testing new configurations Dissertation Ch. 4 and Appendix C · parameter identification 41 Fit torque residuals Evaluate other tests Flexor: χ₀, χ₁, χ₂ 2 fitting tests 2 flexor validation tests Extensor: χ₀, χ₃ 3 fitting tests 3 extensor validation tests Shared χ₁, χ₂ retained for the extensor",
+    "notes": "At each candidate parameter set chi, the inner scalar root solves displacement separately at every pose. gamultiobj identifies chi from torque residuals. Flexor: fit 48.5 and 41.0 cm; validation 45.7 and 40.6 cm with 3.5 cm tendon. Extensor: retain the same chi1/chi2 pair, fit chi0/chi3 on 43,43+tendon,46 cm; validate on40,40+tendon,47 cm. Validation results also informed Pareto acceptance, so these are not blind external tests. The adopted parameter set is then fixed for route redesign. Source: Chapter4, AppendixC, evaluator fold records. The identification objectives are baseline-normalized per-test RMSE, fraction of variance unexplained, and maximum absolute residual, averaged across the fitting tests. gamultiobj returns Pareto candidates; validation behavior also informed their acceptance. This is a selected, cross-configuration fit, not blind external validation. The stiffness pair represents effective system compliance and is not uniquely identifiable as two bracket material properties."
+  },
+  {
+    "slide": 42,
+    "text": "Dissertation Ch. 4, Isometric Knee Torque 42 The design factors improve predictions in the four pinned-flexor tests Measured BPA model Corrected",
+    "notes": "Compare optimized predictions with the same measured flexor data shown before correction. Hybrid means the actuator force model uses measured muscle length and measured moment arm, rather than their geometric predictions. The original four-panel flexor layout and six-panel extensor layout are retained. Effective stiffness includes the complete setup and is not a literal bracket material measurement. Source: dissertation Chapter 4 and Appendix C."
+  },
+  {
+    "slide": 43,
+    "text": "Dissertation Ch. 4, pinned-knee flexor goodness of fit 43 The design factors improve all three measures of pinned-flexor fit Before correction With design factors l₀; lₜₑₙ (cm) RMSE FVU Max. RMSE FVU Max. Fit: 48.5; — 7.617 2.1278 25.531 2.165 0.1718 5.467 Fit: 41.0; — 9.694 2.1149 21.076 1.084 0.0277 1.766 Fit mean 8.656 2.1213 23.303 1.624 0.0998 3.617 Val: 45.7; — 8.803 1.9380 26.264 1.368 0.0468 3.614 Val: 40.6; 3.5 6.373 0.5935 16.859 1.611 0.0427 5.891 Validation mean 7.588 1.2657 21.562 1.490 0.0447 4.752 RMSE and Max.: N·m     FVU: dimensionless",
+    "notes": "Native table reproduces the dissertation pinned-flexor goodness-of-fit values before and after correction, with all three reported measures. Fitting tests: 48.5 cm and 41.0 cm. Validation tests: 45.7 cm and 40.6 cm with a 3.5 cm artificial tendon. Means are the source table means, not newly computed pooled residuals. RMSE and maximum absolute residual are in N m; FVU is dimensionless and lower is better. Source: Chapter 4, Table FlxPinGof."
+  },
+  {
+    "slide": 44,
+    "text": "Dissertation Ch. 4, Isometric Knee Torque 44 The same stiffness pair improves pinned-extensor torque predictions Measured Hybrid BPA model Corrected",
+    "notes": "Extensor predictions use the same effective stiffness pair as the flexor, with extensor-specific chi0 and chi3. Hybrid means the actuator force model uses measured muscle length and measured moment arm, rather than their geometric predictions. The original four-panel flexor layout and six-panel extensor layout are retained. Effective stiffness includes the complete setup and is not a literal bracket material measurement. Source: dissertation Chapter 4 and Appendix C."
+  },
+  {
+    "slide": 45,
+    "text": "Steele et al. (2018); dissertation biomimetic-knee Methods 45 The four-bar knee moves its center of rotation as it flexes",
+    "notes": "The biomimetic knee has a moving instantaneous center of rotation. Consequently the moment arm changes with knee angle in a way a simple hinge does not capture. This provides a further test of the design factors. Source: Steele et al., 2018; dissertation Chapter 4."
+  },
+  {
+    "slide": 46,
+    "text": "Dissertation Ch. 4, Isometric Knee Torque 46 The design factors also improve predictions on the biomimetic knee Extensor Flexor Rigid-body model Corrected model",
+    "notes": "The extensor and flexor results test the factors beyond the pinned joint. Explain that the first route optimization predicted meeting or exceeding human torque but failed in physical validation. That failure required modifying the route optimization. The corrected predictions are useful, but this is not perfect agreement at every angle. Source: dissertation Figures 4.10 and 4.11. The plotted biomimetic-knee tests use the original dissertation apparatus inset. The earlier route optimization appeared adequate under rigid-body assumptions, but physical tests failed to meet the human target, so the route optimization was modified."
+  },
+  {
+    "slide": 47,
+    "text": "Dissertation Ch. 4 · single-BPA biomimetic flexor validation 47 The single-BPA flexor falls short of the human torque target",
+    "notes": "The original dissertation/torque-paper biomimetic-flexor panel compares a 20 mm BPA with the selected maximum human BFSH torque. The original rigid-body prediction and corrected prediction are shown along with measured torque; reduced-pressure points are separately marked. The corrected model still does not make the earlier single-actuator route meet the target. This is the reason to change the route optimization. Use the original panel and legend; do not describe the fitted model as a physical optimization."
+  },
+  {
+    "slide": 48,
+    "text": "Dissertation Ch. 4, constrained knee-route redesign 48 Route optimization includes compliance and bending Choose attachment positions and actuator–tendon lengths Predict torque across the joint range in the required direction Check pressure, contraction, clearance, and wrapping",
+    "notes": "The search varies attachment positions, BPA resting length, and artificial-tendon length. At every joint angle, fixed identified design factors and the inner displacement solve determine corrected force and torque. The target is the selected human torque magnitude plus5percent in the required direction. The worst-angle shortfall is penalized; pressure, contraction, bone clearance, wrapping, and tendon feasibility constrain the design. surrogateopt finds candidates and patternsearch refines them. The animation illustrates the geometric variables; measured validation follows."
+  },
+  {
+    "slide": 49,
+    "text": "Repository model animation · redesigned 20 mm knee flexor 49 The redesigned flexor route can be checked across knee motion BPA 1 BPA 2 Human BFSH",
+    "notes": "Original complete-cycle repository GIF from Knee_Flexor_20mm.gif, followed by physical validation. The native PowerPoint crop enlarges the existing animation without changing any frame. It illustrates the selected route and wrapping; quantitative validation is the following measured torque plot. The cached animation does not have a generation manifest establishing byte-identical measured-test geometry."
+  },
+  {
+    "slide": 50,
+    "text": "Torque paper, redesigned 20 mm flexor · model prediction at measured pressure 50 The redesigned flexor meets the human target at the tested angles",
+    "notes": "The torque-paper publication figure compares the human BFSH reference, redesigned prediction at 620 kPa, measured torque, and prediction at the measured pressure. The measured blue points are opaque and drawn above the yellow hybrid predictions. The physical validation contains 15 measured points from -119 to +5 degrees; measured margins over the selected human magnitude are +0.42 N m at -105 degrees to +17.0 N m at -14 degrees. These discrete isometric tests do not establish dynamic gait or complete-leg behavior. Pressure differences explain why the measured points are not expected to lie on the 620 kPa curve."
+  },
+  {
+    "slide": 51,
+    "text": "Repository model animation · direct 20 mm knee extensor 51 The direct extensor route met the model target but overloaded hardware Direct BPA route Next design change: increase the moment arm",
+    "notes": "This is the original direct-route extensor animation, not the later cam. Its generator loads Vas_Pam_20mm_Result.mat. Physical testing of the direct route failed printed and machined hardware. The cam then increased moment arm and reduced the required actuator force. This native crop preserves every GIF frame."
+  },
+  {
+    "slide": 52,
+    "text": "Dissertation Ch. 4, Isometric Knee Torque 52 A cam increases the moment arm and reduces the required BPA force Flexed knee Extended knee BPA path Black points: cam contacts Circles: clearance and bend constraints",
+    "notes": "The earlier direct extensor route required large forces and broke printed and machined parts. The cam was introduced to increase the moment arm and reduce the BPA force required for a given torque. The two poses show how the tendon follows the cam across knee motion. The next slide shows physical measurements. Source: dissertation Chapter4."
+  },
+  {
+    "slide": 53,
+    "text": "The cam changes actuator loading and the pressure needed for torque Saved direct and cam designs · force at 620 kPa; pressure for the same human target 53",
+    "notes": "Both curves use the finalized saved direct-route and cam designs with the same adopted design factors. The source verifies that the saved cam baseline equals the saved direct-route design. The left panel compares total BPA force at a fixed 620 kPa supply; this is not the force required to produce the same torque. The right panel compares pressures back-calculated to match the same human torque target, from the saved October 28 pressure table. Cam pressure is lower through much of the middle range but not at every angle; do not claim a uniform reduction. This slide is a model comparison, followed by physical cam-extensor validation. No route optimization was rerun."
+  },
+  {
+    "slide": 54,
+    "text": "Dissertation Ch. 4 · cam-assisted extensor physical validation 54 The cam-assisted extensor meets the selected human torque target",
+    "notes": "Use the finalized dissertation/torque-paper physical validation, preserving the source model curves and measured data. Blue measurements are drawn after yellow predictions at measured pressure, so the measured result remains visible. The human reference is the selected vastus medialis muscle, not the complete human extensor group. The model capacity and measured-pressure predictions are distinct. These results are isometric measurements at the tested angles, not a walking demonstration."
+  },
+  {
+    "slide": 55,
+    "text": "Design factors can guide a more biomimetic knee mechanism Dissertation reverse-pulley knee mechanism · ideal cable relation 55 Two parallel BPAs 2× tendon travel ½ combined BPA force",
+    "notes": "Original dissertation reverse-pulley knee schematic. Two parallel BPAs drive a moving sheave. In the ideal two-part cable arrangement, tendon travel is twice BPA shortening and tendon tension is half the combined BPA force. The corrected loaded BPA force and length are inputs to this design calculation. Friction, packaging, clearance, and load-sharing still require physical checks. This is a mechanism-design example and transition to the whole-leg coverage comparison, not a claim that this particular knee has been dynamically validated."
+  },
+  {
+    "slide": 56,
+    "text": "27-site model · 620 kPa · actuator sizing and pulley ratios · inherited routes 56 Predicted mean torque coverage rises from 37.35% to 65.81% Angular-domain coverage, averaged across 27 sites",
+    "notes": "The submitted whole-leg comparison improves mean area-weighted torque coverage from 37.35% to 65.81% and active-force coverage from 93.00% to 99.31%. The comparison combines tackle selection, actuator sizing, and replacing 40 mm actuators with four parallel 20 mm actuators. It does not isolate attachment optimization alone. These are model predictions, not a whole-leg physical test. Source: submitted dissertation Chapter 4 and Appendix C. Coverage values are equal-site means of trapezoid-weighted angular-domain coverage, not unweighted fractions of sampled points."
+  },
+  {
+    "slide": 57,
+    "text": "Dissertation Chapters 3, 4, and 6 57 Neuromechanical Models and Tools BPA force Joint torque Neural control How do neural control and mechanics interact?",
+    "notes": "The same robot links the sections. First establish actuator force, then predict and measure joint torque, then combine the mechanics with a neural controller and sensory feedback. How do neural control and mechanics interact?"
+  },
+  {
+    "slide": 58,
+    "text": "Dissertation Ch. 6, Table 6.1 · Li–Deng/W2L Li-derived mechanics Deng-derived controller 58 We combined Deng’s controller with Li’s separate walker model",
+    "notes": "The first walker attempt combines the neural controller from one neuromechanical model with the mechanics of another. It is not a direct replay of either original complete model. This distinction sets up why successful rhythmic activity did not establish a successful controller transplant. Sources: Li et al. and Deng et al. (2019); dissertation first W2L attempt."
+  },
+  {
+    "slide": 59,
+    "text": "Dissertation Ch. 6, Table 6.1 · Li–Deng/W2L Root fixed, moving platform Root released 59 Hand tuning produced leg cycling, but the released walker fell",
+    "notes": "The left recording shows the original walker with its root fixed above a moving platform. The right recording releases the root and the model falls. This is the key failure that motivated faster, more inspectable neuromechanical tools. Both are actual AnimatLab recordings, and they predate the later geometry correction."
+  },
+  {
+    "slide": 60,
+    "text": "Dissertation Ch. 6, Table 6.1 · Knowledge gap after the suspended / ground comparison 60 Detailed neuromechanical models require a faster, repeatable testing workflow Inspectable pathways New mechanics Motor commands Sensory feedback Controller fitting needed repeatable automated trials",
+    "notes": "The previous suspended-versus-dropped AnimatLab comparison motivates a workflow gap. AnimatLab allowed graphical construction and interactive inspection, but the transfer to more detailed mechanics required robust programmatic coupling, repeatable parameter and stimulus experiments, and faster execution. Its unsupported development status motivated moving the workflow, rather than implying that AnimatLab lacked graphical inspection. The figure is a conceptual controller/body signal loop using an authentic source neural schematic and the actual human reference model. The required measurements include neural activity, motion, loading, and all external assistance. The following tools address this gap in the order of dissertation Table 6.1. Sources: submitted Chapter 6, sections Knowledge Gaps and the New Tools; Hunt INRC2 lecture; SESSION1_NEURAL_CONTROLLER_HANDOFF.md."
+  },
+  {
+    "slide": 61,
+    "text": "Dissertation Ch. 6, Table 6.1 · 1–2. Walker and Gait2392-based models 61 The model library links simplified walkers with detailed human mechanics Simplified W2L Human musculoskeletal model",
+    "notes": "The first two rows of Table 6.1 supply complementary test bodies. Li–Deng/W2L is a simplified sagittal controller-transfer example. Gait2392 supplies detailed human musculoskeletal geometry; a separate robot counterpart uses BPA routes and the measured force law. Six floating-base coordinates and seventeen internal coordinates belong to the human model. Do not interpret a small sagittal controller as demonstrated control of every remaining degree of freedom. These source images illustrate model implementations, not one identical controller across bodies. Sources: submitted Chapter 6; MODEL_DIMENSION_AND_CONTROL.md."
+  },
+  {
+    "slide": 62,
+    "text": "Dissertation Ch. 6, Table 6.1 · 3. SNS-Simscape block library and editor 62 Neural blocks connect sensory input to actuator commands",
+    "notes": "SNS-Simscape implements graphical neuron, synapse, sensory, activation, biological-muscle, and BPA-force components. This authentic library figure comes from the submitted component PDF. These blocks support circuit inspection and mechanical coupling; block and reflex demonstrations validate declared component functions. They do not certify an entire walking controller. The loaded-arm response and matched implementation results are retained in questions. Sources: dissertation Table 6.1 and SNS-Simscape library description."
+  },
+  {
+    "slide": 63,
+    "text": "Dissertation Ch. 6, Table 6.1 · 4. SOLIDWORKS-derived robot assembly 63 CAD assemblies bring robot geometry and actuator mechanics into the workflow Geometry, joints, and muscle routes BPA force blocks",
+    "notes": "The SOLIDWORKS-derived robot is a separate integration test. CAD geometry, joint definitions, inertias, and actuator routes are assembled for mechanical simulation; SNS-Simscape supplies neural and actuator components. The displayed source assembly predates the laptop 3-DoF-foot upgrade. Existing robot results retain this earlier model identity. The submitted supported CAD demonstration uses ideal reference tensions/hybrid actuation. A later pressure-pair example uses only two pressure-modeled BPAs and 52 reference-tension routes; neither is a completed 54-BPA neural walking controller. Sources: submitted Chapter 6; current campaign RESULTS_AND_FILES.md CAD media section."
+  },
+  {
+    "slide": 64,
+    "text": "Dissertation Ch. 6, Table 6.1 · 5. MuJoCo–Simulink interface 64 The bridge exchanges muscle commands and sensory measurements SNS-Simscape controller MuJoCo mechanical model Motor output Feedback Matched sensor traces verify the interface",
+    "notes": "The MuJoCo–Simulink interface connects block-programmed neural control to MuJoCo mechanics. Activation commands enter the mechanical model; sensor values return to the controller. The authentic readback plot is the submitted short interface check, with five channels, 80 scored steps, and zero maximum deviation in that test. The question table records 81 samples on the 5 ms grid; scored transitions and saved samples are distinct counts. This is interface verification, not a gait or timing benchmark. Source: submitted Chapter 6, MuJoCo–Simulink integration."
+  },
+  {
+    "slide": 65,
+    "text": "A. J. Hunt, INRC2 Meeting, Intel Labs (Feb 15, 2019) · Table 6.1 experiment drivers 65 Staged experiments separate rhythm, motor output, and local feedback 1 Intrinsic rhythm 2 Timing with expected feedback 3 Motor-output pattern 4 Local sensory refinement Each stage freezes the solution needed by the next",
+    "notes": "Hunt’s four-part instructional method is functional calibration, not the physical curriculum. A: select a free-running CPG with approximately twice the target stepping period. B: replay expected afferents and fit timing at the target cadence. C: freeze timing and fit CPG/PF-to-MN output. D: freeze feedforward settings and fit local Ia/Ib feedback to refine the waveform. These operations are implemented through saved configurations, scripted inputs, parameter fitting, and recorded neural and mechanical responses. In the selected November campaign, intrinsic/timing fits were reused and checked, then four shared local feedback targets and three paired motor-output settings were refined. Physical air, standing, and ground stages remain separate tests. Citation: Hunt, A. J. (2019, February 15). Real-time control of dynamic walking in a dog-like robot. Presented at the 2nd Intel Neuromorphic Research Community Meeting. Diagram: source controller schematic retained from the submitted deck."
+  },
+  {
+    "slide": 66,
+    "text": "Dissertation Ch. 6, Table 6.1 · 7. Literature circuits and variants · Deng et al. (2019) 66 Literature circuits give controlled stimuli a defined neural target Specified intervention: RG +50 nA for 3.876 s Source architecture",
+    "notes": "The source schematic is attributed to Deng et al. (2019). It establishes the hierarchy used to select a rhythm-generator intervention. The adjacent trace is the separate reduced Deng-derived circuit experiment, with a +50 nA RG pulse lasting 3.876 s. This is a neural mechanism test; it is not the public rat120 body controller or the selected human Hunt/PT result. Detailed motor deletions, perturbation layers, and spiking variants remain in questions. Literature models and variant implementations are tools for testing specified mechanisms, not interchangeable physiological ground truth. Sources: dissertation Chapter 6 and Appendix D; Deng et al. (2019); NON_GAIT_AUTHOR_CHOICE_RECORD.md."
+  },
+  {
+    "slide": 67,
+    "text": "Matched Gait source trial · full process and neural-call scopes reported separately 67 Compiled execution reduced complete-process time by 6.82× Runtime scope Native (s) Accelerated (s) Speed-up Complete process 199.624 29.284 6.82× Neural updates 179.079 9.780 18.31× Identical recorded trajectories in the paired test",
+    "notes": "This paired benchmark compares source_native_s1 with source_baseline_s1, not the final ground9 body trial. Whole-process times are 199.623573 and 29.284280 s, including fresh-process startup and capture/diagnostic costs. Accumulated neural calls are 179.079112 and 9.779516 s. Whole-process acceleration is 6.817×; neural calls accelerate 18.312×. Forty-five numeric fields across six saved files agree exactly, including recorded neural, mechanical, and force arrays. Current fully instrumented Gait trials are not universally faster than real time. The old suspended-W2L benchmark retains its own configuration in questions. Source: D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/figures/BACKEND_AND_VALIDATOR_COMPARISON.md."
+  },
+  {
+    "slide": 68,
+    "text": "Human Gait2392 model · Selected RF/HAM subnetwork 68 Rectus femoris and hamstring pathways combine hip and knee inputs Hip flexor PF Knee extensor PF RF integrator RF relay HAM integrator HAM relay Hip extensor PF Knee flexor PF Rectus femoris MN Semimembranosus Semitendinosus Biceps femoris long head PF: pattern formation     RF: rectus femoris     HAM: hamstrings Motor neurons Arrows: excitation Circles: inhibition",
+    "notes": "Selected human Gait2392 / graded biw2lvar-Hunt-PT with a four-cell RF/HAM PF module per leg and the separately enabled autogenic Renshaw repair. Ground9 RC S4 is guided stepping in place with five right/four left qualifying unloaded, whole-foot-mesh-clear swings during 5–13 s. Net vertical assistance is 48.848356% BW and horizontal restraint RMS is 115.560892 N. These measurements use the actual post-physics sample alignment and pelvis-subtree weight 768.756726 N. It is a separate post-submission result, not W2L108 or historical Syn6. The authentic executed right-leg subnetwork has four cells: an RF integrator, a HAM integrator, and their two inhibitory relays. Hip-flexor plus knee-extensor PF inputs converge on RF. Hip-extensor plus knee-flexor PF inputs converge on HAM. Each integrator excites its own relay, which inhibits the opposing integrator. RF drives rectus femoris; HAM drives semimembranosus, semitendinosus, and biceps femoris long head. Sartorius and gracilis retain separate modules. The displayed diagram preserves all twelve incident edges of these cells; full-precision source fields are in the adjacent ledger. This is an engineering adaptation rather than a literal reproduction of the rat biarticular circuit. Source: D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/figures/rfham_selected_subnetwork/CAPTION.md. New EB475WS4 delivery is used only if its provenance is independently confirmed. The presentation schematic uses native editable shapes and preserves the four cells and all twelve incident connections of the selected source ledger. Excitatory arrowheads and inhibitory terminal circles are defined on the slide."
+  },
+  {
+    "slide": 69,
+    "text": "Gait2392 / graded Hunt–PT · selected ground9 RC · 2 Nov 2026 · Recorded activity, right leg 69 The selected circuit links rhythm to patterned motor output RG: rhythm generator   PF: pattern formation   MN: motor neuron",
+    "notes": "Selected human Gait2392 / graded biw2lvar-Hunt-PT with a four-cell RF/HAM PF module per leg and the separately enabled autogenic Renshaw repair. Ground9 RC S4 is guided stepping in place with five right/four left qualifying unloaded, whole-foot-mesh-clear swings during 5–13 s. Net vertical assistance is 48.848356% BW and horizontal restraint RMS is 115.560892 N. These measurements use the actual post-physics sample alignment and pelvis-subtree weight 768.756726 N. It is a separate post-submission result, not W2L108 or historical Syn6. The displayed right-leg RG, four-cell RF/HAM PF, and biceps-femoris-long-head MN traces are three selections from the same 7.663–13.000 s recording. The landscape derivative preserves all original data paths, actual graded-model rest-relative voltages, color/line styles, and y scales. Only axes placement and labels changed. The RF/HAM integration and relay cells are not necessarily equal in amplitude, and these traces are not EMG. Both legs and available hip/knee/ankle MN selections remain in the original source plate and supporting question material. Source: D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/figures/ground9_rc_s4/plots/PRESENTATION_NEURAL.pdf."
+  },
+  {
+    "slide": 70,
+    "text": "Gait2392 / graded Hunt–PT · selected ground9 RC · 2 Nov 2026 · Guided stepping in place 70 The human model takes repeated steps with measured support 5 right / 4 left clear swings 48.8% BW vertical assistance; 115.6 N horizontal guidance",
+    "notes": "Selected human Gait2392 / graded biw2lvar-Hunt-PT with a four-cell RF/HAM PF module per leg and the separately enabled autogenic Renshaw repair. Ground9 RC S4 is guided stepping in place with five right/four left qualifying unloaded, whole-foot-mesh-clear swings during 5–13 s. Net vertical assistance is 48.848356% BW and horizontal restraint RMS is 115.560892 N. These measurements use the actual post-physics sample alignment and pelvis-subtree weight 768.756726 N. It is a separate post-submission result, not W2L108 or historical Syn6. The GIF replays saved states at 1× over 7.663–13.000 s, approximately three cycles. It performs no new integration. The foot-load panel is an exact vector crop of the matching saved mechanics PDF, with force normalized by the same body-weight denominator. Assessment counts apply to 5–13 s, rather than only the shorter replay window. A minimum support threshold and forward progression were not established. Source: D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/RESULTS_AND_FILES.md; D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/figures/ground9_rc_s4/plots/SUPPORT_DECOMPOSITION_5_TO_13.json."
+  },
+  {
+    "slide": 71,
+    "text": "Selected Hunt–PT S5 · matched contact-to-PF strength comparison 71 Quarter-strength contact feedback restored clearance in this test 5 right / 4 left clear swings 2 right / 2 left clear swings",
+    "notes": "Selected human Gait2392 / graded biw2lvar-Hunt-PT with a four-cell RF/HAM PF module per leg and the separately enabled autogenic Renshaw repair. Ground9 RC S4 is guided stepping in place with five right/four left qualifying unloaded, whole-foot-mesh-clear swings during 5–13 s. Net vertical assistance is 48.848356% BW and horizontal restraint RMS is 115.560892 N. These measurements use the actual post-physics sample alignment and pelvis-subtree weight 768.756726 N. It is a separate post-submission result, not W2L108 or historical Syn6. This is the S5 comparison, distinct from the S4 movie. The same RC-enabled controller and body are compared at contact-to-PF scale 0.25 and 1.0, with matching apparatus settings. The whole-foot mesh/unloading assessment finds five right/four left clear swings at quarter strength and two/two at original strength over 5–13 s. Actual right ankle PF channels and bilateral vertical foot forces are shown with their original amplitudes, time stamps, colors, and line styles. PF/DF in the plot means plantarflexion/dorsiflexion; R/L means right/left. Toe-to-dorsiflexion-PF inhibition is stronger in the original condition. The result motivates phase-dependent feedback testing; no such new policy is installed here. Source: D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/figures/stage5_contact_strength_review/CAPTION.md."
+  },
+  {
+    "slide": 72,
+    "text": "Submitted dissertation Discussion, Design Workflow 72 The experiments connect BPA force prediction to measured joint torque Force characterization Physical knee validation",
+    "notes": "The published force model accounts for initial length. The torque experiments identify effects of length offsets, compliance, and bending. The redesigned flexor and extensor then meet selected human targets at the measured angles. Together these results support actuator selection and knee design."
+  },
+  {
+    "slide": 73,
+    "text": "Dissertation future work · Dynamic actuation 73 Dynamic tests must establish how the knee performs during movement Physical knee Actuator and cam geometry",
+    "notes": "The present mechanical validation is isometric. Next tests should measure pressure tracking, force and torque during motion, and repeatability under cyclic loading. Dynamic behavior cannot be inferred from static torque coverage alone."
+  },
+  {
+    "slide": 74,
+    "text": "Future work · Support reduction with explicit movement criteria 74 Further tests must reduce support while preserving clear, alternating steps Reduce lift Reduce guidance Retain clearance and unloading Test vertical support and lateral balance separately",
+    "notes": "Selected human Gait2392 / graded biw2lvar-Hunt-PT with a four-cell RF/HAM PF module per leg and the separately enabled autogenic Renshaw repair. Ground9 RC S4 is guided stepping in place with five right/four left qualifying unloaded, whole-foot-mesh-clear swings during 5–13 s. Net vertical assistance is 48.848356% BW and horizontal restraint RMS is 115.560892 N. These measurements use the actual post-physics sample alignment and pelvis-subtree weight 768.756726 N. It is a separate post-submission result, not W2L108 or historical Syn6. The next lower-lift quarter-strength S5 condition failed the clearance test with only two qualifying swings per foot. A minimum support level has not been established. The proposed next experiments reduce prescribed lift and horizontal/rotational guidance separately while keeping explicit whole-foot clearance, unloading, knee safety, and repeatability criteria. This future work does not relabel guided stepping as independent balance. Source: current campaign RESULTS_AND_FILES.md and COMMITTEE_QA.md."
+  },
+  {
+    "slide": 75,
+    "text": "Future experiment · Test the observed contact-feedback mechanism 75 Contact feedback can be tested at specific gait phases Current result Full contact feedback suppressed swing clearance Proposed comparison Feedback timing Measure Always enabled Reference response Stance only Support and clearance Swing only Dorsiflexor suppression Hold mechanics, support, and the remaining controller fixed",
+    "notes": "Proposed experiment informed by the selected Hunt/PT S5 comparison. First identify stance and swing from the declared foot-load/unloading rules. Compare unchanged always-enabled contact-PF feedback with phase-gated variants, keeping the remaining controller, physical model, and apparatus fixed. Record RG phase, dorsiflexor PF current, MN activity, whole-foot clearance, and loading. No phase-gated controller is implemented or dynamically validated by this slide. This replaces the older W2L-only future-test proposal so that the next experiment follows the new measured failure. Source: current campaign COMMITTEE_QA.md and stage5_contact_strength_review/CAPTION.md."
+  },
+  {
+    "slide": 76,
+    "text": "Submitted dissertation Discussion, Simulation-to-Hardware Workflow 76 Hardware tests can compare predicted and measured neural–mechanical behavior",
+    "notes": "The implemented work covers model conversion and coupled simulation. The dashed hardware branch is future work: run the controller on an embedded system, command valves and pressure, and return measured force, joint state, and contact. Validate the interfaces before testing supported stepping on the physical robot. Source: dissertation Discussion."
+  },
+  {
+    "slide": 77,
+    "text": "Dissertation contributions · New neural demonstration from the November 2 campaign 77 This work advances actuator prediction, joint design, and neural testing Supported Gait2392 Predict BPA force Meet selected knee-torque targets Test neural control with measured support",
+    "notes": "The force model accounts for initial length, pressure, and contraction. Experimentally identified design factors improve joint-torque prediction and guide knee designs that meet the selected human targets at measured angles. The neural tools enable inspectable controller construction and repeated, measured body experiments. The third panel shows the selected post-submission guided Gait2392 result: five right/four left qualifying clear unloaded swings, 48.8% BW net vertical assistance, and 115.6 N horizontal guidance. It is not unsupported walking. The contact-strength comparison demonstrates a specific controller-body experiment enabled by the workflow. Mechanical calibration, functional circuit checks, and supported stepping supply complementary evidence. Hardware/dynamic validation and further support reduction remain future work. Sources: dissertation conclusion and D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/RESULTS_AND_FILES.md."
+  },
+  {
+    "slide": 78,
+    "text": "Biomimetic robots improve engineering and enable biological experiments Asano et al. (2016); Bolen and Hunt (2019); Dissertation Ch. 1 Biological mechanisms Controlled robot experiments 78",
+    "notes": "Pacing: finish by 01:15 (30 seconds). Our first goal is better autonomous robots on unstructured terrain, using biological mechanics and neural control to exploit compliance and energy recovery. Our second goal is to use robots for biomechanical and neuroscience experiments that are impossible in humans. Better prosthetic and orthotic devices are a third goal. Four knowledge and tool gaps organize this dissertation. Sources: Asano et al. (2016); Bolen and Hunt (2019); Dissertation Ch. 1"
+  },
+  {
+    "slide": 79,
+    "text": "Shorter BPAs deliver less maximum isometric force Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3 Resting length changes the force available to a robot design 79",
+    "notes": "Pacing: finish by 02:45 (30 seconds). At 620 kPa, shorter actuators produce less maximum force in both tested diameters. The manufacturer prediction has the opposite trend. Resting length therefore needs to enter the force model. Sources: Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3"
+  },
+  {
+    "slide": 80,
+    "text": "A biomechanical model becomes neuromechanical when control and feedback close the loop Dissertation Ch. 6, Table 6.1 Activation Sensory return 80 Neural\ncontroller Length / velocity\nfeedback",
+    "notes": "Pacing: finish by 08:15 (30 seconds). The first two sections establish actuator force and delivered joint torque. A neuromechanical model adds a neural controller that activates those actuators and receives sensory measurements from the moving body. This creates a new question: which neural pathways and feedback signals can organize useful movement? Begin with the original walker integration. Sources: Dissertation Chs. 4–6"
+  },
+  {
+    "slide": 81,
+    "text": "The newer bilateral-RG controller also moves with the root fixed Native AnimatLab recording supplied by Ben; newer saved W2L controller 81",
+    "notes": "The diagram at left is the original shared-RG circuit, included for architectural context. The animation at right is Ben’s w2l_bilateralRGfreeze.gif: the newer saved model with type II and contact feedback and separate left/right RG layers, with its Root fixed. This does not demonstrate self-supported walking. Recording predates the subsequently requested body/joint alignment review; preserve it as recorded, without substituting a corrected-model claim."
+  },
+  {
+    "slide": 82,
+    "text": "The same mechanical coordinates can be tested with different actuator models Dissertation Ch. 6, Table 6.1 82 BPA force models\n10 mm  |  20 mm",
+    "notes": "Pacing: finish by 15:00 (30 seconds). A converted mechanical model separates joint coordinates from the actuator law. Biological muscle and measured BPA force functions can therefore be tested with explicit parameters and interfaces. This supports controlled comparisons, while the different force laws retain their own assumptions. Transition: examine the supported human-model motion against its reference. Sources: Dissertation Ch. 6 · Model and force interfaces"
+  },
+  {
+    "slide": 83,
+    "text": "The supported human model retains hip-angle errors across repeated cycles Dissertation Appendix D · Supported human-model comparison with OpenSim IK 83 Gait cycle (%)",
+    "notes": "Pacing: finish by 15:30 (30 seconds). These are the supported human-model hip traces, not the earlier robot torque results. Each leg is aligned to its own loading event, with no fitted phase, offset, or amplitude correction. Repeated rhythm is visible, alongside deviations from the reference hip trajectory. Transition: the knee provides another check of the same movement. Sources: Dissertation Ch. 6 and Appendix D The horizontal coordinate is normalized gait cycle in percent. Blue shading is cycle-to-cycle variation in the model; the dashed trace is the OpenSim inverse-kinematics reference. Both plots show hip angles, not forward progression."
+  },
+  {
+    "slide": 84,
+    "text": "Contact timing adds a mechanical check beyond rhythmic joint angles Dissertation Appendix D · Supported human-model comparison with OpenSim IK 84 Solid blue: model     Dashed black: OpenSim IK Right Left Duty: 0.71 right · 0.65 left · reference 0.61",
+    "notes": "Pacing: finish by 16:30 (30 seconds). Supported human-model duty factors are 0.71 and 0.65, compared with the reference 0.61. The contact panel makes stance and unloading differences visible alongside the joint-angle comparisons. These measures help locate what still needs improvement. Transition: also check the converted actuator-force implementation. Sources: Dissertation Ch. 6 and Appendix D Panel order follows the complete source figure: right, then left. Stance fraction is the fraction of aligned cycles in contact at each phase, rather than a single-cycle binary contact signal. Duty-side labels corrected against overlay_metrics.json: right0.710142857; left0.648571429. Underlying figure/data unchanged."
+  },
+  {
+    "slide": 85,
+    "text": "Matched-input force agreement varies across the converted muscles Dissertation Appendix D · Matched poses and OpenSim static-optimization activations 85 Vastus lateralis: R² = 0.94 Semimembranosus: R² = 0.57 0 20 40 60 80 100 0 20 40 60 80 100 % of analyzed walk % of analyzed walk Each curve is divided by its own peak",
+    "notes": "Pacing: finish by 17:00 (30 seconds). A motion mismatch can arise from mechanics as well as neural control. The saved muscle-force comparison checks the converted implementation under specified conditions. It helps identify actuator discrepancies before attributing all movement differences to the controller. Transition: the graphical tools make those neural and mechanical components inspectable. Sources: Dissertation Ch. 6 and Appendix D Shown are two panels from the six-muscle comparison. Vastus lateralis has R² 0.94 and reported lag one frame; semimembranosus has R² 0.57 and lag zero frames. The source uses identical poses and OpenSim static-optimization activations for the comparison. The normalized traces do not establish equality of absolute force. The complete six-panel source remains in the reproducible assets. Each human and BPA force curve is normalized to its own peak; this comparison concerns curve shape, not absolute force agreement."
+  },
+  {
+    "slide": 86,
+    "text": "The graphical editor exposes neural connection parameters Dissertation Chapter 6 · SNS-Simscape graphical editor 86",
+    "notes": "Pacing: finish by 17:30 (30 seconds). The third contribution is the SNS-Simscape library and its editor. The library provides reusable neuron, synapse, sensory, activation, and muscle components. Their visible interfaces let researchers inspect a pathway and change an identified mechanism. Transition: begin with the neuron’s membrane-current implementation. Sources: Dissertation Ch. 6 and Appendix D This is the implemented editor, showing the palette, example circuit, and selected connection properties. Neural parameters remain inspectable in the property panel before a Simulink model is built."
+  },
+  {
+    "slide": 87,
+    "text": "The neuron block exposes the current balance that drives membrane voltage Table 6.1 · contribution 3 87",
+    "notes": "Pacing: finish by 18:00 (30 seconds). The implemented neuron block makes the current balance and membrane-voltage integration inspectable. Parameters and inputs can be traced through the block instead of being hidden in a complete walker model. Transition: synapse blocks specify how presynaptic activity changes that current. Sources: Dissertation Ch. 6 and Appendix D"
+  },
+  {
+    "slide": 88,
+    "text": "Synaptic current depends on conductance and the postsynaptic voltage Dissertation Ch. 6, Table 6.1 Iₛᵧₙ = ∑gEₛᵧₙ − V∑g Conductance and reversal potential 88",
+    "notes": "Pacing: finish by 18:30 (30 seconds). The synapse provides conductance-weighted reversal-potential and conductance signals. Their combination with postsynaptic voltage determines current and preserves the driving force of the conductance model. This interface makes sign and saturation choices inspectable during translation. Transition: the actuator side must preserve its own measured force law. Sources: SNS-Simscape library · Conductance-based synaptic current"
+  },
+  {
+    "slide": 89,
+    "text": "The BPA blocks evaluate the measured force model during simulation Dissertation Chapter 6 · SNS-Simscape BPA blocks; Bolen et al. (2026) 89",
+    "notes": "Pacing: finish by 19:00 (30 seconds). The diameter-specific force blocks reuse the characterized BPA relationship rather than requiring each researcher to rebuild it. Muscle length, pressure, and resting length remain explicit inputs. This carries the first dissertation contribution into a reusable simulation component. Transition: sensory encoders close the return path. Sources: SNS-Simscape library · Dissertation Chs. 3 and 6 The displayed BPA10mm block is from the actual library export. Diameter selects the fitted coefficients; current length, pressure, and initial length determine force using the same normalized static model as the actuator chapter. This static force block does not establish valve or pneumatic transient dynamics."
+  },
+  {
+    "slide": 90,
+    "text": "Afferent blocks convert muscle state into sensory input Dissertation Chapter 6 · Implemented Ia spindle and Ib tendon-organ blocks 90 Muscle length and velocity Muscle force",
+    "notes": "Pacing: finish by 19:30 (30 seconds). The spindle encoder uses muscle length and velocity, while the tendon encoder uses force. Keeping these inputs explicit allows a pathway intervention to be defined at the sensory interface. The encoders are model components with stated assumptions. Transition: the editor assembles these components into an inspectable circuit. Sources: SNS-Simscape library · Ia spindle and Ib tendon encoders The left image is the actual IaMuscleSpindle block and the right is IbGolgiTendon. These are sensory encoders: they convert the supplied mechanical quantities to neural inputs. Correct encoding does not itself establish the physiological targets of every downstream synapse."
+  },
+  {
+    "slide": 91,
+    "text": "The editor assembles circuits while retaining inspectable connection parameters Table 6.1 · contribution 3 91",
+    "notes": "Pacing: finish by 20:00 (30 seconds). The running editor shows the reduced knee circuit, its component palette, and the selected connection’s parameters. Circuit data remain inspectable and can be saved as JSON. Generated model export currently supports the neural vocabulary; sensory and muscle coupling remain separate assembly work. Transition: test a constructed pathway through a mechanical outcome. Sources: Dissertation Ch. 6 and Appendix D"
+  },
+  {
+    "slide": 92,
+    "text": "The loaded-arm model tests a complete sensory-to-motor feedback pathway Table 6.1 · contribution 3 92",
+    "notes": "Pacing: finish by 20:30 (30 seconds). The loaded arm links a mechanical disturbance to sensory feedback, interneurons, and motor output. The circuit retains all six connections shown in the corrected dissertation figure. This is a functional component demonstration with an observable mechanical outcome. Transition: compare the arm’s sag with and without that feedback. Sources: Dissertation Fig. 6.5 · Loaded-arm mechanism and corrected six-connection circuit"
+  },
+  {
+    "slide": 93,
+    "text": "A transient input produces a measurable knee response and recovery Table 6.1 · contribution 3 1.09° peak response at 111 ms · recovery at 6.355 s 93",
+    "notes": "Pacing: finish by 21:30 (30 seconds). After settling, a 2 nA, 30 ms input produces a 1.09-degree response at 111 ms and recovery by 6.355 seconds. The engineering comparison changes six saturation-width parameters. This knee demonstration uses a simple actuator law, separate from the characterized BPA model. Transition: move from component mechanisms to a CAD-derived assembly. Sources: Dissertation Ch. 6 and Appendix D"
+  },
+  {
+    "slide": 94,
+    "text": "Coupling a CAD model requires actuator and sensory interfaces Dissertation Chapter 6 · CAD model and neural–mechanical interfaces 94 Length and velocity → Neural controller ↓ Activation / pressure Actuator force model ←",
+    "notes": "Pacing: finish by 22:30 (30 seconds). The mechanical assembly provides coordinate motion and loads. Actuator blocks apply forces, and sensory blocks return the associated state to neural pathways. This coupling defines an experimental model before any claim about successful movement. Transition: a separate CAD-derived MuJoCo model provides whole-body integration tests. Sources: Dissertation Ch. 6 · SNS-Simscape assembly and actuator interfaces This is an interface diagram, not a claim that every CAD route is driven by a neural BPA. The submitted CAD demonstration used hybrid ideal tensions and support; the particular actuator implementation must be identified for each trial. Sensory values return from mechanics, while neural commands pass through the selected actuator model."
+  },
+  {
+    "slide": 95,
+    "text": "A separate CAD-derived model supports whole-body integration tests Table 6.1 · contribution 4 95",
+    "notes": "Pacing: finish by 23:00 (30 seconds). The separate AH001 MuJoCo model retains four-bar knees, spherical hips, and selected actuator routes. Its supported hybrid controller provides a whole-body integration test. These tests use reference tensions rather than calibrated BPA forces. Transition: a matched intervention tests whether added separation control changes leg crossing. Sources: Dissertation Ch. 6 and Appendix D"
+  },
+  {
+    "slide": 96,
+    "text": "Table 6.1 · contribution 4 96 Physical torque tests and neural checks answer different questions Measured knee torque Physical isometric validation Matched neural traces Agreement for specified inputs Supported stepping Motion with external assistance Physiological equivalence Not established",
+    "notes": "Separate physical knee validation, circuit agreement, supported locomotor trials, and complete controller design. A successful electrical check does not establish correct biological routing or whole-body balance. The complete design review remains open. Source: DISSERTATION_FIRST_PASS_FIX.md, November 1–2, 2026."
+  },
+  {
+    "slide": 97,
+    "text": "The MuJoCo–Simulink bridge links graphical controllers to an existing mechanical model Table 6.1 · contribution 5 SNS-Simscape controller MuJoCo–Simulink bridge MuJoCo mechanical model Activation commands → ← Sensory measurements 97",
+    "notes": "Pacing: finish by 24:30 (30 seconds). The fifth contribution is the MuJoCo–Simulink integration. It sends activation commands to the MuJoCo model and returns sensory measurements to graphical neural components. The workflow keeps the command and measurement interfaces explicit. Transition: verify those interfaces with saved tests before interpreting a coupled movement. Sources: Dissertation Fig. 6.2 · Implemented-tools workflow"
+  },
+  {
+    "slide": 98,
+    "text": "Bridge checks exercise commands, sample rates, and sensor return Table 6.1 · contribution 5 Interface check Observed result Activation command Force: 0 → −549.9 N Two-rate execution 81 samples on a 5 ms grid Sensor return Five channels match reference 98",
+    "notes": "Pacing: finish by 25:00 (30 seconds). The saved checks cover actuator response to activation, operation at specified sample rates, and sensor return against a Python reference. These are separate interface checks. Their role is to identify translation errors before a coupled-model experiment. Transition: inspect the sensor overlay, where numerical agreement can be scored directly. Sources: Saved bridge tests A–C · SNS-Simscape MuJoCo integration"
+  },
+  {
+    "slide": 99,
+    "text": "Table 6.1 · contribution 5 99 The historical full-s3k trial included central sensory feedback Dissertation full-s3k trial Central Ia, II, and Ib active Ia inhibition enabled Renshaw gain = 0.5 Later standing export Central gains set to zero 410-neuron condition A different saved configuration",
+    "notes": "The Appendix D full-s3k score −186.4 traces to prune_matrix.py, v10 multipliers plus s3k_trial34_full_params.json, and stage 5. Central Ia, flexor II, extensor II, and Ib gains were positive. The later 410-neuron standing export has zero central gains and cannot illustrate this historical full condition. A reconstruction using current code is not a byte-identical historical replay. Source: DISSERTATION_TRIAL_PROVENANCE.md."
+  },
+  {
+    "slide": 100,
+    "text": "An isolated rhythm circuit makes intrinsic neural dynamics inspectable Table 6.1 · contribution 6 100",
+    "notes": "Pacing: finish by 27:00 (30 seconds). The isolated circuit removes the complete mechanical task while exposing rhythm generation and its neural parameters. This gives the first training step a measurable target. Transition: compare a defined driven rhythm core across implementations before using it in a larger coupled model. Sources: SNS-Simscape · SNS_Deng_RG model diagram"
+  },
+  {
+    "slide": 101,
+    "text": "The driven W2L core reproduces timing across NumPy and Simulink Table 6.1 · contribution 6 1.000 s period · 10 bursts · correlation ≥ 0.99996 101",
+    "notes": "Pacing: finish by 27:30 (30 seconds). Both implementations receive the same input protocol. Their burst period is 1.000 second, all ten expected bursts are reproduced, and voltage correlation is at least 0.99996. The enlarged traces show the left rhythm-generator pair, with the complete four-channel comparison in the question slides. Transition: remove the phasic sensory input to test what sustains the alternation. Sources: Dissertation Fig. 6.7 · Matched driven W2L rhythm core"
+  },
+  {
+    "slide": 102,
+    "text": "Table 6.1 · contribution 6 102 The historical syn6 controller requires a heel-pathway review Heel excites InE and InF InE inhibits RG-F InF inhibits RG-E The combined phase response requires a functional test",
+    "notes": "The historical syn6 recipe has nonzero heel/toe drive and zero pooled central Ib gain. General direct central Ia/II projections are absent, while local sensory/reflex routes remain. Heel excites both ipsilateral RG interneurons, whose outputs inhibit opposite half-centers. This matters in the historical contact-driven recipe, not only the later silent standing export. The intended combined phase response needs a functional test. Absence of direct central Ia/II is not a universal defect: Di Russo uses phase oscillators with heel-event resets. Syn6 combines NMF channels with half-centers and is an engineered hybrid, not a literal Di Russo replication. Source: GAIT_DISSERTATION_RECIPE_REVIEW.md and DEFENSE_DESIGN_DECISIONS.md, November 2, 2026."
+  },
+  {
+    "slide": 103,
+    "text": "Staged tests separate rhythm, feedback, and mechanical support Table 6.1 · contribution 6 Condition introduced Question tested Suspended, without sensory feedback Can the circuit generate activity? Sensory feedback How does feedback reshape the output? Standing and perturbations Can the model maintain posture? Supported ground contact Does physical coordination meet the criterion? Reference and intervention comparisons Which mechanism or mismatch explains the result? 103",
+    "notes": "Pacing: finish by 28:30 (30 seconds). The five-stage curriculum turns the four training principles into an experiment sequence. It progresses from neural timing through sensory and posture checks to supported movement and reference comparisons. Each stage has its own acceptance measures. Transition: first check whether a saved supported controller reproduces its reference run. Sources: Dissertation Ch. 6, curriculum Table 6.2"
+  },
+  {
+    "slide": 104,
+    "text": "A saved W2L controller reproduces its trajectory in four independent replays Table 6.1 · contribution 6 4/4 independent replays 104",
+    "notes": "Pacing: finish by 29:00 (30 seconds). Four independent 30-second reference replays reproduce the same saved supported W2L trajectory. This establishes numerical repeatability for that specified configuration. It does not establish robustness to a new model or task. Transition: change parameters locally and test whether the motion persists. Sources: Dissertation Appendix D · Saved supported W2L replay record"
+  },
+  {
+    "slide": 105,
+    "text": "The supported W2L result persists in twelve local gain-perturbation reruns Table 6.1 · contribution 6 12/12 tested local perturbations · ±1% gains 105",
+    "notes": "Pacing: finish by 29:30 (30 seconds). All twelve tested local gain perturbations retain the accepted supported outcome. The perturbations are plus or minus one percent around the saved controller. This is a local sensitivity check with a specified acceptance gate. Transition: the experiment drivers also apply timed stimuli and remove identified pathways. Sources: Dissertation Appendix D · ±1% gain perturbation check"
+  },
+  {
+    "slide": 106,
+    "text": "Experiment drivers compare a fixed controller under specified pathway removals Table 6.1 · contribution 6 106",
+    "notes": "Pacing: finish by 30:00 (30 seconds). These frozen-controller interventions remove named sensory and commissural pathways without retuning. Left and right contact-event counts reveal different responses across removals. The comparison makes an intervention observable under the same harness-supported model. Transition: literature circuit phenomena provide further targets for this testing approach. Sources: Dissertation Appendix D · W2L stimulus and pathway-removal experiments"
+  },
+  {
+    "slide": 107,
+    "text": "Literature circuits define mechanistic tests for translated controllers Deng et al. (2019) · Dissertation Table 6.1, literature-controller tools 107",
+    "notes": "Pacing: finish by 30:30 (30 seconds). The final Table 6.1 contribution includes literature-based circuit translations and encoding variants. The Deng organization motivates a reduced circuit in which rhythm-generator and downstream interventions can be compared. Translation alone does not establish a running biological model. Transition: ask whether a deleted motor burst resets the rhythm. Sources: Dissertation Ch. 6 and Appendix D"
+  },
+  {
+    "slide": 108,
+    "text": "Downstream stimuli can delete motor bursts while preserving rhythm phase Table 6.1 · contribution 7 108 Phase shift: 0.000 · Blue: stimulus · Dashed: baseline",
+    "notes": "Pacing: finish by 31:30 (30 seconds). With the same two-period protocol, the pattern-formation and motoneuron interventions delete motor output while the reported rhythm phase shift remains 0.000. The distinction depends on both the circuit layer and stimulus duration. Transition: encoding choice also changes the timing of the translated rhythm. Sources: Dissertation Ch. 6 and Appendix D"
+  },
+  {
+    "slide": 109,
+    "text": "Measured actuator and joint results make mechanical design choices testable Dissertation Chs. 3–4 · Mechanical contributions Actuator force Joint prediction Physical validation 109",
+    "notes": "Pacing: finish by 32:30 (30 seconds). The mechanical contributions connect resting-length-dependent BPA force, corrected Joint torque, and physical torque validation. The design factors reduce prediction errors, while the redesigned routes meet the selected human targets at the measured points. Transition: the evidence and software contributions make neural-control questions more explicit. Sources: Dissertation Chs. 3–4 · Mechanical contributions"
+  },
+  {
+    "slide": 110,
+    "text": "Dissertation Ch.6 · Circuit translation and specified stimuli 110 Circuit tests connect a published control hypothesis to an implemented model Imported rat-model organization Separate reduced-circuit test",
+    "notes": "Source circuits and experimental protocols provide separate checks on a translated controller. Each pathway must identify its source signal, target, sign, and laterality. The stimulus test measures the implemented response. This slide does not claim a complete replication of biological locomotion. SADb details are reserved for the final question section. The left diagram organizes the imported public biarticular rat model. The right result is a separate reduced14-neuron Deng-derived deletion experiment. This is not a matched replication of the complete imported model."
+  },
+  {
+    "slide": 111,
+    "text": "Dissertation Ch. 6, Model construction and neural-controller interfaces 111 Numerical agreement and physiological pathway checks answer different questions Numerical checks Units and physical time Input ranges and scaling Reference / accelerated agreement Pathway checks Actual sensory source Correct target and sign Response at the intended phase",
+    "notes": "The new review verified 77 hashed evidence files across 15 family review rows. Units, clocks, input ranges, cache use, and accelerated/reference agreement establish numerical contracts. Target identity, sign, and phase response require additional pathway tests. The complete design gate remains closed. Source: DISSERTATION_FIRST_PASS_FIX.md."
+  },
+  {
+    "slide": 112,
+    "text": "Matched rhythm cores reproduce the same driven bursts Dissertation Ch. 6 and Appendix D · Current saved verification records 1.000 s period · 10 expected bursts · correlation ≥ 0.99996 112",
+    "notes": "Question slide. Under the matched phasic-drive protocol, both implementations produce the ten expected bursts with a 1.000 s period and correlation of at least 0.99996. Removing those phasic inputs latches both. The result establishes agreement for this defined core and protocol. Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records"
+  },
+  {
+    "slide": 113,
+    "text": "The knee model produces a transient sensory response Dissertation Ch. 6 and Appendix D · Current saved verification records 2 nA for 30 ms 1.09° at 111 ms Recovery at 6.355 s Six neural saturation widths changed in this configuration 113",
+    "notes": "Question slide. The knee example applies 2 nA for 30 ms after settling. The response peaks at 1.09° at 111 ms and meets the recovery thresholds at 6.355 s. Six neural saturation widths changed. This is an engineering demonstration of the implemented blocks. Sources: Dissertation Ch. 6 and Appendix D · Current saved verification records"
+  },
+  {
+    "slide": 114,
+    "text": "Physical dimensions differ from prediction settings Torque manuscript, Physical Tests · Dissertation Appendix C dimensions Actuator Resting length, mm Tendon length, mm Flexor 1 561 28 Flexor 2 560 30 Extensor 1 828 92 Extensor 2 826 85 Prediction inputs: flexor 561.49 / 5.00 mm; extensor 827.74 / ≈92.49 mm 114",
+    "notes": "Question slide. These rows contain measured resting and tendon lengths. Prediction settings differ and remain identified separately. In particular, retain the nominal 562 mm prediction label rather than replacing it with a measured length. Sources: Torque manuscript, Physical Tests · Dissertation Appendix C dimensions"
+  },
+  {
+    "slide": 115,
+    "text": "Stimulation duration changes the deletion interpretation stimulus_results_all.csv · Current Appendix D layer-stimulus protocols 115 Protocol RG shift (cycles) Motor shift (cycles) RG, two periods 0.211 0.211 PF, two periods 0.000 0.000 MN, two periods 0.000 0.000 PF, one second 0.000 0.208",
+    "notes": "The two-period stimuli delete two expected motor bursts. RG stimulation also changes the rhythm phase by 0.211 cycles. PF and MN stimulation in that protocol preserve the original schedule. A separate one-second PF pulse shifts motor timing by 0.208 cycles while the RG clock is unchanged. Thus stimulus duration and the measured layer both matter. Source: submitted dissertation Chapter 6 and Appendix D, reduced Deng-derived circuit; stimulus_results_all.csv."
+  },
+  {
+    "slide": 116,
+    "text": "AH001_20261028/PLACEMENT_RECOMMENDATION.md · asset_provenance.json 116 The submitted CAD model used ideal tensions and substantial support Hybrid actuation External support Integration test",
+    "notes": "The submitted CAD-derived robot is an integration demonstration. Preserve its ideal-reference-tension/hybrid description. Later pressure-pair tests are distinct conditions. The audit identified mechanical initialization issues and incomplete IaIN/IIIN/Renshaw organization. The implementation should not be described as a complete neural pneumatic controller. Source: DISSERTATION_MODEL_MAP.md and DEFENSE_DESIGN_DECISIONS.md."
+  },
+  {
+    "slide": 117,
+    "text": "Reported force comparisons favor the model in the shown cases Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3 Measured-versus-predicted force at the two displayed actuator lengths 117",
+    "notes": "Question slide. The diagonal indicates equality between measured and predicted force. Preserve the model identities and the two tested lengths. These source panels compare the reported cases. Sources: Bolen et al. (2026), Actuators 15(5):230 · Dissertation Ch. 3"
+  },
+  {
+    "slide": 118,
+    "text": "Joint motion and stance differ from the OpenSim walking reference Submitted human-model comparison · Dissertation Ch. 6 and Appendix D 118 Blue: model mean ± SD     Dashed black: OpenSim IK Gait cycle (%)",
+    "notes": "The same eight original panels are rearranged into two groups for legibility: hip and knee on the left, ankle and stance fraction on the right. The blue curve and band show the model mean and standard deviation; black dashed curves show the OpenSim inverse-kinematics reference. These differences illustrate the limits of the supported result. A finite trace comparison is not proof of biological equivalence or global walking stability. Source: submitted dissertation Chapter 6 and Appendix D; original IK comparison figure. No plot values or colors changed."
+  },
+  {
+    "slide": 119,
+    "text": "The saved AH001 replay shows supported hybrid motion AH001_20261028/asset_provenance.json · saved 20–32 s interval Optional 12-second replay · same supported-control diagnostic 119",
+    "notes": "Question slide. Play the saved 20–32 s AH001 interval if useful. It illustrates the same supported hybrid-control condition. Use slide 48 for its assumptions and slide 79 for the matched diagnostic measures. Sources: AH001_20261028/asset_provenance.json · saved 20–32 s interval"
+  },
+  {
+    "slide": 120,
+    "text": "The corrected model predicts a cam route with torque headroom Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4 +30.83% above required envelope · 269–507 kPa predicted pressure 120",
+    "notes": "Question slide. The adopted cam route predicts at least 30.83% margin above the required envelope, which includes 5% overshoot. The predicted pressure requirement is 269–507 kPa. The next comparison tests the built route. Sources: Dissertation Ch. 4 · Current knee-torque manuscript, §§3–4"
+  },
+  {
+    "slide": 121,
+    "text": "Half-weight support delays the fall but does not stabilize either model Native AnimatLab | matched mechanics | unchanged saved controllers 121",
+    "notes": "Eight baselines, two saved controllers by four support/contact conditions. Partial support is a constant 205.4031 N positive-Y force at Root, 50% of declared 41.919 kg weight at gravity 9.8 m/s^2. Root is free in both fall conditions. There is no balance or rotational constraint. Both controllers fall. Root first passes below 0.5 m at 1.103 versus 1.790 s (legacy) and 0.999 versus 2.077 s (newer), without versus with support. The fixed-root air and belt trials retain Root Y=0.99298 m. The newer partly supported model later moves below belt height. No unsupported walking is demonstrated."
+  },
+  {
+    "slide": 122,
+    "text": "PF and RG pulses produce different motor responses in the saved controllers Deng et al. (2019), Biomimetics 4(1):21 | pulse protocol transferred to W2L 122",
+    "notes": "Protocol transfer from Deng 2019 figures 8-10: -10 nA for 100 ms at t=2.0-2.1 s, applied separately to L Hip PF ext and L RG ext. Plot shows L Hip MN ext in air for both saved controllers, with the unperturbed trace in gray. Both Root and floors are configured so all contact counts are zero. All four mechanical conditions were also tested and are available in the campaign folder. This is a transfer of the pulse protocol to W2L, not an exact replication of the rat model. Source https://www.mdpi.com/2313-7673/4/1/21"
+  },
+  {
+    "slide": 123,
+    "text": "The saved controllers show different phase responses with mechanical contact Deng et al. (2022), Biomimetics 7(4):226 | pulse protocol transferred to W2L 123",
+    "notes": "Protocol transfer: +/-0.5 nA to L RG flx IN, duration 5% of the measured baseline period, ten phases 0.05 to 0.95, both saved controllers in air and on the moving belt. Phase reference: L RG ext adaptive-midrange upward crossing. Positive shift is an advance of the first post-stimulus cycle relative to baseline, divided by the baseline period. Baseline periods: legacy air/belt 0.443 s; newer air 0.493 s; newer belt 0.4645 s. The newer controller has four Type II adapters, four contact adapters, and separate L/R RGs. Gains are unchanged. The comparison does not isolate individual feedback contributions. We did not replicate the original rat model, 1/2-Hz retuning, or synaptic-strength sweep. Source https://www.mdpi.com/2313-7673/7/4/226"
+  },
+  {
+    "slide": 124,
+    "text": "The same selected controller passed the first four physical stages Selected Hunt–PT controller · Saved-condition validation 124 Physical condition Result 1. Air, rhythm test Pass 2. Air, sensory feedback Pass 3. Supported standing Pass 4. Supported ground steps Pass, 5 right / 4 left 5. Contact-PF scale 0.25 Pass, 5 right / 4 left Stage 5 changes contact-feedback strength",
+    "notes": "Selected human Gait2392 / graded biw2lvar-Hunt-PT with a four-cell RF/HAM PF module per leg and the separately enabled autogenic Renshaw repair. Ground9 RC S4 is guided stepping in place with five right/four left qualifying unloaded, whole-foot-mesh-clear swings during 5–13 s. Net vertical assistance is 48.848356% BW and horizontal restraint RMS is 115.560892 N. These measurements use the actual post-physics sample alignment and pelvis-subtree weight 768.756726 N. It is a separate post-submission result, not W2L108 or historical Syn6. The nominal RC-enabled saved controller passed fresh air stages 1–2, supported standing 3, and supported ground stepping 4. The quarter-strength S5 extension also passes, but its contact-PF scale differs from S4. Full-strength S5 and the next lower-lift rung fail clearance. Physical stage numbers do not identify Hunt A–D calibration operations. The result is a feasible tested candidate, not proof of global optimality or normal walking. Source: D:/Users/Ben Bolen/NeuroCampaign_20261102_9h/RESULTS_AND_FILES.md; ALL_CONTROLLER_DISPOSITION_20261102.md."
+  },
+  {
+    "slide": 125,
+    "text": "Measured vertical assistance includes lift and restraint Gait2392 / graded Hunt–PT · selected ground9 RC · 2 Nov 2026 · Actual aligned 5–13 s force record 125 Vertical contribution % body weight Prescribed lift 40.051 Signed restraint 8.797 Net assistance 48.848 Horizontal restraint RMS: 115.6 N",
+    "notes": "Selected human Gait2392 / graded biw2lvar-Hunt-PT with a four-cell RF/HAM PF module per leg and the separately enabled autogenic Renshaw repair. Ground9 RC S4 is guided stepping in place with five right/four left qualifying unloaded, whole-foot-mesh-clear swings during 5–13 s. Net vertical assistance is 48.848356% BW and horizontal restraint RMS is 115.560892 N. These measurements use the actual post-physics sample alignment and pelvis-subtree weight 768.756726 N. It is a separate post-submission result, not W2L108 or historical Syn6. Mean superior support is 40.051043% BW explicit lift plus 8.797312% BW signed vertical restraint, totaling 48.848356% BW. The selected denominator is the 78.3646 kg pelvis subtree, weight 768.756726 N. Horizontal restraint RMS is 115.560892 N (15.03% BW), separate from vertical assistance. The original source anatomical masses total 75.1646 kg; 32 numerical follower frames have 0.1 kg each. No mechanics were changed for this deck. Source: SUPPORT_DECOMPOSITION_5_TO_13.json and reproducibility/MASS_PROVENANCE.json."
+  },
+  {
+    "slide": 126,
+    "text": "NumPy and Simulink reproduce the same driven W2L rhythm Submitted W2L neural-core comparison 126",
+    "notes": "Preserved submitted result, separate from the new human ground9 study. With matched parameters and input signals, the selected driven W2L neural core has a 1.000 s period, ten expected bursts, and trace correlation at least 0.99996. This demonstrates agreement for that declared core/protocol, rather than arbitrary full-controller equivalence. Source: submitted Chapter 6."
+  },
+  {
+    "slide": 127,
+    "text": "Sensory feedback reduces forearm sag in the loaded-arm test SNS-Simscape component verification · 7.85° to 2.00° final sag 127",
+    "notes": "Preserved submitted SNS-Simscape component demonstration. Under the specified cup-loading protocol, feedback reduces final forearm sag from 7.85 degrees to 2.00 degrees. This verifies a coupled sensory-to-motor response in the implemented blocks, rather than locomotor balance. Source: dissertation Chapter 6 loaded-arm reflex example."
+  },
+  {
+    "slide": 128,
+    "text": "The circuit keeps motor conversion and force feedback explicit EB475WS4 schematic · historical w2lvar standing export · RF local crop 128 AD: adapter/map     RF: rectus femoris     MN: motor neuron",
+    "notes": "New EB475WS4 drawing, local RF crop of the named historical w2lvar standing export. This is not the current ground9 Hunt/PT controller. The source ledger SHA256 is 49b946c627222e030aa7bc741d7de20faeb804646d791b51548e6d3d704d4e2f and was checked against the local source. MN voltage passes through an adapter/map to muscle activation. Muscle force passes through a separate adapter to Ib and the local inhibitory circuit; Renshaw feedback is also shown. AD is a map, not another neuron. Connections continuing above/right leave this local viewport; the full paired RF/semimembranosus drawing is preserved beside the source SVG. Gray dashed descending PF-to-MN routes have zero effective conductance in this saved standing condition. Original SVG shapes and paths are unchanged. Source: functional_subnetwork_review/drawings/full_motor_loops/README.md and VERIFICATION.json."
+  },
+  {
+    "slide": 129,
+    "text": "Separate sensory maps preserve Ia and II input identities EB475WS4 schematic · historical w2lvar standing export · RF sensory crop 129 Brown: physical signals    Black: neural connections",
+    "notes": "New EB475WS4 drawing, local RF sensory crop of the historical w2lvar standing export, not the current ground9 controller. The spindle symbol identifies encoded muscle length and velocity, without adding new mechanistic receptor dynamics. Separate adapter/maps inject the saved Ia and II currents; Ia, II excitatory, and II inhibitory branches remain distinct. Brown paths denote physical signals/current injection and black paths denote neural connections. Connections continuing below/right lead to motor and antagonist pathways outside this viewport. Source body and complete edge/physical-map tables are preserved in assets/neural/eb475ws4_motor_loops. Source ledger hash 49b946c627222e030aa7bc741d7de20faeb804646d791b51548e6d3d704d4e2f."
+  },
+  {
+    "slide": 130,
+    "text": "Route redesign prioritizes the worst torque shortfall Dissertation Ch. 4 and Appendix C 130 Human target + 5% · required torque direction",
+    "notes": "The design variables are attachment locations, unloaded BPA length, and artificial-tendon length. The adopted design factors remain fixed. A 5% allowance above the selected human muscle is a design target, not a statistical error bound. The desired torque direction is checked; absolute magnitude alone is insufficient. The large weight prioritizes maximum shortfall over the squared-mean term. Finite weights do not guarantee a feasible result; the final pointwise torque-direction and capacity checks establish whether a candidate meets the envelope. The normalization scale has a floor of 1 N m. Human targets are selected monoarticular muscles, not all muscles crossing the knee. Source: Chapter 4, Constrained Knee-Route Redesign, and Appendix C."
+  },
+  {
+    "slide": 131,
+    "text": "Route search penalizes violations of actuator and packaging limits Dissertation Ch. 4 and Appendix C 131 Term Flexor Extensor Rest-length penalty 10⁶ 10⁶ Strain bounds 10⁷ 10⁴ Contraction cap — 10⁶ Off-axis loading 10³ — Wrapping feasibility 10³ — Geometry / length 10⁻² / 10⁻³ 10⁻² / 10⁻³ Cam design also rewards a larger, smoother moment arm",
+    "notes": "These are the adopted route-redesign objective weights, not the gamultiobj identification objectives. Flexor/extensor differences are intentional. Auxiliary terms include a small flexor shape penalty and extensor overshoot penalty. Cam-specific terms include a capped moment-arm reward, a 2.2 mm arm-step penalty, and regularization normalized at 25.4 mm. Geometrically infeasible cases return large sentinel costs before refinement. The dissertation gives full definitions and units; weights alone are not dimensionally portable to a new objective."
+  },
+  {
+    "slide": 132,
+    "text": "A global search supplies candidates for local refinement Dissertation Ch. 4 and Appendix C 132 Design surrogateopt patternsearch Flexor 1,000 15,000 Direct extensor 3,000 15,000 Cam extensor 1,000 1,500 Maximum function evaluations",
+    "notes": "Source budgets are maximum function-evaluation settings, not a guarantee that every search exhausted its budget. Surrogate optimization explores the bounded design space; pattern search refines the selected candidate. Identification uses gamultiobj and must not be conflated with this route-design search. No optimizer was rerun for this deck."
+  },
+  {
+    "slide": 133,
+    "text": "Design factors minimize three normalized torque-error measures Dissertation Ch. 4 and Appendix C 133 Metric Meaning RMSE Typical torque-error magnitude FVU Error relative to measured variation Maximum error Largest absolute torque residual",
+    "notes": "For each fitting test, RMSE, FVU, and maximum absolute residual are divided by their uncorrected values. The objective vector averages each normalized metric over fitting tests. FVU is the source finite-sample variance ratio, and for a fixed test it is proportional to squared RMSE; it is not an independent physical measurement. Candidate ranking also examined validation performance, so the displayed validation is not blind validation. Source: Chapter 4 and Appendix C; saved pinned-knee fronts."
+  },
+  {
+    "slide": 134,
+    "text": "One stiffness pair is shared across flexor and extensor tests Dissertation Ch. 4 and Appendix C 134 Parameter Flexor bounds Extensor bounds Adopted χ₀ (mm) 0 to 20 −20 to 5 +3.937 / −6.378 χ₁ (N/m) 30,000–1,000,000 Fixed 39,978.7 χ₂ (N/m) 5,000–20,000 Fixed 14,733.8 χ₃ — 0 to 1 0.15829 χ₀ differs by configuration; χ₁ and χ₂ are shared",
+    "notes": "Values of record are the dissertation adopted set and rows 77 and 32 of the two authoritative saved fronts. Flexor chi0, chi1, chi2 are fitted first. The extensor fit holds that chi1/chi2 pair fixed while fitting chi0 and chi3. Chi1 and chi2 are effective system stiffnesses, including fixtures and the loading setup; these are not literal bracket material moduli. The pinned-flexor data do not uniquely identify the pair; external redesign requirements contributed to its selection."
+  },
+  {
+    "slide": 135,
+    "text": "Saved solver settings distinguish identification from route design Saved pinned-knee identification records · Appendix C 135 gamultiobj setting Flexor Extensor Population size 150 50 Maximum generations 600 150 Crossover fraction Not archived 0.8 Pareto fraction Not archived 0.35 Function tolerance Not archived 0.001 Extensor: scattered crossover + adaptive-feasible mutation",
+    "notes": "These settings are read from the authoritative saved records. The flexor file records POP=150 and MAXGEN=600, but does not preserve an opts object. The extensor opts object preserves population 50, maximum generations 150, crossover fraction 0.8, scattered crossover, adaptive-feasible mutation, function tolerance 0.001, Pareto fraction 0.35, and maximum stalled generations 100. Do not infer the missing flexor options from current MATLAB defaults. The extensor saved last output stopped at 102 generations; this belongs to the saved final solver call and is not the total cost of all folds. No fitting was rerun for these slides."
+  },
+  {
+    "slide": 136,
+    "text": "The adopted flexor is selected from a trade-off among torque errors Saved flexor front · adopted row 77 · Appendix C 136 Same held-out fold · three objectives · two-dimensional views",
+    "notes": "Two-dimensional projections of the saved three-objective candidate set, restricted to the held-out fold of adopted row 77. The held-out tests are the 46 cm and 40 cm-tendon file labels, corresponding to measured rest lengths 45.7 cm and 40.6 cm; fitting uses the 48 cm and 41 cm file labels, measured 48.5 cm and 41.0 cm. The 47 cm test was not evaluated in this front. Points are retained candidates, not a newly calculated front. Validation entered candidate filtering, so the right-hand panel is not blind validation. See pareto_provenance.json for source hash and exact columns."
+  },
+  {
+    "slide": 137,
+    "text": "The extensor fit preserves the adopted stiffness pair Saved pair-locked extensor front · adopted row 32 · Appendix C 137 χ₁ and χ₂ fixed · χ₀ and χ₃ refitted",
+    "notes": "Two-dimensional projections of the saved three-objective retained candidate set, restricted to the held-out fold of adopted row 32. Validation file indices are 1, 2, and 8; fitting indices are 5, 6, and 7. Early tests 3, 4, and 9 were excluded because attachment geometry shifted. Chi1 and chi2 equal the adopted flexor pair. The refit changes chi0 and chi3. Validation entered filtering and should not be described as blind. Source hashes, selection, and plotted columns are recorded alongside the deck."
+  },
+  {
+    "slide": 138,
+    "text": "χ₄ remains a hypothesis for additional compliance Dissertation Ch. 7, future work in isometric joint design 138 Current result Question for a new experiment χ₀–χ₃ improve the tested predictions Does another compliance term transfer better? χ₁, χ₂ lump several compliant elements Can separate displacement measurements identify them? No fitted or validated χ₄ is claimed",
+    "notes": "Chapter 7 proposes an additional stiffness along the loaded actuator assembly as a hypothesis that might separate effects currently absorbed into the orientation-dependent pair. No chi4 value has been identified or validated in the reported knee tests. A follow-up should independently measure displacement while varying load and attachment orientation, and compare the expanded model with the same held-out tests. This is proposed work, not part of the fitted chi0–chi3 result."
+  },
+  {
+    "slide": 139,
+    "text": "Dissertation Ch. 5 · Sensory Afferent Database (SADb) 139 SADb connects a selected paper to its references and citing papers Selected record Connected papers",
+    "notes": "SADb is the Sensory Afferent Database. These are enlarged, authentic portions of the selected-record and connected-paper panes. The selected Grillner (1985) record retains its bibliographic identity, DOI, species tags, and graph-navigation actions. The adjacent pane lists connected papers. The crop stops before the record curation text. Citation relationships are literature metadata, not biological synapses. Source: submitted Chapter 5 and the local SADb app. Example paper: Grillner, S. (1985), Neurobiological Bases of Rhythmic Motor Acts in Vertebrates, Science, DOI 10.1126/science.3975635."
+  },
+  {
+    "slide": 140,
+    "text": "Dissertation Ch. 5 · Sensory Afferent Database (SADb) 140 SADb combines searchable records with an interactive citation map Select a paper to explore its citation neighborhood",
+    "notes": "This authentic app screenshot shows the Table, Pivot, Bubble map, and Search tabs, the map controls, the selected record, and connected-paper navigation. The lower curation pane is outside the crop. Local Table, Pivot, and Bubble map views work offline. Search (online), DOI destinations, and external papers require an internet connection. The full collection contains 1,393 literature records; 943 is the Papers category displayed by this app snapshot. It is not a deduplicated count of the full collection. Source: submitted Chapter 5 and the local SADb app."
+  },
+  {
+    "slide": 141,
+    "text": "SADb makes 1,393 literature records searchable in one offline collection SADb Explorer · Offline app snapshot 1,393 full-table records · 943 entries in Papers 141",
+    "notes": "Pacing: finish by 11:45 (30 seconds). The full Table view contains 1,393 literature records across the app’s categories. Search and filtering locate relevant sources in the supplied offline snapshot. The 943 Papers category used by Pivot and the citation map is a subset, not the total collection. Transition: inspect the context of a selected source. Sources: SADb Explorer · Offline app snapshot"
+  },
+  {
+    "slide": 142,
+    "text": "SADb curation example · Grillner (1985) · DOI: 10.1126/science.3975635 142 A curated finding can suggest a testable robot hypothesis Literature finding Spinal networks generate rhythmic motor patterns. Proposed robot test Can a shared neural subnetwork preserve timing across two simulated motor patterns?",
+    "notes": "The left statement is a concise paraphrase of the Grillner (1985) record, not a verbatim quotation. The right question is a proposed robot or simulation experiment recorded separately from the source finding. It has not been performed for this example. A useful test would compare shared and separate subnetworks while holding the mechanical model and input protocol fixed, then measure motor-pattern timing and stability. The database preserves the distinction between what the literature reports and what a researcher proposes to test. Source: submitted Chapter 5; Grillner (1985), Neurobiological Bases of Rhythmic Motor Acts in Vertebrates, Science, DOI 10.1126/science.3975635."
+  },
+  {
+    "slide": 143,
+    "text": "Dissertation Ch. 5 · Sensory Afferent Database (SADb) 143 Citation links help researchers follow related work Red: references     Green: citing papers",
+    "notes": "The authentic Bubble map view focuses the literature graph around Grillner (1985). The selected-record pane is outside this crop. Colored direct links distinguish references from citing papers; gray links extend the displayed citation neighborhood. The Connections pane supports navigation to the related records. The neuron-like display is a visual metaphor for a citation network, not an inferred neural circuit. Source: submitted Chapter 5 and the local SADb app."
+  },
+  {
+    "slide": 144,
+    "text": "Pivot selections lead back to the records underlying a comparison SADb Explorer · Recorded offline walkthrough 144",
+    "notes": "Pacing: finish by 13:15 (30 seconds). A species-by-pathway pivot helps locate the evidence behind a category comparison. Drilling into a cell returns the underlying records so that their preparations and findings can be checked. Transition: the next slide demonstrates the complete search-to-record workflow in the offline app. Sources: SADb Explorer · Recorded offline walkthrough"
+  },
+  {
+    "slide": 145,
+    "text": "SADb makes sensory evidence searchable and traceable SADb Explorer · Offline snapshot: 1,393 records Open offline SADb Search · inspect · follow · compare 145",
+    "notes": "Pacing: finish by 14:00 (45 seconds). Play the 26-second embedded walkthrough: search Grillner, inspect a source, follow the citation neighborhood, and drill from a Cat × Ia pivot cell to records. The accompanying HTML supports an unscripted offline demonstration. External DOI links and online search require a connection. Transition: use this source evidence to choose pathways for more complex neuromechanical models. Sources: SADb Explorer · Offline snapshot: 1,393 records"
+  }
+]
