@@ -1,5 +1,21 @@
 function [f, rep] = fr_objective(C, cs, kin, x, xiBranch, opts)
-%FR_OBJECTIVE Spec-driven objective + hard constraints for one candidate.
+%FR_OBJECTIVE Spec-driven objective + hard constraints for one candidate
+%(v2, 2026-11-04).
+%
+% v2 changes (Ben's 2026-11-04 corrections, items 6 and 7):
+%   1. VIOLATION ACCOUNTING: every hard constraint carries explicit
+%      metadata (name, physical units, normalization, numerical tolerance).
+%      rep.cinfo is a per-constraint table; the effective violation used
+%      for the penalty and for feasibility is max(0, c - tol) so a result
+%      is never called infeasible (or feasible) by an unlabeled rounding.
+%      rep.topViolator names the worst constraint with its dimensional
+%      residual and units.
+%   2. LAYERING SEMANTICS: retained deeper-layer envelopes enter as
+%      (a) HARD constraint retained_rigid_envelopes (rigid fittings +
+%      tackle blocks, fr_obstacles v2) and (b) SOFT objective term
+%      retained_bpa_corridor_soft (BPA sleeve corridor penetration, depth
+%      normalized + extent in mm, recorded every evaluation). Slight
+%      BPA-BPA interference can never make a candidate infeasible.
 %
 % The objective TERMS AND WEIGHTS are read FRESH from objective_spec.json
 % at every solve (master item 8: never hardcoded, iterable). Every
@@ -17,23 +33,7 @@ function [f, rep] = fr_objective(C, cs, kin, x, xiBranch, opts)
 % rep.tauSecondary and never enter f - the objective-spec file lists this
 % as forbidden, and no term of that class exists in the registry.
 %
-% HARD constraints (violation form, c <= 0 feasible):
-%   1 z=0 pelvis-frame centerline (handoff item 8, every attachment and
-%     mount anchor at every evaluated pose, sideSign*z >= 0)
-%   2 foot occupancy ban (sleeve fitting tip stays proximal of the ankle
-%     pivot plane; BPA/tackle owning bodies structurally off the foot)
-%   3 required tendon spans (fr_spans, computed from geometry + hardware)
-%   4 transmission feasibility (no infeasible/slack cells; strain floor;
-%     gain <= line parts structurally)
-%   5 rated hardware loads (tackle vector reaction and the 180-deg
-%     reversing-sheave equivalent 2T vs the assigned family's catalog
-%     capacity)
-%   6 bone exclusion (point-cloud distance >= inflated radius + rigid
-%     clearance; buildGeoExclusion/nonlconExclusion lineage)
-%   7 retained deeper-layer envelopes (Ben's layering ruling; HARD) with
-%     the documented CAD-registration hook
-%
-% f = weighted objective + PENALTY * total constraint violation.
+% f = weighted objective + PENALTY * total effective constraint violation.
 
 if nargin < 6
     opts = struct();
@@ -47,6 +47,9 @@ tEval = tic;
 NC_MAX = 32;
 cvec = nan(NC_MAX, 1);
 clabels = cell(NC_MAX, 1);
+cunits = cell(NC_MAX, 1);
+cnorm = cell(NC_MAX, 1);
+ctol = nan(NC_MAX, 1);
 ci = 0;
 % ---- 0. objective spec (fresh read: iterable, never hardcoded) ----------
 spec = jsondecode(fileread(fullfile(C.camp, 'objective_spec.json')));
@@ -55,6 +58,16 @@ W = containers.Map();
 for i = 1:numel(termsList)
     t = termsList{i};
     W(t.name) = t.weight;
+end
+% optional per-evaluation weight override (fr_weightSensitivity only;
+% the spec FILE stays the single source of record for campaign solves)
+if isfield(opts, 'weightOverride') && ~isempty(opts.weightOverride)
+    for i = 1:numel(termsList)
+        nm = termsList{i}.name;
+        if opts.weightOverride.isKey(nm)
+            W(nm) = opts.weightOverride(nm);
+        end
+    end
 end
 
 % ---- 1. design + score-pass mechanics -----------------------------------
@@ -125,10 +138,11 @@ for i = 1:numel(names)
     fObj = fObj + W(names{i}) * terms.(names{i});
 end
 
-% ---- 4. hard constraints -------------------------------------------------
+% ---- 4. hard constraints (with metadata) ---------------------------------
 
 % 1. centerline z=0 (every attachment + anchor, every pass pose, per-pass
 % used-row indexing so masks of different passes each index correctly)
+% UNITS: meters in the pelvis frame; tol 1e-4 m (0.1 mm numerical noise)
 zmin = inf;
 for p = 1:numel(cs.passes)
     qL = cs.passes{p}.qStructs;
@@ -140,18 +154,24 @@ for p = 1:numel(cs.passes)
         end
     end
 end
-ci = ci + 1; cvec(ci) = -zmin; clabels{ci} = 'centerline_z0'; 
+ci = ci + 1; cvec(ci) = -zmin; clabels{ci} = 'centerline_z0';
+cunits{ci} = 'm (pelvis frame)'; cnorm{ci} = 'dimensional (m)'; ...
+    ctol(ci) = 1e-4;
 
 % 2. foot occupancy (fitting-tip rule; owning bodies structural)
+% UNITS: meters of margin proximal of the ankle pivot plane (+5 mm)
 if cs.footTipRule
     tipMin = fr_fittingTipMargin(C, cs, kin, meta);
     ci = ci + 1; cvec(ci) = -tipMin; clabels{ci} = 'foot_occupancy_ban';
+    cunits{ci} = 'm (tibia frame y)'; cnorm{ci} = 'dimensional (m)'; ...
+        ctol(ci) = 1e-4;
 end
 
 % 3. required tendon spans (master item 6): the OPTIMIZED routing must
 % never need more tendon than the PROCURED hardware quantity
 % cs.tendonHardware_m = max seed chord + ferrule/stop allowance (the
 % contract placeholder resolved at case setup from the seed geometry)
+% UNITS: normalized fraction of the procured hardware length
 for p = 1:numel(cs.passes)
     if ~strcmp(cs.spanKind, 'none')
         [ptsP, bodP] = fr_locForPass(C, cs, design, kin, p);
@@ -160,6 +180,9 @@ for p = 1:numel(cs.passes)
         cvec(ci) = (sp.spanMax_m + sp.allowance_m - ...
             cs.tendonHardware_m) / max(cs.tendonHardware_m, eps);
         clabels{ci} = sprintf('span_%s_pass%d', cs.spanKind, p);
+        cunits{ci} = 'm';
+        cnorm{ci} = 'fraction of tendonHardware_m';
+        ctol(ci) = 1e-6;
         if p == 1
             rep.spanRequired = sp;
             rep.tendonHardware_m = cs.tendonHardware_m;
@@ -169,6 +192,7 @@ for p = 1:numel(cs.passes)
 end
 
 % 4. transmission feasibility over ALL passes
+% UNITS: fraction of grid cells (infeasible/slack); strain floor normalized
 infeasFrac = 0; slackFrac = 0; elongViol = 0;
 for p = 1:numel(cs.passes)
     qgp = struct('passIdx', p, 'qList', {cs.passes{p}.qStructs});
@@ -178,10 +202,18 @@ for p = 1:numel(cs.passes)
     elongViol = max(elongViol, max(0, -min(mp.strain_p) - strainFloor(cs)));
 end
 ci = ci + 1; cvec(ci) = infeasFrac; clabels{ci} = 'tx_infeasible_cells';
+cunits{ci} = 'fraction of cells'; cnorm{ci} = 'fraction of cells'; ...
+    ctol(ci) = 1e-12;
 ci = ci + 1; cvec(ci) = slackFrac; clabels{ci} = 'tx_slack_cells';
+cunits{ci} = 'fraction of cells'; cnorm{ci} = 'fraction of cells'; ...
+    ctol(ci) = 1e-12;
 ci = ci + 1; cvec(ci) = elongViol; clabels{ci} = 'strain_floor';
+cunits{ci} = 'normalized strain'; cnorm{ci} = 'strain (unitless)'; ...
+    ctol(ci) = 1e-9;
 
 % 5. rated hardware loads
+% UNITS: normalized by the assigned family's catalog capacity (which is a
+% weight capacity whose dynamic convention is UNRESOLVED - handoff open item)
 if cs.hasTackle
     fam = C.families(cs.txConfig.tackleFamily);
     cap = fam.capacity_N;
@@ -189,33 +221,63 @@ if cs.hasTackle
     revMax = 2 * max(mech.Ftendon);   % 180-deg reversing sheave worst case
     ci = ci + 1; cvec(ci) = (loadMax - cap) / cap;
     clabels{ci} = sprintf('tackle_load_%s', cs.txConfig.tackleFamily);
+    cunits{ci} = 'N';
+    cnorm{ci} = 'fraction of family catalog capacity_N';
+    ctol(ci) = 1e-6;
     ci = ci + 1; cvec(ci) = (revMax - cap) / cap;
     clabels{ci} = 'reversing_sheave_2T';
+    cunits{ci} = 'N';
+    cnorm{ci} = 'fraction of family catalog capacity_N';
+    ctol(ci) = 1e-6;
     rep.tackleLoadMax_N = loadMax;
     rep.reversingSheaveMax_N = revMax;
     rep.tackleCapacity_N = cap;
 end
 
 % 6 + 7. bone + retained envelopes (all passes' poses, physically
-% simultaneous per pass)
-obsBoneMin = inf; obsEnvMin = inf;
+% simultaneous per pass). v2: fr_obstacles returns the RIGID-only envelope
+% margin (hard) plus the SOFT BPA-corridor penetration (objective term)
+obsBoneMin = inf; obsRigidMin = inf;
+corrDepth = 0; corrMaxMm = 0; corrWhich = '';
 for p = 1:numel(cs.passes)
     [ptsP, bodP] = fr_locForPass(C, cs, design, kin, p);
     csP = cs; csP.cross = cs.crossFor{p};
     ob = fr_obstacles(C, csP, ptsP, bodP, kin, ...
         cs.passes{p}.qStructs, opts.envelopes);
     obsBoneMin = min(obsBoneMin, ob.boneMargin);
-    obsEnvMin = min(obsEnvMin, ob.envMargin);
+    obsRigidMin = min(obsRigidMin, ob.rigidMargin);
+    if ob.corridorDepthNorm > corrDepth
+        corrDepth = ob.corridorDepthNorm;
+        corrMaxMm = ob.corridorMaxMm;
+        corrWhich = ob.corridorWhich;
+    end
     if p == 1
         rep.obstacles = ob;
     end
 end
 ci = ci + 1; cvec(ci) = -obsBoneMin; clabels{ci} = 'bone_exclusion';
-ci = ci + 1; cvec(ci) = -obsEnvMin; clabels{ci} = 'retained_envelopes';
+cunits{ci} = 'm (clearance incl. inflated radius + rigid clearance)';
+cnorm{ci} = 'dimensional (m)'; ctol(ci) = 1e-4;
+ci = ci + 1; cvec(ci) = -obsRigidMin; ...
+    clabels{ci} = 'retained_rigid_envelopes';
+cunits{ci} = 'm (clearance incl. radii + rigid clearance)';
+cnorm{ci} = 'dimensional (m)'; ctol(ci) = 1e-4;
+
+% soft retained-corridor term (NEVER a constraint; depth/extent recorded)
+% NOTE: computed AFTER the base fObj summation above, so it is added to
+% the objective EXPLICITLY here (gate r11 caught the silent omission when
+% this line only filled the terms struct)
+terms.retained_bpa_corridor_soft = corrDepth;
+fObj = fObj + W('retained_bpa_corridor_soft') * corrDepth;
 
 cvec = cvec(1:ci); clabels = clabels(1:ci);
-viol = max(0, cvec);
-f = fObj + opts.penaltyScale * sum(viol);
+cunits = cunits(1:ci); cnorm = cnorm(1:ci); ctol = ctol(1:ci);
+% effective violation: tolerance-aware (a residual within its stated
+% numerical tolerance is noise, not infeasibility - and the tolerance is
+% printed, so nothing is hidden by rounding)
+violEff = max(0, cvec - ctol);
+violRaw = max(0, cvec);
+f = fObj + opts.penaltyScale * sum(violEff);
 
 % ---- 5. report ------------------------------------------------------------
 rep = fr_reportShell(rep);
@@ -228,9 +290,40 @@ for i = 1:numel(spec.terms)
 end
 rep.fObj = fObj;
 rep.f = f;
-rep.violation = sum(viol);
+rep.violation = sum(violEff);
+rep.violationRaw = sum(violRaw);
+% per-constraint table: name, normalized residual, dimensional residual,
+% units, normalization, tolerance, violated flag
+cinfo = struct('name', {}, 'cNorm', {}, 'cDim', {}, 'units', {}, ...
+    'normalization', {}, 'tol', {}, 'violated', {});
+for i = 1:ci
+    cinfo(i) = struct('name', clabels{i}, 'cNorm', cvec(i), ...
+        'cDim', cvec(i), 'units', cunits{i}, 'normalization', cnorm{i}, ...
+        'tol', ctol(i), 'violated', violEff(i) > 0);
+end
+rep.cinfo = cinfo;
+% dimensional residuals where the normalization is a ratio (spans, loads):
+% recover the dimensional value from the normalized form's definition
+rep.cDim = cvec;   % per-constraint dimensional residuals are filled below
+for i = 1:ci
+    if strcmpi(cnorm{i}, 'fraction of tendonHardware_m') ...
+            && isfield(rep, 'tendonHardware_m')
+        rep.cDim(i) = cvec(i) * rep.tendonHardware_m;
+    elseif strcmpi(cnorm{i}, 'fraction of family catalog capacity_N') ...
+            && isfield(rep, 'tackleCapacity_N')
+        rep.cDim(i) = cvec(i) * rep.tackleCapacity_N;
+    end
+end
 rep.c = cvec;
 rep.clabels = clabels;
+[~, iTop] = max(violEff);
+if violEff(iTop) > 0
+    rep.topViolator = sprintf('%s: normalized %.3e (dimensional %.3e %s, tol %.1e)', ...
+        clabels{iTop}, violEff(iTop), rep.cDim(iTop), cunits{iTop}, ctol(iTop));
+else
+    rep.topViolator = 'none (all hard constraints within stated tolerances)';
+end
+rep.feasible = ~any(violEff > 0);
 rep.tauPrimary = tauPrim;
 rep.tauClassCrossCheck = tauClass;
 rep.tauCrossCheckMaxDiff = max(abs(tauPrim - tauClass));
@@ -239,6 +332,9 @@ rep.tauSecondary = tauSecondary;
 rep.meetsAtAllPoses = all(deficitVec <= 1e-6);
 rep.fractionPosesMet = 1 - termRom;
 rep.overlapMaxMm = overlapMaxMm;
+rep.corridorDepthNorm = corrDepth;
+rep.corridorMaxMm = corrMaxMm;
+rep.corridorWhich = corrWhich;
 rep.design = design;
 rep.loc = meta.loc;
 rep.wallSeconds = toc(tEval);
@@ -249,12 +345,14 @@ rep.print = sprintf( ...
     ['EVAL %-16s t=%.3fs f=%+.4f (obj %+.4f viol %.2e) ' ...
     'deficit=%.3f(w%g,n=Sum|tauT|) rom=%.2f(w%g,n=fraction) ' ...
     'shape=%.3f(w%g,n=mean/mean) overlap=%.3f(w%g,n=Drest; max %.2f mm) ' ...
-    'cmax=%.2e'], ...
-    cs.name, rep.wallSeconds, f, fObj, sum(viol), ...
+    'corr=%.2f(n=Drest; max %.2f mm vs %s) cmax=%.2e [%s]'], ...
+    cs.name, rep.wallSeconds, f, fObj, sum(violEff), ...
     termDeficit, W('torque_capacity_deficit'), ...
     termRom, W('usable_rom_shortfall'), ...
     termShape, W('torque_shape'), ...
-    termOverlap, W('bpa_bpa_overlap_soft'), overlapMaxMm, max(viol));
+    termOverlap, W('bpa_bpa_overlap_soft'), overlapMaxMm, ...
+    corrDepth, W('retained_bpa_corridor_soft'), corrMaxMm, corrWhich, ...
+    sum(violEff), strrep(rep.topViolator, newline, ' '));
 if ~opts.quiet
     fprintf('%s\n', rep.print);
 end
@@ -263,8 +361,19 @@ end
 % ==========================================================================
 function opts = fr_defaultOpts(opts)
 if ~isfield(opts, 'envelopes'); opts.envelopes = {}; end
+% normalize a single envelope struct (the struct('envelopes', {envDeep})
+% one-level cell-unwrap) into the cell-of-envelopes shape
+if ~isempty(opts.envelopes) && isstruct(opts.envelopes)
+    opts.envelopes = {opts.envelopes};
+end
 if ~isfield(opts, 'quiet'); opts.quiet = false; end
-if ~isfield(opts, 'penaltyScale'); opts.penaltyScale = 1e3; end
+% v2: raised from 1e3 after gate r10 caught a hard-feasible warm start
+% wandering into rigid-envelope violations (penalty 1e3 lost to objective
+% incentives; run_0 layer-2 "solved viol 1.0e+00" logs are the same
+% under-enforcement signature). Hard constraints are enforced via penalty
+% + honest per-constraint reporting; a residual violation is still
+% labeled best-infeasible, never hidden.
+if ~isfield(opts, 'penaltyScale'); opts.penaltyScale = 1e4; end
 end
 
 function tl = fr_termList(terms)

@@ -1,0 +1,264 @@
+sizing search | 04-Nov-2026 10:51:15 | budget 150 evals/config
+
+=== ercspn (id 1) | base dia 20 n 3 tackle 1 | peak|tauT| 115.9 Nm | 12 configs ===
+  cfg  1: dia 20 n 2 fam L  g 2 -> f    111.305 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam M  g 2 -> f    149.167 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 3 fam M  g 2 -> f  10195.097 violEff 1.00e+00 feasible 0 (tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12))
+  cfg  5: dia 20 n 4 fam L  g 2 -> f    132.374 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 20 n 4 fam M  g 2 -> f  10194.685 violEff 1.00e+00 feasible 0 (tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12))
+  cfg  7: dia 10 n 2 fam L  g 2 -> f    134.577 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 2 fam M  g 2 -> f    135.326 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  9: dia 10 n 3 fam L  g 2 -> f    143.907 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 10: dia 10 n 3 fam M  g 2 -> f    151.180 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 11: dia 10 n 4 fam L  g 2 -> f    139.266 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 12: dia 10 n 4 fam M  g 2 -> f    153.284 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER ercspn: dia 20 nBPA 2 fam L gain 2, f 111.305 (feasible at screen budget)
+
+=== intobl (id 2) | base dia 20 n 1 tackle 0 | peak|tauT| 47.5 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER intobl: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== extobl (id 3) | base dia 20 n 1 tackle 0 | peak|tauT| 69.9 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER extobl: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== bifemlh (id 4) | base dia 20 n 1 tackle 0 | peak|tauT| 25.6 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER bifemlh: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== semimem (id 5) | base dia 20 n 2 tackle 0 | peak|tauT| 46.5 Nm | 6 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 3 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 10 n 3 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER semimem: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== sar (id 6) | base dia 10 n 1 tackle 0 | peak|tauT| 2.9 Nm | 4 configs ===
+  cfg  1: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER sar: dia 10 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== tfl (id 7) | base dia 20 n 1 tackle 0 | peak|tauT| 2.8 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER tfl: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== rect_fem (id 8) | base dia 20 n 1 tackle 0 | peak|tauT| 58.0 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER rect_fem: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== grac (id 9) | base dia 10 n 1 tackle 1 | peak|tauT| 5.4 Nm | 8 configs ===
+  cfg  1: dia 10 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 10 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 20 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 20 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER grac: dia 10 nBPA 1 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== bifemsh (id 10) | base dia 20 n 1 tackle 1 | peak|tauT| 23.0 Nm | 8 configs ===
+  cfg  1: dia 20 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 10 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 10 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER bifemsh: dia 20 nBPA 1 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== vas_int (id 11) | base dia 20 n 4 tackle 1 | peak|tauT| 180.8 Nm | 12 configs ===
+  cfg  1: dia 20 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 4 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 4 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 20 n 5 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 20 n 5 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  9: dia 10 n 4 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 10: dia 10 n 4 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 11: dia 10 n 5 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 12: dia 10 n 5 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER vas_int: dia 20 nBPA 3 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== soleus (id 12) | base dia 20 n 3 tackle 1 | peak|tauT| 147.6 Nm | 12 configs ===
+  cfg  1: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 20 n 4 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 20 n 4 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  9: dia 10 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 10: dia 10 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 11: dia 10 n 4 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 12: dia 10 n 4 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER soleus: dia 20 nBPA 2 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== med_gas (id 13) | base dia 20 n 2 tackle 1 | peak|tauT| 72.0 Nm | 12 configs ===
+  cfg  1: dia 20 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 20 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 20 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  9: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 10: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 11: dia 10 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 12: dia 10 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER med_gas: dia 20 nBPA 1 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== lat_gas (id 14) | base dia 20 n 1 tackle 1 | peak|tauT| 32.9 Nm | 8 configs ===
+  cfg  1: dia 20 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 10 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 10 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER lat_gas: dia 20 nBPA 1 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== tib_post (id 15) | base dia 20 n 2 tackle 0 | peak|tauT| 29.9 Nm | 6 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 3 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 10 n 3 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER tib_post: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== tib_ant (id 16) | base dia 20 n 1 tackle 0 | peak|tauT| 34.5 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER tib_ant: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== per_brev (id 17) | base dia 20 n 1 tackle 0 | peak|tauT| 12.5 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER per_brev: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== per_long (id 18) | base dia 20 n 1 tackle 0 | peak|tauT| 26.1 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER per_long: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== per_tert (id 19) | base dia 10 n 1 tackle 0 | peak|tauT| 3.6 Nm | 4 configs ===
+  cfg  1: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER per_tert: dia 10 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== flex_dig (id 20) | base dia 20 n 1 tackle 0 | peak|tauT| 2.1 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER flex_dig: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== flex_hal (id 21) | base dia 20 n 1 tackle 0 | peak|tauT| 2.0 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER flex_hal: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== ext_dig (id 22) | base dia 20 n 1 tackle 0 | peak|tauT| 3.5 Nm | 4 configs ===
+  cfg  1: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER ext_dig: dia 20 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== ext_hal (id 23) | base dia 10 n 1 tackle 0 | peak|tauT| 1.4 Nm | 4 configs ===
+  cfg  1: dia 10 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 10 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 1 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam none g 1 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER ext_hal: dia 10 nBPA 1 fam none gain 1, f 114.944 (feasible at screen budget)
+
+=== glut_max3 (id 24) | base dia 20 n 4 tackle 1 | peak|tauT| 112.6 Nm | 12 configs ===
+  cfg  1: dia 20 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 4 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 4 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 20 n 5 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 20 n 5 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  9: dia 10 n 4 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 10: dia 10 n 4 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 11: dia 10 n 5 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 12: dia 10 n 5 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER glut_max3: dia 20 nBPA 3 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== add_mag3 (id 25) | base dia 20 n 2 tackle 1 | peak|tauT| 130.5 Nm | 12 configs ===
+  cfg  1: dia 20 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 20 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 20 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  9: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 10: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 11: dia 10 n 3 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg 12: dia 10 n 3 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER add_mag3: dia 20 nBPA 1 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== iliacus (id 26) | base dia 20 n 1 tackle 1 | peak|tauT| 45.1 Nm | 8 configs ===
+  cfg  1: dia 20 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 10 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 10 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER iliacus: dia 20 nBPA 1 fam L gain 2, f 114.944 (feasible at screen budget)
+
+=== psoas (id 27) | base dia 20 n 1 tackle 1 | peak|tauT| 44.1 Nm | 8 configs ===
+  cfg  1: dia 20 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  2: dia 20 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  3: dia 20 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  4: dia 20 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  5: dia 10 n 1 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  6: dia 10 n 1 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  7: dia 10 n 2 fam L  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  cfg  8: dia 10 n 2 fam M  g 2 -> f    114.944 violEff 0.00e+00 feasible 1 (none (all hard constraints within stated tolerances))
+  WINNER psoas: dia 20 nBPA 1 fam L gain 2, f 114.944 (feasible at screen budget)
+
+winners written: sizing_winners.json

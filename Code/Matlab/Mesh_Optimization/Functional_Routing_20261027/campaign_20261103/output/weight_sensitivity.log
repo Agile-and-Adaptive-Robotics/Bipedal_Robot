@@ -1,0 +1,67 @@
+weight sensitivity | 04-Nov-2026 10:20:49 | baseline spec status: TUNED-20261104-AUTO
+
+=== psoas ===
+baseline: f 116.0426 (obj 116.0426, violEff 0.00e+00)
+  term torque_capacity_deficit      value 0.8013 weight 100 -> weighted 80.1273
+  term usable_rom_shortfall         value 0.8889 weight 40 -> weighted 35.5556
+  term torque_shape                 value 0.7195 weight 0.5 -> weighted 0.3598
+  term bpa_bpa_overlap_soft         value 0.0000 weight 2 -> weighted 0.0000
+  term retained_bpa_corridor_soft   value 0.0000 weight 2 -> weighted 0.0000
+CHECK capacity share: 69.0% of |weighted terms| (>= 50%) - PASS
+CHECK shape share: 0.3% (<= 10%) - PASS
+  perturb bpa_bpa_overlap_soft         x-2 -> fObj 116.0426 (delta +0.0000)
+  perturb bpa_bpa_overlap_soft         x+2 -> fObj 116.0426 (delta +0.0000)
+  perturb retained_bpa_corridor_soft   x-2 -> fObj 116.0426 (delta +0.0000)
+  perturb retained_bpa_corridor_soft   x+2 -> fObj 116.0426 (delta +0.0000)
+  perturb torque_capacity_deficit      x-2 -> fObj -124.3393 (delta -240.3820)
+  perturb torque_capacity_deficit      x+2 -> fObj 196.1700 (delta +80.1273)
+  perturb torque_shape                 x-2 -> fObj 114.9634 (delta -1.0793)
+  perturb torque_shape                 x+2 -> fObj 116.4024 (delta +0.3598)
+  perturb usable_rom_shortfall         x-2 -> fObj 9.3760 (delta -106.6667)
+  perturb usable_rom_shortfall         x+2 -> fObj 151.5982 (delta +35.5556)
+
+=== vas_int ===
+baseline: f 2032.3157 (obj 147.1928, violEff 1.89e-01)
+  term torque_capacity_deficit      value 0.8674 weight 100 -> weighted 86.7355
+  term usable_rom_shortfall         value 1.0000 weight 40 -> weighted 40.0000
+  term torque_shape                 value 0.9551 weight 0.5 -> weighted 0.4776
+  term bpa_bpa_overlap_soft         value 9.9898 weight 2 -> weighted 19.9797
+  term retained_bpa_corridor_soft   value 0.0000 weight 2 -> weighted 0.0000
+CHECK capacity share: 58.9% of |weighted terms| (>= 50%) - PASS
+CHECK shape share: 0.3% (<= 10%) - PASS
+  perturb bpa_bpa_overlap_soft         x-2 -> fObj 1972.3766 (delta +1825.1839)
+  perturb bpa_bpa_overlap_soft         x+2 -> fObj 2052.2954 (delta +1905.1026)
+  perturb retained_bpa_corridor_soft   x-2 -> fObj 2032.3157 (delta +1885.1229)
+  perturb retained_bpa_corridor_soft   x+2 -> fObj 2032.3157 (delta +1885.1229)
+  perturb torque_capacity_deficit      x-2 -> fObj 1772.1092 (delta +1624.9164)
+  perturb torque_capacity_deficit      x+2 -> fObj 2119.0512 (delta +1971.8585)
+  perturb torque_shape                 x-2 -> fObj 2030.8830 (delta +1883.6903)
+  perturb torque_shape                 x+2 -> fObj 2032.7933 (delta +1885.6005)
+  perturb usable_rom_shortfall         x-2 -> fObj 1912.3157 (delta +1765.1229)
+  perturb usable_rom_shortfall         x+2 -> fObj 2072.3157 (delta +1925.1229)
+
+=== semimem ===
+baseline: f 8550.6202 (obj 38.0905, violEff 8.51e-01)
+  term torque_capacity_deficit      value 0.2048 weight 100 -> weighted 20.4842
+  term usable_rom_shortfall         value 0.2222 weight 40 -> weighted 8.8889
+  term torque_shape                 value 0.9969 weight 0.5 -> weighted 0.4985
+  term bpa_bpa_overlap_soft         value 4.1095 weight 2 -> weighted 8.2190
+  term retained_bpa_corridor_soft   value 0.0000 weight 2 -> weighted 0.0000
+CHECK capacity share: 53.8% of |weighted terms| (>= 50%) - PASS
+CHECK shape share: 1.3% (<= 10%) - PASS
+  perturb bpa_bpa_overlap_soft         x-2 -> fObj 8525.9632 (delta +8487.8726)
+  perturb bpa_bpa_overlap_soft         x+2 -> fObj 8558.8392 (delta +8520.7486)
+  perturb retained_bpa_corridor_soft   x-2 -> fObj 8550.6202 (delta +8512.5296)
+  perturb retained_bpa_corridor_soft   x+2 -> fObj 8550.6202 (delta +8512.5296)
+  perturb torque_capacity_deficit      x-2 -> fObj 8489.1676 (delta +8451.0771)
+  perturb torque_capacity_deficit      x+2 -> fObj 8571.1044 (delta +8533.0138)
+  perturb torque_shape                 x-2 -> fObj 8549.1248 (delta +8511.0343)
+  perturb torque_shape                 x+2 -> fObj 8551.1186 (delta +8513.0281)
+  perturb usable_rom_shortfall         x-2 -> fObj 8523.9535 (delta +8485.8630)
+  perturb usable_rom_shortfall         x+2 -> fObj 8559.5091 (delta +8521.4185)
+
+=== short A/B solve (psoas, budget 100) ===
+short-solve fBest: deficitW50 66.4842 | deficitW200 171.7367 | |delta| 105.2525
+CHECK A/B stability: designs diverge >25% - inspect (WARN, not automatic FAIL)
+
+VERDICT: PASS

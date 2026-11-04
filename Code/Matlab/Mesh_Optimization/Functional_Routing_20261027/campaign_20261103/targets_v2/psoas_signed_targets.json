@@ -1,0 +1,256 @@
+{
+  "group": "psoas",
+  "map_id": 27,
+  "primaryDof": "hip_flexion_r",
+  "pass1Name": "hip_sweep",
+  "secondaryDof": "",
+  "stockMuscles": [
+    "psoas_r"
+  ],
+  "nCells": 9,
+  "gridMachinery": "grid_export.json cells = fr_cases27 pass-1 qStructs verbatim",
+  "convention": "tau_target = SUM_m F_m(q)*r_m(q); r_m = OpenSim Muscle::computeMomentArm about the group's primary dof (verified this ask to return -dL_m/dq, i.e. the torque-convention moment arm; tau = F*r == fr_targets.m's tau = -Fmax*dL/dq). Positive tau drives the coordinate in its positive direction per the model.",
+  "forceLengthTreatment": "F_m(q) = Fmax_m * fl_active(nce(q)); nce = (pathLength(q) - tendonSlackLength_m)/optimalFiberLength_m (rigid-tendon CE approximation); fl_active = the model's own Thelen2003Muscle ActiveForceLengthCurve (class-default curve; the XML overrides no muscle's active_force_length_curve), evaluated at nce; the curve clamps to its min_value 0.1 outside [0.35, 1.6]. Activation 1, zero fiber velocity; passive force-length excluded; pennation NOT applied (consumer fr_targets/fr_objective use the same path-moment-arm convention).",
+  "curveDomain": "~[0.4441,1.8123]",
+  "peakAbsTau_Nm": 44.10581442533137,
+  "peakAbsTau_at_cell": 3,
+  "peakAbsTau_at_deg": 16.250000000000018,
+  "tau_vec_Nm": [
+    36.87027787410525,
+    43.035734071591655,
+    44.10581442533137,
+    41.020536363421904,
+    31.703685065793326,
+    12.264811754784455,
+    4.470109711708057,
+    1.808341539795308,
+    -3.3781222677744336
+  ],
+  "cells": [
+    {
+      "index": 1,
+      "requested_rad": -0.2617993877991494,
+      "requested_deg": -14.999999999999998,
+      "realized_rad": -0.2617993877991494,
+      "realized_deg": -15.000000000000014,
+      "clamped": false,
+      "tau_target_Nm": 36.87027787410525,
+      "sumAbsFmaxTimesR_upper_Nm": 38.78943632403923,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.27056699809859586,
+          "nce_rigid_tendon": 1.1056699809859585,
+          "fl_active": 0.9505236829454877,
+          "F_m_N": 1057.9328591183278,
+          "momentArm_m": 0.03485124557415924,
+          "tau_contrib_Nm": 36.87027787410525
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "requested_rad": 0.01090830782496456,
+      "requested_deg": 0.625,
+      "realized_rad": 0.01090830782496456,
+      "realized_deg": 0.6250000000000007,
+      "clamped": false,
+      "tau_target_Nm": 43.035734071591655,
+      "sumAbsFmaxTimesR_upper_Nm": 43.03582076559193,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.2605244260786094,
+          "nce_rigid_tendon": 1.0052442607860936,
+          "fl_active": 0.9999979855385879,
+          "F_m_N": 1112.9977579044482,
+          "momentArm_m": 0.03866650562946265,
+          "tau_contrib_Nm": 43.035734071591655
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "requested_rad": 0.28361600344907856,
+      "requested_deg": 16.25,
+      "realized_rad": 0.28361600344907856,
+      "realized_deg": 16.250000000000018,
+      "clamped": false,
+      "tau_target_Nm": 44.10581442533137,
+      "sumAbsFmaxTimesR_upper_Nm": 46.28092767150576,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.24955899085112293,
+          "nce_rigid_tendon": 0.8955899085112292,
+          "fl_active": 0.9530019523028367,
+          "F_m_N": 1060.6911729130572,
+          "momentArm_m": 0.041582145257417574,
+          "tau_contrib_Nm": 44.10581442533137
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "requested_rad": 0.5563236990731926,
+      "requested_deg": 31.875,
+      "realized_rad": 0.5563236990731926,
+      "realized_deg": 31.875000000000032,
+      "clamped": false,
+      "tau_target_Nm": 41.020536363421904,
+      "sumAbsFmaxTimesR_upper_Nm": 48.099500154930325,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.23795904332292506,
+          "nce_rigid_tendon": 0.7795904332292505,
+          "fl_active": 0.8528266662084469,
+          "F_m_N": 949.1960794900015,
+          "momentArm_m": 0.043216082798679535,
+          "tau_contrib_Nm": 41.020536363421904
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "requested_rad": 0.8290313946973066,
+      "requested_deg": 47.5,
+      "realized_rad": 0.8290313946973066,
+      "realized_deg": 47.50000000000005,
+      "clamped": false,
+      "tau_target_Nm": 31.703685065793326,
+      "sumAbsFmaxTimesR_upper_Nm": 47.555395272005086,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.22620974856424386,
+          "nce_rigid_tendon": 0.6620974856424385,
+          "fl_active": 0.6666685217199037,
+          "F_m_N": 742.0020646742528,
+          "momentArm_m": 0.04272721947170268,
+          "tau_contrib_Nm": 31.703685065793326
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "requested_rad": 1.1017390903214204,
+      "requested_deg": 63.12499999999999,
+      "realized_rad": 1.1017390903214204,
+      "realized_deg": 63.12500000000005,
+      "clamped": false,
+      "tau_target_Nm": 12.264811754784455,
+      "sumAbsFmaxTimesR_upper_Nm": 48.5975370969233,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.21437618675984385,
+          "nce_rigid_tendon": 0.5437618675984385,
+          "fl_active": 0.25237517140680243,
+          "F_m_N": 280.8935657757711,
+          "momentArm_m": 0.043663555343147614,
+          "tau_contrib_Nm": 12.264811754784455
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "requested_rad": 1.3744467859455345,
+      "requested_deg": 78.75,
+      "realized_rad": 1.3744467859455345,
+      "realized_deg": 78.75000000000009,
+      "clamped": false,
+      "tau_target_Nm": 4.470109711708057,
+      "sumAbsFmaxTimesR_upper_Nm": 44.70109711708056,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.2027710098107103,
+          "nce_rigid_tendon": 0.42771009810710303,
+          "fl_active": 0.1,
+          "F_m_N": 111.30000000000001,
+          "momentArm_m": 0.040162710797017574,
+          "tau_contrib_Nm": 4.470109711708057
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "requested_rad": 1.6471544815696484,
+      "requested_deg": 94.37499999999999,
+      "realized_rad": 1.6471544815696484,
+      "realized_deg": 94.37500000000009,
+      "clamped": false,
+      "tau_target_Nm": 1.808341539795308,
+      "sumAbsFmaxTimesR_upper_Nm": 18.08341539795308,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.1941916877754671,
+          "nce_rigid_tendon": 0.34191687775467106,
+          "fl_active": 0.1,
+          "F_m_N": 111.30000000000001,
+          "momentArm_m": 0.016247453187738615,
+          "tau_contrib_Nm": 1.808341539795308
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "requested_rad": 1.9198621771937625,
+      "requested_deg": 110,
+      "realized_rad": 1.9198621771937625,
+      "realized_deg": 110.00000000000011,
+      "clamped": false,
+      "tau_target_Nm": -3.3781222677744336,
+      "sumAbsFmaxTimesR_upper_Nm": 33.78122267774433,
+      "muscles": [
+        {
+          "muscle": "psoas_r",
+          "Fmax_N": 1113.0,
+          "optimalFiberLength_m": 0.1,
+          "tendonSlackLength_m": 0.16,
+          "pennation_angle_at_optimal_deg": 0.13962634,
+          "pathLength_m": 0.1967137603475493,
+          "nce_rigid_tendon": 0.36713760347549307,
+          "fl_active": 0.1,
+          "F_m_N": 111.30000000000001,
+          "momentArm_m": -0.030351502855116202,
+          "tau_contrib_Nm": -3.3781222677744336
+        }
+      ]
+    }
+  ]
+}

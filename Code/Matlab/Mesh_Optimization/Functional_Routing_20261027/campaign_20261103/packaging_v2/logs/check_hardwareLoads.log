@@ -1,0 +1,42 @@
+HWL: T=1971 N beta=180deg R=3942 N vs L 3003 N -> ok=0
+HWL:   FLAGGED (never resized): family L (3434T78) catalog capacity 3002.5 N < radial reaction 3942.0 N (T = 1971.0 N, beta = 180.0 deg, R = 2*T*sin(beta/2)). Require a load-separated branch, a different family, or a rerouting decision by Ben.
+HWL:   FLAGGED (never resized): family L 180-deg reversing-sheave equivalent 2T = 3942.0 N exceeds catalog capacity 3002.5 N (fr_objective rated-load convention).
+HWL: T=400 N beta=90deg R=565.7 N vs M 667 N -> ok=1
+HWL: S overload caught: R=500 N > 400 N
+HWL: caveat attached: UNRESOLVED convention: the catalog capacities are published weight capacities; their interpretation for dynamic radial shaft loading, cyclic duty, and cable compatibility is unconfirmed (HARDWARE_AND_ZCODE_HANDOFF.md Open items). Catalog pulley diameter is not assumed to be the wire pitch diameter.
+HWL: approval status: 0 (final hardware approval is NOT claimed: no assembly WLL exists until cable, terminations, pins, bearings, plates, and brackets are checked (handoff Open items).)
+HWL: two-sheave stacks: S 21.700 / M 24.875 / L 36.400 mm
+HWL: Bowden finished ODs: bicycle 5.0 mm / Sava 7.747 mm
+HWL: building fr_cases27 (read-only)...
+fr_targets: ercspn -> targets_v2 exact (ercspn)
+fr_targets: intobl -> targets_v2 exact (intobl)
+fr_targets: extobl -> targets_v2 exact (extobl)
+fr_targets: bifemlh -> targets_v2 exact (bifemlh)
+fr_targets: semimem -> targets_v2 exact (semimem)
+fr_targets: sar -> targets_v2 exact (sar)
+fr_targets: tfl -> targets_v2 exact (tfl)
+fr_targets: rect_fem -> targets_v2 exact (rect_fem)
+fr_targets: grac -> targets_v2 exact (grac)
+fr_targets: bifemsh -> targets_v2 exact (bifemsh)
+fr_targets: vas_int -> targets_v2 exact (vas_int)
+fr_targets: soleus -> targets_v2 exact (soleus)
+fr_targets: med_gas -> targets_v2 exact (med_gas)
+fr_targets: lat_gas -> targets_v2 exact (lat_gas)
+fr_targets: tib_post -> targets_v2 exact (tib_post)
+fr_targets: tib_ant -> targets_v2 exact (tib_ant)
+fr_targets: per_brev -> targets_v2 exact (per_brev)
+fr_targets: per_long -> targets_v2 exact (per_long)
+fr_targets: per_tert -> targets_v2 exact (per_tert)
+fr_targets: flex_dig -> targets_v2 exact (flex_dig)
+fr_targets: flex_hal -> targets_v2 exact (flex_hal)
+fr_targets: ext_dig -> targets_v2 exact (ext_dig)
+fr_targets: ext_hal -> targets_v2 exact (ext_hal)
+fr_targets: glut_max3 -> targets_v2 exact (glut_max3)
+fr_targets: add_mag3 -> targets_v2 exact (add_mag3)
+fr_targets: iliacus -> targets_v2 exact (iliacus)
+fr_targets: psoas -> targets_v2 exact (psoas)
+HWL: vas_int rigid build: family L worst T 1784.3 N worst beta 180.0 deg R 3568.6 N 2T 3568.6 N -> ok 0
+HWL:   FLAGGED (never resized): family L (3434T78) catalog capacity 3002.5 N < radial reaction 3568.6 N (T = 1784.3 N, beta = 180.0 deg, R = 2*T*sin(beta/2)). Require a load-separated branch, a different family, or a rerouting decision by Ben.
+HWL:   FLAGGED (never resized): family L 180-deg reversing-sheave equivalent 2T = 3568.6 N exceeds catalog capacity 3002.5 N (fr_objective rated-load convention).
+HWL: ext_hal (no tackle): note case has no tackle; only the informational 2T record is kept
+CHECK_HARDWARELOADS PASS (6.0 s)

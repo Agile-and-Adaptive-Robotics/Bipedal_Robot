@@ -1,0 +1,2977 @@
+{
+  "spec": "functional_routing_attachment_patches_v2",
+  "created": "2026-11-04",
+  "rule": "HARD z=0 centerline rule (handoff item 8): sideSign*z_pelvis >= 0 for every candidate attachment and mount anchor at EVERY evaluated pose. sideSign = +1 (right side of record). Enforced as hard constraint centerline_z0 in fr_objective.m:131-143 (zmin over all rows/poses, cvec = -zmin) via fr_rowZPelvis fr_objective.m:411-417 (fr_chainT into the pelvis frame); sideSign definition in objective_spec.json hard_constraints[0]. The rule is per-attachment-side; seeds may not switch sides (no sign flips or absolute values).",
+  "patch_conventions": "bounded surface patch on the owning bone cloud (Bone_Mesh_Plots, body frame) with mount standoff in mm; fr_setup.standoff_mm = [1 12]; anatomically tight per the registration RULE in packaging_v2/registration_report.json",
+  "n_entries": 69,
+  "seed_zmin_pelvis_m": -0.072728952706964237,
+  "entries": [
+    {
+      "group": "ercspn",
+      "map_id": 1,
+      "case": "ercspn",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Sacrum",
+      "seed_owning_body_frame_m": [
+        -0.14,
+        0.0439,
+        0.0436
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.14,
+        0.0439,
+        0.0436
+      ],
+      "patch_frame": {
+        "e1": [
+          0.34633002848686806,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.1609718134403253
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "ercspn",
+      "map_id": 1,
+      "case": "ercspn",
+      "row": 2,
+      "role": "insertion",
+      "owning_body": "torso",
+      "cloud": "Spine",
+      "seed_owning_body_frame_m": [
+        -0.055,
+        0.11,
+        0.0241
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.055,
+        0.11,
+        0.0241
+      ],
+      "patch_frame": {
+        "e1": [
+          1.3182966316117022,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.44059982047871438
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "intobl",
+      "map_id": 2,
+      "case": "intobl",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Sacrum",
+      "seed_owning_body_frame_m": [
+        -0.04,
+        0.07,
+        0.1157
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.04,
+        0.07,
+        0.1157
+      ],
+      "patch_frame": {
+        "e1": [
+          0.072459183689038878,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.025435830335677537
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "intobl",
+      "map_id": 2,
+      "case": "intobl",
+      "row": 2,
+      "role": "insertion",
+      "owning_body": "torso",
+      "cloud": "Spine",
+      "seed_owning_body_frame_m": [
+        0.07,
+        0.16,
+        0.015
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        0.07,
+        0.16,
+        0.015
+      ],
+      "patch_frame": {
+        "e1": [
+          0.14961643937354596,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.013635836717190793
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "extobl",
+      "map_id": 3,
+      "case": "extobl",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Sacrum",
+      "seed_owning_body_frame_m": [
+        -0.03,
+        -0.0636,
+        0.01
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.03,
+        -0.0636,
+        0.01
+      ],
+      "patch_frame": {
+        "e1": [
+          0.069038465508055508,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.0076836655043976427
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "extobl",
+      "map_id": 3,
+      "case": "extobl",
+      "row": 2,
+      "role": "insertion",
+      "owning_body": "torso",
+      "cloud": "Spine",
+      "seed_owning_body_frame_m": [
+        0.065,
+        0.11,
+        0.11
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        0.065,
+        0.11,
+        0.11
+      ],
+      "patch_frame": {
+        "e1": [
+          0.044259607618197458,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.0028837454239392384
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "bifemlh",
+      "map_id": 4,
+      "case": "bifemlh",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.12596,
+        -0.10257,
+        0.06944
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.12596,
+        -0.10257,
+        0.06944
+      ],
+      "patch_frame": {
+        "e1": [
+          0.14356793346432037,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.0567224645577834
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "bifemlh",
+      "map_id": 4,
+      "case": "bifemlh",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0301,
+        -0.036,
+        0.02943
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0301,
+        -0.036,
+        0.02943
+      ],
+      "patch_frame": {
+        "e1": [
+          0.14024434626373639,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.10957328677116318
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "bifemlh",
+      "map_id": 4,
+      "case": "bifemlh",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0234,
+        -0.0563,
+        0.0343
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0234,
+        -0.0563,
+        0.0343
+      ],
+      "patch_frame": {
+        "e1": [
+          0.15253194854033592,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.13239320616467662
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "semimem",
+      "map_id": 5,
+      "case": "semimem",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.12635,
+        -0.10988,
+        0.06039
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.12635,
+        -0.10988,
+        0.06039
+      ],
+      "patch_frame": {
+        "e1": [
+          0.12781166749060333,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.050605729394288396
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "semimem",
+      "map_id": 5,
+      "case": "semimem",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.03322,
+        -0.05282,
+        -0.02288
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.03322,
+        -0.05282,
+        -0.02288
+      ],
+      "patch_frame": {
+        "e1": [
+          0.13843708776367203,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.11118018697553311
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "semimem",
+      "map_id": 5,
+      "case": "semimem",
+      "row": 4,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0027,
+        -0.0956,
+        -0.0193
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0027,
+        -0.0956,
+        -0.0193
+      ],
+      "patch_frame": {
+        "e1": [
+          0.25464410660673764,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.1394606520141333
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "sar",
+      "map_id": 6,
+      "case": "sar",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.0153,
+        -0.0013,
+        0.1242
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0153,
+        -0.0013,
+        0.1242
+      ],
+      "patch_frame": {
+        "e1": [
+          0.17817691263059932,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.035177628690654612
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "sar",
+      "map_id": 6,
+      "case": "sar",
+      "row": 2,
+      "role": "via",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        -0.003,
+        -0.3568,
+        -0.0421
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.003,
+        -0.3568,
+        -0.0421
+      ],
+      "patch_frame": {
+        "e1": [
+          0.27172745650907248,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.12172300825109775
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "sar",
+      "map_id": 6,
+      "case": "sar",
+      "row": 5,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0243,
+        -0.084,
+        -0.0252
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0243,
+        -0.084,
+        -0.0252
+      ],
+      "patch_frame": {
+        "e1": [
+          0.25634884524887924,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.13766522933631206
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "tfl",
+      "map_id": 7,
+      "case": "tfl",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.0311,
+        0.0214,
+        0.1241
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0311,
+        0.0214,
+        0.1241
+      ],
+      "patch_frame": {
+        "e1": [
+          0.14521229253289417,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.029540366102707459
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "tfl",
+      "map_id": 7,
+      "case": "tfl",
+      "row": 2,
+      "role": "via",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        0.0294,
+        -0.0995,
+        0.0597
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0294,
+        -0.0995,
+        0.0597
+      ],
+      "patch_frame": {
+        "e1": [
+          0.24543607746067861,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.0675250044279988
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "tfl",
+      "map_id": 7,
+      "case": "tfl",
+      "row": 4,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.006,
+        -0.0487,
+        0.0297
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.006,
+        -0.0487,
+        0.0297
+      ],
+      "patch_frame": {
+        "e1": [
+          0.17453148292825274,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.13862995074360229
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "rect_fem",
+      "map_id": 8,
+      "case": "rect_fem",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.0295,
+        -0.0311,
+        0.0968
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0295,
+        -0.0311,
+        0.0968
+      ],
+      "patch_frame": {
+        "e1": [
+          0.284377665180318,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.083829532825001246
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "rect_fem",
+      "map_id": 8,
+      "case": "rect_fem",
+      "row": 2,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        null,
+        null,
+        null
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        null,
+        null,
+        null
+      ],
+      "patch_frame": {
+        "e1": [
+          0.072109040544461878,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.013340037727196228
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "rect_fem",
+      "map_id": 8,
+      "case": "rect_fem",
+      "row": 2,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        null,
+        null,
+        null
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        null,
+        null,
+        null
+      ],
+      "patch_frame": {
+        "e1": [
+          0.072109040544461878,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.013340037727196228
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "grac",
+      "map_id": 9,
+      "case": "grac",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.07401,
+        -0.1187,
+        0.02794
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.07401,
+        -0.1187,
+        0.02794
+      ],
+      "patch_frame": {
+        "e1": [
+          0.20265127967504512,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.056681518947372181
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "grac",
+      "map_id": 9,
+      "case": "grac",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.01943,
+        -0.05153,
+        -0.0358
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.01943,
+        -0.05153,
+        -0.0358
+      ],
+      "patch_frame": {
+        "e1": [
+          0.14173441002973283,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.10448886306517167
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "grac",
+      "map_id": 9,
+      "case": "grac",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.006,
+        -0.0836,
+        -0.0228
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.006,
+        -0.0836,
+        -0.0228
+      ],
+      "patch_frame": {
+        "e1": [
+          0.26028525245477607,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.14088217468945377
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "bifemsh",
+      "map_id": 10,
+      "case": "bifemsh",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        0.005,
+        -0.2111,
+        0.0234
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        0.005,
+        -0.2111,
+        0.0234
+      ],
+      "patch_frame": {
+        "e1": [
+          0.25038266811404764,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.042650299251158284
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "bifemsh",
+      "map_id": 10,
+      "case": "bifemsh",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0234,
+        -0.0563,
+        0.0343
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0234,
+        -0.0563,
+        0.0343
+      ],
+      "patch_frame": {
+        "e1": [
+          0.15253194854033592,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.13239320616467662
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "bifemsh",
+      "map_id": 10,
+      "case": "bifemsh",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0301,
+        -0.036,
+        0.02943
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0301,
+        -0.036,
+        0.02943
+      ],
+      "patch_frame": {
+        "e1": [
+          0.14024434626373639,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.10957328677116318
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "vas_int",
+      "map_id": 11,
+      "case": "vas_int",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        0.0048,
+        -0.1854,
+        0.0349
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        0.0048,
+        -0.1854,
+        0.0349
+      ],
+      "patch_frame": {
+        "e1": [
+          0.24733867887347055,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.042747033386413863
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "vas_int",
+      "map_id": 11,
+      "case": "vas_int",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        null,
+        null,
+        null
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        null,
+        null,
+        null
+      ],
+      "patch_frame": {
+        "e1": [
+          0.072109040544461878,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.013340037727196228
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "vas_int",
+      "map_id": 11,
+      "case": "vas_int",
+      "row": 2,
+      "role": "via",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        0.0269,
+        -0.2591,
+        0.0409
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0269,
+        -0.2591,
+        0.0409
+      ],
+      "patch_frame": {
+        "e1": [
+          0.18857282367958975,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.038708335773164494
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "soleus",
+      "map_id": 12,
+      "case": "soleus",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0024,
+        -0.1533,
+        0.0071
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0024,
+        -0.1533,
+        0.0071
+      ],
+      "patch_frame": {
+        "e1": [
+          0.22263936494555525,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.050075528258994653
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "soleus",
+      "map_id": 12,
+      "case": "soleus",
+      "row": 2,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0,
+        0.031,
+        -0.0053
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0,
+        0.031,
+        -0.0053
+      ],
+      "patch_frame": {
+        "e1": [
+          0.24708963597258782,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.14495978316979566
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "med_gas",
+      "map_id": 13,
+      "case": "med_gas",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        -0.019,
+        -0.3929,
+        -0.0235
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.019,
+        -0.3929,
+        -0.0235
+      ],
+      "patch_frame": {
+        "e1": [
+          0.27215934270505687,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.18466664176693823
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "med_gas",
+      "map_id": 13,
+      "case": "med_gas",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0,
+        0.031,
+        -0.0053
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0,
+        0.031,
+        -0.0053
+      ],
+      "patch_frame": {
+        "e1": [
+          0.24708963597258782,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.14495978316979566
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "lat_gas",
+      "map_id": 14,
+      "case": "lat_gas",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        -0.022,
+        -0.3946,
+        0.0272
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.022,
+        -0.3946,
+        0.0272
+      ],
+      "patch_frame": {
+        "e1": [
+          0.28374153506376015,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.18501362803149116
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "lat_gas",
+      "map_id": 14,
+      "case": "lat_gas",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0,
+        0.031,
+        -0.0053
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0,
+        0.031,
+        -0.0053
+      ],
+      "patch_frame": {
+        "e1": [
+          0.24708963597258782,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.14495978316979566
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "tib_post",
+      "map_id": 15,
+      "case": "tib_post",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0094,
+        -0.1348,
+        0.0019
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0094,
+        -0.1348,
+        0.0019
+      ],
+      "patch_frame": {
+        "e1": [
+          0.23958850448030233,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.0813528211922234
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "tib_post",
+      "map_id": 15,
+      "case": "tib_post",
+      "row": 4,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0.0772,
+        0.0159,
+        -0.0281
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0.0772,
+        0.0159,
+        -0.0281
+      ],
+      "patch_frame": {
+        "e1": [
+          0.61527940556604888,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.21346423723156954
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "tib_ant",
+      "map_id": 16,
+      "case": "tib_ant",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0179,
+        -0.1624,
+        0.0115
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0179,
+        -0.1624,
+        0.0115
+      ],
+      "patch_frame": {
+        "e1": [
+          0.20485092959393478,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.048687259027338482
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "tib_ant",
+      "map_id": 16,
+      "case": "tib_ant",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0.1166,
+        0.0178,
+        -0.0305
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0.1166,
+        0.0178,
+        -0.0305
+      ],
+      "patch_frame": {
+        "e1": [
+          0.61017630477785245,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.1763664863466812
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "per_brev",
+      "map_id": 17,
+      "case": "per_brev",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.007,
+        -0.2646,
+        0.0325
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.007,
+        -0.2646,
+        0.0325
+      ],
+      "patch_frame": {
+        "e1": [
+          0.18141852081430535,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.037864363726931693
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "per_brev",
+      "map_id": 17,
+      "case": "per_brev",
+      "row": 5,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0.0677,
+        0.0219,
+        0.0343
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0.0677,
+        0.0219,
+        0.0343
+      ],
+      "patch_frame": {
+        "e1": [
+          0.49921271033254411,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.15225450462150339
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "per_long",
+      "map_id": 18,
+      "case": "per_long",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0005,
+        -0.1568,
+        0.0362
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0005,
+        -0.1568,
+        0.0362
+      ],
+      "patch_frame": {
+        "e1": [
+          0.18058266268234291,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.045615968014036556
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "per_long",
+      "map_id": 18,
+      "case": "per_long",
+      "row": 7,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0.1203,
+        0.0085,
+        -0.0184
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0.1203,
+        0.0085,
+        -0.0184
+      ],
+      "patch_frame": {
+        "e1": [
+          0.83458949992786935,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.19328406505052156
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "per_tert",
+      "map_id": 19,
+      "case": "per_tert",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.001,
+        -0.2804,
+        0.0231
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.001,
+        -0.2804,
+        0.0231
+      ],
+      "patch_frame": {
+        "e1": [
+          0.18380864634835661,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.036186812882522512
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "per_tert",
+      "map_id": 19,
+      "case": "per_tert",
+      "row": 3,
+      "role": "insertion",
+      "owning_body": "calcn_r",
+      "cloud": "Calcaneus",
+      "seed_owning_body_frame_m": [
+        0.0857,
+        0.0228,
+        0.0299
+      ],
+      "patch_radius_mm": 20,
+      "patch_center_m": [
+        0.0857,
+        0.0228,
+        0.0299
+      ],
+      "patch_frame": {
+        "e1": [
+          0.63466387992182383,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.17113990224957629
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "flex_dig",
+      "map_id": 20,
+      "case": "flex_dig",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0083,
+        -0.2046,
+        -0.0018
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0083,
+        -0.2046,
+        -0.0018
+      ],
+      "patch_frame": {
+        "e1": [
+          0.23223737545143441,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.0387827804242084
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "flex_dig",
+      "map_id": 20,
+      "case": "flex_dig",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0154,
+        -0.4051,
+        -0.0196
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0154,
+        -0.4051,
+        -0.0196
+      ],
+      "patch_frame": {
+        "e1": [
+          0.1352277710047293,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.0960623178002526
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "flex_dig",
+      "map_id": 20,
+      "case": "flex_dig",
+      "row": 8,
+      "role": "insertion",
+      "owning_body": "toes_r",
+      "cloud": "Toes",
+      "seed_owning_body_frame_m": [
+        0.0441,
+        -0.006,
+        0.0242
+      ],
+      "patch_radius_mm": 15,
+      "patch_center_m": [
+        0.0441,
+        -0.006,
+        0.0242
+      ],
+      "patch_frame": {
+        "e1": [
+          0.57129183030486008,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.051665408230404351
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "flex_hal",
+      "map_id": 21,
+      "case": "flex_hal",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0079,
+        -0.2334,
+        0.0244
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0079,
+        -0.2334,
+        0.0244
+      ],
+      "patch_frame": {
+        "e1": [
+          0.1878839076718273,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.037189173939075539
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "flex_hal",
+      "map_id": 21,
+      "case": "flex_hal",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        -0.0186,
+        -0.4079,
+        -0.0174
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0186,
+        -0.4079,
+        -0.0174
+      ],
+      "patch_frame": {
+        "e1": [
+          0.1352277710047293,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.0960623178002526
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "flex_hal",
+      "map_id": 21,
+      "case": "flex_hal",
+      "row": 7,
+      "role": "insertion",
+      "owning_body": "toes_r",
+      "cloud": "Toes",
+      "seed_owning_body_frame_m": [
+        0.0562,
+        -0.0102,
+        -0.0181
+      ],
+      "patch_radius_mm": 15,
+      "patch_center_m": [
+        0.0562,
+        -0.0102,
+        -0.0181
+      ],
+      "patch_frame": {
+        "e1": [
+          0.32495273955946608,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.048698790064886706
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "ext_dig",
+      "map_id": 22,
+      "case": "ext_dig",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0032,
+        -0.1381,
+        0.0276
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0032,
+        -0.1381,
+        0.0276
+      ],
+      "patch_frame": {
+        "e1": [
+          0.23568878373879229,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.0703616423727628
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "ext_dig",
+      "map_id": 22,
+      "case": "ext_dig",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0289,
+        -0.4007,
+        0.0072
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0289,
+        -0.4007,
+        0.0072
+      ],
+      "patch_frame": {
+        "e1": [
+          0.16584702313335423,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.096533670138015254
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "ext_dig",
+      "map_id": 22,
+      "case": "ext_dig",
+      "row": 6,
+      "role": "insertion",
+      "owning_body": "toes_r",
+      "cloud": "Toes",
+      "seed_owning_body_frame_m": [
+        0.0443,
+        -0.0004,
+        0.025
+      ],
+      "patch_radius_mm": 15,
+      "patch_center_m": [
+        0.0443,
+        -0.0004,
+        0.025
+      ],
+      "patch_frame": {
+        "e1": [
+          0.57035630417070737,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.051666488499320325
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "ext_hal",
+      "map_id": 23,
+      "case": "ext_hal",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0012,
+        -0.1767,
+        0.0228
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0012,
+        -0.1767,
+        0.0228
+      ],
+      "patch_frame": {
+        "e1": [
+          0.18703612607115117,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.045803784584014261
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "ext_hal",
+      "map_id": 23,
+      "case": "ext_hal",
+      "row": 2,
+      "role": "via",
+      "owning_body": "tibia_r",
+      "cloud": "Tibia",
+      "seed_owning_body_frame_m": [
+        0.0326,
+        -0.3985,
+        -0.0085
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        0.0326,
+        -0.3985,
+        -0.0085
+      ],
+      "patch_frame": {
+        "e1": [
+          0.15694326680295451,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.0965272566154725
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "ext_hal",
+      "map_id": 23,
+      "case": "ext_hal",
+      "row": 7,
+      "role": "insertion",
+      "owning_body": "toes_r",
+      "cloud": "Toes",
+      "seed_owning_body_frame_m": [
+        0.0563,
+        0.0034,
+        -0.0186
+      ],
+      "patch_radius_mm": 15,
+      "patch_center_m": [
+        0.0563,
+        0.0034,
+        -0.0186
+      ],
+      "patch_frame": {
+        "e1": [
+          0.319584218206238,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.048411103872456632
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "glut_max3",
+      "map_id": 24,
+      "case": "glut_max3",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.1556,
+        -0.0314,
+        0.0058
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.1556,
+        -0.0314,
+        0.0058
+      ],
+      "patch_frame": {
+        "e1": [
+          0.12782106786024325,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.011833309753330764
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "glut_max3",
+      "map_id": 24,
+      "case": "glut_max3",
+      "row": 4,
+      "role": "insertion",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        -0.006,
+        -0.1419,
+        0.0411
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.006,
+        -0.1419,
+        0.0411
+      ],
+      "patch_frame": {
+        "e1": [
+          0.34400362629739289,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.055081320654419862
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "glut_max3",
+      "map_id": 24,
+      "case": "glut_max3",
+      "row": 2,
+      "role": "via",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.1529,
+        -0.1052,
+        0.0403
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.1529,
+        -0.1052,
+        0.0403
+      ],
+      "patch_frame": {
+        "e1": [
+          0.090663688396885461,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.035461492842067774
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "add_mag3",
+      "map_id": 25,
+      "case": "add_mag3",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.11108,
+        -0.11413,
+        0.04882
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.11108,
+        -0.11413,
+        0.04882
+      ],
+      "patch_frame": {
+        "e1": [
+          0.19192313076818651,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.06681131686561663
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "add_mag3",
+      "map_id": 25,
+      "case": "add_mag3",
+      "row": 2,
+      "role": "insertion",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        0.007,
+        -0.3837,
+        -0.0266
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        0.007,
+        -0.3837,
+        -0.0266
+      ],
+      "patch_frame": {
+        "e1": [
+          0.28374153506376015,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.18501362803149116
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "iliacus",
+      "map_id": 26,
+      "case": "iliacus",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.0674,
+        0.0365,
+        0.0854
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.0674,
+        0.0365,
+        0.0854
+      ],
+      "patch_frame": {
+        "e1": [
+          0.32978845595028039,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.075097892292569343
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "iliacus",
+      "map_id": 26,
+      "case": "iliacus",
+      "row": 4,
+      "role": "insertion",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        -0.0193,
+        -0.0621,
+        0.0129
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.0193,
+        -0.0621,
+        0.0129
+      ],
+      "patch_frame": {
+        "e1": [
+          0.47643134516765229,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.20721317643770815
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "iliacus",
+      "map_id": 26,
+      "case": "iliacus",
+      "row": 2,
+      "role": "via",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.0258,
+        -0.055,
+        0.0811
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0258,
+        -0.055,
+        0.0811
+      ],
+      "patch_frame": {
+        "e1": [
+          0.21759331001051771,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.073445053182412248
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "psoas",
+      "map_id": 27,
+      "case": "psoas",
+      "row": 1,
+      "role": "origin",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.0647,
+        0.0887,
+        0.0289
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.0647,
+        0.0887,
+        0.0289
+      ],
+      "patch_frame": {
+        "e1": [
+          0.10338047201620702,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.024412123760118695
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "psoas",
+      "map_id": 27,
+      "case": "psoas",
+      "row": 4,
+      "role": "insertion",
+      "owning_body": "femur_r",
+      "cloud": "Femur",
+      "seed_owning_body_frame_m": [
+        -0.0188,
+        -0.0597,
+        0.0104
+      ],
+      "patch_radius_mm": 30,
+      "patch_center_m": [
+        -0.0188,
+        -0.0597,
+        0.0104
+      ],
+      "patch_frame": {
+        "e1": [
+          0.48603504959191518,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          -1,
+          0
+        ],
+        "n_outward": [
+          -0,
+          -0,
+          -0.20767530807482362
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    },
+    {
+      "group": "psoas",
+      "map_id": 27,
+      "case": "psoas",
+      "row": 2,
+      "role": "via",
+      "owning_body": "pelvis",
+      "cloud": "Pelvis_R",
+      "seed_owning_body_frame_m": [
+        -0.0238,
+        -0.057,
+        0.0759
+      ],
+      "patch_radius_mm": 25,
+      "patch_center_m": [
+        -0.0238,
+        -0.057,
+        0.0759
+      ],
+      "patch_frame": {
+        "e1": [
+          0.20796075975224521,
+          0,
+          0
+        ],
+        "e2": [
+          0,
+          1,
+          0
+        ],
+        "n_outward": [
+          0,
+          0,
+          0.073788132614205582
+        ]
+      },
+      "standoff_mm": [
+        1,
+        12
+      ],
+      "parameterization": "(u,v) in [-1,1]^2 tangential in (e1,e2); project = nearest cloud point to seed + Rpatch*(u*e1+v*e2) + (s/1000)*n (fr_patch.m:69-84)",
+      "provenance": "fr_cases27 builder (stock gait2392_simbody route seeds per target_contract.json winners; patch defined by fr_patch on the Bone_Mesh_Plots cloud of record)"
+    }
+  ]
+}

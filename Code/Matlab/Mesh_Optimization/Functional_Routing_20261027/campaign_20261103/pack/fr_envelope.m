@@ -1,23 +1,22 @@
 function env = fr_envelope(C, caseDef, design, kin, qPoseList, xiBranch)
-%FR_ENVELOPE Pose-dependent occupied envelope of one optimized group.
+%FR_ENVELOPE Pose-dependent occupied envelope of one optimized group (v2).
 %
-% Ben's layering ruling (master item 5): each finished layer's occupied
-% envelope (sleeve + fittings + tackle + hardware, pose-dependent) is
-% RETAINED and enforced as a HARD obstacle inside every more-superficial
-% group's constraint set. The envelope is built from the SAME solved
-% mechanics the objective uses (fr_mechBuild -> BiPam_pulley2), evaluated
-% at the poses of the group that must avoid it (physically simultaneous
-% configurations, handoff item 9 - never a comparison between unrelated
-% poses of different muscles).
+% v2 (2026-11-04, Ben's corrected layering ruling): primitives are TAGGED
+% so the constraint layer can split SOFT from HARD:
+%   - capsules (BPA sleeve branches)        -> kind 'bpa_sleeve'  (SOFT:
+%     slight BPA-BPA interference is a soft objective penalty with depth
+%     and extent recorded; never a hard clearance constraint)
+%   - spheres 'fitting_origin/fitting_exit' -> kind 'rigid_fitting' (HARD:
+%     rigid metal hardware)
+%   - sphere  'exit_row' (sleeve end bulk)  -> kind 'bpa_end'      (SOFT)
+%   - sphere  'tackle_*'                    -> kind 'rigid_tackle' (HARD)
 %
-% Primitives per pose:
-%   - one capsule per parallel BPA branch (row 1 -> sleeve exit row),
-%     radius = inflated sleeve radius at that pose from fr_diameter at the
-%     solved contraction (branches on a ring around the bundle axis, so
-%     soft BPA-BPA overlap and the hard envelope have real geometry)
-%   - fitting spheres at both sleeve ends
-%   - tackle sphere at the sleeve exit (family OD/2 + proposed 2 mm radial
-%     guard) when the case has a tackle
+% The envelope is still built from the SAME solved mechanics the objective
+% uses (fr_mechBuild -> the bi transmission class), evaluated at the poses
+% of the group that must avoid it (physically simultaneous configurations,
+% handoff item 9). Ben's layering ruling (master item 5) is retained:
+% finished layers are carried into outer layers - the RIGID parts as hard
+% obstacles, the BPA sleeve corridors through the soft penalty.
 env.caseName = caseDef.name;
 env.groupMapId = caseDef.groupMapId;
 env.design = design;
@@ -74,7 +73,7 @@ for i = 1:nG
     offs = fr_bundleOffsets(caseDef.seed.nBPA) * (Drest / 2) / 1000;
     ncap = max(1, size(offs, 1));
     env.capsules{i} = repmat(struct('p1', [], 'p2', [], 'r', 0, ...
-        'branch', 0), 1, ncap);
+        'branch', 0, 'kind', 'bpa_sleeve'), 1, ncap);
     for b = 1:ncap
         if b <= size(offs, 1)
             off = perp * offs(b, :)';
@@ -85,6 +84,7 @@ for i = 1:nG
         env.capsules{i}(b).p2 = p2 + off';
         env.capsules{i}(b).r = r;
         env.capsules{i}(b).branch = b;
+        env.capsules{i}(b).kind = 'bpa_sleeve';
     end
     % field-by-field (struct('p', [3x3], 'what', {cell}) would broadcast
     % into a struct array - the struct-with-array-value trap)
@@ -92,11 +92,13 @@ for i = 1:nG
     sph.p = [p1; p2; p2];
     sph.r = [r, r, r];
     sph.what = {'fitting_origin', 'fitting_exit', 'exit_row'};
+    sph.kind = {'rigid_fitting', 'rigid_fitting', 'bpa_end'};
     if caseDef.hasTackle
         fam = C.families(caseDef.txConfig.tackleFamily);
         sph.p(end+1, :) = p2;
         sph.r(end+1) = (fam.od_mm / 2 + 2) / 1000;
         sph.what{end+1} = ['tackle_' caseDef.txConfig.tackleFamily];
+        sph.kind{end+1} = 'rigid_tackle';
     end
     env.spheres{i} = sph;
 end

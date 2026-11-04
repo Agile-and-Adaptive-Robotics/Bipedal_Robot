@@ -1,0 +1,67 @@
+=== fr_launch_run1 (corrected formulation) | 04-Nov-2026 11:48:58 | machine EASTEREGG2 ===
+sizing winners: 27 group config(s) applied
+fr_targets: ercspn -> targets_v2 exact (ercspn)
+fr_targets: intobl -> targets_v2 exact (intobl)
+fr_targets: extobl -> targets_v2 exact (extobl)
+fr_targets: bifemlh -> targets_v2 exact (bifemlh)
+fr_targets: semimem -> targets_v2 exact (semimem)
+fr_targets: sar -> targets_v2 exact (sar)
+fr_targets: tfl -> targets_v2 exact (tfl)
+fr_targets: rect_fem -> targets_v2 exact (rect_fem)
+fr_targets: grac -> targets_v2 exact (grac)
+fr_targets: bifemsh -> targets_v2 exact (bifemsh)
+fr_targets: vas_int -> targets_v2 exact (vas_int)
+fr_targets: soleus -> targets_v2 exact (soleus)
+fr_targets: med_gas -> targets_v2 exact (med_gas)
+fr_targets: lat_gas -> targets_v2 exact (lat_gas)
+fr_targets: tib_post -> targets_v2 exact (tib_post)
+fr_targets: tib_ant -> targets_v2 exact (tib_ant)
+fr_targets: per_brev -> targets_v2 exact (per_brev)
+fr_targets: per_long -> targets_v2 exact (per_long)
+fr_targets: per_tert -> targets_v2 exact (per_tert)
+fr_targets: flex_dig -> targets_v2 exact (flex_dig)
+fr_targets: flex_hal -> targets_v2 exact (flex_hal)
+fr_targets: ext_dig -> targets_v2 exact (ext_dig)
+fr_targets: ext_hal -> targets_v2 exact (ext_hal)
+fr_targets: glut_max3 -> targets_v2 exact (glut_max3)
+fr_targets: add_mag3 -> targets_v2 exact (add_mag3)
+fr_targets: iliacus -> targets_v2 exact (iliacus)
+fr_targets: psoas -> targets_v2 exact (psoas)
+layer order: [27 26 1 2 3 11 10 25 5 4 8 9 6 7 24 15 20 21 17 18 12 13 14 16 22 23 19]
+warm starts from run_0: 10 rigid, 5 compliant
+
+--- COMPLIANT SMOKE (serial, psoas, budget 100) ---
+compliant smoke PASSED (f 69.143) - parallel solves unlocked
+resume scan (run_1): 0/27 rigid, 0/27 compliant, 0/27 refine found
+manifest written: D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Functional_Routing_20261027\campaign_20261103\run_1\manifest.json
+envelope-of-record restored for 0 placed group(s)
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+parpool: 10 workers
+
+--- LAYER 1 (trunk/deep hip): groups [27 26 1 2 3] ---
+obstacle envelopes carried into this layer: 0
+  [27] psoas     rigid failed           f      NaN violEff NaN | compliant failed           f      NaN violEff NaN
+  [26] iliacus   rigid failed           f      NaN violEff NaN | compliant failed           f      NaN violEff NaN
+  [ 1] ercspn    rigid failed           f      NaN violEff NaN | compliant failed           f      NaN violEff NaN
+  [ 2] intobl    rigid failed           f      NaN violEff NaN | compliant failed           f      NaN violEff NaN
+  [ 3] extobl    rigid failed           f      NaN violEff NaN | compliant failed           f      NaN violEff NaN
+
+--- LAYER 2 (thigh): groups [11 10 25 5 4 8 9 6 7 24] ---
+obstacle envelopes carried into this layer: 0
+  [11] vas_int   rigid failed           f      NaN violEff NaN | compliant solved           f  167.957 violEff 0.0e+00
+  [10] bifemsh   rigid solved           f   65.940 violEff 0.0e+00 | compliant solved           f   83.325 violEff 0.0e+00
+  [25] add_mag3  rigid failed           f      NaN violEff NaN | compliant best-infeasible  f  525.734 violEff 4.0e-02
+       compliant top violator: centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
+  [ 5] semimem   rigid solved           f   75.728 violEff 0.0e+00 | compliant solved           f    5.489 violEff 0.0e+00
+  [ 4] bifemlh   rigid solved           f   13.147 violEff 0.0e+00 | compliant solved           f   32.870 violEff 0.0e+00
+  [ 8] rect_fem  rigid solved           f   97.835 violEff 0.0e+00 | compliant solved           f   48.741 violEff 0.0e+00
+  [ 9] grac      rigid failed           f      NaN violEff NaN | compliant best-infeasible  f 10138.022 violEff 1.0e+00
+       compliant top violator: tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+  [ 6] sar       rigid failed           f      NaN violEff NaN | compliant best-infeasible  f 10002.126 violEff 1.0e+00
+       compliant top violator: tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+  [ 7] tfl       rigid solved           f    9.004 violEff 0.0e+00 | compliant solved           f    8.983 violEff 0.0e+00
+  [24] glut_max3 rigid failed           f      NaN violEff NaN | compliant solved           f  130.395 violEff 0.0e+00
+
+--- LAYER 3 (lower leg): groups [15 20 21 17 18 12 13 14 16 22 23 19] ---
+obstacle envelopes carried into this layer: 7

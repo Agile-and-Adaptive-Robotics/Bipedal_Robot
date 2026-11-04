@@ -1,5 +1,6 @@
-function CASES = fr_cases27(C, kin)
-%FR_CASES27 Build the 27 contract-driven campaign cases (run_0).
+function CASES = fr_cases27(C, kin, overrides)
+%FR_CASES27 Build the 27 contract-driven campaign cases (run_0; v2 adds
+% the optional per-group sizing overrides, see fr_applyCfg27).
 %
 % One case per target_contract.json group. Every case is contract-aligned:
 % PASS 1 sweeps the contract's primaryDof over the actuator-map ROM table
@@ -51,11 +52,18 @@ function CASES = fr_cases27(C, kin)
 tc = jsondecode(fileread(fullfile(C.targetsDir, 'target_contract.json')));
 am = jsondecode(fileread(fullfile(C.repo, 'Code', 'Matlab', ...
     'Mesh_Optimization', 'Routing27_v2', 'actuator_map_27.json')));
+% optional per-group sizing overrides (fr_sizingSearch winners): containers.Map
+% group name -> struct('diaStr', '10'|'20', 'nBPA', n, 'family', 'L'|'M'|'S', ...
+% 'gain', g). Absent/empty = the contract seeds (Ben 2026-11-04 item 4: the
+% contract counts are search centers, never mandatory).
+if nargin < 3
+    overrides = containers.Map('KeyType', 'char', 'ValueType', 'any');
+end
 
 caseCell = {};
 for g = 1:numel(tc.groups)
     grp = tc.groups(g);
-    cs = fr_buildOne27(C, kin, grp, am);
+    cs = fr_buildOne27(C, kin, grp, am, overrides);
     caseCell{end + 1} = cs;
 end
 CASES = caseCell{1};
@@ -65,7 +73,7 @@ end
 end
 
 % ==========================================================================
-function cs = fr_buildOne27(C, kin, grp, am)
+function cs = fr_buildOne27(C, kin, grp, am, overrides)
 % Dispatch on the contract group id (explicit, deterministic). Each
 % pattern builder derives its row/cross structure from the ACTUAL parsed
 % route (never hardcoded row indices).
@@ -99,7 +107,60 @@ switch grp.map_id
         error('fr_cases27:Map', 'unmapped contract group id %d', ...
             grp.map_id);
 end
+cs = fr_applyCfg27(cs, overrides);
 cs = fr_finishCase27(C, kin, cs);
+end
+
+% ==========================================================================
+function cs = fr_applyCfg27(cs, overrides)
+% v2 sizing hook: apply a per-group config override AFTER the pattern
+% builders and BEFORE fr_finishCase27 (the seed derivations in
+% fr_finishCase27 use the FINAL txConfig gain and diameter). Unknown
+% groups are ignored; absent fields keep the case's own values.
+if isempty(overrides) || ~isa(overrides, 'containers.Map') ...
+        || ~overrides.isKey(cs.name)
+    return
+end
+ov = overrides(cs.name);
+if isfield(ov, 'diaStr') && ~isempty(ov.diaStr)
+    cs.diaStr = char(ov.diaStr);
+    cs.diaNum = str2double(cs.diaStr);
+end
+if isfield(ov, 'nBPA') && ~isempty(ov.nBPA)
+    cs.seed.nBPA = double(ov.nBPA);
+end
+fam = cs.txConfig.tackleFamily;
+if strcmpi(fam, 'none'); fam = 'L'; end
+if isfield(ov, 'family') && ~isempty(ov.family); fam = char(ov.family); end
+g = NaN;
+if isfield(cs, 'txConfig') && ~isempty(cs.txConfig.gain)
+    g = max(cs.txConfig.gain);
+end
+if isfield(ov, 'gain') && ~isempty(ov.gain); g = double(ov.gain); end
+if ~cs.hasTackle
+    cs.txConfig = fr_txFor(false, cs.seed.nBPA, 'none');
+else
+    cs.txConfig = fr_txFor(true, cs.seed.nBPA, fam, g);
+end
+% optional DENSE verification grid (fr_verifyDense): resample every
+% pass's sweep to ov.gridN cells BEFORE fr_fillQ27 runs in
+% fr_finishCase27; targets are then resampled onto the dense grid by
+% fr_targets' documented verification fallback
+if isfield(ov, 'gridN') && ~isempty(ov.gridN)
+    gn = round(double(ov.gridN));
+    for p = 1:numel(cs.passes)
+        th1o = cs.passes{p}.th1(:);
+        th1n = linspace(min(th1o), max(th1o), gn)';
+        cs.passes{p}.th1 = th1n';
+        if isfield(cs.passes{p}, 'th2') && numel(cs.passes{p}.th2) == numel(th1o)
+            cs.passes{p}.th2 = interp1(th1o, cs.passes{p}.th2(:), th1n, ...
+                'linear', 'extrap')';
+        end
+    end
+    cs.note = sprintf('%s | dense verification grid %d cells', cs.note, gn);
+end
+cs.note = sprintf('%s | sizing override applied: dia %s nBPA %d fam %s gain %g', ...
+    cs.note, cs.diaStr, cs.seed.nBPA, fam, g);
 end
 
 % ============================== HIP ======================================
@@ -743,16 +804,27 @@ cs.obstacleBones = {};
 cs.footTipRule = false;
 cs.envelopePassIdx = 1;
 cs.secondaryCrossing = 0;
+% Xi3 per-pose inside the equilibrium (Ben 2026-11-04 item 3): the
+% derived class path (BiPam_pulley2_xi3pose) for the COMPLIANT branch;
+% rigid is unaffected. fr_xi3_check PASSED 83/0 in a fresh process
+% (tmp/xi3_check_final.log). 'legacyMaxEnvelope' remains available as
+% the explicit A/B fallback in fr_mechBuild.
+cs.xi3Mode = 'perPose';
 cs.note = '';
 end
 
-function cfg = fr_txFor(hasTackle, nBPA, tackleFamily)
-% field-by-field (the struct-with-cell-value broadcast trap)
+function cfg = fr_txFor(hasTackle, nBPA, tackleFamily, gain)
+% field-by-field (the struct-with-cell-value broadcast trap). gain: the
+% tackle's travel/force ratio on the primary crossing (default 2; the
+% class enforces gain <= tackle line parts structurally)
+if nargin < 4
+    gain = 2;
+end
 cfg = struct();
 if hasTackle
     cfg.nPulleyBPA = [nBPA, 1];
-    cfg.tackleLineParts = [2, 1];
-    cfg.gain = [2, 1];
+    cfg.tackleLineParts = [max(1, double(gain)), 1];
+    cfg.gain = [max(1, double(gain)), 1];
     cfg.routingMode = {'moving_via', 'moving_via'};
     cfg.tackleFamily = tackleFamily;
 else

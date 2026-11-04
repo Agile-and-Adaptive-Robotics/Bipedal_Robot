@@ -1,0 +1,151 @@
+=== fr_xi3_check | 04-Nov-2026 09:24:05 ===
+machine: EASTEREGG2
+
+--- CHECK (a): rigid-limit recovery (derived == original) ---
+  [psoas]
+    wrapper legacy rigid vs perPose rigid: strain_p      max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: FsingleBPA    max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: sContraction  max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: Torque_ins    max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): strain_p   max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): FsingleBPA max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): Torque_ins max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): deltaL     max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    rigid-limit recovery: derived rigid branch reproduces the original rigid branch EXACTLY (all diffs 0) -> PASS
+  [med_gas]
+    wrapper legacy rigid vs perPose rigid: strain_p      max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: FsingleBPA    max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: sContraction  max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: Torque_ins    max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): strain_p   max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): FsingleBPA max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): Torque_ins max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): deltaL     max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    rigid-limit recovery: derived rigid branch reproduces the original rigid branch EXACTLY (all diffs 0) -> PASS
+  [sar]
+    wrapper legacy rigid vs perPose rigid: strain_p      max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: FsingleBPA    max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: sContraction  max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    wrapper legacy rigid vs perPose rigid: Torque_ins    max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): strain_p   max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): FsingleBPA max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): Torque_ins max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    direct ORIGINAL class vs derived (Xi3=0): deltaL     max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    rigid-limit recovery: derived rigid branch reproduces the original rigid branch EXACTLY (all diffs 0) -> PASS
+
+--- CHECK (b): component isolation (Xi0 / Xi1 / Xi3) ---
+  [psoas] nG = 9
+    escape-branch exact identities on 9 pose cells (active crossing 1)
+    Xi0-only: sCon(Xi0) - sCon(rigid) == Xi0             max|diff| = 3.469e-18 (tol 1.0e-10) -> PASS
+    Xi3-only: sCon(Xi3) - sCon(rigid) == deltaRoute(i)   max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    Xi0+Xi3: deltaRoute == Xi3*bend*comp(Xi0)^2 (zeta semantics) max|diff| = 0.000e+00 (tol 1.0e-15) -> PASS
+    Xi1+Xi3: deltaRoute == deltaRoute(Xi3) exactly       max|diff| = 0.000e+00 (tol 1.0e-15) -> PASS
+    zero cross-coupling: Xi0-only and Xi1-only runs apply EXACTLY zero loss; Xi1 does not perturb the loss at all; the Xi0 dependence is the zeta = 1 - epsilon*(chi0-inclusive) definition itself -> PASS
+    elastic-branch taut cells: 18 / 18
+    Xi1-only closure identity max |G*PulleyTravel - DeltaL| / max|DeltaL| = 3.371e-16 -> PASS
+    Xi1-only: bracket projection cb max 5.538e-05 m/N, bracket deflection max 16.6545 mm (bracket channel active; Xi0/Xi3 terms zero) -> PASS
+    Xi3 elastic effect: per-cell sCon(Xi3) - sCon(no Xi3) in [dR -2.182e-03, dR +0.000e+00] m (positive shift, at most its own dR through the force feedback) -> PASS
+    Xi3 elastic per-pose shifts (m): 0.0023 0.0015 0.0008 0.0003 0.0001 0.0000 0.0000 0.0000 0.0000 0.0012 0.0009 0.0006 0.0003 0.0001 0.0000 0.0000 0.0000 0.0000 | deltaRoute: 0.0045 0.0029 0.0015 0.0006 0.0002 0.0000 0.0000 0.0000 0.0000 0.0024 0.0018 0.0011 0.0006 0.0002 0.0000 0.0000 0.0000 0.0000 -> PASS
+    Xi1-only effect exists: max |sCon(Xi1) - sCon(escape demand)| = 2.202e-02 m -> PASS
+    note: with Xi0+Xi1+Xi3 simultaneously on, the solved roots interact through the shared force law F(s) (additive closure terms, nonlinear root) - expected physics, not double counting
+  [med_gas] nG = 9
+    escape-branch exact identities on 9 pose cells (active crossing 1)
+    Xi0-only: sCon(Xi0) - sCon(rigid) == Xi0             max|diff| = 6.939e-18 (tol 1.0e-10) -> PASS
+    Xi3-only: sCon(Xi3) - sCon(rigid) == deltaRoute(i)   max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    Xi0+Xi3: deltaRoute == Xi3*bend*comp(Xi0)^2 (zeta semantics) max|diff| = 0.000e+00 (tol 1.0e-15) -> PASS
+    Xi1+Xi3: deltaRoute == deltaRoute(Xi3) exactly       max|diff| = 0.000e+00 (tol 1.0e-15) -> PASS
+    zero cross-coupling: Xi0-only and Xi1-only runs apply EXACTLY zero loss; Xi1 does not perturb the loss at all; the Xi0 dependence is the zeta = 1 - epsilon*(chi0-inclusive) definition itself -> PASS
+    elastic-branch taut cells: 18 / 18
+    Xi1-only closure identity max |G*PulleyTravel - DeltaL| / max|DeltaL| = 3.938e-16 -> PASS
+    Xi1-only: bracket projection cb max 5.560e-05 m/N, bracket deflection max 36.8609 mm (bracket channel active; Xi0/Xi3 terms zero) -> PASS
+    Xi3 elastic effect: per-cell sCon(Xi3) - sCon(no Xi3) in [dR -1.627e-03, dR -1.882e-04] m (positive shift, at most its own dR through the force feedback) -> PASS
+    Xi3 elastic per-pose shifts (m): 0.0002 0.0003 0.0005 0.0007 0.0009 0.0011 0.0014 0.0017 0.0020 0.0002 0.0003 0.0005 0.0007 0.0009 0.0011 0.0014 0.0017 0.0020 | deltaRoute: 0.0004 0.0006 0.0009 0.0012 0.0016 0.0021 0.0025 0.0031 0.0036 0.0004 0.0006 0.0009 0.0012 0.0016 0.0021 0.0025 0.0030 0.0036 -> PASS
+    Xi1-only effect exists: max |sCon(Xi1) - sCon(escape demand)| = 3.481e-02 m -> PASS
+    note: with Xi0+Xi1+Xi3 simultaneously on, the solved roots interact through the shared force law F(s) (additive closure terms, nonlinear root) - expected physics, not double counting
+  [sar] nG = 9
+    escape-branch exact identities on 9 pose cells (active crossing 1)
+    Xi0-only: sCon(Xi0) - sCon(rigid) == Xi0             max|diff| = 3.469e-18 (tol 1.0e-10) -> PASS
+    Xi3-only: sCon(Xi3) - sCon(rigid) == deltaRoute(i)   max|diff| = 0.000e+00 (tol 1.0e-10) -> PASS
+    Xi0+Xi3: deltaRoute == Xi3*bend*comp(Xi0)^2 (zeta semantics) max|diff| = 0.000e+00 (tol 1.0e-15) -> PASS
+    Xi1+Xi3: deltaRoute == deltaRoute(Xi3) exactly       max|diff| = 0.000e+00 (tol 1.0e-15) -> PASS
+    zero cross-coupling: Xi0-only and Xi1-only runs apply EXACTLY zero loss; Xi1 does not perturb the loss at all; the Xi0 dependence is the zeta = 1 - epsilon*(chi0-inclusive) definition itself -> PASS
+    elastic-branch taut cells: 18 / 18
+    Xi1-only closure identity max |G*PulleyTravel - DeltaL| / max|DeltaL| = 5.037e-16 -> PASS
+    Xi1-only: bracket projection cb max 6.641e-05 m/N, bracket deflection max 15.7123 mm (bracket channel active; Xi0/Xi3 terms zero) -> PASS
+    Xi3 elastic effect: per-cell sCon(Xi3) - sCon(no Xi3) in [dR -1.508e-03, dR -9.892e-04] m (positive shift, at most its own dR through the force feedback) -> PASS
+    Xi3 elastic per-pose shifts (m): 0.0035 0.0036 0.0038 0.0039 0.0041 0.0042 0.0041 0.0040 0.0038 0.0031 0.0034 0.0037 0.0039 0.0041 0.0042 0.0042 0.0042 0.0040 | deltaRoute: 0.0046 0.0048 0.0050 0.0053 0.0055 0.0057 0.0056 0.0055 0.0051 0.0041 0.0045 0.0049 0.0053 0.0055 0.0057 0.0057 0.0056 0.0054 -> PASS
+    Xi1-only effect exists: max |sCon(Xi1) - sCon(escape demand)| = 1.561e-02 m -> PASS
+    note: with Xi0+Xi1+Xi3 simultaneously on, the solved roots interact through the shared force law F(s) (additive closure terms, nonlinear root) - expected physics, not double counting
+
+--- CHECK (c): Xi3 is genuinely per-pose ---
+  [synthetic 3-pose] bend (m) = [0.005 0.02 0.01]
+    deltaRoute (m) = [3.137553e-04 1.255021e-03 6.275106e-04]
+    ratio deltaRoute(2)/deltaRoute(1) = 4.000000000000 (bend ratio 4, comp equal) -> PASS
+    linearity: max|deltaRoute(3b) - 3*deltaRoute(b)|/max|dR| = 6.911e-16 -> PASS
+    per-pose spread inside one object: max-min = 9.413e-04 m -> PASS
+  [psoas] active crossing 1
+    pose          bend total (m)   per-pose loss (m)   legacy scalar (m)
+     1               0.044481      3.482332e-03      1.287944e-03
+     5               0.023548      4.222003e-05      1.287944e-03
+     9               0.056259      0.000000e+00      1.287944e-03
+    per-pose loss spread = 3.482e-03 m (legacy max-envelope would hold ALL poses at 1.288e-03 m) -> PASS
+    wrapper bend profile == class self-computed profile  max|diff| = 0.000e+00 (tol 1.0e-12) -> PASS
+  [med_gas] active crossing 1
+    pose          bend total (m)   per-pose loss (m)   legacy scalar (m)
+     1               0.027775      3.149184e-04      0.000000e+00
+     5               0.027196      1.385815e-03      0.000000e+00
+     9               0.027611      3.270693e-03      0.000000e+00
+    per-pose loss spread = 2.956e-03 m (legacy max-envelope would hold ALL poses at 0.000e+00 m) -> PASS
+    wrapper bend profile == class self-computed profile  max|diff| = 0.000e+00 (tol 1.0e-12) -> PASS
+  [sar] active crossing 1
+    pose          bend total (m)   per-pose loss (m)   legacy scalar (m)
+     1               0.050883      4.037817e-03      3.622794e-03
+     5               0.045075      4.907077e-03      3.622794e-03
+     9               0.042783      4.499543e-03      3.622794e-03
+    per-pose loss spread = 9.969e-04 m (legacy max-envelope would hold ALL poses at 3.623e-03 m) -> PASS
+    wrapper bend profile == class self-computed profile  max|diff| = 0.000e+00 (tol 1.0e-12) -> PASS
+
+--- CHECK (d): work balance with loss (|resid|/scale < 1e-12) ---
+  [psoas] taut cells 9, scale 3.405e+00 J, loss share sum(W_loss)/sum(W_gross) = 1.197e-01
+    work balance max |W_in - W_xi0 - W_loss - W_out - W_spring + W_cAdd| / scale = 5.543e-16 -> PASS
+    loss term W_loss = nBPA*F*deltaRoute present and nonzero (sum 2.449e+00 J) -> PASS
+  [med_gas] taut cells 9, scale 2.170e+01 J, loss share sum(W_loss)/sum(W_gross) = 1.526e-01
+    work balance max |W_in - W_xi0 - W_loss - W_out - W_spring + W_cAdd| / scale = 9.005e-15 -> PASS
+    loss term W_loss = nBPA*F*deltaRoute present and nonzero (sum 1.603e+01 J) -> PASS
+  [sar] taut cells 9, scale 2.509e+00 J, loss share sum(W_loss)/sum(W_gross) = 7.264e-01
+    work balance max |W_in - W_xi0 - W_loss - W_out - W_spring + W_cAdd| / scale = 2.248e-14 -> PASS
+    loss term W_loss = nBPA*F*deltaRoute present and nonzero (sum 8.738e+00 J) -> PASS
+
+--- CHECK (e): bracket/mount/housing-stop reactions ---
+  [med_gas | med_gas (tackle mount)] pose 5/9
+    origin bracket (Xi1/Xi2)         527.60 N  defl   31.064 mm
+    insertion bracket                527.60 N  defl   35.063 mm
+    tendon tension Ft = nBPA*F/G     527.60 N
+    BPA bundle pull nBPA*F          1055.19 N
+    tackle-block mount reaction      941.85 N  defl    0.200 mm
+    mount reaction within [|nBPA*F - Ft|, nBPA*F + Ft] = [527.6, 1582.8] N -> PASS
+    closure decomposition cAdd = -G*nBPA*cmB + nBPA*cmT + cmBw(1) + cmBw(2) + cIns: rel err 0.000e+00 -> PASS
+    all reaction outputs finite and positive -> PASS
+  [psoas | psoas (tackle mount)] pose 5/9
+    origin bracket (Xi1/Xi2)         231.24 N  defl    8.758 mm
+    insertion bracket                115.62 N  defl    5.607 mm
+    tendon tension Ft = nBPA*F/G     115.62 N
+    BPA bundle pull nBPA*F           231.24 N
+    tackle-block mount reaction      137.94 N  defl    0.153 mm
+    mount reaction within [|nBPA*F - Ft|, nBPA*F + Ft] = [115.6, 346.9] N -> PASS
+    closure decomposition cAdd = -G*nBPA*cmB + nBPA*cmT + cmBw(1) + cmBw(2) + cIns: rel err 0.000e+00 -> PASS
+    all reaction outputs finite and positive -> PASS
+  [sar | sar (brackets only)] pose 5/9
+    origin bracket (Xi1/Xi2)         216.96 N  defl   14.507 mm
+    insertion bracket                216.96 N  defl   13.675 mm
+    tendon tension Ft = nBPA*F/G     216.96 N
+    BPA bundle pull nBPA*F           216.96 N
+    closure decomposition cAdd = -G*nBPA*cmB + nBPA*cmT + cmBw(1) + cmBw(2) + cIns: rel err 0.000e+00 -> PASS
+    all reaction outputs finite and positive -> PASS
+  [ext_hal | Bowden housing stops] pose 5/9
+    housing-stop reacted tension     202.46 N
+    housing-stop deflection           0.002 mm
+    Bowden housing-stop reaction outputs exist -> PASS
+  [med_gas] all-taut-cell cAdd decomposition rel err 0.000e+00 -> PASS
+
+=== fr_xi3_check PASSED (all checks) in 12.5 s ===
