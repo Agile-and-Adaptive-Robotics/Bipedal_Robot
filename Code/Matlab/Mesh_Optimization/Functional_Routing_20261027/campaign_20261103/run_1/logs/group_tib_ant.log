@@ -1,3 +1,18 @@
 === pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
 SOLVED-FEASIBLE tib_ant rigid: fSeed 73.6986 -> fBest 53.1454 (obj 53.1454, violEff 0.00e+00) | capsules(pose1) 1 | 48.0 s
 === pass1 compliant | 04-Nov-2026 11:56:15 | budget 600 | envelopes 7 ===
+SOLVED-FEASIBLE tib_ant compliant: fSeed 1237.0939 -> fBest 114.2220 (obj 114.2220, violEff 0.00e+00) | capsules(pose1) 1 | 119.4 s
+REFINE skipped: no rigid checkpoint to refine
+RESUME skip (feasible checkpoint): rigid f 53.1454
+RESUME skip (feasible checkpoint): compliant f 114.2220
+REFINE1 tib_ant: f 53.1454 -> 280.4069 (rejected, others 26, 24.9 s)
+RESUME skip (feasible checkpoint): rigid f 53.1454
+RESUME skip (feasible checkpoint): compliant f 114.2220
+RESUME skip refine1 (rejected): f 280.4069
+RESUME tib_ant rigid: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
+SOLVED-FEASIBLE tib_ant rigid: fSeed 45.9735 -> fBest 21.6686 (obj 21.6686, violEff 0.00e+00) | capsules(pose1) 2 | 45.0 s
+RESUME tib_ant compliant: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:59:18 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_ant compliant: fSeed 5605.0291 -> fBest 2286.7134 (obj 64.4912, violEff 2.22e-01) | capsules(pose1) 2 | 93.3 s | TOP VIOLATOR tx_infeasible_cells: normalized 2.222e-01 (dimensional 2.222e-01 fraction of cells, tol 1.0e-12)
+REFINE1 tib_ant: f 21.6686 -> 248.4779 (rejected, others 26, 22.0 s)

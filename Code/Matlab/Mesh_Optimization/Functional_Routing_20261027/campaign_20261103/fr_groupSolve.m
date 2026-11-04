@@ -77,6 +77,10 @@ try
     ck.status = out.status;
     ck.nX = cs.nX;
     ck.xSeedSum = sum(cs.xSeed);
+    % config signature: a sizing-config change between passes must force
+    % a re-solve even when nX/xSeed are unchanged
+    ck.cfgSig = sprintf('%s|%d|%s|%d', cs.diaStr, cs.seed.nBPA, ...
+        cs.txConfig.tackleFamily, max(cs.txConfig.gain));
     ck.elapsedSec = out.elapsedSec;
     ck.writtenAt = datetime('now');
     ck.machine = getenv('COMPUTERNAME');

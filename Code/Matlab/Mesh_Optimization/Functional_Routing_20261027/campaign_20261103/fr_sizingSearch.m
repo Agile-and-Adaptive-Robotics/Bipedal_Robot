@@ -101,9 +101,15 @@ for c = 1:numel(CASES)
         om = containers.Map('KeyType', 'char', 'ValueType', 'any');
         om(cs.name) = ov;
         csK = fr_cases27(C, kin, om);
+        % select the INTENDED case (fr_cases27 returns all 27; csK(1) is
+        % the contract's first group, NOT this group - gate caught the
+        % mis-selection when every "winner" reproduced ercspn's score)
+        selK = find(strcmp({csK.name}, cs.name), 1);
+        assert(~isempty(selK), 'fr_sizingSearch:case', ...
+            'override build lost group %s', cs.name);
         so = struct('quiet', true, 'budget', budget, 'envelopes', {{}});
         try
-            [~, rep, info] = fr_solveCase(C, csK(1), kin, 'rigid', so);
+            [~, rep, info] = fr_solveCase(C, csK(selK), kin, 'rigid', so);
             score = info.fBest;
             fprintf(fid, '  cfg %2d: dia %s n %d fam %-2s g %d -> f %10.3f violEff %.2e feasible %d (%s)\n', ...
                 k, cfgs{k}.diaStr, cfgs{k}.nBPA, cfgs{k}.family, ...

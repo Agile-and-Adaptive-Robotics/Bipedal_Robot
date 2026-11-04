@@ -93,6 +93,9 @@ end
 fprintf('layer order: %s\n', mat2str(allIds));
 
 % ---- run_0 warm starts (STARTING POINTS, never results) -------------------
+% v2: pack the checkpoint's DESIGN STRUCT into the x-vector the solver
+% expects (gate r1 of run_1: struct warm starts crashed every warm-started
+% (group, branch) with MATLAB:badsubscript in fr_unpackX)
 wRigid = containers.Map('KeyType', 'char', 'ValueType', 'any');
 wComp = containers.Map('KeyType', 'char', 'ValueType', 'any');
 ck0 = fullfile(C.camp, 'run_0', 'checkpoints');
@@ -103,10 +106,21 @@ for i = 1:numel(d0)
     if ~byName.isKey(S.csName); continue; end
     cs0 = CASES(byName(S.csName));
     if S.nX ~= cs0.nX; continue; end   % dimension guard for x0Override
+    % 10 mm guard (run_1 resume evidence): every run_0 checkpoint predates
+    % the sizing search, i.e. it is a 20 mm-era design. Warm-starting a
+    % 10 mm winner from a 20 mm design poisons the solve (grac/sar came
+    % out 100% tx-infeasible: the 10 mm sleeve cannot close from a 20 mm
+    % length world). 10 mm groups start from their SEED instead.
+    if overrides.isKey(S.csName)
+        ovw = overrides(S.csName);
+        if isfield(ovw, 'diaStr') && strcmpi(ovw.diaStr, '10')
+            continue
+        end
+    end
     if S.branch(1) == 'r'
-        wRigid(S.csName) = S.design;
+        wRigid(S.csName) = fr_packX(cs0, S.design);
     else
-        wComp(S.csName) = S.design;
+        wComp(S.csName) = fr_packX(cs0, S.design);
     end
 end
 fprintf('warm starts from run_0: %d rigid, %d compliant\n', ...
@@ -172,6 +186,7 @@ stopFile = fullfile(runDir, 'STOP');
 
 % ---- PASS 1: sequential layers, parfor within layer ------------------------
 layerResults = cell(1, numel(layerIds));
+solvedEnv = containers.Map('KeyType', 'double', 'ValueType', 'any');
 for L = 1:numel(layerIds)
     if exist(stopFile, 'file') == 2
         fprintf(['STOP detected before layer %d (%s) - stopping ' ...
@@ -184,9 +199,21 @@ for L = 1:numel(layerIds)
     ids = layerIds{L};
     fprintf('\n--- LAYER %d (%s): groups %s ---\n', L, regionName{L}, ...
         mat2str(ids));
-    envsInner = envRecord.values();
-    fprintf('obstacle envelopes carried into this layer: %d\n', ...
-        numel(envsInner));
+    % v2 layering correction: a layer carries ONLY the envelopes of
+    % STRICTLY EARLIER layers (run_1 pass 2 carried every restored
+    % envelope into layer 1, inverting the layering: psoas re-solved
+    % AGAINST superficial envelopes and regressed from solved to
+    % best-infeasible). Deepest layer runs against bone only.
+    envsInner = {};
+    for LL = 1:L - 1
+        for id2 = layerIds{LL}
+            if isKey(envRecord, id2)
+                envsInner{end + 1} = envRecord(id2); %#ok<AGROW>
+            end
+        end
+    end
+    fprintf('obstacle envelopes carried into this layer: %d (from %d earlier layers)\n', ...
+        numel(envsInner), L - 1);
     nL = numel(ids);
     templ = fr_pairTemplate();
     pairOut = repmat(templ, 1, nL);
@@ -206,8 +233,10 @@ for L = 1:numel(layerIds)
         po = pairOut(ii);
         if strcmp(po.rigid.status, 'solved')
             envRecord(id) = po.rigid.envelope;
+            solvedEnv(id) = po.rigid.envelope;
         elseif strcmp(po.compliant.status, 'solved')
             envRecord(id) = po.compliant.envelope;
+            solvedEnv(id) = po.compliant.envelope;
         end
         fprintf(['  [%2d] %-9s rigid %-16s f %8.3f violEff %.1e | ' ...
             'compliant %-16s f %8.3f violEff %.1e\n'], id, po.name, ...

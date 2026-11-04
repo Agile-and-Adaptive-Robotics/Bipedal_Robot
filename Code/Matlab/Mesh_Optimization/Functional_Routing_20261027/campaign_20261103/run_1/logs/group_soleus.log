@@ -1,3 +1,18 @@
 === pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
 SOLVED-FEASIBLE soleus rigid: fSeed 95.6076 -> fBest 88.2018 (obj 88.2018, violEff 0.00e+00) | capsules(pose1) 2 | 55.8 s
 === pass1 compliant | 04-Nov-2026 11:56:23 | budget 600 | envelopes 7 ===
+SOLVED-FEASIBLE soleus compliant: fSeed 133.4775 -> fBest 131.1642 (obj 131.1642, violEff 0.00e+00) | capsules(pose1) 2 | 57.5 s
+REFINE skipped: no rigid checkpoint to refine
+RESUME skip (feasible checkpoint): rigid f 88.2018
+RESUME skip (feasible checkpoint): compliant f 131.1642
+REFINE1 soleus: f 88.2018 -> 177.3967 (rejected, others 26, 23.7 s)
+RESUME skip (feasible checkpoint): rigid f 88.2018
+RESUME skip (feasible checkpoint): compliant f 131.1642
+RESUME skip refine1 (rejected): f 177.3967
+RESUME soleus rigid: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
+SOLVED-FEASIBLE soleus rigid: fSeed 95.6076 -> fBest 88.2018 (obj 88.2018, violEff 0.00e+00) | capsules(pose1) 2 | 53.0 s
+RESUME soleus compliant: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:59:26 | budget 600 | envelopes 15 ===
+SOLVED-FEASIBLE soleus compliant: fSeed 133.4775 -> fBest 131.1642 (obj 131.1642, violEff 0.00e+00) | capsules(pose1) 2 | 49.9 s
+REFINE1 soleus: f 88.2018 -> 177.3967 (rejected, others 26, 19.4 s)

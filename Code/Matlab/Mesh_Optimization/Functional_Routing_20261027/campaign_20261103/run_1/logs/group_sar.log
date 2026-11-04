@@ -2,3 +2,24 @@
 FAILED sar rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
 === pass1 compliant | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
 BEST-INFEASIBLE (retained as warm start) sar compliant: fSeed 10085.1714 -> fBest 10002.1259 (obj 2.1259, violEff 1.00e+00) | capsules(pose1) 1 | 182.9 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 04-Nov-2026 12:11:41 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) sar rigid: fSeed 10494.7650 -> fBest 10439.7514 (obj 140.7411, violEff 1.03e+00) | capsules(pose1) 1 | 89.4 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME sar compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:13:10 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) sar compliant: fSeed 10409.1658 -> fBest 10318.1323 (obj 17.0679, violEff 1.03e+00) | capsules(pose1) 1 | 93.4 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+REFINE skipped: no rigid checkpoint to refine
+RESUME sar rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:29:40 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) sar rigid: fSeed 24692.9597 -> fBest 10159.6948 (obj 134.5124, violEff 1.00e+00) | capsules(pose1) 1 | 80.3 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME sar compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:31:00 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) sar compliant: fSeed 10223.3815 -> fBest 10035.1466 (obj 2.6634, violEff 1.00e+00) | capsules(pose1) 1 | 83.7 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+REFINE1 sar: f 10159.6948 -> 11398.8712 (rejected, others 26, 19.9 s)
+RESUME sar rigid: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) sar rigid: fSeed 10178.1476 -> fBest 10178.1475 (obj 120.5402, violEff 1.01e+00) | capsules(pose1) 1 | 28.0 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME sar compliant: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:54:44 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) sar compliant: fSeed 10199.0337 -> fBest 925.8728 (obj 69.3610, violEff 8.57e-02) | capsules(pose1) 1 | 103.6 s | TOP VIOLATOR span_knee_pass1: normalized 3.994e-02 (dimensional 3.120e-03 m, tol 1.0e-06)
+REFINE1 sar: f 10178.1475 -> 11427.4937 (rejected, others 26, 21.1 s)
