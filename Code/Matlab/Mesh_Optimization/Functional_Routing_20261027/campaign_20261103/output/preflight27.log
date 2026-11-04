@@ -1,0 +1,162 @@
+=== preflight27 | 04-Nov-2026 06:07:25 | machine EASTEREGG2 ===
+cases built: 27 | wall 8.1 s
+
+[ 1] ercspn    trunk/deep hip nRows 2 cross [2 2] nMov 2 nBPA 3 dia 20 tackle 1 passes 1 | target peak 121.3 N*m (contract mifN 2500, -95.1%)
+     note: trunk pattern; STOCK route seed (not the robotbody legacy loop); tackle: G=2 family L (wired-exemplar override)
+     rows: pelvis>torso
+     SEED rigid f +143.6565 (viol 0.00e+00) | compliant f +186.8211 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.23/0.42 s | PASS
+
+[ 2] intobl    trunk/deep hip nRows 2 cross [2 2] nMov 2 nBPA 1 dia 20 tackle 0 passes 1 | target peak 47.6 N*m (contract mifN 900, -94.7%)
+     note: trunk pattern; STOCK route seed (not the robotbody legacy loop); tackle: none (rule: dML within the contraction band)
+     rows: pelvis>torso
+     SEED rigid f +131.0710 (viol 0.00e+00) | compliant f +138.2978 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.17/0.37 s | PASS
+
+[ 3] extobl    trunk/deep hip nRows 2 cross [2 2] nMov 2 nBPA 1 dia 20 tackle 0 passes 1 | target peak 72.5 N*m (contract mifN 900, -91.9%)
+     note: trunk pattern; STOCK route seed (not the robotbody legacy loop); tackle: none (rule: dML within the contraction band)
+     rows: pelvis>torso
+     SEED rigid f +125.7133 (viol 3.21e-04) | compliant f +250.2159 (viol 1.11e-01) | meet 0/1 poses (compliant) | eval 0.14/0.33 s | PASS
+
+[ 4] bifemlh   thigh          nRows 3 cross [2 2] nMov 3 nBPA 1 dia 20 tackle 0 passes 2 | target peak 31.1 N*m (contract mifN 896, -96.5%)
+     note: thigh bi pattern; contract primary knee (pass 1), hip coverage pass 2; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: none (rule: dML within the contraction band)
+     rows: pelvis>tibia_r>tibia_r
+     SEED rigid f +1200.3682 (viol 1.18e+00) | compliant f +263.6693 (viol 1.67e-01) | meet 0/1 poses (compliant) | eval 0.17/0.68 s | PASS
+     span knee: required 0.0324 m (allowance 0.0440 m)
+
+[ 5] semimem   thigh          nRows 4 cross [2 2] nMov 3 nBPA 2 dia 20 tackle 0 passes 2 | target peak 71.4 N*m (contract mifN 1698, -95.8%)
+     note: thigh bi pattern; contract primary knee (pass 1), hip coverage pass 2; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: none (rule: dML within the contraction band)
+     rows: pelvis>tibia_r>tibia_r>tibia_r
+     SEED rigid f +937.1205 (viol 8.51e-01) | compliant f +285.0964 (viol 1.51e-01) | meet 0/1 poses (compliant) | eval 0.21/0.71 s | PASS
+     span knee: required 0.0205 m (allowance 0.0440 m)
+
+[ 6] sar       thigh          nRows 5 cross [3 3] nMov 3 nBPA 1 dia 10 tackle 0 passes 2 | target peak 4.8 N*m (contract mifN 156, -96.9%)
+     note: thigh bi pattern; contract primary knee (pass 1), hip coverage pass 2; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: none (rule: dML within the contraction band)
+     rows: pelvis>femur_r>tibia_r>tibia_r>tibia_r
+     SEED rigid f +2514.9532 (viol 2.45e+00) | compliant f +2461.9179 (viol 2.38e+00) | meet 0/1 poses (compliant) | eval 0.18/0.65 s | PASS
+     span knee: required 0.0341 m (allowance 0.0440 m)
+
+[ 7] tfl       thigh          nRows 4 cross [4 4] nMov 3 nBPA 1 dia 20 tackle 0 passes 2 | target peak 3.3 N*m (contract mifN 233, -98.6%)
+     note: thigh bi pattern; contract primary knee (pass 1), hip coverage pass 2; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: none (rule: dML within the contraction band)
+     rows: pelvis>femur_r>femur_r>tibia_r
+     SEED rigid f +305.0622 (viol 2.86e-01) | compliant f +308.2740 (viol 2.86e-01) | meet 0/1 poses (compliant) | eval 0.17/0.51 s | PASS
+     span knee: required 0.0604 m (allowance 0.0440 m)
+
+[ 8] rect_fem  thigh          nRows 2 cross [2 2] nMov 3 nBPA 1 dia 20 tackle 0 passes 2 | target peak 58.1 N*m (contract mifN 1169, -95.0%)
+     note: thigh bi pattern; contract primary knee (pass 1), hip coverage pass 2; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: none (rule: dML within the contraction band)
+     rows: pelvis>tibia_r
+     SEED rigid f +114.0659 (viol 0.00e+00) | compliant f +275.8337 (viol 1.43e-01) | meet 0/1 poses (compliant) | eval 0.19/0.43 s | PASS
+     span knee: required 0.4743 m (allowance 0.0440 m)
+
+[ 9] grac      thigh          nRows 3 cross [2 2] nMov 3 nBPA 1 dia 10 tackle 1 passes 2 | target peak 6.3 N*m (contract mifN 162, -96.1%)
+     note: thigh bi pattern; contract primary knee (pass 1), hip coverage pass 2; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: G=2 family L (rule)
+     rows: pelvis>tibia_r>tibia_r
+     SEED rigid f +1222.0897 (viol 1.15e+00) | compliant f +726.7581 (viol 6.31e-01) | meet 0/1 poses (compliant) | eval 0.15/0.60 s | PASS
+     span knee: required 0.0403 m (allowance 0.0440 m)
+
+[10] bifemsh   thigh          nRows 3 cross [2 2] nMov 3 nBPA 1 dia 20 tackle 1 passes 1 | target peak 27.0 N*m (contract mifN 804, -96.6%)
+     note: knee-mono pattern; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: G=2 family L (rule)
+     rows: femur_r>tibia_r>tibia_r
+     SEED rigid f +99.5679 (viol 0.00e+00) | compliant f +128.0170 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.12/0.49 s | PASS
+     span knee: required 0.0324 m (allowance 0.0440 m)
+
+[11] vas_int   thigh          nRows 3 cross [3 3] nMov 3 nBPA 4 dia 20 tackle 1 passes 1 | target peak 207.6 N*m (contract mifN 4530, -95.4%)
+     note: knee-mono pattern; conditional rows dropped, moving rows fixed-tracked at the pass-1 mid pose; tackle: G=2 family L (rule)
+     rows: femur_r>femur_r>tibia_r
+     SEED rigid f +339.3796 (viol 1.89e-01) | compliant f +171.8533 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.13/0.37 s | PASS
+     span knee: required 0.2008 m (allowance 0.0440 m)
+
+[12] soleus    lower leg      nRows 2 cross [2 2] nMov 2 nBPA 3 dia 20 tackle 1 passes 1 | target peak 171.1 N*m (contract mifN 3549, -95.2%)
+     note: ankle-mono pattern; calcn rows in talus frame (subtalar at default); tackle: G=2 family L (rule)
+     rows: tibia_r>calcn_r
+     SEED rigid f +145.4242 (viol 0.00e+00) | compliant f +173.6073 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.14/0.33 s | PASS
+     span foot: required 0.2889 m (allowance 0.0440 m)
+
+[13] med_gas   lower leg      nRows 3 cross [3 3] nMov 2 nBPA 2 dia 20 tackle 1 passes 2 | target peak 74.1 N*m (contract mifN 1558, -95.2%)
+     note: gas pattern; ALL rows kept (condyle conditional row FIXED, tracked behavior; gate knee_bowden structure); pass 1 contract primary ankle, pass 2 knee; tackle G=2 L (wired)
+     rows: femur_r>femur_r>calcn_r
+     SEED rigid f +88.0160 (viol 0.00e+00) | compliant f +116.1325 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.20/0.53 s | PASS
+     span knee: required 0.4512 m (allowance 0.0440 m)
+
+[14] lat_gas   lower leg      nRows 3 cross [3 3] nMov 2 nBPA 1 dia 20 tackle 1 passes 2 | target peak 33.3 N*m (contract mifN 683, -95.1%)
+     note: gas pattern; ALL rows kept (condyle conditional row FIXED, tracked behavior; gate knee_bowden structure); pass 1 contract primary ankle, pass 2 knee; tackle G=2 L (wired)
+     rows: femur_r>femur_r>calcn_r
+     SEED rigid f +73.8946 (viol 0.00e+00) | compliant f +106.8326 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.19/0.49 s | PASS
+     span knee: required 0.4522 m (allowance 0.0440 m)
+
+[15] tib_post  lower leg      nRows 4 cross [3 3] nMov 2 nBPA 2 dia 20 tackle 0 passes 2 | target peak 31.9 N*m (contract mifN 1588, -98.0%)
+     note: subtalar pattern; pass 1 contract primary subtalar, pass 2 ankle coverage; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>calcn_r>calcn_r
+     SEED rigid f +19.0286 (viol 4.71e-03) | compliant f +81.1348 (viol 4.71e-03) | meet 0/1 poses (compliant) | eval 0.26/0.64 s | PASS
+     span foot: required 0.0742 m (allowance 0.0440 m)
+
+[16] tib_ant   lower leg      nRows 3 cross [3 3] nMov 2 nBPA 1 dia 20 tackle 0 passes 1 | target peak 39.3 N*m (contract mifN 905, -95.7%)
+     note: ankle-mono pattern; calcn rows in talus frame (subtalar at default); tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>calcn_r
+     SEED rigid f +83.1504 (viol 0.00e+00) | compliant f +221.4728 (viol 1.11e-01) | meet 0/1 poses (compliant) | eval 0.16/0.31 s | PASS
+     span foot: required 0.1002 m (allowance 0.0440 m)
+
+[17] per_brev  lower leg      nRows 5 cross [4 4] nMov 2 nBPA 1 dia 20 tackle 0 passes 2 | target peak 13.0 N*m (contract mifN 435, -97.0%)
+     note: subtalar pattern; pass 1 contract primary subtalar, pass 2 ankle coverage; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>tibia_r>calcn_r>calcn_r
+     SEED rigid f +321.8807 (viol 2.46e-01) | compliant f +586.3185 (viol 4.69e-01) | meet 0/1 poses (compliant) | eval 0.19/0.47 s | PASS
+     span foot: required 0.0584 m (allowance 0.0440 m)
+
+[18] per_long  lower leg      nRows 7 cross [4 4] nMov 2 nBPA 1 dia 20 tackle 0 passes 2 | target peak 26.8 N*m (contract mifN 943, -97.2%)
+     note: subtalar pattern; pass 1 contract primary subtalar, pass 2 ankle coverage; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>tibia_r>calcn_r>calcn_r>calcn_r>calcn_r
+     SEED rigid f +120.7325 (viol 2.83e-02) | compliant f +140.3142 (viol 2.83e-02) | meet 0/1 poses (compliant) | eval 0.24/0.77 s | PASS
+     span foot: required 0.1124 m (allowance 0.0440 m)
+
+[19] per_tert  lower leg      nRows 3 cross [3 3] nMov 2 nBPA 1 dia 10 tackle 0 passes 2 | target peak 3.6 N*m (contract mifN 180, -98.0%)
+     note: subtalar pattern; pass 1 contract primary subtalar, pass 2 ankle coverage; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>calcn_r
+     SEED rigid f +1024.2819 (viol 8.97e-01) | compliant f +1002.1145 (viol 8.65e-01) | meet 0/1 poses (compliant) | eval 0.18/0.34 s | PASS
+     span foot: required 0.0626 m (allowance 0.0440 m)
+
+[20] flex_dig  lower leg      nRows 8 cross [3 3] nMov 3 nBPA 1 dia 20 tackle 0 passes 2 | target peak 2.2 N*m (contract mifN 310, -99.3%)
+     note: foot mtp pattern; pass 1 contract primary mtp (calcn guide rows dropped: tendon guides, not sleeve hardware); pass 2 ankle coverage, all rows in talus frame; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>calcn_r>calcn_r>calcn_r>toes_r>toes_r>toes_r
+     SEED rigid f +950.4056 (viol 8.76e-01) | compliant f +53.4745 (viol 1.08e-02) | meet 0/1 poses (compliant) | eval 0.30/0.98 s | PASS
+     span foot: required 0.2088 m (allowance 0.0440 m)
+
+[21] flex_hal  lower leg      nRows 7 cross [3 3] nMov 3 nBPA 1 dia 20 tackle 0 passes 2 | target peak 2.0 N*m (contract mifN 322, -99.4%)
+     note: foot mtp pattern; pass 1 contract primary mtp (calcn guide rows dropped: tendon guides, not sleeve hardware); pass 2 ankle coverage, all rows in talus frame; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>calcn_r>calcn_r>calcn_r>toes_r>toes_r
+     SEED rigid f +948.3426 (viol 9.06e-01) | compliant f +47.6035 (viol 1.96e-02) | meet 0/1 poses (compliant) | eval 0.27/0.84 s | PASS
+     span foot: required 0.2131 m (allowance 0.0440 m)
+
+[22] ext_dig   lower leg      nRows 6 cross [3 3] nMov 3 nBPA 1 dia 20 tackle 0 passes 2 | target peak 3.7 N*m (contract mifN 512, -99.3%)
+     note: foot mtp pattern; pass 1 contract primary mtp (calcn guide rows dropped: tendon guides, not sleeve hardware); pass 2 ankle coverage, all rows in talus frame; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>calcn_r>calcn_r>toes_r>toes_r
+     SEED rigid f +937.4185 (viol 9.09e-01) | compliant f +148.4148 (viol 1.38e-01) | meet 1/1 poses (compliant) | eval 0.19/0.68 s | PASS
+     span foot: required 0.1715 m (allowance 0.0440 m)
+
+[23] ext_hal   lower leg      nRows 7 cross [3 3] nMov 3 nBPA 1 dia 10 tackle 0 passes 2 | target peak 1.4 N*m (contract mifN 162, -99.1%)
+     note: foot mtp pattern; pass 1 contract primary mtp (calcn guide rows dropped: tendon guides, not sleeve hardware); pass 2 ankle coverage, all rows in talus frame; tackle: none (rule: dML within the contraction band)
+     rows: tibia_r>tibia_r>calcn_r>calcn_r>calcn_r>toes_r>toes_r
+     SEED rigid f +924.9061 (viol 9.20e-01) | compliant f +420.7071 (viol 4.19e-01) | meet 1/1 poses (compliant) | eval 0.19/0.64 s | PASS
+     span foot: required 0.1771 m (allowance 0.0440 m)
+
+[24] glut_max3 thigh          nRows 4 cross [3 3] nMov 3 nBPA 4 dia 20 tackle 1 passes 1 | target peak 160.7 N*m (contract mifN 4867, -96.7%)
+     note: hip pattern; conditional rows dropped from the mechanics row set (declared behavior in fr_evalRoute); tackle: G=2 family L (rule)
+     rows: pelvis>pelvis>femur_r>femur_r
+     SEED rigid f +1230.0005 (viol 1.09e+00) | compliant f +401.3550 (viol 2.22e-01) | meet 0/1 poses (compliant) | eval 0.12/0.38 s | PASS
+
+[25] add_mag3  thigh          nRows 2 cross [2 2] nMov 2 nBPA 2 dia 20 tackle 1 passes 1 | target peak 140.5 N*m (contract mifN 2268, -93.8%)
+     note: hip pattern; conditional rows dropped from the mechanics row set (declared behavior in fr_evalRoute); tackle: G=2 family L (wired-exemplar override)
+     rows: pelvis>femur_r
+     SEED rigid f +192.3815 (viol 7.01e-02) | compliant f +216.0876 (viol 7.01e-02) | meet 0/1 poses (compliant) | eval 0.14/0.30 s | PASS
+
+[26] iliacus   trunk/deep hip nRows 4 cross [3 3] nMov 3 nBPA 1 dia 20 tackle 1 passes 1 | target peak 48.0 N*m (contract mifN 1073, -95.5%)
+     note: hip pattern; conditional rows dropped from the mechanics row set (declared behavior in fr_evalRoute); tackle: G=2 family L (rule)
+     rows: pelvis>pelvis>femur_r>femur_r
+     SEED rigid f +354.9150 (viol 2.22e-01) | compliant f +471.6282 (viol 3.33e-01) | meet 0/1 poses (compliant) | eval 0.10/0.36 s | PASS
+
+[27] psoas     trunk/deep hip nRows 4 cross [3 3] nMov 3 nBPA 1 dia 20 tackle 1 passes 1 | target peak 48.6 N*m (contract mifN 1113, -95.6%)
+     note: hip pattern; conditional rows dropped from the mechanics row set (declared behavior in fr_evalRoute); tackle: G=2 family L (wired-exemplar override)
+     rows: pelvis>pelvis>femur_r>femur_r
+     SEED rigid f +128.3180 (viol 0.00e+00) | compliant f +136.2985 (viol 0.00e+00) | meet 0/1 poses (compliant) | eval 0.13/0.60 s | PASS
+
+=== preflight27 wall 0.5 min ===
+seed-eval seconds: n 54 | median 0.299 | mean 0.354 | max 0.980
+extrapolated full campaign at the seed-eval mean (40500 evals): 3.98 h serial
+PREFLIGHT PASSED all 27 groups. log: D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Functional_Routing_20261027\campaign_20261103\output\preflight27.log

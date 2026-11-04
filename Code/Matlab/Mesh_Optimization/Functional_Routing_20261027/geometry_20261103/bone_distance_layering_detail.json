@@ -1,0 +1,2535 @@
+{
+ "method": "Euclidean distance from the declared attachment location (owning-body frame, neutral pose) to the nearest point of the Bone_Mesh_Plots Open_Sim_Bone_Geometry point cloud; pelvis points take the nearer of Pelvis_R and Sacrum. Clouds are sparse surface samples, so these distances carry cloud-spacing granularity and are used as a layer-ordering metric, not a clearance tolerance.",
+ "cloud_point_counts": {
+  "Femur": 456,
+  "Tibia": 145,
+  "Calcaneus": 1000,
+  "Talus": 99,
+  "Toes": 958,
+  "Pelvis_R": 125,
+  "Sacrum": 192,
+  "Spine": 5434
+ },
+ "rows": [
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.12208037026287633,
+   "location_m_y": -0.050698246002197266,
+   "location_m_z": 0.078,
+   "bone_distance_mm": 17.87,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 102,
+   "nearest": [
+    -0.110855,
+    -0.059933,
+    0.067604
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P2",
+   "role": "via1",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.1575492306330236,
+   "location_m_y": 0.053542494166448934,
+   "location_m_z": 0.04142724163142175,
+   "bone_distance_mm": 22.29,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 76,
+   "nearest": [
+    -0.137764,
+    0.052955,
+    0.051671
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P2_0",
+   "role": "via2",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": -0.07233132903981333,
+   "location_m_y": 0.17180145329100446,
+   "location_m_z": 0.03138861662428826,
+   "bone_distance_mm": 17.83,
+   "surface_cloud": "Spine",
+   "cloud_index": 1403,
+   "nearest": [
+    -0.060057,
+    0.175595,
+    0.019028
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P4",
+   "role": "via3",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": -0.03884585571289063,
+   "location_m_y": 0.17867135621255603,
+   "location_m_z": 0.029389057308313597,
+   "bone_distance_mm": 10.01,
+   "surface_cloud": "Spine",
+   "cloud_index": 1299,
+   "nearest": [
+    -0.042851,
+    0.172818,
+    0.022327
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P5",
+   "role": "via4",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": 0.005136274814605713,
+   "location_m_y": 0.027039732358251967,
+   "location_m_z": 0.04668191909790039,
+   "bone_distance_mm": 22.67,
+   "surface_cloud": "Spine",
+   "cloud_index": 4150,
+   "nearest": [
+    -0.009392,
+    0.017241,
+    0.032302
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P6",
+   "role": "via5",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": -0.03248118522687321,
+   "location_m_y": 0.026976865192352897,
+   "location_m_z": 0.048093875911501084,
+   "bone_distance_mm": 28.8,
+   "surface_cloud": "Spine",
+   "cloud_index": 4152,
+   "nearest": [
+    -0.010621,
+    0.022557,
+    0.029869
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P7",
+   "role": "via6",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": -0.07159359346416161,
+   "location_m_y": 0.17499889387347092,
+   "location_m_z": 0.047790577201266504,
+   "bone_distance_mm": 31.0,
+   "surface_cloud": "Spine",
+   "cloud_index": 1403,
+   "nearest": [
+    -0.060057,
+    0.175595,
+    0.019028
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P8",
+   "role": "via7",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": -0.04012581152714064,
+   "location_m_y": 0.1820602520073153,
+   "location_m_z": 0.044887611398927274,
+   "bone_distance_mm": 24.53,
+   "surface_cloud": "Spine",
+   "cloud_index": 1299,
+   "nearest": [
+    -0.042851,
+    0.172818,
+    0.022327
+   ]
+  },
+  {
+   "group_id": 1,
+   "master_name": "Erector Spinae",
+   "route": "ercspn_r",
+   "attachment": "ercspn_r-P9",
+   "role": "insertion",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": -0.01873196941823945,
+   "location_m_y": 0.048041785583269075,
+   "location_m_z": 0.059191221019852094,
+   "bone_distance_mm": 29.03,
+   "surface_cloud": "Spine",
+   "cloud_index": 3938,
+   "nearest": [
+    -0.008904,
+    0.043204,
+    0.032302
+   ]
+  },
+  {
+   "group_id": 2,
+   "master_name": "Internal Oblique",
+   "route": "intobl_r",
+   "attachment": "intobl_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.04,
+   "location_m_y": 0.07,
+   "location_m_z": 0.1157,
+   "bone_distance_mm": 4.8,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 35,
+   "nearest": [
+    -0.042675,
+    0.072014,
+    0.11914
+   ]
+  },
+  {
+   "group_id": 2,
+   "master_name": "Internal Oblique",
+   "route": "intobl_r",
+   "attachment": "intobl_r-P2",
+   "role": "insertion",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": 0.07,
+   "location_m_y": 0.16,
+   "location_m_z": 0.015,
+   "bone_distance_mm": 69.87,
+   "surface_cloud": "Spine",
+   "cloud_index": 3215,
+   "nearest": [
+    0.005229,
+    0.13434,
+    0.009701
+   ]
+  },
+  {
+   "group_id": 3,
+   "master_name": "External Oblique",
+   "route": "extobl_r",
+   "attachment": "extobl_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.03,
+   "location_m_y": -0.0636,
+   "location_m_z": 0.01,
+   "bone_distance_mm": 10.25,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 84,
+   "nearest": [
+    -0.026301,
+    -0.071631,
+    0.004815
+   ]
+  },
+  {
+   "group_id": 3,
+   "master_name": "External Oblique",
+   "route": "extobl_r",
+   "attachment": "extobl_r-P2",
+   "role": "insertion",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": 0.065,
+   "location_m_y": 0.11,
+   "location_m_z": 0.11,
+   "bone_distance_mm": 107.55,
+   "surface_cloud": "Spine",
+   "cloud_index": 3364,
+   "nearest": [
+    0.017636,
+    0.088303,
+    0.015909
+   ]
+  },
+  {
+   "group_id": 4,
+   "master_name": "Bicep Femoris, Long Head",
+   "route": "bifemlh_r",
+   "attachment": "bifemlh_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.12596,
+   "location_m_y": -0.10257,
+   "location_m_z": 0.06944,
+   "bone_distance_mm": 6.85,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 92,
+   "nearest": [
+    -0.119191,
+    -0.10149,
+    0.069475
+   ]
+  },
+  {
+   "group_id": 4,
+   "master_name": "Bicep Femoris, Long Head",
+   "route": "bifemlh_r",
+   "attachment": "bifemlh_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.03,
+   "location_m_y": -0.036,
+   "location_m_z": 0.02943,
+   "bone_distance_mm": 17.11,
+   "surface_cloud": "Tibia",
+   "cloud_index": 12,
+   "nearest": [
+    -0.026973,
+    -0.033649,
+    0.012754
+   ]
+  },
+  {
+   "group_id": 4,
+   "master_name": "Bicep Femoris, Long Head",
+   "route": "bifemlh_r",
+   "attachment": "bifemlh_r-P3",
+   "role": "via2",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0234,
+   "location_m_y": -0.0563,
+   "location_m_z": 0.0343,
+   "bone_distance_mm": 12.6,
+   "surface_cloud": "Tibia",
+   "cloud_index": 44,
+   "nearest": [
+    -0.013477,
+    -0.059294,
+    0.027134
+   ]
+  },
+  {
+   "group_id": 4,
+   "master_name": "Bicep Femoris, Long Head",
+   "route": "bifemlh_r",
+   "attachment": "bifemlh_r-P4",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.005,
+   "location_m_y": -0.378,
+   "location_m_z": 0.035,
+   "bone_distance_mm": 11.88,
+   "surface_cloud": "Tibia",
+   "cloud_index": 118,
+   "nearest": [
+    0.006,
+    -0.387229,
+    0.02758
+   ]
+  },
+  {
+   "group_id": 5,
+   "master_name": "Semimembranosus",
+   "route": "semimem_r",
+   "attachment": "semimem_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.126,
+   "location_m_y": -0.103,
+   "location_m_z": 0.069,
+   "bone_distance_mm": 6.99,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 92,
+   "nearest": [
+    -0.119191,
+    -0.10149,
+    0.069475
+   ]
+  },
+  {
+   "group_id": 5,
+   "master_name": "Semimembranosus",
+   "route": "semimem_r",
+   "attachment": "default",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.047,
+   "location_m_y": -0.113,
+   "location_m_z": -0.002,
+   "bone_distance_mm": 15.35,
+   "surface_cloud": "Tibia",
+   "cloud_index": 49,
+   "nearest": [
+    0.038389,
+    -0.101014,
+    -0.006224
+   ]
+  },
+  {
+   "group_id": 5,
+   "master_name": "Semimembranosus",
+   "route": "semimem_r",
+   "attachment": "semimem_r-P3",
+   "role": "via2",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.022,
+   "location_m_y": -0.052,
+   "location_m_z": -0.03,
+   "bone_distance_mm": 10.76,
+   "surface_cloud": "Tibia",
+   "cloud_index": 15,
+   "nearest": [
+    0.024485,
+    -0.052627,
+    -0.019554
+   ]
+  },
+  {
+   "group_id": 5,
+   "master_name": "Semimembranosus",
+   "route": "semimem_r",
+   "attachment": "semimem_r-P4",
+   "role": "via3",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.03,
+   "location_m_y": -0.036,
+   "location_m_z": 0.029,
+   "bone_distance_mm": 16.69,
+   "surface_cloud": "Tibia",
+   "cloud_index": 12,
+   "nearest": [
+    -0.026973,
+    -0.033649,
+    0.012754
+   ]
+  },
+  {
+   "group_id": 5,
+   "master_name": "Semimembranosus",
+   "route": "semimem_r",
+   "attachment": "semimem_r-P5",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.047,
+   "location_m_y": -0.113,
+   "location_m_z": -0.002,
+   "bone_distance_mm": 15.35,
+   "surface_cloud": "Tibia",
+   "cloud_index": 49,
+   "nearest": [
+    0.038389,
+    -0.101014,
+    -0.006224
+   ]
+  },
+  {
+   "group_id": 6,
+   "master_name": "Sartorius",
+   "route": "sar_r",
+   "attachment": "sar_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.026,
+   "location_m_y": 0.003,
+   "location_m_z": 0.138,
+   "bone_distance_mm": 18.97,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 27,
+   "nearest": [
+    -0.018107,
+    0.019491,
+    0.132935
+   ]
+  },
+  {
+   "group_id": 6,
+   "master_name": "Sartorius",
+   "route": "sar_r",
+   "attachment": "sar_r-P2",
+   "role": "via1",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.091,
+   "location_m_y": -0.105,
+   "location_m_z": 0.038,
+   "bone_distance_mm": 77.84,
+   "surface_cloud": "Femur",
+   "cloud_index": 266,
+   "nearest": [
+    0.013557,
+    -0.107318,
+    0.03051
+   ]
+  },
+  {
+   "group_id": 6,
+   "master_name": "Sartorius",
+   "route": "sar_r",
+   "attachment": "sar_r-P3",
+   "role": "via2",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.098,
+   "location_m_y": -0.276,
+   "location_m_z": -0.017,
+   "bone_distance_mm": 72.28,
+   "surface_cloud": "Femur",
+   "cloud_index": 297,
+   "nearest": [
+    0.033931,
+    -0.27286,
+    0.016311
+   ]
+  },
+  {
+   "group_id": 6,
+   "master_name": "Sartorius",
+   "route": "sar_r",
+   "attachment": "sar_r-P4",
+   "role": "via3",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.037,
+   "location_m_y": -0.4,
+   "location_m_z": -0.044,
+   "bone_distance_mm": 23.96,
+   "surface_cloud": "Femur",
+   "cloud_index": 356,
+   "nearest": [
+    0.017446,
+    -0.402156,
+    -0.030315
+   ]
+  },
+  {
+   "group_id": 6,
+   "master_name": "Sartorius",
+   "route": "sar_r",
+   "attachment": "sar_r-P3_0",
+   "role": "via4",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.022,
+   "location_m_y": -0.052,
+   "location_m_z": -0.03,
+   "bone_distance_mm": 10.76,
+   "surface_cloud": "Tibia",
+   "cloud_index": 15,
+   "nearest": [
+    0.024485,
+    -0.052627,
+    -0.019554
+   ]
+  },
+  {
+   "group_id": 6,
+   "master_name": "Sartorius",
+   "route": "sar_r",
+   "attachment": "sar_r-P4_0",
+   "role": "via5",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.047,
+   "location_m_y": -0.113,
+   "location_m_z": -0.002,
+   "bone_distance_mm": 15.35,
+   "surface_cloud": "Tibia",
+   "cloud_index": 49,
+   "nearest": [
+    0.038389,
+    -0.101014,
+    -0.006224
+   ]
+  },
+  {
+   "group_id": 6,
+   "master_name": "Sartorius",
+   "route": "sar_r",
+   "attachment": "sar_r-P5",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.038,
+   "location_m_y": -0.382,
+   "location_m_z": -0.004,
+   "bone_distance_mm": 13.18,
+   "surface_cloud": "Tibia",
+   "cloud_index": 104,
+   "nearest": [
+    0.025842,
+    -0.386886,
+    -0.00258
+   ]
+  },
+  {
+   "group_id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "route": "tfl_r",
+   "attachment": "tfl_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.026,
+   "location_m_y": 0.003,
+   "location_m_z": 0.138,
+   "bone_distance_mm": 18.97,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 27,
+   "nearest": [
+    -0.018107,
+    0.019491,
+    0.132935
+   ]
+  },
+  {
+   "group_id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "route": "tfl_r",
+   "attachment": "tfl_r-P2",
+   "role": "via1",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.037,
+   "location_m_y": -0.037,
+   "location_m_z": 0.071,
+   "bone_distance_mm": 45.33,
+   "surface_cloud": "Femur",
+   "cloud_index": 188,
+   "nearest": [
+    -0.003984,
+    -0.028974,
+    0.053373
+   ]
+  },
+  {
+   "group_id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "route": "tfl_r",
+   "attachment": "tfl_r-P3",
+   "role": "via2",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.0054,
+   "location_m_y": -0.4049,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 12.58,
+   "surface_cloud": "Femur",
+   "cloud_index": 367,
+   "nearest": [
+    -0.002143,
+    -0.406302,
+    0.037033
+   ]
+  },
+  {
+   "group_id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "route": "tfl_r",
+   "attachment": "tfl_r-P4",
+   "role": "via3",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.006,
+   "location_m_y": -0.062,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 9.24,
+   "surface_cloud": "Tibia",
+   "cloud_index": 41,
+   "nearest": [
+    0.006,
+    -0.058953,
+    0.038273
+   ]
+  },
+  {
+   "group_id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "route": "tfl_r",
+   "attachment": "tfl_r-P5",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.005220028696492798,
+   "location_m_y": -0.378,
+   "location_m_z": 0.035,
+   "bone_distance_mm": 11.87,
+   "surface_cloud": "Tibia",
+   "cloud_index": 118,
+   "nearest": [
+    0.006,
+    -0.387229,
+    0.02758
+   ]
+  },
+  {
+   "group_id": 8,
+   "master_name": "Rectus Femoris",
+   "route": "rect_fem_r",
+   "attachment": "rect_fem_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.072,
+   "location_m_y": 0.125,
+   "location_m_z": 0.079,
+   "bone_distance_mm": 33.86,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 61,
+   "nearest": [
+    -0.068605,
+    0.091887,
+    0.085194
+   ]
+  },
+  {
+   "group_id": 8,
+   "master_name": "Rectus Femoris",
+   "route": "rect_fem_r",
+   "attachment": "rect_fem_r-P2",
+   "role": "via1",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.072,
+   "location_m_y": -0.117,
+   "location_m_z": 0.015,
+   "bone_distance_mm": 59.06,
+   "surface_cloud": "Femur",
+   "cloud_index": 273,
+   "nearest": [
+    0.021585,
+    -0.143279,
+    0.030989
+   ]
+  },
+  {
+   "group_id": 8,
+   "master_name": "Rectus Femoris",
+   "route": "rect_fem_r",
+   "attachment": "rect_fem_r-P3",
+   "role": "via2",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.065,
+   "location_m_y": -0.156,
+   "location_m_z": 0.005,
+   "bone_distance_mm": 49.29,
+   "surface_cloud": "Femur",
+   "cloud_index": 279,
+   "nearest": [
+    0.026764,
+    -0.175448,
+    0.029277
+   ]
+  },
+  {
+   "group_id": 8,
+   "master_name": "Rectus Femoris",
+   "route": "rect_fem_r",
+   "attachment": "default",
+   "role": "via3",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.058,
+   "location_m_y": -0.329,
+   "location_m_z": -0.003,
+   "bone_distance_mm": 29.81,
+   "surface_cloud": "Femur",
+   "cloud_index": 311,
+   "nearest": [
+    0.033036,
+    -0.341126,
+    0.007879
+   ]
+  },
+  {
+   "group_id": 8,
+   "master_name": "Rectus Femoris",
+   "route": "rect_fem_r",
+   "attachment": "rect_fem_r-P3_0",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "evaluated_at_neutral(moving_point)",
+   "location_m_x": 0.0617576,
+   "location_m_y": 0.020984,
+   "location_m_z": 0.0014,
+   "bone_distance_mm": 64.88,
+   "surface_cloud": "Tibia",
+   "cloud_index": 3,
+   "nearest": [
+    0.027593,
+    -0.03399,
+    -0.003088
+   ]
+  },
+  {
+   "group_id": 9,
+   "master_name": "Gracilis",
+   "route": "grac_r",
+   "attachment": "grac_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.07401,
+   "location_m_y": -0.1187,
+   "location_m_z": 0.02794,
+   "bone_distance_mm": 3.27,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 90,
+   "nearest": [
+    -0.072771,
+    -0.117347,
+    0.02523
+   ]
+  },
+  {
+   "group_id": 9,
+   "master_name": "Gracilis",
+   "route": "grac_r",
+   "attachment": "grac_r-P2",
+   "role": "via1",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": -0.001,
+   "location_m_y": -0.156,
+   "location_m_z": -0.036,
+   "bone_distance_mm": 57.3,
+   "surface_cloud": "Femur",
+   "cloud_index": 274,
+   "nearest": [
+    0.013413,
+    -0.143481,
+    0.018024
+   ]
+  },
+  {
+   "group_id": 9,
+   "master_name": "Gracilis",
+   "route": "grac_r",
+   "attachment": "grac_r-P2_0",
+   "role": "via2",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.018,
+   "location_m_y": -0.401,
+   "location_m_z": -0.053,
+   "bone_distance_mm": 17.59,
+   "surface_cloud": "Femur",
+   "cloud_index": 357,
+   "nearest": [
+    0.01173,
+    -0.3978,
+    -0.036877
+   ]
+  },
+  {
+   "group_id": 9,
+   "master_name": "Gracilis",
+   "route": "grac_r",
+   "attachment": "default",
+   "role": "via3",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.022,
+   "location_m_y": -0.052,
+   "location_m_z": -0.03,
+   "bone_distance_mm": 10.76,
+   "surface_cloud": "Tibia",
+   "cloud_index": 15,
+   "nearest": [
+    0.024485,
+    -0.052627,
+    -0.019554
+   ]
+  },
+  {
+   "group_id": 9,
+   "master_name": "Gracilis",
+   "route": "grac_r",
+   "attachment": "grac_r-P3",
+   "role": "via4",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.047,
+   "location_m_y": -0.113,
+   "location_m_z": -0.002,
+   "bone_distance_mm": 15.35,
+   "surface_cloud": "Tibia",
+   "cloud_index": 49,
+   "nearest": [
+    0.038389,
+    -0.101014,
+    -0.006224
+   ]
+  },
+  {
+   "group_id": 9,
+   "master_name": "Gracilis",
+   "route": "grac_r",
+   "attachment": "grac_r-P4",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.038,
+   "location_m_y": -0.382,
+   "location_m_z": 0.004,
+   "bone_distance_mm": 14.0,
+   "surface_cloud": "Tibia",
+   "cloud_index": 105,
+   "nearest": [
+    0.025842,
+    -0.386886,
+    0.008942
+   ]
+  },
+  {
+   "group_id": 10,
+   "master_name": "Bicep Femoris, Short Head",
+   "route": "bifemsh_r",
+   "attachment": "bifemsh_r-P1",
+   "role": "origin",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": -0.007,
+   "location_m_y": -0.096,
+   "location_m_z": 0.032,
+   "bone_distance_mm": 9.96,
+   "surface_cloud": "Femur",
+   "cloud_index": 263,
+   "nearest": [
+    -0.013514,
+    -0.08848,
+    0.031602
+   ]
+  },
+  {
+   "group_id": 10,
+   "master_name": "Bicep Femoris, Short Head",
+   "route": "bifemsh_r",
+   "attachment": "bifemsh_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.03,
+   "location_m_y": -0.036,
+   "location_m_z": 0.02943,
+   "bone_distance_mm": 17.11,
+   "surface_cloud": "Tibia",
+   "cloud_index": 12,
+   "nearest": [
+    -0.026973,
+    -0.033649,
+    0.012754
+   ]
+  },
+  {
+   "group_id": 10,
+   "master_name": "Bicep Femoris, Short Head",
+   "route": "bifemsh_r",
+   "attachment": "bifemsh_r-P3",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0234,
+   "location_m_y": -0.0563,
+   "location_m_z": 0.0343,
+   "bone_distance_mm": 12.6,
+   "surface_cloud": "Tibia",
+   "cloud_index": 44,
+   "nearest": [
+    -0.013477,
+    -0.059294,
+    0.027134
+   ]
+  },
+  {
+   "group_id": 11,
+   "master_name": "Vastus Intermedius",
+   "route": "vas_med_r",
+   "attachment": "vas_med_r-P1",
+   "role": "origin",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.014,
+   "location_m_y": -0.2099,
+   "location_m_z": 0.0188,
+   "bone_distance_mm": 4.94,
+   "surface_cloud": "Femur",
+   "cloud_index": 287,
+   "nearest": [
+    0.010333,
+    -0.206775,
+    0.019873
+   ]
+  },
+  {
+   "group_id": 11,
+   "master_name": "Vastus Intermedius",
+   "route": "vas_med_r",
+   "attachment": "vas_med_r-P2",
+   "role": "via1",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.0356,
+   "location_m_y": -0.2769,
+   "location_m_z": 0.0009,
+   "bone_distance_mm": 13.97,
+   "surface_cloud": "Femur",
+   "cloud_index": 298,
+   "nearest": [
+    0.024257,
+    -0.270705,
+    0.006213
+   ]
+  },
+  {
+   "group_id": 11,
+   "master_name": "Vastus Intermedius",
+   "route": "vas_med_r",
+   "attachment": "vas_med_r-P3",
+   "role": "via2",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.037,
+   "location_m_y": -0.4048,
+   "location_m_z": -0.0125,
+   "bone_distance_mm": 6.28,
+   "surface_cloud": "Femur",
+   "cloud_index": 353,
+   "nearest": [
+    0.032818,
+    -0.405157,
+    -0.007829
+   ]
+  },
+  {
+   "group_id": 11,
+   "master_name": "Vastus Intermedius",
+   "route": "vas_med_r",
+   "attachment": "vas_med_r-P4",
+   "role": "via3",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.0274,
+   "location_m_y": -0.4255,
+   "location_m_z": -0.0131,
+   "bone_distance_mm": 5.1,
+   "surface_cloud": "Femur",
+   "cloud_index": 401,
+   "nearest": [
+    0.029071,
+    -0.420928,
+    -0.011581
+   ]
+  },
+  {
+   "group_id": 11,
+   "master_name": "Vastus Intermedius",
+   "route": "vas_med_r",
+   "attachment": "vas_med_r-P5",
+   "role": "insertion",
+   "owning_body": "tibia_r",
+   "location_source": "evaluated_at_neutral(moving_point)",
+   "location_m_x": 0.0559586,
+   "location_m_y": 0.0217917,
+   "location_m_z": -0.0146,
+   "bone_distance_mm": 63.63,
+   "surface_cloud": "Tibia",
+   "cloud_index": 3,
+   "nearest": [
+    0.027593,
+    -0.03399,
+    -0.003088
+   ]
+  },
+  {
+   "group_id": 12,
+   "master_name": "Soleus",
+   "route": "soleus_r",
+   "attachment": "soleus_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0024,
+   "location_m_y": -0.085,
+   "location_m_z": 0.002,
+   "bone_distance_mm": 12.13,
+   "surface_cloud": "Tibia",
+   "cloud_index": 57,
+   "nearest": [
+    -0.012676,
+    -0.080155,
+    -0.002242
+   ]
+  },
+  {
+   "group_id": 12,
+   "master_name": "Soleus",
+   "route": "soleus_r",
+   "attachment": "soleus_r-P2",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0,
+   "location_m_y": 0.031,
+   "location_m_z": -0.0053,
+   "bone_distance_mm": 4.97,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 855,
+   "nearest": [
+    0.002672,
+    0.029905,
+    -0.00934
+   ]
+  },
+  {
+   "group_id": 13,
+   "master_name": "Medial Gastroocnemius",
+   "route": "med_gas_r",
+   "attachment": "med_gas_r-P1",
+   "role": "origin",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.015,
+   "location_m_y": -0.374,
+   "location_m_z": -0.025,
+   "bone_distance_mm": 7.5,
+   "surface_cloud": "Femur",
+   "cloud_index": 328,
+   "nearest": [
+    0.012115,
+    -0.375266,
+    -0.018196
+   ]
+  },
+  {
+   "group_id": 13,
+   "master_name": "Medial Gastroocnemius",
+   "route": "med_gas_r",
+   "attachment": "default",
+   "role": "via1",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": -0.03,
+   "location_m_y": -0.402,
+   "location_m_z": -0.026,
+   "bone_distance_mm": 9.25,
+   "surface_cloud": "Femur",
+   "cloud_index": 434,
+   "nearest": [
+    -0.022322,
+    -0.403616,
+    -0.021101
+   ]
+  },
+  {
+   "group_id": 13,
+   "master_name": "Medial Gastroocnemius",
+   "route": "med_gas_r",
+   "attachment": "med_gas_r-P3",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0,
+   "location_m_y": 0.031,
+   "location_m_z": -0.0053,
+   "bone_distance_mm": 4.97,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 855,
+   "nearest": [
+    0.002672,
+    0.029905,
+    -0.00934
+   ]
+  },
+  {
+   "group_id": 14,
+   "master_name": "Lateral Gastrocenemius",
+   "route": "lat_gas_r",
+   "attachment": "lat_gas_r-P1",
+   "role": "origin",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.009,
+   "location_m_y": -0.378,
+   "location_m_z": 0.027,
+   "bone_distance_mm": 7.48,
+   "surface_cloud": "Femur",
+   "cloud_index": 324,
+   "nearest": [
+    0.015523,
+    -0.381394,
+    0.025617
+   ]
+  },
+  {
+   "group_id": 14,
+   "master_name": "Lateral Gastrocenemius",
+   "route": "lat_gas_r",
+   "attachment": "default",
+   "role": "via1",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": -0.022,
+   "location_m_y": -0.395,
+   "location_m_z": 0.027,
+   "bone_distance_mm": 5.69,
+   "surface_cloud": "Femur",
+   "cloud_index": 362,
+   "nearest": [
+    -0.016769,
+    -0.397147,
+    0.027677
+   ]
+  },
+  {
+   "group_id": 14,
+   "master_name": "Lateral Gastrocenemius",
+   "route": "lat_gas_r",
+   "attachment": "lat_gas_r-P3",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0,
+   "location_m_y": 0.031,
+   "location_m_z": -0.0053,
+   "bone_distance_mm": 4.97,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 855,
+   "nearest": [
+    0.002672,
+    0.029905,
+    -0.00934
+   ]
+  },
+  {
+   "group_id": 15,
+   "master_name": "Tibialis Posterior",
+   "route": "tib_post_r",
+   "attachment": "tib_post_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.02,
+   "location_m_y": -0.085,
+   "location_m_z": 0.002,
+   "bone_distance_mm": 9.75,
+   "surface_cloud": "Tibia",
+   "cloud_index": 57,
+   "nearest": [
+    -0.012676,
+    -0.080155,
+    -0.002242
+   ]
+  },
+  {
+   "group_id": 15,
+   "master_name": "Tibialis Posterior",
+   "route": "tib_post_r",
+   "attachment": "tib_post_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0144,
+   "location_m_y": -0.4051,
+   "location_m_z": -0.0229,
+   "bone_distance_mm": 4.92,
+   "surface_cloud": "Tibia",
+   "cloud_index": 112,
+   "nearest": [
+    -0.011944,
+    -0.40655,
+    -0.018889
+   ]
+  },
+  {
+   "group_id": 15,
+   "master_name": "Tibialis Posterior",
+   "route": "tib_post_r",
+   "attachment": "tib_post_r-P3",
+   "role": "via2",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0417,
+   "location_m_y": 0.0334,
+   "location_m_z": -0.0286,
+   "bone_distance_mm": 5.26,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 929,
+   "nearest": [
+    0.040567,
+    0.034572,
+    -0.023601
+   ]
+  },
+  {
+   "group_id": 15,
+   "master_name": "Tibialis Posterior",
+   "route": "tib_post_r",
+   "attachment": "tib_post_r-P4",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0772,
+   "location_m_y": 0.0159,
+   "location_m_z": -0.0281,
+   "bone_distance_mm": 0.13,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 799,
+   "nearest": [
+    0.077204,
+    0.015958,
+    -0.028212
+   ]
+  },
+  {
+   "group_id": 16,
+   "master_name": "Tibialis Posterior (duplicate name)",
+   "route": "tib_ant_r",
+   "attachment": "tib_ant_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.006,
+   "location_m_y": -0.062,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 9.24,
+   "surface_cloud": "Tibia",
+   "cloud_index": 41,
+   "nearest": [
+    0.006,
+    -0.058953,
+    0.038273
+   ]
+  },
+  {
+   "group_id": 16,
+   "master_name": "Tibialis Posterior (duplicate name)",
+   "route": "tib_ant_r",
+   "attachment": "tib_ant_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.0329,
+   "location_m_y": -0.394,
+   "location_m_z": 0.007,
+   "bone_distance_mm": 5.92,
+   "surface_cloud": "Tibia",
+   "cloud_index": 116,
+   "nearest": [
+    0.03197,
+    -0.398514,
+    0.010722
+   ]
+  },
+  {
+   "group_id": 16,
+   "master_name": "Tibialis Posterior (duplicate name)",
+   "route": "tib_ant_r",
+   "attachment": "tib_ant_r-P3",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.1166,
+   "location_m_y": 0.014,
+   "location_m_z": -0.036,
+   "bone_distance_mm": 4.47,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 76,
+   "nearest": [
+    0.120642,
+    0.015835,
+    -0.036507
+   ]
+  },
+  {
+   "group_id": 17,
+   "master_name": "Peroneus Brevis",
+   "route": "per_brev_r",
+   "attachment": "per_brev_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.006,
+   "location_m_y": -0.062,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 9.24,
+   "surface_cloud": "Tibia",
+   "cloud_index": 41,
+   "nearest": [
+    0.006,
+    -0.058953,
+    0.038273
+   ]
+  },
+  {
+   "group_id": 17,
+   "master_name": "Peroneus Brevis",
+   "route": "per_brev_r",
+   "attachment": "per_brev_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0198,
+   "location_m_y": -0.4184,
+   "location_m_z": 0.028,
+   "bone_distance_mm": 17.93,
+   "surface_cloud": "Tibia",
+   "cloud_index": 120,
+   "nearest": [
+    -0.020846,
+    -0.412876,
+    0.010974
+   ]
+  },
+  {
+   "group_id": 17,
+   "master_name": "Peroneus Brevis",
+   "route": "per_brev_r",
+   "attachment": "per_brev_r-P3",
+   "role": "via2",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0144,
+   "location_m_y": -0.4295,
+   "location_m_z": 0.0289,
+   "bone_distance_mm": 25.28,
+   "surface_cloud": "Tibia",
+   "cloud_index": 120,
+   "nearest": [
+    -0.020846,
+    -0.412876,
+    0.010974
+   ]
+  },
+  {
+   "group_id": 17,
+   "master_name": "Peroneus Brevis",
+   "route": "per_brev_r",
+   "attachment": "per_brev_r-P4",
+   "role": "via3",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0471,
+   "location_m_y": 0.027,
+   "location_m_z": 0.0233,
+   "bone_distance_mm": 4.81,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 964,
+   "nearest": [
+    0.044805,
+    0.024469,
+    0.019921
+   ]
+  },
+  {
+   "group_id": 17,
+   "master_name": "Peroneus Brevis",
+   "route": "per_brev_r",
+   "attachment": "per_brev_r-P5",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.079,
+   "location_m_y": 0.0219,
+   "location_m_z": 0.034,
+   "bone_distance_mm": 0.93,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 470,
+   "nearest": [
+    0.07889,
+    0.022751,
+    0.03365
+   ]
+  },
+  {
+   "group_id": 18,
+   "master_name": "Peroneus Longus",
+   "route": "per_long_r",
+   "attachment": "per_long_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.006,
+   "location_m_y": -0.062,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 9.24,
+   "surface_cloud": "Tibia",
+   "cloud_index": 41,
+   "nearest": [
+    0.006,
+    -0.058953,
+    0.038273
+   ]
+  },
+  {
+   "group_id": 18,
+   "master_name": "Peroneus Longus",
+   "route": "per_long_r",
+   "attachment": "per_long_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0207,
+   "location_m_y": -0.4205,
+   "location_m_z": 0.0286,
+   "bone_distance_mm": 19.2,
+   "surface_cloud": "Tibia",
+   "cloud_index": 120,
+   "nearest": [
+    -0.020846,
+    -0.412876,
+    0.010974
+   ]
+  },
+  {
+   "group_id": 18,
+   "master_name": "Peroneus Longus",
+   "route": "per_long_r",
+   "attachment": "per_long_r-P3",
+   "role": "via2",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0162,
+   "location_m_y": -0.4319,
+   "location_m_z": 0.0289,
+   "bone_distance_mm": 26.55,
+   "surface_cloud": "Tibia",
+   "cloud_index": 120,
+   "nearest": [
+    -0.020846,
+    -0.412876,
+    0.010974
+   ]
+  },
+  {
+   "group_id": 18,
+   "master_name": "Peroneus Longus",
+   "route": "per_long_r",
+   "attachment": "per_long_r-P4",
+   "role": "via3",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0438,
+   "location_m_y": 0.023,
+   "location_m_z": 0.0221,
+   "bone_distance_mm": 2.81,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 964,
+   "nearest": [
+    0.044805,
+    0.024469,
+    0.019921
+   ]
+  },
+  {
+   "group_id": 18,
+   "master_name": "Peroneus Longus",
+   "route": "per_long_r",
+   "attachment": "per_long_r-P5",
+   "role": "via4",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0681,
+   "location_m_y": 0.0106,
+   "location_m_z": 0.028,
+   "bone_distance_mm": 4.44,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 719,
+   "nearest": [
+    0.064585,
+    0.012404,
+    0.025973
+   ]
+  },
+  {
+   "group_id": 18,
+   "master_name": "Peroneus Longus",
+   "route": "per_long_r",
+   "attachment": "per_long_r-P6",
+   "role": "via5",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0852,
+   "location_m_y": 0.0069,
+   "location_m_z": 0.0118,
+   "bone_distance_mm": 2.81,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 761,
+   "nearest": [
+    0.08595,
+    0.009607,
+    0.011708
+   ]
+  },
+  {
+   "group_id": 18,
+   "master_name": "Peroneus Longus",
+   "route": "per_long_r",
+   "attachment": "per_long_r-P7",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.117,
+   "location_m_y": 0.014,
+   "location_m_z": -0.036,
+   "bone_distance_mm": 4.11,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 76,
+   "nearest": [
+    0.120642,
+    0.015835,
+    -0.036507
+   ]
+  },
+  {
+   "group_id": 19,
+   "master_name": "Peroneus Tertius",
+   "route": "per_tert_r",
+   "attachment": "per_tert_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.006,
+   "location_m_y": -0.062,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 9.24,
+   "surface_cloud": "Tibia",
+   "cloud_index": 41,
+   "nearest": [
+    0.006,
+    -0.058953,
+    0.038273
+   ]
+  },
+  {
+   "group_id": 19,
+   "master_name": "Peroneus Tertius",
+   "route": "per_tert_r",
+   "attachment": "per_tert_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.0229,
+   "location_m_y": -0.4069,
+   "location_m_z": 0.0159,
+   "bone_distance_mm": 6.23,
+   "surface_cloud": "Tibia",
+   "cloud_index": 127,
+   "nearest": [
+    0.019616,
+    -0.403472,
+    0.019927
+   ]
+  },
+  {
+   "group_id": 19,
+   "master_name": "Peroneus Tertius",
+   "route": "per_tert_r",
+   "attachment": "per_tert_r-P3",
+   "role": "insertion",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.079,
+   "location_m_y": 0.022,
+   "location_m_z": 0.034,
+   "bone_distance_mm": 0.84,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 470,
+   "nearest": [
+    0.07889,
+    0.022751,
+    0.03365
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.02,
+   "location_m_y": -0.085,
+   "location_m_z": 0.002,
+   "bone_distance_mm": 9.75,
+   "surface_cloud": "Tibia",
+   "cloud_index": 57,
+   "nearest": [
+    -0.012676,
+    -0.080155,
+    -0.002242
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0154,
+   "location_m_y": -0.4051,
+   "location_m_z": -0.0196,
+   "bone_distance_mm": 3.81,
+   "surface_cloud": "Tibia",
+   "cloud_index": 112,
+   "nearest": [
+    -0.011944,
+    -0.40655,
+    -0.018889
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P3",
+   "role": "via2",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0436,
+   "location_m_y": 0.0315,
+   "location_m_z": -0.028,
+   "bone_distance_mm": 5.87,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 930,
+   "nearest": [
+    0.041697,
+    0.029836,
+    -0.022703
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P4",
+   "role": "via3",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0708,
+   "location_m_y": 0.0176,
+   "location_m_z": -0.0263,
+   "bone_distance_mm": 6.88,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 799,
+   "nearest": [
+    0.077204,
+    0.015958,
+    -0.028212
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P5",
+   "role": "via4",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.1658,
+   "location_m_y": -0.0081,
+   "location_m_z": 0.0116,
+   "bone_distance_mm": 4.43,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 292,
+   "nearest": [
+    0.164932,
+    -0.003756,
+    0.011692
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P6",
+   "role": "via5",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": -0.0019,
+   "location_m_y": -0.0078,
+   "location_m_z": 0.015,
+   "bone_distance_mm": 4.3,
+   "surface_cloud": "Toes",
+   "cloud_index": 797,
+   "nearest": [
+    -0.001971,
+    -0.003499,
+    0.014968
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P7",
+   "role": "via6",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.028,
+   "location_m_y": -0.0071,
+   "location_m_z": 0.022,
+   "bone_distance_mm": 1.46,
+   "surface_cloud": "Toes",
+   "cloud_index": 438,
+   "nearest": [
+    0.028519,
+    -0.006469,
+    0.020791
+   ]
+  },
+  {
+   "group_id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "route": "flex_dig_r",
+   "attachment": "flex_dig_r-P8",
+   "role": "insertion",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.0441,
+   "location_m_y": -0.006,
+   "location_m_z": 0.0242,
+   "bone_distance_mm": 0.97,
+   "surface_cloud": "Toes",
+   "cloud_index": 172,
+   "nearest": [
+    0.04409,
+    -0.005356,
+    0.023481
+   ]
+  },
+  {
+   "group_id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "route": "flex_hal_r",
+   "attachment": "flex_hal_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.02,
+   "location_m_y": -0.085,
+   "location_m_z": 0.002,
+   "bone_distance_mm": 9.75,
+   "surface_cloud": "Tibia",
+   "cloud_index": 57,
+   "nearest": [
+    -0.012676,
+    -0.080155,
+    -0.002242
+   ]
+  },
+  {
+   "group_id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "route": "flex_hal_r",
+   "attachment": "flex_hal_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": -0.0186,
+   "location_m_y": -0.4079,
+   "location_m_z": -0.0174,
+   "bone_distance_mm": 6.95,
+   "surface_cloud": "Tibia",
+   "cloud_index": 112,
+   "nearest": [
+    -0.011944,
+    -0.40655,
+    -0.018889
+   ]
+  },
+  {
+   "group_id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "route": "flex_hal_r",
+   "attachment": "flex_hal_r-P3",
+   "role": "via2",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0374,
+   "location_m_y": 0.0276,
+   "location_m_z": -0.0241,
+   "bone_distance_mm": 5.04,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 930,
+   "nearest": [
+    0.041697,
+    0.029836,
+    -0.022703
+   ]
+  },
+  {
+   "group_id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "route": "flex_hal_r",
+   "attachment": "flex_hal_r-P4",
+   "role": "via3",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.1038,
+   "location_m_y": 0.007,
+   "location_m_z": -0.0256,
+   "bone_distance_mm": 3.28,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 617,
+   "nearest": [
+    0.101225,
+    0.008087,
+    -0.027311
+   ]
+  },
+  {
+   "group_id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "route": "flex_hal_r",
+   "attachment": "flex_hal_r-P5",
+   "role": "via4",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.1726,
+   "location_m_y": -0.0053,
+   "location_m_z": -0.0269,
+   "bone_distance_mm": 0.34,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 91,
+   "nearest": [
+    0.172533,
+    -0.005042,
+    -0.026697
+   ]
+  },
+  {
+   "group_id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "route": "flex_hal_r",
+   "attachment": "flex_hal_r-P6",
+   "role": "via5",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.016,
+   "location_m_y": -0.006,
+   "location_m_z": -0.0265,
+   "bone_distance_mm": 1.94,
+   "surface_cloud": "Toes",
+   "cloud_index": 660,
+   "nearest": [
+    0.016278,
+    -0.004507,
+    -0.025298
+   ]
+  },
+  {
+   "group_id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "route": "flex_hal_r",
+   "attachment": "flex_hal_r-P7",
+   "role": "insertion",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.0562,
+   "location_m_y": -0.0102,
+   "location_m_z": -0.0181,
+   "bone_distance_mm": 3.22,
+   "surface_cloud": "Toes",
+   "cloud_index": 54,
+   "nearest": [
+    0.055553,
+    -0.010135,
+    -0.014947
+   ]
+  },
+  {
+   "group_id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "route": "ext_dig_r",
+   "attachment": "ext_dig_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.006,
+   "location_m_y": -0.062,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 9.24,
+   "surface_cloud": "Tibia",
+   "cloud_index": 41,
+   "nearest": [
+    0.006,
+    -0.058953,
+    0.038273
+   ]
+  },
+  {
+   "group_id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "route": "ext_dig_r",
+   "attachment": "ext_dig_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.029,
+   "location_m_y": -0.4007,
+   "location_m_z": 0.0072,
+   "bone_distance_mm": 5.1,
+   "surface_cloud": "Tibia",
+   "cloud_index": 116,
+   "nearest": [
+    0.03197,
+    -0.398514,
+    0.010722
+   ]
+  },
+  {
+   "group_id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "route": "ext_dig_r",
+   "attachment": "ext_dig_r-P3",
+   "role": "via2",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.0922,
+   "location_m_y": 0.0388,
+   "location_m_z": -0.0001,
+   "bone_distance_mm": 7.04,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 662,
+   "nearest": [
+    0.089155,
+    0.032448,
+    7e-06
+   ]
+  },
+  {
+   "group_id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "route": "ext_dig_r",
+   "attachment": "ext_dig_r-P4",
+   "role": "via3",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.1616,
+   "location_m_y": 0.006,
+   "location_m_z": 0.013,
+   "bone_distance_mm": 0.59,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 262,
+   "nearest": [
+    0.161656,
+    0.005469,
+    0.012748
+   ]
+  },
+  {
+   "group_id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "route": "ext_dig_r",
+   "attachment": "ext_dig_r-P5",
+   "role": "via4",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.0003,
+   "location_m_y": 0.005,
+   "location_m_z": 0.0153,
+   "bone_distance_mm": 0.69,
+   "surface_cloud": "Toes",
+   "cloud_index": 769,
+   "nearest": [
+    0.00032,
+    0.004352,
+    0.015073
+   ]
+  },
+  {
+   "group_id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "route": "ext_dig_r",
+   "attachment": "ext_dig_r-P6",
+   "role": "insertion",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.0443,
+   "location_m_y": 0.0,
+   "location_m_z": 0.025,
+   "bone_distance_mm": 1.6,
+   "surface_cloud": "Toes",
+   "cloud_index": 141,
+   "nearest": [
+    0.043647,
+    -0.001077,
+    0.025992
+   ]
+  },
+  {
+   "group_id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "route": "ext_hal_r",
+   "attachment": "ext_hal_r-P1",
+   "role": "origin",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.006,
+   "location_m_y": -0.062,
+   "location_m_z": 0.047,
+   "bone_distance_mm": 9.24,
+   "surface_cloud": "Tibia",
+   "cloud_index": 41,
+   "nearest": [
+    0.006,
+    -0.058953,
+    0.038273
+   ]
+  },
+  {
+   "group_id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "route": "ext_hal_r",
+   "attachment": "ext_hal_r-P2",
+   "role": "via1",
+   "owning_body": "tibia_r",
+   "location_source": "declared",
+   "location_m_x": 0.0326,
+   "location_m_y": -0.398,
+   "location_m_z": -0.008,
+   "bone_distance_mm": 3.73,
+   "surface_cloud": "Tibia",
+   "cloud_index": 115,
+   "nearest": [
+    0.03197,
+    -0.398514,
+    -0.004361
+   ]
+  },
+  {
+   "group_id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "route": "ext_hal_r",
+   "attachment": "ext_hal_r-P3",
+   "role": "via2",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.097,
+   "location_m_y": 0.0389,
+   "location_m_z": -0.0211,
+   "bone_distance_mm": 3.98,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 649,
+   "nearest": [
+    0.096633,
+    0.036061,
+    -0.018342
+   ]
+  },
+  {
+   "group_id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "route": "ext_hal_r",
+   "attachment": "ext_hal_r-P4",
+   "role": "via3",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.1293,
+   "location_m_y": 0.0309,
+   "location_m_z": -0.0257,
+   "bone_distance_mm": 3.29,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 31,
+   "nearest": [
+    0.129806,
+    0.030023,
+    -0.02257
+   ]
+  },
+  {
+   "group_id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "route": "ext_hal_r",
+   "attachment": "ext_hal_r-P5",
+   "role": "via4",
+   "owning_body": "calcn_r",
+   "location_source": "declared",
+   "location_m_x": 0.1734,
+   "location_m_y": 0.0139,
+   "location_m_z": -0.028,
+   "bone_distance_mm": 2.97,
+   "surface_cloud": "Calcaneus",
+   "cloud_index": 26,
+   "nearest": [
+    0.173767,
+    0.013619,
+    -0.025064
+   ]
+  },
+  {
+   "group_id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "route": "ext_hal_r",
+   "attachment": "ext_hal_r-P6",
+   "role": "via5",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.0298,
+   "location_m_y": 0.0041,
+   "location_m_z": -0.024,
+   "bone_distance_mm": 1.88,
+   "surface_cloud": "Toes",
+   "cloud_index": 616,
+   "nearest": [
+    0.030455,
+    0.002523,
+    -0.023206
+   ]
+  },
+  {
+   "group_id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "route": "ext_hal_r",
+   "attachment": "ext_hal_r-P7",
+   "role": "insertion",
+   "owning_body": "toes_r",
+   "location_source": "declared",
+   "location_m_x": 0.0563,
+   "location_m_y": 0.0034,
+   "location_m_z": -0.0186,
+   "bone_distance_mm": 3.01,
+   "surface_cloud": "Toes",
+   "cloud_index": 17,
+   "nearest": [
+    0.055688,
+    0.002834,
+    -0.015709
+   ]
+  },
+  {
+   "group_id": 24,
+   "master_name": "Gluteus Maximus",
+   "route": "glut_max3_r",
+   "attachment": "glut_max3_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.162,
+   "location_m_y": 0.04,
+   "location_m_z": 0.023,
+   "bone_distance_mm": 9.15,
+   "surface_cloud": "Sacrum",
+   "cloud_index": 84,
+   "nearest": [
+    -0.153668,
+    0.037129,
+    0.020521
+   ]
+  },
+  {
+   "group_id": 24,
+   "master_name": "Gluteus Maximus",
+   "route": "glut_max3_r",
+   "attachment": "glut_max3_r-P2",
+   "role": "via1",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.174,
+   "location_m_y": -0.033,
+   "location_m_z": 0.101,
+   "bone_distance_mm": 68.05,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 94,
+   "nearest": [
+    -0.131818,
+    -0.075844,
+    0.069124
+   ]
+  },
+  {
+   "group_id": 24,
+   "master_name": "Gluteus Maximus",
+   "route": "glut_max3_r",
+   "attachment": "glut_max3_r-P3",
+   "role": "via2",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": -0.069,
+   "location_m_y": -0.042,
+   "location_m_z": 0.067,
+   "bone_distance_mm": 41.9,
+   "surface_cloud": "Femur",
+   "cloud_index": 246,
+   "nearest": [
+    -0.03192,
+    -0.028846,
+    0.052585
+   ]
+  },
+  {
+   "group_id": 24,
+   "master_name": "Gluteus Maximus",
+   "route": "glut_max3_r",
+   "attachment": "glut_max3_r-P3_0",
+   "role": "via3",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": -0.046,
+   "location_m_y": -0.116,
+   "location_m_z": 0.06,
+   "bone_distance_mm": 40.9,
+   "surface_cloud": "Femur",
+   "cloud_index": 271,
+   "nearest": [
+    -0.007908,
+    -0.117051,
+    0.045137
+   ]
+  },
+  {
+   "group_id": 24,
+   "master_name": "Gluteus Maximus",
+   "route": "glut_max3_r",
+   "attachment": "glut_max3_r-P4",
+   "role": "insertion",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.005,
+   "location_m_y": -0.339,
+   "location_m_z": 0.022,
+   "bone_distance_mm": 5.34,
+   "surface_cloud": "Femur",
+   "cloud_index": 315,
+   "nearest": [
+    0.010032,
+    -0.339151,
+    0.020233
+   ]
+  },
+  {
+   "group_id": 25,
+   "master_name": "Adductor Magnus",
+   "route": "add_mag3_r",
+   "attachment": "add_mag3_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.163,
+   "location_m_y": -0.013,
+   "location_m_z": 0.005,
+   "bone_distance_mm": 5.93,
+   "surface_cloud": "Sacrum",
+   "cloud_index": 16,
+   "nearest": [
+    -0.159688,
+    -0.013014,
+    8.2e-05
+   ]
+  },
+  {
+   "group_id": 25,
+   "master_name": "Adductor Magnus",
+   "route": "add_mag3_r",
+   "attachment": "add_mag3_r-P2",
+   "role": "via1",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.1357,
+   "location_m_y": -0.0929,
+   "location_m_z": 0.0591,
+   "bone_distance_mm": 4.19,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 93,
+   "nearest": [
+    -0.135738,
+    -0.096931,
+    0.060259
+   ]
+  },
+  {
+   "group_id": 25,
+   "master_name": "Adductor Magnus",
+   "route": "add_mag3_r",
+   "attachment": "add_mag3_r-P2_0",
+   "role": "via2",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": -0.059,
+   "location_m_y": -0.108,
+   "location_m_z": -0.03,
+   "bone_distance_mm": 70.57,
+   "surface_cloud": "Femur",
+   "cloud_index": 233,
+   "nearest": [
+    -0.025443,
+    -0.062217,
+    0.011928
+   ]
+  },
+  {
+   "group_id": 25,
+   "master_name": "Adductor Magnus",
+   "route": "add_mag3_r",
+   "attachment": "add_mag3_r-P2_0_0",
+   "role": "insertion",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.015,
+   "location_m_y": -0.374,
+   "location_m_z": -0.025,
+   "bone_distance_mm": 7.5,
+   "surface_cloud": "Femur",
+   "cloud_index": 328,
+   "nearest": [
+    0.012115,
+    -0.375266,
+    -0.018196
+   ]
+  },
+  {
+   "group_id": 26,
+   "master_name": "Iliacus",
+   "route": "iliacus_r",
+   "attachment": "iliacus_r-P1",
+   "role": "origin",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.055,
+   "location_m_y": 0.091,
+   "location_m_z": 0.085,
+   "bone_distance_mm": 13.64,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 61,
+   "nearest": [
+    -0.068605,
+    0.091887,
+    0.085194
+   ]
+  },
+  {
+   "group_id": 26,
+   "master_name": "Iliacus",
+   "route": "iliacus_r",
+   "attachment": "iliacus_r-P2",
+   "role": "via1",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.024,
+   "location_m_y": -0.057,
+   "location_m_z": 0.076,
+   "bone_distance_mm": 24.41,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 117,
+   "nearest": [
+    -0.043487,
+    -0.047599,
+    0.064706
+   ]
+  },
+  {
+   "group_id": 26,
+   "master_name": "Iliacus",
+   "route": "iliacus_r",
+   "attachment": "iliacus_r-P4",
+   "role": "insertion",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.015,
+   "location_m_y": -0.374,
+   "location_m_z": -0.025,
+   "bone_distance_mm": 7.5,
+   "surface_cloud": "Femur",
+   "cloud_index": 328,
+   "nearest": [
+    0.012115,
+    -0.375266,
+    -0.018196
+   ]
+  },
+  {
+   "group_id": 27,
+   "master_name": "Psoas X",
+   "route": "psoas_r",
+   "attachment": "psoas_r-P1",
+   "role": "origin",
+   "owning_body": "torso",
+   "location_source": "declared",
+   "location_m_x": 0.036000000000000004,
+   "location_m_y": 0.007200000000000095,
+   "location_m_z": 0.0289,
+   "bone_distance_mm": 17.12,
+   "surface_cloud": "Spine",
+   "cloud_index": 4084,
+   "nearest": [
+    0.024706,
+    0.012069,
+    0.016994
+   ]
+  },
+  {
+   "group_id": 27,
+   "master_name": "Psoas X",
+   "route": "psoas_r",
+   "attachment": "psoas_r-P2",
+   "role": "via1",
+   "owning_body": "pelvis",
+   "location_source": "declared",
+   "location_m_x": -0.0238,
+   "location_m_y": -0.057,
+   "location_m_z": 0.076,
+   "bone_distance_mm": 24.57,
+   "surface_cloud": "Pelvis_R",
+   "cloud_index": 117,
+   "nearest": [
+    -0.043487,
+    -0.047599,
+    0.064706
+   ]
+  },
+  {
+   "group_id": 27,
+   "master_name": "Psoas X",
+   "route": "psoas_r",
+   "attachment": "psoas_r-P4",
+   "role": "insertion",
+   "owning_body": "femur_r",
+   "location_source": "declared",
+   "location_m_x": 0.015,
+   "location_m_y": -0.374,
+   "location_m_z": -0.025,
+   "bone_distance_mm": 7.5,
+   "surface_cloud": "Femur",
+   "cloud_index": 328,
+   "nearest": [
+    0.012115,
+    -0.375266,
+    -0.018196
+   ]
+  }
+ ]
+}

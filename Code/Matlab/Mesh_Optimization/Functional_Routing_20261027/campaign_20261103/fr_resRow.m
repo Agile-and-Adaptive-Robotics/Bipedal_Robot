@@ -1,0 +1,6 @@
+function ro = fr_resRow()
+%FR_RESROW One resume-scan row (checkpoint paths + presence flags).
+ro = struct('name', '', 'mapId', NaN, 'ckRigid', '', 'ckCompliant', '', ...
+    'ckRefine', '', 'hasRigid', false, 'hasCompliant', false, ...
+    'hasRefine', false);
+end

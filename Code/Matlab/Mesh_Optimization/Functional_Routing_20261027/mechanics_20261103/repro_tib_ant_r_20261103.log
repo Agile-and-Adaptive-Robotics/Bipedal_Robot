@@ -1,0 +1,54 @@
+Surfaces loaded: 27 actuator surface(s) from D:\GitHub\Bipedal_Robot\tmp\functional_routing_20261103\mech_repro\human_surfaces_5x5_grading_20261023.csv
+
+================ BI PULLEY SURVEY2 (20261023) PLAN ================
+Mode          = SURVEY2 (all sites, serial)
+Budgets       = 300 evals/muscle TOTAL, 60 evals/rung, 5 rungs max, 20 min wall
+Config ladder = seed (1,1), advisor steps +1 BPA / +1 line part, cap {3,3}
+Grading       = 2-D 5x5 surfaces, domain-masked (hip envelope excluded)
+BPA size      = OLD-CODE per-muscle diameter (Size rule on PAM_Prop MIF)
+Pressure      = 620 kPa; sizes [rest; tendon] re-solved per rung
+[16] tib_ant_r    ankle_angle_r      x subtalar_angle_r   pri slot 1; dia 20 mm; domain 25/25; both surface dofs modeled (slots 1+2); 20 mm old-code BPA
+====================================================================
+Build summary: 1 ready, 0 cannot-build/grade-unable/no-surface
+RESUME: 0 actuator(s) already recorded in D:\GitHub\Bipedal_Robot\tmp\functional_routing_20261103\mech_repro\BiPulley_survey2_perMuscle_20261023.csv
+
+########## SURVEY2 tib_ant_r [16] ##########
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2689 0.0500] m, score -400.3995
+  sign check (initial x): 13 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 21.03 N*m < target 39.29 N*m (taut margin -0.4647)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.4647 vs taut margin -0.464664]
+  rung 1 best: rest 0.2689 m, tendon 0.0720 m -> meet 14/25 (56.0%), active 20/25 (80.0%), 65 evals
+  rung 1 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\tmp\functional_routing_20261103\mech_repro\Results\BiPulley_survey2_tib_ant_r_nB1_G1_20261103_235951.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2689 0.0500] m, score -560.3996
+  sign check (initial x): 14 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 32.84 N*m < target 39.29 N*m (taut margin -0.1642)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.1642 vs taut margin -0.164218]
+  rung 2 best: rest 0.2689 m, tendon 0.0891 m -> meet 25/25 (100.0%), active 25/25 (100.0%), 65 evals
+  rung 2 advisor: torque_short -> steps (+1,+0)
+  saved D:\GitHub\Bipedal_Robot\tmp\functional_routing_20261103\mech_repro\Results\BiPulley_survey2_tib_ant_r_nB2_G1_20261103_235959.mat
+
+  ===== RUNG 3 | nBPA = 3, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4033 0.0200] m, score -601.0000
+  sign check (initial x): 25 taut domain cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = converged | steps (nBPA,G) = (+0,+0) ---
+    torque OK over 25 taut feasible cell(s) (min 54.51 vs target 39.29)
+    no slack, no infeasible cells, taut torque meets target
+    [raw slack-gamed margin +0.3873 vs taut margin 0.387287]
+  rung 3 best: rest 0.3408 m, tendon 0.0200 m -> meet 25/25 (100.0%), active 25/25 (100.0%), 50 evals
+  rung 3 advisor: converged -> steps (+0,+0)
+  saved D:\GitHub\Bipedal_Robot\tmp\functional_routing_20261103\mech_repro\Results\BiPulley_survey2_tib_ant_r_nB3_G1_20261104_000005.mat
+  ladder converged at rung 3 (config (3,1)).
+  SITE RESULT tib_ant_r: chosen (2,1), rest 0.2689 m, tendon 0.0891 m, meet 100.0%, active 100.0%, 180 evals, 0.4 min (converged)
+
+Survey2 complete. Driver CSVs:
+  D:\GitHub\Bipedal_Robot\tmp\functional_routing_20261103\mech_repro\BiPulley_survey2_perMuscle_20261023.csv
+  D:\GitHub\Bipedal_Robot\tmp\functional_routing_20261103\mech_repro\BiPulley_survey2_ladder_20261023.csv

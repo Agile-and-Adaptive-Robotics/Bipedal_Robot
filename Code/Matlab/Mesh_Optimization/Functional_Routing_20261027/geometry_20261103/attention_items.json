@@ -1,0 +1,788 @@
+{
+ "vasti": {
+  "actuator_id": 11,
+  "map_seed_preference": [
+   "vas_med_r",
+   "vas_int_r",
+   "vas_lat_r"
+  ],
+  "winner": "vas_med_r",
+  "winner_reason": "first preference entry resolving to a well-formed spec (>=2 path points); vas_med_r resolves, so it wins. The map's own decision note says vas_med_r carries the patella-tracking route (AGENTS 2026-09-10).",
+  "robotbody_points": {
+   "vas_med_r": {
+    "vas_med_r-P1": {
+     "body": "femur_r",
+     "loc": [
+      0.014,
+      -0.2099,
+      0.0188
+     ]
+    },
+    "vas_med_r-P2": {
+     "body": "femur_r",
+     "loc": [
+      0.0356,
+      -0.2769,
+      0.0009
+     ]
+    },
+    "vas_med_r-P3": {
+     "body": "femur_r",
+     "loc": [
+      0.037,
+      -0.4048,
+      -0.0125
+     ]
+    },
+    "vas_med_r-P4": {
+     "body": "femur_r",
+     "loc": [
+      0.0274,
+      -0.4255,
+      -0.0131
+     ]
+    },
+    "vas_med_r-P5": {
+     "body": "tibia_r",
+     "loc": null
+    },
+    "insertion_at_neutral_m": [
+     0.0559586,
+     0.0217917,
+     -0.0146
+    ],
+    "insertion_decl_type": "MovingPathPoint",
+    "insertion_body": "tibia_r",
+    "insertion_fn_types": [
+     "SimmSpline",
+     "SimmSpline",
+     "SimmSpline"
+    ]
+   },
+   "vas_int_r": {
+    "vas_int_r-P1": {
+     "body": "femur_r",
+     "loc": [
+      0.0,
+      -0.043,
+      0.042
+     ]
+    },
+    "vas_int_r-P2": {
+     "body": "femur_r",
+     "loc": [
+      0.057,
+      -0.216,
+      0.029
+     ]
+    },
+    "default": {
+     "body": "femur_r",
+     "loc": [
+      0.054,
+      -0.332,
+      0.013
+     ]
+    },
+    "vas_int_r-P4": {
+     "body": "tibia_r",
+     "loc": null
+    },
+    "insertion_at_neutral_m": [
+     0.0554632,
+     0.0252923,
+     0.0018
+    ],
+    "insertion_decl_type": "MovingPathPoint",
+    "insertion_body": "tibia_r",
+    "insertion_fn_types": [
+     "SimmSpline",
+     "SimmSpline",
+     "SimmSpline"
+    ]
+   },
+   "vas_lat_r": {
+    "vas_lat_r-P1": {
+     "body": "femur_r",
+     "loc": [
+      0.0048,
+      -0.1854,
+      0.0349
+     ]
+    },
+    "vas_lat_r-P2": {
+     "body": "femur_r",
+     "loc": [
+      0.0269,
+      -0.2591,
+      0.0409
+     ]
+    },
+    "vas_lat_r-P3": {
+     "body": "femur_r",
+     "loc": [
+      0.0361,
+      -0.403,
+      0.0205
+     ]
+    },
+    "vas_lat_r-P4": {
+     "body": "femur_r",
+     "loc": [
+      0.0253,
+      -0.4243,
+      0.0184
+     ]
+    },
+    "vas_lat_r-P5": {
+     "body": "tibia_r",
+     "loc": null
+    },
+    "insertion_at_neutral_m": [
+     0.0599557,
+     0.0195864,
+     0.0165
+    ],
+    "insertion_decl_type": "MovingPathPoint",
+    "insertion_body": "tibia_r",
+    "insertion_fn_types": [
+     "SimmSpline",
+     "SimmSpline",
+     "SimmSpline"
+    ]
+   }
+  },
+  "simbody_points": {
+   "vas_med_r": {
+    "vas_med_r-P1": {
+     "body": "femur_r",
+     "loc": [
+      0.014,
+      -0.2099,
+      0.0188
+     ]
+    },
+    "vas_med_r-P2": {
+     "body": "femur_r",
+     "loc": [
+      0.0356,
+      -0.2769,
+      0.0009
+     ]
+    },
+    "vas_med_r-P3": {
+     "body": "femur_r",
+     "loc": [
+      0.037,
+      -0.4048,
+      -0.0125
+     ]
+    },
+    "vas_med_r-P4": {
+     "body": "femur_r",
+     "loc": [
+      0.0274,
+      -0.4255,
+      -0.0131
+     ]
+    },
+    "vas_med_r-P5": {
+     "body": "tibia_r",
+     "loc": null
+    },
+    "insertion_at_neutral_m": [
+     0.0559586,
+     0.0217917,
+     -0.0146
+    ],
+    "insertion_decl_type": "MovingPathPoint",
+    "insertion_body": "tibia_r",
+    "insertion_fn_types": [
+     "SimmSpline",
+     "SimmSpline",
+     "SimmSpline"
+    ]
+   },
+   "vas_int_r": {
+    "vas_int_r-P1": {
+     "body": "femur_r",
+     "loc": [
+      0.029,
+      -0.1924,
+      0.031
+     ]
+    },
+    "vas_int_r-P2": {
+     "body": "femur_r",
+     "loc": [
+      0.0335,
+      -0.2084,
+      0.0285
+     ]
+    },
+    "vas_int_r-P3": {
+     "body": "femur_r",
+     "loc": [
+      0.0343,
+      -0.403,
+      0.0055
+     ]
+    },
+    "vas_int_r-P4": {
+     "body": "tibia_r",
+     "loc": null
+    },
+    "insertion_at_neutral_m": [
+     0.0554632,
+     0.0252923,
+     0.0018
+    ],
+    "insertion_decl_type": "MovingPathPoint",
+    "insertion_body": "tibia_r",
+    "insertion_fn_types": [
+     "SimmSpline",
+     "SimmSpline",
+     "SimmSpline"
+    ]
+   },
+   "vas_lat_r": {
+    "vas_lat_r-P1": {
+     "body": "femur_r",
+     "loc": [
+      0.0048,
+      -0.1854,
+      0.0349
+     ]
+    },
+    "vas_lat_r-P2": {
+     "body": "femur_r",
+     "loc": [
+      0.0269,
+      -0.2591,
+      0.0409
+     ]
+    },
+    "vas_lat_r-P3": {
+     "body": "femur_r",
+     "loc": [
+      0.0361,
+      -0.403,
+      0.0205
+     ]
+    },
+    "vas_lat_r-P4": {
+     "body": "femur_r",
+     "loc": [
+      0.0253,
+      -0.4243,
+      0.0184
+     ]
+    },
+    "vas_lat_r-P5": {
+     "body": "tibia_r",
+     "loc": null
+    },
+    "insertion_at_neutral_m": [
+     0.0599557,
+     0.0195864,
+     0.0165
+    ],
+    "insertion_decl_type": "MovingPathPoint",
+    "insertion_body": "tibia_r",
+    "insertion_fn_types": [
+     "SimmSpline",
+     "SimmSpline",
+     "SimmSpline"
+    ]
+   }
+  },
+  "insertion_representation": "MovingPathPoint on tibia_r (quadriceps insertion modeled as a moving point in the tibia frame per Delp 1990; no patella body exists in gait2392). Function-evaluated per pose; verified maxErrorMm 0.0 at all six poses.",
+  "patellar_routing": "femur-frame ConditionalPathPoints (vas_med_r-P3 range -150..-69.3 deg, vas_med_r-P4 -150..-102 deg; vas_int_r-P3 same style in the stock model) carry the deep knee-flexion routing; they activate only past -69.3 deg knee flexion, matching the computed path at knee -120 deg (n_active 3 -> 5).",
+  "insertion_drift_over_sweep_m": {
+   "neutral": [
+    0.0559586,
+    0.0217917,
+    -0.0146
+   ],
+   "knee_minus120": [
+    0.00981109844178474,
+    0.022415417809080122,
+    -0.0146
+   ]
+  }
+ },
+ "tfl": {
+  "actuator_id": 7,
+  "robotbody_points": [
+   {
+    "name": "tfl_r-P1",
+    "body": "pelvis",
+    "loc_m": [
+     -0.026,
+     0.003,
+     0.138
+    ]
+   },
+   {
+    "name": "tfl_r-P2",
+    "body": "femur_r",
+    "loc_m": [
+     0.037,
+     -0.037,
+     0.071
+    ]
+   },
+   {
+    "name": "tfl_r-P3",
+    "body": "femur_r",
+    "loc_m": [
+     0.0054,
+     -0.4049,
+     0.047
+    ]
+   },
+   {
+    "name": "tfl_r-P4",
+    "body": "tibia_r",
+    "loc_m": [
+     0.006,
+     -0.062,
+     0.047
+    ]
+   },
+   {
+    "name": "tfl_r-P5",
+    "body": "tibia_r",
+    "loc_m": [
+     0.005220028696492798,
+     -0.378,
+     0.035
+    ]
+   }
+  ],
+  "simbody_points": [
+   {
+    "name": "tfl_r-P1",
+    "body": "pelvis",
+    "loc_m": [
+     -0.0311,
+     0.0214,
+     0.1241
+    ]
+   },
+   {
+    "name": "tfl_r-P2",
+    "body": "femur_r",
+    "loc_m": [
+     0.0294,
+     -0.0995,
+     0.0597
+    ]
+   },
+   {
+    "name": "tfl_r-P3",
+    "body": "femur_r",
+    "loc_m": [
+     0.0054,
+     -0.4049,
+     0.0357
+    ]
+   },
+   {
+    "name": "tfl_r-P4",
+    "body": "tibia_r",
+    "loc_m": [
+     0.006,
+     -0.0487,
+     0.0297
+    ]
+   }
+  ],
+  "femur_frame_P2P3_delta_robotbody_vs_stock_mm": 63.97,
+  "P3_delta_mm": 11.3,
+  "P2_robotbody_lateral_z_mm": 71.0,
+  "P3_robotbody_lateral_z_mm": 47.0,
+  "P2_stock_lateral_z_mm": 59.7,
+  "P3_stock_lateral_z_mm": 35.7,
+  "note": "femur_r frame at neutral is aligned with ground (hip angles 0), so +z is lateral for the right leg. The prior render's excess lateral excursion is checked against these frame coordinates; the optimizer hand-off uses exactly these body-frame values."
+ },
+ "foot": {
+  "actuator_ids": [
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23
+  ],
+  "joint_map_to_legacy_names": {
+   "CalcnA (master's ankle joint)": "ankle_r / ankle_angle_r: tibia_r -> talus_r",
+   "calcnSub (master's subtalar joint)": "subtalar_r / subtalar_angle_r: talus_r -> calcn_r",
+   "MTP": "mtp_r / mtp_angle_r: calcn_r -> toes_r"
+  },
+  "neutral_transforms_tibia_talus_calcn_toes": {
+   "talus_in_ground": {
+    "R": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "p": [
+     -0.07519985651753601,
+     0.058079303551649586,
+     0.0835
+    ]
+   },
+   "calcn_in_ground": {
+    "R": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "p": [
+     -0.123969856517536,
+     0.016129303551649585,
+     0.09142
+    ]
+   },
+   "toes_in_ground": {
+    "R": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "p": [
+     0.05483014348246398,
+     0.014129303551649585,
+     0.0925
+    ]
+   },
+   "tibia_in_ground": {
+    "R": [
+     [
+      1.0,
+      0.0,
+      0.0
+     ],
+     [
+      0.0,
+      1.0,
+      0.0
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ],
+    "p": [
+     -0.07519985651753601,
+     0.4880793035516496,
+     0.0835
+    ]
+   }
+  },
+  "routes": {
+   "flex_dig_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "calcn_r",
+     "calcn_r",
+     "calcn_r",
+     "toes_r",
+     "toes_r",
+     "toes_r"
+    ],
+    "n_points": 8
+   },
+   "flex_hal_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "calcn_r",
+     "calcn_r",
+     "calcn_r",
+     "toes_r",
+     "toes_r"
+    ],
+    "n_points": 7
+   },
+   "ext_dig_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "calcn_r",
+     "calcn_r",
+     "toes_r",
+     "toes_r"
+    ],
+    "n_points": 6
+   },
+   "ext_hal_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "calcn_r",
+     "calcn_r",
+     "calcn_r",
+     "toes_r",
+     "toes_r"
+    ],
+    "n_points": 7
+   },
+   "soleus_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "calcn_r"
+    ],
+    "n_points": 2
+   },
+   "tib_post_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "calcn_r",
+     "calcn_r"
+    ],
+    "n_points": 4
+   },
+   "tib_ant_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "calcn_r"
+    ],
+    "n_points": 3
+   },
+   "per_brev_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "tibia_r",
+     "calcn_r",
+     "calcn_r"
+    ],
+    "n_points": 5
+   },
+   "per_long_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "tibia_r",
+     "calcn_r",
+     "calcn_r",
+     "calcn_r",
+     "calcn_r"
+    ],
+    "n_points": 7
+   },
+   "per_tert_r": {
+    "bodies_in_order": [
+     "tibia_r",
+     "tibia_r",
+     "calcn_r"
+    ],
+    "n_points": 3
+   },
+   "med_gas_r": {
+    "bodies_in_order": [
+     "femur_r",
+     "femur_r",
+     "calcn_r"
+    ],
+    "n_points": 3
+   },
+   "lat_gas_r": {
+    "bodies_in_order": [
+     "femur_r",
+     "femur_r",
+     "calcn_r"
+    ],
+    "n_points": 3
+   }
+  },
+  "no_wrap_objects": true,
+  "note": "All foot routes are plain PathPoint chains across tibia->talus->calcn->toes; verified maxErrorMm 0.0 at all six poses including knee sweep; ankle/subtalar/MTP stay neutral in these poses and their full transform chains are in the JSON (body_chains + bodyTransformsInGround per pose)."
+ },
+ "erector_spinae": {
+  "actuator_id": 1,
+  "robotbody_route": [
+   {
+    "name": "ercspn_r-P1",
+    "body": "pelvis",
+    "loc_m": [
+     -0.12208037026287633,
+     -0.050698246002197266,
+     0.078
+    ]
+   },
+   {
+    "name": "ercspn_r-P2",
+    "body": "pelvis",
+    "loc_m": [
+     -0.1575492306330236,
+     0.053542494166448934,
+     0.04142724163142175
+    ]
+   },
+   {
+    "name": "ercspn_r-P2_0",
+    "body": "torso",
+    "loc_m": [
+     -0.07233132903981333,
+     0.17180145329100446,
+     0.03138861662428826
+    ]
+   },
+   {
+    "name": "ercspn_r-P4",
+    "body": "torso",
+    "loc_m": [
+     -0.03884585571289063,
+     0.17867135621255603,
+     0.029389057308313597
+    ]
+   },
+   {
+    "name": "ercspn_r-P5",
+    "body": "torso",
+    "loc_m": [
+     0.005136274814605713,
+     0.027039732358251967,
+     0.04668191909790039
+    ]
+   },
+   {
+    "name": "ercspn_r-P6",
+    "body": "torso",
+    "loc_m": [
+     -0.03248118522687321,
+     0.026976865192352897,
+     0.048093875911501084
+    ]
+   },
+   {
+    "name": "ercspn_r-P7",
+    "body": "torso",
+    "loc_m": [
+     -0.07159359346416161,
+     0.17499889387347092,
+     0.047790577201266504
+    ]
+   },
+   {
+    "name": "ercspn_r-P8",
+    "body": "torso",
+    "loc_m": [
+     -0.04012581152714064,
+     0.1820602520073153,
+     0.044887611398927274
+    ]
+   },
+   {
+    "name": "ercspn_r-P9",
+    "body": "torso",
+    "loc_m": [
+     -0.01873196941823945,
+     0.048041785583269075,
+     0.059191221019852094
+    ]
+   }
+  ],
+  "stock_route": [
+   {
+    "name": "ercspn_r-P1",
+    "body": "pelvis",
+    "loc_m": [
+     -0.14,
+     0.0439,
+     0.0436
+    ]
+   },
+   {
+    "name": "ercspn_r-P2",
+    "body": "torso",
+    "loc_m": [
+     -0.055,
+     0.11,
+     0.0241
+    ]
+   }
+  ],
+  "P1_offset_mm": 102.24,
+  "seed_selected": "stock gait2392_simbody ercspn_r two-point route: P1 pelvis (-0.14, 0.0439, 0.0436) m, P2 torso (-0.055, 0.11, 0.0241) m, expressed in the robot model's pelvis/torso frames.",
+  "seed_reason": "The directive requires initialization from the original OpenSim coordinates and forbids preserving the manually wrapped robotbody loop as a transmission topology. The robotbody route is a 9-point zigzag loop (torso-frame y alternating 0.171/0.178/0.027/0.027/0.175/0.182/0.048 m) that predates the formal multi-parallel multi-sheave scheme; its pelvis P1 also differs from the stock P1 by 102.24 mm. The stock 2-point anatomical route is therefore the seed; the loop coordinates remain documented in extraction_robotbody.json for reference but must not seed the transmission.",
+  "seed_route_bone_distances": [
+   {
+    "attachment": "ercspn_r-P1",
+    "body": "pelvis",
+    "loc_m": [
+     -0.14,
+     0.0439,
+     0.0436
+    ],
+    "bone_distance_mm": 5.36,
+    "surface_cloud": "Sacrum"
+   },
+   {
+    "attachment": "ercspn_r-P2",
+    "body": "torso",
+    "loc_m": [
+     -0.055,
+     0.11,
+     0.0241
+    ],
+    "bone_distance_mm": 18.63,
+    "surface_cloud": "Spine"
+   }
+  ]
+ },
+ "pelvis_frame_z0_audit": {
+  "method": "every winner-route attachment (neutral pose, declared or neutral-evaluated location) transformed into the pelvis frame; hard constraint per handoff item 8 is sideSign*z >= 0 for the right side",
+  "min_z_pelvis_mm": 5.0,
+  "attachments_crossing_or_on_centerline": []
+ }
+}

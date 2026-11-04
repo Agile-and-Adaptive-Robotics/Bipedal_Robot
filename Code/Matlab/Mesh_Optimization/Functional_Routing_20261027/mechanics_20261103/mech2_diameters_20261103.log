@@ -1,0 +1,24 @@
+=== MechanCheck 2: sleeve diameter endpoints and laws ===
+
+--- bpaR.m law endpoints, 20 mm (own braid correction -0.073 deg) ---
+KMAX = 0.240: Dout at k=0 = 23.600 mm (rest), at k=KMAX = 34.774 mm (fully contracted)
+KMAX = 0.255: Dout at k=0 = 23.600 mm (rest), at k=KMAX = 35.261 mm (fully contracted)
+braid law reaches 38 mm Dout at k = 0.3509 (35.09% contraction)
+-> handoff endpoint pair 20 mm (rest) -> 38 mm (fully contracted) is NOT reproduced by the braid law as one relation: it gives 23.6 mm at rest (nominal 20 mm is the INNER tube diameter; Dout adds 2*1.8 mm membrane) and ~34.8 mm at 24%.
+-> repo instead carries a measured fully-inflated OUTER envelope as
+   a CONSTANT: 38.5 mm (buildKneeExtContext20mm.m:195-197) and
+   38.1 mm circle (buildGeoExclusion.m:69).
+
+--- 10 mm sleeve OWN calibration (bpaR 10 mm branch, -0.1 deg) ---
+KMAX = 0.165: 10 mm Dout at k=0 = 13.600 mm, at k=KMAX = 17.837 mm
+KMAX = 0.255: 10 mm Dout at k=0 = 13.600 mm, at k=KMAX = 19.441 mm
+10 mm inflated diameter at the corrected 16.5% contraction:
+  OWN 10 mm law  : 17.837 mm Dout
+  20 mm law scaled (NOT ALLOWED, shown for the delta only): 16.029 mm Dout
+  delta (would-be error if the 20 mm law were reused): -1.808 mm
+-> the 10 mm sleeve HAS its own calibration in the repo: the per-diameter Martens/Boblan braid-angle correction at bpaR.m:46-59 (10 mm: dtheta0 = -0.1 deg) and BPAdiameters.m:13. The 20 mm law is never required for 10 mm candidates.
+
+--- consumers in the campaign-reusable path ---
+predictKneeFlexor20mm.m:46,131 call bpaR(strain, ctx.Dia, ctx.KMAX) with ctx.KMAX = 0.255 (buildKneeFlexorContext20mm.m:141) -- the 20 mm
+knee-flexor context. For a 10 mm sleeve the same call site evaluates the 10 mm branch automatically (bpaR switches on round(d_mm)).
+=== MechanCheck 2 done ===

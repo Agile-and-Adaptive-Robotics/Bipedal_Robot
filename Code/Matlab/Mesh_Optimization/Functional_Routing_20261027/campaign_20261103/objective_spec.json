@@ -1,0 +1,64 @@
+{
+  "spec": "functional_routing_objective_stage1",
+  "created": "2026-11-04",
+  "status": "PLACEHOLDER-PENDING-BEN",
+  "status_note": "The cost function is NOT final (master directive item 8). These weights are DEFAULT placeholders so the machinery is iterable; every term and weight lives here and is re-read by fr_objective at every solve. Ben's final weights replace this file only.",
+  "read_at": "solve time (fresh jsondecode in fr_objective)",
+  "terms": [
+    {
+      "name": "torque_capacity_deficit",
+      "class": "primary_capacity",
+      "weight": 100.0,
+      "normalization": "sum_tau_target_abs (sum over the pose grid of |tau_target|)",
+      "definition": "sum over pose grid of max(0, |tau_target| - |tau_primary|), i.e. the SIGNED meet-or-beat deficit on the group's primary dof torque, per master item 8 (torque capacity primary)",
+      "sign_convention": "tau_primary and tau_target are signed about the same axis; deficit uses absolute magnitudes of the same sign convention (flexion targets met by flexion torque)"
+    },
+    {
+      "name": "usable_rom_shortfall",
+      "class": "primary_rom",
+      "weight": 40.0,
+      "normalization": "grid size (fraction of poses, so the term lives in [0,1])",
+      "definition": "fraction of pose-grid cells where |tau_primary| < |tau_target| (usable motion range primary, master item 8); report-only companion: fraction of cells feasible"
+    },
+    {
+      "name": "torque_shape",
+      "class": "shape",
+      "weight": 0.5,
+      "normalization": "mean over grid of (tau_primary - tau_target)^2 / mean(tau_target.^2)",
+      "definition": "small, explicitly weighted torque-shape penalty (master item 8): squared residual to the target curve. Defined SEPARATELY from the capacity terms; its small weight guarantees it cannot remove the deficit incentive. Never an off-axis torque term."
+    },
+    {
+      "name": "bpa_bpa_overlap_soft",
+      "class": "soft_penalty",
+      "weight": 2.0,
+      "normalization": "sleeve inflated diameter at rest per pose (depth reported in mm as well)",
+      "definition": "soft BPA-BPA interference (handoff item 9 / master item 8): summed overlap depth between the group's OWN parallel BPA sleeves from the pose-dependent inflated envelopes, physically simultaneous poses only. Depth and extent reported per pose."
+    }
+  ],
+  "forbidden": [
+    "off_axis_torque_penalty in ANY form, including inherited regularizers disguised as another term (master item 8; handoff item 9). Secondary joint torques are RECORDED in the evaluation report and never penalized.",
+    "any hard universal muscle-to-muscle clearance constraint (BPA-BPA overlap is soft; only the LAYERED retained-envelope obstacle between groups is hard per Ben's layering ruling)"
+  ],
+  "hard_constraints": [
+    {
+      "name": "centerline_z0",
+      "definition": "sideSign * z_pelvis >= 0 for EVERY candidate attachment point and mechanical mount anchor, transformed into the pelvis frame at EVERY evaluated pose (handoff item 8, verbatim). sideSign = +1 (right side of record). Sign flips / absolute values forbidden."
+    },
+    {
+      "name": "foot_occupancy_ban",
+      "definition": "No BPA body, end fitting, or tackle block may occupy the foot (talus_r, calcn_r, toes_r). Tendons may route through and terminate on the foot. Enforced by owning-body membership of sleeve/fitting/tackle anchors plus the fitting-tip position rule on the tibia."
+    },
+    {
+      "name": "required_tendon_spans",
+      "definition": "minFootTendonSpan_m and minKneeTendonSpan_m computed by fr_spans from the route geometry + hardware clearance over the full motion range (contract placeholders resolved by the implementer, master item 6). Tendon length must cover the maximum required span."
+    },
+    {
+      "name": "transmission_feasibility",
+      "definition": "no PulleyInfeasible or PulleySlack cell on the required grid; strain within [strain floor, KMAX]; gain <= tackle line parts; at most ONE tackle (BiPam_pulley2_20261022 documented limit); discrete config consistent (nBPA, series sections, physical sheave count, reeving kept distinct)."
+    },
+    {
+      "name": "rated_hardware_loads",
+      "definition": "tackle-block vector reaction R and any 180-deg reversing sheave radial load 2T must not exceed the assigned family's catalog capacity (S 400 N / M 667 N / L 3003 N). Catalog capacities are weight capacities whose dynamic interpretation is UNRESOLVED (handoff Open items); the assembly WLL is not assumed."
+    }
+  ]
+}

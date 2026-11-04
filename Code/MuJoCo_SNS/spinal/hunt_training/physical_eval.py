@@ -94,13 +94,21 @@ def standing_solver(model,data,Fmax,preload=True):
 R.solve_standing_activations=standing_solver
 def build(acts,dt,interleg):
     options=dict(use_timing_afferents=False if stage==1 else cfg.get('timing_afferents',True),axis_feedback=0. if stage==1 else cfg.get('axis_feedback',0.),balance=None if stage==1 else cfg.get('balance'),weights_directory=cfg.get('weights_directory',str(H/'runs/fitted')),timing_scale=cfg.get('timing_scale',1.),reciprocal_gain=cfg.get('reciprocal_gain',0.),commissural_gain=0. if stage==1 else cfg.get('commissural_gain',0.),biarticular_pair_gain=cfg.get('biarticular_pair_gain',0.))
+    if cfg.get('backend','sparse')not in ('sparse','native','compact'):raise ValueError('Unknown neural backend')
     if 'hip_abduction_goal' in cfg:options['hip_abduction_goal']=cfg['hip_abduction_goal']
     options['cross_contact_gain']=cfg.get('cross_contact_gain',0.)
     options['commissural_e_gain']=0. if stage==1 else cfg.get('commissural_e_gain',0.)
     options['ipsilateral_heel_reset_gain']=0. if stage==1 else cfg.get('ipsilateral_heel_reset_gain',0.)
     options['bilateral_midline_drive']=cfg.get('bilateral_midline_drive',False)
     options['learn_reciprocal']=cfg.get('learn_reciprocal',False)
-    n=C.build(acts,dt=dt,options=options)
+    # Select the opt-in implementation before install() builds mutable edge
+    # caches. Keep the provenance-locked controller.py and old profiles intact.
+    original_sparse_constructor=C.SparsePairwiseForward
+    if cfg.get('backend')=='compact':
+        from compact_pairwise_eval import CompactPairwiseForward
+        C.SparsePairwiseForward=CompactPairwiseForward
+    try:n=C.build(acts,dt=dt,options=options)
+    finally:C.SparsePairwiseForward=original_sparse_constructor
     trace_indices=np.array([n.idx[cell] for cell in trace_cells],dtype=int)
     C.P.G['contact_onset']=cfg.get('contact_onset',0.)
     if cfg.get('backend','sparse')=='native':n.compiled.forward=n.compiled.c.forward

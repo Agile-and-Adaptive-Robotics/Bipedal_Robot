@@ -31,11 +31,16 @@ def sparse_current_snapshot(network,indices,backend=None):
  and the measured update closure are therefore required, not just class labels.
  """
  if backend is None:return dict(status=0,available=False,fields=None)
- if backend!='sparse':return dict(status=2,available=False,fields=None)
+ if backend not in ('sparse','compact'):return dict(status=2,available=False,fields=None)
  from sparse_pairwise_eval import SparsePairwiseForward
+ expected_forward=SparsePairwiseForward.forward
+ if backend=='compact':
+  from compact_pairwise_eval import CompactPairwiseForward
+  expected_forward=CompactPairwiseForward.forward
  w=network.compiled;forward=w.forward;forward_scope='direct_sparse_forward'
+ if backend=='compact':forward_scope='direct_compact_forward'
  def actual_sparse_binding(method):
-  return getattr(method,'__self__',None)is w and getattr(method,'__func__',None)is SparsePairwiseForward.forward
+  return getattr(method,'__self__',None)is w and getattr(method,'__func__',None)is expected_forward
  recognized=actual_sparse_binding(forward)
  if isinstance(w,SparsePairwiseForward)and not recognized and getattr(forward,'__closure__',None):
   from swing_diagnostics import SwingDiagnostics
@@ -168,7 +173,7 @@ class AlignedCapture:
     self.current_status=np.zeros(self.capacity,dtype=np.uint8)
     self.metadata['current_telemetry']={
      'schema':'aarl_optional_actual_sparse_currents_v1','status_codes':SPARSE_CURRENT_STATUS,
-     'source':'Last actual SparsePairwiseForward i_app and sums with actual V_last; configured sparse backend only.',
+     'source':'Last actual configured sparse/compact i_app and sums with actual V_last; exact forward binding and update closure checked.',
      'applied_current':'All actually mapped external inputs, including direct POST when present; not the separately logged stimulus.',
      'chemical_current':'sums_gE - V_last*sums_g from the last real sparse forward call.',
      'ionic_current':'Algebraic evaluation using actual last voltage and already-updated gates; no new gate/neural update.',

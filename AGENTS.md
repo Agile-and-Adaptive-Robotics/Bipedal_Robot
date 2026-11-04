@@ -203,8 +203,11 @@ machine, NOT staleness.
     **Results of record (2026-10-16/17 wean campaign, reports_20261016\):** HUMAN
     model: feedback re-tuned at drive scale 0.381 → kine **−145.07** (10+10 cycles,
     duty 0.71/0.65, basin 8/8; `wean_human\round8_best3.json`); wean ladder holds
-    bilateral stepping at EVERY drive scale down to **0.0** (8+11 cycles, −157.07 —
-    feedback-sustained, un-retuned config dies below 0.85); generalizes across Ong
+    bilateral stepping at EVERY supplementary hand-drive scale down to **0.0**
+    (8+11 cycles, −157.07; un-retuned config dies below 0.85). **Scope correction
+    2026-11-04:** `wean_tune_20261016.py` retains shared DRIVE=2.0773198435110425;
+    only the added left/right alpha/gamma channels are scaled. This is not zero
+    total descending drive or proof of feedback-only stepping. Generalizes across Ong
     references (−159.66 @ 0.75 m/s …); still in-place under the support rig, no
     forward progression; two lottery weights reported (toe_rge, phase_reset_f —
     removal does not degrade). ROBOT (W2L): L/R split drive + tuned feedback →
