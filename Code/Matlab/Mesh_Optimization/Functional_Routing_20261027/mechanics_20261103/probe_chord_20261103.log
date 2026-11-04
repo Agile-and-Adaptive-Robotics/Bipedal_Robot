@@ -1,0 +1,18 @@
+cell (i1,i2) | tau_obj | tau_deformed-arrays | tau_rigid-arrays | -T*FDchord | chord scale
+(21,21) |   -0.6363 |   -0.6363 |   -0.6363 |   -0.6363 | chord 0.3134 m
+(21, 5) |   -0.1276 |   -0.1276 |   -0.1276 |   -0.1276 | chord 0.3133 m
+(21,35) |   -1.0758 |   -1.0758 |   -1.0758 |   -1.0757 | chord 0.3137 m
+( 5,21) |   -0.2334 |   -0.2334 |   -0.2334 |   -0.2334 | chord 0.3134 m
+(35,21) |   -1.0203 |   -1.0203 |   -1.0203 |   -1.0203 | chord 0.3134 m
+
+max |tau_y| = 2.3481 N*m; FD eAbs = 3.1705e-05 N*m; equiv arm err = 4.352e-08 m; max Tline2 = 728.5 N
+crossing1: max |tau_z| = 221.8112 N*m; FD eAbs = 7.2898e-04 N*m; equiv arm err = 5.003e-07 m; max Tline1 = 1456.9 N
+crossing1 argmax cell (i1=40, i2=41):
+  tau_obj = -217.799791 | tau_rigid-triple = -217.799791 | -T*FDchord = -217.799062
+  5-point stencil check at that cell: {Index in position 1 exceeds array bounds. Index must not exceed 41.
+
+Error in probe_chord_20261103 (line 110)
+    - chord(ii1 + 2, jj1, 1)) / (12 * h1) * Tl1(ii1, jj1);
+      ^^^^^^^^^^^^^^^^^^^^^^
+} 
+ERROR: MATLAB error Exit Status: 0x00000001

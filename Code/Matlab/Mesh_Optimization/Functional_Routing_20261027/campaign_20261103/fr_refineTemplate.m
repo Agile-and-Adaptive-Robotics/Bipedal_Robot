@@ -1,0 +1,6 @@
+function ro = fr_refineTemplate()
+%FR_REFINETEMPLATE Fixed-schema per-group refinement result.
+ro = struct('name', '', 'mapId', NaN, 'verdict', 'pending', ...
+    'accepted', false, 'fPrev', NaN, 'fNew', NaN, 'envelope', [], ...
+    'design', [], 'info', []);
+end

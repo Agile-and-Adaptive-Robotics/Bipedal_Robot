@@ -1,0 +1,30 @@
+=== Reproduction: capability_v3_three_metric_20261027.csv, tib_ant_r (actuator 16) ===
+Target number of record: upd_M1_areashare = 100.0000 (upd_meetCells 25/25), updated winner config (nB,G) = (2,1), 20 mm.
+Machinery: Opt_run_BiPulley_survey2_20261023.m (survey2, FIX_SPEC_20261023 section 4) run in a scratch copy at
+  tmp/functional_routing_20261103/mech_repro/ (copy-and-relocate convention, Ben's original untouched).
+Disclosed mechanical edits to the COPY: resultsRoot (driver line 135) relocated to the scratch Results folder
+  so new dated mats do not land in the repo Results folder. Everything else verbatim; builder
+  biPulleySpecsFromMasters_20261023.m resolves the masters data of record via the repo-root walk (unchanged).
+Run: OPT2_SURVEY_RUN=1 OPT2_SURVEY_SITES=tib_ant_r, serial (no OPT2_SURVEY_PARALLEL), default budgets
+  (300 evals/muscle cap, 60 evals/rung, 10 min wall cap). Hard budget 25 min wall; ACTUAL elapsed = 33 s.
+
+Result vs record (fields from BiPulley_survey2_perMuscle_20261023.csv, row 16):
+  chosen config : (2,1)                          == recorded (2,1)
+  rest          : 0.268868 m                     == recorded 0.268868 m (bit-identical)
+  tendon        : 0.0890625 m                    == recorded 0.0890625 m (bit-identical)
+  meetPct       : 100.0000                       == recorded 100.0000 == capability CSV upd_M1 100.0000
+  activePct     : 100.0000                       == recorded 100.0000
+  evals         : 180                            == recorded 180
+  ladder        : (1,1)[14/20] -> (2,1)[25/25] -> (3,1)[25/25] CONV   == recorded chain, identical
+  winner mat    : tmp/functional_routing_20261103/mech_repro/Results/BiPulley_survey2_tib_ant_r_nB2_G1_20261103_235959.mat
+
+REPRODUCTION: PASS - the survey2 machinery reproduces the capability_v3 updated M1 (area-share) number
+for tib_ant_r exactly (100.0000, meetCells 25/25), with bit-identical design variables, eval count,
+ladder chain and stop reason. Delta vs the recorded value: 0.0.
+
+Console log: repro_tib_ant_r_20261103.log (same folder). Driver CSVs in the scratch folder:
+  tmp/functional_routing_20261103/mech_repro/BiPulley_survey2_perMuscle_20261023.csv
+  tmp/functional_routing_20261103/mech_repro/BiPulley_survey2_ladder_20261023.csv
+Caveat of record: this machinery sizes with kmax = 0.75*rest (survey2 line 439) -- the pre-handoff 25%
+limit; see mech3_contraction_20261103.log. The reproduction validates the MACHINERY's recorded number,
+not the corrected contraction limits.

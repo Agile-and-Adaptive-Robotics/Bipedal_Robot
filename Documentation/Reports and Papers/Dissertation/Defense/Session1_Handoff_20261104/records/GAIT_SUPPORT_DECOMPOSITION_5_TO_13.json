@@ -1,0 +1,105 @@
+{
+  "window_s": [
+    5.0,
+    13.0
+  ],
+  "boundary_float_tolerance_s": 1e-10,
+  "actual_sample_range_s": [
+    5.0,
+    13.000000000000002
+  ],
+  "samples": 4001,
+  "body_weight_N": 768.756726,
+  "frame": "x anterior,y superior,z right",
+  "sampling": "Actual post-physics capture; forces are the last solved physical interval ending at the stored state time. Means use all endpoint samples in5\u201313s, with1e-10s tolerance for binary floating-point boundary sums; original timestamps are unchanged. Time-weighted means use trapezoidal integration over the exact8s window.",
+  "support": {
+    "prescribed_superior": {
+      "mean_N": 307.89509039999996,
+      "mean_fraction_bodyweight": 0.4005104345584613,
+      "time_weighted_mean_N": 307.8950903999999,
+      "minimum_N": 307.8950903999999,
+      "maximum_N": 307.8950903999999
+    },
+    "restraint_superior_signed": {
+      "mean_N": 67.62993072928718,
+      "mean_fraction_bodyweight": 0.08797312393112927,
+      "time_weighted_mean_N": 67.59167537610192,
+      "minimum_N": -94.6705305360923,
+      "maximum_N": 345.80822684627606
+    },
+    "restraint_superior_upward_only": {
+      "mean_N": 72.43271963934438,
+      "mean_fraction_bodyweight": 0.09422059955979414,
+      "time_weighted_mean_N": 72.39566498338665,
+      "minimum_N": 0.0,
+      "maximum_N": 345.80822684627606
+    },
+    "restraint_superior_downward_only": {
+      "mean_N": -4.802788910057212,
+      "mean_fraction_bodyweight": -0.00624747562866489,
+      "time_weighted_mean_N": -4.803989607284727,
+      "minimum_N": -94.6705305360923,
+      "maximum_N": 0.0
+    },
+    "net_external_superior": {
+      "mean_N": 375.5250211292871,
+      "mean_fraction_bodyweight": 0.4884835584895905,
+      "time_weighted_mean_N": 375.48676577610183,
+      "minimum_N": 213.2245598639076,
+      "maximum_N": 653.7033172462759
+    },
+    "total_upward_external": {
+      "mean_N": 380.32781003934434,
+      "mean_fraction_bodyweight": 0.4947310341182555,
+      "time_weighted_mean_N": 380.2907553833866,
+      "minimum_N": 307.8950903999999,
+      "maximum_N": 653.7033172462759
+    },
+    "feet_superior_total": {
+      "mean_N": 393.1028137776855,
+      "mean_fraction_bodyweight": 0.511348779766885,
+      "time_weighted_mean_N": 393.1398865469765,
+      "minimum_N": 36.00397054048719,
+      "maximum_N": 1642.4509419355654
+    }
+  },
+  "horizontal": {
+    "restraint": {
+      "mean_anterior_N": -102.69024627586796,
+      "mean_right_N": 5.133553091722471,
+      "rms_magnitude_N": 115.5608919082438,
+      "p95_magnitude_N": 167.82063387228555,
+      "maximum_magnitude_N": 220.9134074074226,
+      "rms_fraction_bodyweight": 0.15032179621963243
+    },
+    "right_foot_GRF": {
+      "mean_anterior_N": 47.98145613431761,
+      "mean_right_N": -19.975090946586892,
+      "rms_magnitude_N": 84.59965569524141,
+      "p95_magnitude_N": 138.870319806002,
+      "maximum_magnitude_N": 1213.1295481463958,
+      "rms_fraction_bodyweight": 0.11004736977773306
+    },
+    "left_foot_GRF": {
+      "mean_anterior_N": 53.549776135956286,
+      "mean_right_N": 14.986883555605122,
+      "rms_magnitude_N": 87.22664475845325,
+      "p95_magnitude_N": 137.5173376644631,
+      "maximum_magnitude_N": 1300.7074484777613,
+      "rms_fraction_bodyweight": 0.11346456142544795
+    },
+    "total_foot_GRF": {
+      "mean_anterior_N": 101.5312322702739,
+      "mean_right_N": -4.98820739098177,
+      "rms_magnitude_N": 121.97402896488944,
+      "p95_magnitude_N": 154.7501075080688,
+      "maximum_magnitude_N": 1422.4897669720872,
+      "rms_fraction_bodyweight": 0.15866401533752492
+    }
+  },
+  "prescribed_coefficient": 0.4,
+  "prescribed_reference": "Legacy source applies coefficient*model.body_mass.sum()*9.81. The measured force above is normalized independently by pelvis-subtree bodyweight; do not equate the coefficient to bodyweight percentage.",
+  "trace_sha256": "8617fd0db5083efbb7b7d224182eb0c06cfdc0bb99918d73222dc2eb13dee502",
+  "compiled_model_sha256": "6cd0dca1adddb64be3f7711abda9a500b4ec5a254d081ae747997664c183476a",
+  "physics_steps": 0
+}

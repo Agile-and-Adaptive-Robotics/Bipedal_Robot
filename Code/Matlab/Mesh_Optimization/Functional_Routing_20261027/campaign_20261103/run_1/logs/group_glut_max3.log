@@ -1,0 +1,21 @@
+=== pass1 rigid | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
+FAILED glut_max3 rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+=== pass1 compliant | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE glut_max3 compliant: fSeed 2410.5043 -> fBest 130.3947 (obj 130.3947, violEff 0.00e+00) | capsules(pose1) 3 | 104.8 s
+REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 04-Nov-2026 12:11:41 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) glut_max3 rigid: fSeed 1593.0749 -> fBest 431.5850 (obj 184.8766, violEff 2.47e-02) | capsules(pose1) 3 | 93.7 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.467e-02 (dimensional 2.477e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME skip (feasible checkpoint): compliant f 130.3947
+REFINE skipped: no rigid checkpoint to refine
+RESUME glut_max3 rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:29:40 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) glut_max3 rigid: fSeed 1673.1079 -> fBest 537.5527 (obj 150.9503, violEff 3.87e-02) | capsules(pose1) 3 | 57.0 s | TOP VIOLATOR retained_rigid_envelopes: normalized 3.866e-02 (dimensional 3.876e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME skip (feasible checkpoint): compliant f 130.3947
+REFINE1 glut_max3: f 537.5527 -> 3890.9750 (rejected, others 26, 16.8 s)
+RESUME glut_max3 rigid: sizing config changed (ckpt missing vs current 20|4|L|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) glut_max3 rigid: fSeed 1575.4562 -> fBest 1571.9646 (obj 164.6672, violEff 1.41e-01) | capsules(pose1) 3 | 86.0 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.111e-01 (dimensional 1.111e-01 fraction of cells, tol 1.0e-12)
+RESUME glut_max3 compliant: sizing config changed (ckpt missing vs current 20|4|L|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:55:42 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) glut_max3 compliant: fSeed 2625.1911 -> fBest 387.7977 (obj 181.8183, violEff 2.06e-02) | capsules(pose1) 3 | 84.1 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.060e-02 (dimensional 2.070e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE1 glut_max3: f 1571.9646 -> 1634.0376 (rejected, others 26, 18.1 s)

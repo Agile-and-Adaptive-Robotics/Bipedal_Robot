@@ -1,0 +1,37 @@
+=== MechanCheck 6: adopted Xi0-Xi3 context (rows 77 / 32) ===
+
+[Flexor] load minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat
+         resolved from: D:\GitHub\Bipedal_Robot\Testing_Data\2022_02_Festo\minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat
+         xCols = [4 5 6]
+         pick = 77; Xi0 = 0.00393737 m, Xi1 = 39978.7 N/m, Xi2 = 14733.8 N/m
+         Xi3 from minimizeExt10mmX3_results_20260920_flxr77.mat (pick 32, xCols(4) = 8): Xi3 = 0.158289
+
+[Extensor] load minimizeExt10mmX3_results_20260920_flxr77.mat
+           resolved from: D:\GitHub\Bipedal_Robot\Testing_Data\2022_02_Festo\minimizeExt10mmX3_results_20260920_flxr77.mat
+           xCols = [5 6 7 8]
+           pick = 32; Xi0 = -0.00637802 m, Xi1 = 39978.7 N/m, Xi2 = 14733.8 N/m, Xi3 = 0.158289
+
+[Cross-check] records of record minimizeFlxPin10_results.mat (row 77) / minimizeExt10mmX3_results.mat (row 32), LOCKSRC / PICK fields:
+  flexor  row 77: Xi0 = 0.00393737, Xi1 = 39978.7, Xi2 = 14733.8
+  identical to builder flexor Xi0/Xi1/Xi2: PASS
+  extensor row 32: Xi0 = -0.00637802, Xi1 = 39978.7, Xi2 = 14733.8, Xi3 = 0.158289
+  identical to builder extensor Xi0/Xi1/Xi2/Xi3: PASS
+
+[Builders] running the real context builders end to end...
+The algorithm will be calculating Torque at 100 different joint positions.
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+  buildKneeFlexorContext20mm: OK. ctx.Xi0 = 0.00393737, ctx.Xi1 = 39978.7, ctx.Xi2 = 14733.8, ctx.Xi3 = 0.158289, ctx.KMAX = 0.255
+  builder Xi values match the replicated load: PASS
+The algorithm will be calculating Torque at 100 different joint positions.
+Initial tendon = 0.040000 m
+Initial geometry-dependent tendon maximum = 0.059648 m
+  buildKneeExtContext20mm: OK. ctx.Xi0 = -0.00637802, ctx.Xi1 = 39978.7, ctx.Xi2 = 14733.8, ctx.Xi3 = 0.158289, ctx.KMAX = 0.255
+  builder Xi values match the replicated load: PASS
+
+[Xi4] contract: Xi0-Xi3 only; Xi4 must NOT appear anywhere.
+  ctx fields (flexor): T_Pam, T_Pam_inv, T_ICR_t1, T_t1_ICR, T_t1_f, T_f_t1, phi, phiD, pos, N, Name, CrossPoint, Dia, fitting, bpaRadiusMode, geo, wraps, BPAcount, wrapPointT1XY, wrapBendRadius, wrapAngleToleranceD, extensionAngleD, idxExtension, humanAngleD, humanTorque, humanTorqueAbs, targetPressure, Pbins, KMAX, maxRelStrain, minStrain, requiredTorqueMargin, offAxisPenaltyWeight, wrapReleasePenaltyWeight, torqueScale, bpa2AnchorWeight, bpa2AnchorNorm, bpa2TargetP1, bpa2TargetP2, Xi0, Xi1, Xi2, Xi3, x0, lb, ub, originalP1, originalPEnd, originalRest, originalTendon, originalWraps, originalTorqueX, originalTorqueY, offAxisTorqueScaleX, offAxisTorqueScaleY
+  ctx fields (extensor): T_Pam, T_Pam_inv, T_ICR_t1, T_t1_ICR, T_t1_f, T_f_t1, phi, phiD, pos, N, Name, CrossPoint, routeRows, femurRows, t1Rows, Dia, BPAcount, T, t1toICR, fitting, wraps, idxMaxFlex, humanAngleD, targetName, humanTorque, humanTorqueAbs, torqueScale, targetPressure, Pbins, KMAX, maxRelStrain, minStrain, requiredTorqueMargin, Xi0, Xi1, Xi2, Xi3, routeSeed, geo, x0, lb, ub, initialRawLocation, initialLocation, initialLmt0, initialMaxLmt0, initialIdxMaxLmt0, initialMaxLmtAngleD, initialRest0, initialTendon0, initialTendonMax
+  Xi4 present in either context: PASS
+  (repo-wide grep for Xi4 in campaign .m code: run separately in the shell log)
+=== MechanCheck 6 done ===

@@ -1,0 +1,207 @@
+{
+ "generated": "2026-11-04 (easteregg2, task 1 packaging build)",
+ "method": [
+  "CAD pieces: ah001_cad_meshes split meshes (build_ah001.py localize_mesh), vertices already in robot body frames; body frames ISB (x anterior, y superior, z right) at the pelvis datum (AGENTS.md 2026-10-27 ruling; build_ah001.py cad_to_isb normalizes through the pelvis part 02_01_PE_ datum)",
+  "robot joint anchors = CAD anchors (build_ah001.py uses the audit joint anchor_a; MuJoCo body offsets = the anchor deltas)",
+  "OpenSim neutral transforms parsed from gait2392_robotbody.osim and validated EXACTLY (max|dT| < 1e-9) against geometry_20261103/extraction_robotbody.json bodyTransformsInGround.neutral",
+  "registration anchor: align the HIP centers (translate(hipOS - hipR)); pelvis frames both ISB so rotations are identity; knee/ankle mismatches are then measured, not absorbed",
+  "robot knee state vs OpenSim knee_angle_r: four-bar solved for (theta_back, theta_front) at each sampled theta_shank; flexion mapping theta_shank(kappa) = sFlex*(kappa*-1 - flex0) verified by reconstructing the femur/shank axis angle"
+ ],
+ "registration_errors_mm": {
+  "hip": 26.659615166109564,
+  "hip_definition": "robot hip ball (MuJoCo thigh_r offset = CAD knob-pin anchor) vs OpenSim hip_r pelvis_offset",
+  "knee": 86.96563599467916,
+  "knee_definition": "robot KB pin (four-bar knee-bottom pivot = shank_r origin) carried on the hip-aligned femur segment vs OpenSim knee center of record = the TIBIA BODY ORIGIN at neutral (gait2392 knee: rotation axis at the femur origin, knee-angle splines carry the tibia; both knee_r offsets are 0); residual AFTER hip alignment. Dominated by the SEGMENT SPLIT difference: the AH001 femur link (hip->KB pin) is longer and its shank (KB->foot) shorter than the OpenSim femur/tibia split; per-segment anchoring keeps each SDF piece correct while this number is the honest cross-model error",
+  "knee_station_residual_over_sweep_mm": {
+   "mean": 53.46227884981656,
+   "max": 86.96563599467916,
+   "at_-60deg": 53.54168071133631,
+   "note": "pose-dependent residual: robot four-bar KB pin vs OpenSim moving-pivot tibia origin, same kappa; the two knee KINEMATICS differ (splines vs four-bar) -- inherent to CAD mechanism + OpenSim routing, quoted not hidden"
+  },
+  "ankle_station": 88.80496105667557,
+  "ankle_definition": "robot foot_r origin = mesh-derived distal tibia end center (foot_geometry.py distal_center), welded-foot station vs OpenSim ankle_r location; the robot has NO ankle pin in this build (welded foot), so this is a station error, not a joint error"
+ },
+ "knee_axis_abs_misalign_deg": 0.0,
+ "shank_length_mm": {
+  "opensim": 430.0,
+  "robot_KB_to_foot": 324.33902542020286
+ },
+ "four_bar": {
+  "max_closure_residual_m": 4.441434166503682e-16,
+  "flexion_reconstruction_at_-60deg": 77.38897426287501,
+  "flexion_at_qpos0_deg": 22.39307593469057,
+  "flexion_at_qpos0_pin_axes_deg": 26.957140300491915,
+  "flexion_axis_note": "mesh-PCA long axes (CORRECTED_SCENE method) of record; the pin-based alternative differs by the anterior four-bar mount offset (~10 deg)"
+ },
+ "cross_checks_cloud_mm": {
+  "hipCenter_to_FemurCloud_mm": 19.60933310951701,
+  "kneeCenter_to_FemurCloud_mm": 3.4080806794985885,
+  "kneeCenter_to_TibiaCloud_mm": 30.312746906210922,
+  "ankleCenter_to_TibiaCloud_mm": 18.74799287923912,
+  "ankleCenter_to_TalusCloud_mm": 4.856693628385574
+ },
+ "cloud_uncertainty": {
+  "Spine": {
+   "frame": "torso",
+   "n": 5434,
+   "nn_mean_mm": 3.155568097275837,
+   "nn_median_mm": 3.1111655696643874,
+   "nn_max_mm": 11.830836530017647,
+   "note": "cloud-only body (no robot CAD part): nearest-cloud distance OVERestimates the true surface distance by up to the local NN spacing; treat as a conservative clearance bound"
+  },
+  "Pelvis_R": {
+   "frame": "pelvis",
+   "n": 125,
+   "nn_mean_mm": 11.606598380247137,
+   "nn_median_mm": 11.130826069973425,
+   "nn_max_mm": 28.131415517175814,
+   "note": "cloud-only body (no robot CAD part): nearest-cloud distance OVERestimates the true surface distance by up to the local NN spacing; treat as a conservative clearance bound"
+  },
+  "Sacrum": {
+   "frame": "pelvis",
+   "n": 192,
+   "nn_mean_mm": 6.626869320089911,
+   "nn_median_mm": 6.555322261658354,
+   "nn_max_mm": 14.554621705836263,
+   "note": "cloud-only body (no robot CAD part): nearest-cloud distance OVERestimates the true surface distance by up to the local NN spacing; treat as a conservative clearance bound"
+  },
+  "Talus": {
+   "frame": "talus_r",
+   "n": 99,
+   "nn_mean_mm": 4.8647432215811905,
+   "nn_median_mm": 4.868297957192022,
+   "nn_max_mm": 7.76936245775675,
+   "note": "cloud-only body (no robot CAD part): nearest-cloud distance OVERestimates the true surface distance by up to the local NN spacing; treat as a conservative clearance bound"
+  },
+  "Calcaneus": {
+   "frame": "calcn_r",
+   "n": 1000,
+   "nn_mean_mm": 3.449644836949034,
+   "nn_median_mm": 3.246031068837713,
+   "nn_max_mm": 9.182522638142528,
+   "note": "cloud-only body (no robot CAD part): nearest-cloud distance OVERestimates the true surface distance by up to the local NN spacing; treat as a conservative clearance bound"
+  },
+  "Toes": {
+   "frame": "toes_r",
+   "n": 958,
+   "nn_mean_mm": 1.8712301363081503,
+   "nn_median_mm": 1.7345174331983337,
+   "nn_max_mm": 5.90721524916775,
+   "note": "cloud-only body (no robot CAD part): nearest-cloud distance OVERestimates the true surface distance by up to the local NN spacing; treat as a conservative clearance bound"
+  }
+ },
+ "sdf": {
+  "pelvis": {
+   "tris": 447300,
+   "grid": [
+    81,
+    91,
+    110
+   ],
+   "voxel_m": 0.003,
+   "vertex_abs_max_mm": 3.7644070107489824,
+   "vertex_abs_mean_mm": 0.5473748897202313,
+   "near_surface_parity_agreement": 0.5916666666666667,
+   "shell_parity_agreement": 0.8616666666666667,
+   "inside_frac": 0.09468062801396135,
+   "pieces": [
+    "pelvis_00",
+    "pelvis_01",
+    "pelvis_02"
+   ]
+  },
+  "thigh_r": {
+   "tris": 193300,
+   "grid": [
+    54,
+    225,
+    64
+   ],
+   "voxel_m": 0.0025,
+   "vertex_abs_max_mm": 3.0850765760987997,
+   "vertex_abs_mean_mm": 0.42737205512821674,
+   "near_surface_parity_agreement": 0.7233333333333334,
+   "shell_parity_agreement": 0.9033333333333333,
+   "inside_frac": 0.06562114197530865,
+   "pieces": [
+    "thigh_r_00",
+    "thigh_r_01"
+   ]
+  },
+  "back_r": {
+   "tris": 6928,
+   "grid": [
+    47,
+    40,
+    37
+   ],
+   "voxel_m": 0.0025,
+   "vertex_abs_max_mm": 1.9209800520911813,
+   "vertex_abs_mean_mm": 0.34216116182506084,
+   "near_surface_parity_agreement": 0.9058333333333334,
+   "shell_parity_agreement": 0.6516666666666666,
+   "inside_frac": 0.10644048303622772,
+   "pieces": [
+    "back_r_00"
+   ]
+  },
+  "front_r": {
+   "tris": 6920,
+   "grid": [
+    37,
+    51,
+    37
+   ],
+   "voxel_m": 0.0025,
+   "vertex_abs_max_mm": 2.8797294944524765,
+   "vertex_abs_mean_mm": 0.3238189092371613,
+   "near_surface_parity_agreement": 0.8858333333333334,
+   "shell_parity_agreement": 0.7433333333333333,
+   "inside_frac": 0.09421504175081281,
+   "pieces": [
+    "front_r_00"
+   ]
+  },
+  "shank_r": {
+   "tris": 61414,
+   "grid": [
+    87,
+    161,
+    55
+   ],
+   "voxel_m": 0.0025,
+   "vertex_abs_max_mm": 3.1839455477893353,
+   "vertex_abs_mean_mm": 0.48334230086766183,
+   "near_surface_parity_agreement": 0.8216666666666667,
+   "shell_parity_agreement": 0.8216666666666667,
+   "inside_frac": 0.07646566327225997,
+   "pieces": [
+    "shank_r_00"
+   ]
+  },
+  "foot_r": {
+   "tris": 108002,
+   "grid": [
+    107,
+    55,
+    56
+   ],
+   "voxel_m": 0.003,
+   "vertex_abs_max_mm": 3.5984888672828674,
+   "vertex_abs_mean_mm": 0.7658636313863099,
+   "near_surface_parity_agreement": 0.7683333333333333,
+   "shell_parity_agreement": 0.7383333333333333,
+   "inside_frac": 0.1014018691588785,
+   "pieces": [
+    "foot_r_00"
+   ]
+  }
+ },
+ "uncertainty_rule": "Attachment searches may use this model for clearance, but a large attachment excursion justified by uncertain registration is FORBIDDEN: the campaign patch bounds stay anatomically tight (surface patch radius + mount standoff in mm, fr_patch/fr_setup conventions).",
+ "limitations": [
+  "cloud-only bodies (Spine, Pelvis_R, Sacrum, Talus, Calcaneus, Toes): sparse-sample distance, conservative; NN bounds recorded per cloud",
+  "robot hip is a BALL joint mapped by the OpenSim hip axes sequence (exact for the OpenSim joint model; the physical robot hip has the same axes at its zero pose, both ISB)",
+  "the SDF sign uses the closest-triangle normal with a ray-parity consistency check on the near-surface shell (agreement recorded per body)",
+  "pelvis/foot grids at 3 mm voxels, others 2.5 mm; SDF clamped at +/-30 mm; queries outside the grid return +clamp (conservative for clearance)"
+ ]
+}

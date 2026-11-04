@@ -1,0 +1,25 @@
+=== MechanCheck 1: maxBPAforce at 620 kPa, L0 = 450 mm ===
+Source: Code/Matlab/Functions/maxBPAforce.m
+  10 mm branch (lines 39-48): z = y*(a1*atan(a2*(x-0.0075)*y)), a1 = 0.4895 N/kPa, a2 = 0.03068 1/(kPa*m)
+  20 mm branch (lines 50-59): z = y*(a1*atan(a2*(x-0.0075)*y)), a1 = 1.4877 N/kPa, a2 = 0.0248 1/(kPa*m)
+
+10 mm:  atan argument = 0.03068*(0.45-0.0075)*620 = 8.417058
+        atan(arg) = 1.452544 rad
+        hand-substituted: 620*0.4895*atan(arg) = 440.8327 N
+        maxBPAforce(0.45,10,620)            = 440.8327 N
+        handoff expects ~441 N -> abs diff 0.1673 N (0.038%)
+
+20 mm:  atan argument = 0.0248*(0.45-0.0075)*620 = 6.803880
+        atan(arg) = 1.424866 rad
+        hand-substituted: 620*1.4877*atan(arg) = 1314.2595 N
+        maxBPAforce(0.45,20,620)            = 1314.2595 N
+        handoff expects ~1314 N -> abs diff 0.2595 N (0.020%)
+
+function-vs-hand-equation max abs diff: 0.000e+00 N (must be 0)
+NOTE: these are ZERO-contraction capacities (handoff line 32); the sweep force falls with contraction via festo4.
+
+Handoff example inputs (row 5):
+  3 x 20 mm bundle at 450 mm Fmax = 3942.78 N
+  G=2 ideal shared cable  T = 3*F20/2 = 1971.39 N (handoff ~1971 N)
+  180-deg reversing sheave R = 2*T     = 3942.78 N (handoff ~3942 N)
+=== MechanCheck 1 done ===

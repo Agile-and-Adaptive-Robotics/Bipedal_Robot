@@ -1,0 +1,878 @@
+{
+  "contract": "functional_routing_targets_27_corrected",
+  "created": "2026-11-03",
+  "author": "Target builder workflow (corrected target contract; handoff items 1-9 supersede the master's all-20-mm prompt)",
+  "machine": "easteregg2",
+  "sources": {
+    "stock_human_model": "Solid_Models/OpenSim/Gait2392_Robotbody/gait2392_simbody.osim",
+    "actuator_map": "Code/Matlab/Mesh_Optimization/Routing27_v2/actuator_map_27.json",
+    "force_screen_csv": "Neuromechanical_Models/AH001_Simscape_Repair/packaging/hardware/bpa_force_screen.csv",
+    "force_screen_provenance": "Neuromechanical_Models/AH001_Simscape_Repair/packaging/hardware/force_screen_provenance.json",
+    "fmax_law": "Code/Matlab/Functions/maxBPAforce.m (620 kPa)",
+    "handoff": "Code/Matlab/Mesh_Optimization/Functional_Routing_20261027/HARDWARE_AND_ZCODE_HANDOFF.md items 1-10",
+    "master_directive": "Code/Matlab/Mesh_Optimization/Functional_Routing_20261027/MASTER_DIRECTIVE_20261103.md (item 8 superseded context)",
+    "xi_builders": [
+      "Code/Matlab/Mesh_Optimization/buildKneeFlexorContext20mm.m (pick 77)",
+      "Code/Matlab/Mesh_Optimization/buildKneeExtContext20mm.m (pick 32)"
+    ],
+    "xi_mats_of_record": [
+      "Testing_Data/2022_02_Festo/minimizeFlxPin10_results.mat (row 77)",
+      "Testing_Data/2022_02_Festo/minimizeExt10mmX3_results.mat (row 32)"
+    ],
+    "verification_artifacts": [
+      "tmp/functional_routing_20261103/targets/stock_model_muscles.json",
+      "tmp/functional_routing_20261103/targets/screen_crosscheck_20261103.json",
+      "tmp/functional_routing_20261103/targets/verify_xi_picks_20261103.m",
+      "tmp/functional_routing_20261103/targets/crosscheck_screen_20261103.py"
+    ]
+  },
+  "glutealConsequence": "The exploratory 3-actuator gluteal compartment split would replace one target group with three, changing the campaign from 27 groups to 29. It is NOT approved by this contract (handoff item 6); the aggregate nine-compartment glut_max3 target (4867 N stock group MIF) remains the baseline. Adopting the split later would require a new, explicit approval and a re-derivation of the layer schedule and group count downstream.",
+  "layerOrder": {
+    "basis": "Starts from MASTER_DIRECTIVE_20261103.md item 5 provisional order. One documented adjustment, grounded in handoff item 7 (not a layering-table result): psoas (27) and iliacus (26) are solved as ONE coupled junction pair at the head of the trunk/deep-hip region because they share an attachment/load-transfer junction. The geometry extraction's layering table was NOT available on easteregg2 on 2026-11-03 (searched Functional_Routing_20261027/, tmp/functional_routing_20261103/, and Neuromechanical_Models/AH001_Simscape_Repair/packaging/), so NO bone-distance adjustments from that table could be applied; see unresolved[0].",
+    "rule": "The deepest layer optimizes against bone; every later group treats ALL earlier layers' occupied envelopes as hard obstacles. After the first full pass, run coordinated refinement so an early poor choice cannot permanently block later muscles (master item 5).",
+    "trunk/deep hip": {
+      "order": [
+        27,
+        26,
+        1,
+        2,
+        3
+      ],
+      "notes": "psoas(27)+iliacus(26) coupled junction pair first; then erector spinae (1); internal oblique (2) BEFORE external oblique (3) per the provisional order."
+    },
+    "thigh": {
+      "order": [
+        11,
+        10,
+        25,
+        5,
+        4,
+        8,
+        9,
+        6,
+        7,
+        24
+      ],
+      "notes": "vas_int/combined vasti (11) and biceps femoris short head (10) first (deep, before superficial crossing groups); then adductor group (25), semimem (5), biceps femoris long head (4), rectus femoris (8), gracilis (9), sartorius (6), TFL (7); gluteal replacement group (24) last, as its local corridors permit."
+    },
+    "lower leg": {
+      "order": [
+        15,
+        20,
+        21,
+        17,
+        18,
+        12,
+        13,
+        14,
+        16,
+        22,
+        23,
+        19
+      ],
+      "notes": "Posterior deep corridor first: tib_post (15), flex_dig (20), flex_hal (21). Lateral corridor: per_brev (17) BEFORE per_long (18). Superficial posterior: soleus (12) before med_gas (13)/lat_gas (14). Anterior corridor: tib_ant (16), ext_dig (22), ext_hal (23), per_tert (19) placed in their appropriate anterior/lateral corridors; corridor separation makes some cross-corridor pairs order-independent - resolve with the (missing) layering table."
+    }
+  },
+  "centerlineConstraint": "No attachment point may cross the pelvis-frame centerline z=0 (HARDWARE_AND_ZCODE_HANDOFF.md item 8, verbatim requirement). Side ownership is assigned from the seed/model (right side, per actuator_map_27 'one_side': the right side is optimized and the left is its mirror). Every candidate attachment point AND mechanical mount anchor is transformed into the pelvis frame at every evaluated pose, and sideSign*z_pelvis >= 0 is enforced as a hard constraint. Sign flips and absolute coordinates are forbidden after optimization. Any seed lying on the centerline is resolved explicitly before search; it may never switch sides during optimization.",
+  "xiSource": "Xi0-Xi3 only; Xi4 is WAIVED (handoff item 9). Sources read 2026-11-03: (a) Code/Matlab/Mesh_Optimization/buildKneeFlexorContext20mm.m lines 178-202: pick=77 from minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat filtered_results with xCols=[4 5 6] -> Xi0=3.94 mm, Xi1=3.998e4 N/m, Xi2=1.473e4 N/m; Xi3 taken from the extensor flxr77 front row 32 (lines 188-190). (b) Code/Matlab/Mesh_Optimization/buildKneeExtContext20mm.m lines 162-183: pick=32 from minimizeExt10mmX3_results_20260920_flxr77.mat with xCols=[5 6 7 8], Xi1/Xi2 LOCKED to the flexor row-77 pair. (c) Verified this ask in MATLAB against the mats of record: minimizeFlxPin10_results.mat row 77 (xCols 4/5/6) = Xi0=0.00393737 m, Xi1=39978.7 N/m, Xi2=14733.8 N/m; minimizeExt10mmX3_results.mat row 32 (xCols 5/6/7/8) = Xi0=-0.00637802 m, Xi1=39978.7 N/m, Xi2=14733.8 N/m, Xi3=0.158289; lock-check flexor Xi1/Xi2 == extensor Xi1/Xi2 = TRUE (one shared pair across flexor and extensor, advisor requirement). These encode the dissertation Appendix C conventions: Xi0 = bracket offset/compliance length scale; Xi1/Xi2 = effective system-stiffness parameters (NOT literal bracket beam stiffness - AGENTS.md 2026-09-07 semantics), with the evaluator's mixed two-bracket convention (insertion/tibia bracket one-rotation pitch-only K=[X1,X2,X1], origin/hip bracket two-rotation K2=[X1,X1,X2], since 2026-09-13); Xi3 = wrapping-loss factor (dimensionless, flexor carry 0.158289). Xi1 direction assignment per bracket follows the configuration-dependent anisotropic table in Chapter 30/Appendix C; no fifth factor is invented or renamed.",
+  "limits": {
+    "contraction": {
+      "10mm": {
+        "max_contraction_pct": 16.5,
+        "Lmin": "0.835*L0"
+      },
+      "20mm": {
+        "max_contraction_pct": 24.0,
+        "Lmin": "0.76*L0"
+      },
+      "note": "Handoff item 2. No universal 25% contraction limit; flag extrapolation outside the experimental force-contraction domain."
+    },
+    "diameter_endpoints": {
+      "20mm": {
+        "resting_mm": 20.0,
+        "fully_contracted_mm": 38.0
+      },
+      "10mm": "Resting diameter 10 mm; inflated/fully-contracted diameter must come from the 10 mm sleeve's OWN calibration. NEVER apply the 20 mm diameter law to a 10 mm sleeve (handoff item 2). The 10 mm calibration was not located in this ask - unresolved[3].",
+      "note": "Fully inflated 20 mm Festo BPA diameter used for clearance geometry in the context builders is 38.5 mm (buildKneeExtContext20mm.m 'geo.bpaRadius = 0.0385/2'); the 38 mm endpoint above is the handoff's calibrated endpoint."
+    },
+    "restingLength": "Resting length excludes end fittings; packaging includes both fittings (master item 2).",
+    "offAxisTorquePenalty": "NONE (handoff item 9 / master item 8). Secondary crossed-DOF torques are recorded for inspection only and are never penalized, including inherited terms disguised as another regularizer. Structural mount reactions still matter for sizing and compliance; they are not off-axis torque penalties.",
+    "bpaBpaOverlap": "SOFT penalty (handoff item 9): BPA-BPA interference is a penalty, not a universal hard clearance constraint. Compute overlap from pose-dependent inflated envelopes, evaluate only physically simultaneous configurations, and report overlap depth and extent.",
+    "footOccupancy": "No BPA body, end fitting, or tackle block may occupy the foot (handoff item 9 / master item 6). Tendons may route through and terminate on the foot.",
+    "tendonSpanPlaceholders": {
+      "minFootTendonSpan_m": null,
+      "minFootTendonSpan_note": "PLACEHOLDER - implementer computes from geometry: minimum tendon/Bowden length for every foot-actuating route, from the required ankle-to-insertion routing and hardware clearance over the full ankle/subtalar/MTP motion range (master item 6). No arbitrary token tendon length that lets a sleeve extend onto the foot.",
+      "minKneeTendonSpan_m": null,
+      "minKneeTendonSpan_note": "PLACEHOLDER - implementer computes from geometry: minimum artificial-tendon/Bowden span needed across the knee over the robot knee range 0 to -120 deg (no hyperextension), packaging brackets, housing stops, ferrules, cable exits, articulation, and minimum bend radius through the sweep (master items 2 and 6). For long knee-crossing actuators consider pinned proximal and distal BPA sections with the central crossing carried by tendon/Bowden; initialize equal halves and parameterize any optimized split."
+    },
+    "rom": "Robot knee range 0 to -120 deg, no hyperextension; other coordinates per actuator_map_27 rom_table_deg."
+  },
+  "groups": [
+    {
+      "group": "ercspn",
+      "map_id": 1,
+      "master_name": "Erector Spinae",
+      "region": "trunk/deep hip",
+      "stockMuscles": [
+        "ercspn_r"
+      ],
+      "primaryDof": "lumbar_extension",
+      "targetDef": "Targets ercspn_r on their stock gait2392_simbody routes (meet-or-beat lumbar_extension torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 1).",
+      "mifN": 2500.0,
+      "sizing": "Seed 3x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(2500/1104.0). Resting-length seed L0=0.1733 m = longest sampled constituent path (ercspn_r; sampled over ['lumbar_extension', 'lumbar_bending', 'lumbar_rotation']). 10 mm screen FAILS: MIF 2500 N >= 0.5*Fmax10(L0) = 191.8 N (Fmax10=383.5 N, Fmax20=1104.0 N). The located bpa_force_screen.csv reports 5x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(2500/552.0)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.17326587649495356,
+        "L0_recomputed_this_ask_m": 0.17326587649495356,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 383.51587002001406,
+        "Fmax20_at_L0_N": 1104.00018149783,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 3,
+        "n20_csv_half_Fmax20_alternative": 5,
+        "per_muscle_Lmax_m": {
+          "ercspn_r": 0.17326587649495356
+        },
+        "master_actuator_mif_N_reference_only": 2500
+      }
+    },
+    {
+      "group": "intobl",
+      "map_id": 2,
+      "master_name": "Internal Oblique",
+      "region": "trunk/deep hip",
+      "stockMuscles": [
+        "intobl_r"
+      ],
+      "primaryDof": "lumbar_extension",
+      "targetDef": "Targets intobl_r on their stock gait2392_simbody routes (meet-or-beat lumbar_extension torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 2).",
+      "mifN": 900.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(900/1191.2). Resting-length seed L0=0.2342 m = longest sampled constituent path (intobl_r; sampled over ['lumbar_extension', 'lumbar_bending']). 10 mm screen FAILS: MIF 900 N >= 0.5*Fmax10(L0) = 203.8 N (Fmax10=407.6 N, Fmax20=1191.2 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(900/595.6)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.23423065424161385,
+        "L0_recomputed_this_ask_m": 0.24207951924430693,
+        "L0_grid_delta_m": 0.007848865002693078,
+        "Fmax10_at_L0_N": 407.57297442678276,
+        "Fmax20_at_L0_N": 1191.2018849618507,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "intobl_r": 0.24207951924430693
+        },
+        "master_actuator_mif_N_reference_only": 900
+      }
+    },
+    {
+      "group": "extobl",
+      "map_id": 3,
+      "master_name": "External Oblique",
+      "region": "trunk/deep hip",
+      "stockMuscles": [
+        "extobl_r"
+      ],
+      "primaryDof": "lumbar_extension",
+      "targetDef": "Targets extobl_r on their stock gait2392_simbody routes (meet-or-beat lumbar_extension torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 3).",
+      "mifN": 900.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(900/1248.9). Resting-length seed L0=0.3029 m = longest sampled constituent path (extobl_r; sampled over ['lumbar_extension', 'lumbar_bending']). 10 mm screen FAILS: MIF 900 N >= 0.5*Fmax10(L0) = 211.6 N (Fmax10=423.3 N, Fmax20=1248.9 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(900/624.5)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.30285424937469074,
+        "L0_recomputed_this_ask_m": 0.2980215049915501,
+        "L0_grid_delta_m": -0.00483274438314063,
+        "Fmax10_at_L0_N": 423.26092508355237,
+        "Fmax20_at_L0_N": 1248.9471124809363,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "extobl_r": 0.2980215049915501
+        },
+        "master_actuator_mif_N_reference_only": 900
+      }
+    },
+    {
+      "group": "bifemlh",
+      "map_id": 4,
+      "master_name": "Bicep Femoris, Long Head",
+      "region": "thigh",
+      "stockMuscles": [
+        "bifemlh_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Targets bifemlh_r on their stock gait2392_simbody routes (meet-or-beat knee_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 4).",
+      "mifN": 896.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(896/1332.5). Resting-length seed L0=0.5204 m = longest sampled constituent path (bifemlh_r; sampled over ['knee_angle_r', 'hip_flexion_r']). 10 mm screen FAILS: MIF 896 N >= 0.5*Fmax10(L0) = 222.9 N (Fmax10=445.7 N, Fmax20=1332.5 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(896/666.3)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.5204195430105126,
+        "L0_recomputed_this_ask_m": 0.5204195430105126,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 445.72294118706554,
+        "Fmax20_at_L0_N": 1332.5286567894636,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "bifemlh_r": 0.5204195430105126
+        },
+        "master_actuator_mif_N_reference_only": 896
+      }
+    },
+    {
+      "group": "semimem",
+      "map_id": 5,
+      "master_name": "Semimembranosus",
+      "region": "thigh",
+      "stockMuscles": [
+        "semimem_r",
+        "semiten_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Targets the summed SIGNED torques of semimem_r + semiten_r at each same configuration on their stock routes (handoff item 4); target curve = elementwise signed sum at each shared pose, not the sum of separate per-muscle peak torques.",
+      "mifN": 1698.0,
+      "sizing": "Seed 2x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(1698/1343.6). Resting-length seed L0=0.5748 m = longest sampled constituent path (semiten_r; sampled over ['knee_angle_r', 'hip_flexion_r']). 10 mm screen FAILS: MIF 1698 N >= 0.5*Fmax10(L0) = 224.3 N (Fmax10=448.7 N, Fmax20=1343.6 N). The located bpa_force_screen.csv reports 3x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(1698/671.8)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.5747789015358002,
+        "L0_recomputed_this_ask_m": 0.5747789015358002,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 448.6755530374494,
+        "Fmax20_at_L0_N": 1343.5746197101969,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 2,
+        "n20_csv_half_Fmax20_alternative": 3,
+        "per_muscle_Lmax_m": {
+          "semimem_r": 0.5028448242067864,
+          "semiten_r": 0.5747789015358002
+        },
+        "master_actuator_mif_N_reference_only": 1698
+      }
+    },
+    {
+      "group": "sar",
+      "map_id": 6,
+      "master_name": "Sartorius",
+      "region": "thigh",
+      "stockMuscles": [
+        "sar_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Targets sar_r on their stock gait2392_simbody routes (meet-or-beat knee_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 6).",
+      "mifN": 156.0,
+      "sizing": "Seed 1x nominal 10 mm BPA. Resting-length seed L0=0.5790 m = longest sampled constituent path (sar_r; sampled over ['knee_angle_r', 'hip_flexion_r']). Screen PASS (handoff item 1): MIF 156 N < 0.5*Fmax10(L0) = 224.4 N (Fmax10=448.9 N). INITIAL seed only, not optimized; cam and tackle effects excluded. L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.5789641092483041,
+        "L0_recomputed_this_ask_m": 0.5789641092483041,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 448.87979351329056,
+        "Fmax20_at_L0_N": 1344.3390980672548,
+        "ten_mm_screen_pass": true,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "sar_r": 0.5789641092483041
+        },
+        "master_actuator_mif_N_reference_only": 156
+      }
+    },
+    {
+      "group": "tfl",
+      "map_id": 7,
+      "master_name": "Tensor Fasciae Latae",
+      "region": "thigh",
+      "stockMuscles": [
+        "tfl_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Targets tfl_r on their stock gait2392_simbody routes (meet-or-beat knee_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 7).",
+      "mifN": 233.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(233/1342.9). Resting-length seed L0=0.5714 m = longest sampled constituent path (tfl_r; sampled over ['knee_angle_r', 'hip_flexion_r', 'hip_adduction_r']). 10 mm screen FAILS: MIF 233 N >= 0.5*Fmax10(L0) = 224.3 N (Fmax10=448.5 N, Fmax20=1342.9 N). The located bpa_force_screen.csv reports 1x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(233/671.5)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.5713695128959102,
+        "L0_recomputed_this_ask_m": 0.5713695128959102,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 448.50695122905466,
+        "Fmax20_at_L0_N": 1342.9435755754027,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "tfl_r": 0.5713695128959102
+        },
+        "master_actuator_mif_N_reference_only": 233
+      }
+    },
+    {
+      "group": "rect_fem",
+      "map_id": 8,
+      "master_name": "Rectus Femoris",
+      "region": "thigh",
+      "stockMuscles": [
+        "rect_fem_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Targets rect_fem_r on their stock gait2392_simbody routes (meet-or-beat knee_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 8).",
+      "mifN": 1169.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(1169/1327.4). Resting-length seed L0=0.4985 m = longest sampled constituent path (rect_fem_r; sampled over ['knee_angle_r', 'hip_flexion_r']). 10 mm screen FAILS: MIF 1169 N >= 0.5*Fmax10(L0) = 222.2 N (Fmax10=444.3 N, Fmax20=1327.4 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(1169/663.7)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.49850349800658356,
+        "L0_recomputed_this_ask_m": 0.5002488961603613,
+        "L0_grid_delta_m": 0.001745398153777722,
+        "Fmax10_at_L0_N": 444.3495866605718,
+        "Fmax20_at_L0_N": 1327.39467698862,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "rect_fem_r": 0.5002488961603613
+        },
+        "master_actuator_mif_N_reference_only": 1169
+      }
+    },
+    {
+      "group": "grac",
+      "map_id": 9,
+      "master_name": "Gracilis",
+      "region": "thigh",
+      "stockMuscles": [
+        "grac_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Targets grac_r on their stock gait2392_simbody routes (meet-or-beat knee_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 9).",
+      "mifN": 162.0,
+      "sizing": "Seed 1x nominal 10 mm BPA. Resting-length seed L0=0.5134 m = longest sampled constituent path (grac_r; sampled over ['knee_angle_r', 'hip_flexion_r']). Screen PASS (handoff item 1): MIF 162 N < 0.5*Fmax10(L0) = 222.6 N (Fmax10=445.3 N). INITIAL seed only, not optimized; cam and tackle effects excluded. L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.5134270317959392,
+        "L0_recomputed_this_ask_m": 0.49336203750333946,
+        "L0_grid_delta_m": -0.020064994292599725,
+        "Fmax10_at_L0_N": 445.29754644809253,
+        "Fmax20_at_L0_N": 1330.9381425900945,
+        "ten_mm_screen_pass": true,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "grac_r": 0.49336203750333946
+        },
+        "master_actuator_mif_N_reference_only": 162
+      }
+    },
+    {
+      "group": "bifemsh",
+      "map_id": 10,
+      "master_name": "Bicep Femoris, Short Head",
+      "region": "thigh",
+      "stockMuscles": [
+        "bifemsh_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Targets bifemsh_r on their stock gait2392_simbody routes (meet-or-beat knee_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 10).",
+      "mifN": 804.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(804/1203.6). Resting-length seed L0=0.2463 m = longest sampled constituent path (bifemsh_r; sampled over ['knee_angle_r']). 10 mm screen FAILS: MIF 804 N >= 0.5*Fmax10(L0) = 205.5 N (Fmax10=410.9 N, Fmax20=1203.6 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(804/601.8)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.24625075890103157,
+        "L0_recomputed_this_ask_m": 0.2462507589010316,
+        "L0_grid_delta_m": 2.7755575615628914e-17,
+        "Fmax10_at_L0_N": 410.94357022781446,
+        "Fmax20_at_L0_N": 1203.5561495001139,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "bifemsh_r": 0.2462507589010316
+        },
+        "master_actuator_mif_N_reference_only": 804
+      }
+    },
+    {
+      "group": "vas_int",
+      "map_id": 11,
+      "master_name": "Vastus Intermedius",
+      "region": "thigh",
+      "stockMuscles": [
+        "vas_int_r",
+        "vas_lat_r",
+        "vas_med_r"
+      ],
+      "primaryDof": "knee_angle_r",
+      "targetDef": "Replaces the combined knee-extension torque of vas_med_r + vas_lat_r + vas_int_r (stock gait2392_simbody routes). Target curve = elementwise SIGNED torque sum of the three constituents at each same pose (never the sum of separate per-muscle peaks; handoff Coarse-force-screen note). Expect several parallel 20 mm BPAs. Explore a cam-assisted transmission with terminal attachment at the patellar-tendon attachment on the tibia, or inferior to it within bounded surface patches; cam profile, pivot, cable contact, bracket, and insertion location are optimization variables. Do not use the current renderer's excessively anterior point as ground truth (handoff item 3).",
+      "mifN": 4530.0,
+      "sizing": "Seed 4x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(4530/1228.2). Resting-length seed L0=0.2742 m = longest sampled constituent path (vas_lat_r; sampled over ['knee_angle_r']). 10 mm screen FAILS: MIF 4530 N >= 0.5*Fmax10(L0) = 208.8 N (Fmax10=417.7 N, Fmax20=1228.2 N). The located bpa_force_screen.csv reports 8x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(4530/614.1)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.2742065168080493,
+        "L0_recomputed_this_ask_m": 0.2742065168080492,
+        "L0_grid_delta_m": -1.1102230246251565e-16,
+        "Fmax10_at_L0_N": 417.6558028432022,
+        "Fmax20_at_L0_N": 1228.2462180889781,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 4,
+        "n20_csv_half_Fmax20_alternative": 8,
+        "per_muscle_Lmax_m": {
+          "vas_int_r": 0.2570132285559771,
+          "vas_lat_r": 0.2742065168080492,
+          "vas_med_r": 0.24738490776632258
+        },
+        "master_actuator_mif_N_reference_only": 4530
+      }
+    },
+    {
+      "group": "soleus",
+      "map_id": 12,
+      "master_name": "Soleus",
+      "region": "lower leg",
+      "stockMuscles": [
+        "soleus_r"
+      ],
+      "primaryDof": "ankle_angle_r",
+      "targetDef": "Targets soleus_r on their stock gait2392_simbody routes (meet-or-beat ankle_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 12).",
+      "mifN": 3549.0,
+      "sizing": "Seed 3x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(3549/1251.0). Resting-length seed L0=0.3060 m = longest sampled constituent path (soleus_r; sampled over ['ankle_angle_r']). 10 mm screen FAILS: MIF 3549 N >= 0.5*Fmax10(L0) = 211.9 N (Fmax10=423.8 N, Fmax20=1251.0 N). The located bpa_force_screen.csv reports 6x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(3549/625.5)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.30602235205035944,
+        "L0_recomputed_this_ask_m": 0.30602235205035927,
+        "L0_grid_delta_m": -1.6653345369377348e-16,
+        "Fmax10_at_L0_N": 423.8167928923303,
+        "Fmax20_at_L0_N": 1251.0039131641236,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 3,
+        "n20_csv_half_Fmax20_alternative": 6,
+        "per_muscle_Lmax_m": {
+          "soleus_r": 0.30602235205035927
+        },
+        "master_actuator_mif_N_reference_only": 3549
+      }
+    },
+    {
+      "group": "med_gas",
+      "map_id": 13,
+      "master_name": "Medial Gastroocnemius",
+      "region": "lower leg",
+      "stockMuscles": [
+        "med_gas_r"
+      ],
+      "primaryDof": "ankle_angle_r",
+      "targetDef": "Targets med_gas_r on their stock gait2392_simbody routes (meet-or-beat ankle_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 13).",
+      "mifN": 1558.0,
+      "sizing": "Seed 2x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(1558/1318.9). Resting-length seed L0=0.4659 m = longest sampled constituent path (med_gas_r; sampled over ['ankle_angle_r', 'knee_angle_r']). 10 mm screen FAILS: MIF 1558 N >= 0.5*Fmax10(L0) = 221.0 N (Fmax10=442.1 N, Fmax20=1318.9 N). The located bpa_force_screen.csv reports 3x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(1558/659.4)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.46592030218696145,
+        "L0_recomputed_this_ask_m": 0.4659203021869614,
+        "L0_grid_delta_m": -5.551115123125783e-17,
+        "Fmax10_at_L0_N": 442.06801429597226,
+        "Fmax20_at_L0_N": 1318.871309877854,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 2,
+        "n20_csv_half_Fmax20_alternative": 3,
+        "per_muscle_Lmax_m": {
+          "med_gas_r": 0.4659203021869614
+        },
+        "master_actuator_mif_N_reference_only": 1558
+      }
+    },
+    {
+      "group": "lat_gas",
+      "map_id": 14,
+      "master_name": "Lateral Gastrocenemius",
+      "region": "lower leg",
+      "stockMuscles": [
+        "lat_gas_r"
+      ],
+      "primaryDof": "ankle_angle_r",
+      "targetDef": "Targets lat_gas_r on their stock gait2392_simbody routes (meet-or-beat ankle_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 14).",
+      "mifN": 683.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(683/1317.9). Resting-length seed L0=0.4625 m = longest sampled constituent path (lat_gas_r; sampled over ['ankle_angle_r', 'knee_angle_r']). 10 mm screen FAILS: MIF 683 N >= 0.5*Fmax10(L0) = 220.9 N (Fmax10=441.8 N, Fmax20=1317.9 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(683/659.0)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.46253021687328755,
+        "L0_recomputed_this_ask_m": 0.46253021687328755,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 441.8121042373776,
+        "Fmax20_at_L0_N": 1317.9157632845775,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "lat_gas_r": 0.46253021687328755
+        },
+        "master_actuator_mif_N_reference_only": 683
+      }
+    },
+    {
+      "group": "tib_post",
+      "map_id": 15,
+      "master_name": "Tibialis Posterior",
+      "region": "lower leg",
+      "stockMuscles": [
+        "tib_post_r"
+      ],
+      "primaryDof": "subtalar_angle_r",
+      "targetDef": "Targets tib_post_r on their stock gait2392_simbody routes (meet-or-beat subtalar_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 15).",
+      "mifN": 1588.0,
+      "sizing": "Seed 2x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(1588/1279.0). Resting-length seed L0=0.3566 m = longest sampled constituent path (tib_post_r; sampled over ['subtalar_angle_r', 'ankle_angle_r']). 10 mm screen FAILS: MIF 1588 N >= 0.5*Fmax10(L0) = 215.7 N (Fmax10=431.4 N, Fmax20=1279.0 N). The located bpa_force_screen.csv reports 3x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(1588/639.5)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.35658194278593597,
+        "L0_recomputed_this_ask_m": 0.35658194278593586,
+        "L0_grid_delta_m": -1.1102230246251565e-16,
+        "Fmax10_at_L0_N": 431.3562340271986,
+        "Fmax20_at_L0_N": 1278.96478297548,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 2,
+        "n20_csv_half_Fmax20_alternative": 3,
+        "per_muscle_Lmax_m": {
+          "tib_post_r": 0.35658194278593586
+        },
+        "master_actuator_mif_N_reference_only": 3549
+      }
+    },
+    {
+      "group": "tib_ant",
+      "map_id": 16,
+      "master_name": "Tibialis Posterior (duplicate name)",
+      "region": "lower leg",
+      "stockMuscles": [
+        "tib_ant_r"
+      ],
+      "primaryDof": "ankle_angle_r",
+      "targetDef": "Targets tib_ant_r on their stock gait2392_simbody routes (meet-or-beat ankle_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 16).",
+      "mifN": 905.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(905/1270.5). Resting-length seed L0=0.3397 m = longest sampled constituent path (tib_ant_r; sampled over ['ankle_angle_r', 'subtalar_angle_r']). 10 mm screen FAILS: MIF 905 N >= 0.5*Fmax10(L0) = 214.5 N (Fmax10=429.1 N, Fmax20=1270.5 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(905/635.3)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.33965144017581145,
+        "L0_recomputed_this_ask_m": 0.3396514401758114,
+        "L0_grid_delta_m": -5.551115123125783e-17,
+        "Fmax10_at_L0_N": 429.0807964595422,
+        "Fmax20_at_L0_N": 1270.5139968632773,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "tib_ant_r": 0.3396514401758114
+        },
+        "master_actuator_mif_N_reference_only": 905
+      }
+    },
+    {
+      "group": "per_brev",
+      "map_id": 17,
+      "master_name": "Peroneus Brevis",
+      "region": "lower leg",
+      "stockMuscles": [
+        "per_brev_r"
+      ],
+      "primaryDof": "subtalar_angle_r",
+      "targetDef": "Targets per_brev_r on their stock gait2392_simbody routes (meet-or-beat subtalar_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 17).",
+      "mifN": 435.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(435/1185.0). Resting-length seed L0=0.2287 m = longest sampled constituent path (per_brev_r; sampled over ['subtalar_angle_r', 'ankle_angle_r']). 10 mm screen FAILS: MIF 435 N >= 0.5*Fmax10(L0) = 202.9 N (Fmax10=405.9 N, Fmax20=1185.0 N). The located bpa_force_screen.csv reports 1x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(435/592.5)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.2286500890144912,
+        "L0_recomputed_this_ask_m": 0.22865008901449108,
+        "L0_grid_delta_m": -1.1102230246251565e-16,
+        "Fmax10_at_L0_N": 405.8900217766344,
+        "Fmax20_at_L0_N": 1185.044927118734,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "per_brev_r": 0.22865008901449108
+        },
+        "master_actuator_mif_N_reference_only": 435
+      }
+    },
+    {
+      "group": "per_long",
+      "map_id": 18,
+      "master_name": "Peroneus Longus",
+      "region": "lower leg",
+      "stockMuscles": [
+        "per_long_r"
+      ],
+      "primaryDof": "subtalar_angle_r",
+      "targetDef": "Targets per_long_r on their stock gait2392_simbody routes (meet-or-beat subtalar_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 18).",
+      "mifN": 943.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(943/1302.6). Resting-length seed L0=0.4142 m = longest sampled constituent path (per_long_r; sampled over ['subtalar_angle_r', 'ankle_angle_r']). 10 mm screen FAILS: MIF 943 N >= 0.5*Fmax10(L0) = 218.9 N (Fmax10=437.7 N, Fmax20=1302.6 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(943/651.3)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.4141634935687961,
+        "L0_recomputed_this_ask_m": 0.4141634935687959,
+        "L0_grid_delta_m": -2.220446049250313e-16,
+        "Fmax10_at_L0_N": 437.7034135524021,
+        "Fmax20_at_L0_N": 1302.5879709836302,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "per_long_r": 0.4141634935687959
+        },
+        "master_actuator_mif_N_reference_only": 943
+      }
+    },
+    {
+      "group": "per_tert",
+      "map_id": 19,
+      "master_name": "Peroneus Tertius",
+      "region": "lower leg",
+      "stockMuscles": [
+        "per_tert_r"
+      ],
+      "primaryDof": "subtalar_angle_r",
+      "targetDef": "Targets per_tert_r on their stock gait2392_simbody routes (meet-or-beat subtalar_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 19).",
+      "mifN": 180.0,
+      "sizing": "Seed 1x nominal 10 mm BPA. Resting-length seed L0=0.2119 m = longest sampled constituent path (per_tert_r; sampled over ['subtalar_angle_r', 'ankle_angle_r']). Screen PASS (handoff item 1): MIF 180 N < 0.5*Fmax10(L0) = 200.2 N (Fmax10=400.3 N). INITIAL seed only, not optimized; cam and tackle effects excluded. L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.21192599931963757,
+        "L0_recomputed_this_ask_m": 0.2119259993196374,
+        "L0_grid_delta_m": -1.6653345369377348e-16,
+        "Fmax10_at_L0_N": 400.32844751161764,
+        "Fmax20_at_L0_N": 1164.7554774041403,
+        "ten_mm_screen_pass": true,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "per_tert_r": 0.2119259993196374
+        },
+        "master_actuator_mif_N_reference_only": 180
+      }
+    },
+    {
+      "group": "flex_dig",
+      "map_id": 20,
+      "master_name": "Flexor Digitorum Longus",
+      "region": "lower leg",
+      "stockMuscles": [
+        "flex_dig_r"
+      ],
+      "primaryDof": "mtp_angle_r",
+      "targetDef": "Targets flex_dig_r on their stock gait2392_simbody routes (meet-or-beat mtp_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 20).",
+      "mifN": 310.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(310/1313.6). Resting-length seed L0=0.4477 m = longest sampled constituent path (flex_dig_r; sampled over ['mtp_angle_r', 'ankle_angle_r', 'subtalar_angle_r']). 10 mm screen FAILS: MIF 310 N >= 0.5*Fmax10(L0) = 220.3 N (Fmax10=440.6 N, Fmax20=1313.6 N). The located bpa_force_screen.csv reports 1x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(310/656.8)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.44771847316996305,
+        "L0_recomputed_this_ask_m": 0.4477184731699628,
+        "L0_grid_delta_m": -2.220446049250313e-16,
+        "Fmax10_at_L0_N": 440.6484023863263,
+        "Fmax20_at_L0_N": 1313.571829260286,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "flex_dig_r": 0.4477184731699628
+        },
+        "master_actuator_mif_N_reference_only": 310
+      }
+    },
+    {
+      "group": "flex_hal",
+      "map_id": 21,
+      "master_name": "Flexor Hallucis Longus",
+      "region": "lower leg",
+      "stockMuscles": [
+        "flex_hal_r"
+      ],
+      "primaryDof": "mtp_angle_r",
+      "targetDef": "Targets flex_hal_r on their stock gait2392_simbody routes (meet-or-beat mtp_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 21).",
+      "mifN": 322.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(322/1309.7). Resting-length seed L0=0.4354 m = longest sampled constituent path (flex_hal_r; sampled over ['mtp_angle_r', 'ankle_angle_r', 'subtalar_angle_r']). 10 mm screen FAILS: MIF 322 N >= 0.5*Fmax10(L0) = 219.8 N (Fmax10=439.6 N, Fmax20=1309.7 N). The located bpa_force_screen.csv reports 1x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(322/654.9)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.4354141199851924,
+        "L0_recomputed_this_ask_m": 0.4354141199851921,
+        "L0_grid_delta_m": -3.3306690738754696e-16,
+        "Fmax10_at_L0_N": 439.62132294826444,
+        "Fmax20_at_L0_N": 1309.7396004595907,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "flex_hal_r": 0.4354141199851921
+        },
+        "master_actuator_mif_N_reference_only": 322
+      }
+    },
+    {
+      "group": "ext_dig",
+      "map_id": 22,
+      "master_name": "Extensor Digitorum Longus",
+      "region": "lower leg",
+      "stockMuscles": [
+        "ext_dig_r"
+      ],
+      "primaryDof": "mtp_angle_r",
+      "targetDef": "Targets ext_dig_r on their stock gait2392_simbody routes (meet-or-beat mtp_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 22).",
+      "mifN": 512.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(512/1322.0). Resting-length seed L0=0.4775 m = longest sampled constituent path (ext_dig_r; sampled over ['mtp_angle_r', 'ankle_angle_r', 'subtalar_angle_r']). 10 mm screen FAILS: MIF 512 N >= 0.5*Fmax10(L0) = 221.5 N (Fmax10=442.9 N, Fmax20=1322.0 N). The located bpa_force_screen.csv reports 1x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(512/661.0)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.47752934145839304,
+        "L0_recomputed_this_ask_m": 0.47752934145839304,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 442.9167422518142,
+        "Fmax20_at_L0_N": 1322.0410726135513,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "ext_dig_r": 0.47752934145839304
+        },
+        "master_actuator_mif_N_reference_only": 512
+      }
+    },
+    {
+      "group": "ext_hal",
+      "map_id": 23,
+      "master_name": "Extensor Hallucis Longus",
+      "region": "lower leg",
+      "stockMuscles": [
+        "ext_hal_r"
+      ],
+      "primaryDof": "mtp_angle_r",
+      "targetDef": "Targets ext_hal_r on their stock gait2392_simbody routes (meet-or-beat mtp_angle_r torque; secondary dofs recorded as info curves, not part of the objective per actuator_map_27 id 23).",
+      "mifN": 162.0,
+      "sizing": "Seed 1x nominal 10 mm BPA. Resting-length seed L0=0.4455 m = longest sampled constituent path (ext_hal_r; sampled over ['mtp_angle_r', 'ankle_angle_r', 'subtalar_angle_r']). Screen PASS (handoff item 1): MIF 162 N < 0.5*Fmax10(L0) = 220.2 N (Fmax10=440.5 N). INITIAL seed only, not optimized; cam and tackle effects excluded. L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.44549444499451507,
+        "L0_recomputed_this_ask_m": 0.445494444994515,
+        "L0_grid_delta_m": -5.551115123125783e-17,
+        "Fmax10_at_L0_N": 440.466967957423,
+        "Fmax20_at_L0_N": 1312.8947446883271,
+        "ten_mm_screen_pass": true,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 1,
+        "per_muscle_Lmax_m": {
+          "ext_hal_r": 0.445494444994515
+        },
+        "master_actuator_mif_N_reference_only": 162
+      }
+    },
+    {
+      "group": "glut_max3",
+      "map_id": 24,
+      "master_name": "Gluteus Maximus",
+      "region": "thigh",
+      "stockMuscles": [
+        "glut_max1_r",
+        "glut_max2_r",
+        "glut_max3_r",
+        "glut_med1_r",
+        "glut_med2_r",
+        "glut_med3_r",
+        "glut_min1_r",
+        "glut_min2_r",
+        "glut_min3_r"
+      ],
+      "primaryDof": "hip_flexion_r",
+      "targetDef": "Aggregate gluteal target retained as baseline (handoff item 6): glut_max1_r..glut_max3_r + glut_med1_r..glut_med3_r + glut_min1_r..glut_min3_r (nine compartments), signed torque sum at each shared configuration, hip_flexion_r primary per actuator_map_27 id 24. The exploratory 3-actuator compartment split (one actuator per max/med/min compartment) is NOT part of this contract; see glutealConsequence.",
+      "mifN": 4867.0,
+      "sizing": "Seed 4x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(4867/1272.1). Resting-length seed L0=0.3427 m = longest sampled constituent path (glut_max3_r; sampled over ['hip_flexion_r', 'hip_adduction_r', 'hip_rotation_r']). 10 mm screen FAILS: MIF 4867 N >= 0.5*Fmax10(L0) = 214.8 N (Fmax10=429.5 N, Fmax20=1272.1 N). The located bpa_force_screen.csv reports 8x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(4867/636.0)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.34267594180641825,
+        "L0_recomputed_this_ask_m": 0.34267594180641825,
+        "L0_grid_delta_m": 0.0,
+        "Fmax10_at_L0_N": 429.50374935979556,
+        "Fmax20_at_L0_N": 1272.084047492933,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 4,
+        "n20_csv_half_Fmax20_alternative": 8,
+        "per_muscle_Lmax_m": {
+          "glut_max1_r": 0.2552426794399773,
+          "glut_max2_r": 0.27712082426786605,
+          "glut_max3_r": 0.34267594180641825,
+          "glut_med1_r": 0.15987470954412786,
+          "glut_med2_r": 0.1696460447276344,
+          "glut_med3_r": 0.15460915189588204,
+          "glut_min1_r": 0.11255216169133662,
+          "glut_min2_r": 0.1110749031640905,
+          "glut_min3_r": 0.11496170325797474
+        },
+        "master_actuator_mif_N_reference_only": 5047
+      }
+    },
+    {
+      "group": "add_mag3",
+      "map_id": 25,
+      "master_name": "Adductor Magnus",
+      "region": "thigh",
+      "stockMuscles": [
+        "add_mag1_r",
+        "add_mag2_r",
+        "add_mag3_r",
+        "add_long_r",
+        "add_brev_r"
+      ],
+      "primaryDof": "hip_adduction_r",
+      "targetDef": "Combined adductor group target: add_mag1_r + add_mag2_r + add_mag3_r + add_long_r + add_brev_r, summed as signed torques at each shared configuration (hip_adduction_r primary per actuator_map_27 id 25). Legacy alias add_mag3 is preserved as this group's name of record. Adductor census of gait2392_simbody.osim (92 muscles, this ask): exactly these five adductor-named muscles exist on the right side; no other muscle literally named as an adductor is present, so extraAdductors=[] and no independently assigned group is pulled in (handoff item 5).",
+      "mifN": 2268.0,
+      "sizing": "Seed 2x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(2268/1314.3). Resting-length seed L0=0.4502 m = longest sampled constituent path (add_mag3_r; sampled over ['hip_adduction_r', 'hip_flexion_r']). 10 mm screen FAILS: MIF 2268 N >= 0.5*Fmax10(L0) = 220.4 N (Fmax10=440.9 N, Fmax20=1314.3 N). The located bpa_force_screen.csv reports 4x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(2268/657.2)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.4502409567022828,
+        "L0_recomputed_this_ask_m": 0.448951964713753,
+        "L0_grid_delta_m": -0.0012889919885298307,
+        "Fmax10_at_L0_N": 440.8520092655615,
+        "Fmax20_at_L0_N": 1314.3317176561532,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 2,
+        "n20_csv_half_Fmax20_alternative": 4,
+        "per_muscle_Lmax_m": {
+          "add_mag1_r": 0.19613629357187798,
+          "add_mag2_r": 0.2955198657130243,
+          "add_mag3_r": 0.448951964713753,
+          "add_long_r": 0.2630480525131057,
+          "add_brev_r": 0.18609329862933374
+        },
+        "master_actuator_mif_N_reference_only": 2268
+      }
+    },
+    {
+      "group": "iliacus",
+      "map_id": 26,
+      "master_name": "Iliacus",
+      "region": "trunk/deep hip",
+      "stockMuscles": [
+        "iliacus_r"
+      ],
+      "primaryDof": "hip_flexion_r",
+      "targetDef": "iliacus_r alone is this actuator's target muscle (stock route). Topology ruling (handoff item 7): psoas terminates onto iliacus, and both contribute to hip flexion as a shared attachment/load-transfer topology. No fictitious direct bone insertion is created for psoas, no serial force multiplier is applied, and iliacus force is not counted twice: each actuator keeps its own force contribution and the reactions at their junction are traced explicitly.",
+      "mifN": 1073.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(1073/1171.0). Resting-length seed L0=0.2168 m = longest sampled constituent path (iliacus_r; sampled over ['hip_flexion_r']). 10 mm screen FAILS: MIF 1073 N >= 0.5*Fmax10(L0) = 201.0 N (Fmax10=402.0 N, Fmax20=1171.0 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(1073/585.5)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.21681576230415667,
+        "L0_recomputed_this_ask_m": 0.21410372625028895,
+        "L0_grid_delta_m": -0.002712036053867717,
+        "Fmax10_at_L0_N": 402.04106328070264,
+        "Fmax20_at_L0_N": 1170.9938100095794,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "iliacus_r": 0.21410372625028895
+        },
+        "master_actuator_mif_N_reference_only": 1073
+      }
+    },
+    {
+      "group": "psoas",
+      "map_id": 27,
+      "master_name": "Psoas X",
+      "region": "trunk/deep hip",
+      "stockMuscles": [
+        "psoas_r"
+      ],
+      "primaryDof": "hip_flexion_r",
+      "targetDef": "psoas_r alone is this actuator's target muscle (stock route). Topology ruling (handoff item 7): psoas terminates onto iliacus, and both contribute to hip flexion as a shared attachment/load-transfer topology. This group must NOT be given a fictitious direct bone insertion for psoas and must NOT use a serial force multiplier; iliacus force is not counted twice. Retain psoas's own force contribution and trace the reactions at the psoas-iliacus junction.",
+      "mifN": 1113.0,
+      "sizing": "Seed 1x nominal 20 mm BPA, count = ceil(MIF/Fmax20(L0)) = ceil(1113/1225.3). Resting-length seed L0=0.2706 m = longest sampled constituent path (psoas_r; sampled over ['hip_flexion_r']). 10 mm screen FAILS: MIF 1113 N >= 0.5*Fmax10(L0) = 208.4 N (Fmax10=416.9 N, Fmax20=1225.3 N). The located bpa_force_screen.csv reports 2x under its half-Fmax20 convention (n = ceil(MIF/(0.5*Fmax20)) = ceil(1113/612.7)); that alternative is recorded here but NOT adopted (this contract follows the corrected prompt's ceil(MIF/Fmax20) formula). INITIAL estimate only, NOT an optimized count; cam and tackle effects excluded (e.g., vas_int's 4x becomes larger only if a cam/tackle redesign raises per-BPA effective stroke/force - that is re-solved in the campaign, not here). L0 is the 5-point-per-relevant-coordinate sampled longest path (grid: knee swept 0..-120 deg; other relevant coordinates per actuator_map_27 rom_table_deg), a SAMPLED LOWER BOUND on the true longest path, and is re-derived from the robot's feasible geometry during optimization.",
+      "sizing_data": {
+        "L0_seed_m": 0.27056699809859586,
+        "L0_recomputed_this_ask_m": 0.26865530464336285,
+        "L0_grid_delta_m": -0.00191169345523301,
+        "Fmax10_at_L0_N": 416.85953163170905,
+        "Fmax20_at_L0_N": 1225.3113855090612,
+        "ten_mm_screen_pass": false,
+        "n20_ceil_MIF_over_Fmax20": 1,
+        "n20_csv_half_Fmax20_alternative": 2,
+        "per_muscle_Lmax_m": {
+          "psoas_r": 0.26865530464336285
+        },
+        "master_actuator_mif_N_reference_only": 1113
+      }
+    }
+  ],
+  "unresolved": [
+    "Geometry extraction's layering table (bone distances) was not available on easteregg2 on 2026-11-03 (searched Functional_Routing_20261027/, tmp/functional_routing_20261103/, Neuromechanical_Models/AH001_Simscape_Repair/packaging/). layerOrder therefore carries the master item 5 provisional order plus the handoff-item-7 psoas/iliacus junction adjustment only; apply the bone-distance adjustments when the table lands.",
+    "BPA-count convention conflict, documented not resolved: this contract uses the corrected prompt's n20 = ceil(MIF/Fmax20(L0)) (e.g., vas_int 4x, soleus 3x, glut_max3 4x), while the located bpa_force_screen.csv used n = ceil(MIF/(0.5*Fmax20)) (e.g., vas_int 8x, soleus 6x, glut_max3 8x). Both values are recorded per group in sizing_data. Counts are INITIAL estimates either way; cam and tackle effects are excluded.",
+    "L0 seeds are sampled lower bounds: coarse_Lmax comes from a 5-point-per-relevant-coordinate grid; a fresh product-grid recomputation this ask (opensim 4.4.1, gait2392_simbody.osim) matched the CSV within 0.05 mm on 20/27 groups and differed by up to 20.1 mm (gracilis, 0.4934 vs 0.5134 m) on 7 groups - a grid-convention difference (product grid over ROM endpoints vs the CSV's sampling), with no change to any 10 mm screen outcome. Final resting lengths must be re-derived from the robot's feasible geometry.",
+    "Missing 10 mm calibration: handoff item 2 requires the 10 mm sleeve's inflated diameter from its own calibration; no 10 mm diameter-contraction calibration file was located in this ask. The four 10 mm seeds (sar, grac, per_tert, ext_hal) cannot size their inflated envelopes until it is supplied.",
+    "Hardware families S/M/L and Bowden references are dimensional candidates only (HARDWARE_AND_ZCODE_HANDOFF.md); sheave capacity convention, cable fatigue/bend limits, termination ratings, housing compression, and ferrule/stop geometry remain open per handoff 'Open items' - no load ratings are assumed by this contract."
+  ]
+}

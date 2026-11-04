@@ -1,0 +1,32 @@
+=== pass1 rigid | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+FAILED extobl rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+=== pass1 compliant | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+FAILED extobl compliant: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 04-Nov-2026 12:09:04 | budget 600 | envelopes 22 ===
+BEST-INFEASIBLE (retained as warm start) extobl rigid: fSeed 112.7186 -> fBest 112.7186 (obj 111.0506, violEff 1.67e-04) | capsules(pose1) 1 | 23.0 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+=== pass1 compliant | 04-Nov-2026 12:09:27 | budget 600 | envelopes 22 ===
+BEST-INFEASIBLE (retained as warm start) extobl compliant: fSeed 7820.0848 -> fBest 77.2102 (obj 75.5422, violEff 1.67e-04) | capsules(pose1) 1 | 58.7 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+REFINE skipped: no rigid checkpoint to refine
+RESUME extobl rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:27:04 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl rigid: fSeed 112.7186 -> fBest 112.7186 (obj 111.0506, violEff 1.67e-04) | capsules(pose1) 1 | 18.3 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+RESUME extobl compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:27:22 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl compliant: fSeed 7820.0848 -> fBest 77.2102 (obj 75.5422, violEff 1.67e-04) | capsules(pose1) 1 | 54.2 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+REFINE1 extobl: f 112.7186 -> 115.3180 (rejected, others 26, 18.7 s)
+RESUME extobl rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 13:40:19 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl rigid: fSeed 87.4642 -> fBest 87.4642 (obj 85.7963, violEff 1.67e-04) | capsules(pose1) 2 | 16.9 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+RESUME extobl compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 13:40:36 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl compliant: fSeed 10009.5241 -> fBest 77.6506 (obj 75.9827, violEff 1.67e-04) | capsules(pose1) 2 | 40.9 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+RESUME extobl rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 13:42:10 | budget 600 | envelopes 0 ===
+RESUME extobl rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 13:52:02 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl rigid: fSeed 87.4642 -> fBest 87.4642 (obj 85.7963, violEff 1.67e-04) | capsules(pose1) 2 | 17.7 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+RESUME extobl compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 13:52:20 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl compliant: fSeed 10009.5241 -> fBest 77.6506 (obj 75.9827, violEff 1.67e-04) | capsules(pose1) 2 | 41.6 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+REFINE1 extobl: f 87.4642 -> 93.5568 (rejected, others 26, 17.3 s)

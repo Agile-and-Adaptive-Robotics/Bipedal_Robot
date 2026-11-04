@@ -1,0 +1,21 @@
+=== pass1 rigid | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+FAILED vas_int rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+=== pass1 compliant | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE vas_int compliant: fSeed 182.5377 -> fBest 167.9569 (obj 167.9569, violEff 0.00e+00) | capsules(pose1) 3 | 91.7 s
+REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 04-Nov-2026 12:11:41 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) vas_int rigid: fSeed 474.8066 -> fBest 447.7530 (obj 179.6508, violEff 2.68e-02) | capsules(pose1) 3 | 91.0 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.681e-02 (dimensional 2.691e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME skip (feasible checkpoint): compliant f 167.9569
+REFINE skipped: no rigid checkpoint to refine
+RESUME vas_int rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:29:40 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE vas_int rigid: fSeed 160.9764 -> fBest 144.9944 (obj 144.9944, violEff 0.00e+00) | capsules(pose1) 3 | 55.4 s
+RESUME skip (feasible checkpoint): compliant f 167.9569
+REFINE1 vas_int: f 144.9944 -> 410.2276 (rejected, others 26, 23.1 s)
+RESUME vas_int rigid: sizing config changed (ckpt missing vs current 20|3|L|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE vas_int rigid: fSeed 160.9764 -> fBest 144.9944 (obj 144.9944, violEff 0.00e+00) | capsules(pose1) 3 | 51.0 s
+RESUME vas_int compliant: sizing config changed (ckpt missing vs current 20|3|L|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:55:07 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE vas_int compliant: fSeed 182.5377 -> fBest 167.9569 (obj 167.9569, violEff 0.00e+00) | capsules(pose1) 3 | 66.7 s
+REFINE1 vas_int: f 144.9944 -> 424.6877 (rejected, others 26, 22.1 s)

@@ -1,0 +1,25 @@
+=== pass1 rigid | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
+FAILED grac rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+=== pass1 compliant | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) grac compliant: fSeed 10875.3789 -> fBest 10138.0224 (obj 138.0224, violEff 1.00e+00) | capsules(pose1) 1 | 85.7 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 04-Nov-2026 12:11:41 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) grac rigid: fSeed 10613.4928 -> fBest 10518.9743 (obj 145.3873, violEff 1.04e+00) | capsules(pose1) 1 | 44.6 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME grac compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:12:25 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) grac compliant: fSeed 11296.6431 -> fBest 10519.1006 (obj 145.3469, violEff 1.04e+00) | capsules(pose1) 1 | 67.5 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+REFINE skipped: no rigid checkpoint to refine
+RESUME grac rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:29:40 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) grac rigid: fSeed 11568.4424 -> fBest 10137.3909 (obj 137.3909, violEff 1.00e+00) | capsules(pose1) 1 | 70.6 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME grac compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:30:51 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) grac compliant: fSeed 10875.3789 -> fBest 10138.0256 (obj 138.0256, violEff 1.00e+00) | capsules(pose1) 1 | 60.7 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+REFINE1 grac: f 10137.3909 -> 10531.1012 (rejected, others 26, 17.1 s)
+RESUME grac rigid: sizing config changed (ckpt missing vs current 20|1|L|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) grac rigid: fSeed 10132.6031 -> fBest 10132.6031 (obj 132.6031, violEff 1.00e+00) | capsules(pose1) 1 | 21.6 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME grac compliant: sizing config changed (ckpt missing vs current 20|1|L|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:54:38 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE grac compliant: fSeed 3123.9031 -> fBest 24.0628 (obj 24.0628, violEff 0.00e+00) | capsules(pose1) 1 | 155.3 s
+REFINE1 grac: f 10132.6031 -> 10558.6199 (rejected, others 26, 18.1 s)

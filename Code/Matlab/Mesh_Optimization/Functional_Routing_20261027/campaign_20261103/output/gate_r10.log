@@ -1,0 +1,90 @@
+=== sensitivity_gate round 10 | 04-Nov-2026 09:55:22 ===
+machine: EASTEREGG2 | campaign: D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Functional_Routing_20261027\campaign_20261103
+KINEMATICS validation vs geometry_20261103 bodyTransformsInGround (6 poses, exact transforms): maxErr 0.036913 mm, maxRot 0.000000 deg (tol 0.50 mm)
+fr_targets: hip_flex_ext -> targets_v2 exact (hip_flex_ext)
+fr_targets: hip_flex_extrot -> targets_v2 exact (hip_flex_extrot)
+fr_targets: hip_rot -> targets_v2 exact (hip_rot)
+fr_targets: knee_bowden -> targets_v2 exact (knee_bowden)
+fr_targets: foot_span -> targets_v2 exact (foot_span)
+fr_targets: trunk_ercspn -> targets_v2 exact (trunk_ercspn)
+fr_targets: sar_layering -> targets_v2 exact (sar_layering)
+cases built: hip_flex_ext, hip_flex_extrot, hip_rot, knee_bowden, foot_span, trunk_ercspn, sar_layering
+
+--- CHECK (a): per-variable finite-difference sensitivity ---
+  var  1 [mov1(u,row1)]: dGeom 0.1551 mm, df 4.103e-02, dc 5.945e-04 -> PASS
+  var  2 [mov1(v,row1)]: dGeom 1.5000 mm, df 5.728e+00, dc 1.235e-02 -> PASS
+  var  3 [mov1(standoff,row1)]: dGeom 0.0732 mm, df 2.696e-03, dc 7.324e-05 -> PASS
+  var  4 [mov2(u,row4)]: dGeom 0.7291 mm, df 4.887e+00, dc 6.447e-03 -> PASS
+  var  5 [mov2(v,row4)]: dGeom 1.5000 mm, df 5.137e+00, dc 5.059e-03 -> PASS
+  var  6 [mov2(standoff,row4)]: dGeom 0.0166 mm, df 1.919e-03, dc 3.291e-05 -> PASS
+  var  7 [mov3(u,row2)]: dGeom 0.4159 mm, df 4.879e+00, dc 4.064e-03 -> PASS
+  var  8 [mov3(v,row2)]: dGeom 20.5086 mm, df 9.598e+01, dc 1.111e-01 -> PASS
+  var  9 [mov3(standoff,row2)]: dGeom 0.0059 mm, df 9.006e-04, dc 1.285e-05 -> PASS
+  var 10 [L0]: dGeom 0.0000 mm, df 1.037e+01, dc 8.032e-02 -> PASS
+  var 11 [tendon]: dGeom 0.0000 mm, df 1.167e+01, dc 8.573e-02 -> PASS
+  var 12 [seriesSplit]: dGeom 0.0000 mm, df 0.000e+00, dc 0.000e+00 -> PASS
+CHECK (a) PASS
+
+--- CHECK (b): bounds extent + short optimization does not silently restore the seed ---
+  bounds extent (min 0.3, max 11 over 12 vars) -> PASS
+  short patternsearch (150 evals): |xBest-xSeed|max = 7.0000 (scaled), geometry moved 25.62 mm, f 119.1742 -> 106.4451 -> PASS
+CHECK (b) PASS
+
+--- CHECK (c): representative cases + mechanics identities ---
+  hip_flex_ext     rigid f=119.1742 viol=0.00e+00 | compliant f=134.4516 viol=0.00e+00 | tauCrossCheck max 5.39e-01 N*m
+    seed feasibility (rigid): PASS
+    both bracket contributions (hip_flex_ext): row-1 bracket deflection max 14.0497 mm, tendon stretch gama max 0.0038 mm, dstrain vs rigid 1.031e-01 -> PASS
+    parallel load sharing (hip_flex_ext): max |Ftendon - nBPA*F/G| / max|Ftendon| = 0.000e+00 -> PASS
+    transmission work, rigid (hip_flex_ext): max |nBPA*F*travel - Ft*(deltaL+gama)|/scale = 2.975e-16 -> PASS
+    compliant closure w/ compliance terms (hip_flex_ext): max |G*travel - deltaL - gama + cAdd*F|/dLscale = 3.196e-16 -> PASS
+  hip_rot          rigid f=71.6929 viol=0.00e+00 | compliant f=124.8783 viol=0.00e+00 | tauCrossCheck max 2.46e+01 N*m
+    seed feasibility (rigid): PASS
+  hip_flex_extrot  rigid f=126.5074 viol=0.00e+00 | compliant f=135.1272 viol=0.00e+00 | tauCrossCheck max 7.23e-01 N*m
+    seed feasibility (rigid): PASS
+  knee_bowden      rigid f=51.6375 viol=0.00e+00 | compliant f=93.3276 viol=0.00e+00 | tauCrossCheck max 3.36e+00 N*m
+    seed feasibility (rigid): PASS
+    both bracket contributions (knee_bowden): row-1 bracket deflection max 38.2559 mm, tendon stretch gama max 0.0078 mm, dstrain vs rigid 1.621e-02 -> PASS
+    parallel load sharing (knee_bowden): max |Ftendon - nBPA*F/G| / max|Ftendon| = 0.000e+00 -> PASS
+    transmission work, rigid (knee_bowden): max |nBPA*F*travel - Ft*(deltaL+gama)|/scale = 2.769e-16 -> PASS
+    compliant closure w/ compliance terms (knee_bowden): max |G*travel - deltaL - gama + cAdd*F|/dLscale = 1.106e-15 -> PASS
+  foot_span        rigid f=37.6662 viol=0.00e+00 | compliant f=64.0406 viol=0.00e+00 | tauCrossCheck max 5.55e-01 N*m
+    seed feasibility (rigid): PASS
+  trunk_ercspn     rigid f=142.0506 viol=0.00e+00 | compliant f=176.4290 viol=0.00e+00 | tauCrossCheck max 3.04e+00 N*m
+    seed feasibility (rigid): PASS
+  rigid-limit recovery hip_flex_ext    : |dtau|max 8.55e-06 N*m, |df| 1.63e-05 -> PASS
+  rigid-limit recovery hip_rot         : |dtau|max 9.64e-06 N*m, |df| 1.10e-04 -> PASS
+    diameter endpoints: 20 mm: rest 20.000 mm (want 20), fully contracted 38.000 mm (want 38); 10 mm own law: rest 13.600 mm, 16.5% 17.837 mm
+    bpaR own 10 mm law check: Dout(0) = 13.600 mm (want 13.600), Dout(16.5%) = 17.837 mm (want 17.837)
+    braid-law 20 mm Dout at 24% = 34.774 mm (mech2: the braid law does NOT reproduce the handoff 20->38 mm pair; the campaign carries the calibrated endpoints)
+    med_gas P2 conditional knee [-45.0, 10.0] deg: active(-44deg)=1 active(-46deg)=0, |dL| across transition 0.99 mm -> PASS
+    psoas psoas_r-P3 conditional hip [-90.0, 45.0] deg: active(+44deg)=1 active(+46deg)=0 -> PASS
+    route length across the transition: 433.27 mm (inactive) vs 434.26 mm (active), jump 0.99 mm (quantified; grid mechanics rows documented fixed)
+CHECK (c) PASS
+
+--- CHECK (d): LAYERING proof (deep -> superficial -> refine) ---
+  DEEP hip_flex_ext solved: f 106.4451 (violEff 0.00e+00, feasible 1)
+  SUPERFICIAL sar_layering: guide patch recentered ON the retained deep anchor corridor (nearest bone Pelvis_R, 0.3 mm from its cloud), patch radius bounded to 12 mm, seed = patch center (inside by construction)
+  corridor seed: RIGID margin -6.767 mm (WOULD VIOLATE the rigid retained envelope) | SOFT corridor depth 0.00 (n=Drest), extent 0.00 mm
+  bone-only optimum: RIGID margin 4.348 mm (clears the rigid envelope (constraint NOT binding)), corridor depth 0.00, f 1134.5151
+  rigid-constrained optimum: RIGID margin 4.348 mm, active=0, route deflection from seed 61.11 mm, f 10134.5143, feasible 0
+  layering HARD demo (seed violates rigid; constrained solve deflects >1 mm to feasibility): PASS
+  soft-demo frame try femur_r: corridor depth 4.48 (n=Drest), extent 15.43 mm
+  soft-demo frame try pelvis: corridor depth 0.00 (n=Drest), extent 0.00 mm
+  SOFT corridor demo: second guide patch centered on the capsule AXIS at mid-span (frame femur_r on Femur, patch radius 12 mm; seed crossing depth 4.48 n=Drest)
+  corridor-crossing seed: RIGID margin -42.068 mm (must NOT bind), SOFT corridor depth 4.48 (n=Drest), extent 15.43 mm
+  semantics at the crossing seed: hard set identical 0 | f_with 1178.2537 - f_without 1136.2858 = 41.967891 vs W_corr*depth = 14.266022 (identical 0)
+  csSoft bone-only optimum: f 1134.5151, hard-feasible 1
+  soft-penalized optimum (warm start = bone-only feasible): f 1166.5263, hard-feasible 0, corridor depth 3.89, extent 11.48 mm
+  SOFT corridor demo: the corridor changed the HARD set or the objective delta is not exactly the soft term
+  SOFT corridor demo: warm-started soft solve came out hard-infeasible - a corridor must NEVER cause that
+  layering SOFT demo (corridor scored, never a feasibility flag): FAIL
+  REFINEMENT: superficial re-solve (budget 300 vs 150): f 10134.5143 -> 1134.5143 (improved 1)
+  REFINEMENT: deep re-solve with the superficial envelope constraining it: f 106.4451 -> 106.4451 (degradation 0.000e+00, tolerance 1.0e-06, PASS)
+CHECK (d) FAIL
+
+--- CHECK (e): timing + extrapolated full-campaign budget ---
+  evaluations measured: 39 | median 0.162 s | mean 0.224 s
+  extrapolated full campaign (27 groups x {rigid, compliant} x [600 solve + 1 x 150 refine evals] = 40500 evals): 2.52 h
+CHECK (e) PASS
+
+=== gate wall time: 3.1 min ===

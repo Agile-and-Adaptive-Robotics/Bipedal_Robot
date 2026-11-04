@@ -1,0 +1,22 @@
+OBST: 12 bodies (6 CAD SDF, 6 cloud)
+OBST: CAD bodies   back_r, foot_r, front_r, pelvis, shank_r, thigh_r
+OBST: cloud bodies Calcaneus, Pelvis_R, Sacrum, Spine, Talus, Toes
+OBST: back_r    grid [47 40 37] voxel 2.5 mm inside 10.6% vertexAbs max 1.921 mm shellParity 0.652
+OBST: foot_r    grid [107 55 56] voxel 3.0 mm inside 10.1% vertexAbs max 3.598 mm shellParity 0.738
+OBST: front_r   grid [37 51 37] voxel 2.5 mm inside 9.4% vertexAbs max 2.880 mm shellParity 0.743
+OBST: pelvis    grid [81 91 110] voxel 3.0 mm inside 9.5% vertexAbs max 3.764 mm shellParity 0.862
+OBST: shank_r   grid [87 161 55] voxel 2.5 mm inside 7.6% vertexAbs max 3.184 mm shellParity 0.822
+OBST: thigh_r   grid [54 225 64] voxel 2.5 mm inside 6.6% vertexAbs max 3.085 mm shellParity 0.903
+OBST: far-field d = [30 30 30] mm (bid [1 1 1])
+OBST: hip anchor (robot thigh origin = OpenSim hip center): identity by construction
+OBST: knee   0.0 deg: KB-pin vs OpenSim tibia origin = 86.97 mm (table 86.97 mm)
+OBST: knee -60.0 deg: KB-pin vs OpenSim tibia origin = 53.54 mm (table 53.54 mm)
+OBST: pin-axis flexion at kappa=-60 deg: 77.96 deg (recorded mesh-PCA value 77.39 deg; same monotonic branch)
+OBST: knee   0.0 deg: min route-line clearance    30.0 mm
+OBST: knee -30.0 deg: min route-line clearance    30.0 mm
+OBST: knee -60.0 deg: min route-line clearance    30.0 mm
+OBST: knee -90.0 deg: min route-line clearance    25.2 mm
+OBST: knee -120.0 deg: min route-line clearance    -0.2 mm
+OBST: shank SDF at the KB pin across poses: [-0.4 -0.4 -0.4 -0.4 -0.4] mm
+OBST: spine-cloud distance at a torso-frame spine point: 30.0 mm (cloud-only, conservative; NN mean 3.2 mm)
+CHECK_OBSTACLES_V2 PASS (0.7 s)

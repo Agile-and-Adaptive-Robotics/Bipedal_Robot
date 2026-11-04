@@ -1,0 +1,26 @@
+=== pass1 rigid | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+FAILED iliacus rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+=== pass1 compliant | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+FAILED iliacus compliant: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 04-Nov-2026 12:09:04 | budget 600 | envelopes 22 ===
+BEST-INFEASIBLE (retained as warm start) iliacus rigid: fSeed 163.8241 -> fBest 156.2006 (obj 110.7059, violEff 4.55e-03) | capsules(pose1) 1 | 73.8 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.549e-03 (dimensional 4.649e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+=== pass1 compliant | 04-Nov-2026 12:10:17 | budget 600 | envelopes 22 ===
+BEST-INFEASIBLE (retained as warm start) iliacus compliant: fSeed 135.6446 -> fBest 127.7620 (obj 81.7116, violEff 4.61e-03) | capsules(pose1) 1 | 60.8 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.605e-03 (dimensional 4.705e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE skipped: no rigid checkpoint to refine
+RESUME iliacus rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:27:04 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE iliacus rigid: fSeed 115.8999 -> fBest 110.8835 (obj 110.8835, violEff 0.00e+00) | capsules(pose1) 1 | 47.2 s
+RESUME iliacus compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:27:51 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE iliacus compliant: fSeed 88.9423 -> fBest 68.0282 (obj 68.0282, violEff 0.00e+00) | capsules(pose1) 1 | 108.9 s
+REFINE1 iliacus: f 110.8835 -> 542.6598 (rejected, others 26, 19.0 s)
+RESUME skip (feasible checkpoint): rigid f 110.8835
+RESUME skip (feasible checkpoint): compliant f 68.0282
+RESUME iliacus rigid: sizing config changed (ckpt missing vs current 10|2|M|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:52:02 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE iliacus rigid: fSeed 4586.0621 -> fBest 122.5474 (obj 122.5474, violEff 0.00e+00) | capsules(pose1) 2 | 57.7 s
+RESUME iliacus compliant: sizing config changed (ckpt missing vs current 10|2|M|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:53:00 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE iliacus compliant: fSeed 5700.3223 -> fBest 100.6276 (obj 100.6276, violEff 0.00e+00) | capsules(pose1) 2 | 76.6 s
+REFINE1 iliacus: f 122.5474 -> 435.0898 (rejected, others 26, 16.1 s)

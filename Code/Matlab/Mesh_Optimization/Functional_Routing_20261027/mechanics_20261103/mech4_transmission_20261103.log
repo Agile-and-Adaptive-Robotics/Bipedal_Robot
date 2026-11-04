@@ -1,0 +1,69 @@
+=== MechanCheck 4/5: BiPam_pulley2_20261022 transmission ===
+
+Bi fixture: rest = 0.6884 m (kmax = 0.76*rest = 0.5232 m, 24%), tendon 0.050 m
+Active crossing = 2, G = 2, nBPA = 3
+strain_p range over grid: [0.1459, 0.2302]
+taut cells: 1681 / 1681
+
+[Bi a] closure  G*PulleyTravel == deltaL + gama:
+   max |residual| on taut cells = 1.092e-16 m (scale 6.053e-04 m) -> PASS
+[Bi b] gama == nBPA*F/(G*kSpr): max |residual| = 3.388e-21 m; kSpr(class) = 3.497e+07 N/m, recomputed wraps*Aeff*E/L = 3.497e+07 N/m -> PASS
+[Bi c] Ftendon == nBPA*Fsingle/G : max |residual| = 0.000e+00 N
+       segTension(k=1) == nBPA*F (above tackle): max |res| = 0.000e+00 N
+       segTension(k=2) == Ftendon (shared line): max |res| = 0.000e+00 N
+[Bi d] work: nBPA*F*travel == Ft*(deltaL+gama): max |residual| = 5.951e-14 J -> PASS
+[Bi e] virtual-work consistency vs CHORD (central FD, h1 = 8.75e-03, h2 = 8.75e-03 rad):
+   k2/joint2: max|tau_y + Tline2*dChord2/dth2| = 3.171e-05 N*m (rel 1.38e-05; arm err 4.35e-08 m) -> PASS
+   k1/joint1: max|tau_z + Tline1*dChord1/dth1| = 7.290e-04 N*m (rel 3.35e-06; arm err 5.00e-07 m) -> PASS
+
+[Bi f] mountCompliance ON: closure WITH deflection terms
+   max |G*travel - (deltaL+gama)| (plain form) = 2.586e-04 m (nonzero: losses shift it)
+   vs the class's own solve coefficients cmB/cmT: max |res| = 1.236e-16 m -> PASS
+   vs post-solve deflected geometry (first-order agreement): max |res| = 1.091e-08 m
+   DeflClosure_cAdd range: [-5.331e-07, -4.393e-07] m/N (exactly 0 when compliance off)
+
+Mono fixture: rest = 0.6189 m (kmax = 0.4703), tackle at crossing 1 (G = 2, nBPA = 2)
+[Mono] T2 == identity: max variation along the joint-2 axis
+   MuscleLength     0.000e+00
+   deltaL(k1)       0.000e+00
+   deltaL(k2)       0.000e+00
+   sContraction     0.000e+00
+   FsingleBPA       0.000e+00
+   Torque_ins(k1,x) 0.000e+00
+   Torque_ins(k1,z) 0.000e+00
+   Torque_ins(k2,z) 0.000e+00
+   -> route crosses ONE joint, no fictitious second joint: PASS
+[Mono] closure: max |res| = 5.551e-17 m -> PASS
+[Mono] Ftendon == nBPA*F/G: max |res| = 0.000e+00 N
+[Mono] segTension(k=2) == Ftendon (at/below tackle): max |res| = 0.000e+00 N
+[Mono] work identity: max |res| = 2.132e-14 J -> PASS
+[Mono e] virtual-work consistency vs CHORD (central FD, h1 = 8.75e-03, h2 = 8.75e-03 rad):
+   k2/joint2: max|tau_y + Tline2*dChord2/dth2| = 0.000e+00 N*m (rel 0.00e+00; arm err 0.00e+00 m) -> PASS
+   k1/joint1: max|tau_z + Tline1*dChord1/dth1| = 4.947e-04 N*m (rel 4.49e-06; arm err 1.05e-06 m) -> PASS
+
+[Bi e-straight] straight-at-seed exit->insertion tail (row 4 on the row3-row5 line):
+[BiS e] virtual-work consistency vs CHORD (central FD, h1 = 8.75e-03, h2 = 8.75e-03 rad):
+   k2/joint2: max|tau_y + Tline2*dChord2/dth2| = 3.475e-05 N*m (rel 1.38e-05; arm err 4.34e-08 m) -> PASS
+   k1/joint1: max|tau_z + Tline1*dChord1/dth1| = 8.025e-04 N*m (rel 3.35e-06; arm err 5.01e-07 m) -> PASS
+   polyline (deltaL) form: max |tau - Tline*dDeltaL/dth2| = 4.699e+01 N*m  EXPECTED mismatch, not an error: deltaL is the POLYLINE exit->insertion span (the exact closure/travel partner, verified to 1e-16 above), while Torque_ins is the single-resultant insertion torque whose exact virtual-work partner is the CHORD (verified above to 4.4e-08 m arm error). A tail that is straight at the seed pose bends under joint rotation (via + insertion rotate about the pivot; the exit point does not), so the polyline and chord derivatives genuinely differ away from the seed.
+
+=== MechanCheck 5: sheave reaction R = 2*T*sin(beta/2) ===
+Fmax20(450 mm, 620 kPa) = 1314.26 N (maxBPAforce)
+R = 2*T*sin(beta/2) with T = 3*F20/G, G = 2 (shared cable):
+   beta =   0 deg: R = 2*T*sin(beta/2) =     0.00 N
+   beta =  30 deg: R = 2*T*sin(beta/2) =  1020.47 N
+   beta =  90 deg: R = 2*T*sin(beta/2) =  2787.97 N
+   beta = 180 deg: R = 2*T*sin(beta/2) =  3942.78 N
+Handoff example (HARDWARE_AND_ZCODE_HANDOFF.md line 36): 3 x 20 mm at 450 mm Fmax, G=2:
+   ideal shared cable T = 3*1314.3/2 = 1971.39 N (handoff ~1971 N; diff 0.02%)
+   180-deg reversing sheave R = 2*T = 3942.78 N (handoff ~3942 N; diff 0.02%)
+
+On the bi fixture object (division rule at the solved force, taut cells):
+   Ftendon == nBPA*FsingleBPA/G: max |res| = 0.000e+00 N -> PASS
+   ReactionFmag == ||nBPA*F*u_bpa + Ft*u_t|| (full vector sum, differing tensions):
+      max |res| = 0.000e+00 N -> PASS
+   NOTE: ReactionF is the TACKLE-BLOCK vector sum (bundle line nBPA*F + shared line Ft). A separate 180-deg REVERSING sheave is downstream hardware the class does not emit; its radial load follows from the class's own shared-cable tension via R = 2*Ftendon (= 2*T*sin(180/2)), i.e. 3942.78 N at the handoff sizing point.
+
+Two-tackle config rejected as documented: "Both crossings carry gain > 1 (2, 2), but only ONE tackle is supported: the crossing-1 mount reaction and the shared ReactionFmag grid assume the distal crossing is the only active one. Set the other crossing's gain to 1." (id: BiPam_pulley2_20261022:TwoTackles) -> PASS
+
+=== MechanCheck 4/5 done ===

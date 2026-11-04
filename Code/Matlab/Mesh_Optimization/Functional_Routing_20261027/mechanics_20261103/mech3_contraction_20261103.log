@@ -1,0 +1,81 @@
+=== MechCheck 3: contraction limits wired into the sizing path ===
+Generated: Tue Nov  3 23:58:19 PST 2026 on easteregg2; evidence = grep line citations below; numeric demonstrations in mech1/mech4 logs.
+
+--- (1) Handoff requirement (HARDWARE_AND_ZCODE_HANDOFF.md item 2) ---
+47:2. Use maximum contraction assumptions **16.5% for 10 mm** and **24% for 20 mm**: `Lmin = 0.835*L0` and `Lmin = 0.76*L0`. Preserve 20/38 mm diameter endpoints for 20 mm and verify the 10 mm inflated diameter from its own calibration. Never apply the 20 mm diameter law to a 10 mm sleeve.
+
+--- (2) Campaign-reusable class: Kmax is a CONSTRUCTOR ARGUMENT (no hard-coded 25% in the solve) ---
+196:        Kmax                        %Length of BPA at maximum contraction
+325:                PD.Kmax = kmax;                   % fully contracted length, m
+593:            kmax = obj.Kmax;
+1392:KMAX = (rest - obj.Kmax) / rest;
+1477:kmax = obj.Kmax;
+
+--- (3) BUT the two existing drivers hard-code kmax = 0.75*rest = 25% for ALL diameters ---
+D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization/Opt_run_BiPulley.m:363:    kmax = 0.75 * rest;      % 25% maximum contraction fraction (KMAX)
+D:/GitHub/Bipedal_Robot/tmp/paper_bridge/capability_table_20261022/Opt_run_BiPulley_survey2_20261023.m:439:        kmax = 0.75 * rest;
+
+--- (4) The class's own LengthCheck getter keeps a legacy 25% (maxContractPercent = 0.25) ---
+        function lengthCheck = get.LengthCheck(obj)
+            contraction = obj.Contraction;
+            maxContractPercent = 0.25;          %Contracting to 75% of length
+            minContractPercent = -0.03;         %Elongating to 103% of length
+            restingPamLength = obj.RestingL;
+
+            if restingPamLength < 0
+                lengthCheck = 'Unusable';
+            else
+                if max(contraction(:)) <= maxContractPercent
+                    if min(contraction(:)) >= minContractPercent
+                        lengthCheck = 'Usable';
+                    else
+                        lengthCheck = 'Unusable';
+                    end
+                else
+                    lengthCheck = 'Unusable';
+                end
+            end
+--- LengthCheck consumers repo-wide (BiPulley drivers NOT among them): ---
+D:/GitHub/Bipedal_Robot/Code/Matlab\testBiMeshCalculation.m
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Bifemsh_Mesh_Opt.m
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Add_Mag_Mesh_Opt.m
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\nonlconExclusion.m
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Opt_run.m
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Opt_run_pulley.m
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Vas_Mesh_Opt.m
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Bifemsh_Mesh_Refine_Opt.m
+
+--- (5) The corrected limits (0.835 / 0.76 as sizing fractions) appear NOWHERE in campaign .m code: ---
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Functional_Routing_20261027\mechanics_20261103\probe_straight_20261103.m:19:    restBi, 0.76*restBi, tendonBi, fitn, 620, xi0, 5e5, 1e4, 6, cfgBi);
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Functional_Routing_20261027\mechanics_20261103\probe_span2_20261103.m:19:    restBi, 0.76*restBi, tendonBi, fitn, 620, xi0, 5e5, 1e4, 6, cfgBi);
+D:/GitHub/Bipedal_Robot/Code/Matlab\Mesh_Optimization\Functional_Routing_20261027\mechanics_20261103\probe_span_20261103.m:18:    restBi, 0.76*restBi, tendonBi, fitn, 620, xi0, 5e5, 1e4, 6, cfgBi);
+(no hits above = not wired anywhere)
+
+--- (6) Identified contraction constant in the knee 20 mm contexts (distinct from sizing kmax): ---
+D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization/buildKneeExtContext20mm.m:146:ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
+D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization/buildKneeFlexorContext20mm.m:141:ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
+
+--- (7) strain floors in the class (per diameter, distinct from contraction ceiling): ---
+        %% -------------- Strain floor (base Tor rule) ------------
+        function ss = strainFloor(obj)
+            switch obj.Diameter
+                case 20
+                    ss = -.03;       %maximum allowable strain
+                case 10
+                    ss = -.02;
+                otherwise
+                    ss = -.02;
+            end
+        end
+
+=== CONCLUSION ===
+FAIL as-wired: the corrected limits Lmin = 0.835*L0 (10 mm) / 0.76*L0 (20 mm) are NOT wired into any
+existing driver. A universal 25% contraction limit DOES survive in BOTH campaign-relevant sizing paths:
+  Code/Matlab/Mesh_Optimization/Opt_run_BiPulley.m:363                     kmax = 0.75 * rest
+  tmp/paper_bridge/capability_table_20261022/Opt_run_BiPulley_survey2_20261023.m:439  kmax = 0.75 * rest
+plus the legacy, UNCONSUMED LengthCheck getter (BiPam_pulley2_20261022.m:552, maxContractPercent = 0.25;
+no BiPulley-path consumer). The class takes Kmax as its 7th constructor argument, so the corrected
+per-diameter limits wire in by passing kmax = 0.835*rest (10 mm) / 0.76*rest (20 mm); this
+verification's transmission fixtures (mech4 log) already demonstrate the 20 mm limit wired that way.
+Note: the knee 20 mm contexts carry ctx.KMAX = 0.255 (Festo-identified contraction fraction at 620 kPa),
+which the new 24% sizing assumption supersedes for sizing but which remains the identified physics bound.

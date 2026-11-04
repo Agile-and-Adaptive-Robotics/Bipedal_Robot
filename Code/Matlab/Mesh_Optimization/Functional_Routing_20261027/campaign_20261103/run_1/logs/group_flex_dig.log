@@ -1,0 +1,18 @@
+=== pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
+SOLVED-FEASIBLE flex_dig rigid: fSeed 8837.6515 -> fBest 10.1886 (obj 10.1886, violEff 0.00e+00) | capsules(pose1) 1 | 129.2 s
+=== pass1 compliant | 04-Nov-2026 11:57:36 | budget 600 | envelopes 7 ===
+SOLVED-FEASIBLE flex_dig compliant: fSeed 257.7960 -> fBest 17.7267 (obj 17.7267, violEff 0.00e+00) | capsules(pose1) 1 | 136.9 s
+REFINE skipped: no rigid checkpoint to refine
+RESUME skip (feasible checkpoint): rigid f 10.1886
+RESUME skip (feasible checkpoint): compliant f 17.7267
+REFINE1 flex_dig: f 10.1886 -> 330.8325 (rejected, others 26, 43.0 s)
+RESUME skip (feasible checkpoint): rigid f 10.1886
+RESUME skip (feasible checkpoint): compliant f 17.7267
+RESUME skip refine1 (rejected): f 330.8325
+RESUME flex_dig rigid: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
+SOLVED-FEASIBLE flex_dig rigid: fSeed 8837.6515 -> fBest 10.1886 (obj 10.1886, violEff 0.00e+00) | capsules(pose1) 1 | 113.0 s
+RESUME flex_dig compliant: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 14:00:26 | budget 600 | envelopes 15 ===
+SOLVED-FEASIBLE flex_dig compliant: fSeed 257.7960 -> fBest 17.7267 (obj 17.7267, violEff 0.00e+00) | capsules(pose1) 1 | 104.1 s
+REFINE1 flex_dig: f 10.1886 -> 330.8325 (rejected, others 26, 37.7 s)
