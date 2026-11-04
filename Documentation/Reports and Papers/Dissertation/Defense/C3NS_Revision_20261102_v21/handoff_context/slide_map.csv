@@ -1,0 +1,146 @@
+﻿final_position,v20_or_appended_source_id,main_or_question,title
+1,1,main,Design and Modeling of Biomimetic Humanoid Robots
+2,2,main,Search-and-rescue robots must move reliably over uneven terrain
+3,3,main,"Braided pneumatic actuators provide lightweight, compliant actuation"
+4,4,main,Actuator force and moment arm determine joint torque
+5,5,main,Neural control depends on feedback from the moving body
+6,6,main,The robot reproduces selected human anatomy with pneumatic actuation
+7,7,main,Limited BPA contraction constrains the robot’s joint range
+8,8,main,The robot’s available torque covers only part of the human range
+9,9,main,Biology guides robot design; robot experiments test movement hypotheses
+10,10,main,Biological mechanics and control also inform prosthetic-limb design
+11,11,main,Three gaps limit prediction and testing of a biomimetic biped
+12,12,main,Braided Pneumatic Actuator Modeling
+13,13,main,BPA length is measured between the inner edges of the clamps
+14,14,main,"A force model must account for pressure, contraction, and initial length"
+15,15,main,The manufacturer tool overpredicts force by 42.1% in this short BPA
+16,16,main,Existing models mispredict force for ⌀10 mm and ⌀20 mm BPAs
+17,17,main,The test jig measures force while pressure and length are controlled
+18,18,main,We first measure maximum force at each initial BPA length
+19,19,main,Shorter ⌀10 mm BPAs produce less maximum force
+20,20,main,The ⌀20 mm BPAs show the same loss of force at short initial lengths
+21,21,main,An arbitrary pressure limit Pₘₐₓ scales the magnitude and shape of the maximum-force response
+22,22,main,Maximum free contraction still requires an individual measurement
+23,23,main,Normalization combines measurements across initial lengths
+24,24,main,The normalized model captures force for both tested BPA diameters
+25,25,main,The new model reduces the short-BPA force error from 42.1% to 4.5%
+26,26,main,The new model improves force predictions for the 20 mm BPAs
+27,128,main,The new model lowers prediction error for ⌀10 mm BPAs
+28,129,main,The new model lowers prediction error for ⌀20 mm BPAs
+29,27,main,Isometric Knee Torque
+30,28,main,Human muscle geometry provides a starting point for BPA attachment locations
+31,29,main,OpenSim muscle paths determine the human knee-torque target
+32,30,main,OpenSim provides separate knee-torque targets for flexors and extensors
+33,31,main,The robot’s available torque covers only part of the human range
+34,32,main,The test stand measures knee torque at a fixed joint angle
+35,33,main,Improved BPA force prediction does not resolve the torque mismatch
+36,34,main,The measured BPA is shorter than the rigid-geometry prediction
+37,35,main,Effective stiffness is expressed in the local attachment frame
+38,36,main,"Offsets, compliance, and bending correct the predicted BPA length"
+39,37,main,Two rotations align the bracket frame with the attachment point
+40,38,main,Force and attachment displacement must be solved together
+41,39,main,The design factors are fitted before testing new configurations
+42,40,main,The design factors improve predictions in the four pinned-flexor tests
+43,41,main,The design factors improve all three measures of pinned-flexor fit
+44,42,main,The same stiffness pair improves pinned-extensor torque predictions
+45,43,main,The four-bar knee moves its center of rotation as it flexes
+46,44,main,The design factors also improve predictions on the biomimetic knee
+47,45,main,The single-BPA flexor falls short of the human torque target
+48,46,main,Route optimization includes compliance and bending
+49,47,main,The redesigned flexor route can be checked across knee motion
+50,48,main,The redesigned flexor meets the human target at the tested angles
+51,49,main,The direct extensor route met the model target but overloaded hardware
+52,50,main,A cam increases the moment arm and reduces the required BPA force
+53,130,main,The cam changes actuator loading and the pressure needed for torque
+54,51,main,The cam-assisted extensor meets the selected human torque target
+55,131,main,Design factors can guide a more biomimetic knee mechanism
+56,52,main,Predicted mean torque coverage rises from 37.35% to 65.81%
+57,54,main,Neuromechanical Models and Tools
+58,55,main,We combined Deng’s controller with Li’s separate walker model
+59,56,main,"Hand tuning produced leg cycling, but the released walker fell"
+60,57,main,"Detailed neuromechanical models require a faster, repeatable testing workflow"
+61,58,main,The model library links simplified walkers with detailed human mechanics
+62,59,main,Neural blocks connect sensory input to actuator commands
+63,60,main,CAD assemblies bring robot geometry and actuator mechanics into the workflow
+64,61,main,The bridge exchanges muscle commands and sensory measurements
+65,62,main,"Staged experiments separate rhythm, motor output, and local feedback"
+66,63,main,Literature circuits give controlled stimuli a defined neural target
+67,64,main,Compiled execution reduced complete-process time by 6.82×
+68,65,main,Rectus femoris and hamstring pathways combine hip and knee inputs
+69,66,main,The selected circuit links rhythm to patterned motor output
+70,67,main,The human model takes repeated steps with measured support
+71,68,main,Quarter-strength contact feedback restored clearance in this test
+72,69,main,The experiments connect BPA force prediction to measured joint torque
+73,70,main,Dynamic tests must establish how the knee performs during movement
+74,71,main,"Further tests must reduce support while preserving clear, alternating steps"
+75,72,main,Contact feedback can be tested at specific gait phases
+76,73,main,Hardware tests can compare predicted and measured neural–mechanical behavior
+77,74,main,"This work advances actuator prediction, joint design, and neural testing"
+78,75,question,Biomimetic robots improve engineering and enable biological experiments
+79,76,question,Shorter BPAs deliver less maximum isometric force
+80,77,question,A biomechanical model becomes neuromechanical when control and feedback close the loop
+81,78,question,The newer bilateral-RG controller also moves with the root fixed
+82,79,question,The same mechanical coordinates can be tested with different actuator models
+83,80,question,The supported human model retains hip-angle errors across repeated cycles
+84,81,question,Contact timing adds a mechanical check beyond rhythmic joint angles
+85,82,question,Matched-input force agreement varies across the converted muscles
+86,83,question,The graphical editor exposes neural connection parameters
+87,84,question,The neuron block exposes the current balance that drives membrane voltage
+88,85,question,Synaptic current depends on conductance and the postsynaptic voltage
+89,86,question,The BPA blocks evaluate the measured force model during simulation
+90,87,question,Afferent blocks convert muscle state into sensory input
+91,88,question,The editor assembles circuits while retaining inspectable connection parameters
+92,89,question,The loaded-arm model tests a complete sensory-to-motor feedback pathway
+93,90,question,A transient input produces a measurable knee response and recovery
+94,91,question,Coupling a CAD model requires actuator and sensory interfaces
+95,92,question,A separate CAD-derived model supports whole-body integration tests
+96,93,question,Physical torque tests and neural checks answer different questions
+97,94,question,The MuJoCo–Simulink bridge links graphical controllers to an existing mechanical model
+98,95,question,"Bridge checks exercise commands, sample rates, and sensor return"
+99,96,question,The historical full-s3k trial included central sensory feedback
+100,97,question,An isolated rhythm circuit makes intrinsic neural dynamics inspectable
+101,98,question,The driven W2L core reproduces timing across NumPy and Simulink
+102,99,question,The historical syn6 controller requires a heel-pathway review
+103,100,question,"Staged tests separate rhythm, feedback, and mechanical support"
+104,101,question,A saved W2L controller reproduces its trajectory in four independent replays
+105,102,question,The supported W2L result persists in twelve local gain-perturbation reruns
+106,103,question,Experiment drivers compare a fixed controller under specified pathway removals
+107,104,question,Literature circuits define mechanistic tests for translated controllers
+108,105,question,Downstream stimuli can delete motor bursts while preserving rhythm phase
+109,106,question,Measured actuator and joint results make mechanical design choices testable
+110,107,question,Circuit tests connect a published control hypothesis to an implemented model
+111,108,question,Numerical agreement and physiological pathway checks answer different questions
+112,109,question,Matched rhythm cores reproduce the same driven bursts
+113,110,question,The knee model produces a transient sensory response
+114,111,question,Physical dimensions differ from prediction settings
+115,112,question,Stimulation duration changes the deletion interpretation
+116,113,question,The submitted CAD model used ideal tensions and substantial support
+117,114,question,Reported force comparisons favor the model in the shown cases
+118,115,question,Joint motion and stance differ from the OpenSim walking reference
+119,116,question,The saved AH001 replay shows supported hybrid motion
+120,117,question,The corrected model predicts a cam route with torque headroom
+121,118,question,Half-weight support delays the fall but does not stabilize either model
+122,119,question,PF and RG pulses produce different motor responses in the saved controllers
+123,120,question,The saved controllers show different phase responses with mechanical contact
+124,132,question,The same selected controller passed the first four physical stages
+125,133,question,Measured vertical assistance includes lift and restraint
+126,134,question,NumPy and Simulink reproduce the same driven W2L rhythm
+127,135,question,Sensory feedback reduces forearm sag in the loaded-arm test
+128,136,question,The circuit keeps motor conversion and force feedback explicit
+129,137,question,Separate sensory maps preserve Ia and II input identities
+130,138,question,Route redesign prioritizes the worst torque shortfall
+131,139,question,Route search penalizes violations of actuator and packaging limits
+132,140,question,A global search supplies candidates for local refinement
+133,141,question,Design factors minimize three normalized torque-error measures
+134,142,question,One stiffness pair is shared across flexor and extensor tests
+135,143,question,Saved solver settings distinguish identification from route design
+136,144,question,The adopted flexor is selected from a trade-off among torque errors
+137,145,question,The extensor fit preserves the adopted stiffness pair
+138,146,question,χ₄ remains a hypothesis for additional compliance
+139,121,question,SADb connects a selected paper to its references and citing papers
+140,122,question,SADb combines searchable records with an interactive citation map
+141,123,question,"SADb makes 1,393 literature records searchable in one offline collection"
+142,124,question,A curated finding can suggest a testable robot hypothesis
+143,125,question,Citation links help researchers follow related work
+144,126,question,Pivot selections lead back to the records underlying a comparison
+145,127,question,SADb makes sensory evidence searchable and traceable

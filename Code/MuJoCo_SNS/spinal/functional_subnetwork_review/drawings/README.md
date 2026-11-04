@@ -1,5 +1,7 @@
 # Connection drawings
 
+**Coverage is incomplete across controller families.** See ../CONTROLLER_AND_EDITOR_STATUS.md. Syn6 and RF/HAM sheets in the combined PDF use historical source selections; the newer reviewed replacements are demonstrated in the isolated editor preview at D:/Users/Ben Bolen/NeuroGraphics_20261102/editor_preview/Connectome_Schematic_Preview.html. They are not silently substituted into the old PDF.
+
 Current expanded set: **full_motor_loops/RG_PF_MN_Full_Feedback.pdf** (16 pages). Pages 13–14 now include muscle-specific Ia/II/Ib/Renshaw circuitry, spindle and tendon-force symbols, circular AD/maps, and directed physical muscle pathways. The two expanded sheets are also available as full_motor_loops/Expanded_MN_Feedback_and_Muscle_Maps.pdf. Previous versions remain preserved.
 
 Latest combined set: **motor_examples/RG_PF_and_Representative_MN_Layers.pdf** (16 pages). Five representative MN-layer examples follow the RG/PF diagrams. The five new pages are also available separately as motor_examples/Representative_MN_Layers.pdf. See that folder's README.md for source distinctions and scope.
