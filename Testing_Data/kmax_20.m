@@ -18,13 +18,23 @@ opts.VariableNames = ["Var3", "Var4", "Var5", "Var6"];
 opts.VariableTypes = ["double", "double", "double", "double"];
 
 % Import the data
-% BPATestResults = readtable("D:\Github\Muscle_Sensory\BPA_Static_Characterization_Test\20mm_maxForce\BPA Test Results.xlsx", opts, "UseExcel", false);
-BPATestResults = readtable("C:\Users\Ben\Documents\GitHub\Muscle_Sensory\BPA_Static_Characterization_Test\20mm_maxForce\BPA Test Results.xlsx", opts, "UseExcel", false);
+BPATestResults = readtable("BPA_Test_Results-Moe.xlsx", opts, "UseExcel", false);   %Now in the testing Data. Original in Muscle Sensory repo, moe's branch.
+% BPATestResults =
+% readtable("D:\Github\Muscle_Sensory\BPA_Static_Characterization_Test\20mm_maxForce\BPA
+% Test Results.xlsx", opts, "UseExcel", false); %original file
+% BPATestResults = readtable("C:\Users\Ben\Documents\GitHub\Muscle_Sensory\BPA_Static_Characterization_Test\20mm_maxForce\BPA Test Results.xlsx", opts, "UseExcel", false);
 %% Convert to output type
 BPATestResults = table2array(BPATestResults);
-kmax20 = BPATestResults(:,[1 2 4]);
+kmax20 = BPATestResults(:,[1 2 4]);  %resting length (cm), max (620 kPa) contracted length (cm), kmax percent
 kmax20 = sortrows(kmax20,1,"ascend");
 
 %% Clear temporary variables
-clear opts BPATestResults
+% clear opts BPATestResults
 % save kmax_20.mat
+
+%% Plot the results
+x = kmax20(:,1)/100;
+y = kmax20(:,3);
+
+figure
+scatter(x,y)
