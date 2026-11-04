@@ -12,7 +12,7 @@ def build(destination):
     a=source.index('function persist() {');b=source.index('\nfunction renderTabs()',a)
     source=source[:a]+"function persist() { if (window.desktopChanged) window.desktopChanged(); }\n"+source[b:]
     source=source.replace('Connectome Block Editor v3.3','Connectome Editor Desktop')
-    source=source.replace('const TYPES = {','const TYPES = {\n  ADAPTER:{shape:"circle",color:"#FA8E80",w:2,grp:"Physical maps"},\n  SPINDLE:{shape:"rect",color:"#C7AA78",w:2,grp:"Physical maps"},\n  TENDON:{shape:"rect",color:"#C7AA78",w:2,grp:"Physical maps"},')
+    source=source.replace('const TYPES = {','const TYPES = {\n  DRIVE:{shape:"rect",color:"#9AD8F1",w:2,grp:"Descending drive"},\n  MLR:{shape:"rect",color:"#9AD8F1",w:2,grp:"Descending drive"},\n  PF:{shape:"rect",color:"#FFE52E",w:2,grp:"Pattern"},\n  ADAPTER:{shape:"circle",color:"#FA8E80",w:2,grp:"Physical maps"},\n  SPINDLE:{shape:"rect",color:"#C7AA78",w:2,grp:"Physical maps"},\n  TENDON:{shape:"rect",color:"#C7AA78",w:2,grp:"Physical maps"},')
     source=source.replace('Math.hypot(hp.x - n.x, hp.y - n.y) < 24','desktopNodeHit(n,hp)')
     # The desktop drag wrapper snapshots before movement; do not add a second
     # post-movement snapshot, which would consume the first Undo without moving.

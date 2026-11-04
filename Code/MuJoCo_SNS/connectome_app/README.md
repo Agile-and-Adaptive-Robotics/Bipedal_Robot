@@ -12,6 +12,28 @@ and native `.sns.json` projects; compiled audit ledgers require explicit adapter
 
 ## Editing and files
 
+To open the prepared controllers, relaunch the desktop app and select **File →
+Open controller**. The menu distinguishes reviewed Syn6, the saved s3k and
+w2lvar standing conditions, and W2L108 GENTLE108. These are separate conditions;
+the menu does not relabel a standing archive as a later Hunt result.
+
+Their working copies are in
+`D:\Users\Ben Bolen\Connectome_Editor_Projects\Controllers`. You can also use
+**Open / Ctrl+O** and select a `_hierarchy.sns.json` file there. Double-click a
+layer module, then Left or Right, to reach its cells. **F4** returns one level.
+The companion `_exact.sns.json` files contain the same individual connections
+in a flat view. The library retains zero-conductance definitions and source
+records. A wire marked **×N** displays N individual synapses; selecting it lets
+you choose an individual member and edit its parameters.
+
+A template starts without a file location. Its first **Save** therefore opens
+**Save As**. Choose a name in the project folder above. Subsequent **Ctrl+S**
+updates that project file. Opening a controller from the new menu opens its
+already saved working copy, so ordinary Save has a destination. Use **File →
+Open project folder** whenever you want to find your files. Saving a project
+writes the editor JSON; native AnimatLab files and Python controller source
+require separate format adapters.
+
 - **Save / Ctrl+S:** write the current project, including edits inside a module.
 - **Save As / Ctrl+Shift+S:** choose a new file and continue editing that copy.
 - **Save Subnetwork As:** save the current module as a separate project. Its

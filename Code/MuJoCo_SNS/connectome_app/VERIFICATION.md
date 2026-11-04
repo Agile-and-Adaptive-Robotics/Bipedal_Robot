@@ -1,5 +1,31 @@
 # Desktop milestone verification
 
+## Controller library update
+
+The controller library adds native-file menu entries and full graph hierarchy
+copies. Static checks preserve all cells, individual synaptic parameters, source
+records, zero-conductance entries, and nested endpoint paths: reviewed Syn6
+794/3,200; saved standing s3k 410/1,186; saved standing w2lvar 888/7,866; and
+W2L108 GENTLE108 108/216. The reviewed Syn6 source is the designated final
+compiled graph with SHA256
+`697678b3281d7fb3b2a9322c2bc77b0671e7d05beb932fcb4364b8aa5ddaddea`.
+It remains separate from the older standing Syn6 files.
+
+Seven Python checks pass. The frontend checks also pass for all four libraries:
+2,292 / 1,162 / 2,728 / 164 top-level actual connections are represented by
+15 / 12 / 20 / 14 view wires, respectively. Bundling changes no serialized model
+field. Selecting a view wire exposes its individual member connections.
+The new app loads W2L108 and exposes all bundle counts in its accessibility
+tree, with no JavaScript errors logged. Desktop preview activation is limited
+by the Windows automation environment; this is separate from loading the file.
+The user's older editor window and its unsaved edits were left open.
+
+No neural or body integration was executed for this update. Existing original
+model sources were read as saved data. Unsupported native/ionic model dynamics
+remain preserved source records; this does not add a whole-controller simulator.
+
+## Original first milestone
+
 Verified on EB475WS4 with the separate ConnectomeEditorRuntime environment.
 
 - Native Save As created

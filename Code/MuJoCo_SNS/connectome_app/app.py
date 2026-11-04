@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse,json,os,sys
 from pathlib import Path
 from PySide6.QtCore import QObject,Signal,Slot,QUrl,QTimer
-from PySide6.QtGui import QAction,QKeySequence
+from PySide6.QtGui import QAction,QKeySequence,QDesktopServices
 from PySide6.QtWidgets import QApplication,QMainWindow,QFileDialog,QMessageBox
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEnginePage,QWebEngineProfile,QWebEngineSettings
@@ -84,7 +84,23 @@ class Window(QMainWindow):
             action=QAction(label,self)
             if shortcut:action.setShortcut(QKeySequence(shortcut))
             action.triggered.connect(lambda checked=False,script=js:self.page.runJavaScript(script));menu.addAction(action)
+        library=menu.addMenu('Open controller')
+        for family in ('syn6','s3k','w2lvar','W2L108'):
+            description={'syn6':'syn6 — reviewed final','s3k':'s3k — saved standing','w2lvar':'w2lvar — saved standing','W2L108':'W2L108 — GENTLE108'}[family]
+            action=QAction(description,self);action.triggered.connect(lambda checked=False,key=family:self.open_controller(key));library.addAction(action)
+        folder_action=QAction('Open project folder',self);folder_action.triggered.connect(lambda:QDesktopServices.openUrl(QUrl.fromLocalFile(str(workspace()))));menu.addAction(folder_action)
         helpmenu=self.menuBar().addMenu('&Help');action=QAction('Commands',self);action.triggered.connect(lambda:QMessageBox.information(self,'Editor commands','Original editor commands are retained.\n\nDrag palette → canvas: place\nShift/Alt-drag or Alt-click two cells: connect\nRubber-band / Ctrl-click: select\nDrag selection: group move\nAlt-click wire: bend; drag pink handle\nCtrl+G: pack subnetwork; Ctrl+Shift+G: unpack\nDouble-click module: enter; F4/Esc: leave\nF2/F3: hide/show layers\nCtrl+C/V: copy/paste\nDelete: delete selected graph elements\nCtrl+Z/Y: undo/redo\nCtrl+S: save; Ctrl+Shift+S: save as\nF5: build neural model without running it.'));helpmenu.addAction(action)
+    def open_controller(self,family):
+        try:
+            folder=workspace()/'Controllers';index=folder/'LIBRARY_INDEX.json'
+            if index.exists():
+                row=next(r for r in json.loads(index.read_text()) if r['family']==family);path=Path(row['hierarchy'])
+            else:path=folder/(('syn6_reviewed' if family=='syn6' else family)+'_hierarchy.sns.json')
+            if not path.exists():
+                from controller_library import prepare
+                prepare(path.parent)
+            self.bridge.open_path(path)
+        except Exception as e:self.bridge.report.emit('Could not open controller: '+str(e))
     def initial_document(self,path):
         if self.initial_loaded:return
         self.initial_loaded=True
