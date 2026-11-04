@@ -1,0 +1,33 @@
+{
+  "status": "Catalog-dimensional candidates and preliminary packaging envelopes; not released hardware designs",
+  "retrieved_date_Pacific": "2026-11-03",
+  "units": "mm and N unless named otherwise",
+  "sources": {
+    "mcmaster": "https://www.mcmaster.com/products/cable-sheaves/",
+    "shimano": "https://bike.shimano.com/en-NA/products/service-and-upgrade-parts/pdp.P-Y80098411.html",
+    "jagwire": "https://jagwire.com/files/general/2021_Jagwire_AM_Catalog_LowRes.pdf",
+    "sava_casing": "https://www.savacable.com/galvanized-steelhdpe-lining-push-pull-casing-1958",
+    "sava_bends": "https://www.savacable.com/blog/push-pull-cable-assemblies-everything-you-need-to-know"
+  },
+  "families": [
+    {"id":"S", "supplier":"McMaster-Carr", "sheave_part":"9466T44", "rope_diameter_mm":1.5875, "od_mm":31.75, "width_mm":6.35, "catalog_pulley_diameter_mm":26.9875, "bore_mm":4.7625, "catalog_capacity_lbf":90, "catalog_capacity_N":400.339945,
+     "proposed_plate_thickness_mm":3, "proposed_side_clearance_mm":1, "proposed_radial_guard_mm":2,
+     "capacity_basis":"Published weight capacity; interpretation for dynamic radial shaft loading requires confirmation", "assembly_rating_N":null},
+    {"id":"M", "supplier":"McMaster-Carr", "sheave_part":"9466T41", "rope_diameter_mm":2.38125, "od_mm":38.1, "width_mm":7.9375, "catalog_pulley_diameter_mm":31.75, "bore_mm":9.525, "catalog_capacity_lbf":150, "catalog_capacity_N":667.233242,
+     "proposed_plate_thickness_mm":3, "proposed_side_clearance_mm":1, "proposed_radial_guard_mm":2,
+     "capacity_basis":"Published weight capacity; interpretation for dynamic radial shaft loading requires confirmation", "assembly_rating_N":null},
+    {"id":"L", "supplier":"McMaster-Carr", "sheave_part":"3434T78", "rope_diameter_mm":3.175, "od_mm":63.5, "width_mm":12.7, "catalog_pulley_diameter_mm":55.5625, "bore_mm":12.7, "catalog_capacity_lbf":675, "catalog_capacity_N":3002.549589,
+     "proposed_plate_thickness_mm":4, "proposed_side_clearance_mm":1, "proposed_radial_guard_mm":2,
+     "capacity_basis":"Published weight capacity; interpretation for dynamic radial shaft loading requires confirmation", "assembly_rating_N":null}
+  ],
+  "bowden_candidates": [
+    {"id":"bicycle", "inner_part":"Shimano Y80098411", "inner_diameter_mm":1.6,"inner_stock_length_mm":2050,"housing_part":"Jagwire KEB-SL", "housing_od_mm":5,"ferrule_part":"Jagwire BOT192-BJ","ferrule_od_mm":6,"ferrule_length_mm":null,"working_load_N":null,"minimum_bend_radius_mm":null,
+     "preview_ferrule_length_mm":12,"preview_stop_od_mm":12,"preview_stop_length_mm":15,"preview_bend_radius_mm":75,
+     "status":"Bicycle dimensional reference; no verified assembly load rating or minimum bend radius. Preview values are design assumptions."},
+    {"id":"industrial_3_32", "supplier":"Sava", "part":"C277PL", "item":"100714", "casing_id_mm":3.556,"metal_casing_od_mm":7.0358,"finished_od_mm":7.747,"mating_cable_mm":2.3622,"working_load_N":null,"minimum_bend_radius_mm":null,
+     "status":"Catalog casing option; obtain assembly rating and matching termination dimensions before use. Does not cover a 1/8 inch inner cable."}
+  ],
+  "bpa_rules": {"allowed_nominal_diameters_mm":[10,20],"contraction_fraction":{"10":0.165,"20":0.24},"initial_screen":"Choose 10 mm as an initial candidate if target MIF <= about 0.5 * Fmax10(L0=Lmax of replaced muscle); then verify torque, strain, transmission and packaging. This is not a hard threshold or a claim that all muscles use 20 mm.","force_model":"Code/Matlab/Functions/maxBPAforce.m", "pressure_kPa":620},
+  "centerline_rule":"For every candidate attachment, transform into pelvis coordinates and require seed_side_sign * z_pelvis >= 0 at every evaluated pose. Preserve side ownership; never take abs(z) as a correction. Handle near-zero seed points explicitly.",
+  "modeling_limits":["Catalog sheave diameter is not assumed to be the wire pitch diameter.","Groove profile is a schematic interpolation between catalog envelope dimensions, not supplier CAD.","Plate, guard, ferrule length, boss and bend-radius preview dimensions are proposed, not catalog dimensions.","No family has an assembly WLL until cable, terminations, pin, bearings and bracket have been checked.","No high-load bicycle housing is approved merely from its 5 mm diameter."]
+}

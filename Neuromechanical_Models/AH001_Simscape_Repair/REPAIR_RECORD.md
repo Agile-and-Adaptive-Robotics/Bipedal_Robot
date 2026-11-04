@@ -328,3 +328,12 @@ that fixed the knees):
   tibia part datum (no clearance work per Ben's direction); right foot uses
   the LEFT-foot CAD un-mirrored; mount height along tibia to be set when the
   true housing datum is measured (ties to the tibia 002 decision).
+
+## 10. Visualization postmortem (2026-11-02, Ben's direction)
+
+The animated knee-sweep HTML (robot_bpa27_knee_sweep.html) is DEFECTIVE
+(slider inert, feet absent, leg parts break under rotation, surfaces ghostly)
+and the static render is mediocre; both are documented with root causes and a
+salvage plan in `VISUALIZATION_REPORT_20261102.md` (includes the Blender
+assessment and the modular data-layer contract for optimizer re-runs). The
+Simscape model, route kinematics numbers, BPA law, and STLs remain verified.
