@@ -1,0 +1,25 @@
+=== pass1 rigid | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE rect_fem rigid: fSeed 100.5498 -> fBest 97.8346 (obj 97.8346, violEff 0.00e+00) | capsules(pose1) 1 | 141.4 s
+=== pass1 compliant | 04-Nov-2026 11:52:14 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE rect_fem compliant: fSeed 1532.7185 -> fBest 48.7409 (obj 48.7409, violEff 0.00e+00) | capsules(pose1) 1 | 179.3 s
+REFINE skipped: no rigid checkpoint to refine
+RESUME skip (feasible checkpoint): rigid f 97.8346
+RESUME skip (feasible checkpoint): compliant f 48.7409
+REFINE1 rect_fem: f 97.8346 -> 396.7863 (rejected, others 26, 35.3 s)
+RESUME skip (feasible checkpoint): rigid f 97.8346
+RESUME skip (feasible checkpoint): compliant f 48.7409
+RESUME skip refine1 (rejected): f 396.7863
+RESUME rect_fem rigid: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) rect_fem rigid: fSeed 487.6202 -> fBest 296.4813 (obj 61.6960, violEff 2.35e-02) | capsules(pose1) 2 | 78.4 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.348e-02 (dimensional 2.358e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME rect_fem compliant: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:55:35 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) rect_fem compliant: fSeed 1892.2336 -> fBest 286.2052 (obj 52.0793, violEff 2.34e-02) | capsules(pose1) 2 | 135.4 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.341e-02 (dimensional 2.351e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE1 rect_fem: f 296.4813 -> 356.1085 (rejected, others 26, 28.7 s)
+RESUME rect_fem rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 16:24:00 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) rect_fem rigid: fSeed 551.9817 -> fBest 272.2777 (obj 36.7006, violEff 2.36e-02) | capsules(pose1) 2 | 127.8 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.356e-02 (dimensional 2.366e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME rect_fem compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 16:26:08 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) rect_fem compliant: fSeed 1934.8062 -> fBest 311.6167 (obj 77.5274, violEff 2.34e-02) | capsules(pose1) 2 | 155.7 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.341e-02 (dimensional 2.351e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 356.1085

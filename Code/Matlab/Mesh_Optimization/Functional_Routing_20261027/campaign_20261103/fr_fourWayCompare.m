@@ -41,7 +41,7 @@ models = struct( ...
     fullfile(C.repo, 'Solid_Models', 'OpenSim', 'Gait2392_Robotbody', ...
     'ConnorBipedal.osim')});
 
-logFile = fullfile('output', 'four_way_compare.log');
+logFile = fullfile('output', 'four_way_compare_v2.log');
 if ~exist('output', 'dir'); mkdir('output'); end
 fid = fopen(logFile, 'w');
 cleanupFid = onCleanup(@() fclose(fid));
@@ -50,7 +50,7 @@ fprintf(fid, ['four-way compare | %s | gridN %d\n' ...
     'robot models are out-of-sample evaluations\n'], datetime('now'), ...
     gridN);
 
-csvFile = fullfile('output', 'four_way_compare.csv');
+csvFile = fullfile('output', 'four_way_compare_v2.csv');
 fcsv = fopen(csvFile, 'w');
 cleanupCsv = onCleanup(@() fclose(fcsv)); %#ok<NASGU>
 fprintf(fcsv, ['group,branch,model,muscle,signedMeetFrac,' ...

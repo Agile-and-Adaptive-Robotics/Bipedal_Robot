@@ -25,13 +25,13 @@ else; groupsList = arrayfun(@(g) g, sz.groups, 'UniformOutput', false);
 end
 ck1 = fullfile(C.camp, 'run_1', 'checkpoints');
 outDir = fullfile(C.camp, 'output');
-curveDir = fullfile(outDir, 'torque_curves');
+curveDir = fullfile(outDir, 'torque_curves_v2');
 if ~exist(curveDir, 'dir'); mkdir(curveDir); end
 
-fcsv = fopen(fullfile(outDir, 'deliverable_status.csv'), 'w');
+fcsv = fopen(fullfile(outDir, 'deliverable_status_v2.csv'), 'w');
 fprintf(fcsv, ['group,branch,status,config,fSeed,fBest,violEff,' ...
     'topViolator,meetFrac,tauPeakTarget_Nm,tauPeakRobot_Nm\n']);
-fdsp = fopen(fullfile(outDir, 'deliverable_displacement.csv'), 'w');
+fdsp = fopen(fullfile(outDir, 'deliverable_displacement_v2.csv'), 'w');
 fprintf(fdsp, ['group,branch,mvidx,row,bone,patchRadius_mm,' ...
     'seedX_mm,seedY_mm,seedZ_mm,finalX_mm,finalY_mm,finalZ_mm,' ...
     'displacement_mm\n']);
@@ -85,13 +85,29 @@ for gi = 1:numel(groupsList)
         projD(abs(tT(1:nn2)) <= 1e-12) = 0;
         meetFrac = mean(tP(1:nn2) .* projD >= ...
             abs(tT(1:nn2)) - 1e-9);
+        % Ben's two singular metrics (2026-11-04): % of human torque
+        % magnitude met-or-beaten, and % of RoM with at least active force
+        pctTorqueMeet = 100 * meetFrac;
+        actVec = abs(tP(1:nn2)) > 1e-6;          % any active force
+        pctRoMActive = 100 * mean(actVec);
+        act5 = tP(1:nn2) .* projD(1:nn2) >= 0.05 * abs(tT(1:nn2));
+        pctRoMActive5 = 100 * mean(act5);
         topV = '';
         if isfield(rep, 'topViolator'); topV = rep.topViolator; end
         topV = strrep(topV, ',', ';'); topV = strrep(topV, newline, ' ');
-        fprintf(fcsv, '%s,%s,%s,%s,%.4f,%.4f,%.3e,"%s",%.4f,%.3f,%.3f\n', ...
-            gsz.name, b, st, cfgStr, S.info.fSeed, S.fBest, ...
-            rep.violation, topV, meetFrac, max(abs(tauT)), ...
-            max(abs(rep.tauPrimary)));
+        fprintf(fcsv, ['%s,%s,%s,%s,%.4f,%.4f,%.3e,"%s",%.4f,%.3f,%.3f,' ...
+            '%.1f,%.1f,%.1f\n'], gsz.name, b, st, cfgStr, S.info.fSeed, ...
+            S.fBest, rep.violation, topV, meetFrac, max(abs(tauT)), ...
+            max(abs(rep.tauPrimary)), pctTorqueMeet, pctRoMActive, ...
+            pctRoMActive5);
+        % per-pose MATLAB record (Ben: save the range for each in matlab)
+        mDir = fullfile(outDir, 'metrics');
+        if ~exist(mDir, 'dir'); mkdir(mDir); end
+        mFile = fullfile(mDir, sprintf('%s_%s.mat', gsz.name, b));
+        degV = cs.passes{1}.th1(1:nn2) * 180 / pi;
+        save(mFile, 'tauT', 'tP', 'projD', 'meetFrac', 'pctTorqueMeet', ...
+            'pctRoMActive', 'pctRoMActive5', 'actVec', 'act5', 'degV', ...
+            '-v7');
         if strcmp(st, 'solved'); nSolved = nSolved + 1;
         elseif strcmp(st, 'best-infeasible'); nBI = nBI + 1;
         else; nFailed = nFailed + 1;
@@ -122,6 +138,9 @@ for gi = 1:numel(groupsList)
     % signed curve CSV (target + both branches where present)
     cf = fullfile(curveDir, sprintf('%s.csv', gsz.name));
     fc2 = fopen(cf, 'w');
+    if fc2 == -1
+        error('fr_deliverables:fopen', 'cannot open %s for writing', cf);
+    end
     fprintf(fc2, 'cell,deg,human_target_Nm,robot_rigid_Nm,robot_compliant_Nm\n');
     rr = struct('rigid', [], 'compliant', []);
     for branch = {'rigid', 'compliant'}

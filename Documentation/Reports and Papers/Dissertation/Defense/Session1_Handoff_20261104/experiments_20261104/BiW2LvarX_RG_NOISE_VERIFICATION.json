@@ -1,0 +1,821 @@
+{
+  "cases": [
+    {
+      "label": "zero",
+      "sigma_nA": 0.0,
+      "seed": 41001,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\zero",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.74,
+            7.046,
+            8.356000000000002,
+            9.670000000000002,
+            10.982000000000001,
+            12.294,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.3000000000000003,
+        "period_cv": 0.008536696131938783,
+        "bilateral_phase_error": 0.09327680150520916,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.46576937126136,
+          39.66646727014467
+        ],
+        "hip_ranges_deg": [
+          62.86491519313944,
+          62.711708851261236
+        ],
+        "autocorrelation": [
+          0.9997007639108404,
+          0.9998784119273197
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.7179745408236142,
+        -1.8008293752985627
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986024544282449,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.0014340654261941923,
+        "mean_excitation_squared": 0.0012971090112290664,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.002369328271330292,
+        "lateral_harness_peak_bw": 0.019637357565394014,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.03839739950279448,
+        "late_window_available": true
+      },
+      "wall_s": 29.53493979992345
+    },
+    {
+      "label": "0.01_41001",
+      "sigma_nA": 0.01,
+      "seed": 41001,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\0.01_41001",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.74,
+            7.046,
+            8.356000000000002,
+            9.670000000000002,
+            10.982000000000001,
+            12.294,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.3000000000000003,
+        "period_cv": 0.008536696131938783,
+        "bilateral_phase_error": 0.09327680150520916,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.525127719773046,
+          39.623744337026174
+        ],
+        "hip_ranges_deg": [
+          62.86576547563412,
+          62.69487590615344
+        ],
+        "autocorrelation": [
+          0.9996993682197097,
+          0.9998730168913724
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.7146115716485637,
+        -1.7316598983607678
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986017943517611,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.0014340958293588915,
+        "mean_excitation_squared": 0.0012971388481189514,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.0023796814532430414,
+        "lateral_harness_peak_bw": 0.020817904638705073,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.03833673677638855,
+        "late_window_available": true
+      },
+      "wall_s": 32.757299799937755,
+      "observed_noise": {
+        "channels": 4,
+        "mean_nA": [
+          -0.0005724501042273951,
+          0.0005161742515492521,
+          -0.0007466512076321968,
+          0.0005323205678570474
+        ],
+        "std_nA": [
+          0.010141615770365766,
+          0.009529144860144443,
+          0.010075078052517816,
+          0.009774056125062432
+        ]
+      }
+    },
+    {
+      "label": "0.01_41002",
+      "sigma_nA": 0.01,
+      "seed": 41002,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\0.01_41002",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.74,
+            7.046,
+            8.356000000000002,
+            9.670000000000002,
+            10.982000000000001,
+            12.296000000000001,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.3000000000000003,
+        "period_cv": 0.008559757937484681,
+        "bilateral_phase_error": 0.09301924841317301,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.46092253963221,
+          39.70495474862549
+        ],
+        "hip_ranges_deg": [
+          62.873296658029716,
+          62.70685403083987
+        ],
+        "autocorrelation": [
+          0.9996983335120385,
+          0.9998790132049649
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.630350487802023,
+        -1.770055315630253
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986130971399007,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.001434076497041839,
+        "mean_excitation_squared": 0.0012971156619032375,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.0023758662298028403,
+        "lateral_harness_peak_bw": 0.01954259393636629,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.038374766734488155,
+        "late_window_available": true
+      },
+      "wall_s": 32.9146897001192,
+      "observed_noise": {
+        "channels": 4,
+        "mean_nA": [
+          -0.000873593690966412,
+          1.6309748244772988e-05,
+          0.0007709601847422799,
+          -0.0003155554720437321
+        ],
+        "std_nA": [
+          0.00939492384473419,
+          0.00999745358973307,
+          0.009870803093698892,
+          0.009358653776877458
+        ]
+      }
+    },
+    {
+      "label": "0.01_41003",
+      "sigma_nA": 0.01,
+      "seed": 41003,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\0.01_41003",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.74,
+            7.046,
+            8.356000000000002,
+            9.668000000000001,
+            10.982000000000001,
+            12.294,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.3000000000000003,
+        "period_cv": 0.008536696131938783,
+        "bilateral_phase_error": 0.09353476651744415,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.59385042970784,
+          39.64881707602389
+        ],
+        "hip_ranges_deg": [
+          62.85515608268193,
+          62.694130240364686
+        ],
+        "autocorrelation": [
+          0.999691776730337,
+          0.9998781005044207
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.742049642919305,
+        -1.77533588242813
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986003835429983,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.001434037133340336,
+        "mean_excitation_squared": 0.0012970832636458062,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.002410748621997021,
+        "lateral_harness_peak_bw": 0.020923190502219934,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.038523061448580656,
+        "late_window_available": true
+      },
+      "wall_s": 31.673439499922097,
+      "observed_noise": {
+        "channels": 4,
+        "mean_nA": [
+          9.536531486869093e-05,
+          5.312944401044975e-05,
+          -0.00010408506101167476,
+          -0.0007813637407804179
+        ],
+        "std_nA": [
+          0.009784607216520746,
+          0.01016102433325263,
+          0.0100849174130175,
+          0.010428578705559032
+        ]
+      }
+    },
+    {
+      "label": "0.025_41001",
+      "sigma_nA": 0.025,
+      "seed": 41001,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\0.025_41001",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.742,
+            7.046,
+            8.356000000000002,
+            9.670000000000002,
+            10.982000000000001,
+            12.294,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.2990000000000004,
+        "period_cv": 0.008482760290509215,
+        "bilateral_phase_error": 0.09309963208196285,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.558262872891284,
+          39.68051533262938
+        ],
+        "hip_ranges_deg": [
+          62.865005018093655,
+          62.665350626795934
+        ],
+        "autocorrelation": [
+          0.9996970192477092,
+          0.9998584075674771
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.7111323247530161,
+        -1.6343024665261185
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986007545690788,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.0014341301106637057,
+        "mean_excitation_squared": 0.0012971738518626772,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.002411428195050541,
+        "lateral_harness_peak_bw": 0.02221337688405594,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.038308522017005395,
+        "late_window_available": true
+      },
+      "wall_s": 34.07066969992593,
+      "observed_noise": {
+        "channels": 4,
+        "mean_nA": [
+          -0.001431125260568488,
+          0.0012904356288731304,
+          -0.0018666280190804921,
+          0.0013308014196426183
+        ],
+        "std_nA": [
+          0.02535403942591442,
+          0.023822862150361113,
+          0.025187695131294544,
+          0.024435140312656086
+        ]
+      }
+    },
+    {
+      "label": "0.025_41002",
+      "sigma_nA": 0.025,
+      "seed": 41002,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\0.025_41002",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.74,
+            7.046,
+            8.356000000000002,
+            9.670000000000002,
+            10.982000000000001,
+            12.296000000000001,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.3000000000000003,
+        "period_cv": 0.008559757937484681,
+        "bilateral_phase_error": 0.09301924841317301,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.589144350582366,
+          39.69231177760834
+        ],
+        "hip_ranges_deg": [
+          62.88647017152487,
+          62.70053248138524
+        ],
+        "autocorrelation": [
+          0.9996911508690989,
+          0.9998797645743454
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.6846456821768094,
+        -1.7853498329123092
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986085927976501,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.0014340667782617713,
+        "mean_excitation_squared": 0.0012970999814495667,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.0024621921772491773,
+        "lateral_harness_peak_bw": 0.021552652163682406,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.03847404315492752,
+        "late_window_available": true
+      },
+      "wall_s": 40.253501900006086,
+      "observed_noise": {
+        "channels": 4,
+        "mean_nA": [
+          -0.002183984227416031,
+          4.0774370611932615e-05,
+          0.0019274004618557003,
+          -0.0007888886801093298
+        ],
+        "std_nA": [
+          0.02348730961183548,
+          0.024993633974332678,
+          0.024677007734247237,
+          0.02339663444219365
+        ]
+      }
+    },
+    {
+      "label": "0.025_41003",
+      "sigma_nA": 0.025,
+      "seed": 41003,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\0.025_41003",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.74,
+            7.044,
+            8.356000000000002,
+            9.668000000000001,
+            10.982000000000001,
+            12.294,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.299,
+        "period_cv": 0.008605696145395789,
+        "bilateral_phase_error": 0.09379407395037716,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.581759333670945,
+          39.73284456580118
+        ],
+        "hip_ranges_deg": [
+          62.83771237531418,
+          62.680685769037154
+        ],
+        "autocorrelation": [
+          0.9996895237180723,
+          0.999874585168725
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.7551832518461024,
+        -1.7236459322074928
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986087932471788,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.0014339877740027534,
+        "mean_excitation_squared": 0.0012970379807867925,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.0024337849534709047,
+        "lateral_harness_peak_bw": 0.021480121026142777,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.03866147609017656,
+        "late_window_available": true
+      },
+      "wall_s": 39.194002699805424,
+      "observed_noise": {
+        "channels": 4,
+        "mean_nA": [
+          0.00023841328717172722,
+          0.000132823610026124,
+          -0.00026021265252918645,
+          -0.001953409351951045
+        ],
+        "std_nA": [
+          0.02446151804130187,
+          0.02540256083313158,
+          0.025212293532543752,
+          0.02607144676389759
+        ]
+      }
+    },
+    {
+      "label": "repeat",
+      "sigma_nA": 0.025,
+      "seed": 41001,
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\repeat",
+      "exit_code": 0,
+      "accepted": true,
+      "principal": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.742,
+            7.046,
+            8.356000000000002,
+            9.670000000000002,
+            10.982000000000001,
+            12.294,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.2990000000000004,
+        "period_cv": 0.008482760290509215,
+        "bilateral_phase_error": 0.09309963208196285,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.558262872891284,
+          39.68051533262938
+        ],
+        "hip_ranges_deg": [
+          62.865005018093655,
+          62.665350626795934
+        ],
+        "autocorrelation": [
+          0.9996970192477092,
+          0.9998584075674771
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "maximum_knee_extension_deg": [
+        -1.7111323247530161,
+        -1.6343024665261185
+      ],
+      "measured": {
+        "mean_spring_support_bw": 0.9986007545690788,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.0014341301106637057,
+        "mean_excitation_squared": 0.0012971738518626772,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.002411428195050541,
+        "lateral_harness_peak_bw": 0.02221337688405594,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.038308522017005395,
+        "late_window_available": true
+      },
+      "wall_s": 33.84596930001862,
+      "observed_noise": {
+        "channels": 4,
+        "mean_nA": [
+          -0.001431125260568488,
+          0.0012904356288731304,
+          -0.0018666280190804921,
+          0.0013308014196426183
+        ],
+        "std_nA": [
+          0.02535403942591442,
+          0.023822862150361113,
+          0.025187695131294544,
+          0.024435140312656086
+        ]
+      },
+      "fresh_repeat_max_abs_difference": {
+        "qpos": 0.0,
+        "neural_voltage": 0.0,
+        "stimulus_nA": 0.0
+      }
+    }
+  ],
+  "passed": 8,
+  "total": 8,
+  "scope": "Fixed learned parameters; independent 20 ms OU current at four RG cells; suspended-air motion gates, not unsupported balance or ground stepping"
+}

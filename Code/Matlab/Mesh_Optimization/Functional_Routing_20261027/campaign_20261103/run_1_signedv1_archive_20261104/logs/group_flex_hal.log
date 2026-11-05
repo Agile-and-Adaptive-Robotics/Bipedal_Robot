@@ -1,0 +1,33 @@
+=== pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal rigid: fSeed 9104.7464 -> fBest 42.0455 (obj 5.2729, violEff 3.68e-03) | capsules(pose1) 1 | 172.8 s | TOP VIOLATOR foot_occupancy_ban: normalized 3.677e-03 (dimensional 3.777e-03 m (tibia frame y), tol 1.0e-04)
+=== pass1 compliant | 04-Nov-2026 11:58:20 | budget 600 | envelopes 7 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal compliant: fSeed 1731.7847 -> fBest 24.6136 (obj 20.6231, violEff 3.99e-04) | capsules(pose1) 1 | 131.9 s | TOP VIOLATOR foot_occupancy_ban: normalized 3.990e-04 (dimensional 4.990e-04 m (tibia frame y), tol 1.0e-04)
+REFINE skipped: no rigid checkpoint to refine
+RESUME flex_hal rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:14:44 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal rigid: fSeed 9481.8330 -> fBest 467.5575 (obj 51.9743, violEff 4.16e-02) | capsules(pose1) 1 | 162.9 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.433e-02 (dimensional 2.443e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME flex_hal compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:17:27 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal compliant: fSeed 2108.8713 -> fBest 337.7844 (obj 45.3726, violEff 2.92e-02) | capsules(pose1) 1 | 167.9 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.924e-02 (dimensional 2.934e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE1 flex_hal: f 467.5575 -> 466.7087 (accepted, others 26, 44.6 s)
+RESUME flex_hal rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:32:24 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal rigid: fSeed 9104.7464 -> fBest 42.0455 (obj 5.2729, violEff 3.68e-03) | capsules(pose1) 1 | 166.2 s | TOP VIOLATOR foot_occupancy_ban: normalized 3.677e-03 (dimensional 3.777e-03 m (tibia frame y), tol 1.0e-04)
+RESUME flex_hal compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:35:11 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal compliant: fSeed 1731.7847 -> fBest 24.6136 (obj 20.6231, violEff 3.99e-04) | capsules(pose1) 1 | 117.9 s | TOP VIOLATOR foot_occupancy_ban: normalized 3.990e-04 (dimensional 4.990e-04 m (tibia frame y), tol 1.0e-04)
+RESUME skip refine1 (accepted): f 466.7087
+RESUME flex_hal rigid: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal rigid: fSeed 9104.7464 -> fBest 42.0455 (obj 5.2729, violEff 3.68e-03) | capsules(pose1) 1 | 147.7 s | TOP VIOLATOR foot_occupancy_ban: normalized 3.677e-03 (dimensional 3.777e-03 m (tibia frame y), tol 1.0e-04)
+RESUME flex_hal compliant: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 14:01:01 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal compliant: fSeed 1731.7847 -> fBest 24.6136 (obj 20.6231, violEff 3.99e-04) | capsules(pose1) 1 | 104.4 s | TOP VIOLATOR foot_occupancy_ban: normalized 3.990e-04 (dimensional 4.990e-04 m (tibia frame y), tol 1.0e-04)
+REFINE1 flex_hal: f 42.0455 -> 466.7087 (rejected, others 26, 36.9 s)
+RESUME flex_hal rigid: sizing config changed (ckpt 20|1|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 16:29:19 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal rigid: fSeed 9409.9164 -> fBest 249.0628 (obj 96.5782, violEff 1.52e-02) | capsules(pose1) 1 | 163.0 s | TOP VIOLATOR foot_occupancy_ban: normalized 1.525e-02 (dimensional 1.535e-02 m (tibia frame y), tol 1.0e-04)
+RESUME flex_hal compliant: sizing config changed (ckpt 20|1|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 16:32:02 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal compliant: fSeed 451.1894 -> fBest 197.3774 (obj 152.5427, violEff 4.48e-03) | capsules(pose1) 1 | 146.6 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.483e-03 (dimensional 4.583e-03 m (tibia frame y), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 466.7087

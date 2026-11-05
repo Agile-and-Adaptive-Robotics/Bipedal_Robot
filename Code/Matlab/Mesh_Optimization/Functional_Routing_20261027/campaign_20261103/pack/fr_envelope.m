@@ -70,10 +70,24 @@ for i = 1:nG
         end
         perp = [cross(alt, uc), cross(uc, alt)];   % 3x2, both columns perp
     end
-    offs = fr_bundleOffsets(caseDef.seed.nBPA) * (Drest / 2) / 1000;
+    spread = 1.0;
+    if isfield(caseDef, 'bundleSpread'); spread = caseDef.bundleSpread; end
+    offs = fr_bundleOffsets(caseDef.seed.nBPA) * (Drest / 2) / 1000 * spread;
     ncap = max(1, size(offs, 1));
     env.capsules{i} = repmat(struct('p1', [], 'p2', [], 'r', 0, ...
         'branch', 0, 'kind', 'bpa_sleeve'), 1, ncap);
+    if any(~isfinite(p1)) || any(~isfinite(p2))
+        % NaN deformed geometry at this pose (diverged class solve):
+        % emit NO primitives for the pose rather than NaN obstacles that
+        % would poison every group constrained by this envelope
+        env.capsules{i} = env.capsules{i}(1, :);
+        env.capsules{i}(1).p1 = [inf inf inf];
+        env.capsules{i}(1).p2 = [inf inf inf];
+        env.capsules{i}(1).r = 0;
+        env.spheres{i} = struct('p', zeros(0, 3), 'r', zeros(1, 0), ...
+            'what', {{}}, 'kind', {{}});
+        continue
+    end
     for b = 1:ncap
         if b <= size(offs, 1)
             off = perp * offs(b, :)';

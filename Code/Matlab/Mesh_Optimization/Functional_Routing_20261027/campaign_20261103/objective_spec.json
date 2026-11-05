@@ -2,7 +2,7 @@
   "spec": "functional_routing_objective_v2",
   "created": "2026-11-04",
   "status": "TUNED-20261104-AUTO",
-  "status_note": "Weights chosen autonomously per Ben's 2026-11-04 directive item 7 (normalize, bounded sensitivity checks, documented choice; no pause for approval). Every term and weight is re-read by fr_objective at every solve; this file is the only place weights live. Rationale per term in weight_sensitivity log + README. Any weight here can be replaced by Ben at any time; the re-solve is checkpoint-based. | 2026-11-04 signed-deficit correction applied after the figure review caught opposite-sign robot curves.",
+  "status_note": "Weights chosen autonomously per Ben's 2026-11-04 directive item 7 (normalize, bounded sensitivity checks, documented choice; no pause for approval). Every term and weight is re-read by fr_objective at every solve; this file is the only place weights live. Rationale per term in weight_sensitivity log + README. Any weight here can be replaced by Ben at any time; the re-solve is checkpoint-based. | 2026-11-04 signed-deficit correction applied after the figure review caught opposite-sign robot curves. | 2026-11-04 evening: attachment_deviation + actuator_length terms added (Ben directive), signed deficit in force.",
   "read_at": "solve time (fresh jsondecode in fr_objective)",
   "terms": [
     {
@@ -33,7 +33,7 @@
       "class": "soft_penalty",
       "weight": 2.0,
       "normalization": "sleeve inflated diameter at rest per pose (depth reported in mm as well)",
-      "definition": "soft BPA-BPA interference (handoff item 9 / master item 8): summed overlap depth between the group's OWN parallel BPA sleeves from the pose-dependent inflated envelopes, physically simultaneous poses only. Depth and extent reported per pose."
+      "definition": "BPA-BPA overlap with STEEP escalation (Ben 2026-11-04): linear below 5 mm of squish, quadratic to 10x by 20 mm (hard-interference scale). Applies to in-group parallel sleeves and the inter-group corridor term alike."
     },
     {
       "name": "retained_bpa_corridor_soft",
@@ -42,6 +42,48 @@
       "normalization": "sleeve inflated diameter at rest per pose (extent reported in mm as well)",
       "definition": "v2 (Ben 2026-11-04): soft interference against RETAINED INNER-LAYER BPA sleeve corridors (fr_envelope kind 'bpa_sleeve'/'bpa_end'), evaluated at physically simultaneous poses. Depth/extent recorded every evaluation. An outer-layer BPA is never INFEASIBLE for crossing an inner layer's sleeve corridor - it pays this penalty; rigid fittings and tackle blocks of inner layers stay HARD (retained_rigid_envelopes).",
       "added_by": "Ben's 2026-11-04 directive item 6"
+    },
+    {
+      "name": "attachment_deviation",
+      "class": "regularizer",
+      "weight": 2.0,
+      "normalization": "mean displacement in mm divided by 25 mm",
+      "definition": "Ben 2026-11-04: mean displacement of the movable attachments from their ORIGINAL human seed points, measured AT THE HOME POSITION (zero/neutral configuration). Articulating poses are governed by the bounds and centerline constraints, not this term."
+    },
+    {
+      "name": "actuator_length",
+      "class": "regularizer",
+      "weight": 2.0,
+      "normalization": "lengthening beyond seed length, fraction of seed (L0Seed+tendonSeed)",
+      "definition": "Ben 2026-11-04: only LENGTHENING penalized \u2014 shortening is free. Per-group weights make long muscles pay more: grac 8, vas_int 4, bifemlh 4 (lengthWeightOverrides), default 2. Makes the long pinned+bowden setup more expensive for gracilis than a small reverse pulley.",
+      "lengthWeightOverrides": [
+        {
+          "name": "grac",
+          "weight": 8.0
+        },
+        {
+          "name": "vas_int",
+          "weight": 4.0
+        },
+        {
+          "name": "bifemlh",
+          "weight": 4.0
+        }
+      ]
+    },
+    {
+      "name": "active_rom_shortfall",
+      "class": "primary_rom",
+      "weight": 20.0,
+      "normalization": "fraction of pose cells",
+      "definition": "Ben 2026-11-04: fraction of pose cells where the route produces NO active force (|tau| <= 1e-6 N*m). Active force across the full RoM is required, not just reported."
+    },
+    {
+      "name": "baseline_beat",
+      "class": "primary_baseline",
+      "weight": 50.0,
+      "normalization": "max-cell signed deficit excess / sum|tau_target|",
+      "definition": "Ben 2026-11-04, SIGNIFICANT: the optimized route must at least beat the 2019 hand-tuned routing (gait2392_robotbody as-is paths, robotbody kinematics) for the same group and branch. Penalizes max-cell signed deficit in excess of the 2019 baseline max-cell signed deficit (from baseline_2019_group_deficit.json, computed by fr_baselineCompare)."
     }
   ],
   "forbidden": [
@@ -84,6 +126,20 @@
       "name": "retained_rigid_envelopes",
       "definition": "v2: rigid fittings and tackle blocks of already-placed deeper layers (fr_envelope kind 'rigid_*') as hard obstacles at physically simultaneous poses. BPA sleeve corridors of inner layers are the SOFT term retained_bpa_corridor_soft instead (Ben 2026-11-04). Tolerance 1e-4 m, stated per evaluation.",
       "tol": 0.0001
+    }
+  ],
+  "lengthWeightOverrides": [
+    {
+      "name": "grac",
+      "weight": 8.0
+    },
+    {
+      "name": "vas_int",
+      "weight": 4.0
+    },
+    {
+      "name": "bifemlh",
+      "weight": 4.0
     }
   ]
 }

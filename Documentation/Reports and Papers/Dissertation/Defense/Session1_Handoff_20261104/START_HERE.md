@@ -2,6 +2,8 @@
 
 Prepared on **easteregg2**, 4 November 2026. This package puts the previously external handoff documents and selected presentation assets inside the repository. It is ready for Ben to commit and push; creating this package did not commit or upload anything.
 
+**Later calculation update:** [new Gait2392 air GIF, controller results, postural tests, and full experiment paths](experiments_20261104/EXPERIMENT_UPDATE.md). Ben subsequently authorized training. The new graded Hunt candidate passed both suspended-air stages; all four families passed intrinsic/timing blocks. This update supersedes the preparation-only status below. Raw calculations remain on easteregg2; selected media and reports travel in this package.
+
 ## Open this on EB475WS4
 
 Repository: `D:\Github\Bipedal_Robot`.

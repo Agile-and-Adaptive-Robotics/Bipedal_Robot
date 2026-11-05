@@ -85,7 +85,7 @@ function cs = fr_buildOne27(C, kin, grp, am, overrides, opts)
 seedMuscle = grp.stockMuscles{im};
 % route source of record: the stock human model by default (optimization
 % seeds); opts.routeFromRobotbody = true switches the seed geometry to
-% gait2392_robotbody.osim's OWN path points — the 2019-vintage robot
+% gait2392_robotbody.osim's OWN path points -- the 2019-vintage robot
 % routings, for the BASELINE comparison (Ben 2026-11-04). Connor-era
 % frozen conditional artifacts in robotbody are handled by
 % fr_activeRows27 (declared-range rows dropped from the mechanics row
@@ -613,6 +613,14 @@ end
 if ~isfield(cs, 'secondaryCrossing')
     cs.secondaryCrossing = 0;
 end
+% bundleSpread (Ben 2026-11-04: "build 2 or 3 different vastus muscles
+% that can each take a load of the combined vastus force and reduce
+% deformation"): multi-BPA groups spread their branch ring into distinct
+% corridors instead of one tight bundle -- each branch behaves as its own
+% vastus unit; soft overlap still governs collisions.
+if cs.groupMapId == 11 || cs.groupMapId == 24 || cs.groupMapId == 25
+    cs.bundleSpread = 2.5;
+end
 for p = 1:numel(cs.passes)
     cs.passes{p} = fr_fillQ27(kin, cs.passes{p});
 end
@@ -621,6 +629,57 @@ cs.seedLoc = zeros(nRows, 3);
 for r = 1:nRows
     cs.rowOwning{r} = cs.rows{r}.body;
     cs.seedLoc(r, :) = cs.rows{r}.loc;
+end
+% centerline-safe seed (Ben 2026-11-04: "add_mag3 should not cross
+% centerline"): the add_mag3 femur-side seed crosses z=0 at high hip
+% adduction. Search small offsets in the owning-body frame and keep the
+% first whose worst-pose z_pelvis margin is >= 2 mm; the patch below then
+% builds from the corrected seed.
+if cs.groupMapId == 25
+    % centerline-safe seed AT THE HOME POSITION (Ben 2026-11-04
+    % correction: the seed is judged in the model's zero/neutral
+    % configuration, not across the articulation sweep; the every-pose
+    % z=0 rule remains the optimizer's hard constraint). If the femur-side
+    % seed has z_pelvis >= 2 mm at home, the original seed stands
+    % unchanged; otherwise recenter to the best home-z offset.
+    qHz = cs.passes{1}.qStructs{1};
+    hzF = fieldnames(qHz);
+    for i2 = 1:numel(hzF)
+        qHz.(hzF{i2}) = 0;
+    end
+    Thz = fr_chainT(kin, qHz, 'femur_r', 'pelvis');
+    zh0 = Thz(1:3, 1:3) * cs.seedLoc(fzRow, :)' + Thz(1:3, 4);
+    zh0 = zh0(3);
+    fprintf('FR_CASES27: add_mag3 femur seed home z_pelvis = %.1f mm
+', ...
+        zh0 * 1000);
+    if zh0 * 1000 < 2
+        bestZ = -inf;
+        bestP = cs.seedLoc(fzRow, :);
+        for ax = 1:3
+            for sgn = [-1, 1]
+                for dmm = [5, 10, 15, 20]
+                    cand = cs.seedLoc(fzRow, :);
+                    cand(ax) = cand(ax) + sgn * dmm / 1000;
+                    zh = Thz(1:3, 1:3) * cand(:) + Thz(1:3, 4);
+                    zh = zh(3);
+                    if zh > bestZ
+                        bestZ = zh;
+                        bestP = cand;
+                    end
+                end
+            end
+        end
+        if bestZ * 1000 >= 2
+            cs.rows{fzRow}.loc = bestP;
+            cs.seedLoc(fzRow, :) = bestP;
+            fprintf('FR_CASES27: add_mag3 seed recentered at home (z %.1f -> %.1f mm)', zh0 * 1000, bestZ * 1000); fprintf(char(10));
+
+        else
+            fprintf('FR_CASES27: add_mag3 home z %.1f mm not fixable within 20 mm offsets - left for the optimizer', zh0 * 1000); fprintf(char(10));
+
+        end
+    end
 end
 for m = 1:numel(cs.movable)
     mv = cs.movable(m);
@@ -819,6 +878,7 @@ cs.txConfig = struct();
 cs.spanKind = 'none';
 cs.obstacleBones = {};
 cs.footTipRule = false;
+cs.bundleSpread = 1.0;
 cs.envelopePassIdx = 1;
 cs.secondaryCrossing = 0;
 % Xi3 per-pose inside the equilibrium (Ben 2026-11-04 item 3): the

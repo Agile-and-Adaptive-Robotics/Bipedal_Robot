@@ -90,22 +90,24 @@ nG = numel(qg.qList);
 % Torque_ins is carried as a cross-check (reported).
 kPrim = cs.primaryCrossing;
 dTheta = cs.passes{scorePass}.th1(2) - cs.passes{scorePass}.th1(1);
-% torque by CHORD virtual work: tau = -T * dChord/dtheta, the exact
-% virtual-work partner per the mech4 verification (the polyline deltaL
-% derivative is NOT the exact partner - documented mech4 'e-straight'
-% expected mismatch). Chord = deformed exit->insertion distance in the
-% crossing's child frame, from the class's pointInFrameDeformed.
-chord = fr_crossingChord(mech, kPrim);
-tauPrim = -mech.segTension(:, kPrim) .* fr_dDeltaL(chord, dTheta);
-tauPrim = edgeFix(tauPrim);
+% PRIMARY torque = the class's own per-pose insertion torque (Torque_ins
+% projected on the primary axis). Ben 2026-11-04: the straight exit->
+% insertion CHORD virtual-work flips sign near wraps (vas_int patella
+% case: negative torque where the mounted-point force line gives positive)
+% - "you're not calculating right". The class torque follows the
+% MOUNTED-POINT exit direction (structural bowden mounts), which is the
+% force direction we want. The chord virtual-work is retained only as a
+% cross-check.
 tauClass = zeros(nG, 1);
 for i = 1:nG
-    % per-pose insertion torque about the primary pivot, from the class's
-    % Torque_ins at grid cell (i, primary crossing)
     tq = mech.cell.Torque_ins(i, :, 1, kPrim);
     tauClass(i) = dot(reshape(tq, 1, 3), reshape(cs.primaryAxis, 1, 3)) ...
         / max(norm(cs.primaryAxis), eps);
 end
+tauPrim = tauClass;
+chord = fr_crossingChord(mech, kPrim);
+tauChord = -mech.segTension(:, kPrim) .* fr_dDeltaL(chord, dTheta);
+tauChord = edgeFix(tauChord);
 tauSecondary = [];
 if cs.secondaryCrossing > 0
     k2 = cs.secondaryCrossing;
@@ -135,11 +137,81 @@ termRom = mean(deficitVec > 1e-6);
 termShape = mean((tauPrim - tauT).^2) / max(mean(tauT.^2), eps);
 [termOverlap, overlapMaxMm] = fr_softOverlap(C, cs, design, kin, mech, meta);
 
+% attachment_deviation (Ben 2026-11-04, Connor-methods lineage, light):
+% mean displacement of the movable attachments from their ORIGINAL human
+% seed points measured AT THE HOME POSITION (robotics: the model's
+% zero/neutral configuration) — articulating poses are irrelevant for
+% this term; the centerline and bounds govern those. NaN deformed rows
+% (all-slack cells) are skipped, never infinite.
+qHomeZ = cs.passes{scorePass}.qStructs{1};
+qHomeZF = fieldnames(qHomeZ);
+for i3 = 1:numel(qHomeZF)
+    qHomeZ.(qHomeZF{i3}) = 0;
+end
+csH = cs;
+csH.passes{scorePass}.qStructs = repmat(qHomeZ, 1, ...
+    numel(cs.passes{scorePass}.qStructs));
+[locHome, ~] = fr_locForPass(C, csH, design, kin, scorePass);
+absRowsD = find(cs.rowUse{scorePass});
+devSum = 0;
+devN = 0;
+for m = 1:numel(cs.movable)
+    uIdx = find(absRowsD == cs.movable(m).row, 1);
+    if isempty(uIdx) || uIdx > size(locHome, 1); continue; end
+    locRow = locHome(uIdx, :);
+    seedRow = cs.seedLoc(cs.movable(m).row, :);
+    if any(~isfinite(locRow)) || any(~isfinite(seedRow))
+        continue;
+    end
+    devSum = devSum + norm(locRow - seedRow) * 1000;
+    devN = devN + 1;
+end
+termDeviation = (devSum / max(devN, 1)) / 25;
+
+% actuator_length (Ben 2026-11-04: penalties should shorten gracilis and
+% maybe vas_int/bifemlh; only LENGTHENING is penalized — shortening is
+% free — and per-group weights via spec.lengthWeightOverrides make the
+% long muscles pay more; also makes the long pinned+bowden setup more
+% expensive for gracilis than a small reverse pulley)
+Lnow = design.L0 + design.tendon;
+Lseed = cs.L0Seed + cs.tendonSeed;
+termLength = max(0, Lnow - Lseed) / max(Lseed, eps);
+lenW = 2.0;
+lwo = spec.lengthWeightOverrides;
+for i2 = 1:numel(lwo)
+    if iscell(lwo)
+        if strcmp(lwo{i2}.name, cs.name); lenW = lwo{i2}.weight; end
+    else
+        if strcmp(lwo(i2).name, cs.name); lenW = lwo(i2).weight; end
+    end
+end
+termLength = lenW * termLength;
+
+% active_rom_shortfall (Ben 2026-11-04): cells producing no active
+% force (|tau| below floor) count against the objective — active force
+% across the full RoM is required, not just reported.
+actMask = abs(tauPrim) <= 1e-6;
+termActiveRom = mean(actMask);
+
+% baseline_beat (Ben 2026-11-04, significant): the optimized route must
+% at least beat the 2019 hand-tuned routing's signed deficit for the
+% same group and branch. Baseline max-cell signed deficits (N*m) are
+% precomputed from the as-is robotbody evaluation into
+% baseline_2019_group_deficit.json; missing file or group -> term 0 and
+% a note in rep (the baseline comparison table still reports it).
+robotMaxDeficit = max(deficitVec);
+baseDef = baselineDeficitFor(C, cs, xiBranch);
+termBaselineBeat = max(0, robotMaxDeficit - baseDef) / max(normCap, eps);
+
 terms = struct();
 terms.torque_capacity_deficit = termDeficit;
 terms.usable_rom_shortfall = termRom;
 terms.torque_shape = termShape;
 terms.bpa_bpa_overlap_soft = termOverlap;
+terms.attachment_deviation = termDeviation;
+terms.actuator_length = termLength;
+terms.active_rom_shortfall = termActiveRom;
+terms.baseline_beat = termBaselineBeat;
 
 fObj = 0;
 names = fieldnames(terms);
@@ -334,8 +406,8 @@ else
 end
 rep.feasible = ~any(violEff > 0);
 rep.tauPrimary = tauPrim;
-rep.tauClassCrossCheck = tauClass;
-rep.tauCrossCheckMaxDiff = max(abs(tauPrim - tauClass));
+rep.tauClassCrossCheck = tauChord;
+rep.tauCrossCheckMaxDiff = max(abs(tauChord - tauPrim));
 rep.tauTarget = tauT;
 rep.tauSecondary = tauSecondary;
 rep.meetsAtAllPoses = all(deficitVec <= 1e-6);
@@ -468,7 +540,9 @@ for i = 1:nG
         end
         perp = [cross(alt, uc), cross(uc, alt)];   % 3x2, both columns perp
     end
-    offs = fr_ringOffsets(nB) * (Drest / 2) / 1000;
+    spread = 1.0;
+    if isfield(cs, 'bundleSpread'); spread = cs.bundleSpread; end
+    offs = fr_ringOffsets(nB) * (Drest / 2) / 1000 * spread;
     Dinfl = fr_diameter(C, cs.diaStr, mech.strain_p(i));
     r = (Dinfl / 2) / 1000;
     ctr = cell(1, size(offs, 1));
@@ -482,7 +556,12 @@ for i = 1:nG
                 ctr{b2}(1, :), ctr{b2}(2, :));
             ov = 2 * r - d;
             if ov > 0
-                depth = depth + ov / (Drest / 1000);
+                % Ben 2026-11-04: steep escalation - a few mm of BPA
+                % squish is mild; 20 mm is hard-interference scale.
+                % Linear below 5 mm, quadratic to 10x by 20 mm.
+                dmm = ov * 1000;
+                steep = 1 + 9 * min(4, max(0, (dmm - 5) / 15))^2;
+                depth = depth + (ov / (Drest / 1000)) * steep;
                 depthMaxMm = max(depthMaxMm, ov * 1000);
             end
         end
@@ -595,4 +674,27 @@ function tt = interpTarget(tt, n)
 xi = linspace(0, 1, n);
 xo = linspace(0, 1, numel(tt));
 tt = interp1(xo, tt, xi, 'linear', 'extrap');
+end
+
+
+function d = baselineDeficitFor(C, cs, xiBranch)
+% baseline 2019 routing max-cell signed deficit (N*m) for this group and
+% branch, from baseline_2019_group_deficit.json (written by
+% fr_baselineCompare after its as-is evaluation). Missing file, group,
+% or branch -> 0 (no penalty; the comparison table still reports it).
+d = 0;
+jf = fullfile(C.camp, 'baseline_2019_group_deficit.json');
+if exist(jf, 'file') ~= 2
+    return
+end
+B = jsondecode(fileread(jf));
+if ~isfield(B, cs.name)
+    return
+end
+g = B.(cs.name);
+br = 'rigid';
+if strcmpi(xiBranch, 'compliant'); br = 'compliant'; end
+if isfield(g, br) && isreal(g.(br))
+    d = max(0, double(g.(br)));
+end
 end

@@ -1,0 +1,29 @@
+=== pass1 rigid | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+FAILED psoas rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+=== pass1 compliant | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
+FAILED psoas compliant: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 04-Nov-2026 12:09:04 | budget 600 | envelopes 22 ===
+BEST-INFEASIBLE (retained as warm start) psoas rigid: fSeed 184.5383 -> fBest 139.5472 (obj 100.2128, violEff 3.93e-03) | capsules(pose1) 1 | 56.7 s | TOP VIOLATOR retained_rigid_envelopes: normalized 3.933e-03 (dimensional 4.033e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+=== pass1 compliant | 04-Nov-2026 12:10:00 | budget 600 | envelopes 22 ===
+BEST-INFEASIBLE (retained as warm start) psoas compliant: fSeed 243.2366 -> fBest 119.0200 (obj 79.6857, violEff 3.93e-03) | capsules(pose1) 1 | 100.1 s | TOP VIOLATOR retained_rigid_envelopes: normalized 3.933e-03 (dimensional 4.033e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE skipped: no rigid checkpoint to refine
+RESUME psoas rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:27:04 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE psoas rigid: fSeed 101.2308 -> fBest 101.2308 (obj 101.2308, violEff 0.00e+00) | capsules(pose1) 1 | 27.4 s
+RESUME psoas compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:27:31 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE psoas compliant: fSeed 79.3691 -> fBest 70.3565 (obj 70.3565, violEff 0.00e+00) | capsules(pose1) 1 | 81.0 s
+REFINE1 psoas: f 101.2308 -> 385.5901 (rejected, others 26, 20.3 s)
+RESUME skip (feasible checkpoint): rigid f 101.2308
+RESUME skip (feasible checkpoint): compliant f 70.3565
+RESUME psoas rigid: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:52:02 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE psoas rigid: fSeed 78.8058 -> fBest 78.8058 (obj 78.8058, violEff 0.00e+00) | capsules(pose1) 2 | 24.0 s
+RESUME psoas compliant: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:52:26 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE psoas compliant: fSeed 60.2598 -> fBest 44.2909 (obj 44.2909, violEff 0.00e+00) | capsules(pose1) 2 | 63.9 s
+REFINE1 psoas: f 78.8058 -> 239.4397 (rejected, others 26, 18.3 s)
+RESUME skip (feasible checkpoint): rigid f 78.8058
+RESUME skip (feasible checkpoint): compliant f 44.2909
+RESUME skip refine1 (rejected): f 239.4397

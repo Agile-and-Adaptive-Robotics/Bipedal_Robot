@@ -38,7 +38,7 @@ class Replay:
             raise ValueError('Static wiring gate failed')
         self.phase = manifest['phase']
         self.T = float(manifest['target_period_s'])
-        duration = (8. * self.T if self.phase == 'A' else 6. * self.T)
+        duration = (8. * self.T if self.phase == 'A' else 12. * self.T)
         self.t = np.arange(round(duration / self.dt)) * self.dt
         query = manifest['target_start_s'] + self.t % self.T
         if query.min() < z['t'].min() or query.max() > z['t'].max():
@@ -79,6 +79,7 @@ class Replay:
         self.output = np.empty((len(self.t), len(self.acts)))
         self.rg_trace = np.empty((len(self.t), 4))
         self.pf_range_min = np.empty(len(self.pf)); self.pf_range_max = np.empty(len(self.pf))
+        self.pf_trace = np.empty((len(self.t), len(self.pf)))
         self.work = np.zeros(len(self.net.inputs))
 
     def evaluate(self, parameters, deadline=None):
@@ -98,6 +99,10 @@ class Replay:
             runtime.shared_gains[key] = parameters.get(key, 1.)
         for i, (pre, post) in enumerate(zip(self.c.pre, self.c.post)):
             source, target = self.names[pre], self.names[post]
+            if source.startswith('V3E_') or (source.startswith('RG_E_') and target.startswith('V3E_')):
+                self.c.gmax[i] *= parameters.get('commissural_E',1.)
+            elif source.startswith(('CIN_F_','V2a_','V0V_','V0D_','INI_')) or (source.startswith('RG_F_') and target.startswith(('CIN_F_','V2a_','V0D_'))):
+                self.c.gmax[i] *= parameters.get('commissural_F',1.)
             if target.startswith('MN_') and source.startswith('PF_') and not source.startswith('PF_IN'):
                 group = classify(target[3:]).groups[0]
                 self.c.gmax[i] *= parameters.get('ff_' + group, 1.)
@@ -116,16 +121,17 @@ class Replay:
                 runtime.commands['F_' + side] = 0. if self.phase == 'A' else self.manifest['command_F']
                 runtime.commands['E_' + side] = 0. if self.phase == 'A' else self.manifest['command_E']
             if t < .1:
-                runtime.commands['E_r'] += .4
-                runtime.commands['F_l'] += .4
+                runtime.commands['E_r'] = min(1.,runtime.commands['E_r']+.4)
+                runtime.commands['F_l'] = min(1.,runtime.commands['F_l']+.4)
             runtime.prepare_inputs(self.work)
             try:
                 self.c.forward(self.work)
             except (FloatingPointError, OverflowError):
-                return dict(value=1e6, diagnostics=dict(finite=False, accepted=False,
+                return dict(ok=True, value=1e6, diagnostics=dict(finite=False, accepted=False,
                     failure='nonfinite_neural_trial', stopped_step=i,
                     scope='Offline neural replay; not a body result'))
             self.rg_trace[i] = self.core.V[self.rg]
+            self.pf_trace[i] = self.core.V[self.pf]
             self.output[i] = np.clip(self.core.V[self.mn] / 5., 0., 1.)
             if t >= 2. * self.T:
                 np.minimum(self.pf_range_min, self.core.V[self.pf], out=self.pf_range_min)
@@ -162,7 +168,7 @@ class Replay:
                            accepted=bool(rhythmic and (self.phase not in ('C', 'D') or (peak_error if self.phase == 'C' else rmse) <= .25 and pf_dynamic > 0)),
                            wall_s=time.perf_counter() - tick,
                            scope='Offline neural replay on expected afferents; no physics integration, joint tracking or curriculum acceptance')
-        return dict(value=float(value), diagnostics=diagnostics)
+        return dict(ok=True, value=float(value), diagnostics=diagnostics)
 
 
 def handle_request(request):
@@ -170,9 +176,18 @@ def handle_request(request):
     if request['op'] == 'preflight':
         INSTANCE = Replay(request['manifest'])
         baseline = INSTANCE.evaluate(request['manifest'].get('fixed_parameters', {}), request.get('deadline_epoch_s'))
-        return dict(ready_for_optimization=baseline['diagnostics']['finite'],
+        return dict(ok=True, ready_for_optimization=baseline['diagnostics']['finite'],
                     baseline=baseline, static=INSTANCE.static,
                     runtime_verification='First neural replay occurs here, not during preparation')
-    if INSTANCE is None or request['op'] != 'evaluate':
+    if INSTANCE is None or request['op'] not in ('evaluate','capture'):
         raise ValueError('Preflight required')
-    return INSTANCE.evaluate(request['params'], request.get('deadline_epoch_s'))
+    result=INSTANCE.evaluate(request['params'], request.get('deadline_epoch_s'))
+    if request['op']=='capture':
+        path=Path(request['path']).resolve()
+        root=Path(r'D:\Users\Ben Bolen\ControllerTraining_20261104').resolve()
+        if not path.is_relative_to(root):raise ValueError('Capture outside owned training root')
+        np.savez_compressed(path,t=INSTANCE.t,rg=INSTANCE.rg_trace,pf=INSTANCE.pf_trace,
+            mn=INSTANCE.output,desired=INSTANCE.desired,
+            rg_names=np.array([INSTANCE.names[i]for i in INSTANCE.rg]),
+            pf_names=np.array([INSTANCE.names[i]for i in INSTANCE.pf]),acts=np.array(INSTANCE.acts))
+    return result

@@ -9,7 +9,7 @@ from contact_guides import add_guides,Measurements
 from physics_variants import apply_segment_mass_scale
 from recruitment import apply_recruitment
 
-def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,tag='',dt=.002,release_at=1.5,contact_si=False,pf_knee_flex_scale=1.,source=None,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,sagittal_harness=0.,rail_height_offset=0.,neural_time_scale=1.,guide_clearance=None,yaw_perturb_nm=0.,belt_motor_end_s=10.,v3_output_scale=1.,neural_pulse=None,segment_mass_scale=1.,contact_rg_scale=1.,contact_pf_scale=1.,contact_mn_scale=1.,contact_gmax=None,pf_mn_recruitment_scale=1.,toe_mn_gmax=None,initial_qpos=None,hip_pf_mn_scale=1.,hip_flexor_pf_mn_scale=1.,output_root=None,fixed_root_pose=None,pool_inherited_hip_physics=False,belt_speed_m_s=.1):
+def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,tag='',dt=.002,release_at=1.5,contact_si=False,pf_knee_flex_scale=1.,source=None,ankle_pf_crossed=False,symmetric_rg_ext_tonic=None,sagittal_harness=0.,rail_height_offset=0.,neural_time_scale=1.,guide_clearance=None,yaw_perturb_nm=0.,belt_motor_end_s=10.,v3_output_scale=1.,neural_pulse=None,segment_mass_scale=1.,contact_rg_scale=1.,contact_pf_scale=1.,contact_mn_scale=1.,contact_gmax=None,pf_mn_recruitment_scale=1.,toe_mn_gmax=None,initial_qpos=None,hip_pf_mn_scale=1.,hip_flexor_pf_mn_scale=1.,output_root=None,fixed_root_pose=None,pool_inherited_hip_physics=False,belt_speed_m_s=.1,pelvis_pf_posture=None,hip_excitation_scale=1.,knee_ext_excitation_scale=1.,hip_pf_limits=None,rg_ext_duration_scale=1.,heel_handover=None):
  path=build(newer,source,output_root);folder=path.parent;meta=json.loads((folder/'IMPORT_AUDIT.json').read_text());bank=meta['muscles'];tree=E.parse(path);root=tree.getroot();root.find('option').set('timestep',str(dt))
  if mode=='air':
   b=root.find("worldbody/body[@name='Root']");b.remove(b.find('freejoint'));
@@ -28,6 +28,9 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  mujoco.mj_forward(m,d)
  controller=K.NativeController(meta['source_snapshot'],bank,contact_si,pf_knee_flex_scale,ankle_pf_crossed,symmetric_rg_ext_tonic,neural_time_scale,v3_output_scale,contact_rg_scale,contact_pf_scale,contact_mn_scale,contact_gmax);params=K.bank_parameters(bank);nb=len(bank);n=round(duration/dt);nj=len(controller.v)
  hip_physics_ledger=None
+ assert 1.<=rg_ext_duration_scale<=3.
+ if rg_ext_duration_scale!=1.:
+  for side in ('L','R'):controller.params[controller.names.index(side+' RG ext'),9]*=rg_ext_duration_scale
  if pool_inherited_hip_physics:
   from physics_variants import pool_inherited_hip_law
   original_force_params=params.copy();hip_physics_ledger=pool_inherited_hip_law(controller,bank,params,m,d)
@@ -47,9 +50,27 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  rails=[i for i in range(m.ngeom) if 'support_rail' in (mujoco.mj_id2name(m,mujoco.mjtObj.mjOBJ_GEOM,i) or '')];motor=mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_ACTUATOR,'motor_Treadmill_Slide')
  physical_names=['foot_L','toe_L','foot_R','toe_R'];footids=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_BODY,x) for x in physical_names];geomid=[mujoco.mj_name2id(m,mujoco.mjtObj.mjOBJ_GEOM,'geom_'+x) for x in physical_names]
  vm=np.full(nb,-.15);internal=np.zeros(nb);force=np.zeros(nb);ia=np.zeros(nb);ii=np.zeros(nb);ib=np.zeros(nb);lastlength=d.ten_length[tid].copy();velocity=np.zeros(nb)
+ assert .3<=hip_excitation_scale<=1. and .3<=knee_ext_excitation_scale<=1.
+ readout_ids=np.array([i for i,b in enumerate(bank)if b['name']in('hip_L_flx','hip_R_flx','hip_L_ext','hip_R_ext','knee_L_ext','knee_R_ext')and b['type']=='LinearHillMuscle'],dtype=int)
+ readout_gains=np.array([hip_excitation_scale if bank[i]['name'].startswith('hip')else knee_ext_excitation_scale for i in readout_ids]);readout_active=bool(np.any(readout_gains!=1.))
+ if readout_active:
+  assert np.all(params[readout_ids,8]>0);readout_anchor=params[readout_ids,6]-12./params[readout_ids,8]
  arrays=dict(t=np.empty(n),q=np.empty((n,m.nq)),angles=np.empty((n,6)),neuro=np.empty((n,nj)),forces=np.empty((n,nb)),root=np.empty((n,3)),rail_vertical=np.empty(n),foot_vertical=np.empty((n,2)),foot_clearance=np.empty((n,4)),harness_force=np.zeros((n,3)),harness_torque=np.zeros((n,3)))
  arrays.update({k:np.empty((n,)+shape) for k,shape in measurements.shapes.items()});arrays['perturb_torque']=np.zeros((n,3));arrays['contact_sensor_binary']=np.zeros((n,4))
  arrays['neural_stimulus_nA']=np.zeros((n,nj))
+ if readout_active:arrays['calibrated_neural_readout_V']=np.zeros((n,len(readout_ids)))
+ posture=None
+ handover=None
+ if heel_handover is not None:
+  from heel_handover import HeelHandover
+  handover=HeelHandover(controller,heel_handover);arrays['heel_handover']=np.zeros((n,8))
+ hip_limits=None
+ if hip_pf_limits is not None:
+  from hip_pf_limits import HipPFLimits
+  hip_limits=HipPFLimits(controller,hip_pf_limits);arrays['hip_pf_limit_feedback']=np.zeros((n,6))
+ if pelvis_pf_posture is not None:
+  from pelvis_pf_posture import PelvisPFPosture
+  posture=PelvisPFPosture(controller,pelvis_pf_posture);arrays['pelvis_pf_posture']=np.zeros((n,8))
  native_values={}
  if mode in ('replay','native_kinematic'):
   native=np.load(Path(meta['source']).parent/'verification.npz');z=native['data'];labels=native['labels'].tolist();nt=z[:,labels.index('Time')];native_values={name:np.interp(np.arange(n)*dt,nt,z[:,i]) for i,name in enumerate(labels) if 'angle' in name or 'MN' in name or 'contacts' in name}
@@ -78,7 +99,11 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
    else:
     if getattr(controller,'balance',None) is not None:controller.balance.observe(m,d,measured if step and feedback else None,t,dt)
     if getattr(controller,'heteronymous_load_indices',[]):controller.observe_load_feedback(m,measured if step and feedback else None)
+    if posture is not None:posture.observe(m,d,measured if step else None,t,dt);arrays['pelvis_pf_posture'][step]=posture.last
+    if hip_limits is not None:hip_limits.observe(m,d,dt);arrays['hip_pf_limit_feedback'][step]=hip_limits.last
+    if handover is not None:handover.observe(m,d,measured if step else None,dt);arrays['heel_handover'][step]=handover.last
     controller.step(t,ia,ii,ib,contacts,dt,feedback);controller.motor_voltages(vm);arrays['neural_stimulus_nA'][step]=controller.last_test_impulse_nA_s/dt
+   if readout_active:vm[readout_ids]=readout_anchor+readout_gains*(vm[readout_ids]-readout_anchor);arrays['calibrated_neural_readout_V'][step]=vm[readout_ids]
    hill(length,velocity,vm,params,internal,force,ia,ii,ib,dt)
    for b,a in act:d.ctrl[a]=force[b]
    if motor>=0:d.ctrl[motor]=belt_speed_m_s if .5<=t<belt_motor_end_s else 0.
@@ -127,6 +152,7 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  summary['shared_pf_knee_flex_scale']=pf_knee_flex_scale;summary['tuned_edges']=controller.tuned_edges
  summary.update(ankle_pf_crossed=ankle_pf_crossed,ankle_phase_edits=controller.ankle_phase_edits,symmetric_rg_ext_tonic_nA=symmetric_rg_ext_tonic,sagittal_harness_scale=sagittal_harness,harness_force_rms_N=np.sqrt(np.mean(arrays['harness_force']**2,axis=0)).tolist(),harness_torque_rms_Nm=np.sqrt(np.mean(arrays['harness_torque']**2,axis=0)).tolist())
  summary['neural_time_scale']=neural_time_scale
+ summary['rg_ext_duration_scale']=rg_ext_duration_scale
  summary['robot_mass_kg']=robot_mass
  summary['pooled_inherited_hip_physics']=hip_physics_ledger
  if hip_physics_ledger is not None:np.savez_compressed(trialdir/'POOLED_FORCE_PARAMETERS.npz',original=original_force_params,pooled=params,muscle_names=[b['name'] for b in bank])
@@ -146,6 +172,10 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  summary.update(source_neural_clock_scale=source_profile.get('neural_clock_scale',1.),source_profile=source_profile,source_embedded_guides=source_guides,neural_pulse=neural_pulse,neural_pulse_logged_integral_nA_s=np.sum(arrays['neural_stimulus_nA'],axis=0).tolist())
  summary['neural_pulse_logged_integral_nA_s']=(np.sum(arrays['neural_stimulus_nA'],axis=0)*dt).tolist()
  summary['mean_net_vertical_assistance_BW']=float(np.mean(arrays['rail_force_world'][:,1]+arrays['guide_force_world'][:,1]+arrays['harness_force'][:,1])/(robot_mass*9.81))
+ summary['pelvis_pf_posture']=pelvis_pf_posture
+ summary['heel_handover']=None if handover is None else dict(configuration=heel_handover,bindings=handover.bindings)
+ summary['hip_pf_limits']=None if hip_limits is None else dict(configuration=hip_pf_limits,bindings=hip_limits.bindings)
+ summary['excitation_readout_calibration']=dict(hip_scale=hip_excitation_scale,knee_extensor_scale=knee_ext_excitation_scale,muscles=[bank[i]['name']for i in readout_ids],scope='Optional MN-output adapter voltage range scaling around A-12/C of the existing activation sigmoid; muscle parameters and forces are not scaled or overridden')
  summary['belt_command_m_s']=float(belt_speed_m_s);summary['slide_travel_checks']={}
  for j in range(m.njnt):
   if m.jnt_type[j]!=mujoco.mjtJoint.mjJNT_SLIDE:continue

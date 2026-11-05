@@ -1,0 +1,25 @@
+=== pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
+BEST-INFEASIBLE (retained as warm start) lat_gas rigid: fSeed 41.5685 -> fBest 29.9249 (obj 29.9248, violEff 8.26e-09) | capsules(pose1) 1 | 152.1 s | TOP VIOLATOR span_knee_pass1: normalized 8.264e-09 (dimensional 5.003e-07 m, tol 1.0e-06)
+=== pass1 compliant | 04-Nov-2026 11:57:59 | budget 600 | envelopes 7 ===
+SOLVED-FEASIBLE lat_gas compliant: fSeed 91.1561 -> fBest 48.9381 (obj 48.9381, violEff 0.00e+00) | capsules(pose1) 1 | 132.7 s
+REFINE skipped: no rigid checkpoint to refine
+RESUME lat_gas rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:14:44 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) lat_gas rigid: fSeed 554.3975 -> fBest 540.0611 (obj 73.5611, violEff 4.67e-02) | capsules(pose1) 1 | 154.6 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.665e-02 (dimensional 4.675e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME skip (feasible checkpoint): compliant f 48.9381
+REFINE1 lat_gas: f 540.0611 -> 240.1743 (accepted, others 26, 35.3 s)
+RESUME lat_gas rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:32:24 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) lat_gas rigid: fSeed 41.5685 -> fBest 29.9249 (obj 29.9248, violEff 8.26e-09) | capsules(pose1) 1 | 151.3 s | TOP VIOLATOR span_knee_pass1: normalized 8.264e-09 (dimensional 5.003e-07 m, tol 1.0e-06)
+RESUME skip (feasible checkpoint): compliant f 48.9381
+RESUME skip refine1 (accepted): f 240.1743
+RESUME lat_gas rigid: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
+SOLVED-FEASIBLE lat_gas rigid: fSeed 6.7570 -> fBest 4.8759 (obj 4.8759, violEff 0.00e+00) | capsules(pose1) 2 | 88.7 s
+RESUME lat_gas compliant: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 14:00:02 | budget 600 | envelopes 15 ===
+SOLVED-FEASIBLE lat_gas compliant: fSeed 69.4031 -> fBest 50.8192 (obj 50.8192, violEff 0.00e+00) | capsules(pose1) 2 | 127.3 s
+REFINE1 lat_gas: f 4.8759 -> 216.2934 (rejected, others 26, 28.8 s)
+RESUME skip (feasible checkpoint): rigid f 4.8759
+RESUME skip (feasible checkpoint): compliant f 50.8192
+RESUME skip refine1 (rejected): f 216.2934

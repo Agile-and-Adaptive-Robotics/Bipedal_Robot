@@ -1,25 +1,8 @@
-=== pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
-SOLVED-FEASIBLE med_gas rigid: fSeed 91.4203 -> fBest 86.5602 (obj 86.5602, violEff 0.00e+00) | capsules(pose1) 1 | 85.3 s
-=== pass1 compliant | 04-Nov-2026 11:56:52 | budget 600 | envelopes 7 ===
-BEST-INFEASIBLE (retained as warm start) med_gas compliant: fSeed 120.2185 -> fBest 91.7295 (obj 91.7252, violEff 4.29e-07) | capsules(pose1) 1 | 125.5 s | TOP VIOLATOR span_knee_pass1: normalized 4.287e-07 (dimensional 7.076e-07 m, tol 1.0e-06)
+=== pass1 rigid | 04-Nov-2026 19:23:41 | budget 600 | envelopes 6 ===
+SOLVED-FEASIBLE med_gas rigid: fSeed 62.1899 -> fBest 49.4250 (obj 49.4250, violEff 0.00e+00) | capsules(pose1) 2 | 98.4 s
+=== pass1 compliant | 04-Nov-2026 19:25:19 | budget 600 | envelopes 6 ===
+SOLVED-FEASIBLE med_gas compliant: fSeed 121.9632 -> fBest 86.6371 (obj 86.6371, violEff 0.00e+00) | capsules(pose1) 2 | 205.6 s
 REFINE skipped: no rigid checkpoint to refine
-RESUME skip (feasible checkpoint): rigid f 86.5602
-RESUME med_gas compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 compliant | 04-Nov-2026 12:14:44 | budget 600 | envelopes 24 ===
-BEST-INFEASIBLE (retained as warm start) med_gas compliant: fSeed 631.4174 -> fBest 595.4161 (obj 128.9118, violEff 4.67e-02) | capsules(pose1) 1 | 154.7 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.665e-02 (dimensional 4.675e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
-REFINE1 med_gas: f 86.5602 -> 253.5533 (rejected, others 26, 33.9 s)
-RESUME skip (feasible checkpoint): rigid f 86.5602
-RESUME med_gas compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 compliant | 04-Nov-2026 12:32:24 | budget 600 | envelopes 15 ===
-BEST-INFEASIBLE (retained as warm start) med_gas compliant: fSeed 122.4634 -> fBest 94.1561 (obj 91.9167, violEff 2.24e-04) | capsules(pose1) 1 | 108.6 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.239e-04 (dimensional 3.239e-04 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
-RESUME skip refine1 (rejected): f 253.5533
-RESUME med_gas rigid: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
-=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
-SOLVED-FEASIBLE med_gas rigid: fSeed 59.5171 -> fBest 46.4345 (obj 46.4345, violEff 0.00e+00) | capsules(pose1) 2 | 82.1 s
-RESUME med_gas compliant: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
-=== pass1 compliant | 04-Nov-2026 13:59:56 | budget 600 | envelopes 15 ===
-SOLVED-FEASIBLE med_gas compliant: fSeed 119.2904 -> fBest 72.6224 (obj 72.6224, violEff 0.00e+00) | capsules(pose1) 2 | 164.4 s
-REFINE1 med_gas: f 46.4345 -> 214.1911 (rejected, others 26, 32.1 s)
-RESUME skip (feasible checkpoint): rigid f 46.4345
-RESUME skip (feasible checkpoint): compliant f 72.6224
-RESUME skip refine1 (rejected): f 214.1911
+RESUME skip (feasible checkpoint): rigid f 49.4250
+RESUME skip (feasible checkpoint): compliant f 86.6371
+REFINE1 med_gas: f 49.4250 -> 217.1215 (rejected, others 26, 44.8 s)

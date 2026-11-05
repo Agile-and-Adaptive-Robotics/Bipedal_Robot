@@ -1,0 +1,53 @@
+{
+  "source_fit": "D:\\Users\\Ben Bolen\\PosturalPilot_20261104\\mirrored_neural_fit_v1",
+  "parameters": {
+    "reciprocal_scale": 1.0990264209512661,
+    "Ia_scale": 1.9909059359442003,
+    "II_scale": 0.4657818502410257,
+    "Ib_scale": 0.10951355847681028
+  },
+  "source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\postural_pilot_20261104\\delay_noise.py": "6e144189f92e220189c7200ec31b0627057704cc90be22ce804f9e585e2b22e3",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\postural_pilot_20261104\\run.py": "29df03332179a23d25c244b3c6580f485a1d5f4b15703f16852209be006bd83d",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\postural_pilot_20261104\\model.py": "33c7827ec1991a6232c29b5b7208c8c62d7d9847a5fc42249899ec7786aae98f"
+  },
+  "groups": [
+    {
+      "parameter_set": "baseline",
+      "delay_s": 0.0,
+      "passed": 12,
+      "total": 12
+    },
+    {
+      "parameter_set": "baseline",
+      "delay_s": 0.03,
+      "passed": 9,
+      "total": 12
+    },
+    {
+      "parameter_set": "baseline",
+      "delay_s": 0.07,
+      "passed": 0,
+      "total": 12
+    },
+    {
+      "parameter_set": "trained",
+      "delay_s": 0.0,
+      "passed": 12,
+      "total": 12
+    },
+    {
+      "parameter_set": "trained",
+      "delay_s": 0.03,
+      "passed": 0,
+      "total": 12
+    },
+    {
+      "parameter_set": "trained",
+      "delay_s": 0.07,
+      "passed": 0,
+      "total": 12
+    }
+  ],
+  "scope": "Uniform added measurement delay stress test on the isolated ankle bench, not calibrated physiological conduction delays"
+}

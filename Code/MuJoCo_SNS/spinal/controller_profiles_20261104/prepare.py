@@ -4,6 +4,7 @@ from collections import Counter
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 import sys
 import xml.etree.ElementTree as ET
@@ -89,6 +90,8 @@ def main():
     p.add_argument('--family', choices=P.FAMILIES, required=True)
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--hunt-config', type=Path)
+    p.add_argument('--rg-seed-file', type=Path, help='Explicit accepted intrinsic RG design; non-Hunt candidates only')
+    p.add_argument('--c1-gain',type=float,default=.03)
     a = p.parse_args()
     model = P.S.parents[2] / 'Solid_Models/OpenSim/Gait2392_Robotbody/mjc/gait2392_simbody/gait2392_simbody_cvt3.xml'
     acts = [n.get('name') for n in ET.parse(model).getroot().find('actuator')]
@@ -98,7 +101,12 @@ def main():
         keys = ('weights_directory', 'timing_scale', 'biarticular_pair_gain', 'learn_reciprocal', 'bilateral_midline_drive', 'hip_abduction_goal')
         options = {k: old[k] for k in keys if k in old}
         options.update(balance=None, use_timing_afferents=False)
-    net = P.build(a.family, acts, options=options)
+    config=None
+    if a.rg_seed_file:
+        seed=json.loads(a.rg_seed_file.read_text())
+        if a.family=='hunt' or not seed['accepted']:raise ValueError('Use an accepted intrinsic seed for non-Hunt only')
+        config=dict(rg_design=dict(nap=seed['nap'],tau_h=seed['tau_h'],mutual_inhibition=seed['mutual_inhibition'],c1_gain=a.c1_gain,source=str(a.rg_seed_file.resolve()),source_sha256=hashlib.sha256(a.rg_seed_file.read_bytes()).hexdigest()))
+    net = P.build(a.family, acts, options=options,config=config)
     result = audit(net)
     a.output.mkdir(parents=True, exist_ok=True)
     (a.output / 'WIRING_CHANGES.json').write_text(json.dumps(net.central_revision, indent=2), encoding='utf-8')
@@ -106,16 +114,21 @@ def main():
     if options is not None:
         (a.output / 'HUNT_OPTIONS.json').write_text(json.dumps(options, indent=2), encoding='utf-8')
     (a.output / 'STATIC_CHECK.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
-    sources = list(Path(__file__).parent.glob('*.py'))
+    sources = [Path(__file__).parent/name for name in ('__init__.py','profile.py','prepare.py','replay_adapter.py','train.py','campaign.py')]
     sources += [P.S / name for name in ('params.py', 'muscle_map.py', 'build_network.py', 'build_network_w2lvar.py', 'build_network_syn6.py', 'synergy_basis.npz',
                 'hunt_training/controller.py', 'functional_gait2392/network.py', 'functional_gait2392/deng2023_joint_pf.py',
                 'w2l_cpg/sparse_pairwise_eval.py', 'w2l_cpg/compact_pairwise_eval.py')]
     sources.append(model)
+    if a.rg_seed_file:sources.append(a.rg_seed_file.resolve())
     if options and 'weights_directory' in options:
         sources += list(Path(options['weights_directory']).glob('*.json'))
     (a.output / 'SOURCE_HASHES.json').write_text(json.dumps({str(f): hashlib.sha256(f.read_bytes()).hexdigest() for f in sources}, indent=2))
+    for source in sources:
+        if source.suffix=='.py':
+            destination=a.output/'source_snapshot'/source.relative_to(P.S)
+            destination.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source,destination)
     import params
-    (a.output / 'BUILD_SETTINGS.json').write_text(json.dumps(dict(G=params.G, NAP=params.NAP, TAU=params.TAU), indent=2, default=lambda value: value.tolist()))
+    (a.output / 'BUILD_SETTINGS.json').write_text(json.dumps(dict(G=params.G, NAP=params.NAP, TAU=params.TAU,effective_RG_override=(config or {}).get('rg_design')), indent=2, default=lambda value: value.tolist()))
     print(json.dumps({k: v for k, v in result.items() if k not in ('mirror_errors', 'duplicate_endpoints')}, indent=2))
     if not result['static_pass']:
         raise SystemExit(2)

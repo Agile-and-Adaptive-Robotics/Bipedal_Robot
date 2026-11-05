@@ -1,25 +1,8 @@
-=== pass1 rigid | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
-FAILED intobl rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
-=== pass1 compliant | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
-FAILED intobl compliant: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
+=== pass1 rigid | 04-Nov-2026 19:14:47 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE intobl rigid: fSeed 111.6696 -> fBest 111.6010 (obj 111.6010, violEff 0.00e+00) | capsules(pose1) 2 | 42.1 s
+=== pass1 compliant | 04-Nov-2026 19:15:29 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE intobl compliant: fSeed 10011.9706 -> fBest 172.3425 (obj 172.3425, violEff 0.00e+00) | capsules(pose1) 2 | 57.7 s
 REFINE skipped: no rigid checkpoint to refine
-=== pass1 rigid | 04-Nov-2026 12:09:04 | budget 600 | envelopes 22 ===
-SOLVED-FEASIBLE intobl rigid: fSeed 122.3181 -> fBest 122.2948 (obj 122.2948, violEff 0.00e+00) | capsules(pose1) 1 | 37.7 s
-=== pass1 compliant | 04-Nov-2026 12:09:41 | budget 600 | envelopes 22 ===
-SOLVED-FEASIBLE intobl compliant: fSeed 10054.7521 -> fBest 76.4456 (obj 76.4456, violEff 0.00e+00) | capsules(pose1) 1 | 51.4 s
-REFINE skipped: no rigid checkpoint to refine
-RESUME skip (feasible checkpoint): rigid f 122.2948
-RESUME skip (feasible checkpoint): compliant f 76.4456
-REFINE1 intobl: f 122.2948 -> 159.3761 (rejected, others 26, 19.8 s)
-RESUME skip (feasible checkpoint): rigid f 122.2948
-RESUME skip (feasible checkpoint): compliant f 76.4456
-RESUME intobl rigid: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
-=== pass1 rigid | 04-Nov-2026 13:52:02 | budget 600 | envelopes 0 ===
-SOLVED-FEASIBLE intobl rigid: fSeed 105.4688 -> fBest 105.4049 (obj 105.4049, violEff 0.00e+00) | capsules(pose1) 2 | 28.6 s
-RESUME intobl compliant: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
-=== pass1 compliant | 04-Nov-2026 13:52:31 | budget 600 | envelopes 0 ===
-SOLVED-FEASIBLE intobl compliant: fSeed 10005.3569 -> fBest 19.1057 (obj 19.1057, violEff 0.00e+00) | capsules(pose1) 2 | 79.5 s
-REFINE1 intobl: f 105.4049 -> 147.2928 (rejected, others 26, 17.6 s)
-RESUME skip (feasible checkpoint): rigid f 105.4049
-RESUME skip (feasible checkpoint): compliant f 19.1057
-RESUME skip refine1 (rejected): f 147.2928
+RESUME skip (feasible checkpoint): rigid f 111.6010
+RESUME skip (feasible checkpoint): compliant f 172.3425
+REFINE1 intobl: f 111.6010 -> 153.9188 (rejected, others 26, 23.4 s)

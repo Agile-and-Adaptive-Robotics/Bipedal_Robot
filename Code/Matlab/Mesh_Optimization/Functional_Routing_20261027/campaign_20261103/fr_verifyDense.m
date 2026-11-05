@@ -22,7 +22,7 @@ function fr_verifyDense(gridN)
 %   fr_verifyDense(33)                                     (custom density)
 
 if nargin < 1; gridN = 25; end
-logFile = fullfile('output', 'dense_verification.log');
+logFile = fullfile('output', 'dense_verification_v2.log');
 if ~exist('output', 'dir'); mkdir('output'); end
 fid = fopen(logFile, 'w');
 cleanupFid = onCleanup(@() fclose(fid));
@@ -41,7 +41,7 @@ d1 = dir(fullfile(ck1, '*.mat'));
 assert(~isempty(d1), 'fr_verifyDense:noCheckpoints', ...
     'no run_1 checkpoints - run the campaign first');
 
-csvFile = fullfile('output', 'dense_verification.csv');
+csvFile = fullfile('output', 'dense_verification_v2.csv');
 fcsv = fopen(csvFile, 'w');
 cleanupCsv = onCleanup(@() fclose(fcsv));
 fprintf(fcsv, ['group,branch,gridN,meetFrac,tauJumpMax_Nm,' ...

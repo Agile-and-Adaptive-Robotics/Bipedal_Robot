@@ -1,21 +1,8 @@
-=== pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
-SOLVED-FEASIBLE ext_dig rigid: fSeed 9124.0846 -> fBest 0.0988 (obj 0.0988, violEff 0.00e+00) | capsules(pose1) 1 | 164.3 s
-=== pass1 compliant | 04-Nov-2026 11:58:11 | budget 600 | envelopes 7 ===
-SOLVED-FEASIBLE ext_dig compliant: fSeed 5716.7553 -> fBest 0.1003 (obj 0.1003, violEff 0.00e+00) | capsules(pose1) 1 | 184.3 s
+=== pass1 rigid | 04-Nov-2026 19:23:41 | budget 600 | envelopes 6 ===
+SOLVED-FEASIBLE ext_dig rigid: fSeed 9124.6179 -> fBest 2.1152 (obj 2.1152, violEff 0.00e+00) | capsules(pose1) 1 | 175.7 s
+=== pass1 compliant | 04-Nov-2026 19:26:37 | budget 600 | envelopes 6 ===
+SOLVED-FEASIBLE ext_dig compliant: fSeed 5717.2886 -> fBest 2.1527 (obj 2.1527, violEff 0.00e+00) | capsules(pose1) 1 | 181.2 s
 REFINE skipped: no rigid checkpoint to refine
-RESUME skip (feasible checkpoint): rigid f 0.0988
-RESUME skip (feasible checkpoint): compliant f 0.1003
-REFINE1 ext_dig: f 0.0988 -> 290.5824 (rejected, others 26, 41.5 s)
-RESUME skip (feasible checkpoint): rigid f 0.0988
-RESUME skip (feasible checkpoint): compliant f 0.1003
-RESUME skip refine1 (rejected): f 290.5824
-RESUME ext_dig rigid: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
-=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
-SOLVED-FEASIBLE ext_dig rigid: fSeed 9124.0846 -> fBest 0.0988 (obj 0.0988, violEff 0.00e+00) | capsules(pose1) 1 | 141.1 s
-RESUME ext_dig compliant: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
-=== pass1 compliant | 04-Nov-2026 14:00:55 | budget 600 | envelopes 15 ===
-SOLVED-FEASIBLE ext_dig compliant: fSeed 5716.7553 -> fBest 0.1003 (obj 0.1003, violEff 0.00e+00) | capsules(pose1) 1 | 147.8 s
-REFINE1 ext_dig: f 0.0988 -> 290.5824 (rejected, others 26, 33.2 s)
-RESUME skip (feasible checkpoint): rigid f 0.0988
-RESUME skip (feasible checkpoint): compliant f 0.1003
-RESUME skip refine1 (rejected): f 290.5824
+RESUME skip (feasible checkpoint): rigid f 2.1152
+RESUME skip (feasible checkpoint): compliant f 2.1527
+REFINE1 ext_dig: f 2.1152 -> 376.7217 (rejected, others 26, 46.1 s)

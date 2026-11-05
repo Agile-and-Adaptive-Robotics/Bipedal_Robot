@@ -1,32 +1,12 @@
-=== pass1 rigid | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
-FAILED add_mag3 rigid: MATLAB:badsubscript | Index exceeds the number of array elements. Index must not exceed 1.
-=== pass1 compliant | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 836.0981 -> fBest 525.7342 (obj 128.6766, violEff 3.97e-02) | capsules(pose1) 1 | 120.7 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
-REFINE skipped: no rigid checkpoint to refine
-=== pass1 rigid | 04-Nov-2026 12:11:41 | budget 600 | envelopes 24 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 rigid: fSeed 1276.7784 -> fBest 909.8404 (obj 136.1483, violEff 7.74e-02) | capsules(pose1) 1 | 44.2 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
-RESUME add_mag3 compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 compliant | 04-Nov-2026 12:12:25 | budget 600 | envelopes 24 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 1292.8477 -> fBest 733.4918 (obj 123.3716, violEff 6.10e-02) | capsules(pose1) 1 | 86.8 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
+=== pass1 rigid | 04-Nov-2026 19:18:15 | budget 600 | envelopes 4 ===
+BEST-INFEASIBLE (retained as warm start) add_mag3 rigid: fSeed 650.9340 -> fBest 511.9206 (obj 114.8631, violEff 3.97e-02) | capsules(pose1) 2 | 38.6 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
+=== pass1 compliant | 04-Nov-2026 19:18:53 | budget 600 | envelopes 4 ===
+BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 686.2458 -> fBest 516.9553 (obj 119.8978, violEff 3.97e-02) | capsules(pose1) 2 | 130.6 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
 REFINE skipped: no rigid checkpoint to refine
 RESUME add_mag3 rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 rigid | 04-Nov-2026 12:29:40 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 rigid: fSeed 816.2581 -> fBest 522.5983 (obj 125.5407, violEff 3.97e-02) | capsules(pose1) 1 | 35.4 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
+=== pass1 rigid | 04-Nov-2026 20:44:01 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) add_mag3 rigid: fSeed 650.9340 -> fBest 511.9206 (obj 114.8631, violEff 3.97e-02) | capsules(pose1) 2 | 39.0 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
 RESUME add_mag3 compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 compliant | 04-Nov-2026 12:30:16 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 836.0981 -> fBest 525.7342 (obj 128.6766, violEff 3.97e-02) | capsules(pose1) 1 | 99.8 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
-REFINE1 add_mag3: f 522.5983 -> 1002.6692 (rejected, others 26, 19.7 s)
-RESUME add_mag3 rigid: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
-=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 rigid: fSeed 803.1012 -> fBest 511.2465 (obj 114.1889, violEff 3.97e-02) | capsules(pose1) 2 | 39.1 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
-RESUME add_mag3 compliant: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
-=== pass1 compliant | 04-Nov-2026 13:54:55 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 850.2560 -> fBest 521.9726 (obj 124.9151, violEff 3.97e-02) | capsules(pose1) 2 | 81.1 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
-REFINE1 add_mag3: f 511.2465 -> 846.6319 (rejected, others 26, 17.3 s)
-RESUME add_mag3 rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 rigid | 04-Nov-2026 16:24:00 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 rigid: fSeed 803.1012 -> fBest 511.2465 (obj 114.1889, violEff 3.97e-02) | capsules(pose1) 2 | 47.7 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
-RESUME add_mag3 compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 compliant | 04-Nov-2026 16:24:47 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 850.2560 -> fBest 529.3333 (obj 132.2758, violEff 3.97e-02) | capsules(pose1) 2 | 114.8 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
-RESUME skip refine1 (rejected): f 846.6319
+=== pass1 compliant | 04-Nov-2026 20:44:40 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 686.2458 -> fBest 516.9553 (obj 119.8978, violEff 3.97e-02) | capsules(pose1) 2 | 122.1 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
+REFINE1 add_mag3: f 511.9206 -> 746.4356 (rejected, others 26, 23.4 s)

@@ -18,6 +18,7 @@ for p in (S, S / 'hunt_training', S / 'functional_gait2392', S / 'w2l_cpg'):
         sys.path.insert(0, str(p))
 
 FAMILIES = ('hunt', 's3k', 'w2lvar', 'syn6')
+DISPLAY_NAMES = dict(hunt='BiW2Lvar+', s3k='s3k', w2lvar='w2lvar', syn6='syn6')
 DEFAULTS = dict(
     schema='gait_four_commands_central_afferents_v1',
     command_voltage_fullscale_mV=5., command_current_fullscale_nA=5., command_tau_s=.05,
@@ -91,6 +92,18 @@ def contact_flags(net):
                 if target in path:
                     continue
                 total = sign * edge_sign
+                # Inspect the sensory entry itself, before intrinsic reciprocal
+                # inhibition. Ben's baseline allows no inhibitory contact entry,
+                # and no toe-specific entry at RG level.
+                if total < 0:
+                    flags.append(dict(source=root, target=target, sign=total,
+                                      layer='PF' if target.startswith('PF_') else 'RG' if central(target) else 'local',
+                                      path=path + [target],
+                                      issue='inhibitory_contact_entry'))
+                if root.startswith(('TOE_', 'TOEDF_')) and target.startswith(('RG_', 'InE_', 'InF_')):
+                    flags.append(dict(source=root, target=target, sign=total,
+                                      path=path + [target],
+                                      issue='toe_contact_at_RG'))
                 role = None
                 if target.startswith(('RG_E_', 'InE_')):
                     role = ('RG', target[-1], 'phase', 'E')
@@ -125,6 +138,25 @@ def compose(net, family, config=None):
         raise ValueError('Invalid family or circuit composed twice')
     if set(cfg['command']) != {'F_l', 'E_l', 'F_r', 'E_r'}:
         raise ValueError('Exactly four declared commands are required')
+    if cfg.get('rg_design') is not None:
+        if family=='hunt':raise ValueError('Hunt already loads its source-locked intrinsic design')
+        from sns_toolbox.neurons import NonSpikingNeuronWithPersistentSodiumChannel
+        spec=cfg['rg_design'];nv=spec['nap'];tau=float(spec['tau_h']);mutual=float(spec['mutual_inhibition']);c1=float(spec['c1_gain'])
+        if set(nv)!=set(B.NAP) or not 0<tau<=3 or not 0<mutual<=12 or not 0<c1<=1:raise ValueError('Invalid RG seed')
+        # Replace only the RG neurons. PF intrinsic parameters stay specific to
+        # each family, and no global params dictionary is modified.
+        for population in net.net.populations:
+            if population['name'].startswith(('RG_E_','RG_F_')):
+                population['type']=NonSpikingNeuronWithPersistentSodiumChannel(
+                    membrane_capacitance=B.TAU['rg'],membrane_conductance=1.,resting_potential=0.,bias=0.,
+                    g_ion=np.array([nv['g_ion']]),e_ion=np.array([nv['e_ion']]),
+                    k_m=np.array([nv['k_m']]),slope_m=np.array([nv['slope_m']]),e_m=np.array([nv['e_m']]),
+                    k_h=np.array([nv['k_h']]),slope_h=np.array([nv['slope_h']]),e_h=np.array([nv['e_h']]),tau_max_h=np.array([tau]))
+        for connection,source,target in connections(net):
+            if (source.startswith('RG_') and target.startswith(('InE_','InF_')))or(source.startswith(('InE_','InF_'))and target.startswith('RG_')):
+                connection['params']['max_conductance']=mutual
+            if source.startswith('CIN_F_') or (source.startswith('RG_F_')and target.startswith('CIN_F_')):
+                connection['params']['max_conductance']=c1*mutual
     before = contact_flags(net)
     removed = []
     synergy_mirror = None
@@ -170,7 +202,10 @@ def compose(net, family, config=None):
     for c, a, b in list(connections(net)):
         descending = a in ('DRIVE', 'BS_ALPHA', 'BS_GAMMA') or a.startswith(('ALPHA_', 'GAMMA_'))
         old_afferent = a.startswith(('Ia_', 'II_', 'Ib_', 'IaIN_', 'IIIN_', 'IIX_', 'IBIN_', 'IBEXC_', 'AFF_', 'HUNT_AF_', 'HEEL_', 'TOE_', 'TOEDF_', 'LBIN_', 'PRESET_'))
-        if (descending and (central(b) or b.startswith('MN_'))) or (a == 'POSTURE' and b.startswith('RG_')) or (old_afferent and central(b)):
+        # Toe-dependent local inhibition is not in the selected baseline either.
+        # Toe->ankle PF remains a separately named future hypothesis.
+        toe_path = a.startswith(('TOE_', 'TOEDF_'))
+        if (descending and (central(b) or b.startswith('MN_'))) or (a == 'POSTURE' and b.startswith('RG_')) or (old_afferent and central(b)) or toe_path:
             removed.append(dict(source=a, target=b, gmax_uS=float(c['params']['max_conductance'])))
             net.net.connections.remove(c)
     # Aliases are not actual additional populations.
@@ -365,6 +400,7 @@ class Runtime:
 
 def build(family, acts, dt=.002, options=None, config=None, backend='compact'):
     """Build/compile only. No neuron or mechanical step is executed."""
+    if family in ('BiW2Lvar+', 'BiW2LvarX'):family='hunt'
     import build_network as B
     import build_network_w2lvar as W
     import build_network_syn6 as Y
@@ -407,4 +443,5 @@ def build(family, acts, dt=.002, options=None, config=None, backend='compact'):
         B.G[key] = 1.
     # Retain Hunt's exact pre-install sparse slot map, including fitted zeros.
     net.command_runtime = Runtime(net, dt)
+    net.controller_display_name = DISPLAY_NAMES[family]
     return net

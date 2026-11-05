@@ -1,0 +1,33 @@
+=== pass1 rigid | 04-Nov-2026 11:55:27 | budget 600 | envelopes 7 ===
+BEST-INFEASIBLE (retained as warm start) tib_post rigid: fSeed 106.2069 -> fBest 86.7240 (obj 40.6166, violEff 4.61e-03) | capsules(pose1) 1 | 53.5 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+=== pass1 compliant | 04-Nov-2026 11:56:21 | budget 600 | envelopes 7 ===
+BEST-INFEASIBLE (retained as warm start) tib_post compliant: fSeed 166.4918 -> fBest 146.8433 (obj 100.7359, violEff 4.61e-03) | capsules(pose1) 1 | 196.2 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+REFINE skipped: no rigid checkpoint to refine
+RESUME tib_post rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:14:44 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) tib_post rigid: fSeed 509.4285 -> fBest 468.3784 (obj 104.0688, violEff 3.64e-02) | capsules(pose1) 1 | 78.9 s | TOP VIOLATOR retained_rigid_envelopes: normalized 3.182e-02 (dimensional 3.192e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME tib_post compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:16:03 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) tib_post compliant: fSeed 569.7134 -> fBest 530.3454 (obj 172.6812, violEff 3.58e-02) | capsules(pose1) 1 | 109.4 s | TOP VIOLATOR retained_rigid_envelopes: normalized 3.116e-02 (dimensional 3.126e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE1 tib_post: f 468.3784 -> 468.8316 (rejected, others 26, 41.8 s)
+RESUME tib_post rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:32:24 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_post rigid: fSeed 106.2069 -> fBest 86.7240 (obj 40.6166, violEff 4.61e-03) | capsules(pose1) 1 | 58.6 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+RESUME tib_post compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:33:23 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_post compliant: fSeed 166.4918 -> fBest 146.8433 (obj 100.7359, violEff 4.61e-03) | capsules(pose1) 1 | 175.9 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 468.8316
+RESUME tib_post rigid: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 13:58:33 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_post rigid: fSeed 51.0089 -> fBest 48.9642 (obj 2.8568, violEff 4.61e-03) | capsules(pose1) 2 | 69.6 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+RESUME tib_post compliant: sizing config changed (ckpt missing vs current 20|2|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 13:59:43 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_post compliant: fSeed 5772.1461 -> fBest 57.4561 (obj 11.3487, violEff 4.61e-03) | capsules(pose1) 2 | 122.5 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+REFINE1 tib_post: f 48.9642 -> 431.4509 (rejected, others 26, 34.4 s)
+RESUME tib_post rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 16:29:19 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_post rigid: fSeed 51.0089 -> fBest 48.9642 (obj 2.8568, violEff 4.61e-03) | capsules(pose1) 2 | 80.5 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+RESUME tib_post compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 16:30:40 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_post compliant: fSeed 5808.0014 -> fBest 57.4561 (obj 11.3487, violEff 4.61e-03) | capsules(pose1) 2 | 142.2 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 431.4509

@@ -89,12 +89,13 @@ for e = 1:numel(envelopes)
                         strncmpi(char(cap.kind), 'rigid', 5)
                     mRigid = min(mRigid, d - C.clearanceEnvelope_m);
                 else
-                    % SOFT BPA corridor: penetration depth, no clearance,
-                    % normalized by the resting inflated diameter (same
-                    % convention as fr_softOverlap in fr_objective)
+                    % SOFT BPA corridor with steep escalation (Ben
+                    % 2026-11-04: squish vs hard-interference scale)
                     ov = -d;
                     if ov > 0
-                        dSoft = dSoft + ov / (2 * sleeveR);
+                        dmm = ov * 1000;
+                        steep = 1 + 9 * min(4, max(0, (dmm - 5) / 15))^2;
+                        dSoft = dSoft + (ov / (2 * sleeveR)) * steep;
                         mmSoft = max(mmSoft, ov * 1000);
                     end
                 end
@@ -108,7 +109,9 @@ for e = 1:numel(envelopes)
                 else
                     ov = -d;
                     if ov > 0
-                        dSoft = dSoft + ov / (2 * sleeveR);
+                        dmm = ov * 1000;
+                        steep = 1 + 9 * min(4, max(0, (dmm - 5) / 15))^2;
+                        dSoft = dSoft + (ov / (2 * sleeveR)) * steep;
                         mmSoft = max(mmSoft, ov * 1000);
                     end
                 end

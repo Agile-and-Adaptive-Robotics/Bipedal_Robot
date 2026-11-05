@@ -1,21 +1,8 @@
-=== pass1 rigid | 04-Nov-2026 11:49:52 | budget 600 | envelopes 0 ===
-SOLVED-FEASIBLE bifemsh rigid: fSeed 82.5554 -> fBest 65.9399 (obj 65.9399, violEff 0.00e+00) | capsules(pose1) 1 | 114.6 s
-=== pass1 compliant | 04-Nov-2026 11:51:47 | budget 600 | envelopes 0 ===
-SOLVED-FEASIBLE bifemsh compliant: fSeed 124.4488 -> fBest 83.3249 (obj 83.3249, violEff 0.00e+00) | capsules(pose1) 1 | 138.7 s
+=== pass1 rigid | 04-Nov-2026 19:18:15 | budget 600 | envelopes 4 ===
+SOLVED-FEASIBLE bifemsh rigid: fSeed 46.0261 -> fBest 23.2400 (obj 23.2400, violEff 0.00e+00) | capsules(pose1) 2 | 103.4 s
+=== pass1 compliant | 04-Nov-2026 19:19:58 | budget 600 | envelopes 4 ===
+SOLVED-FEASIBLE bifemsh compliant: fSeed 148.1550 -> fBest 111.4853 (obj 111.4853, violEff 0.00e+00) | capsules(pose1) 2 | 133.2 s
 REFINE skipped: no rigid checkpoint to refine
-RESUME skip (feasible checkpoint): rigid f 65.9399
-RESUME skip (feasible checkpoint): compliant f 83.3249
-REFINE1 bifemsh: f 65.9399 -> 422.7827 (rejected, others 26, 23.0 s)
-RESUME skip (feasible checkpoint): rigid f 65.9399
-RESUME skip (feasible checkpoint): compliant f 83.3249
-RESUME skip refine1 (rejected): f 422.7827
-RESUME bifemsh rigid: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
-=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
-SOLVED-FEASIBLE bifemsh rigid: fSeed 45.0488 -> fBest 22.1851 (obj 22.1851, violEff 0.00e+00) | capsules(pose1) 2 | 87.3 s
-RESUME bifemsh compliant: sizing config changed (ckpt missing vs current 20|2|L|2) - re-solving
-=== pass1 compliant | 04-Nov-2026 13:55:44 | budget 600 | envelopes 5 ===
-SOLVED-FEASIBLE bifemsh compliant: fSeed 132.0936 -> fBest 88.8141 (obj 88.8141, violEff 0.00e+00) | capsules(pose1) 2 | 72.4 s
-REFINE1 bifemsh: f 22.1851 -> 372.6451 (rejected, others 26, 20.9 s)
-RESUME skip (feasible checkpoint): rigid f 22.1851
-RESUME skip (feasible checkpoint): compliant f 88.8141
-RESUME skip refine1 (rejected): f 372.6451
+RESUME skip (feasible checkpoint): rigid f 23.2400
+RESUME skip (feasible checkpoint): compliant f 111.4853
+REFINE1 bifemsh: f 23.2400 -> 373.9994 (rejected, others 26, 30.7 s)

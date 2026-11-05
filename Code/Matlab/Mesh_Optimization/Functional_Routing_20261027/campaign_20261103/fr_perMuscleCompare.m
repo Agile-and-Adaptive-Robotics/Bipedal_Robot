@@ -19,7 +19,7 @@ function fr_perMuscleCompare()
 %
 % Run headless: matlab -batch "addpath('<camp>'); fr_perMuscleCompare"
 
-logFile = fullfile('output', 'per_muscle_compare.log');
+logFile = fullfile('output', 'per_muscle_compare_v2.log');
 if ~exist('output', 'dir'); mkdir('output'); end
 fid = fopen(logFile, 'w');
 cleanupFid = onCleanup(@() fclose(fid));
@@ -36,7 +36,7 @@ else; groupsList = arrayfun(@(g) g, sz.groups, 'UniformOutput', false);
 end
 ck1 = fullfile(C.camp, 'run_1', 'checkpoints');
 
-csvFile = fullfile('output', 'per_muscle_compare.csv');
+csvFile = fullfile('output', 'per_muscle_compare_v2.csv');
 fcsv = fopen(csvFile, 'w');
 fprintf(fcsv, ['group,branch,muscle,meetFrac,maxDeficit_Nm,' ...
     'peakAbsTauMuscle_Nm,peakAbsTauRobot_Nm\n']);

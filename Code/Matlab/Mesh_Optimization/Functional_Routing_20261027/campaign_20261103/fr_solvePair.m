@@ -55,7 +55,22 @@ end
 if ~strcmp(po.rigid.status, 'solved')
     opts = struct('quiet', true, 'envelopes', {envsInner}, ...
         'budget', solver.MaxFunctionEvaluations);
-    if ~isempty(x0Rigid); opts.x0Override = x0Rigid; end
+    if ~isempty(x0Rigid)
+        % NaN guard (run_1 vas_int: a warm start whose design NaNs the
+        % objective at x0 makes patternsearch refuse to start) — drop the
+        % override and let the solve restart from the case seed
+        try
+            oq = struct('quiet', true, 'envelopes', {envsInner});
+            f0 = fr_objective(C, cs, kin, x0Rigid, 'rigid', oq);
+            if isreal(f0) && ~isnan(f0)
+                opts.x0Override = x0Rigid;
+            else
+                fr_glog2(glog, sprintf('WARM-START %s rigid: x0 evaluates non-finite (%.3g) - dropped, starting from seed', cs.name, f0));
+            end
+        catch
+            fr_glog2(glog, sprintf('WARM-START %s rigid: x0 errored - dropped, starting from seed', cs.name));
+        end
+    end
     po.rigid = fr_groupSolve(C, cs, kin, 'rigid', opts, ...
         fr_ckPath(cs.name, 'rigid', ckDir), glog, 'pass1');
 end
@@ -89,7 +104,19 @@ end
 if ~strcmp(po.compliant.status, 'solved')
     opts = struct('quiet', true, 'envelopes', {envsInner}, ...
         'budget', solver.MaxFunctionEvaluations);
-    if ~isempty(x0Compliant); opts.x0Override = x0Compliant; end
+    if ~isempty(x0Compliant)
+        try
+            oq = struct('quiet', true, 'envelopes', {envsInner});
+            f0 = fr_objective(C, cs, kin, x0Compliant, 'compliant', oq);
+            if isreal(f0) && ~isnan(f0)
+                opts.x0Override = x0Compliant;
+            else
+                fr_glog2(glog, sprintf('WARM-START %s compliant: x0 evaluates non-finite (%.3g) - dropped, starting from seed', cs.name, f0));
+            end
+        catch
+            fr_glog2(glog, sprintf('WARM-START %s compliant: x0 errored - dropped, starting from seed', cs.name));
+        end
+    end
     po.compliant = fr_groupSolve(C, cs, kin, 'compliant', opts, ...
         fr_ckPath(cs.name, 'compliant', ckDir), glog, 'pass1');
 end

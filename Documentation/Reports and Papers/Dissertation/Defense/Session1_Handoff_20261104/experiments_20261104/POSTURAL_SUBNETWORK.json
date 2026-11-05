@@ -1,0 +1,269 @@
+{
+  "nodes": [
+    {
+      "name": "PP_POS",
+      "position": [
+        3.0,
+        5.0
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "PP_NEG",
+      "position": [
+        6.0,
+        5.0
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "PP_IN_POS",
+      "position": [
+        3.8,
+        3.8
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "PP_IN_NEG",
+      "position": [
+        5.2,
+        3.8
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "MN_POS",
+      "position": [
+        3.0,
+        1.7
+      ],
+      "tau_s": 0.01
+    },
+    {
+      "name": "MN_NEG",
+      "position": [
+        6.0,
+        1.7
+      ],
+      "tau_s": 0.01
+    },
+    {
+      "name": "Ia_POS",
+      "position": [
+        0.0,
+        4.5
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "Ia_NEG",
+      "position": [
+        9.0,
+        4.5
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "II_POS",
+      "position": [
+        0.0,
+        5.3
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "II_NEG",
+      "position": [
+        9.0,
+        5.3
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "Ib_POS",
+      "position": [
+        0.0,
+        2.8
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "Ib_NEG",
+      "position": [
+        9.0,
+        2.8
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "IbRelay_POS",
+      "position": [
+        1.5,
+        2.8
+      ],
+      "tau_s": 0.02
+    },
+    {
+      "name": "IbRelay_NEG",
+      "position": [
+        7.5,
+        2.8
+      ],
+      "tau_s": 0.02
+    }
+  ],
+  "edges": [
+    {
+      "source": "PP_POS",
+      "target": "PP_IN_POS",
+      "gmax_uS": 1.6666666666666667,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "PP_IN_POS",
+      "target": "PP_NEG",
+      "gmax_uS": 0.4945618894280698,
+      "reversal_mV": -8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "PP_POS",
+      "target": "MN_POS",
+      "gmax_uS": 1.6666666666666667,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "PP_IN_POS",
+      "target": "MN_NEG",
+      "gmax_uS": 0.4945618894280698,
+      "reversal_mV": -8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "Ia_POS",
+      "target": "PP_POS",
+      "gmax_uS": 0.059727178078326004,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "II_POS",
+      "target": "PP_POS",
+      "gmax_uS": 0.018631274009641027,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "Ia_POS",
+      "target": "MN_POS",
+      "gmax_uS": 0.01,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "Ib_POS",
+      "target": "IbRelay_POS",
+      "gmax_uS": 1.6666666666666667,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "IbRelay_POS",
+      "target": "PP_POS",
+      "gmax_uS": 0.004380542339072411,
+      "reversal_mV": -8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "PP_NEG",
+      "target": "PP_IN_NEG",
+      "gmax_uS": 1.6666666666666667,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "PP_IN_NEG",
+      "target": "PP_POS",
+      "gmax_uS": 0.4945618894280698,
+      "reversal_mV": -8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "PP_NEG",
+      "target": "MN_NEG",
+      "gmax_uS": 1.6666666666666667,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "PP_IN_NEG",
+      "target": "MN_POS",
+      "gmax_uS": 0.4945618894280698,
+      "reversal_mV": -8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "Ia_NEG",
+      "target": "PP_NEG",
+      "gmax_uS": 0.059727178078326004,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "II_NEG",
+      "target": "PP_NEG",
+      "gmax_uS": 0.018631274009641027,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "Ia_NEG",
+      "target": "MN_NEG",
+      "gmax_uS": 0.01,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "Ib_NEG",
+      "target": "IbRelay_NEG",
+      "gmax_uS": 1.6666666666666667,
+      "reversal_mV": 8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    },
+    {
+      "source": "IbRelay_NEG",
+      "target": "PP_NEG",
+      "gmax_uS": 0.004380542339072411,
+      "reversal_mV": -8.0,
+      "e_lo_mV": 0.0,
+      "e_hi_mV": 5.0
+    }
+  ],
+  "parameters": {
+    "reciprocal_scale": 1.0990264209512661,
+    "Ia_scale": 1.9909059359442003,
+    "II_scale": 0.4657818502410257,
+    "Ib_scale": 0.10951355847681028
+  },
+  "scope": "Actual isolated ankle-bench circuit; no RG or PF populations in this module"
+}

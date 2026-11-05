@@ -8801,3 +8801,98 @@ Important interpretation correction: wean_tune_20261016.py explicitly states tha
 Ben requested handoff documents in the repo first so he can commit and show the deck builder on EB475WS4. Previously several key documents/media lived only under D:\Users\Ben Bolen and therefore were not in GitHub. Copied 38 curated documents/assets (~17.3 MB) into Documentation\Reports and Papers\Dissertation\Defense\Session1_Handoff_20261104. START_HERE.md is the single builder entry; it includes machine roots, current branch KneeTestSetup_BenBo_stw, reading order, committee questions, portable GIF/still/figure links, Final source links, source identities, measured support, and corrections. PACKAGE_MANIFEST.json preserves original easteregg2 paths, byte sizes, and SHA256 values. No raw NPZ files, databases, model/mesh trees, or trial logs were copied. Original reports/media unchanged. User must commit and push the package, then pull the same branch on EB475WS4; no agent commit/push.
 
 Current priority change: Ben now wants one postural-premotor candidate tested before deploying into Hunt/s3k/w2lvar/syn6. No postural circuit has been integrated during this handoff work. Training and dynamic tests remain held while MATLAB work runs. New contact ruling: flag any explicitly inhibitory contact route, even to one channel; toe-specific RG feedback is excluded from the proposed baseline, and toe-to-ankle-PF is a separate hypothesis. Normal reciprocal inhibition inside the CPG must be distinguished from explicitly inhibitory sensory wiring. These stricter checks and the isolated postural pilot are next research work, not already validated results. START_HERE.md overrides older snapshots' pending/current descriptions.
+
+## Session 1 — authorized calculation batch, 2026-11-04
+
+Ben subsequently authorized simulations/training while away. Separate record:
+`Code\MuJoCo_SNS\spinal\controller_profiles_20261104\TRAINING_RECORD.md`.
+Portable results, GIF, aligned RG/PF/MN/joint/load plots, postural schematic, and
+full paths are in
+`Documentation\Reports and Papers\Dissertation\Defense\Session1_Handoff_20261104\experiments_20261104\EXPERIMENT_UPDATE.md`.
+
+All four revised graded Gait2392 families passed intrinsic/timing A/B. Final C/D
+errors: Hunt 0.2229/0.2148, s3k 0.1221/0.3677, w2lvar 0.1216/0.4027,
+syn6 0.1205/0.2471 against the declared 0.25 output-error gate. Hunt and syn6
+passed offline D; s3k/w2lvar did not. Hunt's pose-gated replay/live interface was
+matched, and it passed protected physical air stages 1/2 with the same fitted
+weights, 0.1 expression, periods 2.466/1.300 s, and no hyperextension. Stage-2
+spring assistance is 99.860% BW, with zero foot loading. RG/PF/MN current-pulse
+comparisons and fixed-weight RG-noise checks completed; six noisy cases, zero
+control, and repeated noisy seed passed, with exact fresh-process repetition.
+
+Syn6's slower 2.004 s body candidate repeated principal air-motion passes but
+misses cadence and retains secondary 6.4–7 Hz ankle activity; it is not promoted.
+The isolated 14-cell postural premotor bench passed nominal tests; its improved
+delay/noise fit passed 17/18 unseen cases, retaining the failed 3 s settling gate.
+No full-body postural deployment or new ground-stage acceptance is claimed.
+Original controller.py remains byte-identical. Contact fault injection passes
+all four candidates, including single inhibitory-entry and toe-to-RG detection.
+
+Raw records are owned external folders under
+`D:\Users\Ben Bolen\ControllerTraining_20261104` and
+`D:\Users\Ben Bolen\PosturalPilot_20261104`. Completed jobs use Rustuna and the
+verified compact neural backend. No CAD, tendon/damping, manuscript, or Overleaf
+changes in this batch; other MATLAB work is untouched. Selected repo assets have
+source paths and SHA256 values in experiments_20261104\ASSET_MANIFEST.json.
+No commit/push by the agent. All bounded jobs in this batch have completed.
+
+Naming/interpretation correction: internal `hunt` means Ben's biarticular
+multi-PF W2Lvar controller trained with Hunt's four-step method, not a published
+Hunt model. The code inheritance was checked directly. Stage 2 is afferented
+air stepping; measured suspension force does not establish a minimum harness
+requirement for ground walking. The handoff and separate training record now
+state this. Saved selectors, numerical results, and source snapshots are retained.
+
+Ben's final name is **BiW2Lvar+** (plain identifier **BiW2LvarX**), crediting
+Hunt's four-step calibration and Bolen's five-stage curriculum. Current docs,
+identity metadata, and portable plot/GIF labels were corrected. Archived `hunt`
+paths/selectors remain compatibility aliases, not model attributions.
+
+Newer Li–Deng-derived W2L108: 32 Rustuna trials completed in 130.59 s, all passing
+the supported-ground gate. Winner repeats all numeric arrays byte-exactly:
+8/7 unloaded clear swings, 100% qualified alternation, and 29.519% BW upward
+rail/guide assistance after 1 s. Full-trial signed net assistance is 35.069% BW.
+Knees remain flexed; rails/guides remain. Peak contact force 11.727 BW needs work.
+Record: Code\MuJoCo_SNS\spinal\virtual_walker_20261031\RESULT_20261104.md.
+Raw: D:\Users\Ben Bolen\NeuroCampaign_20261031\LiDeng_W2L_20261104.
+Portable media/report are in the existing experiments_20261104 handoff folder.
+No CAD or tendon/damping changes. FSA-versus-PF causes are not yet resolved for
+s3k/syn6; syn6's offline waveform pass/live ankle oscillation indicates a
+closed-loop problem but does not exonerate every design/scaling choice.
+The 17/18 postural result is only the separate 10 kg inverted-pendulum ankle bench
+with two synthetic tensile actuators, not full-body walker acceptance.
+
+W2L pelvis/overlap follow-up: 45 short comparisons plus two byte-exact fresh
+repeats. Baseline after1s: 1.51% loaded double support, 18.16% both-unloaded
+samples, mean pelvis −7.39°, swing knee10.91°. Initial anterior rotations do
+not persist. A new default-off PD posture command enters existing antagonistic
+hip PF cells, gated by actual foot load; no direct MN drive or root force.
+One repeated case gives mean anterior tilt+4.16° and DS10.04%, but support32.63%BW
+and tilt overshoot27.50°. Another gives posterior tilt−3.88°, DS2.80%, and
+support21.13%BW. Both remain diagnostic tradeoffs; no combined finalist accepted.
+Joint/muscle/tendon physics unchanged. Separate labeled rail-height variants
+also failed to improve overlap. Default-off numeric trajectories remain exact.
+Record: Code\MuJoCo_SNS\spinal\virtual_walker_20261031\PELVIS_OVERLAP_RECORD_20261104.md.
+Portable trial GIFs and record copied to the existing defense handoff; no
+manuscript edits or commits. Knee waveform remains too straight in swing.
+
+Short/slow W2L follow-up: actual belt direction verified rearward (−X), with
+toes toward+X. A slower 16 s candidate gives 7/7 alternating low-clearance swings,
+periods2.107/2.120s and 10.105%BW upward assistance over2–16s, repeated byte-exactly.
+It still misses the new short-shuffle gate: foot excursions0.351/0.417m and only
+1.929% sustained double support. Both feet are below5%BW load for0.714% of the
+window (load statistic, not geometric flight). Preview now has measured direction
+arrows. 48 timing/recruitment and48 readout trials, plus30 sensory/duty/event
+comparisons and4 causal heel controls, produced no full shuffle passer.
+Deleting the two heel→contraRG-F edges worsens sustained overlap to0.3%, low-load
+fraction to8.11%, and upward support to18.24%BW; blanket inhibition is not a
+demonstrated fix. Native-position/FK audit gives0.808mm mean registered RMS with
+current signs versus137mm with reversed signs. No physics sign reversal applied.
+Record: Code\MuJoCo_SNS\spinal\virtual_walker_20261031\SHORT_SHUFFLE_RECORD_20261104.md.
+Raw/record/source snapshot: D:\Users\Ben Bolen\NeuroCampaign_20261031\W2L_short_slow_shuffle_20261104.
+Conceptual follow-up: a sensory-gating functional subnetwork with descending
+gain modulation; Rybak2024 alpha suppresses feedback gains, gamma supplies E
+drive. Applying that suppression to heel→contraF is an explicit extension, not
+a replication or already implemented neuronal gate. Existing tests use an
+explicit software event gate. Portable media/report in the existing handoff.
+All bounded jobs completed; no manuscript/Overleaf/physics edits or agent commits.

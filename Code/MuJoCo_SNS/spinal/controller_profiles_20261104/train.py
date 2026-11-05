@@ -14,7 +14,7 @@ HERE = Path(__file__).resolve().parent
 S = HERE.parent
 SPACES = dict(
     A=dict(tau_scale=(.5, 3.), g_ion_scale=(.7, 1.3)),
-    B={k + '_RG': (.05, 4.) for k in ('Ia', 'II', 'Ib')},
+    B={k + '_RG': (.05, 128.) for k in ('Ia', 'II', 'Ib')},
     C={'ff_' + k: (.2, 3.) for k in ('hip_ext', 'hip_flex', 'knee_ext', 'knee_flex', 'ankle_pf', 'ankle_df')},
     D={'local_' + k: (.2, 2.) for k in ('Ia', 'II', 'Ib')},
 )
@@ -29,7 +29,11 @@ def main():
     p.add_argument('--budget-s', type=float, default=900.)
     p.add_argument('--execute', action='store_true')
     p.add_argument('--computer-free', action='store_true')
+    p.add_argument('--runtime', type=Path, help='Existing isolated Python-3.11 Rustuna package directory')
     a = p.parse_args()
+    space=dict(SPACES[a.phase])
+    if a.phase=='A' and a.family in ('w2lvar','syn6'):
+        space.update(commissural_F=(.001,1.),commissural_E=(.001,1.))
     if not 1 <= a.trials <= 64 or not 0 < a.budget_s <= 3600:
         p.error('Use bounded blocks: 1..64 trials and at most one hour')
     print(json.dumps(dict(family=a.family, phase=a.phase, trials=a.trials,
@@ -67,7 +71,7 @@ def main():
     (folder / 'MANIFEST.json').write_text(json.dumps(cfg, indent=2))
     sys.path.insert(0, str(S / 'virtual_walker_20261031'))
     from rustuna_transfer import Worker
-    runtime = a.prepared.parent / 'rustuna_runtime_py311'
+    runtime = a.runtime or a.prepared.parent / 'rustuna_runtime_py311'
     if sys.version_info[:2] != (3, 11):
         raise RuntimeError('Use D:\\Anaconda\\python.exe (Python 3.11) for the isolated Rustuna wheel; myo remains the worker')
     if not runtime.is_dir():
@@ -75,6 +79,15 @@ def main():
     sys.path.insert(0, str(runtime))
     import rustuna as backend
     study = backend.create_study(direction='minimize', sampler=backend.samplers.TPESampler(seed=61104, n_startup_trials=min(8, a.trials), multivariate=False))
+    study.enqueue_trial({key: 1. for key in space})
+    if a.phase=='A' and a.family in ('w2lvar','syn6'):
+        for f,e in ((.03,.001),(.1,.001),(.3,.001),(.03,.03)):
+            study.enqueue_trial(dict(tau_scale=1.,g_ion_scale=1.,commissural_F=f,commissural_E=e))
+    if a.phase == 'B':
+        # Separate ablation probes entrained Hunt at these budgets. Preserve
+        # that evidence as initial candidates, not as predetermined winners.
+        for values in ((96., .05, .05), (.05, 96., .05), (32., 32., 32.)):
+            study.enqueue_trial(dict(zip(SPACES['B'], values)))
     worker = Worker(HERE / 'replay_adapter.py', folder)
     deadline = time.time() + a.budget_s
     best = None
@@ -87,7 +100,7 @@ def main():
             if time.time() >= deadline:
                 break
             trial = study.ask()
-            params = {**fixed, **{k: trial.suggest_float(k, *bounds) for k, bounds in SPACES[a.phase].items()}}
+            params = {**fixed, **{k: trial.suggest_float(k, *bounds, log=a.phase == 'B'or k.startswith('commissural_')) for k, bounds in space.items()}}
             result = worker.request(dict(op='evaluate', params=params, deadline_epoch_s=min(deadline, time.time() + 180.)), min(180., deadline - time.time()))
             if 'value' not in result:
                 raise RuntimeError('Scientific worker rejected trial: ' + json.dumps(result))
@@ -95,14 +108,24 @@ def main():
             row = dict(trial=i, parameters=params, **result)
             with (folder / 'TRIALS.jsonl').open('a', encoding='utf-8') as stream:
                 stream.write(json.dumps(row, allow_nan=False) + '\n')
-            if best is None or row['value'] < best['value']:
+            if best is None or (row['diagnostics']['accepted'] and not best['diagnostics']['accepted']) or (row['diagnostics']['accepted'] == best['diagnostics']['accepted'] and row['value'] < best['value']):
                 best = row
                 (folder / 'BEST.json').write_text(json.dumps(best, indent=2))
-        if best is not None:
-            (folder / 'FINAL.json').write_text(json.dumps(dict(accepted=best['diagnostics']['accepted'], parameters=best['parameters'], best=best,
-                scope='Offline neural block only; fresh-process replay and body curriculum not yet passed'), indent=2))
     finally:
         worker.close()
+    if best is not None:
+        # New process, same source-locked manifest, no state carried from TPE.
+        fresh = Worker(HERE / 'replay_adapter.py', folder)
+        try:
+            fresh.request(dict(op='preflight', manifest=cfg, deadline_epoch_s=time.time()+180.),180.)
+            repeat=fresh.request(dict(op='capture',params=best['parameters'],path=str(folder/'BEST_TRACE.npz'),deadline_epoch_s=time.time()+180.),180.)
+        finally:
+            fresh.close()
+        delta=abs(float(repeat['value'])-float(best['value']))
+        matched=delta<1e-10
+        (folder/'FRESH_REPEAT.json').write_text(json.dumps(dict(matched=matched,objective_abs_difference=delta,**repeat),indent=2))
+        (folder / 'FINAL.json').write_text(json.dumps(dict(accepted=bool(best['diagnostics']['accepted'] and repeat['diagnostics']['accepted'] and matched), parameters=best['parameters'], best=best,
+            fresh_process_matched=matched,scope='Offline neural block only; body curriculum not yet passed'), indent=2))
 
 
 if __name__ == '__main__':

@@ -1,0 +1,33 @@
+=== pass1 rigid | 04-Nov-2026 12:00:32 | budget 600 | envelopes 7 ===
+BEST-INFEASIBLE (retained as warm start) per_tert rigid: fSeed 9096.3020 -> fBest 1573.8493 (obj 79.2485, violEff 1.49e-01) | capsules(pose1) 1 | 91.0 s | TOP VIOLATOR tx_slack_cells: normalized 1.429e-01 (dimensional 1.429e-01 fraction of cells, tol 1.0e-12)
+=== pass1 compliant | 04-Nov-2026 12:02:03 | budget 600 | envelopes 7 ===
+BEST-INFEASIBLE (retained as warm start) per_tert compliant: fSeed 8789.9417 -> fBest 1700.6103 (obj 113.7358, violEff 1.59e-01) | capsules(pose1) 1 | 109.7 s | TOP VIOLATOR span_foot_pass2: normalized 8.187e-02 (dimensional 8.727e-03 m, tol 1.0e-06)
+REFINE skipped: no rigid checkpoint to refine
+RESUME per_tert rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:20:15 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) per_tert rigid: fSeed 9320.9301 -> fBest 1816.1030 (obj 137.2133, violEff 1.68e-01) | capsules(pose1) 1 | 77.4 s | TOP VIOLATOR tx_slack_cells: normalized 1.429e-01 (dimensional 1.429e-01 fraction of cells, tol 1.0e-12)
+RESUME per_tert compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:21:32 | budget 600 | envelopes 24 ===
+BEST-INFEASIBLE (retained as warm start) per_tert compliant: fSeed 9014.5699 -> fBest 2299.3908 (obj 157.3142, violEff 2.14e-01) | capsules(pose1) 1 | 117.8 s | TOP VIOLATOR span_foot_pass2: normalized 1.006e-01 (dimensional 1.072e-02 m, tol 1.0e-06)
+REFINE1 per_tert: f 1816.1030 -> 1802.4749 (accepted, others 26, 30.3 s)
+RESUME per_tert rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 12:36:19 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_tert rigid: fSeed 9096.3020 -> fBest 1573.8493 (obj 79.2485, violEff 1.49e-01) | capsules(pose1) 1 | 86.5 s | TOP VIOLATOR tx_slack_cells: normalized 1.429e-01 (dimensional 1.429e-01 fraction of cells, tol 1.0e-12)
+RESUME per_tert compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 12:37:45 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_tert compliant: fSeed 8789.9417 -> fBest 1700.6103 (obj 113.7358, violEff 1.59e-01) | capsules(pose1) 1 | 87.1 s | TOP VIOLATOR span_foot_pass2: normalized 8.187e-02 (dimensional 8.727e-03 m, tol 1.0e-06)
+RESUME skip refine1 (accepted): f 1802.4749
+RESUME per_tert rigid: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 rigid | 04-Nov-2026 14:02:46 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_tert rigid: fSeed 5704.6081 -> fBest 80.3930 (obj 14.6603, violEff 6.57e-03) | capsules(pose1) 1 | 58.9 s | TOP VIOLATOR foot_occupancy_ban: normalized 6.573e-03 (dimensional 6.673e-03 m (tibia frame y), tol 1.0e-04)
+RESUME per_tert compliant: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
+=== pass1 compliant | 04-Nov-2026 14:03:44 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_tert compliant: fSeed 6539.6520 -> fBest 80.0921 (obj 13.6648, violEff 6.64e-03) | capsules(pose1) 1 | 114.0 s | TOP VIOLATOR foot_occupancy_ban: normalized 6.643e-03 (dimensional 6.743e-03 m (tibia frame y), tol 1.0e-04)
+REFINE1 per_tert: f 80.3930 -> 318.0759 (rejected, others 26, 25.6 s)
+RESUME per_tert rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 16:33:02 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_tert rigid: fSeed 5704.6081 -> fBest 80.3930 (obj 14.6603, violEff 6.57e-03) | capsules(pose1) 1 | 68.8 s | TOP VIOLATOR foot_occupancy_ban: normalized 6.573e-03 (dimensional 6.673e-03 m (tibia frame y), tol 1.0e-04)
+RESUME per_tert compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 16:34:11 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_tert compliant: fSeed 6593.9719 -> fBest 1798.7745 (obj 211.9000, violEff 1.59e-01) | capsules(pose1) 1 | 71.9 s | TOP VIOLATOR span_foot_pass2: normalized 8.187e-02 (dimensional 8.727e-03 m, tol 1.0e-06)
+RESUME skip refine1 (rejected): f 318.0759

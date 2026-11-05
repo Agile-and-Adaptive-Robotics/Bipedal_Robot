@@ -1,25 +1,12 @@
-=== pass1 rigid | 04-Nov-2026 11:49:53 | budget 600 | envelopes 0 ===
-SOLVED-FEASIBLE tfl rigid: fSeed 2867.5602 -> fBest 9.0037 (obj 9.0037, violEff 0.00e+00) | capsules(pose1) 1 | 105.2 s
-=== pass1 compliant | 04-Nov-2026 11:51:38 | budget 600 | envelopes 0 ===
-SOLVED-FEASIBLE tfl compliant: fSeed 2895.1886 -> fBest 8.9826 (obj 8.9826, violEff 0.00e+00) | capsules(pose1) 1 | 173.8 s
+=== pass1 rigid | 04-Nov-2026 19:18:15 | budget 600 | envelopes 4 ===
+BEST-INFEASIBLE (retained as warm start) tfl rigid: fSeed 2937.1962 -> fBest 57.7986 (obj 14.5830, violEff 4.32e-03) | capsules(pose1) 1 | 152.7 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.322e-03 (dimensional 4.422e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+=== pass1 compliant | 04-Nov-2026 19:20:48 | budget 600 | envelopes 4 ===
+BEST-INFEASIBLE (retained as warm start) tfl compliant: fSeed 2953.3542 -> fBest 96.1653 (obj 10.6186, violEff 8.55e-03) | capsules(pose1) 1 | 173.1 s | TOP VIOLATOR retained_rigid_envelopes: normalized 8.555e-03 (dimensional 8.655e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
 REFINE skipped: no rigid checkpoint to refine
-RESUME skip (feasible checkpoint): rigid f 9.0037
-RESUME skip (feasible checkpoint): compliant f 8.9826
-REFINE1 tfl: f 9.0037 -> 375.6461 (rejected, others 26, 34.9 s)
-RESUME skip (feasible checkpoint): rigid f 9.0037
-RESUME skip (feasible checkpoint): compliant f 8.9826
-RESUME skip refine1 (rejected): f 375.6461
-RESUME tfl rigid: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
-=== pass1 rigid | 04-Nov-2026 13:54:16 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) tfl rigid: fSeed 2921.3229 -> fBest 49.8406 (obj 7.4202, violEff 4.24e-03) | capsules(pose1) 1 | 114.5 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.242e-03 (dimensional 4.342e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
-RESUME tfl compliant: sizing config changed (ckpt missing vs current 20|1|none|1) - re-solving
-=== pass1 compliant | 04-Nov-2026 13:56:11 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) tfl compliant: fSeed 2948.9513 -> fBest 89.1548 (obj 4.1803, violEff 8.50e-03) | capsules(pose1) 1 | 136.1 s | TOP VIOLATOR retained_rigid_envelopes: normalized 8.497e-03 (dimensional 8.597e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
-REFINE1 tfl: f 49.8406 -> 382.3949 (rejected, others 26, 30.8 s)
 RESUME tfl rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 rigid | 04-Nov-2026 16:24:00 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) tfl rigid: fSeed 2932.7933 -> fBest 53.7652 (obj 10.5496, violEff 4.32e-03) | capsules(pose1) 1 | 152.9 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.322e-03 (dimensional 4.422e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+=== pass1 rigid | 04-Nov-2026 20:44:00 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) tfl rigid: fSeed 2937.1962 -> fBest 57.7986 (obj 14.5830, violEff 4.32e-03) | capsules(pose1) 1 | 146.6 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.322e-03 (dimensional 4.422e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
 RESUME tfl compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
-=== pass1 compliant | 04-Nov-2026 16:26:33 | budget 600 | envelopes 5 ===
-BEST-INFEASIBLE (retained as warm start) tfl compliant: fSeed 2948.9513 -> fBest 90.9459 (obj 5.3993, violEff 8.55e-03) | capsules(pose1) 1 | 166.2 s | TOP VIOLATOR retained_rigid_envelopes: normalized 8.555e-03 (dimensional 8.655e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
-RESUME skip refine1 (rejected): f 382.3949
+=== pass1 compliant | 04-Nov-2026 20:46:27 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) tfl compliant: fSeed 2953.3542 -> fBest 96.1653 (obj 10.6186, violEff 8.55e-03) | capsules(pose1) 1 | 171.4 s | TOP VIOLATOR retained_rigid_envelopes: normalized 8.555e-03 (dimensional 8.655e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE1 tfl: f 57.7986 -> 401.4649 (rejected, others 26, 42.0 s)

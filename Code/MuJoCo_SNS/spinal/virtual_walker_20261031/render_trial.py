@@ -5,7 +5,7 @@ import xml.etree.ElementTree as E
 import numpy as np
 from PIL import Image,ImageDraw,ImageFont
 from import_virtual_walker import mujoco,fmt
-def render(folder,start=2.,stop=4.7,title=None,guidance_caption=None,detail_caption=None,still_time=None):
+def render(folder,start=2.,stop=4.7,title=None,guidance_caption=None,detail_caption=None,still_time=None,direction_arrows=False):
  folder=Path(folder);z=np.load(folder/'trajectory.npz');r=json.loads((folder/'RESULT.json').read_text());tree=E.parse(folder/'model.xml');root=tree.getroot();world=root.find('worldbody');body=world.find("body[@name='Root']")
  eye=np.array([2.,.1,2.]);target=np.array([0.,-.45,0.]);forward=target-eye;forward/=np.linalg.norm(forward);right=np.cross(forward,np.array([0.,1.,0.]));right/=np.linalg.norm(right);up=np.cross(right,forward)
  E.SubElement(body,'camera',name='review_oblique',pos=fmt(eye),xyaxes=fmt(np.r_[right,up]),mode='trackcom',fovy='35')
@@ -30,6 +30,13 @@ def render(folder,start=2.,stop=4.7,title=None,guidance_caption=None,detail_capt
  frames=[];indices=np.flatnonzero((z['t']>=start)&(z['t']<=stop))[::max(1,round(.08/r['physics_dt']))]
  for k in indices:
   d.qpos[:]=z['q'][k];mujoco.mj_forward(m,d);renderer.update_scene(d,camera='review_oblique')
+  if direction_arrows:
+   rootpos=d.xpos[m.body('Root').id];belt=m.geom('geom_Treadmill_Belt').id;surface=float(d.geom_xpos[belt,1]+m.geom_size[belt,1]+.03)
+   joint=m.joint('Treadmill_Slide');address=int(joint.qposadr[0]);previous=max(0,k-1);qdot=(z['q'][k,address]-z['q'][previous,address])/max(r['physics_dt'],float(z['t'][k]-z['t'][previous]));belt_delta=.35*np.sign(qdot)*d.xaxis[joint.id]
+   arrows=[(rootpos+np.array([0.,.12,0.]),np.array([.25,0.,0.]),np.array([.1,.65,.2,1.],dtype=np.float32))]
+   if abs(qdot)>.001:arrows.append((np.array([rootpos[0]+.15,surface,rootpos[2]+.23]),belt_delta,np.array([.15,.35,.9,1.],dtype=np.float32)))
+   for origin,delta,color in arrows:
+    g=renderer.scene.geoms[renderer.scene.ngeom];mujoco.mjv_initGeom(g,mujoco.mjtGeom.mjGEOM_ARROW,np.zeros(3),np.zeros(3),np.eye(3).ravel(),color);mujoco.mjv_connector(g,mujoco.mjtGeom.mjGEOM_ARROW,.012,origin,origin+delta);renderer.scene.ngeom+=1
   if not frames:
    debug=dict(root=d.xpos[1].tolist(),camera_position=d.cam_xpos.tolist(),camera_rotation=d.cam_xmat.tolist(),first_geom_positions=d.geom_xpos[:4].tolist(),extent=float(m.stat.extent),znear=float(m.vis.map.znear),ngeom=int(renderer.scene.ngeom));(folder/'RENDER_CAMERA.json').write_text(json.dumps(debug,indent=2))
   profile=r.get('source_profile',{});clearance=r.get('guide_clearance_m')
