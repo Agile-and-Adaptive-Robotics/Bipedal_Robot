@@ -6,6 +6,7 @@ sandbox.selectEdge=id=>{sandbox.sel={kind:'edge',id};};sandbox.selectNode=id=>{s
 vm.createContext(sandbox);vm.runInContext(original.slice(original.indexOf('function modelSpec()'),original.indexOf('function snapshot()')),sandbox);vm.runInContext(fs.readFileSync(path.join(root,'desktop_editor.js'),'utf8'),sandbox);
 vm.runInContext(original.slice(original.indexOf('function uniqueLabel('),original.indexOf('function copySel(')),sandbox);
 vm.runInContext(original.slice(original.indexOf('function nodeById('),original.indexOf('// ---------------- node rendering')),sandbox);
+sandbox.redrawEdges=()=>{};
 sandbox.snapshot=()=>sandbox.undoStack.push(JSON.stringify(vm.runInContext('serialize()',sandbox)));
 vm.runInContext('function serialize(){return specOf(nodes,edges,grpNames,hiddenG)}',sandbox);
 const fixture=JSON.parse(fs.readFileSync(path.join(root,'examples/paired_mn.sns.json'),'utf8'));
@@ -18,6 +19,7 @@ const neuronFields=before.nodes.map(n=>[n.id,n.model,n.source_record]);
 sandbox.selSet=new Set([sandbox.nodes[0].id,sandbox.nodes[3].id]);vm.runInContext('packSub()',sandbox);let packed=documentNow();assert.deepEqual(semantics(packed),meaning);assert.deepEqual(packed.source,before.source);
 assert.equal(packed.inputs[0].node_path[0],fixture.nodes[0].id);assert.equal(packed.inputs[0].node_id,sandbox.nodes.find(n=>n.sub).id);
 const host=sandbox.nodes.find(n=>n.sub);sandbox.selSet=new Set([host.id,sandbox.nodes[0].id]);vm.runInContext('packSub()',sandbox);const twice=documentNow();assert.deepEqual(semantics(twice),meaning);
+const display=vm.runInContext('desktopDisplayEdges()',sandbox);assert(display.length<=sandbox.edges.length);assert.deepEqual(documentNow(),twice);
 load(twice);sandbox.sel={kind:'node',id:sandbox.nodes.find(n=>n.sub).id};vm.runInContext('unpackSub()',sandbox);sandbox.sel={kind:'node',id:sandbox.nodes.find(n=>n.sub).id};vm.runInContext('unpackSub()',sandbox);assert.deepEqual(semantics(documentNow()),meaning);
 const after=documentNow();assert.deepEqual(after.nodes.map(n=>[n.id,n.model,n.source_record]).sort(),neuronFields.sort());
 assert.equal(after.inputs[0].node_id,fixture.nodes[0].id);assert.deepEqual(after.inputs[0].node_path,[]);
@@ -28,3 +30,7 @@ assert.equal(copied.inputs.length,2);for(const p of copied.inputs){let n=copied.
 vm.runInContext("testEditedEdge=edges.find(e=>e.synapse);testInput=desktopField(document.createElement('div'),'g',testEditedEdge.synapse.gmax_uS,v=>testEditedEdge.synapse.gmax_uS=v);testInput.value='0.375';testInput.oninput();",sandbox);
 assert(documentNow().edges.some(e=>e.synapse?.gmax_uS===0.375));
 console.log('PASS: all 50 connections survive nested pack/save/reload/unpack; complete node/source fields preserved; subtree copy remaps boundary IDs without aliasing.');
+if(process.argv[2]){
+ const folder=process.argv[2],catalog=JSON.parse(fs.readFileSync(path.join(folder,'LIBRARY_INDEX.json'),'utf8'));
+ for(const entry of catalog){load(JSON.parse(fs.readFileSync(entry.hierarchy,'utf8')));sandbox.sel=null;const before=documentNow();const display=vm.runInContext('desktopDisplayEdges()',sandbox);assert.equal(display.reduce((n,e)=>n+(e._uiBundle?.length||1),0),sandbox.edges.length);assert.deepEqual(documentNow(),before);console.log(`PASS: ${entry.family} hierarchy: ${sandbox.edges.length} root connections shown as ${display.length} view wires; serialized source unchanged.`);}
+}
