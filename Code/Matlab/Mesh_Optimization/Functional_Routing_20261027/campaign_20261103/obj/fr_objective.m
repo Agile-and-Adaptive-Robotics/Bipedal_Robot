@@ -104,7 +104,14 @@ for i = 1:nG
     tauClass(i) = dot(reshape(tq, 1, 3), reshape(cs.primaryAxis, 1, 3)) ...
         / max(norm(cs.primaryAxis), eps);
 end
-tauPrim = tauClass;
+% Project the insertion wrench through the actual joint-coordinate motion.
+% A fixed Z projection scores adduction/rotation about the wrong axis and
+% omits the translating knee origin. Retain the old projection as a check.
+tauPrim = fr_coordinateTorque(cs, kin, mech, scorePass, kPrim);
+invalidTorque=~isfinite(tauPrim);
+% An invalid state earns no capacity credit and remains subject to the
+% explicit transmission hard constraints; NaNs must not stop the search.
+tauPrim(invalidTorque)=0;
 chord = fr_crossingChord(mech, kPrim);
 tauChord = -mech.segTension(:, kPrim) .* fr_dDeltaL(chord, dTheta);
 tauChord = edgeFix(tauChord);
@@ -241,12 +248,8 @@ cunits{ci} = 'm (pelvis frame)'; cnorm{ci} = 'dimensional (m)'; ...
 
 % 2. foot occupancy (fitting-tip rule; owning bodies structural)
 % UNITS: meters of margin proximal of the ankle pivot plane (+5 mm)
-if cs.footTipRule
-    tipMin = fr_fittingTipMargin(C, cs, kin, meta);
-    ci = ci + 1; cvec(ci) = -tipMin; clabels{ci} = 'foot_occupancy_ban';
-    cunits{ci} = 'm (tibia frame y)'; cnorm{ci} = 'dimensional (m)'; ...
-        ctol(ci) = 1e-4;
-end
+% Full vessel/fitting occupancy is evaluated below after physical sleeves
+% have been constructed; a route guide on the foot is not itself a BPA.
 
 % 3. required tendon spans (master item 6): the OPTIMIZED routing must
 % never need more tendon than the PROCURED hardware quantity
@@ -259,7 +262,7 @@ for p = 1:numel(cs.passes)
         sp = fr_spans(C, kin, ptsP, bodP, cs.passes{p}.qStructs, cs.spanKind);
         ci = ci + 1;
         cvec(ci) = (sp.spanMax_m + sp.allowance_m - ...
-            cs.tendonHardware_m) / max(cs.tendonHardware_m, eps);
+            design.tendon) / max(cs.tendonHardware_m, eps);
         clabels{ci} = sprintf('span_%s_pass%d', cs.spanKind, p);
         cunits{ci} = 'm';
         cnorm{ci} = 'fraction of tendonHardware_m';
@@ -274,13 +277,16 @@ end
 
 % 4. transmission feasibility over ALL passes
 % UNITS: fraction of grid cells (infeasible/slack); strain floor normalized
-infeasFrac = 0; slackFrac = 0; elongViol = 0;
+infeasFrac = 0; slackFrac = 0; elongViol = 0; contractionViol = 0;
+physicalSleeves=cell(1,numel(cs.passes));
 for p = 1:numel(cs.passes)
     qgp = struct('passIdx', p, 'qList', {cs.passes{p}.qStructs});
-    [mp, ~] = fr_mechBuild(C, cs, design, kin, xiBranch, qgp);
+    [mp, metap] = fr_mechBuild(C, cs, design, kin, xiBranch, qgp);
+    physicalSleeves{p}=fr_sleevePrimitives(C,cs,design,kin,mp,metap);
     infeasFrac = max(infeasFrac, mean(mp.PulleyInfeasible));
     slackFrac = max(slackFrac, mean(mp.PulleySlack));
     elongViol = max(elongViol, max(0, -min(mp.strain_p) - strainFloor(cs)));
+    contractionViol = max(contractionViol, max(mp.strain_p) - (1-mp.kmax/mp.rest));
 end
 ci = ci + 1; cvec(ci) = infeasFrac; clabels{ci} = 'tx_infeasible_cells';
 cunits{ci} = 'fraction of cells'; cnorm{ci} = 'fraction of cells'; ...
@@ -291,6 +297,25 @@ cunits{ci} = 'fraction of cells'; cnorm{ci} = 'fraction of cells'; ...
 ci = ci + 1; cvec(ci) = elongViol; clabels{ci} = 'strain_floor';
 cunits{ci} = 'normalized strain'; cnorm{ci} = 'strain (unitless)'; ...
     ctol(ci) = 1e-9;
+ci = ci + 1; cvec(ci) = contractionViol; clabels{ci} = 'physical_contraction_ceiling';
+cunits{ci} = 'contraction fraction'; cnorm{ci} = 'strain (unitless)'; ctol(ci) = 1e-9;
+ci=ci+1;cvec(ci)=mean(invalidTorque);clabels{ci}='invalid_torque_cells';
+cunits{ci}='fraction of cells';cnorm{ci}='fraction of cells';ctol(ci)=1e-12;
+if cs.footTipRule
+ tipMin=inf;
+ for p=1:numel(cs.passes)
+  qList=cs.passes{p}.qStructs;
+  for poseIdx=1:numel(qList)
+   T=fr_bodyT(kin,qList{poseIdx},'tibia_r');caps=physicalSleeves{p}{poseIdx};
+   for cap=caps
+    points=(T(1:3,1:3)'*([cap.p1;cap.p2]'-T(1:3,4)))';
+    tipMin=min(tipMin,min(points(:,2))+.43-cap.r-cs.fittingLength-.005);
+   end
+  end
+ end
+ ci=ci+1;cvec(ci)=-tipMin;clabels{ci}='physical_foot_occupancy';
+ cunits{ci}='m above ankle plane';cnorm{ci}='dimensional (m)';ctol(ci)=1e-4;
+end
 
 % 5. rated hardware loads
 % UNITS: normalized by the assigned family's catalog capacity (which is a
@@ -324,7 +349,7 @@ for p = 1:numel(cs.passes)
     [ptsP, bodP] = fr_locForPass(C, cs, design, kin, p);
     csP = cs; csP.cross = cs.crossFor{p};
     ob = fr_obstacles(C, csP, ptsP, bodP, kin, ...
-        cs.passes{p}.qStructs, opts.envelopes);
+        cs.passes{p}.qStructs, opts.envelopes,physicalSleeves{p});
     obsBoneMin = min(obsBoneMin, ob.boneMargin);
     obsRigidMin = min(obsRigidMin, ob.rigidMargin);
     if ob.corridorDepthNorm > corrDepth
@@ -406,6 +431,7 @@ else
 end
 rep.feasible = ~any(violEff > 0);
 rep.tauPrimary = tauPrim;
+rep.invalidTorqueCells=invalidTorque;
 rep.tauClassCrossCheck = tauChord;
 rep.tauCrossCheckMaxDiff = max(abs(tauChord - tauPrim));
 rep.tauTarget = tauT;
@@ -517,6 +543,8 @@ if nB < 2
     return
 end
 Drest = fr_diameter(C, cs.diaStr, 0);
+distanceFn=@segSegDistMin;
+if isfield(C,'exactSegmentDistance')&&C.exactSegmentDistance;distanceFn=@fr_segmentDistance;end
 exitRow = cs.cross(1);
 nG = mech.nG;
 for i = 1:nG
@@ -552,7 +580,7 @@ for i = 1:nG
     end
     for a = 1:numel(ctr)
         for b2 = a+1:numel(ctr)
-            d = segSegDistMin(ctr{a}(1, :), ctr{a}(2, :), ...
+            d = distanceFn(ctr{a}(1, :), ctr{a}(2, :), ...
                 ctr{b2}(1, :), ctr{b2}(2, :));
             ov = 2 * r - d;
             if ov > 0
@@ -590,14 +618,15 @@ d = norm(p1 + sc * u - (q1 + tc * v));
 end
 
 function offs = fr_ringOffsets(nB)
-switch min(nB, 3)
+switch nB
     case 1
         offs = [0 0];
     case 2
         offs = [0 1; 0 -1];
     otherwise
-        th = (0:2) * 2 * pi / 3;
-        offs = [cos(th)', sin(th)'];
+        th = (0:nB-1) * 2 * pi / nB;
+        radius = 1/sin(pi/nB);
+        offs = radius * [cos(th)', sin(th)'];
 end
 end
 

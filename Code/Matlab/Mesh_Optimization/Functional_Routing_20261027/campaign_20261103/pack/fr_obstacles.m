@@ -1,5 +1,5 @@
 function obs = fr_obstacles(C, caseDef, loc, rowBodies, kin, qPoseList, ...
-    envelopes)
+    envelopes, sleeves)
 %FR_OBSTACLES Obstacle margins for one candidate route (v2, 2026-11-04).
 %
 % Ben's corrected layering/interference ruling split the old single HARD
@@ -29,6 +29,8 @@ function obs = fr_obstacles(C, caseDef, loc, rowBodies, kin, qPoseList, ...
 % (constraint active - used by the layering proof in the gate).
 
 nG = numel(qPoseList);
+distanceFn=@segSegDist;
+if isfield(C,'exactSegmentDistance')&&C.exactSegmentDistance;distanceFn=@fr_segmentDistance;end
 sleeveR = (fr_diameter(C, caseDef.diaStr, 0) / 2) / 1000;
 
 % --- candidate route world segments (BPA-side rows only: 1..exitRow) ----
@@ -43,6 +45,19 @@ for i = 1:nG
     end
     segs{i} = w;
 end
+if nargin>=8 && ~isempty(sleeves)
+ for i=1:nG
+  cap=sleeves{i};w=nan(3*numel(cap),3);
+  for j=1:numel(cap)
+   a=cap(j).p1;b=cap(j).p2;
+   if isfield(C,'fullFittingEnvelopes')&&C.fullFittingEnvelopes
+    u=(b-a)/max(norm(b-a),eps);a=a-u*caseDef.fittingLength;b=b+u*caseDef.fittingLength;
+   end
+   w(3*j-2,:)=a;w(3*j-1,:)=b;
+  end
+  segs{i}=w;
+ end
+end
 
 % --- 1. bone obstacle (HARD) ----------------------------------------------
 obs.boneClouds = {};
@@ -53,8 +68,20 @@ for b = 1:numel(caseDef.obstacleBones)
     m = inf;
     for i = 1:nG
         w = segs{i};
+        body=cloudBody(caseDef.obstacleBones{b});Tbone=fr_bodyT(kin,qPoseList{i},body);
+        cloudWorld=(Tbone(1:3,1:3)*cloud'+Tbone(1:3,4))';
+        if nargin>=8 && ~isempty(sleeves);sleeveR=max([sleeves{i}.r]);end
         for r = 1:size(w, 1) - 1
-            d = segPointDist(cloud, w(r, :), w(r + 1, :));
+            if any(~isfinite(w(r:r+1,:)),'all');continue;end
+            fieldFile=fullfile(C.camp,'audit_20261105','surface_fields',[body '.mat']);
+            if isfile(fieldFile)
+                nSample=max(2,ceil(norm(w(r+1,:)-w(r,:))/.003)+1);
+                t=linspace(0,1,nSample)';sample=w(r,:)+t.*(w(r+1,:)-w(r,:));
+                local=(Tbone(1:3,1:3)'*(sample'-Tbone(1:3,4)))';
+                d=min(fr_surfaceDistance(C,body,local))-norm(w(r+1,:)-w(r,:))/(2*(nSample-1));
+            else
+                d = segPointDist(cloudWorld, w(r, :), w(r + 1, :));
+            end
             m = min(m, d - sleeveR - C.clearanceBone_m);
         end
     end
@@ -75,15 +102,20 @@ obs.envDeflection_m = NaN;   % set by the layering driver when known
 for e = 1:numel(envelopes)
     envE = envelopes{e};
     if ~isstruct(envE); continue; end
+    if isfield(envE,'caseDef')
+        envE=fr_retainedEnvelope(C,envE,kin,qPoseList);
+    end
     mRigid = inf;
     dSoft = 0;
     mmSoft = 0;
     for i = 1:nG
         w = segs{i};
+        if nargin>=8 && ~isempty(sleeves);sleeveR=max([sleeves{i}.r]);end
         for r = 1:size(w, 1) - 1
+            if any(~isfinite(w(r:r+1,:)),'all');continue;end
             for k = 1:numel(envE.capsules{i})
                 cap = envE.capsules{i}(k);
-                d = segSegDist(w(r, :), w(r + 1, :), cap.p1, cap.p2) ...
+                d = distanceFn(w(r, :), w(r + 1, :), cap.p1, cap.p2) ...
                     - cap.r - sleeveR;
                 if strcmpi(cap.kind, 'rigid_*') || ...
                         strncmpi(char(cap.kind), 'rigid', 5)
@@ -132,6 +164,7 @@ for e = 1:numel(envelopes)
         obs.corridorWhich = envE.caseName;
     end
 end
+
 % backward-compatible alias for the gate/proof consumers: envMargin is now
 % the RIGID-only margin (BPA corridors are excluded from it by design)
 obs.envMargin = obs.rigidMargin;
@@ -201,4 +234,17 @@ if isempty(idx)
     cache{idx} = reshape(cl, [], 3);
 end
 cloud = cache{idx};
+end
+
+function body=cloudBody(name)
+switch lower(name)
+ case 'femur';body='femur_r';
+ case 'tibia';body='tibia_r';
+ case {'pelvis_r','sacrum'};body='pelvis';
+ case 'spine';body='torso';
+ case 'talus';body='talus_r';
+ case 'calcaneus';body='calcn_r';
+ case 'toes';body='toes_r';
+ otherwise;error('fr_obstacles:UnknownBone','No owning body for %s',name);
+end
 end

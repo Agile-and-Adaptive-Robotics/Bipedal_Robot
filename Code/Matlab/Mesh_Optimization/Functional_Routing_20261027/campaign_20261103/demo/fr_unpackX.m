@@ -12,7 +12,7 @@ for m = 1:nMov
 end
 design.L0 = x(3 * nMov + 1) / 10;
 design.tendon = x(3 * nMov + 2) / 10;
-design.seriesSplit = min(0.999, max(1e-3, x(end)));
+design.seriesSplit = min(1, max(1e-3, x(end)));
 end
 
 function x = fr_packX(cs, design) %#ok<DEFNU>

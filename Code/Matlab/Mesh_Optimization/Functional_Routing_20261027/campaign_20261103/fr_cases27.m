@@ -18,14 +18,12 @@ function CASES = fr_cases27(C, kin, overrides, opts)
 %     and is tracked per pose (stage-1 convention, gate check (c)).
 %   - MovingPathPoints (rect_fem_r-P3, vas_lat_r-P5) are KEPT as
 %     FIXED-TRACKED mechanics rows: seed location = fr_evalRoute's
-%     declared location at the pass-1 MID pose, owning-body frame (the
-%     stage-1 fixed-row convention with tracked behavior; README
-%     limitation 2). They are never movable attachments.
-%   - Sleeve = rows 1..cross(1)-1. Short routes (2 declared rows: trunk
-%     x3, soleus, add_mag3, bifemsh, psoas-family hip cases with nProx=1)
-%     carry the same zero-length-sleeve-in-grid convention as the
-%     gate-passing wired trunk/hip cases (hardware at brackets; the bone
-%     obstacle is vacuous over zero segments).
+%     declared location at the model DEFAULT pose, owning-body frame.
+%     Selected terminal rows may subsequently be movable attachments.
+%     Their native moving behavior is not preserved through the ROM.
+%   - Physical sleeves are emitted at their full solved length by
+%     fr_sleevePrimitives, including routes with only two declared rows.
+%     The pre-crossing route polyline is not a pressure-vessel envelope.
 %
 % Tackle policy (recorded per case):
 %   wired-feasibility-exemplar overrides (gate-passed configs):
@@ -38,10 +36,9 @@ function CASES = fr_cases27(C, kin, overrides, opts)
 %     mechanically feasible one; documented here and in the manifest.
 %
 % nBPA = contract sizing n20_ceil_MIF_over_Fmax20; diameter '10' iff the
-% contract's 10 mm screen passed, else '20'. The envelope/soft-overlap
-% branch ring caps at 3 offsets (fr_bundleOffsets/fr_ringOffsets), so
-% 4-branch groups (glut_max3, vas_int) under-represent one branch in the
-% envelope - recorded machinery cap, later campaign item.
+% contract's 10 mm screen passed, else '20'. This initializes the search;
+% repaired drivers screen other allowed sizes/counts. All parallel branches
+% are emitted in the envelope. Branch offsets share a fixed bundle layout.
 %
 % Transform convention (gate-verified fr_chainT direction): T1 =
 % fr_chainT(kin, q, childFrame, proxFrame) maps distal-row coords into
@@ -714,6 +711,7 @@ kmaxF = fr_kmaxFraction27(C, cs.diaStr);
 G = max(max(cs.txConfig.gain), 1);
 cs.fittingLength = min(C.fittingLength, max(0.008, 0.07 * mLmax));
 cs.tendonSeed = 2 * cs.fittingLength + 0.005;
+if ~strcmp(cs.spanKind,'none');cs.tendonSeed=max(cs.tendonSeed,cs.seedSpan.requiredSpan_m);end
 rest0 = max(0.03, mLmax - cs.tendonSeed - 2 * cs.fittingLength + 0.008);
 dProbe = struct('L0', rest0, 'tendon', cs.tendonSeed, ...
     'seriesSplit', 0.5, 'uv', repmat([0, 0, 5], numel(cs.movable), 1));
@@ -747,6 +745,11 @@ ub(3 * nMov + 1) = 2.5 * cs.L0Seed * 10;
 lb(3 * nMov + 2) = 0.3 * cs.tendonSeed * 10;
 ub(3 * nMov + 2) = 2.5 * cs.tendonSeed * 10;
 lb(end) = 0.35; ub(end) = 0.65;
+if ~strcmp(cs.spanKind,'knee')
+ cs.xSeed(end)=1;lb(end)=1;ub(end)=1;
+else
+ ub(end)=1; % explicitly allow a one-section candidate as well as two sections
+end
 cs.lb = lb; cs.ub = ub;
 cs.target = fr_targets(C, kin, cs);
 end
@@ -769,8 +772,8 @@ end
 
 function rows = fr_fixMovingRows27(rows, route, kin, qMidCoord)
 % MovingPathPoints: keep the row FIXED-TRACKED - seed location = the
-% declared fr_evalRoute location at the DEFAULT pose (mid-range for the
-% knee primary, whose default is 0 = the pass-1 grid midpoint), owning-
+% declared fr_evalRoute location at the DEFAULT pose (knee 0, rather than
+% the midpoint of the -120..0 degree sweep), owning-
 % body frame (stage-1 fixed-row convention, tracked behavior). rows
 % carries the already-dropped conditional set.
 qMid = [];
@@ -797,6 +800,7 @@ for i = 1:numel(route.points)
         'behavior in fr_evalRoute)'], P.name, qMidCoord);
     out{idx} = sRow;
 end
+rows=out;
 end
 
 function loc = fr_evalRouteOne27(P, q)

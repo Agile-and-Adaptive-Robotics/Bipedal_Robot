@@ -90,10 +90,10 @@ kmax = campaignLminFraction(C, caseDef.diaStr) * rest;
 
 % ---- 3. discrete transmission configuration (kept distinct) -------------
 cfg = caseDef.txConfig;
-% physical sheave count from the reeving gain (never inferred from travel):
-% a G-line tackle block carries (G-1) moving sheaves plus one fixed
-% redirect when G > 1. Recorded per crossing.
-cfg.sheaveCountPhysical = tackleSheaves(cfg.gain(1)) + tackleSheaves(cfg.gain(2));
+% Mathematical gain does not uniquely determine physical reeving. These
+% metadata fields are not consumed by the force/equilibrium classes.
+cfg.sheaveCountPhysical = NaN;
+cfg.sheaveCountStatus = 'Unresolved: define physical reeving before counting sheaves';
 cfg.seriesSections = 1 + double(design.seriesSplit < 0.999);
 cfg.sectionLengths_m = [rest * design.seriesSplit, ...
     rest * (1 - design.seriesSplit)];
@@ -231,7 +231,12 @@ mech.cfg = mergeCfg(cfg, cfgMount);
 mech.qg = qg;
 mech.cell = m;
 mech.nG = nG;
-mech.strain_p = m.strain_p(1:nG);
+% The legacy strain reconstructs muscle length from the whole routed path.
+% A reverse transmission decouples that path change from BPA shortening.
+% Diameter, strain limits and packaging must use the solved sleeve state.
+mech.legacyRouteStrain = m.strain_p(1:nG);
+mech.strain_p = m.sContraction(:, 1) / rest;
+mech.sleeveLength_m = rest - m.sContraction(:, 1);
 mech.FsingleBPA = m.FsingleBPA(:, 1);
 mech.Ftendon = m.Ftendon(:, 1);
 mech.segTension = m.segTension(1:nG, :);
@@ -287,14 +292,6 @@ if numel(c2.crossFor) >= passIdx
 end
 mask = c2.rowUse{passIdx};
 c2.nRows = sum(mask);
-end
-
-function s = tackleSheaves(g)
-if g > 1
-    s = (g - 1) + 1;   % moving sheaves + fixed redirect
-else
-    s = 0;
-end
 end
 
 function c = campaignLminFraction(C, diaStr)
