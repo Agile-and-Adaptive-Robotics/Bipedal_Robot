@@ -10,3 +10,10 @@ RESUME add_mag3 compliant: checkpoint is best-infeasible - re-solving (kept as w
 === pass1 compliant | 04-Nov-2026 20:44:40 | budget 600 | envelopes 5 ===
 BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 686.2458 -> fBest 516.9553 (obj 119.8978, violEff 3.97e-02) | capsules(pose1) 2 | 122.1 s | TOP VIOLATOR centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
 REFINE1 add_mag3: f 511.9206 -> 746.4356 (rejected, others 26, 23.4 s)
+RESUME add_mag3 rigid: checkpoint case signature differs (nX 9 vs 9) - solving fresh
+=== pass1 rigid | 05-Nov-2026 02:09:47 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) add_mag3 rigid: fSeed 847.7227 -> fBest 838.3926 (obj 145.2945, violEff 6.93e-02) | capsules(pose1) 1 | 41.2 s | TOP VIOLATOR centerline_z0: normalized 6.931e-02 (dimensional 6.941e-02 m (pelvis frame), tol 1.0e-04)
+RESUME add_mag3 compliant: checkpoint case signature differs (nX 9 vs 9) - solving fresh
+=== pass1 compliant | 05-Nov-2026 02:10:28 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) add_mag3 compliant: fSeed 845.4423 -> fBest 837.3109 (obj 144.2128, violEff 6.93e-02) | capsules(pose1) 1 | 49.0 s | TOP VIOLATOR centerline_z0: normalized 6.931e-02 (dimensional 6.941e-02 m (pelvis frame), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 746.4356

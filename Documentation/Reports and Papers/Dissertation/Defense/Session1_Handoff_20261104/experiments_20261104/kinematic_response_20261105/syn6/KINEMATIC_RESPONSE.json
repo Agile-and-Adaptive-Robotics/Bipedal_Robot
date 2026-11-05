@@ -1,0 +1,344 @@
+{
+  "schema": "database_kinematics_v1",
+  "recording": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_ankle_selected_repeat_20261104\\stage2",
+  "reference": "subject01_walk1: existing calibration IK/GRF reference",
+  "scope": "IK waveform response comparison, not input-output transfer function or Bode FRF",
+  "window_s": [
+    5.0,
+    14.0
+  ],
+  "phase_anchor": "One shared right-knee maximum-flexion peak; all six joints retain relative phase. Left reference cycles shifted by reference loading phase.",
+  "principal": {
+    "accepted": true,
+    "principal_knee_cycles": [
+      4,
+      4
+    ],
+    "principal_peak_times_s": [
+      [
+        6.108,
+        8.112,
+        10.116000000000001,
+        12.120000000000001
+      ],
+      [
+        7.07,
+        9.078000000000001,
+        11.084000000000001,
+        13.092
+      ]
+    ],
+    "period_s": 2.005000000000001,
+    "period_cv": 0.0008949916581575387,
+    "bilateral_phase_error": 0.01786640572645251,
+    "cycle_coverage": 1.0,
+    "knee_ranges_deg": [
+      20.449564988142985,
+      22.839899184625963
+    ],
+    "hip_ranges_deg": [
+      25.430676949204422,
+      26.523144509853775
+    ],
+    "autocorrelation": [
+      0.9999720656200004,
+      0.9999770355570912
+    ],
+    "dominant_spectral_Hz": [
+      0.4444444444444934,
+      0.4444444444444934
+    ],
+    "peak_counts": [
+      {
+        "all_prominent_peaks": 4,
+        "principal_peaks": 4
+      },
+      {
+        "all_prominent_peaks": 4,
+        "principal_peaks": 4
+      }
+    ]
+  },
+  "source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\kinematic_response.py": "a7d6df67c91dfcffc2d693bb3d42196eac66cf2305bdaf8b2ba14755d2cf54be",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\dominant_cycles.py": "fc084078e825c99d5d03465576c87e37ea26d01dc389f301035f679cf1078510",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_ankle_selected_repeat_20261104\\stage2\\capture\\aligned_trace.npz": "6819df35541af6d8ab60c06f23b17db6d1a26d0ee32ae1c6b40d2971f81a3085"
+  },
+  "safety_gates_passed": true,
+  "complete_cycles": 3,
+  "reference_source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_ik.mot": "7380251a0e2434bea1ad62aa8ece037e3dc8ff014f8b747395b63c4c8a4d55e2",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_grf.mot": "69a5e8633f8666bc192abd8069e6812fe7b4c8bb8968dc3254d4824abf263662"
+  },
+  "joints": [
+    {
+      "joint": "hip_flexion_r",
+      "reference_ROM_deg": 43.28089307662569,
+      "simulation_ROM_deg": 25.41975312029382,
+      "ROM_gain": 0.5873204389588261,
+      "mean_bias_deg": -6.489008763237603,
+      "waveform_RMSE_deg": 18.58974460072913,
+      "normalized_RMSE": 0.429513886596964,
+      "cycle_variability_RMS_deg": 0.011363456256511424,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 21.175120918712647,
+          "simulation_amplitude_deg": 11.938688514337395,
+          "usable": true,
+          "gain": 0.5638073359848947,
+          "gain_dB": -4.977385552011571,
+          "lag_deg": -88.91449145619725
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 4.335852005530965,
+          "simulation_amplitude_deg": 0.6714180052386514,
+          "usable": true,
+          "gain": 0.15485261129350517,
+          "gain_dB": -16.201629333971088,
+          "lag_deg": 48.7258903470962
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 2.3960741245804096,
+          "simulation_amplitude_deg": 1.541478911102504,
+          "usable": true,
+          "gain": 0.6433352354541374,
+          "gain_dB": -3.8312532330145226,
+          "lag_deg": -94.80663087190122
+        }
+      ]
+    },
+    {
+      "joint": "knee_angle_r",
+      "reference_ROM_deg": 70.4324342385684,
+      "simulation_ROM_deg": 20.397129415025216,
+      "ROM_gain": 0.28959852993205026,
+      "mean_bias_deg": 15.171052771452036,
+      "waveform_RMSE_deg": 22.7488441683952,
+      "normalized_RMSE": 0.3229881859732467,
+      "cycle_variability_RMS_deg": 0.015297139727458333,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 21.133616804210895,
+          "simulation_amplitude_deg": 10.670021113276528,
+          "usable": true,
+          "gain": 0.504883816723246,
+          "gain_dB": -5.936170994505128,
+          "lag_deg": 9.894618312563294
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 20.434592708617743,
+          "simulation_amplitude_deg": 1.3899040284964406,
+          "usable": true,
+          "gain": 0.06801721220067607,
+          "gain_dB": -23.347623446500073,
+          "lag_deg": 34.48130561287065
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 6.950876872333199,
+          "simulation_amplitude_deg": 1.7837948351026327,
+          "usable": true,
+          "gain": 0.25662874884213954,
+          "gain_dB": -11.813893867707074,
+          "lag_deg": -175.96271501522395
+        }
+      ]
+    },
+    {
+      "joint": "ankle_angle_r",
+      "reference_ROM_deg": 23.101158648376128,
+      "simulation_ROM_deg": 26.661659870877912,
+      "ROM_gain": 1.154126521387795,
+      "mean_bias_deg": -25.510791921640667,
+      "waveform_RMSE_deg": 27.82769419458169,
+      "normalized_RMSE": 1.204601666009415,
+      "cycle_variability_RMS_deg": 0.04915375516799481,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 5.800901173669958,
+          "simulation_amplitude_deg": 11.894394144896632,
+          "usable": true,
+          "gain": 2.050439024695814,
+          "gain_dB": 6.2369371780844896,
+          "lag_deg": 98.86081565898407
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 3.6696726191596905,
+          "simulation_amplitude_deg": 1.5898766916512248,
+          "usable": true,
+          "gain": 0.43324755547683896,
+          "gain_dB": -7.265277580747834,
+          "lag_deg": 108.20277544207003
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 3.2790433707962587,
+          "simulation_amplitude_deg": 1.710474216374743,
+          "usable": true,
+          "gain": 0.5216381800889033,
+          "gain_dB": -5.652612578839596,
+          "lag_deg": 28.733369149315678
+        }
+      ]
+    },
+    {
+      "joint": "hip_flexion_l",
+      "reference_ROM_deg": 44.109011203262426,
+      "simulation_ROM_deg": 26.4048474130516,
+      "ROM_gain": 0.5986270535826163,
+      "mean_bias_deg": -6.319259515122423,
+      "waveform_RMSE_deg": 19.78459706297756,
+      "normalized_RMSE": 0.4485386664372616,
+      "cycle_variability_RMS_deg": 0.07207202903759895,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 21.313766994400304,
+          "simulation_amplitude_deg": 11.67385954512502,
+          "usable": true,
+          "gain": 0.5477145146698871,
+          "gain_dB": -5.228914998568234,
+          "lag_deg": -99.87601541223493
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 4.910585797200347,
+          "simulation_amplitude_deg": 1.581426733935234,
+          "usable": true,
+          "gain": 0.3220444157267034,
+          "gain_dB": -9.841684542805698,
+          "lag_deg": 22.154808074100988
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 2.7236301444313473,
+          "simulation_amplitude_deg": 1.6906792404691071,
+          "usable": true,
+          "gain": 0.6207447967653829,
+          "gain_dB": -4.1417382424128855,
+          "lag_deg": -111.14486037511355
+        }
+      ]
+    },
+    {
+      "joint": "knee_angle_l",
+      "reference_ROM_deg": 70.61814631691922,
+      "simulation_ROM_deg": 22.750627189121037,
+      "ROM_gain": 0.32216403822072953,
+      "mean_bias_deg": 9.840367396674319,
+      "waveform_RMSE_deg": 20.16580781527325,
+      "normalized_RMSE": 0.28556127379460505,
+      "cycle_variability_RMS_deg": 0.08423974046171481,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 22.978779909480203,
+          "simulation_amplitude_deg": 10.647462814039596,
+          "usable": true,
+          "gain": 0.46336066823316596,
+          "gain_dB": -6.681616670059941,
+          "lag_deg": 4.655886111042014
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 20.545371781646605,
+          "simulation_amplitude_deg": 2.76289811573114,
+          "usable": true,
+          "gain": 0.1344778836369983,
+          "gain_dB": -17.426982685602187,
+          "lag_deg": -70.25852635588893
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 6.731401801426537,
+          "simulation_amplitude_deg": 1.8455094024253291,
+          "usable": true,
+          "gain": 0.27416420188053897,
+          "gain_dB": -11.239785049332419,
+          "lag_deg": 141.295210452461
+        }
+      ]
+    },
+    {
+      "joint": "ankle_angle_l",
+      "reference_ROM_deg": 23.937315866630676,
+      "simulation_ROM_deg": 27.850220359728386,
+      "ROM_gain": 1.1634646304915253,
+      "mean_bias_deg": -26.21202963020974,
+      "waveform_RMSE_deg": 27.843799720192436,
+      "normalized_RMSE": 1.163196403277926,
+      "cycle_variability_RMS_deg": 0.33935516387794623,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 6.483381160115726,
+          "simulation_amplitude_deg": 11.38033889771155,
+          "usable": true,
+          "gain": 1.7553092463112898,
+          "gain_dB": 4.887072810739611,
+          "lag_deg": 74.11840143969918
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 3.8570152710379606,
+          "simulation_amplitude_deg": 2.2682634194108626,
+          "usable": true,
+          "gain": 0.5880877466166866,
+          "gain_dB": -4.611157389078697,
+          "lag_deg": 70.61692612230286
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 3.2470540206578415,
+          "simulation_amplitude_deg": 2.195040890605859,
+          "usable": true,
+          "gain": 0.6760099698498861,
+          "gain_dB": -3.400937980017509,
+          "lag_deg": -10.388216391952307
+        }
+      ]
+    }
+  ],
+  "terms": {
+    "cadence_log_error": 0.4945829407005775,
+    "waveform_normalized_RMSE": 0.6424000136815698,
+    "ROM_log_gain_error": 0.6186669051808635,
+    "mean_bias_normalized": 0.47454550828398173,
+    "fundamental_phase_error": 0.34844465591733403
+  },
+  "weights": {
+    "cadence_log_error": 2.0,
+    "waveform_normalized_RMSE": 1.0,
+    "ROM_log_gain_error": 0.5,
+    "mean_bias_normalized": 0.5,
+    "fundamental_phase_error": 0.5
+  },
+  "kinematic_loss": 2.352394429773815,
+  "valid": true,
+  "accepted": false,
+  "simulation_periods_s": [
+    2.0040000000000004,
+    2.007999999999999
+  ],
+  "reference_periods_s": [
+    1.2334,
+    1.2133000000000003
+  ],
+  "cadence_gate_passed": false,
+  "objective": 1002.3523944297738,
+  "acceptance_scope": "Existing motion/safety gates plus <=15% reference-period error; waveform loss ranks candidates, no validated waveform cutoff yet",
+  "metric_self_check": {
+    "passed": true,
+    "perfect_loss": 0.0,
+    "double_amplitude_gain": 2.0,
+    "delayed_phase_lag_deg": 45.00000000000001,
+    "half_cadence_loss": 1.3862943611198906
+  }
+}

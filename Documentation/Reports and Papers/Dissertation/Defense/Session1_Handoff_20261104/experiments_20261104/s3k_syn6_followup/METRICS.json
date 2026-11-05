@@ -1,0 +1,1559 @@
+{
+  "machine": "easteregg2",
+  "recorded_utc": "2026-11-05T08:06:16.9672055Z",
+  "scope": "Offline neural fits and separate suspended-air body results; no new ground pass",
+  "offline": {
+    "s3k": {
+      "accepted": true,
+      "parameters": {
+        "local_Ia": 0.1,
+        "local_Ib": 0.1,
+        "local_II": 0.01,
+        "relay_Ib_output": 0.1,
+        "relay_II_output": 1.0
+      },
+      "diagnostics": {
+        "finite": true,
+        "rg_cycles": [
+          9,
+          10
+        ],
+        "rg_period_s": [
+          1.232,
+          1.232
+        ],
+        "target_period_s": 1.233,
+        "relative_period_error": 0.0008110300081103361,
+        "bilateral_phase_error": 0.00487012987012958,
+        "mn_command_rmse": 0.17378270332378537,
+        "dynamic_pf_cells": 8,
+        "mn_peak_rmse": 0.24664517505442102,
+        "accepted": true,
+        "wall_s": 2.4669085000641644,
+        "scope": "Offline neural replay on expected afferents; no physics integration, joint tracking or curriculum acceptance",
+        "waveform_gate_passed": true,
+        "peak_preservation_gate": true
+      },
+      "fresh_process_matched": true,
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\s3k_relay_output_20261104"
+    },
+    "syn6": {
+      "accepted": true,
+      "parameters": {
+        "local_Ia": 0.057760405741386994,
+        "local_Ib": 0.060915579204289,
+        "local_II": 0.28906576401609274
+      },
+      "diagnostics": {
+        "finite": true,
+        "rg_cycles": [
+          9,
+          10
+        ],
+        "rg_period_s": [
+          1.233,
+          1.232
+        ],
+        "target_period_s": 1.233,
+        "relative_period_error": 0.00040551500405516805,
+        "bilateral_phase_error": 0.006693711967545535,
+        "mn_command_rmse": 0.15845040855575487,
+        "dynamic_pf_cells": 12,
+        "mn_peak_rmse": 0.24624882561613348,
+        "accepted": true,
+        "wall_s": 2.9741432000882924,
+        "scope": "Offline neural replay on expected afferents; no physics integration, joint tracking or curriculum acceptance",
+        "waveform_gate_passed": true,
+        "peak_preservation_gate": true
+      },
+      "fresh_process_matched": true,
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_D_20261104\\syn6"
+    }
+  },
+  "physical": {
+    "s3k_repaired_body_20261104": [
+      {
+        "expression": 0.1,
+        "stages": {
+          "1": {
+            "accepted": false,
+            "assessment": {
+              "score": 84.76443252118419,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                4,
+                5
+              ],
+              "knee_ranges_deg": [
+                24.453308217683045,
+                26.499927760007182
+              ],
+              "hip_ranges_deg": [
+                38.07353125903579,
+                43.00568532548622
+              ],
+              "cycle_phase_error": 0.08396051042652393,
+              "cycle_coverage": 0.6666666666666666,
+              "period_s": 2.412,
+              "period_cv": 0.29991933647750324,
+              "left_right_phases": [
+                0.3049065420560744,
+                0.4918300653594773,
+                0.4933665008291876,
+                0.29009433962264103,
+                0.5
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.25358140284977865,
+              "minimum_knee_width_m": 0.19987452424134192,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.6845746127268588,
+                -1.7147050735993616
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9986651045299964,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.0006486572598369374,
+              "mean_excitation_squared": 0.0006169858472851615,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.0021371466584197136,
+              "lateral_harness_peak_bw": 0.03472153190299357,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.013032933760750714,
+              "late_window_available": true
+            },
+            "wall_s": 14.976702800020576,
+            "simulated_s": 16.0
+          }
+        }
+      },
+      {
+        "expression": 0.2,
+        "stages": {
+          "1": {
+            "accepted": true,
+            "assessment": {
+              "score": 105.77889392915506,
+              "accepted": true,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                3,
+                4
+              ],
+              "knee_ranges_deg": [
+                39.65924925098778,
+                43.0734507258279
+              ],
+              "hip_ranges_deg": [
+                63.62997938356658,
+                66.83089986697917
+              ],
+              "cycle_phase_error": 0.0038836541229708256,
+              "cycle_coverage": 1.0,
+              "period_s": 2.4700000000000006,
+              "period_cv": 0.0033997045321559312,
+              "left_right_phases": [
+                0.506053268765133,
+                0.49797570850202433,
+                0.49312853678253843,
+                0.4987775061124694,
+                0.5032467532467533
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.2520282696321336,
+              "minimum_knee_width_m": 0.20012831229280528,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.5278463590190716,
+                -1.6208559553383688
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9987277612568809,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.002348404082001441,
+              "mean_excitation_squared": 0.0022463781251582378,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.003797020229047171,
+              "lateral_harness_peak_bw": 0.0527558342446828,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.02026585232704297,
+              "late_window_available": true
+            },
+            "wall_s": 16.468569100135937,
+            "simulated_s": 16.0
+          },
+          "2": {
+            "accepted": false,
+            "assessment": {
+              "score": 16.836147810310397,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                7,
+                6
+              ],
+              "knee_ranges_deg": [
+                28.41489141702775,
+                25.953405060533093
+              ],
+              "hip_ranges_deg": [
+                127.62765162530354,
+                142.4269295098518
+              ],
+              "cycle_phase_error": 0.13477066342598415,
+              "cycle_coverage": 1.0,
+              "period_s": 1.3920000000000012,
+              "period_cv": 0.023741600221810526,
+              "left_right_phases": [
+                0.525697503671072,
+                0.5595930232558142,
+                0.6176046176046178,
+                0.6695402298850571,
+                0.7083333333333328,
+                0.737373737373737,
+                0.45621468926553654,
+                0.41450068399452805,
+                0.36251709986320074,
+                0.31811894882434366,
+                0.28431372549019635
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.24864137915295473,
+              "minimum_knee_width_m": 0.19645547709315134,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.3576357344760117,
+                -1.4733322437579766
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9955775385455932,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.004069416512764877,
+              "mean_excitation_squared": 0.003726556499789724,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.012704783908671457,
+              "lateral_harness_peak_bw": 0.044714513441990185,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.08849853523207021,
+              "late_window_available": true
+            },
+            "wall_s": 20.47633960004896,
+            "simulated_s": 16.0
+          }
+        }
+      },
+      {
+        "expression": 0.35,
+        "stages": {
+          "1": {
+            "accepted": false,
+            "assessment": {
+              "score": 93.44499944496448,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                3,
+                4
+              ],
+              "knee_ranges_deg": [
+                59.56817859100327,
+                60.73821466194033
+              ],
+              "hip_ranges_deg": [
+                91.93388516490637,
+                91.13523370578251
+              ],
+              "cycle_phase_error": 0.0019378501561266638,
+              "cycle_coverage": 1.0,
+              "period_s": 2.466000000000001,
+              "period_cv": 0.0028231210774227267,
+              "left_right_phases": [
+                0.49797242497972427,
+                0.49959448499594505,
+                0.5056360708534623,
+                0.5012145748987851,
+                0.5004055150040553
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.24713999769996903,
+              "minimum_knee_width_m": 0.19917176065226216,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.437152791992214,
+                -1.2869337882143852
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9990215986833063,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.006277054432992243,
+              "mean_excitation_squared": 0.006039847211071189,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.006055058427699439,
+              "lateral_harness_peak_bw": 0.06983044073521043,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.0277475650550779,
+              "late_window_available": true
+            },
+            "wall_s": 14.374444199958816,
+            "simulated_s": 16.0
+          }
+        }
+      },
+      {
+        "expression": 0.5,
+        "stages": {
+          "1": {
+            "accepted": false,
+            "stop": {
+              "error": "RuntimeError('Predictive knee guard')",
+              "knee_guard": {
+                "side": "l",
+                "time_s": 14.006000000001347,
+                "angle_deg": -1.1353966645473514,
+                "velocity_deg_s": 566.0458486661198,
+                "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+              },
+              "scope": "Failed body probe; inspect capture/log"
+            }
+          }
+        }
+      },
+      {
+        "expression": 0.7,
+        "stages": {
+          "1": {
+            "accepted": false,
+            "stop": {
+              "error": "RuntimeError('Predictive knee guard')",
+              "knee_guard": {
+                "side": "l",
+                "time_s": 1.304000000000001,
+                "angle_deg": -0.7174652662251759,
+                "velocity_deg_s": 659.0100659650925,
+                "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+              },
+              "scope": "Failed body probe; inspect capture/log"
+            }
+          }
+        }
+      }
+    ],
+    "syn6_waveform_body_20261104": [
+      {
+        "expression": 0.1,
+        "stages": {
+          "1": {
+            "accepted": false,
+            "assessment": {
+              "score": 94.84513452296184,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                3,
+                3
+              ],
+              "knee_ranges_deg": [
+                19.36934239804458,
+                21.584650616290116
+              ],
+              "hip_ranges_deg": [
+                11.622865130397667,
+                12.001097299912683
+              ],
+              "cycle_phase_error": 0.010090393276248222,
+              "cycle_coverage": 1.0,
+              "period_s": 2.450000000000001,
+              "period_cv": 0.013992498952124293,
+              "left_right_phases": [
+                0.49077786688051284,
+                0.4925986842105264,
+                0.49084858569051587,
+                0.514586709886548
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.2611318505406799,
+              "minimum_knee_width_m": 0.20289009613134004,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.8446333799076968,
+                -1.8545682070252194
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9987197397958741,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.008072588413218416,
+              "mean_excitation_squared": 0.007823684420465394,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.005782037459228318,
+              "lateral_harness_peak_bw": 0.01950662422972133,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.009552191980471605,
+              "late_window_available": true
+            },
+            "wall_s": 23.54595739999786,
+            "simulated_s": 16.0
+          }
+        }
+      },
+      {
+        "expression": 0.2,
+        "stages": {
+          "1": {
+            "accepted": true,
+            "assessment": {
+              "score": 98.51990826005097,
+              "accepted": true,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                3,
+                4
+              ],
+              "knee_ranges_deg": [
+                29.523734395216234,
+                32.8004601519872
+              ],
+              "hip_ranges_deg": [
+                16.76998492021013,
+                16.23021653562161
+              ],
+              "cycle_phase_error": 0.004525153661108117,
+              "cycle_coverage": 1.0,
+              "period_s": 2.4720000000000013,
+              "period_cv": 0.004822707733680355,
+              "left_right_phases": [
+                0.5072463768115947,
+                0.4963503649635035,
+                0.49029126213592233,
+                0.4999999999999996,
+                0.5020210185933713
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.26759649723836176,
+              "minimum_knee_width_m": 0.20563829282893403,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.7869258177618825,
+                -1.7464983229316036
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9987216468431921,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.023236108229193933,
+              "mean_excitation_squared": 0.022706677508870413,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.009915450087256167,
+              "lateral_harness_peak_bw": 0.03029467696678641,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.014405569760015627,
+              "late_window_available": true
+            },
+            "wall_s": 22.142406000057235,
+            "simulated_s": 16.0
+          },
+          "2": {
+            "accepted": false,
+            "assessment": {
+              "score": 66.72580225313799,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                14,
+                16
+              ],
+              "knee_ranges_deg": [
+                29.91155130397537,
+                35.06751285892047
+              ],
+              "hip_ranges_deg": [
+                44.11995721011161,
+                48.255591705484804
+              ],
+              "cycle_phase_error": 0.3095127171567512,
+              "cycle_coverage": 0.7333333333333333,
+              "period_s": 0.512,
+              "period_cv": 0.304417808702528,
+              "left_right_phases": [
+                0.7975077881619926,
+                0.7499999999999991,
+                0.7392996108949407,
+                0.7842323651452295,
+                0.7821011673151754,
+                0.8381742738589222,
+                0.8007662835249024,
+                0.9152542372881373,
+                0.8081180811808132,
+                0.44223107569721043,
+                0.9640000000000004,
+                0.007751937984496991,
+                0.25896414342629603,
+                0.24603174603174735,
+                0.26171875000000044,
+                0.205533596837943,
+                0.21705426356589166,
+                0.15725806451612825,
+                0.19402985074627,
+                0.0836820083681991,
+                0.8945686900958457
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.2517335364717232,
+              "minimum_knee_width_m": 0.1985225312030014,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.4456862254978964,
+                -1.4431834170758153
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9994781387812274,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.0174493057238869,
+              "mean_excitation_squared": 0.0161985727705139,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.023078186443206264,
+              "lateral_harness_peak_bw": 0.09047362483111587,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.06695931038457154,
+              "late_window_available": true
+            },
+            "wall_s": 22.28684170008637,
+            "simulated_s": 16.0
+          }
+        }
+      },
+      {
+        "expression": 0.35,
+        "stages": {
+          "1": {
+            "accepted": true,
+            "assessment": {
+              "score": 102.34679628094842,
+              "accepted": true,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                3,
+                4
+              ],
+              "knee_ranges_deg": [
+                43.741204085210526,
+                46.288089262193495
+              ],
+              "hip_ranges_deg": [
+                19.493867201793663,
+                19.046158362966487
+              ],
+              "cycle_phase_error": 0.001216808333596675,
+              "cycle_coverage": 1.0,
+              "period_s": 2.4659999999999993,
+              "period_cv": 0.0017307632115466322,
+              "left_right_phases": [
+                0.5020275750202757,
+                0.5012165450121655,
+                0.5000000000000002,
+                0.4983766233766232,
+                0.4987834549878349
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.27524529206787834,
+              "minimum_knee_width_m": 0.2089145096996452,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.7882492235321803,
+                -1.6786467388275825
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9987381326378748,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.04879423932768707,
+              "mean_excitation_squared": 0.047961944189861105,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.014142483119249812,
+              "lateral_harness_peak_bw": 0.04371250570166589,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.01861760127163657,
+              "late_window_available": true
+            },
+            "wall_s": 18.21253540017642,
+            "simulated_s": 16.0
+          },
+          "2": {
+            "accepted": false,
+            "assessment": {
+              "score": 73.14697630932392,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                15,
+                16
+              ],
+              "knee_ranges_deg": [
+                37.194968568151694,
+                37.60942243885864
+              ],
+              "hip_ranges_deg": [
+                48.05729308365204,
+                45.51184464012882
+              ],
+              "cycle_phase_error": 0.3267002705775801,
+              "cycle_coverage": 0.8571428571428571,
+              "period_s": 0.5299999999999994,
+              "period_cv": 0.16573839678413493,
+              "left_right_phases": [
+                0.9586776859504141,
+                0.9392857142857147,
+                0.9342105263157908,
+                0.7467948717948715,
+                0.6265060240963851,
+                0.7407407407407423,
+                0.6814814814814831,
+                0.5714285714285714,
+                0.28421052631579075,
+                0.09440559440559472,
+                0.9352517985611517,
+                0.8566037735849079,
+                0.08661417322834566,
+                0.036630036630035834,
+                0.07391304347826046,
+                0.0604838709677407,
+                0.3361702127659584,
+                0.34065934065933984,
+                0.2550607287449383,
+                0.3495934959349576,
+                0.8831168831168825,
+                0.9664179104477633,
+                0.04411764705882516,
+                0.07346938775510117,
+                0.13768115942028766
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.2544994965721814,
+              "minimum_knee_width_m": 0.19844894202655533,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.4669340645782263,
+                -1.5140632137536028
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9986811517402197,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.04193456709489318,
+              "mean_excitation_squared": 0.04016993652036837,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.030765442608118466,
+              "lateral_harness_peak_bw": 0.09973491134367213,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.08795750891916176,
+              "late_window_available": true
+            },
+            "wall_s": 26.19843230000697,
+            "simulated_s": 16.0
+          }
+        }
+      },
+      {
+        "expression": 0.5,
+        "stages": {
+          "1": {
+            "accepted": true,
+            "assessment": {
+              "score": 104.7932279225976,
+              "accepted": true,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                3,
+                4
+              ],
+              "knee_ranges_deg": [
+                54.815513337458164,
+                56.61130072096754
+              ],
+              "hip_ranges_deg": [
+                20.996430400878467,
+                20.362351492296632
+              ],
+              "cycle_phase_error": 0.001054207669651519,
+              "cycle_coverage": 1.0,
+              "period_s": 2.4659999999999993,
+              "period_cv": 0.0006486135884548228,
+              "left_right_phases": [
+                0.5012165450121658,
+                0.5012165450121655,
+                0.4995951417004047,
+                0.49878345498783416,
+                0.4987834549878349
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.28060329132463774,
+              "minimum_knee_width_m": 0.21121611086642803,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.6728524628198125,
+                -1.5924679513185798
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9986951815411855,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.07379553564321749,
+              "mean_excitation_squared": 0.0727551324634535,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.01672331018830262,
+              "lateral_harness_peak_bw": 0.05264518978742069,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.023725876744764472,
+              "late_window_available": true
+            },
+            "wall_s": 19.250464299926534,
+            "simulated_s": 16.0
+          },
+          "2": {
+            "accepted": false,
+            "assessment": {
+              "score": 90.25792823916886,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                15,
+                16
+              ],
+              "knee_ranges_deg": [
+                33.28583002484577,
+                41.60236644642315
+              ],
+              "hip_ranges_deg": [
+                45.61530825116121,
+                49.64494624306525
+              ],
+              "cycle_phase_error": 0.1258888938274946,
+              "cycle_coverage": 1.0,
+              "period_s": 0.5460000000000003,
+              "period_cv": 0.09076523605180738,
+              "left_right_phases": [
+                0.4942196531791901,
+                0.33333333333333276,
+                0.3296703296703306,
+                0.37549407114624567,
+                0.4007352941176473,
+                0.5037593984962419,
+                0.6273062730627306,
+                0.48351648351648413,
+                0.266423357664235,
+                0.26937269372693884,
+                0.4423791821561361,
+                0.3690036900369025,
+                0.3993506493506491,
+                0.3346007604562742,
+                0.3759124087591248,
+                0.6679389312977109,
+                0.6590909090909083,
+                0.6582733812949634,
+                0.5917602996254681,
+                0.5488215488215479,
+                0.4370860927152313,
+                0.3646209386281586,
+                0.7203065134099603,
+                0.733576642335765,
+                0.6246056782334366,
+                0.5999999999999979,
+                0.5816326530612231,
+                0.677655677655678,
+                0.6317689530685932
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.2567420316971554,
+              "minimum_knee_width_m": 0.2002623094364183,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.5307727676869984,
+                -1.5102590065783896
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9986782717148602,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.06322308562466625,
+              "mean_excitation_squared": 0.06104099505739898,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.03525098042002173,
+              "lateral_harness_peak_bw": 0.09535665464432157,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.050031058265897675,
+              "late_window_available": true
+            },
+            "wall_s": 26.012584900017828,
+            "simulated_s": 16.0
+          }
+        }
+      },
+      {
+        "expression": 0.7,
+        "stages": {
+          "1": {
+            "accepted": true,
+            "assessment": {
+              "score": 105.90910034361981,
+              "accepted": true,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                3,
+                4
+              ],
+              "knee_ranges_deg": [
+                66.38703997588217,
+                67.86900464192566
+              ],
+              "hip_ranges_deg": [
+                21.960648782091077,
+                21.251309732409247
+              ],
+              "cycle_phase_error": 0.0005674581110230448,
+              "cycle_coverage": 1.0,
+              "period_s": 2.466000000000001,
+              "period_cv": 0.00039719308298736644,
+              "left_right_phases": [
+                0.5008103727714751,
+                0.500405515004055,
+                0.49918962722852506,
+                0.4995944849959447,
+                0.49959448499594505
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.28459977183028135,
+              "minimum_knee_width_m": 0.21281736415960234,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.5863628219337222,
+                -1.5189624978952236
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9986166428806804,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.10010554081976833,
+              "mean_excitation_squared": 0.09885299255983533,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.022086841438327336,
+              "lateral_harness_peak_bw": 0.09346520821281458,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.03323144146457116,
+              "late_window_available": true
+            },
+            "wall_s": 18.466640499886125,
+            "simulated_s": 16.0
+          },
+          "2": {
+            "accepted": false,
+            "assessment": {
+              "score": 66.69843018837776,
+              "accepted": false,
+              "finite": true,
+              "complete": true,
+              "knee_cycles": [
+                10,
+                15
+              ],
+              "knee_ranges_deg": [
+                43.76985773795156,
+                48.125459509362486
+              ],
+              "hip_ranges_deg": [
+                40.23788037375772,
+                45.85546599108203
+              ],
+              "cycle_phase_error": 0.1535563817206782,
+              "cycle_coverage": 0.2222222222222222,
+              "period_s": 0.5539999999999985,
+              "period_cv": 0.4114046855988336,
+              "left_right_phases": [
+                0.48085106382978743,
+                0.2738589211618244,
+                0.5830258302583025,
+                0.32189973614775697,
+                0.18248175182481716,
+                0.7617328519855595,
+                0.45572916666666813,
+                0.40148698884758216
+              ],
+              "frontal_gate": true,
+              "minimum_ankle_width_m": 0.2319926015602136,
+              "minimum_knee_width_m": 0.18749961130880952,
+              "crossed_ankle_fraction": 0.0,
+              "pelvis_local_right_axis": [
+                0.0,
+                4.547414961947327E-16,
+                1.0
+              ],
+              "anatomical_axis_verified_from_hip_anchors": true,
+              "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+              "maximum_knee_extension_deg": [
+                -1.537341821290957,
+                -1.2964269892464115
+              ],
+              "knee_extension_gate": true,
+              "ground_load_verified": false
+            },
+            "measured": {
+              "mean_spring_support_bw": 0.9987569092219823,
+              "explicit_support_bw": 0.0,
+              "mean_activation_squared": 0.08304580982367672,
+              "mean_excitation_squared": 0.08069995637416723,
+              "mean_foot_normal_bw": [
+                0.0,
+                0.0
+              ],
+              "body_weight_N": 769.7377259999998,
+              "ground_enabled": false,
+              "contact_samples": 0,
+              "lateral_harness_rms_bw": 0.03211804863993477,
+              "lateral_harness_peak_bw": 0.11253215144822487,
+              "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+              "horizontal_harness_rms_bw": 0.07564616528131543,
+              "late_window_available": true
+            },
+            "wall_s": 22.029221900040284,
+            "simulated_s": 16.0
+          }
+        }
+      }
+    ],
+    "syn6_ankle_selected_repeat_20261104": [
+      {
+        "stage": 1,
+        "accepted": true,
+        "legacy_assessment": {
+          "score": 108.03093702132989,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            3,
+            4
+          ],
+          "knee_ranges_deg": [
+            49.53537772809095,
+            50.77301230326007
+          ],
+          "hip_ranges_deg": [
+            49.172565474512176,
+            48.292261797633024
+          ],
+          "cycle_phase_error": 0.0011353105640271699,
+          "cycle_coverage": 1.0,
+          "period_s": 2.466,
+          "period_cv": 0.0003243593902043467,
+          "left_right_phases": [
+            0.5012165450121653,
+            0.5012165450121652,
+            0.4991896272285252,
+            0.4987834549878349,
+            0.4987834549878345
+          ],
+          "frontal_gate": true,
+          "minimum_ankle_width_m": 0.2711371711882003,
+          "minimum_knee_width_m": 0.20689777827547445,
+          "crossed_ankle_fraction": 0.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327E-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+          "maximum_knee_extension_deg": [
+            -1.7036947752120246,
+            -1.7462001297414145
+          ],
+          "knee_extension_gate": true,
+          "ground_load_verified": false
+        },
+        "principal_cycle_audit": {
+          "accepted": true,
+          "principal_knee_cycles": [
+            3,
+            4
+          ],
+          "principal_peak_times_s": [
+            [
+              7.102,
+              9.568000000000001,
+              12.034
+            ],
+            [
+              5.87,
+              8.338000000000001,
+              10.804,
+              13.270000000000001
+            ]
+          ],
+          "period_s": 2.466000000000001,
+          "period_cv": 0.0003243593902044547,
+          "bilateral_phase_error": 0.0011353105640272477,
+          "cycle_coverage": 1.0,
+          "knee_ranges_deg": [
+            49.53537772809095,
+            50.77301230326007
+          ],
+          "hip_ranges_deg": [
+            49.172565474512176,
+            48.292261797633024
+          ],
+          "autocorrelation": [
+            0.9996681236799312,
+            0.9996439630583923
+          ],
+          "dominant_spectral_Hz": [
+            0.4444444444444934,
+            0.4444444444444934
+          ],
+          "peak_counts": [
+            {
+              "all_prominent_peaks": 3,
+              "principal_peaks": 3
+            },
+            {
+              "all_prominent_peaks": 4,
+              "principal_peaks": 4
+            }
+          ]
+        },
+        "measured": {
+          "mean_spring_support_bw": 0.9986843500998837,
+          "explicit_support_bw": 0.0,
+          "mean_activation_squared": 0.05398506805274355,
+          "mean_excitation_squared": 0.052864680707210523,
+          "mean_foot_normal_bw": [
+            0.0,
+            0.0
+          ],
+          "body_weight_N": 769.7377259999998,
+          "ground_enabled": false,
+          "contact_samples": 0,
+          "lateral_harness_rms_bw": 0.01292036203899639,
+          "lateral_harness_peak_bw": 0.03668554990302427,
+          "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+          "horizontal_harness_rms_bw": 0.041828740231916586,
+          "late_window_available": true
+        },
+        "wall_s": 23.368188899941742,
+        "simulated_s": 16.0,
+        "scope": "Suspended-air validation only; legacy assessment retained; no ground stepping or body-balance claim"
+      },
+      {
+        "stage": 2,
+        "accepted": true,
+        "legacy_assessment": {
+          "score": 98.71879581859909,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            4,
+            4
+          ],
+          "knee_ranges_deg": [
+            20.449564988142985,
+            22.839899184625963
+          ],
+          "hip_ranges_deg": [
+            25.430676949204422,
+            26.523144509853775
+          ],
+          "cycle_phase_error": 0.01786640572645244,
+          "cycle_coverage": 1.0,
+          "period_s": 2.005000000000001,
+          "period_cv": 0.0008949916581575116,
+          "left_right_phases": [
+            0.48003992015968106,
+            0.48203592814371277,
+            0.48303393213572865,
+            0.518924302788844,
+            0.5174476570289134,
+            0.5159362549800797
+          ],
+          "frontal_gate": true,
+          "minimum_ankle_width_m": 0.2704001844828857,
+          "minimum_knee_width_m": 0.2062907803560304,
+          "crossed_ankle_fraction": 0.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327E-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+          "maximum_knee_extension_deg": [
+            -1.909939006991164,
+            -1.9367795992598666
+          ],
+          "knee_extension_gate": true,
+          "ground_load_verified": false
+        },
+        "principal_cycle_audit": {
+          "accepted": true,
+          "principal_knee_cycles": [
+            4,
+            4
+          ],
+          "principal_peak_times_s": [
+            [
+              6.108,
+              8.112,
+              10.116000000000001,
+              12.120000000000001
+            ],
+            [
+              7.07,
+              9.078000000000001,
+              11.084000000000001,
+              13.092
+            ]
+          ],
+          "period_s": 2.005000000000001,
+          "period_cv": 0.0008949916581575387,
+          "bilateral_phase_error": 0.01786640572645251,
+          "cycle_coverage": 1.0,
+          "knee_ranges_deg": [
+            20.449564988142985,
+            22.839899184625963
+          ],
+          "hip_ranges_deg": [
+            25.430676949204422,
+            26.523144509853775
+          ],
+          "autocorrelation": [
+            0.9999720656200004,
+            0.9999770355570912
+          ],
+          "dominant_spectral_Hz": [
+            0.4444444444444934,
+            0.4444444444444934
+          ],
+          "peak_counts": [
+            {
+              "all_prominent_peaks": 4,
+              "principal_peaks": 4
+            },
+            {
+              "all_prominent_peaks": 4,
+              "principal_peaks": 4
+            }
+          ]
+        },
+        "measured": {
+          "mean_spring_support_bw": 0.9987406269711265,
+          "explicit_support_bw": 0.0,
+          "mean_activation_squared": 0.04728098431463542,
+          "mean_excitation_squared": 0.04585158378085819,
+          "mean_foot_normal_bw": [
+            0.0,
+            0.0
+          ],
+          "body_weight_N": 769.7377259999998,
+          "ground_enabled": false,
+          "contact_samples": 0,
+          "lateral_harness_rms_bw": 0.012715990164075127,
+          "lateral_harness_peak_bw": 0.036455148011674224,
+          "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+          "horizontal_harness_rms_bw": 0.0192159834666884,
+          "late_window_available": true
+        },
+        "wall_s": 29.894407199928537,
+        "simulated_s": 16.0,
+        "scope": "Suspended-air validation only; legacy assessment retained; no ground stepping or body-balance claim"
+      }
+    ],
+    "s3k_hip_expression_20261104\\0p3": {
+      "stage": 1,
+      "accepted": false,
+      "legacy_assessment": {
+        "score": -43.33669650848951,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          0,
+          0
+        ],
+        "knee_ranges_deg": [
+          0.487485426536705,
+          2.431382182180822
+        ],
+        "hip_ranges_deg": [
+          21.675015633530013,
+          23.230628958206694
+        ],
+        "cycle_phase_error": 0.5,
+        "cycle_coverage": 0.0,
+        "period_s": 0.0,
+        "period_cv": 2.0,
+        "left_right_phases": [],
+        "frontal_gate": true,
+        "minimum_ankle_width_m": 0.2558215274034072,
+        "minimum_knee_width_m": 0.20004372032575213,
+        "crossed_ankle_fraction": 0.0,
+        "pelvis_local_right_axis": [
+          0.0,
+          4.547414961947327E-16,
+          1.0
+        ],
+        "anatomical_axis_verified_from_hip_anchors": true,
+        "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+        "maximum_knee_extension_deg": [
+          -1.8919197902439187,
+          -1.9645527046738758
+        ],
+        "knee_extension_gate": true,
+        "ground_load_verified": false
+      },
+      "principal_cycle_audit": {
+        "accepted": false,
+        "reason": "dominant_frequency_outside_walking_window",
+        "dominant_Hz": [
+          0.11111111111112335
+        ]
+      },
+      "measured": {
+        "mean_spring_support_bw": 0.9986778085077471,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.001250268652511894,
+        "mean_excitation_squared": 0.0011941460619365972,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.0031974177654150344,
+        "lateral_harness_peak_bw": 0.008147862637231147,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.006411099537202372,
+        "late_window_available": true
+      },
+      "wall_s": 15.748891500057653,
+      "simulated_s": 16.0,
+      "scope": "Suspended-air validation only; legacy assessment retained; no ground stepping or body-balance claim"
+    },
+    "s3k_hip_expression_20261104\\0p5": {
+      "stage": 1,
+      "accepted": false,
+      "legacy_assessment": {
+        "score": 100.478995810183,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          3,
+          3
+        ],
+        "knee_ranges_deg": [
+          15.48914018825755,
+          17.947745247376695
+        ],
+        "hip_ranges_deg": [
+          35.95771350721483,
+          38.896494870842574
+        ],
+        "cycle_phase_error": 0.01052871301885322,
+        "cycle_coverage": 1.0,
+        "period_s": 2.457,
+        "period_cv": 0.01336886087555909,
+        "left_right_phases": [
+          0.49479583666933535,
+          0.48939641109298504,
+          0.486284289276808,
+          0.5125913891145413
+        ],
+        "frontal_gate": true,
+        "minimum_ankle_width_m": 0.25561603038529906,
+        "minimum_knee_width_m": 0.20004569454384208,
+        "crossed_ankle_fraction": 0.0,
+        "pelvis_local_right_axis": [
+          0.0,
+          4.547414961947327E-16,
+          1.0
+        ],
+        "anatomical_axis_verified_from_hip_anchors": true,
+        "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+        "maximum_knee_extension_deg": [
+          -1.813173488747177,
+          -1.8352415236158912
+        ],
+        "knee_extension_gate": true,
+        "ground_load_verified": false
+      },
+      "principal_cycle_audit": {
+        "accepted": false,
+        "principal_knee_cycles": [
+          3,
+          3
+        ],
+        "principal_peak_times_s": [
+          [
+            7.612,
+            10.110000000000001,
+            12.562000000000001
+          ],
+          [
+            6.442,
+            8.848,
+            11.31
+          ]
+        ],
+        "period_s": 2.457,
+        "period_cv": 0.013368860875559073,
+        "bilateral_phase_error": 0.01052871301885322,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          15.48914018825755,
+          17.947745247376695
+        ],
+        "hip_ranges_deg": [
+          35.95771350721483,
+          38.896494870842574
+        ],
+        "autocorrelation": [
+          0.9817912642537996,
+          0.9856853067824032
+        ],
+        "dominant_spectral_Hz": [
+          0.4444444444444934,
+          0.4444444444444934
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 3,
+            "principal_peaks": 3
+          },
+          {
+            "all_prominent_peaks": 3,
+            "principal_peaks": 3
+          }
+        ]
+      },
+      "measured": {
+        "mean_spring_support_bw": 0.9986481059622481,
+        "explicit_support_bw": 0.0,
+        "mean_activation_squared": 0.0014624251524793027,
+        "mean_excitation_squared": 0.0013963817205291365,
+        "mean_foot_normal_bw": [
+          0.0,
+          0.0
+        ],
+        "body_weight_N": 769.7377259999998,
+        "ground_enabled": false,
+        "contact_samples": 0,
+        "lateral_harness_rms_bw": 0.0032240615389985162,
+        "lateral_harness_peak_bw": 0.015583170743263923,
+        "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+        "horizontal_harness_rms_bw": 0.007990064677166835,
+        "late_window_available": true
+      },
+      "wall_s": 15.418599900091067,
+      "simulated_s": 16.0,
+      "scope": "Suspended-air validation only; legacy assessment retained; no ground stepping or body-balance claim"
+    }
+  }
+}

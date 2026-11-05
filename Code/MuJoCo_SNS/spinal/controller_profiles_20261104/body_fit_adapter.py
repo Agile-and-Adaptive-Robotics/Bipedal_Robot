@@ -32,4 +32,12 @@ def handle_request(request):
     value=5.*error+5.*principal.get('bilateral_phase_error',.5)+.02*sum(abs(v-35.)for v in knee)
     if not accepted:value+=100.+2.*sum(max(20.-v,0.)for v in knee)+2.*sum(max(v-80.,0.)for v in hip)
     if principal.get('reason')=='dominant_frequency_outside_walking_window':value+=500.+50.*max(principal['dominant_Hz'])
-    return dict(ok=True,value=float(value),diagnostics=dict(accepted=accepted,body_folder=str(folder),principal=principal,target_period_relative_error=error,legacy=old,measured=result['measured'],wall_s=result['wall_s']))
+    response=None
+    if CONFIG.get('objective_profile')=='database_kinematics_v1':
+        response=json.loads((folder/'body.kinematics.json').read_text())
+        if response['schema']!='database_kinematics_v1':raise ValueError('Historical v1 objective requires its archived source snapshot')
+        value=response['objective'];accepted=bool(accepted and response['accepted'])
+    elif CONFIG.get('objective_profile')=='stage_specific_kinematics_v2':
+        response=json.loads((folder/'body.kinematics.json').read_text())
+        value=response['objective'];accepted=response['accepted']
+    return dict(ok=True,value=float(value),diagnostics=dict(accepted=accepted,body_folder=str(folder),principal=principal,target_period_relative_error=error,legacy=old,kinematic_response=response,measured=result['measured'],wall_s=result['wall_s']))

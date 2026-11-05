@@ -1,1 +1,264 @@
-{"groups":[{"name":"ercspn","mapId":1,"status":"feasible","diaStr":"20","nBPA":2,"family":"L","gain":2,"screenF":112.84727610067623},{"name":"intobl","mapId":2,"status":"feasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":112.9616510064313},{"name":"extobl","mapId":3,"status":"best-infeasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":101.93351792494431,"topViolator":"centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)"},{"name":"bifemlh","mapId":4,"status":"feasible","diaStr":"20","nBPA":1,"family":"none","gain":1,"screenF":44.562599074705446},{"name":"semimem","mapId":5,"status":"best-infeasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":4546.7314862173,"topViolator":"span_knee_pass2: normalized 2.264e-01 (dimensional 1.460e-02 m, tol 1.0e-06)"},{"name":"sar","mapId":6,"status":"best-infeasible","diaStr":"20","nBPA":1,"family":"none","gain":1,"screenF":11048.660687850741,"topViolator":"tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)"},{"name":"tfl","mapId":7,"status":"feasible","diaStr":"20","nBPA":1,"family":"none","gain":1,"screenF":24.195953139769838},{"name":"rect_fem","mapId":8,"status":"feasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":108.43802193916756},{"name":"grac","mapId":9,"status":"best-infeasible","diaStr":"10","nBPA":2,"family":"M","gain":2,"screenF":10149.772275179826,"topViolator":"tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)"},{"name":"bifemsh","mapId":10,"status":"feasible","diaStr":"20","nBPA":2,"family":"L","gain":2,"screenF":31.104064358340622},{"name":"vas_int","mapId":11,"status":"feasible","diaStr":"20","nBPA":3,"family":"L","gain":2,"screenF":125.64100672135508},{"name":"soleus","mapId":12,"status":"feasible","diaStr":"20","nBPA":2,"family":"L","gain":2,"screenF":91.605604147874175},{"name":"med_gas","mapId":13,"status":"feasible","diaStr":"20","nBPA":2,"family":"L","gain":2,"screenF":51.243748589385419},{"name":"lat_gas","mapId":14,"status":"feasible","diaStr":"20","nBPA":2,"family":"L","gain":2,"screenF":7.8666225759442359},{"name":"tib_post","mapId":15,"status":"best-infeasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":49.487799522727755,"topViolator":"foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)"},{"name":"tib_ant","mapId":16,"status":"feasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":25.478678747812989},{"name":"per_brev","mapId":17,"status":"best-infeasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":299.65827506079438,"topViolator":"foot_occupancy_ban: normalized 2.411e-02 (dimensional 2.421e-02 m (tibia frame y), tol 1.0e-04)"},{"name":"per_long","mapId":18,"status":"best-infeasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":286.97489912175877,"topViolator":"foot_occupancy_ban: normalized 2.823e-02 (dimensional 2.833e-02 m (tibia frame y), tol 1.0e-04)"},{"name":"per_tert","mapId":19,"status":"best-infeasible","diaStr":"20","nBPA":1,"family":"none","gain":1,"screenF":89.370141022167886,"topViolator":"foot_occupancy_ban: normalized 6.584e-03 (dimensional 6.684e-03 m (tibia frame y), tol 1.0e-04)"},{"name":"flex_dig","mapId":20,"status":"feasible","diaStr":"20","nBPA":1,"family":"none","gain":1,"screenF":202.46777602339},{"name":"flex_hal","mapId":21,"status":"best-infeasible","diaStr":"10","nBPA":1,"family":"none","gain":1,"screenF":280.88898066300169,"topViolator":"foot_occupancy_ban: normalized 2.031e-02 (dimensional 2.041e-02 m (tibia frame y), tol 1.0e-04)"},{"name":"ext_dig","mapId":22,"status":"best-infeasible","diaStr":"20","nBPA":1,"family":"none","gain":1,"screenF":167.96598377415103,"topViolator":"foot_occupancy_ban: normalized 1.646e-02 (dimensional 1.656e-02 m (tibia frame y), tol 1.0e-04)"},{"name":"ext_hal","mapId":23,"status":"best-infeasible","diaStr":"20","nBPA":2,"family":"none","gain":1,"screenF":140.6319334609677,"topViolator":"foot_occupancy_ban: normalized 1.125e-02 (dimensional 1.135e-02 m (tibia frame y), tol 1.0e-04)"},{"name":"glut_max3","mapId":24,"status":"best-infeasible","diaStr":"20","nBPA":4,"family":"L","gain":2,"screenF":1240.9036337774426,"topViolator":"tx_infeasible_cells: normalized 1.111e-01 (dimensional 1.111e-01 fraction of cells, tol 1.0e-12)"},{"name":"add_mag3","mapId":25,"status":"best-infeasible","diaStr":"20","nBPA":2,"family":"L","gain":2,"screenF":513.58879751790312,"topViolator":"centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)"},{"name":"iliacus","mapId":26,"status":"feasible","diaStr":"10","nBPA":2,"family":"M","gain":2,"screenF":134.47328630465438},{"name":"psoas","mapId":27,"status":"feasible","diaStr":"20","nBPA":2,"family":"L","gain":2,"screenF":89.213336206707552}]}
+{
+  "groups": [
+    {
+      "name": "ercspn",
+      "mapId": 1,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "L",
+      "gain": 2,
+      "screenF": 128.97209960764295
+    },
+    {
+      "name": "intobl",
+      "mapId": 2,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "none",
+      "gain": 1,
+      "screenF": 113.0776813462233
+    },
+    {
+      "name": "extobl",
+      "mapId": 3,
+      "status": "best-infeasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "none",
+      "gain": 1,
+      "screenF": 105.21772327650386,
+      "topViolator": "centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)"
+    },
+    {
+      "name": "bifemlh",
+      "mapId": 4,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "none",
+      "gain": 1,
+      "screenF": 41.139666430965448
+    },
+    {
+      "name": "semimem",
+      "mapId": 5,
+      "status": "best-infeasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 4559.5372836734,
+      "topViolator": "span_knee_pass2: normalized 2.264e-01 (dimensional 1.460e-02 m, tol 1.0e-06)"
+    },
+    {
+      "name": "sar",
+      "mapId": 6,
+      "status": "best-infeasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 19536.878344662378,
+      "topViolator": "tx_slack_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)"
+    },
+    {
+      "name": "tfl",
+      "mapId": 7,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 585.80174448925993
+    },
+    {
+      "name": "rect_fem",
+      "mapId": 8,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "none",
+      "gain": 1,
+      "screenF": 158.45068804297074
+    },
+    {
+      "name": "grac",
+      "mapId": 9,
+      "status": "best-infeasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "L",
+      "gain": 2,
+      "screenF": 3275.629120206861,
+      "topViolator": "tx_slack_cells: normalized 1.429e-01 (dimensional 1.429e-01 fraction of cells, tol 1.0e-12)"
+    },
+    {
+      "name": "bifemsh",
+      "mapId": 10,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "L",
+      "gain": 2,
+      "screenF": 56.715560156917967
+    },
+    {
+      "name": "vas_int",
+      "mapId": 11,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 3,
+      "family": "L",
+      "gain": 2,
+      "screenF": 147.47287664003849
+    },
+    {
+      "name": "soleus",
+      "mapId": 12,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "L",
+      "gain": 2,
+      "screenF": 118.50177989174483
+    },
+    {
+      "name": "med_gas",
+      "mapId": 13,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "L",
+      "gain": 2,
+      "screenF": 51.454165309983033
+    },
+    {
+      "name": "lat_gas",
+      "mapId": 14,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "L",
+      "gain": 2,
+      "screenF": 9.5770580964340724
+    },
+    {
+      "name": "tib_post",
+      "mapId": 15,
+      "status": "best-infeasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 46.966743228011431,
+      "topViolator": "foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)"
+    },
+    {
+      "name": "tib_ant",
+      "mapId": 16,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 2,
+      "family": "none",
+      "gain": 1,
+      "screenF": 36.830671774856505
+    },
+    {
+      "name": "per_brev",
+      "mapId": 17,
+      "status": "no-config-survived"
+    },
+    {
+      "name": "per_long",
+      "mapId": 18,
+      "status": "best-infeasible",
+      "diaStr": "10",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 449.68754396241707,
+      "topViolator": "foot_occupancy_ban: normalized 2.823e-02 (dimensional 2.833e-02 m (tibia frame y), tol 1.0e-04)"
+    },
+    {
+      "name": "per_tert",
+      "mapId": 19,
+      "status": "no-config-survived"
+    },
+    {
+      "name": "flex_dig",
+      "mapId": 20,
+      "status": "feasible",
+      "diaStr": "10",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 148.20694468777347
+    },
+    {
+      "name": "flex_hal",
+      "mapId": 21,
+      "status": "best-infeasible",
+      "diaStr": "10",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 233.70287543607856,
+      "topViolator": "foot_occupancy_ban: normalized 4.487e-03 (dimensional 4.587e-03 m (tibia frame y), tol 1.0e-04)"
+    },
+    {
+      "name": "ext_dig",
+      "mapId": 22,
+      "status": "best-infeasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 167.82653985286771,
+      "topViolator": "foot_occupancy_ban: normalized 1.646e-02 (dimensional 1.656e-02 m (tibia frame y), tol 1.0e-04)"
+    },
+    {
+      "name": "ext_hal",
+      "mapId": 23,
+      "status": "best-infeasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "none",
+      "gain": 1,
+      "screenF": 181.5365022455243,
+      "topViolator": "foot_occupancy_ban: normalized 1.784e-02 (dimensional 1.794e-02 m (tibia frame y), tol 1.0e-04)"
+    },
+    {
+      "name": "glut_max3",
+      "mapId": 24,
+      "status": "no-config-survived"
+    },
+    {
+      "name": "add_mag3",
+      "mapId": 25,
+      "status": "best-infeasible",
+      "diaStr": "10",
+      "nBPA": 1,
+      "family": "L",
+      "gain": 2,
+      "screenF": 838.44594611936623,
+      "topViolator": "centerline_z0: normalized 6.931e-02 (dimensional 6.941e-02 m (pelvis frame), tol 1.0e-04)"
+    },
+    {
+      "name": "iliacus",
+      "mapId": 26,
+      "status": "no-config-survived"
+    },
+    {
+      "name": "psoas",
+      "mapId": 27,
+      "status": "feasible",
+      "diaStr": "20",
+      "nBPA": 1,
+      "family": "L",
+      "gain": 2,
+      "screenF": 109.25484017132553
+    }
+  ]
+}

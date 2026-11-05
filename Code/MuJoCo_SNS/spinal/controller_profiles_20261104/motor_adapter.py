@@ -5,6 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parent))
 import numpy as np
 from replay_adapter import Replay
 from muscle_map import classify
+from readout_keys import multiplier
 INSTANCE=None;FIXED=None
 
 def handle_request(request):
@@ -23,7 +24,7 @@ def handle_request(request):
         for i,(pre,post)in enumerate(zip(r.c.pre,r.c.post)):
             source,target=r.names[pre],r.names[post]
             if target.startswith('MN_')and source.startswith('PF_')and not source.startswith('PF_IN'):
-                r.base_g[i]*=final['best']['gains'].get(classify(target[3:]).base,1.)
+                r.base_g[i]*=multiplier(source,target,final)
         check=r.evaluate(FIXED,time.time()+180.)
         matched=abs(check['value']-final['best']['value'])<1e-10
         r.phase='D'

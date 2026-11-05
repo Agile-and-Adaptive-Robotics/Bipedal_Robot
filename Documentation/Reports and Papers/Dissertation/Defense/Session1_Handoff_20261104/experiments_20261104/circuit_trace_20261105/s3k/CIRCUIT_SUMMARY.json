@@ -1,0 +1,4192 @@
+{
+  "family": "s3k",
+  "fit": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\s3k_relay_output_20261104",
+  "C_fit": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_feasible_20261104\\s3k",
+  "fresh_D_objective_matches": true,
+  "saved_traces_exact": {
+    "rg": true,
+    "pf": true,
+    "mn": true,
+    "desired": true
+  },
+  "D_parameters": {
+    "local_Ia": 0.1,
+    "local_Ib": 0.1,
+    "local_II": 0.01,
+    "relay_Ib_output": 0.1,
+    "relay_II_output": 1.0
+  },
+  "PF_cells": [
+    "PF_E1_r",
+    "PF_E2_r",
+    "PF_F1_r",
+    "PF_F2_r"
+  ],
+  "PF_incoming": {
+    "PF_E1_r": [
+      {
+        "source": "RG_E_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 2.4,
+        "inherited_C_gmax_uS": 2.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc"
+      },
+      {
+        "source": "Ia_glut_med1_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_med1_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_med2_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_med2_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_med3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_med3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_min1_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_min1_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_min2_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_min2_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_min3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_min3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_semimem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0025063798760481242,
+        "inherited_C_gmax_uS": 0.00325829383886256,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00325829383886256,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_semimem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0025063798760481242,
+        "inherited_C_gmax_uS": 0.00325829383886256,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00325829383886256,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_semiten_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0025063798760481242,
+        "inherited_C_gmax_uS": 0.00325829383886256,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00325829383886256,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_semiten_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0025063798760481242,
+        "inherited_C_gmax_uS": 0.00325829383886256,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00325829383886256,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_bifemlh_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0025063798760481242,
+        "inherited_C_gmax_uS": 0.00325829383886256,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00325829383886256,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_bifemlh_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0025063798760481242,
+        "inherited_C_gmax_uS": 0.00325829383886256,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00325829383886256,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_bifemsh_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_bifemsh_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0004557054320087498,
+        "inherited_C_gmax_uS": 0.0005924170616113745,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0005924170616113745,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_add_mag3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_add_mag3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_max1_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_max1_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_glut_max1_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.005299398877783658,
+        "inherited_C_gmax_uS": 0.01704545454545454,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.01704545454545454,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_max2_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_max2_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_glut_max2_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.005299398877783658,
+        "inherited_C_gmax_uS": 0.01704545454545454,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.01704545454545454,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_max3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_max3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_glut_max3_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.005299398877783658,
+        "inherited_C_gmax_uS": 0.01704545454545454,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.01704545454545454,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_quad_fem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_quad_fem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_gem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_gem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_peri_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_peri_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.004101348888078748,
+        "inherited_C_gmax_uS": 0.00533175355450237,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00533175355450237,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_rect_fem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_rect_fem_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_vas_med_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_vas_med_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_vas_med_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.001177644195063035,
+        "inherited_C_gmax_uS": 0.003787878787878787,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.003787878787878787,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_vas_int_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_vas_int_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_vas_int_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.001177644195063035,
+        "inherited_C_gmax_uS": 0.003787878787878787,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.003787878787878787,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_vas_lat_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_vas_lat_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_vas_lat_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.001177644195063035,
+        "inherited_C_gmax_uS": 0.003787878787878787,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.003787878787878787,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_med_gas_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0002278527160043749,
+        "inherited_C_gmax_uS": 0.0002962085308056872,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0002962085308056872,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_med_gas_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0002278527160043749,
+        "inherited_C_gmax_uS": 0.0002962085308056872,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0002962085308056872,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_lat_gas_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0002278527160043749,
+        "inherited_C_gmax_uS": 0.0002962085308056872,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0002962085308056872,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_lat_gas_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0002278527160043749,
+        "inherited_C_gmax_uS": 0.0002962085308056872,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0002962085308056872,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_tib_ant_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_tib_ant_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ext_dig_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ext_dig_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ext_hal_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ext_hal_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0009114108640174996,
+        "inherited_C_gmax_uS": 0.001184834123222749,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001184834123222749,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ercspn_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0018228217280349991,
+        "inherited_C_gmax_uS": 0.002369668246445498,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.002369668246445498,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ercspn_r",
+        "target": "PF_E1_r",
+        "snapshot_gmax_uS": 0.0018228217280349991,
+        "inherited_C_gmax_uS": 0.002369668246445498,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.002369668246445498,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      }
+    ],
+    "PF_E2_r": [
+      {
+        "source": "RG_E_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 2.4,
+        "inherited_C_gmax_uS": 2.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc"
+      },
+      {
+        "source": "Ia_glut_med1_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_med1_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_med2_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_med2_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_med3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_med3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_min1_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_min1_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_min2_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_min2_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_min3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_min3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.00031629554655870457,
+        "inherited_C_gmax_uS": 0.0004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_semimem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_semimem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_semiten_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_semiten_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_bifemlh_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_bifemlh_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_add_mag3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_add_mag3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_max1_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_max1_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_glut_max1_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.004416165731486383,
+        "inherited_C_gmax_uS": 0.014204545454545456,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.014204545454545456,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_max2_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_max2_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_glut_max2_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.004416165731486383,
+        "inherited_C_gmax_uS": 0.014204545454545456,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.014204545454545456,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_glut_max3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_glut_max3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_glut_max3_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.004416165731486383,
+        "inherited_C_gmax_uS": 0.014204545454545456,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.014204545454545456,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_quad_fem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_quad_fem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_gem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_gem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_peri_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_peri_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0031629554655870453,
+        "inherited_C_gmax_uS": 0.004111842105263157,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004111842105263157,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_rect_fem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_rect_fem_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_vas_med_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_vas_med_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_vas_med_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.001324849719445915,
+        "inherited_C_gmax_uS": 0.004261363636363637,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.004261363636363637,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_vas_int_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_vas_int_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_vas_int_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.001324849719445915,
+        "inherited_C_gmax_uS": 0.004261363636363637,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.004261363636363637,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_vas_lat_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_vas_lat_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0009488866396761136,
+        "inherited_C_gmax_uS": 0.001233552631578947,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.001233552631578947,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_vas_lat_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.001324849719445915,
+        "inherited_C_gmax_uS": 0.004261363636363637,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.004261363636363637,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_med_gas_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_med_gas_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_lat_gas_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_lat_gas_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_soleus_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_soleus_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ib_soleus_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0022080828657431916,
+        "inherited_C_gmax_uS": 0.007102272727272728,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ib_PF",
+        "reference_budget_gmax_uS": 0.007102272727272728,
+        "shared_gain": 1.0,
+        "stance_gated": true,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_tib_post_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_tib_post_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_flex_dig_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_flex_dig_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_flex_hal_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_flex_hal_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_per_brev_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_per_brev_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_per_long_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_per_long_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_per_tert_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_per_tert_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0015814777327935227,
+        "inherited_C_gmax_uS": 0.0020559210526315784,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0020559210526315784,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ercspn_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0012651821862348183,
+        "inherited_C_gmax_uS": 0.0016447368421052628,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0016447368421052628,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ercspn_r",
+        "target": "PF_E2_r",
+        "snapshot_gmax_uS": 0.0012651821862348183,
+        "inherited_C_gmax_uS": 0.0016447368421052628,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0016447368421052628,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      }
+    ],
+    "PF_F1_r": [
+      {
+        "source": "RG_F_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 2.4,
+        "inherited_C_gmax_uS": 2.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc"
+      },
+      {
+        "source": "Ia_semimem_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_semimem_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_semiten_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_semiten_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_bifemlh_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_bifemlh_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_bifemsh_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_bifemsh_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.006170300287947349,
+        "inherited_C_gmax_uS": 0.00802139037433155,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.00802139037433155,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_sar_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_sar_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_tfl_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_tfl_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_iliacus_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_iliacus_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_psoas_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_psoas_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0025709584533113953,
+        "inherited_C_gmax_uS": 0.0033422459893048123,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0033422459893048123,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_rect_fem_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0012854792266556976,
+        "inherited_C_gmax_uS": 0.0016711229946524062,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0016711229946524062,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_rect_fem_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0012854792266556976,
+        "inherited_C_gmax_uS": 0.0016711229946524062,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0016711229946524062,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_med_gas_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0030851501439736746,
+        "inherited_C_gmax_uS": 0.004010695187165775,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004010695187165775,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_med_gas_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0030851501439736746,
+        "inherited_C_gmax_uS": 0.004010695187165775,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004010695187165775,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_lat_gas_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0030851501439736746,
+        "inherited_C_gmax_uS": 0.004010695187165775,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.004010695187165775,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_lat_gas_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0030851501439736746,
+        "inherited_C_gmax_uS": 0.004010695187165775,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.004010695187165775,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_tib_ant_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0018853695324283568,
+        "inherited_C_gmax_uS": 0.0024509803921568627,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0024509803921568627,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_tib_ant_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0018853695324283568,
+        "inherited_C_gmax_uS": 0.0024509803921568627,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0024509803921568627,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ext_dig_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0018853695324283568,
+        "inherited_C_gmax_uS": 0.0024509803921568627,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0024509803921568627,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ext_dig_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0018853695324283568,
+        "inherited_C_gmax_uS": 0.0024509803921568627,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0024509803921568627,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ext_hal_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0018853695324283568,
+        "inherited_C_gmax_uS": 0.0024509803921568627,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0024509803921568627,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ext_hal_r",
+        "target": "PF_F1_r",
+        "snapshot_gmax_uS": 0.0018853695324283568,
+        "inherited_C_gmax_uS": 0.0024509803921568627,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0024509803921568627,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      }
+    ],
+    "PF_F2_r": [
+      {
+        "source": "RG_F_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 2.4,
+        "inherited_C_gmax_uS": 2.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc"
+      },
+      {
+        "source": "Ia_sar_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_sar_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_tfl_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_tfl_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_iliacus_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_iliacus_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_psoas_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_psoas_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.002973830293417924,
+        "inherited_C_gmax_uS": 0.003865979381443299,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.003865979381443299,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_rect_fem_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.001486915146708962,
+        "inherited_C_gmax_uS": 0.0019329896907216496,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0019329896907216496,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_rect_fem_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.001486915146708962,
+        "inherited_C_gmax_uS": 0.0019329896907216496,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0019329896907216496,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_tib_ant_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.010904044409199055,
+        "inherited_C_gmax_uS": 0.014175257731958765,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.014175257731958765,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_tib_ant_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.010904044409199055,
+        "inherited_C_gmax_uS": 0.014175257731958765,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.014175257731958765,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ext_dig_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.010904044409199055,
+        "inherited_C_gmax_uS": 0.014175257731958765,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.014175257731958765,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ext_dig_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.010904044409199055,
+        "inherited_C_gmax_uS": 0.014175257731958765,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.014175257731958765,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_ext_hal_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.010904044409199055,
+        "inherited_C_gmax_uS": 0.014175257731958765,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.014175257731958765,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_ext_hal_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.010904044409199055,
+        "inherited_C_gmax_uS": 0.014175257731958765,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.014175257731958765,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_intobl_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.0009912767644726414,
+        "inherited_C_gmax_uS": 0.0012886597938144332,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0012886597938144332,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_intobl_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.0009912767644726414,
+        "inherited_C_gmax_uS": 0.0012886597938144332,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0012886597938144332,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "Ia_extobl_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.0009912767644726414,
+        "inherited_C_gmax_uS": 0.0012886597938144332,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "Ia_PF",
+        "reference_budget_gmax_uS": 0.0012886597938144332,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      },
+      {
+        "source": "II_extobl_r",
+        "target": "PF_F2_r",
+        "snapshot_gmax_uS": 0.0009912767644726414,
+        "inherited_C_gmax_uS": 0.0012886597938144332,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "sign": "exc",
+        "dynamic_central_feedback": true,
+        "afferent_group": "II_PF",
+        "reference_budget_gmax_uS": 0.0012886597938144332,
+        "shared_gain": 1.0,
+        "stance_gated": false,
+        "gate": "alpha-dependent presynaptic gain; Ib additionally multiplied by measured stance load"
+      }
+    ]
+  },
+  "Ib_per_muscle": [
+    {
+      "muscle": "add_mag3_r",
+      "groups": [
+        "hip_ext",
+        "hip_add"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_add_mag3_r",
+            "MN_add_mag3_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_add_mag3_r",
+            "IBEXC_hip_ext_r",
+            "MN_add_mag3_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "gem_r",
+      "groups": [
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_gem_r",
+            "MN_gem_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_gem_r",
+            "IBEXC_hip_ext_r",
+            "MN_gem_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "glut_max1_r",
+      "groups": [
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_max1_r",
+            "MN_glut_max1_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_max1_r",
+            "IBEXC_hip_ext_r",
+            "MN_glut_max1_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": [
+        {
+          "target": "RG_E_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E1_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E2_r",
+          "sign": "exc",
+          "stance_gated": true
+        }
+      ]
+    },
+    {
+      "muscle": "glut_max2_r",
+      "groups": [
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_max2_r",
+            "MN_glut_max2_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_max2_r",
+            "IBEXC_hip_ext_r",
+            "MN_glut_max2_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": [
+        {
+          "target": "RG_E_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E1_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E2_r",
+          "sign": "exc",
+          "stance_gated": true
+        }
+      ]
+    },
+    {
+      "muscle": "glut_max3_r",
+      "groups": [
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_max3_r",
+            "MN_glut_max3_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_max3_r",
+            "IBEXC_hip_ext_r",
+            "MN_glut_max3_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": [
+        {
+          "target": "RG_E_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E1_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E2_r",
+          "sign": "exc",
+          "stance_gated": true
+        }
+      ]
+    },
+    {
+      "muscle": "peri_r",
+      "groups": [
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_peri_r",
+            "MN_peri_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_peri_r",
+            "IBEXC_hip_ext_r",
+            "MN_peri_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "quad_fem_r",
+      "groups": [
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_quad_fem_r",
+            "MN_quad_fem_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_quad_fem_r",
+            "IBEXC_hip_ext_r",
+            "MN_quad_fem_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "iliacus_r",
+      "groups": [
+        "hip_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_iliacus_r",
+            "MN_iliacus_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "psoas_r",
+      "groups": [
+        "hip_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_psoas_r",
+            "MN_psoas_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "sar_r",
+      "groups": [
+        "hip_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_sar_r",
+            "MN_sar_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "tfl_r",
+      "groups": [
+        "hip_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_tfl_r",
+            "MN_tfl_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "glut_med1_r",
+      "groups": [
+        "hip_abd"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_med1_r",
+            "MN_glut_med1_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_med1_r",
+            "IBEXC_hip_abd_r",
+            "MN_glut_med1_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "glut_med2_r",
+      "groups": [
+        "hip_abd"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_med2_r",
+            "MN_glut_med2_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_med2_r",
+            "IBEXC_hip_abd_r",
+            "MN_glut_med2_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "glut_med3_r",
+      "groups": [
+        "hip_abd"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_med3_r",
+            "MN_glut_med3_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_med3_r",
+            "IBEXC_hip_abd_r",
+            "MN_glut_med3_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "glut_min1_r",
+      "groups": [
+        "hip_abd"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_min1_r",
+            "MN_glut_min1_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_min1_r",
+            "IBEXC_hip_abd_r",
+            "MN_glut_min1_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "glut_min2_r",
+      "groups": [
+        "hip_abd"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_min2_r",
+            "MN_glut_min2_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_min2_r",
+            "IBEXC_hip_abd_r",
+            "MN_glut_min2_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "glut_min3_r",
+      "groups": [
+        "hip_abd"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_glut_min3_r",
+            "MN_glut_min3_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_glut_min3_r",
+            "IBEXC_hip_abd_r",
+            "MN_glut_min3_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "add_brev_r",
+      "groups": [
+        "hip_add"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_add_brev_r",
+            "MN_add_brev_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "add_long_r",
+      "groups": [
+        "hip_add"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_add_long_r",
+            "MN_add_long_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "add_mag1_r",
+      "groups": [
+        "hip_add"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_add_mag1_r",
+            "MN_add_mag1_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "add_mag2_r",
+      "groups": [
+        "hip_add"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_add_mag2_r",
+            "MN_add_mag2_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "grac_r",
+      "groups": [
+        "hip_add"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_grac_r",
+            "MN_grac_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "pect_r",
+      "groups": [
+        "hip_add"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_pect_r",
+            "MN_pect_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "rect_fem_r",
+      "groups": [
+        "knee_ext",
+        "hip_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_rect_fem_r",
+            "MN_rect_fem_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_rect_fem_r",
+            "IBEXC_knee_ext_r",
+            "MN_rect_fem_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "vas_int_r",
+      "groups": [
+        "knee_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_vas_int_r",
+            "MN_vas_int_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_vas_int_r",
+            "IBEXC_knee_ext_r",
+            "MN_vas_int_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": [
+        {
+          "target": "RG_E_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E1_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E2_r",
+          "sign": "exc",
+          "stance_gated": true
+        }
+      ]
+    },
+    {
+      "muscle": "vas_lat_r",
+      "groups": [
+        "knee_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_vas_lat_r",
+            "MN_vas_lat_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_vas_lat_r",
+            "IBEXC_knee_ext_r",
+            "MN_vas_lat_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": [
+        {
+          "target": "RG_E_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E1_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E2_r",
+          "sign": "exc",
+          "stance_gated": true
+        }
+      ]
+    },
+    {
+      "muscle": "vas_med_r",
+      "groups": [
+        "knee_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_vas_med_r",
+            "MN_vas_med_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_vas_med_r",
+            "IBEXC_knee_ext_r",
+            "MN_vas_med_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": [
+        {
+          "target": "RG_E_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E1_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E2_r",
+          "sign": "exc",
+          "stance_gated": true
+        }
+      ]
+    },
+    {
+      "muscle": "bifemlh_r",
+      "groups": [
+        "knee_flex",
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_bifemlh_r",
+            "MN_bifemlh_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "bifemsh_r",
+      "groups": [
+        "knee_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_bifemsh_r",
+            "MN_bifemsh_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "semimem_r",
+      "groups": [
+        "knee_flex",
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_semimem_r",
+            "MN_semimem_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "semiten_r",
+      "groups": [
+        "knee_flex",
+        "hip_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_semiten_r",
+            "MN_semiten_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "flex_dig_r",
+      "groups": [
+        "ankle_pf"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_flex_dig_r",
+            "MN_flex_dig_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_flex_dig_r",
+            "IBEXC_ankle_pf_r",
+            "MN_flex_dig_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "flex_hal_r",
+      "groups": [
+        "ankle_pf"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_flex_hal_r",
+            "MN_flex_hal_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_flex_hal_r",
+            "IBEXC_ankle_pf_r",
+            "MN_flex_hal_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "lat_gas_r",
+      "groups": [
+        "ankle_pf",
+        "knee_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_lat_gas_r",
+            "MN_lat_gas_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_lat_gas_r",
+            "IBEXC_ankle_pf_r",
+            "MN_lat_gas_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "med_gas_r",
+      "groups": [
+        "ankle_pf",
+        "knee_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_med_gas_r",
+            "MN_med_gas_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_med_gas_r",
+            "IBEXC_ankle_pf_r",
+            "MN_med_gas_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "per_brev_r",
+      "groups": [
+        "ankle_pf"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_per_brev_r",
+            "MN_per_brev_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_per_brev_r",
+            "IBEXC_ankle_pf_r",
+            "MN_per_brev_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "per_long_r",
+      "groups": [
+        "ankle_pf"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_per_long_r",
+            "MN_per_long_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_per_long_r",
+            "IBEXC_ankle_pf_r",
+            "MN_per_long_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "per_tert_r",
+      "groups": [
+        "ankle_pf"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_per_tert_r",
+            "MN_per_tert_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_per_tert_r",
+            "IBEXC_ankle_pf_r",
+            "MN_per_tert_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "soleus_r",
+      "groups": [
+        "ankle_pf"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_soleus_r",
+            "MN_soleus_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_soleus_r",
+            "IBEXC_ankle_pf_r",
+            "MN_soleus_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": [
+        {
+          "target": "RG_E_r",
+          "sign": "exc",
+          "stance_gated": true
+        },
+        {
+          "target": "PF_E2_r",
+          "sign": "exc",
+          "stance_gated": true
+        }
+      ]
+    },
+    {
+      "muscle": "tib_post_r",
+      "groups": [
+        "ankle_pf"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_tib_post_r",
+            "MN_tib_post_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_tib_post_r",
+            "IBEXC_ankle_pf_r",
+            "MN_tib_post_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "ext_dig_r",
+      "groups": [
+        "ankle_df"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_ext_dig_r",
+            "MN_ext_dig_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "ext_hal_r",
+      "groups": [
+        "ankle_df"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_ext_hal_r",
+            "MN_ext_hal_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "tib_ant_r",
+      "groups": [
+        "ankle_df"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_tib_ant_r",
+            "MN_tib_ant_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "ercspn_r",
+      "groups": [
+        "trunk_ext"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_ercspn_r",
+            "MN_ercspn_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        },
+        {
+          "path": [
+            "Ib_ercspn_r",
+            "IBEXC_trunk_ext_r",
+            "MN_ercspn_r"
+          ],
+          "sign": "exc",
+          "snapshot_gmax_uS": [
+            0.05,
+            0.06
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "extobl_r",
+      "groups": [
+        "trunk_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_extobl_r",
+            "MN_extobl_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    },
+    {
+      "muscle": "intobl_r",
+      "groups": [
+        "trunk_flex"
+      ],
+      "autogenic_routes": [
+        {
+          "path": [
+            "Ib_intobl_r",
+            "MN_intobl_r"
+          ],
+          "sign": "inh",
+          "snapshot_gmax_uS": [
+            0.034999999999999996
+          ]
+        }
+      ],
+      "central_targets": []
+    }
+  ],
+  "PF_MN_mirror_max_difference_uS": 0.0,
+  "PF_MN_missing_mirrors": [],
+  "scope": "Actual fitted offline D circuit. Snapshot conductances are at final replay time; zero instantaneous central Ib gain is gating, not missing topology. Right side displayed; all bilateral edges in external ledger."
+}

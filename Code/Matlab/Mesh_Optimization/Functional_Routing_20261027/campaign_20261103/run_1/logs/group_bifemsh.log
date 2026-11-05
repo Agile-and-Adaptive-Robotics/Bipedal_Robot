@@ -6,3 +6,10 @@ REFINE skipped: no rigid checkpoint to refine
 RESUME skip (feasible checkpoint): rigid f 23.2400
 RESUME skip (feasible checkpoint): compliant f 111.4853
 REFINE1 bifemsh: f 23.2400 -> 373.9994 (rejected, others 26, 30.7 s)
+RESUME bifemsh rigid: sizing config changed (ckpt 20|2|L|2 vs current 20|1|L|2) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:09:47 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE bifemsh rigid: fSeed 71.4501 -> fBest 50.3514 (obj 50.3514, violEff 0.00e+00) | capsules(pose1) 1 | 90.1 s
+RESUME bifemsh compliant: sizing config changed (ckpt 20|2|L|2 vs current 20|1|L|2) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:11:17 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE bifemsh compliant: fSeed 102.6200 -> fBest 48.4295 (obj 48.4295, violEff 0.00e+00) | capsules(pose1) 1 | 116.4 s
+RESUME skip refine1 (rejected): f 373.9994

@@ -10,3 +10,10 @@ RESUME per_long compliant: checkpoint is best-infeasible - re-solving (kept as w
 === pass1 compliant | 04-Nov-2026 20:52:03 | budget 600 | envelopes 13 ===
 BEST-INFEASIBLE (retained as warm start) per_long compliant: fSeed 4932.4448 -> fBest 512.0172 (obj 229.7078, violEff 2.82e-02) | capsules(pose1) 2 | 105.2 s | TOP VIOLATOR foot_occupancy_ban: normalized 2.823e-02 (dimensional 2.833e-02 m (tibia frame y), tol 1.0e-04)
 REFINE1 per_long: f 286.7418 -> 635.2587 (rejected, others 26, 54.0 s)
+RESUME per_long rigid: sizing config changed (ckpt 20|2|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:14:46 | budget 600 | envelopes 14 ===
+BEST-INFEASIBLE (retained as warm start) per_long rigid: fSeed 471.0807 -> fBest 448.6831 (obj 166.3737, violEff 2.82e-02) | capsules(pose1) 1 | 106.1 s | TOP VIOLATOR foot_occupancy_ban: normalized 2.823e-02 (dimensional 2.833e-02 m (tibia frame y), tol 1.0e-04)
+RESUME per_long compliant: sizing config changed (ckpt 20|2|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:16:33 | budget 600 | envelopes 14 ===
+BEST-INFEASIBLE (retained as warm start) per_long compliant: fSeed 457.3687 -> fBest 443.0882 (obj 160.7788, violEff 2.82e-02) | capsules(pose1) 1 | 115.0 s | TOP VIOLATOR foot_occupancy_ban: normalized 2.823e-02 (dimensional 2.833e-02 m (tibia frame y), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 635.2587

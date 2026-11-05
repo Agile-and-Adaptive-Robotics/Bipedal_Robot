@@ -10,3 +10,10 @@ RESUME tfl compliant: checkpoint is best-infeasible - re-solving (kept as warm s
 === pass1 compliant | 04-Nov-2026 20:46:27 | budget 600 | envelopes 5 ===
 BEST-INFEASIBLE (retained as warm start) tfl compliant: fSeed 2953.3542 -> fBest 96.1653 (obj 10.6186, violEff 8.55e-03) | capsules(pose1) 1 | 171.4 s | TOP VIOLATOR retained_rigid_envelopes: normalized 8.555e-03 (dimensional 8.655e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
 REFINE1 tfl: f 57.7986 -> 401.4649 (rejected, others 26, 42.0 s)
+RESUME tfl rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 05-Nov-2026 02:09:47 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) tfl rigid: fSeed 3536.2073 -> fBest 628.8706 (obj 585.3597, violEff 4.35e-03) | capsules(pose1) 1 | 85.0 s | TOP VIOLATOR retained_rigid_envelopes: normalized 4.351e-03 (dimensional 4.451e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME tfl compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 05-Nov-2026 02:11:12 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) tfl compliant: fSeed 3113.7576 -> fBest 279.3707 (obj 184.1690, violEff 9.52e-03) | capsules(pose1) 1 | 91.8 s | TOP VIOLATOR retained_rigid_envelopes: normalized 9.520e-03 (dimensional 9.620e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 401.4649

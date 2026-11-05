@@ -6,14 +6,14 @@ from dominant_cycles import self_check,measure
 HERE=Path(__file__).resolve().parent
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--fit',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--expression',type=float,default=.1);p.add_argument('--feedback-scale',type=float,default=1.);p.add_argument('--local-ii-scale',type=float,default=1.);a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False)
+    p=argparse.ArgumentParser();p.add_argument('--fit',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--expression',type=float,default=.1);p.add_argument('--feedback-scale',type=float,default=1.);p.add_argument('--local-ii-scale',type=float,default=1.);p.add_argument('--ankle-ia-scale',type=float,default=1.);p.add_argument('--ankle-ii-scale',type=float,default=1.);p.add_argument('--hip-expression',type=float,default=1.);p.add_argument('--preserve-knee-crossing',action='store_true');a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False)
     checks=self_check();(a.output/'METRIC_SELF_CHECK.json').write_text(json.dumps(checks,indent=2))
     if not checks['passed']:raise ValueError('Physical metric check failed')
     rows=[]
     for stage in (1,2):
         folder=a.output/('stage'+str(stage))
         with(a.output/('stage'+str(stage)+'.log')).open('a',encoding='utf-8')as log:
-            result=subprocess.run([sys.executable,str(HERE/'body_probe.py'),'--reflex-fit',str(a.fit),'--stage',str(stage),'--expression',str(a.expression),'--feedback-scale',str(a.feedback_scale),'--local-ii-scale',str(a.local_ii_scale),'--output',str(folder)],stdout=log,stderr=subprocess.STDOUT,timeout=600,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            result=subprocess.run([sys.executable,str(HERE/'body_probe.py'),'--reflex-fit',str(a.fit),'--stage',str(stage),'--expression',str(a.expression),'--feedback-scale',str(a.feedback_scale),'--local-ii-scale',str(a.local_ii_scale),'--hip-expression',str(a.hip_expression),'--ankle-ia-scale',str(a.ankle_ia_scale),'--ankle-ii-scale',str(a.ankle_ii_scale),'--output',str(folder)]+(['--preserve-knee-crossing']if a.preserve_knee_crossing else[]),stdout=log,stderr=subprocess.STDOUT,timeout=600,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         path=folder/'body.result.json'
         if not path.exists():
             rows.append(dict(stage=stage,accepted=False,stop=json.loads((folder/'STOP.json').read_text())if(folder/'STOP.json').exists()else dict(exit_code=result.returncode)));break

@@ -8,3 +8,8 @@ RESUME tib_ant compliant: checkpoint is best-infeasible - re-solving (kept as wa
 === pass1 compliant | 04-Nov-2026 20:49:18 | budget 600 | envelopes 13 ===
 BEST-INFEASIBLE (retained as warm start) tib_ant compliant: fSeed 5661.3844 -> fBest 1239.2290 (obj 128.1179, violEff 1.11e-01) | capsules(pose1) 2 | 108.1 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.111e-01 (dimensional 1.111e-01 fraction of cells, tol 1.0e-12)
 REFINE1 tib_ant: f 24.6002 -> 296.2729 (rejected, others 26, 28.1 s)
+RESUME skip (feasible checkpoint): rigid f 24.6002
+RESUME tib_ant compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 05-Nov-2026 02:14:46 | budget 600 | envelopes 14 ===
+FAILED tib_ant compliant: globaloptim:poptimfcnchk:objfunNaN | Objective function must be real and not NaN at the starting point.
+RESUME skip refine1 (rejected): f 296.2729

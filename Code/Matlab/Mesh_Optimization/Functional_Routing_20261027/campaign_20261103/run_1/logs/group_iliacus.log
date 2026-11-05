@@ -6,3 +6,10 @@ REFINE skipped: no rigid checkpoint to refine
 RESUME skip (feasible checkpoint): rigid f 130.9034
 RESUME skip (feasible checkpoint): compliant f 110.0889
 REFINE1 iliacus: f 130.9034 -> 430.1666 (rejected, others 26, 21.7 s)
+RESUME iliacus rigid: sizing config changed (ckpt 10|2|M|2 vs current 20|1|L|2) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:07:58 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE iliacus rigid: fSeed 123.7588 -> fBest 119.6762 (obj 119.6762, violEff 0.00e+00) | capsules(pose1) 1 | 47.7 s
+RESUME iliacus compliant: sizing config changed (ckpt 10|2|M|2 vs current 20|1|L|2) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:08:46 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE iliacus compliant: fSeed 102.2963 -> fBest 98.4510 (obj 98.4510, violEff 0.00e+00) | capsules(pose1) 1 | 61.3 s
+RESUME skip refine1 (rejected): f 430.1666

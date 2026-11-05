@@ -10,3 +10,10 @@ RESUME per_tert compliant: checkpoint is best-infeasible - re-solving (kept as w
 === pass1 compliant | 04-Nov-2026 20:54:40 | budget 600 | envelopes 13 ===
 BEST-INFEASIBLE (retained as warm start) per_tert compliant: fSeed 6594.5338 -> fBest 1800.4904 (obj 213.6159, violEff 1.59e-01) | capsules(pose1) 1 | 68.9 s | TOP VIOLATOR span_foot_pass2: normalized 8.187e-02 (dimensional 8.727e-03 m, tol 1.0e-06)
 REFINE1 per_tert: f 81.9125 -> 317.2363 (rejected, others 26, 35.9 s)
+RESUME per_tert rigid: sizing config changed (ckpt 20|1|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:20:52 | budget 600 | envelopes 14 ===
+FAILED per_tert rigid: globaloptim:poptimfcnchk:objfunNaN | Objective function must be real and not NaN at the starting point.
+RESUME per_tert compliant: sizing config changed (ckpt 20|1|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:20:53 | budget 600 | envelopes 14 ===
+FAILED per_tert compliant: globaloptim:poptimfcnchk:objfunNaN | Objective function must be real and not NaN at the starting point.
+RESUME skip refine1 (rejected): f 317.2363

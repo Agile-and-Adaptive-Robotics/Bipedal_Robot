@@ -10,3 +10,10 @@ RESUME ext_hal compliant: checkpoint is best-infeasible - re-solving (kept as wa
 === pass1 compliant | 04-Nov-2026 20:52:05 | budget 600 | envelopes 13 ===
 BEST-INFEASIBLE (retained as warm start) ext_hal compliant: fSeed 12250.8434 -> fBest 174.2111 (obj 21.4018, violEff 1.53e-02) | capsules(pose1) 2 | 160.0 s | TOP VIOLATOR foot_occupancy_ban: normalized 1.528e-02 (dimensional 1.538e-02 m (tibia frame y), tol 1.0e-04)
 REFINE1 ext_hal: f 130.3269 -> 456.2927 (rejected, others 26, 44.1 s)
+RESUME ext_hal rigid: sizing config changed (ckpt 20|2|none|1 vs current 20|1|none|1) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:20:47 | budget 600 | envelopes 14 ===
+BEST-INFEASIBLE (retained as warm start) ext_hal rigid: fSeed 9408.9626 -> fBest 181.4242 (obj 3.0324, violEff 1.78e-02) | capsules(pose1) 1 | 109.0 s | TOP VIOLATOR foot_occupancy_ban: normalized 1.784e-02 (dimensional 1.794e-02 m (tibia frame y), tol 1.0e-04)
+RESUME ext_hal compliant: sizing config changed (ckpt 20|2|none|1 vs current 20|1|none|1) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:22:36 | budget 600 | envelopes 14 ===
+BEST-INFEASIBLE (retained as warm start) ext_hal compliant: fSeed 6071.1556 -> fBest 109.9455 (obj 2.6142, violEff 1.07e-02) | capsules(pose1) 1 | 128.5 s | TOP VIOLATOR foot_occupancy_ban: normalized 1.073e-02 (dimensional 1.083e-02 m (tibia frame y), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 456.2927

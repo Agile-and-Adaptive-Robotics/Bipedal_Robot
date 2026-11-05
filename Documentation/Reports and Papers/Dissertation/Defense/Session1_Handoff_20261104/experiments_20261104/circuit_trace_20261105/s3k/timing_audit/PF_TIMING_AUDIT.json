@@ -1,0 +1,218 @@
+{
+  "family": "s3k",
+  "fit": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\s3k_relay_output_20261104",
+  "reference_period_s": 1.233,
+  "clock": "Original calibration time: target_start_s + cycle phase * T; no per-channel phase shift and no heel/toe display time warp",
+  "activation": "clip(PF voltage /5mV,0,1); active threshold0.2",
+  "rows": [
+    {
+      "cell": "PF_E1_r",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.445,
+        "onset_phase_percent": [
+          92.5
+        ],
+        "offset_phase_percent": [
+          37.0
+        ],
+        "peak_phase_percent": 9.5,
+        "phase_defined": true,
+        "fundamental_phase_deg": -56.10892678868149
+      },
+      "cycle_duty_mean": 0.4466666666666667,
+      "cycle_duty_SD": 0.0035355339059327407
+    },
+    {
+      "cell": "PF_E2_r",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.475,
+        "onset_phase_percent": [
+          93.0
+        ],
+        "offset_phase_percent": [
+          40.5
+        ],
+        "peak_phase_percent": 10.0,
+        "phase_defined": true,
+        "fundamental_phase_deg": -60.07626788529009
+      },
+      "cycle_duty_mean": 0.47277777777777774,
+      "cycle_duty_SD": 0.005068968775248521
+    },
+    {
+      "cell": "PF_F1_r",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.34,
+        "onset_phase_percent": [
+          46.5
+        ],
+        "offset_phase_percent": [
+          80.5
+        ],
+        "peak_phase_percent": 65.0,
+        "phase_defined": true,
+        "fundamental_phase_deg": 130.42995664730728
+      },
+      "cycle_duty_mean": 0.34111111111111114,
+      "cycle_duty_SD": 0.00546453210358498
+    },
+    {
+      "cell": "PF_F2_r",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.41,
+        "onset_phase_percent": [
+          47.0
+        ],
+        "offset_phase_percent": [
+          88.0
+        ],
+        "peak_phase_percent": 66.5,
+        "phase_defined": true,
+        "fundamental_phase_deg": 121.98103207573585
+      },
+      "cycle_duty_mean": 0.4044444444444445,
+      "cycle_duty_SD": 0.0039086797998528515
+    },
+    {
+      "cell": "PF_E1_l",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.435,
+        "onset_phase_percent": [
+          43.0
+        ],
+        "offset_phase_percent": [
+          86.5
+        ],
+        "peak_phase_percent": 60.0,
+        "phase_defined": true,
+        "fundamental_phase_deg": 124.75213728792882
+      },
+      "cycle_duty_mean": 0.43111111111111117,
+      "cycle_duty_SD": 0.0022047927592204943
+    },
+    {
+      "cell": "PF_E2_l",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.465,
+        "onset_phase_percent": [
+          43.0
+        ],
+        "offset_phase_percent": [
+          89.5
+        ],
+        "peak_phase_percent": 60.5,
+        "phase_defined": true,
+        "fundamental_phase_deg": 120.74507978707238
+      },
+      "cycle_duty_mean": 0.4655555555555556,
+      "cycle_duty_SD": 0.0016666666666666496
+    },
+    {
+      "cell": "PF_F1_l",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.35,
+        "onset_phase_percent": [
+          95.5
+        ],
+        "offset_phase_percent": [
+          30.5
+        ],
+        "peak_phase_percent": 17.0,
+        "phase_defined": true,
+        "fundamental_phase_deg": -48.899359301096204
+      },
+      "cycle_duty_mean": 0.35,
+      "cycle_duty_SD": 0.0
+    },
+    {
+      "cell": "PF_F2_l",
+      "actual": {
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "excursion": 1.0,
+        "duty_fraction": 0.415,
+        "onset_phase_percent": [
+          96.5
+        ],
+        "offset_phase_percent": [
+          38.0
+        ],
+        "peak_phase_percent": 18.5,
+        "phase_defined": true,
+        "fundamental_phase_deg": -57.4655517066204
+      },
+      "cycle_duty_mean": 0.41888888888888887,
+      "cycle_duty_SD": 0.003333333333333336
+    }
+  ],
+  "highly_correlated_pairs": [
+    {
+      "cells": [
+        "PF_E1_r",
+        "PF_E2_r"
+      ],
+      "actual_correlation": 0.9941440908827484,
+      "target_correlation": null
+    },
+    {
+      "cells": [
+        "PF_E1_l",
+        "PF_E2_l"
+      ],
+      "actual_correlation": 0.9939649304880783,
+      "target_correlation": null
+    }
+  ],
+  "effective_rank": {
+    "r": {
+      "actual": {
+        "singular_values": [
+          10.266228940642828,
+          4.651310441450276,
+          0.7217693640285,
+          0.420331031656352
+        ],
+        "rank_for99percent_variance": 2
+      }
+    },
+    "l": {
+      "actual": {
+        "singular_values": [
+          10.231327394791599,
+          4.6639198045025285,
+          0.7334403103044342,
+          0.42435561249000736
+        ],
+        "rank_for99percent_variance": 2
+      }
+    }
+  },
+  "PF_timing_verified": false,
+  "gate_scope": "syn6 provisional engineering gate: |fundamental lag|<=30deg, |duty error|<=0.15, matching burst counts and excursion>=0.2. s3k has no declared numerical channel profiles; cannot certify timing from labels alone.",
+  "source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\pf_timing_audit.py": "ccdf77da75e8b4c1f103682a9a821994d1dc20f8bd3128b70f21d7ee3bda36e4",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_results\\fsa_backsolve.npz": "45519a6b166a6182c84eb262891ce21217c999fa298f74279c1220ab1517f470",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\s3k_relay_output_20261104\\BEST_TRACE.npz": "89f58384f9dc85d40866af8505518b16a9aa774414eac80cfd9216657fd73aea"
+  }
+}

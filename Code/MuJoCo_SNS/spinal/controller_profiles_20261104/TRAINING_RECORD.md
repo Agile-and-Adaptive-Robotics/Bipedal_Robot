@@ -184,3 +184,119 @@ not a model attribution. Hunt's four-step calibration and Bolen's five-stage
 curriculum are distinct parts of the workflow; the revised candidate has so far
 passed physical curriculum stages 1 and 2, not all five stages.
 
+
+## s3k/syn6 PF readout and reflex follow-up (Session 1)
+
+Completed: mirrored per-existing-edge PF-to-MN current-balance fitting,
+32-trial local Ia/Ib/II refinements per new family fit, s3k relay-output causal
+comparisons, syn6 live ankle-source comparisons, and bounded physical air probes.
+Detailed record: S3K_SYN6_FOLLOWUP_20261104.md in this directory.
+
+s3k C/D normalized waveform RMSE now 0.168362/0.173783; syn6 C/D
+0.161525/0.158450. Both D finalists match in fresh processes. s3k needed
+independent calibration of the Ib relay output, which is also driven by RG-E;
+reducing raw afferent input alone did not suppress that output. No new PF cells
+were added. Output weights and sensory gains remain mirrored across sides.
+
+The separate syn6 ankle candidate retains its older D checkpoint, attenuates
+local ankle Ia/II outputs by 0.15 while preserving knee-crossing sources, and
+uses expression0.3. Both air stages pass at fixed settings (periods2.466/2.005s).
+Stage2 repeats qpos, qvel, neural voltages, foot forces, and harness wrench
+exactly. Absolute >3Hz ankle RMS improves4.52/4.84 to2.70/3.13deg; residual
+ripple remains. Foot force is zero in air. This is not minimum BW support for
+ground walking. The newly fitted syn6 readout has not passed physical stage2.
+
+s3k physical expression0.2 passes stage1 but stage2 hip ranges127.6/142.4deg
+exceed the80deg gate. Two hip-only gain reductions also reduce knee movement
+and fail stage1. All failures retained; no ground advancement or physics edits.
+All bounded follow-up jobs completed. Raw results and final source snapshot:
+D:\Users\Ben Bolen\ControllerTraining_20261104\source_snapshot_s3k_syn6_followup.
+Portable results/GIF/plots: Dissertation\Defense\Session1_Handoff_20261104\
+experiments_20261104\s3k_syn6_followup. No commits or manuscript edits.
+
+Visualization correction (2026-11-05): the air-stage GIF previously displayed
+an inactive ground plane, so feet appeared to pass through a floor. The renderer
+now hides that plane and states ground contact is disabled. Saved qpos, forces,
+controller parameters, and acceptance results are unchanged. The earlier source
+snapshot remains historical; the repository renderer contains this later fix.
+
+## Physical IK response scoring (2026-11-05, Session 1)
+
+kinematic_response.py now scores actual bilateral joint cadence, ROM gain,
+mean bias, uncentered waveform error, and three harmonic gain/phase ratios.
+body_probe.py automatically writes body.kinematics.json; new fit_body_feedback
+studies select database_kinematics_v1 and freeze metric/reference hashes.
+Old study objectives and saved results remain unchanged. The inherited
+kine_ref.py already had several of these comparisons; the newer fit path had
+not used their full content as its physical optimization objective.
+
+Saved s3k and syn6 runs were scored against the original calibration IK/GRF
+reference and all43 local reference files. Neither matches the primary reference
+adequately: s3k hip ROM gain2.88/2.94; syn6 knee ROM gain0.29/0.32, ankle mean
+bias-25.5/-26.2deg, and periods2.004/2.008s vs1.2334/1.2133s. Air-motion passes
+are retained separately; no claim of database waveform validation follows.
+
+Known amplitude2, lag45deg, offset, phase reversal, and half-cadence metric
+checks pass. A fresh16s physical integration generated the metric and reproduced
+joint positions/velocities, neural voltages, foot forces, and harness wrench
+exactly. No new training/optimization campaign was run in this scoring pass.
+Harmonic output/reference plots are not Bode input-output transfer functions.
+Design/weights/limitations/full paths: KINEMATIC_OBJECTIVE_20261105.md here.
+Portable figures/metrics: Dissertation\Defense\Session1_Handoff_20261104\
+experiments_20261104\kinematic_response_20261105.
+
+## Air-versus-ground scope correction (2026-11-05)
+
+Ben correctly questioned grounded IK as an air-step target. Current default is
+stage_specific_kinematics_v2: during air stages, database gain/phase/amplitude
+and cadence are diagnostic only. Physical air ranking uses phase stability,
+period CV, and cycle repeatability under existing motion/safety gates. Ground
+reference differences cannot change air acceptance or ranking (self-check).
+Hunt et al2017 section2.4.1 sets endogenous CPG PERIOD to twice intended stepping
+period, not a universal2x physical air-step law. Our2.466s target was imposed
+from2*1.233s, not independent confirmation. Compare intrinsic, afferented air,
+and ground conditions separately; measure correlations in paired conditions.
+The original v1 metrics remain historical; corrected saved-run reports are in
+kinematic_response_20261105\air_scope_v2. Syn6 passes air gates; s3k still fails
+its existing hip-motion gate. No training was run using the short-lived v1
+objective, and no physics was changed. KINEMATIC_OBJECTIVE_20261105.md updated.
+Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC5378996/ section2.4.
+
+## Full goodness-of-fit statistics update (2026-11-05)
+
+Primary result tables now show whole-window and per-cycle peak-to-peak amplitude,
+min/max angles, sample SD and amplitude percent error; frequency/period mean+SD
+and errors; per-cycle circular phase mean/SD and maximum absolute phase error;
+and worst absolute waveform error across every retained cycle (plus per-cycle
+maximum-error mean+SD). Joint spectral peaks and >3Hz power are also reported so
+cadence cannot hide ankle ringing. RMSE is supplemental. Ground loss includes
+normalized worst-cycle maximum error and per-cycle phase error. Ground IK
+remains diagnostic for air; no air acceptance/ranking change. Known amplitude,
+phase wrap, delay, and one-cycle100deg spike checks pass. No new training in
+this update. Main portable RESULT.md now contains both models' full statistics,
+not just a methods narrative. See air_scope_v2\{s3k,syn6}\RESULTS.md and JSON.
+
+## Circuit beside neural traces (2026-11-05)
+
+Created expanded s3k/syn6 offline-D figures with left RG/PF/MN schematic,
+primary-group PF-to-MN matrix, and right three-cycle RG/all-PF/MN/target traces.
+Separate exact individual-muscle maps, direct Ia/II/Ib-to-PF maps, and iliacus
+feedback subnetworks are supplied as PNG/PDF/editable SVG. The extracted circuits
+reproduce saved RG/PF/MN/target arrays exactly. All PF-to-MN homologues match
+bilaterally with max difference0.0uS and no missing counterparts.
+
+Flexor Ib is present locally: s3k directly inhibits the homonymous MN (0.035uS
+for iliacus/bifemsh/tib_ant); syn6 uses Ib->IBIN excitatory0.0609156uS then
+IBIN->MN inhibitory0.5uS. These checked flexors have no Ib->RG/PF pathway.
+Central Ib sources are selected stance extensors; Ia/II centrally follow actual
+muscle-carrying PF projections. No wiring was changed for the figures.
+
+S3k uses four shared phase channels, not separate joint PF oscillators. Syn6
+RG-E drivesS2/S3/S6, RG-F drivesS1/S4, both driveS5. Exact muscle allocations
+are in PF_ASSIGNMENTS.md/CSV. Syn6 figure uses the new offline D fit, not the
+older-readout air GIF candidate. Do not mix their weights.
+Portable README/figures:
+Documentation\Reports and Papers\Dissertation\Defense\Session1_Handoff_20261104\
+experiments_20261104\circuit_trace_20261105\README.md.
+Full ledgers remain external under:
+D:\Users\Ben Bolen\ControllerTraining_20261104\circuit_trace_audit_20261105.

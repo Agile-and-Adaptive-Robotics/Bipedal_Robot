@@ -19,6 +19,8 @@ def main():
     prior=json.loads((a.timing_block/'FINAL.json').read_text())
     if not prior['accepted']:raise ValueError('Timing block must pass')
     cfg=json.loads((a.timing_block/'MANIFEST.json').read_text());cfg['phase']='C';fixed=prior['parameters']
+    from pf_design_gate import require_pf_design_ready
+    require_pf_design_ready(cfg['family'])
     replay=Replay
     if a.pose_aware or a.feedforward_only:
         from pose_replay import ContractReplay

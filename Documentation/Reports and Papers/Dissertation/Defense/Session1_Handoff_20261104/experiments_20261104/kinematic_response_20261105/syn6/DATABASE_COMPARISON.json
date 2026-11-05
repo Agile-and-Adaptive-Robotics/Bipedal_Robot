@@ -1,0 +1,1123 @@
+{
+  "scope": "Same fixed-command saved trajectory compared to every supplied reference; not a speed-adaptation test and no best-reference selection",
+  "references": [
+    {
+      "reference": "Case_40_motion.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\Case_40_motion.npz": "7e29ba73aaea63b7b64dfec378c54e268e531bde8d7f1e6faadd6f6094c1b327"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.1126685527638192,
+        1.1126685527638192
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.9861616725215407,
+      "terms": {
+        "cadence_log_error": 0.5893809608416762,
+        "waveform_normalized_RMSE": 0.8737069511916425,
+        "ROM_log_gain_error": 0.7371140268443067,
+        "mean_bias_normalized": 0.7365847552412856,
+        "fundamental_phase_error": 0.3936868172074988
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_selfsel_Init050.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_selfsel_Init050.npz": "06398cfbf7c931fb442fb311b709ced34aa6dbde2fe3f2019bfc96821592e19b"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.2630000000000001,
+        1.278
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.41414388601772,
+      "terms": {
+        "cadence_log_error": 0.45674909286420184,
+        "waveform_normalized_RMSE": 0.6955941852355986,
+        "ROM_log_gain_error": 0.6465705353531935,
+        "mean_bias_normalized": 0.5837567107752265,
+        "fundamental_phase_error": 0.3797757839790153
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_selfsel_Init125.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_selfsel_Init125.npz": "1db1474196b39274df40539040020551b88490b43e69c6541b2ec1d57860c4ee"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.259,
+        1.265
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.3133907140285164,
+      "terms": {
+        "cadence_log_error": 0.4634472539052037,
+        "waveform_normalized_RMSE": 0.6029450766957813,
+        "ROM_log_gain_error": 0.7159137535614574,
+        "mean_bias_normalized": 0.4686723099161181,
+        "fundamental_phase_error": 0.3825161955670798
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_selfsel_Init200.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_selfsel_Init200.npz": "34b20cda64c415c66a9cdedaf4a20f97147886bb8bed0e186104e503f943a564"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.2189999999999999,
+        0.448
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.6756266148612586,
+      "terms": {
+        "cadence_log_error": 0.9986077905600592,
+        "waveform_normalized_RMSE": 0.7601347599002285,
+        "ROM_log_gain_error": 0.680109566291968,
+        "mean_bias_normalized": 0.6281714429135394,
+        "fundamental_phase_error": 0.5282715384763161
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_speed_050.npz",
+      "valid": true,
+      "accepted": true,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_speed_050.npz": "3b9df990c283e36a501e145bc21c34dc35c558c3dbb09677e3e41a05a3078c02"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        2.096,
+        2.1020000000000003
+      ],
+      "cadence_gate_passed": true,
+      "kinematic_loss": 1.734361559618993,
+      "terms": {
+        "cadence_log_error": 0.04531782693072724,
+        "waveform_normalized_RMSE": 0.7933337527626318,
+        "ROM_log_gain_error": 0.7141252256673765,
+        "mean_bias_normalized": 0.6632192184599762,
+        "fundamental_phase_error": 0.32343986186246054
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_speed_075.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_speed_075.npz": "5db21422262dd0e03a348426243b03cb1457a7264026aff5ca8f02d57424df90"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.7149999999999999,
+        1.702
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.0056242567116214,
+      "terms": {
+        "cadence_log_error": 0.16053363714150773,
+        "waveform_normalized_RMSE": 0.8024933029814866,
+        "ROM_log_gain_error": 0.7451629899954374,
+        "mean_bias_normalized": 0.6669778021551128,
+        "fundamental_phase_error": 0.35198656674368817
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_speed_100.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_speed_100.npz": "90f8a5d1c12550b0a72f8eac1ecba3a7ecc85657019532f7f29eac278aed4ebb"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.47,
+        1.466
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.1836958862242075,
+      "terms": {
+        "cadence_log_error": 0.3122421903984982,
+        "waveform_normalized_RMSE": 0.7105228489071441,
+        "ROM_log_gain_error": 0.7291628375928303,
+        "mean_bias_normalized": 0.5690807527733511,
+        "fundamental_phase_error": 0.3991337226739522
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_speed_125.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_speed_125.npz": "9c25068e40441b7e6210132093d0ec1590561d0d891c05c4f11612d6467c6b95"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.3760000000000001,
+        1.376
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.134311501856425,
+      "terms": {
+        "cadence_log_error": 0.3769614530148985,
+        "waveform_normalized_RMSE": 0.5823873908208684,
+        "ROM_log_gain_error": 0.7099945036214446,
+        "mean_bias_normalized": 0.4332427756934269,
+        "fundamental_phase_error": 0.45276513069664764
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_speed_150.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_speed_150.npz": "912087e26b27e737dde1d5bdc0719a2034f27434069a6cdc6449a5aa061d7050"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.1949999999999998,
+        1.195
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.3900086955265047,
+      "terms": {
+        "cadence_log_error": 0.5179960071425764,
+        "waveform_normalized_RMSE": 0.5083383455141142,
+        "ROM_log_gain_error": 0.8328373284832445,
+        "mean_bias_normalized": 0.3775199057386587,
+        "fundamental_phase_error": 0.4809994372325726
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_speed_175.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_speed_175.npz": "e69725e334fa527ac1bd0d6bd197273d5cc35431a7892885adf3932ebd2642c1"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.114,
+        1.128
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.5550379266305403,
+      "terms": {
+        "cadence_log_error": 0.5819405452355707,
+        "waveform_normalized_RMSE": 0.5140550198168854,
+        "ROM_log_gain_error": 0.8651179437779564,
+        "mean_bias_normalized": 0.381626095461389,
+        "fundamental_phase_error": 0.5074595934456815
+      },
+      "reason": null
+    },
+    {
+      "reference": "ong_speed_200.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\ong_speed_200.npz": "1b96af318a374d2420eebe19fb3791647456375e02178b94d9bd9f08e1dfd835"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        1.021,
+        1.026
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 2.6892788435788018,
+      "terms": {
+        "cadence_log_error": 0.6729170495604974,
+        "waveform_normalized_RMSE": 0.4596909859790077,
+        "ROM_log_gain_error": 0.9249567725446854,
+        "mean_bias_normalized": 0.3185264812934438,
+        "fundamental_phase_error": 0.5240242631194704
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject01_Run_20002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject01_Run_20002.npz": "3c5d44a10bdb9c607e661bc38e7fd33ca40e8e439f5804c0d9b6d400aa598096"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.767,
+        0.7650000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.525210448363732,
+      "terms": {
+        "cadence_log_error": 0.9627161539112914,
+        "waveform_normalized_RMSE": 0.7115148511323178,
+        "ROM_log_gain_error": 0.6608312608612302,
+        "mean_bias_normalized": 0.6116933575500384,
+        "fundamental_phase_error": 0.504001960406394
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject01_Run_30002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject01_Run_30002.npz": "a7391c7bb84ddedc950baac5a23c04ea6c940a23fab12ec2e25a6e6db793046a"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.718,
+        0.7170000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.554919584659219,
+      "terms": {
+        "cadence_log_error": 1.0281247666842652,
+        "waveform_normalized_RMSE": 0.5769863924954785,
+        "ROM_log_gain_error": 0.9048211159469347,
+        "mean_bias_normalized": 0.46162678688958425,
+        "fundamental_phase_error": 0.4769194147539008
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject01_Run_40002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject01_Run_40002.npz": "4c3eb9aa2ede57dfb164bfc2e4a1c62ba33ea2adc76fa448a346e09f7857d88c"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.7,
+        0.6829999999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.5982508047302773,
+      "terms": {
+        "cadence_log_error": 1.0651098742010903,
+        "waveform_normalized_RMSE": 0.5267559403289233,
+        "ROM_log_gain_error": 1.0300052734075773,
+        "mean_bias_normalized": 0.40676923312164287,
+        "fundamental_phase_error": 0.44577572546912697
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject01_Run_50002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject01_Run_50002.npz": "3acbad95b55a8016b7f7380c5d5852577c6a0ba9f40546a7da7773ad4426b8f9"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.598,
+        0.5919999999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.9734706603486933,
+      "terms": {
+        "cadence_log_error": 1.215348777090869,
+        "waveform_normalized_RMSE": 0.5492368446413819,
+        "ROM_log_gain_error": 1.0954315034833801,
+        "mean_bias_normalized": 0.4311843284234271,
+        "fundamental_phase_error": 0.4604566911443399
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject02_Run_20002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject02_Run_20002.npz": "6d1cba0f1c28d6f6dff6cc4eaadcf9aae14c73b8a3f2a46c12fd8c0fd646641d"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.8010419999999999,
+        0.8125
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.43695548003185,
+      "terms": {
+        "cadence_log_error": 0.9108828243309163,
+        "waveform_normalized_RMSE": 0.7294286405720164,
+        "ROM_log_gain_error": 0.6403043554763445,
+        "mean_bias_normalized": 0.6170208009341117,
+        "fundamental_phase_error": 0.5141972251855454
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject02_Run_30002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject02_Run_30002.npz": "7b16e7cc9572637e435f15db241ec757be5155222c7cf9422a095c3be42ed860"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.763542,
+        0.747916
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.516729076932365,
+      "terms": {
+        "cadence_log_error": 0.9762680689221552,
+        "waveform_normalized_RMSE": 0.6219773576394477,
+        "ROM_log_gain_error": 0.873421637640691,
+        "mean_bias_normalized": 0.4954833201837736,
+        "fundamental_phase_error": 0.5155262050727497
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject02_Run_40005.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject02_Run_40005.npz": "3e0ca6494ab92e2edbc20dde0ce9f37d173cb83e3343cc04369d2a93ad284a12"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.713541,
+        0.7124999999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.6294444875841396,
+      "terms": {
+        "cadence_log_error": 1.0343875661990474,
+        "waveform_normalized_RMSE": 0.5751863237575537,
+        "ROM_log_gain_error": 1.0305120407282695,
+        "mean_bias_normalized": 0.4467119783751669,
+        "fundamental_phase_error": 0.49374204375354586
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject02_Run_50002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject02_Run_50002.npz": "7ac56f1fe6d4ac795d7c76a2d059d8610f0f7a0e9a430f177a39c411e564059a"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.654167,
+        0.6489579999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.830644531461377,
+      "terms": {
+        "cadence_log_error": 1.1245321364049972,
+        "waveform_normalized_RMSE": 0.5698082735919671,
+        "ROM_log_gain_error": 1.0956794946904735,
+        "mean_bias_normalized": 0.4381055846376017,
+        "fundamental_phase_error": 0.4897588907907567
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject04_Run_20002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject04_Run_20002.npz": "d129cb1a4d2102445c42f288d0f7cd69f67d88ff2766b5c72153c1f9dfa34330"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.8014999999999999,
+        0.7905000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.2092944582304637,
+      "terms": {
+        "cadence_log_error": 0.9243221571586204,
+        "waveform_normalized_RMSE": 0.5496347085781197,
+        "ROM_log_gain_error": 0.7412978958804115,
+        "mean_bias_normalized": 0.39708920717093726,
+        "fundamental_phase_error": 0.48364376761885747
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject04_Run_30002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject04_Run_30002.npz": "ad74d4a26f6b2721be7e26ef167d100b0a41789e96c4f625ce82d88d22d4f050"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.7390000000000001,
+        0.755
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.394678086684763,
+      "terms": {
+        "cadence_log_error": 0.9878896364095742,
+        "waveform_normalized_RMSE": 0.5325421202314214,
+        "ROM_log_gain_error": 0.934540532756127,
+        "mean_bias_normalized": 0.3847256228660106,
+        "fundamental_phase_error": 0.45344723164624795
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject04_Run_40002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject04_Run_40002.npz": "1ee375280bc23ebc4915b9e3b9a1c30be200be601dfd9c18607d7a136e90b1d4"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.7015,
+        0.6915000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.5234293838588133,
+      "terms": {
+        "cadence_log_error": 1.057855446184523,
+        "waveform_normalized_RMSE": 0.4752941352087488,
+        "ROM_log_gain_error": 1.1010078744150842,
+        "mean_bias_normalized": 0.32154428029396515,
+        "fundamental_phase_error": 0.4422965578529871
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject04_Run_50004.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject04_Run_50004.npz": "a3d71387629ab4026b8e854117e6301362a803c338f293e0dba6c7a12d5d2c09"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.6265,
+        0.6280000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.8260934648024896,
+      "terms": {
+        "cadence_log_error": 1.1625530011060268,
+        "waveform_normalized_RMSE": 0.5226737088578863,
+        "ROM_log_gain_error": 1.1256463559823058,
+        "mean_bias_normalized": 0.37959565835537434,
+        "fundamental_phase_error": 0.4513854931274192
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject08_Run_20002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject08_Run_20002.npz": "992dc96f03a4b8f3399a319f228e247f1b0537285979b4b1815a003a34973a39"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.7229999999999999,
+        0.7040000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.3960800748831157,
+      "terms": {
+        "cadence_log_error": 1.033803682349784,
+        "waveform_normalized_RMSE": 0.5553689682583131,
+        "ROM_log_gain_error": 0.6092416643678312,
+        "mean_bias_normalized": 0.41214234696225377,
+        "fundamental_phase_error": 0.5248234725203843
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject08_Run_30001.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject08_Run_30001.npz": "72d3be54e7d1411d949c24d22d82a6723ff1bd3a2894982c238ca8d917c7c83f"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.675,
+        0.661
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.5982687437536915,
+      "terms": {
+        "cadence_log_error": 1.0996642061460795,
+        "waveform_normalized_RMSE": 0.5357834454339175,
+        "ROM_log_gain_error": 0.8232632089180356,
+        "mean_bias_normalized": 0.3983828146403527,
+        "fundamental_phase_error": 0.5046677484968415
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject08_Run_40002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject08_Run_40002.npz": "2d4f596ea79ad98aae15167acb382ea08c5d834f0dc5c95d80be5321227f86ee"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.655,
+        0.6489999999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.675286663771706,
+      "terms": {
+        "cadence_log_error": 1.1238634953385165,
+        "waveform_normalized_RMSE": 0.5132816558232748,
+        "ROM_log_gain_error": 0.9815962500729856,
+        "mean_bias_normalized": 0.3727381621064299,
+        "fundamental_phase_error": 0.47422162236338083
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject08_Run_50003.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject08_Run_50003.npz": "585673a8a048ccf1c0e28d028146083db4b118078886676f5f7a444ce4b015f2"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.61,
+        0.593
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.848631575738981,
+      "terms": {
+        "cadence_log_error": 1.2045707934256464,
+        "waveform_normalized_RMSE": 0.4939810609421826,
+        "ROM_log_gain_error": 1.081671995825116,
+        "mean_bias_normalized": 0.34351682379166865,
+        "fundamental_phase_error": 0.46582903627422656
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject10_Run_20002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject10_Run_20002.npz": "a1a921ae32d8a7dd8b1f2a1001476047283007885e8fafd2f1097200033e5b11"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.727,
+        0.732
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.4821214435997567,
+      "terms": {
+        "cadence_log_error": 1.011543975760772,
+        "waveform_normalized_RMSE": 0.5924764147720221,
+        "ROM_log_gain_error": 0.7598108674822918,
+        "mean_bias_normalized": 0.47089175062040844,
+        "fundamental_phase_error": 0.5024115365096807
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject10_Run_30002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject10_Run_30002.npz": "7c1aa2d9ca00ac420acb5d9c43befe3318a8b716d2358fcb5fa949a88d5d4949"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.7140000000000001,
+        0.726
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.52430459922585,
+      "terms": {
+        "cadence_log_error": 1.0246809829259973,
+        "waveform_normalized_RMSE": 0.540525365234739,
+        "ROM_log_gain_error": 0.964935421478684,
+        "mean_bias_normalized": 0.40852713847966315,
+        "fundamental_phase_error": 0.4953719763198862
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject10_Run_40002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject10_Run_40002.npz": "284aea3f63f6a654f6c2f8a5f8a1a3c730364b101a53669d808de89ef9299ac8"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.704,
+        0.699
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.6091715670643967,
+      "terms": {
+        "cadence_log_error": 1.0506829223122613,
+        "waveform_normalized_RMSE": 0.5055861783166279,
+        "ROM_log_gain_error": 1.1652500543289352,
+        "mean_bias_normalized": 0.37174979914772416,
+        "fundamental_phase_error": 0.467439234769833
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject10_Run_50002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject10_Run_50002.npz": "5ebd4c668279ae029c9ad07aa311108f5ca8098e677107a57023c273f0d7eaf5"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.584,
+        0.5949999999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.988823602429981,
+      "terms": {
+        "cadence_log_error": 1.2246662773212593,
+        "waveform_normalized_RMSE": 0.504534459009612,
+        "ROM_log_gain_error": 1.238433671000913,
+        "mean_bias_normalized": 0.3593036778738907,
+        "fundamental_phase_error": 0.47217582868089675
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject11_Run_20002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject11_Run_20002.npz": "faca2d340154ec32acc3313922a37dca829ecdc98e5f8f6e8d65894e2d9f9239"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.716,
+        0.7180000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.416971832590518,
+      "terms": {
+        "cadence_log_error": 1.0288226035037527,
+        "waveform_normalized_RMSE": 0.5537273279644418,
+        "ROM_log_gain_error": 0.6980955881444375,
+        "mean_bias_normalized": 0.4094049572369396,
+        "fundamental_phase_error": 0.5036980498557645
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject11_Run_30002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject11_Run_30002.npz": "59fde431c070f5912ac8ebb1c53540ea712182e9438230533bc3638ff1964cd1"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.679,
+        0.6950000000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.5138311856925752,
+      "terms": {
+        "cadence_log_error": 1.0716309849464434,
+        "waveform_normalized_RMSE": 0.49338285700042434,
+        "ROM_log_gain_error": 0.9035858051408173,
+        "mean_bias_normalized": 0.3376934090888268,
+        "fundamental_phase_error": 0.5130935033688838
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject11_Run_40002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject11_Run_40002.npz": "d26fe24ed2b09960f9900b452a22bfa0585b372a991bf03b3e7503f0ce7e8e8e"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.624,
+        0.6299999999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.7142108636549342,
+      "terms": {
+        "cadence_log_error": 1.1629623776306846,
+        "waveform_normalized_RMSE": 0.46993647397866845,
+        "ROM_log_gain_error": 1.0261632993175955,
+        "mean_bias_normalized": 0.3036259426181099,
+        "fundamental_phase_error": 0.506910026894087
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject11_Run_50002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject11_Run_50002.npz": "726902543a83ed9b66457b14e301708800e1b941be5b1d93ca24a2c2c5890f15"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.564,
+        0.5589999999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.964895351350767,
+      "terms": {
+        "cadence_log_error": 1.2732956091816086,
+        "waveform_normalized_RMSE": 0.4730111489601592,
+        "ROM_log_gain_error": 1.094795302253689,
+        "mean_bias_normalized": 0.30220293816015,
+        "fundamental_phase_error": 0.4935877276409418
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject17_Run_20002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject17_Run_20002.npz": "acf7846d5d04de68a67febd5d3dc9f73d4bc31a0d802ed6e073e8620b16d3029"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.795833,
+        0.7979169999999999
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.1982130376023736,
+      "terms": {
+        "cadence_log_error": 0.9232004980812634,
+        "waveform_normalized_RMSE": 0.5369215723798115,
+        "ROM_log_gain_error": 0.7690961976335174,
+        "mean_bias_normalized": 0.3911975726943542,
+        "fundamental_phase_error": 0.4694871677921988
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject17_Run_30001.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject17_Run_30001.npz": "0445332805cb1e563067f493086f8cc634521dc1fcd4d94652bf254daf7ad459"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.7583329999999999,
+        0.744792
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.3551991328255593,
+      "terms": {
+        "cadence_log_error": 0.98178367754668,
+        "waveform_normalized_RMSE": 0.48274792873819267,
+        "ROM_log_gain_error": 1.0254335440283378,
+        "mean_bias_normalized": 0.3360821417223538,
+        "fundamental_phase_error": 0.4562520122373213
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject17_Run_40001.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject17_Run_40001.npz": "cbf698108300a942c7bf9fdd4c16125f641128bebb21b20c2c34445d991d843f"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.7000000000000001,
+        0.6895840000000001
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.5772188511175456,
+      "terms": {
+        "cadence_log_error": 1.0603130453744014,
+        "waveform_normalized_RMSE": 0.48329066884512245,
+        "ROM_log_gain_error": 1.1832386254506397,
+        "mean_bias_normalized": 0.3414042821071441,
+        "fundamental_phase_error": 0.4219612754894566
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject17_Run_50001.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject17_Run_50001.npz": "18325f0e1850f90e2c0581cfb43eba9a4e7c38247655851b9efd2e1483391ccf"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.671875,
+        0.659375
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.690643884921339,
+      "terms": {
+        "cadence_log_error": 1.1032151075179581,
+        "waveform_normalized_RMSE": 0.4772588600373115,
+        "ROM_log_gain_error": 1.2277262698952354,
+        "mean_bias_normalized": 0.3346302772868073,
+        "fundamental_phase_error": 0.4515530725141795
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject20_Run_20001.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject20_Run_20001.npz": "690534790d07f0cd61e477662176fe7056edc815953ed48c8609b85735e75dfe"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.6697919999999999,
+        0.680208
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.603617459599765,
+      "terms": {
+        "cadence_log_error": 1.0892145464204075,
+        "waveform_normalized_RMSE": 0.6100861710543639,
+        "ROM_log_gain_error": 0.6731968617614482,
+        "mean_bias_normalized": 0.48068832865961725,
+        "fundamental_phase_error": 0.476319200988107
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject20_Run_30001.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject20_Run_30001.npz": "5a3e79890e2b4938ca7b1f7bc1a560b34c26631fe069519b5409729880f731c7"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.675,
+        0.663542
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.603699524952765,
+      "terms": {
+        "cadence_log_error": 1.0977450498483823,
+        "waveform_normalized_RMSE": 0.5089823174229728,
+        "ROM_log_gain_error": 0.9579117529109671,
+        "mean_bias_normalized": 0.36477638013424746,
+        "fundamental_phase_error": 0.4757660826208398
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject20_Run_40001.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject20_Run_40001.npz": "a3378746752f6576412bfd38bca76280719741158180fd6d1edb43dbe2d7d568"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.648958,
+        0.658334
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.6669110244889964,
+      "terms": {
+        "cadence_log_error": 1.1213572710138153,
+        "waveform_normalized_RMSE": 0.49319595661607846,
+        "ROM_log_gain_error": 1.0876161291520987,
+        "mean_bias_normalized": 0.35498367219628707,
+        "fundamental_phase_error": 0.4194012503421896
+      },
+      "reason": null
+    },
+    {
+      "reference": "subject20_Run_50002.npz",
+      "valid": true,
+      "accepted": false,
+      "reference_source_sha256": {
+        "Code\\MuJoCo_SNS\\spinal\\gait_refs\\subject20_Run_50002.npz": "c4202f1a0aa2ea7a29a8c44a351f397044c70537949228fdb119b2c11c51c27e"
+      },
+      "simulation_periods_s": [
+        2.0040000000000004,
+        2.007999999999999
+      ],
+      "reference_periods_s": [
+        0.5916669999999999,
+        0.592708
+      ],
+      "cadence_gate_passed": false,
+      "kinematic_loss": 3.903605057862689,
+      "terms": {
+        "cadence_log_error": 1.220074550069288,
+        "waveform_normalized_RMSE": 0.4905709860420136,
+        "ROM_log_gain_error": 1.1734651533389278,
+        "mean_bias_normalized": 0.3377781001391515,
+        "fundamental_phase_error": 0.43452668988611953
+      },
+      "reason": null
+    }
+  ]
+}
