@@ -300,3 +300,32 @@ Documentation\Reports and Papers\Dissertation\Defense\Session1_Handoff_20261104\
 experiments_20261104\circuit_trace_20261105\README.md.
 Full ledgers remain external under:
 D:\Users\Ben Bolen\ControllerTraining_20261104\circuit_trace_audit_20261105.
+
+## PF design failure confirmed; downstream fitting held (2026-11-05)
+
+Ben identified hidden diagram routes and inadequate PF timing. Orthogonal A*
+routing now validates every synapse against all neuron interiors: s3k20overview/
+12flexor edges and syn627overview/20flexor edges, all zero interior crossings.
+Neural data unchanged. PF timing audit confirms syn6 actual99%-variance rank3
+vs intended6 on each side; S5 active100% vs intended~32.5/33%. RightS1/S2/S4
+lags-84/-100/-61deg. All12 channels fail the provisional combined timing check.
+S3k four channels have99%-variance rank2, with no declared numerical window
+targets; its PF_SHAPE adaptation multipliers are discarded by _build_pf.
+
+A bounded8-evaluation PF-only current-balance fit, with RG/MN weights fixed,
+uses mirrored right primitive targets on the left with measured loading offset.
+Loss2.51171->2.15643; fresh repeat exact, still0/12pass. Earlier diagnostic used
+original independently factorized left targets and is retained separately.
+Neither is installed into the body adapter or accepted as a controller repair.
+
+pf_design_gate.py now blocks new C/D, readout, and body optimization for these
+known failed PF revisions through the current fitting entry points. Historical
+replay/figures and isolated PF-repair experiments remain available. No physics,
+CAD, manuscript, or old checkpoint changes. Period/antiphase and MN-output
+passes do not constitute PF timing validation.
+Full source/report: controller_profiles_20261104\PF_DESIGN_AUDIT_20261105.md.
+Portable report, corrected figures, timing overlays:
+Dissertation\Defense\Session1_Handoff_20261104\experiments_20261104\
+circuit_trace_20261105\PF_DESIGN_AUDIT_20261105.md.
+Raw repair results: D:\Users\Ben Bolen\ControllerTraining_20261104\
+syn6_PF_input_repair_mirrored_20261105. All bounded experiments completed.
