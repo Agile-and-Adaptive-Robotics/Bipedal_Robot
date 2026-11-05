@@ -24,6 +24,7 @@ import math
 import numpy as np
 import bpy
 import render_common as rc
+import pulley_kinematics as pk
 
 FPS = 15
 DUR = 7.0
@@ -74,6 +75,7 @@ def plate(name, poly, material, z=Z_TH):
 
 
 def cable_points(delta):
+    knee = knee_pose(delta)
     sx = SHEAVE0[0] - delta                       # moving sheave center x
     pts = [(ANCHOR[0], ANCHOR[1], 0)]
     pts.append((sx, SHEAVE0[1] + SHEAVE_R, 0))    # top tangent of moving sheave
@@ -82,12 +84,21 @@ def cable_points(delta):
                     SHEAVE0[1] + SHEAVE_R * math.sin(math.radians(a)), 0))
     pts.append((sx, SHEAVE0[1] - SHEAVE_R, 0))    # bottom tangent
     pts.append((REDIRECT[0], REDIRECT[1] + SHEAVE_R, 0))   # top of redirect
-    for a in np.linspace(90, 0, 6)[1:-1]:         # quarter wrap on redirect
+    for a in np.linspace(90, math.degrees(knee['angle']), 6)[1:-1]:
         pts.append((REDIRECT[0] + SHEAVE_R * math.cos(math.radians(a)),
                     REDIRECT[1] + SHEAVE_R * math.sin(math.radians(a)), 0))
-    pts.append((TENDON_X, REDIRECT[1], 0))
-    pts.append((TENDON_X, INSERTION0[1] - 2 * delta, 0))   # output feeds out 2*delta
+    pts.append((*knee['tangent'], 0))
+    pts.append((*knee['P'], 0))
     return pts
+
+
+def knee_pose(delta):
+    lo, hi = 0.0, pk.end_angle(DELTA_MAX)
+    for _ in range(40):
+        mid=(lo+hi)/2
+        if pk.contraction(mid)<delta:lo=mid
+        else:hi=mid
+    return pk.pose((lo+hi)/2)
 
 
 def main():
@@ -96,7 +107,7 @@ def main():
     _argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     args, _ = ap.parse_known_args(_argv)
 
-    scene, engine = rc.setup_scene(res=(720, 720), samples=32)
+    scene, engine = rc.setup_scene(res=(1080, 720), samples=32)
     rc.add_sun(energy=0.4, direction=(-0.3, -0.6, 1.0))
     print("ENGINE:", engine)
 
@@ -164,6 +175,22 @@ def main():
 
     frames = list(range(0, N_FRAMES))
     deltas = [delta_of_frame(k) for k in frames]
+    knees = [knee_pose(d) for d in deltas]
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=0.07, location=(*knees[0]['I'],Z_TH))
+    pivot_marker=bpy.context.active_object
+    rc.set_material(pivot_marker,rc.make_material('pivot_ink',rc.ARM_GOLD))
+    rc.keyframe_linear(pivot_marker,'location',frames,[(*p['I'],Z_TH) for p in knees])
+    leader=rc.poly_curve('pivot_leader',[(4.8,2.9,LABEL_Z),(*knees[0]['I'],Z_TH)],0.015,material=grey_d)
+    rc.keyframe_polyline(leader,frames,[[(4.8,2.9,LABEL_Z),(*p['I'],Z_TH)] for p in knees])
+    tibia = bpy.data.objects['tibia']
+    rc.keyframe_linear(tibia, 'location', frames, [(*p['t'], 0) for p in knees])
+    rc.keyframe_linear(tibia, 'rotation_euler', frames, [p['theta'] for p in knees], index=2)
+    for j, (fixed, moving) in enumerate(((pk.A,'D'),(pk.B,'C'))):
+        rc.keyframe_polyline(bpy.data.objects[f'kneelink{j}'],frames,
+                            [[(*fixed,0),(*p[moving],0)] for p in knees])
+    for j, key in ((2,'C'),(3,'D')):
+        rc.keyframe_linear(bpy.data.objects[f'kneedot{j}'],'location',frames,
+                           [(*p[key],Z_TH/2) for p in knees])
     polys = [cable_points(d) for d in deltas]
     rc.keyframe_polyline(cable, frames, polys)
 
@@ -178,13 +205,13 @@ def main():
         rc.keyframe_linear(bpy.data.objects[f"stub{yy}"], "location", frames,
                            [(BPA_X1 - d + 0.14, yy, 0) for d in deltas])
     rc.keyframe_linear(cross, "location", frames,
-                       [(STUB_END - d, (BPA_Y[0] + SHEAVE0[1]) / 2.0, 0) for d in deltas])
+                       [(STUB_END - d, sum(BPA_Y) / 2.0, 0) for d in deltas])
     rc.keyframe_linear(cross_arm, "location", frames,
                        [((SHEAVE0[0] - d + STUB_END - d) / 2.0, SHEAVE0[1], 0) for d in deltas])
     rc.keyframe_linear(sheave, "location", frames,
                        [(SHEAVE0[0] - d, SHEAVE0[1], 0) for d in deltas])
     rc.keyframe_linear(ins_ob, "location", frames,
-                       [(INSERTION0[0], INSERTION0[1] - 2 * d, Z_TH / 2) for d in deltas])
+                       [(*p['P'],Z_TH/2) for p in knees])
 
     # ---- motion arrows -----------------------------------------------------
     red_a = rc.make_material("arrow_red", rc.BPA_RED)
@@ -203,8 +230,11 @@ def main():
             tail = (2.3 - d, yy - 0.55, LABEL_Z)
             headv = (1.6 - d, yy - 0.55, LABEL_Z)
             rc.aim_arrow(shaft, head, tail, headv)
-        tail = (TENDON_X + 0.55, 2.0 - 2 * d, LABEL_Z)
-        headv = (TENDON_X + 0.55, 1.2 - 2 * d, LABEL_Z)
+        p=knees[k]
+        direction=(p['tangent']-p['P'])/np.linalg.norm(p['tangent']-p['P'])
+        start=p['P']+np.array([0.50,-0.25])
+        tail=(*start,LABEL_Z)
+        headv=(*(start+0.8*direction),LABEL_Z)
         rc.aim_arrow(out_shaft, out_head, tail, headv)
 
     # ---- labels (flat, facing +z) -------------------------------------------
@@ -226,16 +256,16 @@ def main():
     L["tackle"].location = (ANCHOR[0] + 0.35, 6.9, LABEL_Z)
     L["tendon"] = lab("Output tendon", "L_tendon", 0.24, color=rc.CABLE_BLUE,
                       align="LEFT")
-    L["tendon"].location = (TENDON_X + 0.35, 3.3, LABEL_Z)
-    L["ins"] = lab("Insertion", "L_ins", 0.20, align="LEFT")
+    L["tendon"].location = (TENDON_X + 0.45, 3.6, LABEL_Z)
+    L["ins"] = lab("Tendon attachment", "L_ins", 0.20, align="RIGHT")
     rc.keyframe_linear(L["ins"], "location", frames,
-                       [(INSERTION0[0] + 0.32, INSERTION0[1] - 2 * d + 0.02, LABEL_Z)
-                        for d in deltas])
+                       [(p['P'][0] - 0.20, p['P'][1] - 0.30, LABEL_Z) for p in knees])
     L["femur"] = lab("Femur", "L_femur", 0.22, color=(0.35, 0.34, 0.32))
     L["femur"].location = (3.2, 4.85, LABEL_Z)
     L["tibia"] = lab("Tibia", "L_tibia", 0.22, color=(0.35, 0.34, 0.32))
-    L["tibia"].location = (8.75, 0.62, LABEL_Z)
-    L["knee"] = lab("Biomimetic knee linkage", "L_knee", 0.19, color=(0.35, 0.34, 0.32),
+    rc.keyframe_linear(L["tibia"], 'location', frames,
+                       [(*(p['Q']@np.array([8.35,1.15])+p['t']),LABEL_Z) for p in knees])
+    L["knee"] = lab("Moving pivot: link intersection", "L_knee", 0.19, color=(0.35, 0.34, 0.32),
                     align="RIGHT")
     L["knee"].location = (5.9, 2.75, LABEL_Z)
     L["force"] = lab("Ideal: output force = half the\ncombined BPA force",
@@ -246,26 +276,26 @@ def main():
     L["contr"].location = (1.95, 4.78, LABEL_Z)
     L["travel"] = lab("Output travel = 2 x\nBPA contraction", "L_travel", 0.17,
                       color=rc.CABLE_BLUE, align="LEFT")
-    L["travel"].location = (8.0, 3.05, LABEL_Z)
+    L["travel"].location = (0.55, 0.8, LABEL_Z)
 
     cam_data = bpy.data.cameras.new("cam")
     cam_data.type = "ORTHO"
-    cam_data.ortho_scale = 10.6
+    cam_data.ortho_scale = 12.0
     cam = bpy.data.objects.new("camera", cam_data)
     bpy.context.scene.collection.objects.link(cam)
-    cam.location = (4.85, 4.0, 12.0)
-    cam.rotation_euler = rc.look_rotation(cam.location, (4.85, 4.0, 0.0))
+    cam.location = (5.0, 4.0, 12.0)
+    cam.rotation_euler = rc.look_rotation(cam.location, (5.0, 4.0, 0.0))
     scene.camera = cam
 
-    rc.save_blend(rc.HERE / "scenes" / "visual2_reverse_pulley.blend")
+    rc.save_blend(rc.OUTPUT / "scenes" / "visual2_reverse_pulley.blend")
 
     if args.stills_only:
         k = int(np.argmax(deltas))
-        scene.render.resolution_x = 1080
-        scene.render.resolution_y = 1080
+        scene.render.resolution_x = 1200
+        scene.render.resolution_y = 800
         update_arrows(k)
         scene.frame_set(k)
-        rc.render_frame(scene, k, str(rc.HERE / "build" / "visual2" / "still_labeled.png"))
+        rc.render_frame(scene, k, str(rc.OUTPUT / "visual2" / "still_labeled.png"))
         # unlabeled copy: hide all text objects
         texts = [o for o in bpy.data.objects if o.type == "FONT"]
         for o in texts:
@@ -275,11 +305,11 @@ def main():
             a[1].hide_render = True
         out_shaft.hide_render = True
         out_head.hide_render = True
-        rc.render_frame(scene, k, str(rc.HERE / "build" / "visual2" / "still_unlabeled.png"))
+        rc.render_frame(scene, k, str(rc.OUTPUT / "visual2" / "still_unlabeled.png"))
         print("STILLS_DONE")
         return
 
-    outdir = rc.HERE / "build" / "visual2" / "frames"
+    outdir = rc.OUTPUT / "visual2" / "frames"
     outdir.mkdir(parents=True, exist_ok=True)
     for k in frames:
         update_arrows(k)

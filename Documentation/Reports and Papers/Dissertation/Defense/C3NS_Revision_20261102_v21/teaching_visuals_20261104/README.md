@@ -1,5 +1,11 @@
 # Defense teaching visuals — 2026-11-04
 
+**Superseded rendering instructions:** use [REPAIRS_20261105.md](REPAIRS_20261105.md)
+and `build_fixed_20261105/` for the current corrected visuals. The cam now uses
+Ben's authoritative `09_BA_003.SLDASM`, its native component placements, and
+its named Theta1 datum. The older inferred cam registration described below
+is historical and must not be used to rebuild the current deck.
+
 Three scientific teaching animations for the defense deck. Nothing in the
 dissertation, controllers, optimization winners, or experimental data was
 modified: every rendered quantity is read from the sources of record listed

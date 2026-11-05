@@ -51,9 +51,9 @@ def hierarchy(flat):
         for n in items:subgroups[side(n['label'])].append(n)
         for k,(label,group) in enumerate(sorted(subgroups.items())):
             sid=mid+':'+label.lower();arrange(group);sub={'nodes':group,'edges':[],'presentation':{'style':'schematic'}}
-            graph['nodes'].append({'id':sid,'type':'SUB','label':label+' · '+str(len(group))+' cells','x':240+k*380,'y':180,'sub':sub,'view':{'width':260,'height':72}})
+            graph['nodes'].append({'id':sid,'type':'SUB','label':label+' · '+str(len(group))+' cells','scope':{'layer':layer,'side':label},'x':240+k*380,'y':180,'sub':sub,'view':{'width':260,'height':72}})
             for n in group:paths[n['id']]=[mid,sid,n['id']];homes[n['id']]=sub
-        x,y=pos.get(layer,(700,1000));root['nodes'].append({'id':mid,'type':'SUB','label':layer+'\n'+str(len(items))+' cells','x':x,'y':y,'sub':graph,'view':{'width':265,'height':82}})
+        x,y=pos.get(layer,(700,1000));root['nodes'].append({'id':mid,'type':'SUB','label':layer+'\n'+str(len(items))+' cells','scope':{'layer':layer},'x':x,'y':y,'sub':graph,'view':{'width':265,'height':82}})
     for original in flat['edges']:
         a,b=paths[original['fromId']],paths[original['toId']];e=copy.deepcopy(original)
         if a[:2]==b[:2]:target=homes[original['fromId']];start=2

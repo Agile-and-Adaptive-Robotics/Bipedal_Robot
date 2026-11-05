@@ -88,14 +88,28 @@ def flatten(doc):
     graph(doc);return ns,es,ports
 
 class FileSession:
-    def __init__(self):self.paths={};self.hashes={}
+    def __init__(self):self.paths={};self.hashes={};self.native_hashes={}
     def open(self,path,tab):
-        path=Path(path).resolve();raw=json.loads(path.read_text(encoding='utf-8-sig'));doc=normalize(raw)
+        path=Path(path).resolve()
+        if path.suffix.lower() in ('.asim','.aproj'):
+            from native_w2l import read_model
+            doc=read_model(path);self.native_hashes[tab]=dict(doc['native']['source_files'])
+            sidecar=path.with_suffix('.editor.json')
+            if sidecar.exists():self.native_hashes[tab][str(sidecar)]=fingerprint(sidecar)
+        else:doc=normalize(json.loads(path.read_text(encoding='utf-8-sig')))
         self.paths[tab]=path;self.hashes[tab]=fingerprint(path)
         return doc
     def save(self,doc,tab,path=None):
         doc=normalize(doc);destination=Path(path).resolve() if path else self.paths.get(tab)
         if destination is None:raise ProjectError('Use Save As to choose a project file.')
+        if destination.suffix.lower() in ('.asim','.aproj'):
+            if destination==self.paths.get(tab):
+                for name,expected in self.native_hashes.get(tab,{}).items():
+                    if not Path(name).exists() or fingerprint(name)!=expected:raise ProjectError('A native model or its companion changed outside the editor. Reopen it or use Save As.')
+            from native_files import save_model
+            doc,hashes=save_model(doc,destination,self.paths.get(tab));self.native_hashes[tab]=hashes
+            self.paths[tab]=destination;self.hashes[tab]=fingerprint(destination)
+            return destination,doc
         if destination==self.paths.get(tab) and destination.exists() and fingerprint(destination)!=self.hashes.get(tab):
             raise ProjectError('This file changed outside the editor. Reopen it or use Save As to preserve both versions.')
         destination.parent.mkdir(parents=True,exist_ok=True)

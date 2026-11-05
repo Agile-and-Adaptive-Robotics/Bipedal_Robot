@@ -1,0 +1,36 @@
+const{sandbox:s,load,documentNow,root,vm,fixture}=require('./test_editor.cjs');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+Object.assign(s,{switchTab(){},onMove(){},endDrag(){},deleteSel(){},band:null,bandRect:null,drag:null,bendDrag:null,suppressClick:false,svgPoint:e=>e.p});s.window.addEventListener=()=>{};s.window.removeEventListener=()=>{};
+vm.runInContext(fs.readFileSync(path.join(root,'interaction_editor.js'),'utf8'),s);
+vm.runInContext(fs.readFileSync(path.join(root,'circuit_layout.js'),'utf8'),s);
+vm.runInContext(fs.readFileSync(path.join(root,'context_views.js'),'utf8'),s);
+load({nodes:[{id:'a',label:'A',type:'MN',x:100,y:100,model:{kind:'graded'}},{id:'b',label:'B',type:'MN',x:600,y:400,model:{kind:'graded'}}],edges:[{id:'wire',fromId:'a',toId:'b',synapse:{gmax_uS:.5,reversal_mV:8,threshold_mV:0,saturation_mV:5},pts:[{x:150,y:160},{x:350,y:200}]}]});
+vm.runInContext('selectRectangle({x0:20,y0:40,x1:200,y1:180});',s);
+assert.equal(s.selSet.size,1);assert.equal(vm.runInContext('selectedWirePoints.size',s),1);
+vm.runInContext('startSelectedPointDrag({p:{x:150,y:160},stopPropagation(){}},edges[0],0);onMove({p:{x:180,y:200}});endDrag({});',s);
+assert.deepEqual(JSON.parse(JSON.stringify(s.edges[0].pts)),[{x:180,y:200},{x:350,y:200}]);assert.equal(s.nodes[0].x,130);assert.equal(s.nodes[0].y,140);assert.equal(s.nodes[1].x,600);
+assert.equal(s.undoStack.length>0,true);
+vm.runInContext("perimeterDrag={e:edges[0],side:'to',moved:false};onMove({p:{x:600,y:373}});endDrag({});",s);
+assert.deepEqual(JSON.parse(JSON.stringify(s.edges[0].toPort)),{side:'top',offset:.5});assert.equal(s.edges[0].to,'b');
+const saved=documentNow();load(saved);assert.deepEqual(documentNow().edges[0].toPort,saved.edges[0].toPort);
+vm.runInContext("nodes[0].view={shape:'ellipse',width:200,height:100};testPort=perimeterPort(nodes[0],{x:nodes[0].x+100,y:nodes[0].y+50});testAnchor=anchor(nodes[0],0,0,testPort);",s);
+assert(Math.abs((s.testAnchor.x-s.nodes[0].x)**2/10000+(s.testAnchor.y-s.nodes[0].y)**2/2500-1)<1e-12);
+console.log('PASS: rectangle selects neurons and individual wire points; dragging selected point moves selected neuron/points only; endpoint stays on same neuron; ports survive save/reload.');
+// Canonical graph behind a projection: aliases never duplicate neurons and
+// cross-layer edges retain their nested endpoint paths.
+const graph={nodes:[{id:'rg',type:'SUB',label:'RG',sub:{nodes:[{id:'rgL',type:'SUB',label:'Left',sub:{nodes:[{id:'r',label:'L RG ext',layer:'RG',type:'HC-RG-E',model:{kind:'graded'}}],edges:[]}}],edges:[]}},{id:'mn',type:'SUB',label:'MN',sub:{nodes:[{id:'mnL',type:'SUB',label:'Left',sub:{nodes:[{id:'m',label:'L Hip MN ext',layer:'MN',type:'MN',model:{kind:'graded'}},{id:'ia',label:'L Hip ext Ia',layer:'Afferents',type:'SN-Ia',model:{kind:'graded'}}],edges:[]}}],edges:[]}}],edges:[{id:'e',fromId:'rg',fromPath:['rgL','r'],toId:'mn',toPath:['mnL','m'],synapse:{gmax_uS:.8,reversal_mV:8,threshold_mV:0,saturation_mV:5},pts:[]}],native:{adapters:[],bodies:{}}};
+s.graph=graph;
+const projected=vm.runInContext("circuitProjection(graph,new Set(['m','ia']),'test',true,false)",s);assert.equal(projected.nodes.length,3);assert.equal(projected.nodes.find(n=>n.id==='r').external_alias,true);
+assert(projected.nodes.find(n=>n.id==='r').y<projected.nodes.find(n=>n.id==='m').y);
+load(projected);vm.runInContext("circuitContext={root:graph,key:'test',core:new Set(['m','ia']),managed:new Set(['e']),home:graph.nodes[1].sub.nodes[0].sub};edges[0].synapse.gmax_uS=.375;nodes.find(n=>n.id==='m').model.bias_nA=1.25;result=modelSpec();",s);
+assert.equal(s.result.edges[0].synapse.gmax_uS,.375);assert.deepEqual(JSON.parse(JSON.stringify(s.result.edges[0].toPath)),['mnL','m']);assert.equal(s.result.nodes[1].sub.nodes[0].sub.nodes[0].model.bias_nA,1.25);
+assert.equal(vm.runInContext('flattenView(result).ns.length',s),3);
+vm.runInContext("edges=[];modelSpec();",s);assert.equal(vm.runInContext('flattenView(graph).es.length',s),0);
+// Undo restoring the projection restores the real connection too.
+load(projected);vm.runInContext('modelSpec()',s);assert.equal(vm.runInContext('flattenView(graph).es.length',s),1);
+console.log('PASS: motor projection edits and deletes real canonical connections; undo restores them; off-page aliases do not duplicate model nodes; nested child bindings survive.');
+load(projected);s.selSet=new Set(['m','ia']);vm.runInContext('packSub();groupedResult=modelSpec()',s);
+assert.equal(vm.runInContext('flattenView(groupedResult).ns.length',s),3);assert.equal(vm.runInContext('flattenView(groupedResult).es.length',s),1);
+vm.runInContext("restoredProjection=circuitProjection(groupedResult,new Set(['m','ia']),'test',true,false)",s);assert(s.restoredProjection.nodes.some(n=>n.sub));
+assert.equal(vm.runInContext('flattenView(restoredProjection).es.length',s),1);
+console.log('PASS: grouping within the motor view preserves real neurons and edges and reopens as a presentation subnetwork.');

@@ -22,8 +22,12 @@ def build(destination):
     source=source.replace('<div id="tabs"></div>','<div id="desktopPath" style="font-size:12px;padding:6px 0;color:#42566b">Unsaved project</div><div id="tabs"></div>')
     source=source.replace('tabs auto-saved','explicit project Save / Save As')
     source=source.replace('different models, auto-saved in this browser; templates load into a NEW','different models; save changes to project files. Templates load into a NEW')
-    source=source.replace('// ---------------- boot ----------------','// ---------------- desktop extensions ----------------\n'+(HERE/'desktop_editor.js').read_text(encoding='utf-8')+'\n// ---------------- boot ----------------')
+    source=source.replace('id: "e" + (uid++)','id: desktopUuid("e")')
+    extensions='\n'.join((HERE/name).read_text(encoding='utf-8') for name in ('desktop_editor.js','interaction_editor.js','circuit_layout.js','context_views.js'))
+    source=source.replace('// ---------------- boot ----------------','// ---------------- desktop extensions ----------------\n'+extensions+'\n// ---------------- boot ----------------')
     source=source.replace('</head>','<script src="qrc:///qtwebchannel/qwebchannel.js"></script></head>')
+    source=source.replace('if (ctxStack.length) { exitSub(); return; }','if (ctxStack.length || circuitContext) { exitSub(); return; }')
+    source=source.replace('</head>','<style>#palette{width:140px;flex:none;box-sizing:border-box}#treewrap{width:185px;flex:none;box-sizing:border-box}#panel{width:230px;flex:none;box-sizing:border-box;overflow-y:auto}#canvaswrap{min-width:150px;display:flex;flex-direction:column;min-height:0}#svg{flex:1;min-height:0;height:0}#status{flex:none;max-height:35px;overflow:hidden}header details{font-size:11px;margin:3px 0}#circuitTools select{max-width:190px}#topbar button{margin-top:4px;padding:3px 7px}</style></head>')
     # Run bridge initialization after the original boot, retaining every command.
     source=source.replace('</body>','<script>desktopInitialize();</script></body>')
     path=Path(destination);path.parent.mkdir(parents=True,exist_ok=True);path.write_text(source,encoding='utf-8')

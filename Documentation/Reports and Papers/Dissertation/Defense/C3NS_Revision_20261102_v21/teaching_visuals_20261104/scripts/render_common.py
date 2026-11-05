@@ -16,16 +16,17 @@ from mathutils import Vector, Matrix
 REPO_ROOT = Path(__file__).resolve().parents[7]
 GEOM_DIR = REPO_ROOT / "Solid_Models" / "OpenSim" / "Gait2392_Robotbody" / "mjc" / "gait2392_simbody" / "Geometry"
 HERE = Path(__file__).resolve().parents[1]          # teaching_visuals_20261104
+OUTPUT = HERE / "build_fixed_20261105"
 
 # ---------------------------------------------------------------- palette
 INK = (0.10, 0.10, 0.12)          # label ink (near black)
 BONE = (0.55, 0.54, 0.52)         # bone gray
 BONE_EDGE = (0.45, 0.44, 0.42)
-BPA_RED = (0.80, 0.40, 0.47)      # BPA body  (#CC6677 family)
-CABLE_BLUE = (0.00, 0.45, 0.70)   # cable/tendon (#0072B2)
+BPA_RED = (0.55, 0.08, 0.20)
+CABLE_BLUE = (0.00, 0.25, 0.50)
 CAM_PURPLE = (0.45, 0.35, 0.60)   # shaped cam drum
 PULLEY_GRAY = (0.55, 0.56, 0.58)  # pulleys
-ARM_GOLD = (0.93, 0.60, 0.05)     # moment arm / force
+ARM_GOLD = (0.65, 0.35, 0.02)
 AXIS_X = (0.85, 0.33, 0.00)       # Okabe-Ito
 AXIS_Y = (0.00, 0.60, 0.45)
 AXIS_Z = (0.00, 0.45, 0.70)
@@ -273,7 +274,10 @@ def make_material(name, color, alpha=1.0, emission=0.0, rough=1.0):
         bsdf.inputs["Emission Color"].default_value = (*color, 1.0)
         bsdf.inputs["Emission Strength"].default_value = emission
     if alpha < 1.0:
-        mat.blend_method = "BLEND"
+        try:
+            mat.surface_render_method = "DITHERED"
+        except AttributeError:
+            mat.blend_method = "BLEND"
     return mat
 
 
@@ -309,17 +313,22 @@ def text_label(body, name, size, color=INK, align="LEFT"):
     curve.extrude = size * 0.01
     ob = bpy.data.objects.new(name, curve)
     bpy.context.scene.collection.objects.link(ob)
-    mat = make_material(name + "_ink", color, emission=0.15)
+    mat = make_material(name + "_ink", color)
+    # Unlit text retains its intended contrast under the white studio lights.
+    bsdf = mat.node_tree.nodes["Principled BSDF"]
+    bsdf.inputs["Base Color"].default_value = (0, 0, 0, 1)
+    bsdf.inputs["Emission Color"].default_value = (*color, 1)
+    bsdf.inputs["Emission Strength"].default_value = 1.0
     set_material(ob, mat)
     return ob
 
 
 def track_camera(ob, camera):
     """Point a TEXT label's readable side (+Z) at the camera."""
-    c = ob.constraints.new("TRACK_TO")
+    c = ob.constraints.new("COPY_ROTATION")
     c.target = camera
-    c.track_axis = "TRACK_Z"
-    c.up_axis = "UP_Y"
+    c.owner_space = 'WORLD'
+    c.target_space = 'WORLD'
     return c
 
 
@@ -344,7 +353,7 @@ def arrow(name, tail, head, radius, material, head_len_frac=0.28):
     cone_mesh.name = name + "_headmesh"
     head_ob = bpy.data.objects.new(name + "_head", cone_mesh)
     bpy.context.scene.collection.objects.link(head_ob)
-    head_ob.location = head
+    head_ob.location = head - d.normalized() * head_len / 2
     head_ob.rotation_euler = d.to_track_quat("Z", "Y").to_euler()
     set_material(head_ob, material)
     return shaft, head_ob
@@ -359,7 +368,7 @@ def aim_arrow(shaft, head_ob, tail, head):
     hl = min(L * 0.28, shaft.data.bevel_depth * 6)
     end = head - d.normalized() * hl
     set_polyline(shaft, [tuple(tail), tuple(end)])
-    head_ob.location = head
+    head_ob.location = head - d.normalized() * hl / 2
     head_ob.rotation_euler = d.to_track_quat("Z", "Y").to_euler()
 
 
@@ -397,4 +406,5 @@ def render_frame(scene, frame, filepath):
 
 
 def save_blend(path):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=str(path), compress=True)
