@@ -41,6 +41,9 @@ def main():
                          scope='Offline neural A-D fitting; corrected physical curriculum follows separately'), indent=2))
     if not (a.execute and a.computer_free):
         return
+    if a.phase in('C','D'):
+        from pf_design_gate import require_pf_design_ready
+        require_pf_design_ready(a.family)
     static = json.loads((a.prepared / 'STATIC_CHECK.json').read_text())
     if not static['static_pass']:
         raise ValueError('Prepared static gate failed')
