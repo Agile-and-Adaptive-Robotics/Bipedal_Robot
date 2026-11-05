@@ -32,8 +32,9 @@ fcsv = fopen(fullfile(outDir, 'deliverable_status.csv'), 'w');
 fprintf(fcsv, ['group,branch,status,config,fSeed,fBest,violEff,' ...
     'topViolator,meetFrac,tauPeakTarget_Nm,tauPeakRobot_Nm\n']);
 fdsp = fopen(fullfile(outDir, 'deliverable_displacement.csv'), 'w');
-fprintf(fdsp, ['group,config,row,bone,seedX_mm,seedY_mm,seedZ_mm,' ...
-    'finalX_mm,finalY_mm,finalZ_mm,displacement_mm\n']);
+fprintf(fdsp, ['group,branch,mvidx,row,bone,patchRadius_mm,' ...
+    'seedX_mm,seedY_mm,seedZ_mm,finalX_mm,finalY_mm,finalZ_mm,' ...
+    'displacement_mm\n']);
 
 nPairs = 0;
 nSolved = 0;
@@ -55,58 +56,67 @@ for gi = 1:numel(groupsList)
         sprintf('%s_signed_targets.json', gsz.name))));
     tauT = T.tau_vec_Nm(:);
 
-    % seed coordinates (owning-body frames) for the displacement table
-    nRows = cs.nRows;
-    for m = 1:numel(cs.movable)
-        mv = cs.movable(m);
-        r = mv.row;
-        sl = cs.seedLoc(r, :) * 1000;
-        fprintf(fdsp, '%s,%s,%d,%s,%.2f,%.2f,%.2f,', gsz.name, cfgStr, ...
-            r, cs.rowOwning{r}, sl(1), sl(2), sl(3));
-        % NOTE: final coordinates are appended per branch below from the
-        % checkpoint reps (rep.loc rows correspond to used rows; map by
-        % absolute row index)
-        for branch = {'rigid', 'compliant'}
-            b = branch{1};
-            ck = fullfile(ck1, sprintf('%s_%s.mat', gsz.name, b));
-            if exist(ck, 'file') ~= 2
-                fprintf(fcsv, '%s,%s,NO-CHECKPOINT,%s,NA,NA,NA,NA,NA,NA\n', ...
-                    gsz.name, b, cfgStr);
-                nFailed = nFailed + 1;
-                continue
-            end
-            S = load(ck);
-            st = 'unknown';
-            if isfield(S, 'status'); st = S.status; end
-            [~, rep] = fr_objective(C, cs, kin, fr_packX(cs, S.design), ...
-                b, struct('quiet', true));
-            meetFrac = mean(abs(rep.tauPrimary(:)) >= ...
-                abs(rep.tauTarget(:)) - 1e-9);
-            topV = '';
-            if isfield(rep, 'topViolator'); topV = rep.topViolator; end
-            topV = strrep(topV, ',', ';'); topV = strrep(topV, newline, ' ');
-            fprintf(fcsv, '%s,%s,%s,%s,%.4f,%.4f,%.3e,"%s",%.4f,%.3f,%.3f\n', ...
-                gsz.name, b, st, cfgStr, S.info.fSeed, S.fBest, ...
-                rep.violation, topV, meetFrac, max(abs(tauT)), ...
-                max(abs(rep.tauPrimary)));
-            if strcmp(st, 'solved'); nSolved = nSolved + 1;
-            elseif strcmp(st, 'best-infeasible'); nBI = nBI + 1;
-            else; nFailed = nFailed + 1;
-            end
-            nPairs = nPairs + 1;
-            % displacement for movable rows whose used-row index matches
-            absRows = find(cs.rowUse{1});
-            for m2 = 1:numel(cs.movable)
-                mv2 = cs.movable(m2);
-                uIdx = find(absRows == mv2.row, 1);
-                if isempty(uIdx) || uIdx > size(rep.loc, 1); continue; end
-                fl = rep.loc(uIdx, :) * 1000;
-                disp_mm = norm(fl - sl) ; %#ok<NODEF>
-                fprintf(fdsp, '%s,%s,%d,%s,,,,,,%.2f\n', gsz.name, b, ...
-                    mv2.row, cs.rowOwning{mv2.row}, disp_mm);
-            end
+    % per-branch status rows + PROPER displacement rows (one row per
+    % group/branch/movable: seed xyz, final xyz, displacement in mm,
+    % all in the movable's owning-body frame; Ben 2026-11-04 "I don't
+    % see where you put changed attachment locations")
+    absRows = find(cs.rowUse{1});
+    for branch = {'rigid', 'compliant'}
+        b = branch{1};
+        ck = fullfile(ck1, sprintf('%s_%s.mat', gsz.name, b));
+        if exist(ck, 'file') ~= 2
+            fprintf(fcsv, '%s,%s,NO-CHECKPOINT,%s,NA,NA,NA,NA,NA,NA\n', ...
+                gsz.name, b, cfgStr);
+            nFailed = nFailed + 1;
+            continue
         end
-        break;  % displacement block handled per branch above; keep table compact
+        S = load(ck);
+        st = 'unknown';
+        if isfield(S, 'status'); st = S.status; end
+        [~, rep] = fr_objective(C, cs, kin, fr_packX(cs, S.design), ...
+            b, struct('quiet', true));
+        % signed meet: robot torque in the target's direction AND of
+        % sufficient magnitude (Ben 2026-11-04: opposite sign is a
+        % deficit, never a meet)
+        tT = rep.tauTarget(:);
+        tP = rep.tauPrimary(:);
+        nn2 = min(numel(tT), numel(tP));
+        projD = sign(tT(1:nn2));
+        projD(abs(tT(1:nn2)) <= 1e-12) = 0;
+        meetFrac = mean(tP(1:nn2) .* projD >= ...
+            abs(tT(1:nn2)) - 1e-9);
+        topV = '';
+        if isfield(rep, 'topViolator'); topV = rep.topViolator; end
+        topV = strrep(topV, ',', ';'); topV = strrep(topV, newline, ' ');
+        fprintf(fcsv, '%s,%s,%s,%s,%.4f,%.4f,%.3e,"%s",%.4f,%.3f,%.3f\n', ...
+            gsz.name, b, st, cfgStr, S.info.fSeed, S.fBest, ...
+            rep.violation, topV, meetFrac, max(abs(tauT)), ...
+            max(abs(rep.tauPrimary)));
+        if strcmp(st, 'solved'); nSolved = nSolved + 1;
+        elseif strcmp(st, 'best-infeasible'); nBI = nBI + 1;
+        else; nFailed = nFailed + 1;
+        end
+        nPairs = nPairs + 1;
+        % displacement rows: movable attachments only (seed vs final,
+        % owning-body frame, mm)
+        for m2 = 1:numel(cs.movable)
+            mv2 = cs.movable(m2);
+            uIdx = find(absRows == mv2.row, 1);
+            if isempty(uIdx) || uIdx > size(rep.loc, 1); continue; end
+            sl = cs.seedLoc(mv2.row, :) * 1000;
+            fl = rep.loc(uIdx, :) * 1000;
+            dmm = norm(fl - sl);
+            pr = NaN;
+            if numel(cs.movable) >= m2 ...
+                    && isfield(cs.movable(m2), 'patch') ...
+                    && ~isempty(cs.movable(m2).patch)
+                pr = cs.movable(m2).radius_mm;
+            end
+            fprintf(fdsp, ['%s,%s,%d,%d,%s,%.1f,%.2f,%.2f,%.2f,' ...
+                '%.2f,%.2f,%.2f,%.2f\n'], gsz.name, b, m2, mv2.row, ...
+                cs.rowOwning{mv2.row}, pr, sl(1), sl(2), sl(3), ...
+                fl(1), fl(2), fl(3), dmm);
+        end
     end
 
     % signed curve CSV (target + both branches where present)

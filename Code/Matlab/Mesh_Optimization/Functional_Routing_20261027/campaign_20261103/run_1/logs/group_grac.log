@@ -23,3 +23,8 @@ RESUME grac compliant: sizing config changed (ckpt missing vs current 20|1|L|2) 
 === pass1 compliant | 04-Nov-2026 13:54:38 | budget 600 | envelopes 5 ===
 SOLVED-FEASIBLE grac compliant: fSeed 3123.9031 -> fBest 24.0628 (obj 24.0628, violEff 0.00e+00) | capsules(pose1) 1 | 155.3 s
 REFINE1 grac: f 10132.6031 -> 10558.6199 (rejected, others 26, 18.1 s)
+RESUME grac rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 16:24:00 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) grac rigid: fSeed 10132.6031 -> fBest 10132.6031 (obj 132.6031, violEff 1.00e+00) | capsules(pose1) 1 | 26.8 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME skip (feasible checkpoint): compliant f 24.0628
+RESUME skip refine1 (rejected): f 10558.6199

@@ -43,7 +43,7 @@ assert(~isempty(d1), 'fr_verifyDense:noCheckpoints', ...
 
 csvFile = fullfile('output', 'dense_verification.csv');
 fcsv = fopen(csvFile, 'w');
-cleanupCsv = onCleanup(@() fclose(fcsv)); %#ok<NASGU>
+cleanupCsv = onCleanup(@() fclose(fcsv));
 fprintf(fcsv, ['group,branch,gridN,meetFrac,tauJumpMax_Nm,' ...
     'lenJumpMax_mm,jumpNearConditional,worstConstraint,' ...
     'worstResidualNorm,worstResidualDim,units,feasible\n']);
@@ -78,7 +78,11 @@ for g = 1:numel(sz.groups)
             b, struct('quiet', true));
         tau = rep.tauPrimary(:);
         tauT = rep.tauTarget(:);
-        meetFrac = mean(abs(tau) >= abs(tauT) - 1e-9);
+        projD = sign(tauT);
+        projD(abs(tauT) <= 1e-12) = 0;
+        nn = min(numel(tau), numel(tauT));
+        meetFrac = mean(tau(1:nn) .* projD(1:nn) >= ...
+            abs(tauT(1:nn)) - 1e-9);
         tauJumps = abs(diff(tau));
         [tauJumpMax, ji] = max(tauJumps);
         % sleeve length jumps from the design row spacing
@@ -134,7 +138,7 @@ function tf = conditionalNear(csD, cellIdx)
 % distance to the grid boundary cells (range endpoints) as the
 % conservative proxy documented in the README.
 nG = numel(csD.passes{1}.qStructs);
-th = csD.passes{1}.th1;
+th = csD.passes{1}.th1; %#ok<NASGU>
 edges = [1, nG];
 near = any(abs(edges - cellIdx) <= 1);
 if ~near

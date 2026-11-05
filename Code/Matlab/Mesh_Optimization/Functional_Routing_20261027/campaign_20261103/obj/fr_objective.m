@@ -120,7 +120,16 @@ if numel(tauT) ~= nG
     tauT = interpTarget(tauT, nG);
 end
 normCap = sum(abs(tauT));
-deficitVec = max(0, abs(tauT) - abs(tauPrim));
+% SIGNED meet-or-beat (Ben 2026-11-04: "opposite in sign from the human
+% target. That won't do." — the gate's seed diagnostic found the sign-blind
+% abs() deficit let flex_dig/flex_hal optimize to opposite-sign torque at
+% full credit). Per cell: project the robot torque onto the TARGET'S
+% direction; a wrong-sign torque projects negative and costs MORE than
+% producing nothing.
+projDir = sign(tauT);
+projDir(abs(tauT) <= 1e-12) = 0;          % no direction demand at ~zero targets
+proj = tauPrim .* projDir;                 % >0 same sign, <0 opposite sign
+deficitVec = max(0, abs(tauT) - proj);     % wrong sign: |tauT| + |tauPrim|
 termDeficit = sum(deficitVec) / max(normCap, eps);
 termRom = mean(deficitVec > 1e-6);
 termShape = mean((tauPrim - tauT).^2) / max(mean(tauT.^2), eps);

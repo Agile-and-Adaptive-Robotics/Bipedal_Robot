@@ -94,14 +94,19 @@ for gi = 1:numel(groupsList)
         tauR = rep.tauPrimary(:);
         % group-sum view (target of record)
         tauG = T.tau_vec_Nm(:);
-        meetG = mean(abs(tauR(1:min(end, nG))) >= abs(tauG) - 1e-9);
+        prjG = sign(tauG);
+        prjG(abs(tauG) <= 1e-12) = 0;
+        nGn = min(numel(tauR), nG);
+        meetG = mean(tauR(1:nGn) .* prjG(1:nGn) >= abs(tauG(1:nGn)) - 1e-9);
         fprintf(fid, '%s %s: GROUP-sum meet %.2f (target of record)\n', ...
             gsz.name, b, meetG);
         % per named muscle
         for mi = 1:numel(musNames)
             tauM = tauMat(:, mi);
             nn = min(numel(tauR), numel(tauM));
-            meetM = mean(abs(tauR(1:nn)) >= abs(tauM(1:nn)) - 1e-9);
+            prjM = sign(tauM(1:nn));
+            prjM(abs(tauM(1:nn)) <= 1e-12) = 0;
+            meetM = mean(tauR(1:nn) .* prjM >= abs(tauM(1:nn)) - 1e-9);
             defM = max(abs(tauM(1:nn)) - abs(tauR(1:nn)));
             fprintf(fid, '  %-12s meet %.2f maxDeficit %8.3f Nm (peak |tau_m| %7.3f)\n', ...
                 musNames{mi}, meetM, defM, max(abs(tauM)));

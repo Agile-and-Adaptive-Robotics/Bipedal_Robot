@@ -24,3 +24,10 @@ RESUME per_brev compliant: sizing config changed (ckpt missing vs current 20|2|n
 === pass1 compliant | 04-Nov-2026 13:59:38 | budget 600 | envelopes 15 ===
 BEST-INFEASIBLE (retained as warm start) per_brev compliant: fSeed 7970.5199 -> fBest 6969.7243 (obj 61.9225, violEff 6.91e-01) | capsules(pose1) 2 | 120.3 s | TOP VIOLATOR tx_slack_cells: normalized 5.556e-01 (dimensional 5.556e-01 fraction of cells, tol 1.0e-12)
 REFINE1 per_brev: f 296.9186 -> 575.3876 (rejected, others 26, 34.1 s)
+RESUME per_brev rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 16:29:19 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_brev rigid: fSeed 2531.5561 -> fBest 296.9186 (obj 55.7835, violEff 2.41e-02) | capsules(pose1) 2 | 73.6 s | TOP VIOLATOR foot_occupancy_ban: normalized 2.411e-02 (dimensional 2.421e-02 m (tibia frame y), tol 1.0e-04)
+RESUME per_brev compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 16:30:33 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) per_brev compliant: fSeed 8007.5858 -> fBest 6981.8790 (obj 74.0772, violEff 6.91e-01) | capsules(pose1) 2 | 133.5 s | TOP VIOLATOR tx_slack_cells: normalized 5.556e-01 (dimensional 5.556e-01 fraction of cells, tol 1.0e-12)
+RESUME skip refine1 (rejected): f 575.3876

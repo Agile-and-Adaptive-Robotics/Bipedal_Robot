@@ -2,54 +2,54 @@ group,branch,gridN,meetFrac,tauJumpMax_Nm,lenJumpMax_mm,jumpNearConditional,wors
 ercspn,rigid,25,0.0000,1.1127,103.15,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 ercspn,compliant,25,0.0000,2.5380,97.78,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 intobl,rigid,25,0.0000,1.0117,132.59,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-intobl,compliant,25,0.9600,1.9735,127.12,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+intobl,compliant,25,0.0000,1.9735,127.12,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 extobl,rigid,25,0.0000,1.8692,112.09,1,centerline_z0,2.668e-04,2.668e-04,m (pelvis frame),0
-extobl,compliant,25,0.6400,128.1520,119.51,1,centerline_z0,2.668e-04,2.668e-04,m (pelvis frame),0
-bifemlh,rigid,25,0.4000,1.2504,104.27,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-bifemlh,compliant,25,0.6800,3.7268,125.11,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+extobl,compliant,25,0.0000,125.9273,119.52,1,centerline_z0,3.513e-04,3.513e-04,m (pelvis frame),0
+bifemlh,rigid,25,0.3200,1.2504,104.27,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+bifemlh,compliant,25,0.2800,0.3991,143.75,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 semimem,rigid,25,0.8000,3.8425,152.50,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-semimem,compliant,25,0.6000,14.2252,128.91,0,tx_slack_cells,6.400e-01,6.400e-01,fraction of cells,0
-sar,rigid,25,0.0800,0.0561,360.45,0,tx_infeasible_cells,1.000e+00,1.000e+00,fraction of cells,0
-sar,compliant,25,0.5600,0.4779,360.13,1,span_knee_pass2,3.994e-02,3.120e-03,m,0
-tfl,rigid,25,0.9600,2.0169,428.57,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-tfl,compliant,25,0.9200,1.1994,451.21,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-rect_fem,rigid,25,0.5600,9.1125,112.90,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-rect_fem,compliant,25,0.8800,47.5120,111.55,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+semimem,compliant,25,0.0000,12.7220,130.01,1,tx_slack_cells,6.400e-01,6.400e-01,fraction of cells,0
+sar,rigid,25,0.0400,0.0562,360.13,0,tx_infeasible_cells,1.000e+00,1.000e+00,fraction of cells,0
+sar,compliant,25,0.0400,0.3948,360.24,1,span_knee_pass2,4.513e-02,3.525e-03,m,0
+tfl,rigid,25,0.9200,2.0171,430.49,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+tfl,compliant,25,0.9600,0.8209,428.87,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+rect_fem,rigid,25,0.6400,2.5049,129.12,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+rect_fem,compliant,25,0.6800,31.7637,111.26,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 grac,rigid,25,0.0000,0.0428,80.49,0,tx_infeasible_cells,1.000e+00,1.000e+00,fraction of cells,0
-grac,compliant,25,0.8000,2.5615,67.04,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+grac,compliant,25,0.4800,2.5615,67.04,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 bifemsh,rigid,25,0.8000,3.9722,167.30,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-bifemsh,compliant,25,0.1200,45.1386,165.47,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-vas_int,rigid,25,0.0000,2.4956,261.34,1,reversing_sheave_2T,2.463e-03,7.396e+00,N,0
-vas_int,compliant,25,0.0000,10.4818,257.51,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+bifemsh,compliant,25,0.0400,45.1386,165.47,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+vas_int,rigid,25,0.0000,1.6428,271.01,1,tx_slack_cells,1.200e-01,1.200e-01,fraction of cells,0
+vas_int,compliant,25,0.0800,463.8791,270.29,1,tx_slack_cells,8.000e-02,8.000e-02,fraction of cells,0
 soleus,rigid,25,0.4400,1.6321,162.09,1,span_foot_pass1,9.876e-07,3.287e-07,m,1
-soleus,compliant,25,0.0800,90.1611,162.09,1,span_foot_pass1,9.876e-07,3.287e-07,m,1
+soleus,compliant,25,0.0000,90.1611,162.09,1,span_foot_pass1,9.876e-07,3.287e-07,m,1
 med_gas,rigid,25,0.4000,1.6508,391.14,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-med_gas,compliant,25,0.3200,5.0642,391.14,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+med_gas,compliant,25,0.1600,5.0642,391.14,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 lat_gas,rigid,25,1.0000,1.4068,389.04,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-lat_gas,compliant,25,0.4800,3.9829,391.27,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+lat_gas,compliant,25,0.4400,3.9829,391.27,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 tib_post,rigid,25,1.0000,1.0037,442.11,1,foot_occupancy_ban,4.720e-03,4.720e-03,m (tibia frame y),0
 tib_post,compliant,25,0.8800,23.9960,442.11,1,foot_occupancy_ban,4.720e-03,4.720e-03,m (tibia frame y),0
 tib_ant,rigid,25,0.8000,3.8902,372.30,0,span_foot_pass1,8.323e-07,1.200e-07,m,1
-tib_ant,compliant,25,0.6400,66.8731,370.16,1,tx_infeasible_cells,2.400e-01,2.400e-01,fraction of cells,0
+tib_ant,compliant,25,0.5200,76.8859,368.25,1,tx_infeasible_cells,1.200e-01,1.200e-01,fraction of cells,0
 per_brev,rigid,25,0.6000,2.1595,460.66,1,foot_occupancy_ban,2.422e-02,2.422e-02,m (tibia frame y),0
-per_brev,compliant,25,0.8000,156.6774,460.66,1,tx_slack_cells,6.000e-01,6.000e-01,fraction of cells,0
+per_brev,compliant,25,0.7200,162.3547,460.66,1,tx_slack_cells,6.000e-01,6.000e-01,fraction of cells,0
 per_long,rigid,25,1.0000,1.3955,458.89,0,foot_occupancy_ban,2.833e-02,2.833e-02,m (tibia frame y),0
-per_long,compliant,25,1.0000,17.0710,458.89,0,foot_occupancy_ban,2.833e-02,2.833e-02,m (tibia frame y),0
+per_long,compliant,25,0.0000,1.9724,458.89,1,foot_occupancy_ban,2.833e-02,2.833e-02,m (tibia frame y),0
 per_tert,rigid,25,0.8000,0.5443,430.66,1,foot_occupancy_ban,6.673e-03,6.673e-03,m (tibia frame y),0
-per_tert,compliant,25,0.7200,0.2646,430.58,0,foot_occupancy_ban,6.743e-03,6.743e-03,m (tibia frame y),0
-flex_dig,rigid,25,0.9200,0.4667,387.82,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-flex_dig,compliant,25,0.8400,0.5215,400.34,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-flex_hal,rigid,25,0.8800,0.2740,401.21,1,foot_occupancy_ban,3.777e-03,3.777e-03,m (tibia frame y),0
-flex_hal,compliant,25,0.8000,0.6307,398.29,1,foot_occupancy_ban,4.990e-04,4.990e-04,m (tibia frame y),0
+per_tert,compliant,25,0.0000,0.3061,419.93,1,span_foot_pass2,8.187e-02,8.727e-03,m,0
+flex_dig,rigid,25,0.0000,0.4667,387.82,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+flex_dig,compliant,25,0.0000,0.5215,400.34,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+flex_hal,rigid,25,0.4000,0.2638,418.13,0,foot_occupancy_ban,1.535e-02,1.535e-02,m (tibia frame y),0
+flex_hal,compliant,25,0.0000,0.0841,400.94,0,foot_occupancy_ban,4.583e-03,4.583e-03,m (tibia frame y),0
 ext_dig,rigid,25,1.0000,0.3399,415.80,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 ext_dig,compliant,25,0.9600,0.4584,415.80,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-ext_hal,rigid,25,1.0000,0.1855,423.85,1,foot_occupancy_ban,1.135e-02,1.135e-02,m (tibia frame y),0
-ext_hal,compliant,25,0.9200,0.2444,423.85,1,foot_occupancy_ban,1.135e-02,1.135e-02,m (tibia frame y),0
-glut_max3,rigid,25,0.1600,4.5569,121.19,0,tx_infeasible_cells,1.200e-01,1.200e-01,fraction of cells,0
-glut_max3,compliant,25,0.1200,17.3636,118.22,1,tackle_load_L,2.747e-03,8.248e+00,N,0
+ext_hal,rigid,25,1.0000,0.2902,423.85,1,foot_occupancy_ban,1.135e-02,1.135e-02,m (tibia frame y),0
+ext_hal,compliant,25,0.0000,0.0373,432.24,1,tx_infeasible_cells,1.000e+00,1.000e+00,fraction of cells,0
+glut_max3,rigid,25,0.1200,4.5648,121.43,0,tx_infeasible_cells,1.200e-01,1.200e-01,fraction of cells,0
+glut_max3,compliant,25,0.0400,7.8242,118.14,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
 add_mag3,rigid,25,0.0000,1.1310,305.95,1,centerline_z0,3.981e-02,3.981e-02,m (pelvis frame),0
-add_mag3,compliant,25,0.0800,179.5867,218.43,0,centerline_z0,3.981e-02,3.981e-02,m (pelvis frame),0
-iliacus,rigid,25,0.1600,1.3053,119.13,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-iliacus,compliant,25,0.3200,10.2582,93.35,0,reversing_sheave_2T,7.872e-03,5.253e+00,N,0
-psoas,rigid,25,0.4400,1.8426,127.02,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
-psoas,compliant,25,0.5200,782.1723,129.13,1,tx_slack_cells,8.000e-02,8.000e-02,fraction of cells,0
+add_mag3,compliant,25,0.0000,2.7813,208.58,0,centerline_z0,3.981e-02,3.981e-02,m (pelvis frame),0
+iliacus,rigid,25,0.0800,1.3053,119.13,1,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+iliacus,compliant,25,0.2400,10.2582,93.35,0,reversing_sheave_2T,7.872e-03,5.253e+00,N,0
+psoas,rigid,25,0.3600,1.8426,127.02,0,tx_infeasible_cells,0.000e+00,0.000e+00,fraction of cells,1
+psoas,compliant,25,0.4400,782.1723,129.13,1,tx_slack_cells,8.000e-02,8.000e-02,fraction of cells,0

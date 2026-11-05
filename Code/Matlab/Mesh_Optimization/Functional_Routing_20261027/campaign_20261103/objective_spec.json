@@ -2,7 +2,7 @@
   "spec": "functional_routing_objective_v2",
   "created": "2026-11-04",
   "status": "TUNED-20261104-AUTO",
-  "status_note": "Weights chosen autonomously per Ben's 2026-11-04 directive item 7 (normalize, bounded sensitivity checks, documented choice; no pause for approval). Every term and weight is re-read by fr_objective at every solve; this file is the only place weights live. Rationale per term in weight_sensitivity log + README. Any weight here can be replaced by Ben at any time; the re-solve is checkpoint-based.",
+  "status_note": "Weights chosen autonomously per Ben's 2026-11-04 directive item 7 (normalize, bounded sensitivity checks, documented choice; no pause for approval). Every term and weight is re-read by fr_objective at every solve; this file is the only place weights live. Rationale per term in weight_sensitivity log + README. Any weight here can be replaced by Ben at any time; the re-solve is checkpoint-based. | 2026-11-04 signed-deficit correction applied after the figure review caught opposite-sign robot curves.",
   "read_at": "solve time (fresh jsondecode in fr_objective)",
   "terms": [
     {
@@ -10,8 +10,8 @@
       "class": "primary_capacity",
       "weight": 100.0,
       "normalization": "sum_tau_target_abs (sum over the pose grid of |tau_target|)",
-      "definition": "sum over pose grid of max(0, |tau_target| - |tau_primary|), i.e. the SIGNED meet-or-beat deficit on the group's primary dof torque, per master item 8 (torque capacity primary). With signed per-pose targets from targets_v2, tau_target varies per pose.",
-      "sign_convention": "tau_primary and tau_target are signed about the same axis; deficit uses absolute magnitudes of the same sign convention (flexion targets met by flexion torque)"
+      "definition": "sum over pose grid of max(0, |tau_target| - proj), where proj = tau_primary * sign(tau_target): the SIGNED meet-or-beat deficit. A wrong-sign torque projects negative and costs |tau_target| + |tau_robot| - strictly more than producing nothing (Ben 2026-11-04: opposite sign from the human target will not do).",
+      "sign_convention": "same-axis signed convention; wrong-sign torque is penalized, never credited toward the meet"
     },
     {
       "name": "usable_rom_shortfall",
@@ -26,7 +26,7 @@
       "weight": 0.5,
       "normalization": "mean over grid of (tau_primary - tau_target)^2 / mean(tau_target.^2)",
       "definition": "small, explicitly weighted torque-shape penalty (master item 8): squared residual to the SIGNED target curve. Defined SEPARATELY from the capacity terms; its small weight guarantees it cannot remove the deficit incentive. Never an off-axis torque term.",
-      "sensitivity": "±2x perturbation leaves the chosen designs unchanged within solver noise (weight_sensitivity log)"
+      "sensitivity": "\u00b12x perturbation leaves the chosen designs unchanged within solver noise (weight_sensitivity log)"
     },
     {
       "name": "bpa_bpa_overlap_soft",
@@ -53,17 +53,17 @@
     {
       "name": "centerline_z0",
       "definition": "sideSign * z_pelvis >= 0 for EVERY candidate attachment point and mechanical mount anchor, transformed into the pelvis frame at EVERY evaluated pose (handoff item 8, verbatim). sideSign = +1 (right side of record). Sign flips / absolute values forbidden. Tolerance 1e-4 m, stated per evaluation in rep.cinfo.",
-      "tol": 1e-4
+      "tol": 0.0001
     },
     {
       "name": "foot_occupancy_ban",
       "definition": "No BPA body, end fitting, or tackle block may occupy the foot (talus_r, calcn_r, toes_r). Tendons may route through and terminate on the foot. Enforced by owning-body membership of sleeve/fitting/tackle anchors plus the fitting-tip position rule on the tibia. Tolerance 1e-4 m, stated per evaluation.",
-      "tol": 1e-4
+      "tol": 0.0001
     },
     {
       "name": "required_tendon_spans",
       "definition": "minFootTendonSpan_m and minKneeTendonSpan_m computed by fr_spans from the route geometry + hardware clearance over the full motion range (contract placeholders resolved by the implementer, master item 6). Tendon length must cover the maximum required span. Normalized by the procured hardware length; tolerance 1e-6, stated per evaluation.",
-      "tol": 1e-6
+      "tol": 1e-06
     },
     {
       "name": "transmission_feasibility",
@@ -73,17 +73,17 @@
     {
       "name": "rated_hardware_loads",
       "definition": "tackle-block vector reaction R and any 180-deg reversing sheave radial load 2T must not exceed the assigned family's catalog capacity (S 400 N / M 667 N / L 3003 N). Catalog capacities are weight capacities whose dynamic interpretation is UNRESOLVED (handoff Open items); the assembly WLL is not assumed. Under-rated configurations are flagged in the report, never silently resized. Normalized by capacity; tolerance 1e-6, stated per evaluation.",
-      "tol": 1e-6
+      "tol": 1e-06
     },
     {
       "name": "bone_exclusion",
       "definition": "route clearance to the owning bones (clouds today; packaging_v2 SDF model with quantified registration error when it lands) >= inflated radius + rigid clearance. Tolerance 1e-4 m, stated per evaluation.",
-      "tol": 1e-4
+      "tol": 0.0001
     },
     {
       "name": "retained_rigid_envelopes",
       "definition": "v2: rigid fittings and tackle blocks of already-placed deeper layers (fr_envelope kind 'rigid_*') as hard obstacles at physically simultaneous poses. BPA sleeve corridors of inner layers are the SOFT term retained_bpa_corridor_soft instead (Ben 2026-11-04). Tolerance 1e-4 m, stated per evaluation.",
-      "tol": 1e-4
+      "tol": 0.0001
     }
   ]
 }

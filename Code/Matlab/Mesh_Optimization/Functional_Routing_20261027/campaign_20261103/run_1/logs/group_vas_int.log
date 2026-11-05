@@ -19,3 +19,10 @@ RESUME vas_int compliant: sizing config changed (ckpt missing vs current 20|3|L|
 === pass1 compliant | 04-Nov-2026 13:55:07 | budget 600 | envelopes 5 ===
 SOLVED-FEASIBLE vas_int compliant: fSeed 182.5377 -> fBest 167.9569 (obj 167.9569, violEff 0.00e+00) | capsules(pose1) 3 | 66.7 s
 REFINE1 vas_int: f 144.9944 -> 424.6877 (rejected, others 26, 22.1 s)
+RESUME vas_int rigid: sizing config changed (ckpt 20|3|L|2 vs current 10|5|L|2) - re-solving
+=== pass1 rigid | 04-Nov-2026 16:24:00 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE vas_int rigid: fSeed 153.5686 -> fBest 147.5519 (obj 147.5519, violEff 0.00e+00) | capsules(pose1) 3 | 86.1 s
+RESUME vas_int compliant: sizing config changed (ckpt 20|3|L|2 vs current 10|5|L|2) - re-solving
+=== pass1 compliant | 04-Nov-2026 16:25:26 | budget 600 | envelopes 5 ===
+SOLVED-FEASIBLE vas_int compliant: fSeed 162.1316 -> fBest 153.5244 (obj 153.5244, violEff 0.00e+00) | capsules(pose1) 3 | 85.9 s
+RESUME skip refine1 (rejected): f 424.6877

@@ -16,3 +16,10 @@ RESUME semimem compliant: sizing config changed (ckpt missing vs current 20|2|no
 === pass1 compliant | 04-Nov-2026 13:56:20 | budget 600 | envelopes 5 ===
 BEST-INFEASIBLE (retained as warm start) semimem compliant: fSeed 6326.2729 -> fBest 6018.3515 (obj 41.1232, violEff 5.98e-01) | capsules(pose1) 2 | 120.5 s | TOP VIOLATOR tx_slack_cells: normalized 5.714e-01 (dimensional 5.714e-01 fraction of cells, tol 1.0e-12)
 REFINE1 semimem: f 266.6402 -> 4818.0793 (rejected, others 26, 29.8 s)
+RESUME semimem rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 04-Nov-2026 16:24:00 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) semimem rigid: fSeed 8823.0296 -> fBest 266.6402 (obj 41.9090, violEff 2.25e-02) | capsules(pose1) 2 | 153.3 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.247e-02 (dimensional 2.257e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME semimem compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 16:26:33 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) semimem compliant: fSeed 6724.0873 -> fBest 6299.3951 (obj 322.1221, violEff 5.98e-01) | capsules(pose1) 2 | 150.4 s | TOP VIOLATOR tx_slack_cells: normalized 5.714e-01 (dimensional 5.714e-01 fraction of cells, tol 1.0e-12)
+RESUME skip refine1 (rejected): f 4818.0793

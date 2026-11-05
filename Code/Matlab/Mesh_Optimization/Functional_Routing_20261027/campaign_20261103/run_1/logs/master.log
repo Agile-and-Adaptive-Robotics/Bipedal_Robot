@@ -619,3 +619,140 @@ obstacle envelopes carried into this layer: 15 (from 2 earlier layers)
 
 === run_1 complete | wall 0.26 h | 04-Nov-2026 14:07:03 ===
 status written: D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Functional_Routing_20261027\campaign_20261103\run_1\STATUS.json
+=== fr_launch_run1 (corrected formulation) | 04-Nov-2026 16:22:09 | machine EASTEREGG2 ===
+sizing winners: 27 group config(s) applied
+fr_targets: ercspn -> targets_v2 exact (ercspn)
+fr_targets: intobl -> targets_v2 exact (intobl)
+fr_targets: extobl -> targets_v2 exact (extobl)
+fr_targets: bifemlh -> targets_v2 exact (bifemlh)
+fr_targets: semimem -> targets_v2 exact (semimem)
+fr_targets: sar -> targets_v2 exact (sar)
+fr_targets: tfl -> targets_v2 exact (tfl)
+fr_targets: rect_fem -> targets_v2 exact (rect_fem)
+fr_targets: grac -> targets_v2 exact (grac)
+fr_targets: bifemsh -> targets_v2 exact (bifemsh)
+fr_targets: vas_int -> targets_v2 exact (vas_int)
+fr_targets: soleus -> targets_v2 exact (soleus)
+fr_targets: med_gas -> targets_v2 exact (med_gas)
+fr_targets: lat_gas -> targets_v2 exact (lat_gas)
+fr_targets: tib_post -> targets_v2 exact (tib_post)
+fr_targets: tib_ant -> targets_v2 exact (tib_ant)
+fr_targets: per_brev -> targets_v2 exact (per_brev)
+fr_targets: per_long -> targets_v2 exact (per_long)
+fr_targets: per_tert -> targets_v2 exact (per_tert)
+fr_targets: flex_dig -> targets_v2 exact (flex_dig)
+fr_targets: flex_hal -> targets_v2 exact (flex_hal)
+fr_targets: ext_dig -> targets_v2 exact (ext_dig)
+fr_targets: ext_hal -> targets_v2 exact (ext_hal)
+fr_targets: glut_max3 -> targets_v2 exact (glut_max3)
+fr_targets: add_mag3 -> targets_v2 exact (add_mag3)
+fr_targets: iliacus -> targets_v2 exact (iliacus)
+fr_targets: psoas -> targets_v2 exact (psoas)
+layer order: [27 26 1 2 3 11 10 25 5 4 8 9 6 7 24 15 20 21 17 18 12 13 14 16 22 23 19]
+warm starts from run_0: 8 rigid, 4 compliant
+
+--- COMPLIANT SMOKE (serial, psoas, budget 100) ---
+compliant smoke PASSED (f 73.851) - parallel solves unlocked
+resume scan (run_1): 27/27 rigid, 27/27 compliant, 27/27 refine found
+envelope-of-record restored for 27 placed group(s)
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+parpool: 10 workers
+
+--- LAYER 1 (trunk/deep hip): groups [27 26 1 2 3] ---
+obstacle envelopes carried into this layer: 0 (from 0 earlier layers)
+  [27] psoas     rigid solved           f   78.806 violEff 0.0e+00 | compliant solved           f   44.291 violEff 0.0e+00
+  [26] iliacus   rigid solved           f  122.547 violEff 0.0e+00 | compliant solved           f  100.628 violEff 0.0e+00
+  [ 1] ercspn    rigid solved           f  109.834 violEff 0.0e+00 | compliant solved           f  133.193 violEff 0.0e+00
+  [ 2] intobl    rigid solved           f  105.405 violEff 0.0e+00 | compliant solved           f   19.106 violEff 0.0e+00
+  [ 3] extobl    rigid best-infeasible  f   87.464 violEff 1.7e-04 | compliant best-infeasible  f  506.980 violEff 2.5e-04
+       rigid top violator: centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+       compliant top violator: centerline_z0: normalized 2.513e-04 (dimensional 3.513e-04 m (pelvis frame), tol 1.0e-04)
+
+--- LAYER 2 (thigh): groups [11 10 25 5 4 8 9 6 7 24] ---
+obstacle envelopes carried into this layer: 5 (from 1 earlier layers)
+  [11] vas_int   rigid solved           f  147.552 violEff 0.0e+00 | compliant solved           f  153.524 violEff 0.0e+00
+  [10] bifemsh   rigid solved           f   22.185 violEff 0.0e+00 | compliant solved           f   88.814 violEff 0.0e+00
+  [25] add_mag3  rigid best-infeasible  f  511.246 violEff 4.0e-02 | compliant best-infeasible  f  529.333 violEff 4.0e-02
+       rigid top violator: centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
+       compliant top violator: centerline_z0: normalized 3.971e-02 (dimensional 3.981e-02 m (pelvis frame), tol 1.0e-04)
+  [ 5] semimem   rigid best-infeasible  f  266.640 violEff 2.2e-02 | compliant best-infeasible  f 6299.395 violEff 6.0e-01
+       rigid top violator: retained_rigid_envelopes: normalized 2.247e-02 (dimensional 2.257e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+       compliant top violator: tx_slack_cells: normalized 5.714e-01 (dimensional 5.714e-01 fraction of cells, tol 1.0e-12)
+  [ 4] bifemlh   rigid best-infeasible  f  362.168 violEff 3.1e-02 | compliant best-infeasible  f  336.534 violEff 2.1e-02
+       rigid top violator: retained_rigid_envelopes: normalized 3.098e-02 (dimensional 3.108e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+       compliant top violator: retained_rigid_envelopes: normalized 2.071e-02 (dimensional 2.081e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+  [ 8] rect_fem  rigid best-infeasible  f  272.278 violEff 2.4e-02 | compliant best-infeasible  f  311.617 violEff 2.3e-02
+       rigid top violator: retained_rigid_envelopes: normalized 2.356e-02 (dimensional 2.366e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+       compliant top violator: retained_rigid_envelopes: normalized 2.341e-02 (dimensional 2.351e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+  [ 9] grac      rigid best-infeasible  f 10132.603 violEff 1.0e+00 | compliant solved           f   24.063 violEff 0.0e+00
+       rigid top violator: tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+  [ 6] sar       rigid best-infeasible  f 10180.456 violEff 1.0e+00 | compliant best-infeasible  f 1179.088 violEff 9.6e-02
+       rigid top violator: tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+       compliant top violator: span_knee_pass1: normalized 4.513e-02 (dimensional 3.525e-03 m, tol 1.0e-06)
+  [ 7] tfl       rigid best-infeasible  f   53.765 violEff 4.3e-03 | compliant best-infeasible  f   90.946 violEff 8.6e-03
+       rigid top violator: retained_rigid_envelopes: normalized 4.322e-03 (dimensional 4.422e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+       compliant top violator: retained_rigid_envelopes: normalized 8.555e-03 (dimensional 8.655e-03 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+  [24] glut_max3 rigid best-infeasible  f 1579.097 violEff 1.4e-01 | compliant best-infeasible  f  384.703 violEff 2.0e-02
+       rigid top violator: tx_infeasible_cells: normalized 1.111e-01 (dimensional 1.111e-01 fraction of cells, tol 1.0e-12)
+       compliant top violator: retained_rigid_envelopes: normalized 2.037e-02 (dimensional 2.047e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+
+--- LAYER 3 (lower leg): groups [15 20 21 17 18 12 13 14 16 22 23 19] ---
+obstacle envelopes carried into this layer: 15 (from 2 earlier layers)
+  [15] tib_post  rigid best-infeasible  f   48.964 violEff 4.6e-03 | compliant best-infeasible  f   57.456 violEff 4.6e-03
+       rigid top violator: foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+       compliant top violator: foot_occupancy_ban: normalized 4.611e-03 (dimensional 4.711e-03 m (tibia frame y), tol 1.0e-04)
+  [20] flex_dig  rigid solved           f   10.189 violEff 0.0e+00 | compliant solved           f   17.727 violEff 0.0e+00
+  [21] flex_hal  rigid best-infeasible  f  249.063 violEff 1.5e-02 | compliant best-infeasible  f  197.377 violEff 4.5e-03
+       rigid top violator: foot_occupancy_ban: normalized 1.525e-02 (dimensional 1.535e-02 m (tibia frame y), tol 1.0e-04)
+       compliant top violator: foot_occupancy_ban: normalized 4.483e-03 (dimensional 4.583e-03 m (tibia frame y), tol 1.0e-04)
+  [17] per_brev  rigid best-infeasible  f  296.919 violEff 2.4e-02 | compliant best-infeasible  f 6981.879 violEff 6.9e-01
+       rigid top violator: foot_occupancy_ban: normalized 2.411e-02 (dimensional 2.421e-02 m (tibia frame y), tol 1.0e-04)
+       compliant top violator: tx_slack_cells: normalized 5.556e-01 (dimensional 5.556e-01 fraction of cells, tol 1.0e-12)
+  [18] per_long  rigid best-infeasible  f  285.306 violEff 2.8e-02 | compliant best-infeasible  f  509.756 violEff 2.8e-02
+       rigid top violator: foot_occupancy_ban: normalized 2.823e-02 (dimensional 2.833e-02 m (tibia frame y), tol 1.0e-04)
+       compliant top violator: foot_occupancy_ban: normalized 2.823e-02 (dimensional 2.833e-02 m (tibia frame y), tol 1.0e-04)
+  [12] soleus    rigid solved           f   88.202 violEff 0.0e+00 | compliant solved           f  131.164 violEff 0.0e+00
+  [13] med_gas   rigid solved           f   46.434 violEff 0.0e+00 | compliant solved           f   72.622 violEff 0.0e+00
+  [14] lat_gas   rigid solved           f    4.876 violEff 0.0e+00 | compliant solved           f   50.819 violEff 0.0e+00
+  [16] tib_ant   rigid solved           f   21.669 violEff 0.0e+00 | compliant best-infeasible  f 1235.161 violEff 1.1e-01
+       compliant top violator: tx_infeasible_cells: normalized 1.111e-01 (dimensional 1.111e-01 fraction of cells, tol 1.0e-12)
+  [22] ext_dig   rigid solved           f    0.099 violEff 0.0e+00 | compliant solved           f    0.100 violEff 0.0e+00
+  [23] ext_hal   rigid best-infeasible  f  128.270 violEff 1.1e-02 | compliant best-infeasible  f 10264.832 violEff 1.0e+00
+       rigid top violator: foot_occupancy_ban: normalized 1.125e-02 (dimensional 1.135e-02 m (tibia frame y), tol 1.0e-04)
+       compliant top violator: tx_infeasible_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+  [19] per_tert  rigid best-infeasible  f   80.393 violEff 6.6e-03 | compliant best-infeasible  f 1798.774 violEff 1.6e-01
+       rigid top violator: foot_occupancy_ban: normalized 6.573e-03 (dimensional 6.673e-03 m (tibia frame y), tol 1.0e-04)
+       compliant top violator: span_foot_pass2: normalized 8.187e-02 (dimensional 8.727e-03 m, tol 1.0e-06)
+
+--- REFINEMENT ROUND 1 (all 27 groups, snapshot envelopes) ---
+  [27] psoas     refine rejected f 78.806 -> 239.440
+  [26] iliacus   refine rejected f 122.547 -> 435.090
+  [ 1] ercspn    refine rejected f 109.834 -> 111.305
+  [ 2] intobl    refine rejected f 105.405 -> 147.293
+  [ 3] extobl    refine rejected f 87.464 -> 93.557
+  [11] vas_int   refine rejected f 144.994 -> 424.688
+  [10] bifemsh   refine rejected f 22.185 -> 372.645
+  [25] add_mag3  refine rejected f 511.246 -> 846.632
+  [ 5] semimem   refine rejected f 266.640 -> 4818.079
+  [ 4] bifemlh   refine rejected f 361.703 -> 395.856
+  [ 8] rect_fem  refine rejected f 296.481 -> 356.109
+  [ 9] grac      refine rejected f 10132.603 -> 10558.620
+  [ 6] sar       refine rejected f 10178.147 -> 11427.494
+  [ 7] tfl       refine rejected f 49.841 -> 382.395
+  [24] glut_max3 refine rejected f 1571.965 -> 1634.038
+  [15] tib_post  refine rejected f 48.964 -> 431.451
+  [20] flex_dig  refine rejected f 10.189 -> 330.832
+  [21] flex_hal  refine rejected f 42.045 -> 466.709
+  [17] per_brev  refine rejected f 296.919 -> 575.388
+  [18] per_long  refine rejected f 285.306 -> 625.692
+  [12] soleus    refine rejected f 88.202 -> 177.397
+  [13] med_gas   refine rejected f 46.434 -> 214.191
+  [14] lat_gas   refine rejected f 4.876 -> 216.293
+  [16] tib_ant   refine rejected f 21.669 -> 248.478
+  [22] ext_dig   refine rejected f 0.099 -> 290.582
+  [23] ext_hal   refine rejected f 112.786 -> 416.492
+  [19] per_tert  refine rejected f 80.393 -> 318.076
+
+=== run_1 complete | wall 0.22 h | 04-Nov-2026 16:35:23 ===
+status written: D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Functional_Routing_20261027\campaign_20261103\run_1\STATUS.json

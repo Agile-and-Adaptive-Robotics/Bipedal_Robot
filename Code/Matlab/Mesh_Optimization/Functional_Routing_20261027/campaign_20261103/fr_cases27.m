@@ -1,4 +1,4 @@
-function CASES = fr_cases27(C, kin, overrides)
+function CASES = fr_cases27(C, kin, overrides, opts)
 %FR_CASES27 Build the 27 contract-driven campaign cases (run_0; v2 adds
 % the optional per-group sizing overrides, see fr_applyCfg27).
 %
@@ -59,11 +59,14 @@ am = jsondecode(fileread(fullfile(C.repo, 'Code', 'Matlab', ...
 if nargin < 3
     overrides = containers.Map('KeyType', 'char', 'ValueType', 'any');
 end
+if nargin < 4
+    opts = struct();
+end
 
 caseCell = {};
 for g = 1:numel(tc.groups)
     grp = tc.groups(g);
-    cs = fr_buildOne27(C, kin, grp, am, overrides);
+    cs = fr_buildOne27(C, kin, grp, am, overrides, opts);
     caseCell{end + 1} = cs;
 end
 CASES = caseCell{1};
@@ -73,14 +76,28 @@ end
 end
 
 % ==========================================================================
-function cs = fr_buildOne27(C, kin, grp, am, overrides)
+function cs = fr_buildOne27(C, kin, grp, am, overrides, opts)
 % Dispatch on the contract group id (explicit, deterministic). Each
 % pattern builder derives its row/cross structure from the ACTUAL parsed
 % route (never hardcoded row indices).
 
 [~, im] = max(structfun(@(x) x, grp.sizing_data.per_muscle_Lmax_m));
 seedMuscle = grp.stockMuscles{im};
-route = fr_muscleroute(C.osimStock, seedMuscle);
+% route source of record: the stock human model by default (optimization
+% seeds); opts.routeFromRobotbody = true switches the seed geometry to
+% gait2392_robotbody.osim's OWN path points — the 2019-vintage robot
+% routings, for the BASELINE comparison (Ben 2026-11-04). Connor-era
+% frozen conditional artifacts in robotbody are handled by
+% fr_activeRows27 (declared-range rows dropped from the mechanics row
+% set, behavior tracked in fr_evalRoute), same as for stock routes.
+if nargin < 6
+    opts = struct();
+end
+routeSrc = C.osimStock;
+if isfield(opts, 'routeFromRobotbody') && opts.routeFromRobotbody
+    routeSrc = C.osimRobot;
+end
+route = fr_muscleroute(routeSrc, seedMuscle);
 % case name of record = the contract group key (checkpoint filenames use it)
 grp.name = grp.group;
 diaStr = fr_diaStrOf(grp);

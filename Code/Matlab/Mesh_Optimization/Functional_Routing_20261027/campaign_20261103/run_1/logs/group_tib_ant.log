@@ -16,3 +16,8 @@ RESUME tib_ant compliant: sizing config changed (ckpt missing vs current 20|2|no
 === pass1 compliant | 04-Nov-2026 13:59:18 | budget 600 | envelopes 15 ===
 BEST-INFEASIBLE (retained as warm start) tib_ant compliant: fSeed 5605.0291 -> fBest 2286.7134 (obj 64.4912, violEff 2.22e-01) | capsules(pose1) 2 | 93.3 s | TOP VIOLATOR tx_infeasible_cells: normalized 2.222e-01 (dimensional 2.222e-01 fraction of cells, tol 1.0e-12)
 REFINE1 tib_ant: f 21.6686 -> 248.4779 (rejected, others 26, 22.0 s)
+RESUME skip (feasible checkpoint): rigid f 21.6686
+RESUME tib_ant compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 04-Nov-2026 16:29:19 | budget 600 | envelopes 15 ===
+BEST-INFEASIBLE (retained as warm start) tib_ant compliant: fSeed 5658.4627 -> fBest 1235.1609 (obj 124.0498, violEff 1.11e-01) | capsules(pose1) 2 | 104.4 s | TOP VIOLATOR tx_infeasible_cells: normalized 1.111e-01 (dimensional 1.111e-01 fraction of cells, tol 1.0e-12)
+RESUME skip refine1 (rejected): f 248.4779
