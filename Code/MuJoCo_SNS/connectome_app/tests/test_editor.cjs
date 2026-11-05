@@ -34,3 +34,4 @@ if(process.argv[2]){
  const folder=process.argv[2],catalog=JSON.parse(fs.readFileSync(path.join(folder,'LIBRARY_INDEX.json'),'utf8'));
  for(const entry of catalog){load(JSON.parse(fs.readFileSync(entry.hierarchy,'utf8')));sandbox.sel=null;const before=documentNow();const display=vm.runInContext('desktopDisplayEdges()',sandbox);assert.equal(display.reduce((n,e)=>n+(e._uiBundle?.length||1),0),sandbox.edges.length);assert.deepEqual(documentNow(),before);console.log(`PASS: ${entry.family} hierarchy: ${sandbox.edges.length} root connections shown as ${display.length} view wires; serialized source unchanged.`);}
 }
+module.exports={sandbox,load,documentNow,root,vm,fixture};

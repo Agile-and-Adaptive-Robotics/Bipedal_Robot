@@ -76,7 +76,7 @@ def main():
         rc.keyframe_linear(tibia, "rotation_euler", frames, [r[i] for r in rots], index=i)
 
     # ---- frame triads (parent static at hip; child rides the tibia) ------
-    def triad(prefix, length=0.10, radius=0.007):
+    def triad(prefix, length=0.10, radius=0.0035):
         parts = []
         for (vec, col, letter) in (((1, 0, 0), rc.AXIS_X, "x"),
                                    ((0, 1, 0), rc.AXIS_Y, "y"),
@@ -99,20 +99,27 @@ def main():
         pass  # world-placed, static (hip = femur frame origin)
 
     tibia_triad = triad("tibframe")
-    for ob, _ in tibia_triad:
-        ob.parent = tibia
-        ob.matrix_parent_inverse.identity()
+    for shaft_or_label, head in tibia_triad:
+        for ob in (shaft_or_label, head):
+            if ob is not None:
+                ob.parent = tibia
+                ob.matrix_parent_inverse.identity()
 
     # ---- labels (flat in the sagittal plane; readable from the +z side) ---
-    cam = rc.look_at((-0.16, -0.42, 1.35), (-0.16, -0.40, 0.0), up=(0, 1, 0), lens=55)
+    cam = rc.look_at((-0.18, -0.35, 1.8), (-0.18, -0.35, 0.0), up=(0, 1, 0), lens=45)
+    cam.data.type = 'ORTHO'
+    cam.data.ortho_scale = 1.16
+    for ob in bpy.data.objects:
+        if ob.type == 'FONT':
+            rc.track_camera(ob, cam)
 
-    lab_femur = rc.text_label("Femur  (parent frame)", "lab_femur", 0.055,
+    lab_femur = rc.text_label("Femur: fixed parent frame", "lab_femur", 0.035,
                               align="CENTER")
-    lab_femur.location = (-0.09, -0.155, 0.03)
+    lab_femur.location = (-0.32, 0.11, 0.08)
 
-    lab_tibia = rc.text_label("Tibia  (child frame)", "lab_tibia", 0.055,
+    lab_tibia = rc.text_label("Tibia: moving child frame", "lab_tibia", 0.035,
                               align="CENTER")
-    tib_lab_locs = [(tx - 0.10, ty + 0.075, 0.03) for (tx, ty, _) in locs]
+    tib_lab_locs = [(-0.30, -0.77, 0.08) for _ in locs]
     rc.keyframe_linear(lab_tibia, "location", frames, tib_lab_locs)
 
     lab_readout = rc.text_label("Knee angle:   0.0 deg", "lab_readout", 0.052,
@@ -129,12 +136,12 @@ def main():
     bpy.context.scene.collection.objects.link(holder)
     holder.parent = cam
     holder.matrix_parent_inverse.identity()
-    holder.location = (0.0, 0.30, -1.0)
+    holder.location = (0.0, 0.51, -1.0)
     lab_readout.parent = holder
     lab_readout.matrix_parent_inverse.identity()
     lab_readout.rotation_euler = (0, 0, 0)   # +Z_cam faces the viewer: readable
 
-    rc.save_blend(rc.HERE / "scenes" / "visual3_knee_frames.blend")
+    rc.save_blend(rc.OUTPUT / "scenes" / "visual3_knee_frames.blend")
 
     if args.stills_only:
         q = -1.6
@@ -143,19 +150,19 @@ def main():
         scene.render.resolution_y = 1080
         update_readout(k)
         scene.frame_set(k)
-        rc.render_frame(scene, k, str(rc.HERE / "build" / "visual3" / "still_side.png"))
+        rc.render_frame(scene, k, str(rc.OUTPUT / "visual3" / "still_side.png"))
         # oblique companion: orbit the side camera 35 deg about the vertical
         target = Vector((-0.16, -0.40, 0.0))
         rel = Vector(cam.location) - target
         cam.location = target + Matrix.Rotation(math.radians(35), 3, "Y") @ rel
         cam.rotation_euler = rc.look_rotation(cam.location, target)
         cam.data.lens = 48
-        rc.render_frame(scene, k, str(rc.HERE / "build" / "visual3" / "still_oblique.png"))
+        rc.render_frame(scene, k, str(rc.OUTPUT / "visual3" / "still_oblique.png"))
         print("STILLS_DONE")
         return
 
     if not args.no_frames:
-        outdir = rc.HERE / "build" / "visual3" / "frames"
+        outdir = rc.OUTPUT / "visual3" / "frames"
         outdir.mkdir(parents=True, exist_ok=True)
         for k in frames:
             update_readout(k)

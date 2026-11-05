@@ -34,7 +34,7 @@ class Bridge(QObject):
         self.opened.emit(json.dumps({'tab':tab,'path':str(Path(path).resolve()),'document':doc}))
     @Slot()
     def open(self):
-        path,_=QFileDialog.getOpenFileName(self.window,'Open connectome project',str(workspace()),'Connectome / JSON (*.json);;All files (*)')
+        path,_=QFileDialog.getOpenFileName(self.window,'Open connectome',str(workspace()),'Connectomes (*.json *.aproj *.asim);;AnimatLab model (*.aproj *.asim);;Editor project (*.json);;All files (*)')
         if not path:return
         try:self.open_path(path)
         except Exception as e:self.report.emit('Open failed: '+str(e))
@@ -43,10 +43,14 @@ class Bridge(QObject):
         try:
             request=json.loads(payload);tab=request['tab'];kind=request.get('kind','save');path=None
             if kind!='save' or tab not in self.files.paths:
-                filename=request.get('name','Connectome')+'.sns.json'
-                path,_=QFileDialog.getSaveFileName(self.window,'Save subnetwork copy' if kind=='subnetwork' else 'Save connectome as',str(workspace()/filename),'Connectome project (*.json)')
+                native=request['document'].get('native') if kind!='subnetwork' else None
+                current=self.files.paths.get(tab)
+                suffix=native.get('primary_suffix','.aproj') if native else '.sns.json'
+                filename=(current.stem+'_copy' if current and native else request.get('name','Connectome'))+suffix
+                folder=current.parent if current else workspace()
+                path,_=QFileDialog.getSaveFileName(self.window,'Save subnetwork copy' if kind=='subnetwork' else 'Save connectome as',str(folder/filename),'AnimatLab model (*'+suffix+')' if native else 'Connectome project (*.json)')
                 if not path:return
-                if not path.lower().endswith('.json'):path+='.json'
+                if not path.lower().endswith(suffix):path+=suffix
             target_tab=tab if kind!='subnetwork' else tab+':subnetwork-copy'
             destination,doc=self.files.save(request['document'],target_tab,path)
             self.saved.emit(json.dumps({'tab':tab,'kind':kind,'path':str(destination),'document':doc}))
@@ -86,12 +90,20 @@ class Window(QMainWindow):
             action.triggered.connect(lambda checked=False,script=js:self.page.runJavaScript(script));menu.addAction(action)
         library=menu.addMenu('Open controller')
         for family in ('syn6','s3k','w2lvar','W2L108'):
-            description={'syn6':'syn6 — reviewed final','s3k':'s3k — saved standing','w2lvar':'w2lvar — saved standing','W2L108':'W2L108 — GENTLE108'}[family]
+            description={'syn6':'syn6 — reviewed final','s3k':'s3k — saved standing','w2lvar':'w2lvar — saved standing','W2L108':'W2L108 — editable native model'}[family]
             action=QAction(description,self);action.triggered.connect(lambda checked=False,key=family:self.open_controller(key));library.addAction(action)
         folder_action=QAction('Open project folder',self);folder_action.triggered.connect(lambda:QDesktopServices.openUrl(QUrl.fromLocalFile(str(workspace()))));menu.addAction(folder_action)
         helpmenu=self.menuBar().addMenu('&Help');action=QAction('Commands',self);action.triggered.connect(lambda:QMessageBox.information(self,'Editor commands','Original editor commands are retained.\n\nDrag palette → canvas: place\nShift/Alt-drag or Alt-click two cells: connect\nRubber-band / Ctrl-click: select\nDrag selection: group move\nAlt-click wire: bend; drag pink handle\nCtrl+G: pack subnetwork; Ctrl+Shift+G: unpack\nDouble-click module: enter; F4/Esc: leave\nF2/F3: hide/show layers\nCtrl+C/V: copy/paste\nDelete: delete selected graph elements\nCtrl+Z/Y: undo/redo\nCtrl+S: save; Ctrl+Shift+S: save as\nF5: build neural model without running it.'));helpmenu.addAction(action)
     def open_controller(self,family):
         try:
+            if family=='W2L108':
+                path=workspace()/'Models/W2L108/W2L108.aproj'
+                if not path.exists():
+                    from native_w2l import read_model
+                    from native_files import save_model
+                    source=HERE.parents[2]/'tmp/functional_subnetwork_remote/W2L108_verified/editable/W2L_VirtualWalker_Newer.aproj'
+                    save_model(read_model(source),path)
+                self.bridge.open_path(path);return
             folder=workspace()/'Controllers';index=folder/'LIBRARY_INDEX.json'
             if index.exists():
                 row=next(r for r in json.loads(index.read_text()) if r['family']==family);path=Path(row['hierarchy'])
