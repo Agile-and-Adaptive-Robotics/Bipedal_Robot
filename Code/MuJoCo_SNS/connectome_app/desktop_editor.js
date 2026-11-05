@@ -19,10 +19,19 @@ addNode=function(type,x,y,label,silent,grp,sub){if(!silent)snapshot();const n=de
 // Preserve actual child identities behind the display endpoint of packed modules.
 function packSub(){if(!selSet.size){status('Select nodes to pack.');return;}const ids=new Set(selSet),packed=nodes.filter(n=>ids.has(n.id)),inner=edges.filter(e=>ids.has(e.from)&&ids.has(e.to));const name=prompt('Subsystem name:','Subnetwork');if(!name)return;snapshot();const sub=specOfLocal(packed,inner);let x=0,y=0;packed.forEach(n=>{x+=n.x;y+=n.y;n.el?.remove();});const host={id:desktopUuid('n'),type:'SUB',label:uniqueLabel(name),x:x/packed.length,y:y/packed.length,sub};
  edges=edges.filter(e=>!inner.includes(e)).map(e=>{const r={...e};if(ids.has(e.from)){r.fromPath=[e.from,...(e.fromPath||[])];r.from=host.id;}if(ids.has(e.to)){r.toPath=[e.to,...(e.toPath||[])];r.to=host.id;}return r;});const metadata=desktopMeta.get(nodes);for(const p of metadata?.inputs||[])if(ids.has(p.node_id)){p.node_path=[p.node_id,...(p.node_path||[])];p.node_id=host.id;}nodes=nodes.filter(n=>!ids.has(n.id));desktopMeta.set(nodes,metadata);nodes.push(host);renderNode(host,false);redrawEdges();renderTree();sel={kind:'node',id:host.id};selSet=new Set([host.id]);applySelClasses();updatePanel();persist();}
-function unpackSub(){const host=sel?.kind==='node'&&nodeById(sel.id);if(!host?.sub){status('Select a subsystem to unpack.');return;}const boundary=edges.filter(e=>e.from===host.id||e.to===host.id);for(const e of boundary)for(const side of['from','to'])if(e[side]===host.id&&!(e[side+'Path']||[]).length){status('This legacy module lacks a child boundary binding. Bind it before unpacking.');return;}
- snapshot();const m=materialize(host.sub);const cx=m.nodes.reduce((s,n)=>s+n.x,0)/(m.nodes.length||1),cy=m.nodes.reduce((s,n)=>s+n.y,0)/(m.nodes.length||1),dx=host.x-cx,dy=host.y-cy;m.nodes.forEach(n=>{n.x+=dx;n.y+=dy;});
+function unpackSub(){
+ const id=sel?.kind==='node'?sel.id:selSet.size===1?[...selSet][0]:null,host=nodeById(id);
+ if(!host?.sub){status('Select a subsystem to unpack.');return;}
+ const boundary=edges.filter(e=>e.from===host.id||e.to===host.id);
+ for(const e of boundary)for(const side of['from','to'])if(e[side]===host.id&&!(e[side+'Path']||[]).length){status('This legacy module lacks a child boundary binding. Bind it before unpacking.');return;}
+ snapshot();const m=materialize(host.sub),cx=m.nodes.reduce((s,n)=>s+n.x,0)/(m.nodes.length||1),cy=m.nodes.reduce((s,n)=>s+n.y,0)/(m.nodes.length||1),dx=host.x-cx,dy=host.y-cy;
+ for(const n of m.nodes){n.x+=dx;n.y+=dy;if(n.sub&&n.scope?.layer&&n.scope?.side&&/^(Left|Right|Shared) ·/.test(n.label))n.label=n.scope.side+' '+n.scope.layer+'\n'+n.sub.nodes.length+' cells';}
+ for(const e of m.edges)e.pts=(e.pts||[]).map(p=>({x:p.x+dx,y:p.y+dy}));
  for(const e of boundary)for(const side of['from','to'])if(e[side]===host.id){const path=[...e[side+'Path']];e[side]=path.shift();e[side+'Path']=path;}
- host.el?.remove();const metadata=desktopMeta.get(nodes);for(const p of metadata?.inputs||[])if(p.node_id===host.id){const path=[...(p.node_path||[])];p.node_id=path.shift();p.node_path=path;}nodes=nodes.filter(n=>n!==host);desktopMeta.set(nodes,metadata);nodes.push(...m.nodes);edges.push(...m.edges);m.nodes.forEach(n=>renderNode(n,false));redrawEdges();renderTree();clearSel();persist();}
+ host.el?.remove();const metadata=desktopMeta.get(nodes);
+ for(const p of metadata?.inputs||[])if(p.node_id===host.id){const path=[...(p.node_path||[])];p.node_id=path.shift();p.node_path=path;}
+ grpNames={...grpNames,...host.sub.groups};nodes=nodes.filter(n=>n!==host);desktopMeta.set(nodes,metadata);nodes.push(...m.nodes);edges.push(...m.edges);m.nodes.forEach(n=>renderNode(n,false));redrawEdges();renderTree();clearSel();persist();
+}
 const desktopOriginalEnter=enterSub,desktopOriginalExit=exitSub;
 enterSub=function(n){desktopOriginalEnter(n);desktopStyleState();desktopBoundaryNote();};
 exitSub=function(){desktopOriginalExit();desktopStyleState();};

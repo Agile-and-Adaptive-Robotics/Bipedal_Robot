@@ -14,5 +14,8 @@ class LibraryTests(unittest.TestCase):
                 self.assertEqual({e['id']:e['source_record'] for e in edges},{e['id']:e['source_record'] for e in flat['edges']})
                 self.assertEqual(saved['source'],flat['source'])
                 self.assertEqual(sum(e['synapse']['gmax_uS']==0 for e in edges),sum(e['synapse']['gmax_uS']==0 for e in flat['edges']))
+                rg=[n for n in saved['nodes'] if n.get('scope',{}).get('layer')=='RG']
+                self.assertEqual({n['scope']['side'] for n in rg},{'Left','Right'})
+                self.assertTrue(all(n['sub']['nodes'] and not any(c.get('sub') for c in n['sub']['nodes']) for n in rg))
 
 if __name__=='__main__':unittest.main()

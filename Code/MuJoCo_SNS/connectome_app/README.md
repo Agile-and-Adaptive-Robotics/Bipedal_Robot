@@ -8,13 +8,14 @@ On EB475WS4, projects default to
 `D:\Users\Ben Bolen\Connectome_Editor_Projects`. The original HTML editor and
 its browser session are separate. The first launch creates `Paired_MN.sns.json`
 as an editable copy of the included example. Open accepts existing editor JSON
-and native `.sns.json` projects; compiled audit ledgers require explicit adapters.
+and `.sns.json` projects, plus native AnimatLab `.aproj` / `.asim` models.
+Compiled audit ledgers require explicit adapters.
 
 ## Editing and files
 
 To open the prepared controllers, relaunch the desktop app and select **File →
 Open controller**. The menu distinguishes reviewed Syn6, the saved s3k and
-w2lvar standing conditions, and W2L108 GENTLE108. These are separate conditions;
+w2lvar standing conditions, and the editable native W2L108 copy. These are separate conditions;
 the menu does not relabel a standing archive as a later Hunt result.
 
 Their working copies are in
@@ -31,8 +32,30 @@ A template starts without a file location. Its first **Save** therefore opens
 updates that project file. Opening a controller from the new menu opens its
 already saved working copy, so ordinary Save has a destination. Use **File →
 Open project folder** whenever you want to find your files. Saving a project
-writes the editor JSON; native AnimatLab files and Python controller source
-require separate format adapters.
+writes the editor JSON for JSON projects. For a native W2L108 model, Save updates
+its actual `.asim` and paired `.aproj` files. Python controller source write-back
+is not yet supported for the other families.
+
+### Native W2L108
+
+**File → Open controller → W2L108 — editable native model** opens
+`D:\Users\Ben Bolen\Connectome_Editor_Projects\Models\W2L108\W2L108.aproj`.
+The model package includes `W2L108.asim`, its texture/chart assets, and
+`W2L108.editor.json`, which stores the hierarchy and drawing layout. Keep these
+files together. **Save As** defaults to a new native model name in the same
+folder and copies its companion files. It then continues editing that copy.
+
+This working copy comes from the verified native `.aproj` / `.asim` pair and
+preserves that pair's saved values. The separately recorded GENTLE108 execution
+graph remains in `Controllers`; its external tuning overlays are not applied
+to this native file entry.
+
+Native neuron settings, individual chemical synapse parameters, neural additions,
+deletions, and reconnections are written to both native formats. Native adapter
+polynomial coefficients are editable in their saved SI units. Changing one
+synapse clones its shared AnimatLab type when necessary, so other connections
+keep their parameters. The native model supplies the effective `SynAmp` value;
+the ignored per-connection `G` field is not used as the import authority.
 
 - **Save / Ctrl+S:** write the current project, including edits inside a module.
 - **Save As / Ctrl+Shift+S:** choose a new file and continue editing that copy.
@@ -53,6 +76,34 @@ Select a wire to show its bend handles. Source and destination ports may start
 at different positions along a box. Rounded bends and semicircular crossing
 bridges distinguish routing from junctions. Excitatory triangles have their
 broad edge against the receiving object; inhibition uses filled circles.
+
+The selection rectangle includes individual wire control points as well as
+neurons. Drag any selected control point or neuron to move that selection.
+The blue square handles at a selected wire's ends slide along the current
+neuron's perimeter. They preserve the source and destination neuron identities.
+Delete removes selected bends; Undo restores their positions.
+
+The first overview shows **Left RG** and **Right RG** as separate blocks, with
+their afferent wires attached to their actual receiving neurons. Left/right PF
+and MN blocks appear beneath them. Existing generated layer folders are upgraded
+on open; the underlying cells and synapses stay the same. **Ctrl+Shift+G** unpacks
+the selected block one level, retaining its external child bindings and moving
+internal wire bends along with the newly exposed blocks.
+
+Enter **Left MN / Right MN** to open a paired
+motor view with the saved Ia, II, Ib, Renshaw, and reflex-interneuron wiring.
+The two selectors choose the muscles/cells to display. Gray blocks show the
+actual off-page neurons connected to those circuits; their parameters refer to
+the same model objects. **Show off-page connections** opens this kind of view
+for other layers too. The checkbox controls visibility, not connectivity.
+
+Native W2L108 views include their actual physical maps, muscles, and stretch
+receptors. Saved standing exports also show their recorded physical signal
+interfaces. Sources which contain only neural/current-port definitions retain
+that scope. No unrecorded physical encoder or reflex connection is added.
+Grouping and wire layout in a motor view are saved as presentation data while
+the underlying neuron and synapse edits update the canonical model. **F4** or
+**Layers** returns to the layer hierarchy.
 
 ## First supported model
 
@@ -82,7 +133,9 @@ scientific environment. Elsewhere, install `requirements.txt` in a suitable
 environment and set `CONNECTOME_EDITOR_PYTHON` to its Python executable, or launch
 `python app.py [project.sns.json]` directly.
 
-Run `python -m unittest discover -s tests -p "test_*.py"` and
-`node tests/test_editor.cjs`. These verify atomic save/reopen, preservation of
+Run `python -m unittest discover -s tests -p "test_*.py"`,
+`node tests/test_editor.cjs`, and `node tests/test_interaction.cjs`.
+`python tests/desktop_smoke.py` exercises the generated Qt editor using a
+temporary native copy and the machine-local controller library. These verify save/reopen, preservation of
 source and parameter fields, file conflict protection, nested boundary endpoints,
 copy ID remapping, and consumption of edited conductances by SNS-Toolbox.

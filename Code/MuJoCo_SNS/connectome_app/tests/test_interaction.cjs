@@ -34,3 +34,11 @@ assert.equal(vm.runInContext('flattenView(groupedResult).ns.length',s),3);assert
 vm.runInContext("restoredProjection=circuitProjection(groupedResult,new Set(['m','ia']),'test',true,false)",s);assert(s.restoredProjection.nodes.some(n=>n.sub));
 assert.equal(vm.runInContext('flattenView(restoredProjection).es.length',s),1);
 console.log('PASS: grouping within the motor view preserves real neurons and edges and reopens as a presentation subnetwork.');
+vm.runInContext('circuitContext=null',s);
+load({nodes:[{id:'a',type:'SUB',label:'A',x:100,y:100,sub:{nodes:[{id:'a1',type:'MN',label:'A1',model:{kind:'graded'}}],edges:[]}},{id:'b',type:'SUB',label:'B',x:600,y:500,sub:{nodes:[{id:'b1',type:'MN',label:'B1',model:{kind:'graded'}}],edges:[]}}],edges:[{id:'routed',fromId:'a',fromPath:['a1'],toId:'b',toPath:['b1'],synapse:{gmax_uS:.5,reversal_mV:8,threshold_mV:0,saturation_mV:5},pts:[]}]});
+vm.runInContext("desktopDisplayEdges();autoPoint={...edges[0]._uiPts[0]};selectRectangle({x0:autoPoint.x-2,x1:autoPoint.x+2,y0:autoPoint.y-2,y1:autoPoint.y+2});",s);
+assert.equal(vm.runInContext('selectedWirePoints.size',s),1);assert.equal(s.edges[0].pts.length,0);
+vm.runInContext("startSelectedPointDrag({p:autoPoint,stopPropagation(){}},edges[0],0);onMove({p:{x:autoPoint.x+40,y:autoPoint.y+30}});endDrag({});",s);
+assert.equal(s.edges[0].pts[0].x,s.autoPoint.x+40);assert.equal(s.edges[0].pts[1].y,500);
+assert.deepEqual(JSON.parse(JSON.stringify(s.edges[0].fromPath)),['a1']);
+console.log('PASS: automatically routed bundle bends are selectable and become saved control points on drag without changing their real child endpoints.');

@@ -79,7 +79,8 @@ def read_model(path):
     if not sidecar.exists() and project:sidecar=project.with_suffix('.editor.json')
     if sidecar.exists():
         old=json.loads(sidecar.read_text(encoding='utf-8'));doc=preserve_hierarchy(flat,old['document'])
-    return doc
+    from graph_ops import bilateral_overview
+    return bilateral_overview(doc)
 
 def model_neurons(document):
     d=flat_document(document);return d,{n['id']:n for n in d['nodes'] if n.get('model',{}).get('kind')!='physical' and n['type'] not in ('MUSCLE','SPINDLE','TENDON','ADAPTER','PORT-load')}
