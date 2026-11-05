@@ -14,13 +14,16 @@ sys.path[:0]=[str(H),str(S),str(S/'functional_gait2392'),str(S/'w2l_cpg')]
 import numpy as np
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--reflex-fit',type=Path,required=True);p.add_argument('--stage',type=int,choices=(1,2),required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--expression',type=float,default=1.);p.add_argument('--feedback-scale',type=float,default=1.);p.add_argument('--local-ii-scale',type=float,default=1.);p.add_argument('--stim-cell');p.add_argument('--stim-nA',type=float,default=.5);p.add_argument('--stim-start',type=float,default=7.1);p.add_argument('--stim-duration',type=float,default=.1);p.add_argument('--noise-rg-sigma',type=float,default=0.);p.add_argument('--noise-seed',type=int,default=0);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--reflex-fit',type=Path,required=True);p.add_argument('--stage',type=int,choices=(1,2),required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--expression',type=float,default=1.);p.add_argument('--feedback-scale',type=float,default=1.);p.add_argument('--local-ii-scale',type=float,default=1.);p.add_argument('--stim-cell');p.add_argument('--stim-nA',type=float,default=.5);p.add_argument('--stim-start',type=float,default=7.1);p.add_argument('--stim-duration',type=float,default=.1);p.add_argument('--noise-rg-sigma',type=float,default=0.);p.add_argument('--noise-seed',type=int,default=0);p.add_argument('--ankle-ia-scale',type=float,default=1.);p.add_argument('--ankle-ii-scale',type=float,default=1.);p.add_argument('--hip-expression',type=float,default=1.);p.add_argument('--audit-electrical',action='store_true');p.add_argument('--preserve-knee-crossing',action='store_true');a=p.parse_args()
     if not .05<=a.expression<=1.:raise ValueError('Expression must be in [.05,1]')
+    if not .05<=a.hip_expression<=1.:raise ValueError('Hip expression must be in [.05,1]')
     if not .01<=a.feedback_scale<=1.:raise ValueError('Feedback scale must be in [.01,1]')
     if not .01<=a.local_ii_scale<=1.:raise ValueError('Local II scale must be in [.01,1]')
     if not 0<=a.noise_rg_sigma<=.05:raise ValueError('RG current noise sigma must be in [0,.05] nA')
+    if not all(.01<=g<=1. for g in(a.ankle_ia_scale,a.ankle_ii_scale)):raise ValueError('Ankle-crossing sensory scales must be in [.01,1]')
     if a.stim_cell and(not 0<=a.stim_start<=14 or not 0<a.stim_duration<=.5 or abs(a.stim_nA)>2):raise ValueError('Use a bounded declared stimulus')
     d_final=json.loads((a.reflex_fit/'FINAL.json').read_text());d_manifest=json.loads((a.reflex_fit/'MANIFEST.json').read_text())
+    a.local_ii_scale*=d_final['parameters'].get('local_II',1.)
     if not(d_final['accepted']and d_final['fresh_process_matched']):raise ValueError('Fresh-process Hunt D pass required')
     peaks=Path(d_manifest['fit']);c_fit=json.loads((peaks/'FINAL.json').read_text());c_manifest=json.loads((peaks/'MANIFEST.json').read_text());neural_cfg=c_manifest['configuration'];timing=Path(c_manifest['source_timing_block']);fixed=json.loads((timing/'FINAL.json').read_text())['parameters'];family=neural_cfg['family'];hunt_options=neural_cfg.get('hunt_options')or{}
     a.output.mkdir(parents=True,exist_ok=False)
@@ -28,6 +31,7 @@ def main():
     from controller_profiles_20261104 import profile as P
     import params
     original=C.build;busy=False
+    electrical={}
     target=np.load(neural_cfg['targets'],allow_pickle=False);mid=np.median(target['length'],axis=0);half=np.maximum(np.ptp(target['length'],axis=0)/2.,.02)
     Fmax=np.maximum(target['Fmax'],1.)
     def factory(acts,dt=.002,interleg=False,options=None):
@@ -65,13 +69,21 @@ def main():
             n.command_runtime.original_step=static_advance
         c.c.tau_max_b[:,rg]*=fixed.get('tau_scale',1.);c.c.g_ion[:,rg]*=fixed.get('g_ion_scale',1.);c.refresh_parameters()
         from muscle_map import classify
+        from controller_profiles_20261104.readout_keys import multiplier
         for i,(pre,post)in enumerate(zip(c.pre,c.post)):
             source,target_name=names[pre],names[post]
             if source.startswith('V3E_')or(source.startswith('RG_E_')and target_name.startswith('V3E_')):c.gmax[i]*=fixed.get('commissural_E',1.)
             elif source.startswith(('CIN_F_','V2a_','V0V_','V0D_','INI_'))or(source.startswith('RG_F_')and target_name.startswith(('CIN_F_','V2a_','V0D_'))):c.gmax[i]*=fixed.get('commissural_F',1.)
             if target_name.startswith('MN_')and source.startswith('PF_')and not source.startswith('PF_IN'):
-                n.ff_gain[i]*=c_fit['best']['gains'].get(classify(target_name[3:]).base,1.)
+                n.ff_gain[i]*=multiplier(source,target_name,c_fit)
+                if classify(target_name[3:]).groups[0]in('hip_ext','hip_flex'):n.ff_gain[i]*=a.hip_expression
             if not P.central(target_name):
+                for aff,scale in(('Ia',a.ankle_ia_scale),('II',a.ankle_ii_scale)):
+                    if scale!=1. and source.startswith(aff+'_'):
+                        info=classify(source[len(aff)+1:])
+                        if info and any(group in('ankle_pf','ankle_df')for group in info.groups)and not(a.preserve_knee_crossing and any(group.startswith('knee_')for group in info.groups)):
+                            c.gmax[i]*=scale;n.original_g[i]*=scale
+                            if i in n.reflex_edges:n.reflex_gain[i]*=scale
                 if source.startswith('II_'):
                     c.gmax[i]*=a.local_ii_scale;n.original_g[i]*=a.local_ii_scale
                     if i in n.reflex_edges:n.reflex_gain[i]*=a.local_ii_scale
@@ -80,6 +92,12 @@ def main():
                         gain=d_final['parameters'].get('local_'+aff,1.)
                         c.gmax[i]*=gain;n.original_g[i]*=gain
                         if i in n.reflex_edges:n.reflex_gain[i]*=gain
+            if target_name.startswith('MN_'):
+                key='relay_Ib_output'if source.startswith(('IBIN_','IBEXC_'))else'relay_II_output'if source.startswith(('IIX_','IIIN_'))else None
+                if key:
+                    gain=d_final['parameters'].get(key,1.)
+                    c.gmax[i]*=gain;n.original_g[i]*=gain
+                    if i in n.reflex_edges:n.reflex_gain[i]*=gain
         n.apply_weights(1.)
         n.session_stimulus=np.zeros(len(c.V))
         stimulus_index=n.idx[a.stim_cell]if a.stim_cell else None
@@ -98,8 +116,10 @@ def main():
         # Use the same reference load scale as the replay adapter.
         load_scale={side:max(float(np.percentile(np.maximum(target['force'][:,ids],0.).sum(axis=1),95)),1.)for side,ids in load_ids.items()}
         native=n.step;steps=0
+        ratio_max=np.zeros(len(c.V));voltage_min=np.full(len(c.V),np.inf);voltage_max=-voltage_min.copy();ratio_over2=np.zeros(len(c.V),dtype=int);electrical_samples=0
+        if a.audit_electrical:electrical.update(neuron_names=names,maximum_Euler_load_ratio=ratio_max,steps_above2=ratio_over2,minimum_raw_voltage_mV=voltage_min,maximum_raw_voltage_mV=voltage_max,samples=0,scope='Actual live-body synaptic-load Euler ratio, excluding ionic conductance; not a full recurrent stability proof')
         def advance(u):
-            nonlocal steps
+            nonlocal steps,electrical_samples
             m,d=n.live
             if stimulus_index is not None:
                 amplitude=a.stim_nA if a.stim_start<=steps*dt<a.stim_start+a.stim_duration else 0.
@@ -121,7 +141,11 @@ def main():
                 runtime.commands['F_'+side]=0. if a.stage==1 else neural_cfg['command_F']
                 runtime.commands['E_'+side]=0. if a.stage==1 else neural_cfg['command_E']
             if steps<50:runtime.commands['E_r']+=.4;runtime.commands['F_l']+=.4
-            result=native(u);steps+=1;return result
+            result=native(u)
+            if a.audit_electrical and 5.<=steps*dt<14.:
+                conductance=c.gmax*np.clip((c.last_voltage[c.pre]-c.elo)/c.erange,0.,1.);ratio=c.c.time_factor_membrane*(c.c.g_m+np.bincount(c.post,weights=conductance,minlength=len(c.V)));np.maximum(ratio_max,ratio,out=ratio_max);ratio_over2[:]+=ratio>2.;np.minimum(voltage_min,c.V,out=voltage_min);np.maximum(voltage_max,c.V,out=voltage_max);electrical_samples+=1
+                electrical['samples']=electrical_samples
+            steps+=1;return result
         n.step=advance;return n
     C.build=factory
     base=json.loads(Path(r'D:\Users\Ben Bolen\NeuroAcceleration_20261104\body\compact_final.json').read_text())
@@ -130,8 +154,13 @@ def main():
     trace+=['PF_S1_r','PF_S2_r','PF_S1_l','PF_S2_l']if family=='syn6'else['PF_HIP-F_r','PF_KNEE-F_r']if family in('hunt','w2lvar')else['PF_F1_r','PF_E1_r']
     cfg.update(stage=a.stage,backend='compact',controller_family=family,weights_directory=hunt_options.get('weights_directory',str(H/'runs/fitted')),balance=None,biarticular_pair_gain=hunt_options.get('biarticular_pair_gain',0.),learn_reciprocal=hunt_options.get('learn_reciprocal',False),rg_tonic_current=0.,axis_feedback=0.,timing_afferents=False,restriction=1.,support_fraction=0.,start_hip_deg=-7.,start_knee_deg=-10.,start_ankle_deg=0.,trace_cells=trace,verification_capture=str(a.output/'capture'),verification_sparse_currents=False,diagnostic_scope='Frozen four-command '+family+' fit, matched live afferent encoder, no direct posture/MN command; air curriculum probe')
     cfg['motor_scale']=a.expression
+    cfg['hip_PF_to_MN_expression']=a.hip_expression
     cfg['central_RG_feedback_scale']=a.feedback_scale
     cfg['local_II_feedback_scale']=a.local_ii_scale
+    cfg['ankle_crossing_local_Ia_scale']=a.ankle_ia_scale
+    cfg['ankle_crossing_local_II_scale']=a.ankle_ii_scale
+    cfg['preserve_knee_crossing_afferents']=a.preserve_knee_crossing
+    cfg['local_relay_output_gains']={key:d_final['parameters'].get(key,1.)for key in('relay_Ib_output','relay_II_output')}
     if a.stim_cell:cfg['neural_stimulus']=dict(cell=a.stim_cell,current_nA=a.stim_nA,start_s=a.stim_start,duration_s=a.stim_duration,implementation='Temporary external bias-current addition; no voltage clamp')
     if a.noise_rg_sigma:cfg['neural_noise']=dict(targets=['RG_E_r','RG_F_r','RG_E_l','RG_F_l'],stationary_sigma_nA=a.noise_rg_sigma,tau_s=.02,seed=a.noise_seed,distribution='Independent zero-mean Ornstein-Uhlenbeck current per RG cell; starts at zero',scope='Fixed parameters; continuous current disturbance, not parameter perturbation')
     if family=='syn6':
@@ -165,8 +194,17 @@ def main():
                 raise RuntimeError('Predictive knee guard')
         return native_physics(m,d,*args,**kwargs)
     mujoco.mj_step=protected_physics
-    try:runpy.run_path(str(H/'physical_eval.py'),run_name='__main__',init_globals={'print':compact_print})
+    try:
+        runpy.run_path(str(H/'physical_eval.py'),run_name='__main__',init_globals={'print':compact_print})
+        from kinematic_response import score_recording
+        response,_,_=score_recording(a.output)
+        (a.output/'body.kinematics.json').write_text(json.dumps(response,indent=2,allow_nan=False))
     except Exception as exc:
         (a.output/'STOP.json').write_text(json.dumps(dict(error=repr(exc),knee_guard=guard_info,scope='Failed body probe; inspect capture/log'),indent=2));raise
-    finally:mujoco.mj_step=native_physics;C.build=original;VC.AlignedCapture.sample=original_sample
+    finally:
+        mujoco.mj_step=native_physics;C.build=original;VC.AlignedCapture.sample=original_sample
+        if a.audit_electrical:
+            count=electrical.get('samples',0);saved={key:(value.tolist()if count else None)if isinstance(value,np.ndarray)else value for key,value in electrical.items()}
+            if count:saved['fraction_above2']=(electrical['steps_above2']/count).tolist()
+            (a.output/'ELECTRICAL_AUDIT.json').write_text(json.dumps(saved,indent=2))
 if __name__=='__main__':main()

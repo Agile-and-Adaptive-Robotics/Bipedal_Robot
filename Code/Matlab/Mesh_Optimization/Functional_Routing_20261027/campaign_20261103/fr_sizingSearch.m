@@ -78,36 +78,25 @@ for c = 1:nGroups
 
     % ---- parfor screen ----------------------------------------------------
     scr = cell(1, nCfg);
-    parfor k = 1:nCfg
-        % value-copy the base case and apply ONLY this config's fields,
-        % then finishCase re-derives seeds/patches/target — avoids
-        % rebuilding all 27 cases per config (the serial screen's
-        % bottleneck)
-        csK = cs;
-        csK.diaStr = cfgs{k}.diaStr;
-        csK.diaNum = str2double(csK.diaStr);
-        csK.seed.nBPA = cfgs{k}.nBPA;
-        if cs.hasTackle
-            csK.txConfig = struct('nPulleyBPA', [cfgs{k}.nBPA, 1], ...
-                'tackleLineParts', [2, 1], 'gain', [2, 1], ...
-                'routingMode', {'moving_via', 'moving_via'}, ...
-                'tackleFamily', cfgs{k}.family);
-        else
-            csK.txConfig = struct('nPulleyBPA', [cfgs{k}.nBPA, 1], ...
-                'tackleLineParts', [1, 1], 'gain', [1, 1], ...
-                'routingMode', {'moving_via', 'moving_via'}, ...
-                'tackleFamily', 'none');
-        end
-        csK = fr_finishCase27(C, kin, csK);
+    for k = 1:nCfg
+        % full rebuild per config via the overrides mechanism (PROVEN
+        % path; the finishCase shortcut was illegal - fr_finishCase27 is
+        % a local function of fr_cases27.m, unreachable from here)
+        om = containers.Map('KeyType', 'char', 'ValueType', 'any');
+        om(cs.name) = struct('diaStr', cfgs{k}.diaStr, ...
+            'nBPA', cfgs{k}.nBPA, 'family', cfgs{k}.family, ...
+            'gain', cfgs{k}.gain);
+        csK = fr_cases27(C, kin, om);
+        selK = find(strcmp({csK.name}, cs.name), 1);
         so = struct('quiet', true, 'budget', budget, 'envelopes', {{}});
         try
-            [~, rep, info] = fr_solveCase(C, csK, kin, 'rigid', so);
+            [~, rep, info] = fr_solveCase(C, csK(selK), kin, 'rigid', so);
             scr{k} = struct('fBest', info.fBest, ...
                 'feasible', rep.feasible, 'violEff', rep.violation, ...
                 'topViolator', rep.topViolator);
         catch err
             scr{k} = struct('fBest', NaN, 'feasible', false, ...
-                'violEff', NaN, 'topViolator', ['ERROR ' err.message(1:80)]);
+                'violEff', NaN, 'topViolator', ['ERROR ' err.message(1:min(80, numel(err.message)))]);
         end
     end
 

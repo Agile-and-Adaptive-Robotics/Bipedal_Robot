@@ -10,3 +10,10 @@ RESUME flex_hal compliant: checkpoint is best-infeasible - re-solving (kept as w
 === pass1 compliant | 04-Nov-2026 20:52:03 | budget 600 | envelopes 13 ===
 BEST-INFEASIBLE (retained as warm start) flex_hal compliant: fSeed 451.9165 -> fBest 198.5816 (obj 153.7469, violEff 4.48e-03) | capsules(pose1) 1 | 153.1 s | TOP VIOLATOR foot_occupancy_ban: normalized 4.483e-03 (dimensional 4.583e-03 m (tibia frame y), tol 1.0e-04)
 REFINE1 flex_hal: f 250.6920 -> 524.9276 (rejected, others 26, 45.6 s)
+RESUME flex_hal rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 05-Nov-2026 02:14:46 | budget 600 | envelopes 14 ===
+BEST-INFEASIBLE (retained as warm start) flex_hal rigid: fSeed 9514.1704 -> fBest 171.0858 (obj 171.0810, violEff 4.81e-07) | capsules(pose1) 1 | 163.4 s | TOP VIOLATOR span_foot_pass2: normalized 4.809e-07 (dimensional 3.808e-07 m, tol 1.0e-06)
+RESUME flex_hal compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 05-Nov-2026 02:17:30 | budget 600 | envelopes 14 ===
+SOLVED-FEASIBLE flex_hal compliant: fSeed 505.3440 -> fBest 170.3616 (obj 170.3616, violEff 0.00e+00) | capsules(pose1) 1 | 191.7 s
+RESUME skip refine1 (rejected): f 524.9276

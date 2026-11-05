@@ -327,3 +327,12 @@ Pelvic tilt/overlap follow-up: [full comparison record](PELVIS_OVERLAP_RECORD_20
 
 Short/slow shuffle follow-up: [record and sensory-gate design](SHORT_SHUFFLE_RECORD_20261104.md), [slow candidate with measured direction arrows](LiDeng_W2L108_slow_direction.gif). Fourteen alternating clear swings in 16 s, 10.1% BW upward assistance over 2–16 s; short-stride and sustained double-support targets remain unmet. Fresh numeric trajectories match exactly.
 
+
+Latest s3k/syn6 follow-up: the portable s3k_syn6_followup\RESULT.md contains
+checkpoint paths, gains, scope, and remaining failures. Its syn6_ankle_corrected
+folder has a saved-state GIF, still, RG/PF/MN/joint/foot-load plots, absolute ankle
+spectra, and an exact fresh-repeat audit. Both neural families now pass offline
+C/D gates. Only the separate older-readout syn6 ankle candidate passes both air
+stages; new-readout syn6 and repaired s3k still fail live-body gates. All bounded
+jobs completed. Main record: Code\MuJoCo_SNS\spinal\controller_profiles_20261104\
+S3K_SYN6_FOLLOWUP_20261104.md. This update makes no manuscript changes.

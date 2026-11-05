@@ -10,3 +10,10 @@ RESUME extobl compliant: checkpoint is best-infeasible - re-solving (kept as war
 === pass1 compliant | 04-Nov-2026 20:43:13 | budget 600 | envelopes 0 ===
 BEST-INFEASIBLE (retained as warm start) extobl compliant: fSeed 10018.3569 -> fBest 517.6224 (obj 515.1092, violEff 2.51e-04) | capsules(pose1) 2 | 46.8 s | TOP VIOLATOR centerline_z0: normalized 2.513e-04 (dimensional 3.513e-04 m (pelvis frame), tol 1.0e-04)
 REFINE1 extobl: f 95.8289 -> 101.9335 (rejected, others 26, 22.4 s)
+RESUME extobl rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 rigid | 05-Nov-2026 02:07:58 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl rigid: fSeed 97.8921 -> fBest 97.8921 (obj 96.2241, violEff 1.67e-04) | capsules(pose1) 2 | 17.7 s | TOP VIOLATOR centerline_z0: normalized 1.668e-04 (dimensional 2.668e-04 m (pelvis frame), tol 1.0e-04)
+RESUME extobl compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 05-Nov-2026 02:08:15 | budget 600 | envelopes 0 ===
+BEST-INFEASIBLE (retained as warm start) extobl compliant: fSeed 10204.7019 -> fBest 1351.3827 (obj 238.6037, violEff 1.11e-01) | capsules(pose1) 2 | 34.9 s | TOP VIOLATOR tx_slack_cells: normalized 1.111e-01 (dimensional 1.111e-01 fraction of cells, tol 1.0e-12)
+RESUME skip refine1 (rejected): f 101.9335

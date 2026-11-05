@@ -6,3 +6,10 @@ REFINE skipped: no rigid checkpoint to refine
 RESUME skip (feasible checkpoint): rigid f 189.5215
 RESUME skip (feasible checkpoint): compliant f 159.9061
 REFINE1 flex_dig: f 189.5215 -> 395.2345 (rejected, others 26, 49.8 s)
+RESUME flex_dig rigid: sizing config changed (ckpt 20|1|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:14:46 | budget 600 | envelopes 14 ===
+SOLVED-FEASIBLE flex_dig rigid: fSeed 9175.9167 -> fBest 98.9142 (obj 98.9142, violEff 0.00e+00) | capsules(pose1) 1 | 160.8 s
+RESUME flex_dig compliant: sizing config changed (ckpt 20|1|none|1 vs current 10|1|none|1) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:17:27 | budget 600 | envelopes 14 ===
+SOLVED-FEASIBLE flex_dig compliant: fSeed 395.7812 -> fBest 116.3564 (obj 116.3564, violEff 0.00e+00) | capsules(pose1) 1 | 200.1 s
+RESUME skip refine1 (rejected): f 395.2345

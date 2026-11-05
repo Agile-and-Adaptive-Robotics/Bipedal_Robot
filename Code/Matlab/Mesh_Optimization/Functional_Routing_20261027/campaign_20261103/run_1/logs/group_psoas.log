@@ -6,3 +6,10 @@ REFINE skipped: no rigid checkpoint to refine
 RESUME skip (feasible checkpoint): rigid f 88.7660
 RESUME skip (feasible checkpoint): compliant f 49.4500
 REFINE1 psoas: f 88.7660 -> 245.9475 (rejected, others 26, 25.2 s)
+RESUME psoas rigid: sizing config changed (ckpt 20|2|L|2 vs current 20|1|L|2) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:07:58 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE psoas rigid: fSeed 108.9732 -> fBest 108.9732 (obj 108.9732, violEff 0.00e+00) | capsules(pose1) 1 | 23.7 s
+RESUME psoas compliant: sizing config changed (ckpt 20|2|L|2 vs current 20|1|L|2) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:08:22 | budget 600 | envelopes 0 ===
+SOLVED-FEASIBLE psoas compliant: fSeed 95.7089 -> fBest 86.9426 (obj 86.9426, violEff 0.00e+00) | capsules(pose1) 1 | 63.1 s
+RESUME skip refine1 (rejected): f 245.9475

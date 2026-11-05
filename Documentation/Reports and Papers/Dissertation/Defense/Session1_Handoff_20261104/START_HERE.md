@@ -77,3 +77,16 @@ Final is a separate review draft. ProofFinal and live Overleaf were not overwrit
 Commit **this entire Session1_Handoff_20261104 folder** so its documents, media, and relative links travel together. There are no raw simulation NPZ files, optimizer databases, model mesh trees, or trial logs in the package. [Package manifest](PACKAGE_MANIFEST.json) records exact source paths, sizes, and SHA256 values; files were copied without re-encoding. Source files elsewhere in the repo remain linked rather than duplicated.
 
 The copied reports retain their original dates and archival machine paths. This index's status/corrections take precedence over older statements such as “current,” “next,” or pending postural work inside those snapshots.
+
+Latest s3k/syn6 calculations and media:
+[Result and full checkpoint paths](experiments_20261104/s3k_syn6_followup/RESULT.md).
+[Syn6 suspended-air GIF](experiments_20261104/s3k_syn6_followup/syn6_ankle_corrected/AIR_STEPPING.gif).
+This is a separate result package from the earlier W2L ground-shuffle tests.
+
+Physical IK gain/phase/amplitude objective and saved-run comparison:
+[Method, findings, and full paths](experiments_20261104/kinematic_response_20261105/RESULT.md).
+
+Expanded s3k/syn6 fitted neural figures, exact PF-to-muscle maps, and flexor Ib
+subnetworks: [circuit/traces guide](experiments_20261104/circuit_trace_20261105/README.md).
+Includes PNG/PDF/editable SVG and fitted connection values. These are offline D
+replays, with checkpoints identified separately from the air GIF candidate.

@@ -10,3 +10,10 @@ RESUME bifemlh compliant: checkpoint is best-infeasible - re-solving (kept as wa
 === pass1 compliant | 04-Nov-2026 20:46:09 | budget 600 | envelopes 5 ===
 BEST-INFEASIBLE (retained as warm start) bifemlh compliant: fSeed 6656.3358 -> fBest 342.2132 (obj 131.6312, violEff 2.11e-02) | capsules(pose1) 1 | 171.8 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.106e-02 (dimensional 2.116e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
 REFINE1 bifemlh: f 365.0453 -> 410.1814 (rejected, others 26, 38.9 s)
+RESUME bifemlh rigid: sizing config changed (ckpt 20|1|none|1 vs current 20|2|none|1) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:09:47 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) bifemlh rigid: fSeed 12351.5817 -> fBest 397.6220 (obj 39.5758, violEff 3.58e-02) | capsules(pose1) 2 | 103.2 s | TOP VIOLATOR retained_rigid_envelopes: normalized 3.580e-02 (dimensional 3.590e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME bifemlh compliant: sizing config changed (ckpt 20|1|none|1 vs current 20|2|none|1) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:11:30 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) bifemlh compliant: fSeed 8229.3500 -> fBest 504.6470 (obj 129.0170, violEff 3.76e-02) | capsules(pose1) 2 | 156.3 s | TOP VIOLATOR retained_rigid_envelopes: normalized 3.756e-02 (dimensional 3.766e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+RESUME skip refine1 (rejected): f 410.1814

@@ -10,3 +10,10 @@ RESUME per_brev compliant: checkpoint is best-infeasible - re-solving (kept as w
 === pass1 compliant | 04-Nov-2026 20:50:37 | budget 600 | envelopes 13 ===
 BEST-INFEASIBLE (retained as warm start) per_brev compliant: fSeed 8008.6806 -> fBest 6983.0057 (obj 75.2040, violEff 6.91e-01) | capsules(pose1) 2 | 136.5 s | TOP VIOLATOR tx_slack_cells: normalized 5.556e-01 (dimensional 5.556e-01 fraction of cells, tol 1.0e-12)
 REFINE1 per_brev: f 299.1830 -> 577.6356 (rejected, others 26, 47.5 s)
+RESUME per_brev rigid: sizing config changed (ckpt 20|2|none|1 vs current 20|1|none|1) - re-solving
+=== pass1 rigid | 05-Nov-2026 02:14:46 | budget 600 | envelopes 14 ===
+FAILED per_brev rigid: globaloptim:poptimfcnchk:objfunNaN | Objective function must be real and not NaN at the starting point.
+RESUME per_brev compliant: sizing config changed (ckpt 20|2|none|1 vs current 20|1|none|1) - re-solving
+=== pass1 compliant | 05-Nov-2026 02:14:47 | budget 600 | envelopes 14 ===
+FAILED per_brev compliant: globaloptim:poptimfcnchk:objfunNaN | Objective function must be real and not NaN at the starting point.
+RESUME skip refine1 (rejected): f 577.6356

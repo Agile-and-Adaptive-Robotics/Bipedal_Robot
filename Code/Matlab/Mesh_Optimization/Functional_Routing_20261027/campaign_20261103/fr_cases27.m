@@ -642,6 +642,15 @@ if cs.groupMapId == 25
     % z=0 rule remains the optimizer's hard constraint). If the femur-side
     % seed has z_pelvis >= 2 mm at home, the original seed stands
     % unchanged; otherwise recenter to the best home-z offset.
+    % femur-side movable row (the distal attachment whose home-z is checked)
+    fzRow = NaN;
+    for m = 1:numel(cs.movable)
+        if ~strcmpi(cs.rowOwning{cs.movable(m).row}, 'pelvis') ...
+                && ~strcmpi(cs.rowOwning{cs.movable(m).row}, 'sacrum') ...
+                && ~strcmpi(cs.rowOwning{cs.movable(m).row}, 'spine')
+            fzRow = cs.movable(m).row;
+        end
+    end
     qHz = cs.passes{1}.qStructs{1};
     hzF = fieldnames(qHz);
     for i2 = 1:numel(hzF)
@@ -650,9 +659,8 @@ if cs.groupMapId == 25
     Thz = fr_chainT(kin, qHz, 'femur_r', 'pelvis');
     zh0 = Thz(1:3, 1:3) * cs.seedLoc(fzRow, :)' + Thz(1:3, 4);
     zh0 = zh0(3);
-    fprintf('FR_CASES27: add_mag3 femur seed home z_pelvis = %.1f mm
-', ...
-        zh0 * 1000);
+    fprintf('FR_CASES27: add_mag3 femur seed home z_pelvis = %.1f mm', zh0 * 1000);
+    fprintf(char(10));
     if zh0 * 1000 < 2
         bestZ = -inf;
         bestP = cs.seedLoc(fzRow, :);

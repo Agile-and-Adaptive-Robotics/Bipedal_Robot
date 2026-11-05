@@ -8,3 +8,8 @@ FAILED rect_fem rigid: globaloptim:poptimfcnchk:objfunNaN | Objective function m
 === pass1 compliant | 04-Nov-2026 20:44:04 | budget 600 | envelopes 5 ===
 FAILED rect_fem compliant: globaloptim:poptimfcnchk:objfunNaN | Objective function must be real and not NaN at the starting point.
 REFINE skipped: no rigid checkpoint to refine
+=== pass1 rigid | 05-Nov-2026 02:09:47 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) rect_fem rigid: fSeed 757.1920 -> fBest 392.6966 (obj 139.7554, violEff 2.53e-02) | capsules(pose1) 2 | 103.2 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.529e-02 (dimensional 2.539e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+=== pass1 compliant | 05-Nov-2026 02:11:30 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) rect_fem compliant: fSeed 2210.7916 -> fBest 501.8750 (obj 248.9197, violEff 2.53e-02) | capsules(pose1) 2 | 138.9 s | TOP VIOLATOR retained_rigid_envelopes: normalized 2.530e-02 (dimensional 2.540e-02 m (clearance incl. radii + rigid clearance), tol 1.0e-04)
+REFINE skipped: no rigid checkpoint to refine

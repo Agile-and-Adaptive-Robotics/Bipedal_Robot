@@ -9,6 +9,9 @@ import matplotlib.pyplot as plt
 def main():
     p=argparse.ArgumentParser();p.add_argument('--input',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
     z=np.load(a.input/'BEST_TRACE.npz');cfg=json.loads((a.input/'MANIFEST.json').read_text());final=json.loads((a.input/'FINAL.json').read_text())
+    if 'configuration'in cfg:cfg=cfg['configuration']
+    elif 'fit'in cfg:
+        cfg=json.loads((Path(cfg['fit'])/'MANIFEST.json').read_text())['configuration'];cfg={**cfg,'phase':'D'}
     t=z['t'];keep=(t>=t[-1]-3*cfg['target_period_s']);x=t[keep]-t[keep][0];a.output.mkdir(parents=True,exist_ok=True)
     plt.rcParams.update({'font.family':'Arial','font.size':10,'svg.fonttype':'none'})
     fig,ax=plt.subplots(4,1,figsize=(8.3,8),sharex=True,constrained_layout=True)

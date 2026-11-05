@@ -110,6 +110,11 @@ class Replay:
                 for aff in ('Ia', 'II', 'Ib'):
                     if source.startswith(aff + '_'):
                         self.c.gmax[i] *= parameters.get('local_' + aff, 1.)
+            if target.startswith('MN_'):
+                if source.startswith(('IBIN_', 'IBEXC_')):
+                    self.c.gmax[i] *= parameters.get('relay_Ib_output', 1.)
+                elif source.startswith(('IIX_', 'IIIN_')):
+                    self.c.gmax[i] *= parameters.get('relay_II_output', 1.)
         self.pf_range_min.fill(np.inf); self.pf_range_max.fill(-np.inf)
         for i, t in enumerate(self.t):
             if i % 128 == 0 and deadline is not None and time.time() >= deadline:

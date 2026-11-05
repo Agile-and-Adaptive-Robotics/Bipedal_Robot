@@ -10,3 +10,11 @@ RESUME sar compliant: checkpoint is best-infeasible - re-solving (kept as warm s
 === pass1 compliant | 04-Nov-2026 20:45:07 | budget 600 | envelopes 5 ===
 BEST-INFEASIBLE (retained as warm start) sar compliant: fSeed 10586.5910 -> fBest 1185.6120 (obj 223.0189, violEff 9.63e-02) | capsules(pose1) 1 | 134.9 s | TOP VIOLATOR span_knee_pass1: normalized 4.513e-02 (dimensional 3.525e-03 m, tol 1.0e-06)
 REFINE1 sar: f 10189.1204 -> 11444.9007 (rejected, others 26, 30.2 s)
+RESUME sar rigid: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+WARM-START sar rigid: x0 evaluates non-finite (NaN) - dropped, starting from seed
+=== pass1 rigid | 05-Nov-2026 02:09:48 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) sar rigid: fSeed 24720.6924 -> fBest 19637.8480 (obj 53.2558, violEff 1.96e+00) | capsules(pose1) 1 | 86.2 s | TOP VIOLATOR tx_slack_cells: normalized 1.000e+00 (dimensional 1.000e+00 fraction of cells, tol 1.0e-12)
+RESUME sar compliant: checkpoint is best-infeasible - re-solving (kept as warm start, not as a result)
+=== pass1 compliant | 05-Nov-2026 02:11:15 | budget 600 | envelopes 5 ===
+BEST-INFEASIBLE (retained as warm start) sar compliant: fSeed 10279.8173 -> fBest 987.5578 (obj 115.1494, violEff 8.72e-02) | capsules(pose1) 1 | 128.8 s | TOP VIOLATOR span_knee_pass1: normalized 4.046e-02 (dimensional 3.160e-03 m, tol 1.0e-06)
+RESUME skip refine1 (rejected): f 11444.9007

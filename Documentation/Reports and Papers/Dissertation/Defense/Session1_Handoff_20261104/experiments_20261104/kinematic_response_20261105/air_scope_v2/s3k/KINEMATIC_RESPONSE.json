@@ -1,0 +1,788 @@
+{
+  "schema": "stage_specific_kinematics_v2",
+  "recording": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\s3k_repaired_body_20261104\\expression_0.2\\stage2",
+  "reference": "subject01_walk1: existing calibration IK/GRF reference",
+  "scope": "IK waveform response comparison, not input-output transfer function or Bode FRF",
+  "window_s": [
+    5.0,
+    14.0
+  ],
+  "phase_anchor": "One shared right-knee maximum-flexion peak; all six joints retain relative phase. Left reference cycles shifted by reference loading phase.",
+  "principal": {
+    "accepted": false,
+    "principal_knee_cycles": [
+      7,
+      6
+    ],
+    "principal_peak_times_s": [
+      [
+        5.3919999999999995,
+        6.754,
+        8.13,
+        9.516,
+        10.908000000000001,
+        12.3,
+        13.686000000000002
+      ],
+      [
+        6.108,
+        7.524,
+        8.986,
+        10.448,
+        11.894,
+        13.322000000000001
+      ]
+    ],
+    "period_s": 1.3920000000000012,
+    "period_cv": 0.023741600221810554,
+    "bilateral_phase_error": 0.1347706634259841,
+    "cycle_coverage": 1.0,
+    "knee_ranges_deg": [
+      28.41489141702775,
+      25.953405060533093
+    ],
+    "hip_ranges_deg": [
+      127.62765162530354,
+      142.4269295098518
+    ],
+    "autocorrelation": [
+      0.9967662531263295,
+      0.9902602149054904
+    ],
+    "dominant_spectral_Hz": [
+      0.7777777777778634,
+      0.66666666666674
+    ],
+    "peak_counts": [
+      {
+        "all_prominent_peaks": 7,
+        "principal_peaks": 7
+      },
+      {
+        "all_prominent_peaks": 6,
+        "principal_peaks": 6
+      }
+    ]
+  },
+  "source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\kinematic_response.py": "12a1975eb64f1463321bd94bc7d1e6d069fe9a251c25bf8a676e735cbbaba663",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\dominant_cycles.py": "fc084078e825c99d5d03465576c87e37ea26d01dc389f301035f679cf1078510",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\s3k_repaired_body_20261104\\expression_0.2\\stage2\\capture\\aligned_trace.npz": "d2f5134ab5329f4729efa6f10d6ce893dec1e7d3c253e83cc1328bf8873cbcb8"
+  },
+  "safety_gates_passed": true,
+  "complete_cycles": 6,
+  "reference_source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_ik.mot": "7380251a0e2434bea1ad62aa8ece037e3dc8ff014f8b747395b63c4c8a4d55e2",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_grf.mot": "69a5e8633f8666bc192abd8069e6812fe7b4c8bb8968dc3254d4824abf263662"
+  },
+  "joints": [
+    {
+      "joint": "hip_flexion_r",
+      "reference_ROM_deg": 43.28089307662569,
+      "reference_minimum_deg": -21.226779831778238,
+      "reference_maximum_deg": 22.054113244847454,
+      "simulation_ROM_deg": 124.60548008687073,
+      "ROM_gain": 2.87899512300418,
+      "cycle_amplitude_deg": {
+        "n": 6,
+        "mean": 124.6205959975859,
+        "SD": 3.4655389215695487,
+        "minimum": 118.349442205836,
+        "maximum": 127.61634317182256
+      },
+      "cycle_amplitude_error_deg": {
+        "n": 6,
+        "mean": 81.33970292096022,
+        "SD": 3.465538921569549,
+        "minimum": 75.06854912921031,
+        "maximum": 84.33545009519688
+      },
+      "cycle_amplitude_gain": {
+        "n": 6,
+        "mean": 2.8793443743629354,
+        "SD": 0.08007087366321344,
+        "minimum": 2.734450095479936,
+        "maximum": 2.9485607643513054
+      },
+      "cycle_amplitude_percent_error": {
+        "n": 6,
+        "mean": 187.9344374362936,
+        "SD": 8.007087366321347,
+        "minimum": 173.44500954799358,
+        "maximum": 194.85607643513055
+      },
+      "fundamental_phase_error": {
+        "n": 6,
+        "circular_mean_deg": -158.7322327412476,
+        "circular_SD_deg": 0.6086988896932145,
+        "mean_absolute_error_deg": 158.732242308454,
+        "maximum_absolute_error_deg": 159.87128721090048
+      },
+      "mean_bias_deg": -0.1361011929203293,
+      "mean_absolute_error_deg": 51.96258806865852,
+      "maximum_absolute_error_deg": 86.98670994160469,
+      "mean_cycle_maximum_absolute_error_deg": 85.53645465875084,
+      "cycle_maximum_absolute_error_deg": {
+        "n": 6,
+        "mean": 85.5381618164915,
+        "SD": 1.5972472594216593,
+        "minimum": 82.63942643169193,
+        "maximum": 86.98670994160469
+      },
+      "worst_error_cycle_index": 3,
+      "worst_error_cycle_phase_percent": 79.5,
+      "waveform_RMSE_deg": 57.92687949658235,
+      "normalized_RMSE": 1.3383938125774577,
+      "cycle_variability_RMS_deg": 1.4131035245675736,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 21.175120918712647,
+          "simulation_amplitude_deg": 61.69443074778145,
+          "usable": true,
+          "gain": 2.913533810957439,
+          "gain_dB": 9.288401247061502,
+          "lag_deg": -158.73372554106626
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 4.335852005530965,
+          "simulation_amplitude_deg": 1.5868561785463204,
+          "usable": true,
+          "gain": 0.3659848575371279,
+          "gain_dB": -8.730737659549568,
+          "lag_deg": 42.99623905218741
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 2.3960741245804096,
+          "simulation_amplitude_deg": 0.6680086970771295,
+          "usable": true,
+          "gain": 0.2787930015287437,
+          "gain_dB": -11.094362648467413,
+          "lag_deg": 160.11513479664333
+        }
+      ],
+      "window_minimum_deg": -61.647665614144266,
+      "window_maximum_deg": 65.97998601115928,
+      "window_total_amplitude_deg": 127.62765162530354,
+      "frequency_content": {
+        "dominant_spectral_Hz": 0.66666666666674,
+        "frequency_bin_width_Hz": 0.11111111111112335,
+        "power_above3Hz_fraction": 4.754060221361249e-05,
+        "high_frequency_RMS_deg": 0.3051179095017271,
+        "strongest_peak_above3Hz": 3.555555555555947,
+        "scope": "Hann periodogram of unwarped window; 3Hz split is diagnostic, not a universal physiological bound"
+      }
+    },
+    {
+      "joint": "knee_angle_r",
+      "reference_ROM_deg": 70.4324342385684,
+      "reference_minimum_deg": -69.68110776228107,
+      "reference_maximum_deg": 0.7513264762873323,
+      "simulation_ROM_deg": 24.96535919407721,
+      "ROM_gain": 0.35445827570739163,
+      "cycle_amplitude_deg": {
+        "n": 6,
+        "mean": 25.170426842051622,
+        "SD": 1.7694639836221404,
+        "minimum": 23.725654229080853,
+        "maximum": 28.241272874478735
+      },
+      "cycle_amplitude_error_deg": {
+        "n": 6,
+        "mean": -45.262007396516786,
+        "SD": 1.7694639836221417,
+        "minimum": -46.70678000948755,
+        "maximum": -42.191161364089666
+      },
+      "cycle_amplitude_gain": {
+        "n": 6,
+        "mean": 0.35736982704295683,
+        "SD": 0.025122857143182364,
+        "minimum": 0.336856939357192,
+        "maximum": 0.40096971203380577
+      },
+      "cycle_amplitude_percent_error": {
+        "n": 6,
+        "mean": -64.26301729570432,
+        "SD": 2.512285714318239,
+        "minimum": -66.3143060642808,
+        "maximum": -59.90302879661942
+      },
+      "fundamental_phase_error": {
+        "n": 6,
+        "circular_mean_deg": -10.246921640219862,
+        "circular_SD_deg": 0.9940632806249571,
+        "mean_absolute_error_deg": 10.246960920705812,
+        "maximum_absolute_error_deg": 12.025514339336269
+      },
+      "mean_bias_deg": 16.813910989088868,
+      "mean_absolute_error_deg": 17.010053335134426,
+      "maximum_absolute_error_deg": 44.35163557159449,
+      "mean_cycle_maximum_absolute_error_deg": 43.36490317493082,
+      "cycle_maximum_absolute_error_deg": {
+        "n": 6,
+        "mean": 43.524008040033046,
+        "SD": 1.1304288634484387,
+        "minimum": 41.43415173854753,
+        "maximum": 44.35163557159449
+      },
+      "worst_error_cycle_index": 4,
+      "worst_error_cycle_phase_percent": 0.5,
+      "waveform_RMSE_deg": 21.34582424516564,
+      "normalized_RMSE": 0.30306810315348703,
+      "cycle_variability_RMS_deg": 0.5722737399528984,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 21.133616804210895,
+          "simulation_amplitude_deg": 10.95233228340053,
+          "usable": true,
+          "gain": 0.5182422102599242,
+          "gain_dB": -5.709344342002074,
+          "lag_deg": -10.224182088366161
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 20.434592708617743,
+          "simulation_amplitude_deg": 6.3148962472438495,
+          "usable": true,
+          "gain": 0.30902970943877495,
+          "gain_dB": -10.199995328973566,
+          "lag_deg": 0.26692216252551354
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 6.950876872333199,
+          "simulation_amplitude_deg": 1.9405028812042637,
+          "usable": true,
+          "gain": 0.2791738246620524,
+          "gain_dB": -11.082506071818406,
+          "lag_deg": -27.731741201949532
+        }
+      ],
+      "window_minimum_deg": -30.15168463267301,
+      "window_maximum_deg": -1.7367932156452608,
+      "window_total_amplitude_deg": 28.41489141702775,
+      "frequency_content": {
+        "dominant_spectral_Hz": 0.7777777777778634,
+        "frequency_bin_width_Hz": 0.11111111111112335,
+        "power_above3Hz_fraction": 0.007935280339922222,
+        "high_frequency_RMS_deg": 0.7942260936170429,
+        "strongest_peak_above3Hz": 3.555555555555947,
+        "scope": "Hann periodogram of unwarped window; 3Hz split is diagnostic, not a universal physiological bound"
+      }
+    },
+    {
+      "joint": "ankle_angle_r",
+      "reference_ROM_deg": 23.101158648376128,
+      "reference_minimum_deg": -8.791444998181264,
+      "reference_maximum_deg": 14.309713650194864,
+      "simulation_ROM_deg": 30.54322612325617,
+      "ROM_gain": 1.322151264711702,
+      "cycle_amplitude_deg": {
+        "n": 6,
+        "mean": 30.55948322914203,
+        "SD": 0.2712723774499103,
+        "minimum": 30.087063680203695,
+        "maximum": 30.756480748495427
+      },
+      "cycle_amplitude_error_deg": {
+        "n": 6,
+        "mean": 7.458324580765904,
+        "SD": 0.2712723774499103,
+        "minimum": 6.985905031827567,
+        "maximum": 7.6553221001192995
+      },
+      "cycle_amplitude_gain": {
+        "n": 6,
+        "mean": 1.322855000231349,
+        "SD": 0.011742803968361916,
+        "minimum": 1.3024049632384407,
+        "maximum": 1.3313826036451821
+      },
+      "cycle_amplitude_percent_error": {
+        "n": 6,
+        "mean": 32.2855000231349,
+        "SD": 1.1742803968361915,
+        "minimum": 30.24049632384407,
+        "maximum": 33.13826036451821
+      },
+      "fundamental_phase_error": {
+        "n": 6,
+        "circular_mean_deg": 104.23256760914741,
+        "circular_SD_deg": 0.7481680288958353,
+        "mean_absolute_error_deg": 104.2325475800709,
+        "maximum_absolute_error_deg": 104.94546728470726
+      },
+      "mean_bias_deg": -33.13874024806134,
+      "mean_absolute_error_deg": 33.138740248061346,
+      "maximum_absolute_error_deg": 51.11553129048616,
+      "mean_cycle_maximum_absolute_error_deg": 51.077466696415854,
+      "cycle_maximum_absolute_error_deg": {
+        "n": 6,
+        "mean": 51.09783940231642,
+        "SD": 0.020598938599155642,
+        "minimum": 51.07003949976338,
+        "maximum": 51.11553129048616
+      },
+      "worst_error_cycle_index": 2,
+      "worst_error_cycle_phase_percent": 62.5,
+      "waveform_RMSE_deg": 35.80848704121155,
+      "normalized_RMSE": 1.550073205688697,
+      "cycle_variability_RMS_deg": 0.4155348362185623,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 5.800901173669958,
+          "simulation_amplitude_deg": 14.43045489607187,
+          "usable": true,
+          "gain": 2.4876229509944223,
+          "gain_dB": 7.915691099863411,
+          "lag_deg": 104.23295496237601
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 3.6696726191596905,
+          "simulation_amplitude_deg": 5.042076182799412,
+          "usable": true,
+          "gain": 1.373985285901058,
+          "gain_dB": 2.759641637204353,
+          "lag_deg": 147.49995064463204
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 3.2790433707962587,
+          "simulation_amplitude_deg": 1.1267339241706122,
+          "usable": true,
+          "gain": 0.34361665789647805,
+          "gain_dB": -9.27851581083443,
+          "lag_deg": -47.75366091196879
+        }
+      ],
+      "window_minimum_deg": -42.10073425271886,
+      "window_maximum_deg": -11.291513133679368,
+      "window_total_amplitude_deg": 30.809221119039492,
+      "frequency_content": {
+        "dominant_spectral_Hz": 0.66666666666674,
+        "frequency_bin_width_Hz": 0.11111111111112335,
+        "power_above3Hz_fraction": 0.009491482503798398,
+        "high_frequency_RMS_deg": 1.067318893547696,
+        "strongest_peak_above3Hz": 4.333333333333811,
+        "scope": "Hann periodogram of unwarped window; 3Hz split is diagnostic, not a universal physiological bound"
+      }
+    },
+    {
+      "joint": "hip_flexion_l",
+      "reference_ROM_deg": 44.109011203262426,
+      "reference_minimum_deg": -22.513040988970666,
+      "reference_maximum_deg": 21.595970214291757,
+      "simulation_ROM_deg": 129.8257988473546,
+      "ROM_gain": 2.943294245456863,
+      "cycle_amplitude_deg": {
+        "n": 6,
+        "mean": 136.2989222342883,
+        "SD": 7.3898807615991995,
+        "minimum": 123.7274891883759,
+        "maximum": 142.42482859537535
+      },
+      "cycle_amplitude_error_deg": {
+        "n": 6,
+        "mean": 92.18991103102587,
+        "SD": 7.3898807615991995,
+        "minimum": 79.61847798511347,
+        "maximum": 98.31581739211292
+      },
+      "cycle_amplitude_gain": {
+        "n": 6,
+        "mean": 3.0900471018540365,
+        "SD": 0.16753675858987804,
+        "minimum": 2.8050388302339604,
+        "maximum": 3.228928164792803
+      },
+      "cycle_amplitude_percent_error": {
+        "n": 6,
+        "mean": 209.00471018540364,
+        "SD": 16.753675858987805,
+        "minimum": 180.50388302339604,
+        "maximum": 222.89281647928033
+      },
+      "fundamental_phase_error": {
+        "n": 6,
+        "circular_mean_deg": -129.38003601423898,
+        "circular_SD_deg": 16.91984546837215,
+        "mean_absolute_error_deg": 129.30272977567645,
+        "maximum_absolute_error_deg": 150.70998455943752
+      },
+      "mean_bias_deg": 3.645764718026356,
+      "mean_absolute_error_deg": 52.22424674457238,
+      "maximum_absolute_error_deg": 93.23729983040165,
+      "mean_cycle_maximum_absolute_error_deg": 88.20151756599371,
+      "cycle_maximum_absolute_error_deg": {
+        "n": 6,
+        "mean": 89.10474070179306,
+        "SD": 3.748368885650256,
+        "minimum": 84.47726028610097,
+        "maximum": 93.23729983040165
+      },
+      "worst_error_cycle_index": 3,
+      "worst_error_cycle_phase_percent": 34.5,
+      "waveform_RMSE_deg": 56.832115808372635,
+      "normalized_RMSE": 1.2884468333801409,
+      "cycle_variability_RMS_deg": 14.32616215002371,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 21.313766994400304,
+          "simulation_amplitude_deg": 64.84533938403823,
+          "usable": true,
+          "gain": 3.04241570253981,
+          "gain_dB": 9.664371077868001,
+          "lag_deg": -128.74681400861223
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 4.910585797200347,
+          "simulation_amplitude_deg": 4.034200530530282,
+          "usable": true,
+          "gain": 0.8215314215322915,
+          "gain_dB": -1.7075164245633614,
+          "lag_deg": 79.97593858371614
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 2.7236301444313473,
+          "simulation_amplitude_deg": 0.7647968659378868,
+          "usable": true,
+          "gain": 0.280800558585962,
+          "gain_dB": -11.032040652314755,
+          "lag_deg": -87.55736115652186
+        }
+      ],
+      "window_minimum_deg": -67.74889633791298,
+      "window_maximum_deg": 74.6780331719388,
+      "window_total_amplitude_deg": 142.4269295098518,
+      "frequency_content": {
+        "dominant_spectral_Hz": 0.66666666666674,
+        "frequency_bin_width_Hz": 0.11111111111112335,
+        "power_above3Hz_fraction": 1.7435016720880667e-05,
+        "high_frequency_RMS_deg": 0.20563189508027185,
+        "strongest_peak_above3Hz": 3.444444444444824,
+        "scope": "Hann periodogram of unwarped window; 3Hz split is diagnostic, not a universal physiological bound"
+      }
+    },
+    {
+      "joint": "knee_angle_l",
+      "reference_ROM_deg": 70.61814631691922,
+      "reference_minimum_deg": -70.61725178054326,
+      "reference_maximum_deg": 0.0008945363759642627,
+      "simulation_ROM_deg": 17.617438899275328,
+      "ROM_gain": 0.2494746721361392,
+      "cycle_amplitude_deg": {
+        "n": 6,
+        "mean": 21.03535019343015,
+        "SD": 2.6703107278518154,
+        "minimum": 18.931487422446555,
+        "maximum": 25.69910626452017
+      },
+      "cycle_amplitude_error_deg": {
+        "n": 6,
+        "mean": -49.58279612348907,
+        "SD": 2.6703107278518146,
+        "minimum": -51.68665889447267,
+        "maximum": -44.919040052399055
+      },
+      "cycle_amplitude_gain": {
+        "n": 6,
+        "mean": 0.29787457318729343,
+        "SD": 0.0378133789559985,
+        "minimum": 0.26808247468697444,
+        "maximum": 0.3639164663029818
+      },
+      "cycle_amplitude_percent_error": {
+        "n": 6,
+        "mean": -70.21254268127065,
+        "SD": 3.781337895599849,
+        "minimum": -73.19175253130255,
+        "maximum": -63.60835336970182
+      },
+      "fundamental_phase_error": {
+        "n": 6,
+        "circular_mean_deg": 22.693197262724734,
+        "circular_SD_deg": 20.641885849665066,
+        "mean_absolute_error_deg": 24.30680429900337,
+        "maximum_absolute_error_deg": 53.486574655324915
+      },
+      "mean_bias_deg": 15.55732802896399,
+      "mean_absolute_error_deg": 17.590414879256937,
+      "maximum_absolute_error_deg": 59.460044162879356,
+      "mean_cycle_maximum_absolute_error_deg": 52.70048645501427,
+      "cycle_maximum_absolute_error_deg": {
+        "n": 6,
+        "mean": 52.72933249608166,
+        "SD": 6.124110016306036,
+        "minimum": 43.458203510282004,
+        "maximum": 59.460044162879356
+      },
+      "worst_error_cycle_index": 5,
+      "worst_error_cycle_phase_percent": 48.5,
+      "waveform_RMSE_deg": 23.755190586161138,
+      "normalized_RMSE": 0.3363893251962873,
+      "cycle_variability_RMS_deg": 3.7590714545365724,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 22.978779909480203,
+          "simulation_amplitude_deg": 9.175948080844014,
+          "usable": true,
+          "gain": 0.3993226845372391,
+          "gain_dB": -7.9735203581210214,
+          "lag_deg": 20.5964548771735
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 20.545371781646605,
+          "simulation_amplitude_deg": 3.092727911943662,
+          "usable": true,
+          "gain": 0.15053161095417256,
+          "gain_dB": -16.447445812511525,
+          "lag_deg": 63.12135479648518
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 6.731401801426537,
+          "simulation_amplitude_deg": 0.33490097424938337,
+          "usable": true,
+          "gain": 0.04975204038160524,
+          "gain_dB": -26.063782073922333,
+          "lag_deg": -121.273378272349
+        }
+      ],
+      "window_minimum_deg": -27.68772297581961,
+      "window_maximum_deg": -1.734317915286517,
+      "window_total_amplitude_deg": 25.953405060533093,
+      "frequency_content": {
+        "dominant_spectral_Hz": 0.66666666666674,
+        "frequency_bin_width_Hz": 0.11111111111112335,
+        "power_above3Hz_fraction": 0.005604347211210923,
+        "high_frequency_RMS_deg": 0.5601087565942308,
+        "strongest_peak_above3Hz": 3.444444444444824,
+        "scope": "Hann periodogram of unwarped window; 3Hz split is diagnostic, not a universal physiological bound"
+      }
+    },
+    {
+      "joint": "ankle_angle_l",
+      "reference_ROM_deg": 23.937315866630676,
+      "reference_minimum_deg": -9.648463174859462,
+      "reference_maximum_deg": 14.288852691771213,
+      "simulation_ROM_deg": 32.61320643165563,
+      "ROM_gain": 1.3624420805308166,
+      "cycle_amplitude_deg": {
+        "n": 6,
+        "mean": 33.95381688131821,
+        "SD": 0.6258432905486373,
+        "minimum": 32.93233922507785,
+        "maximum": 34.505761772992194
+      },
+      "cycle_amplitude_error_deg": {
+        "n": 6,
+        "mean": 10.016501014687536,
+        "SD": 0.6258432905486373,
+        "minimum": 8.99502335844717,
+        "maximum": 10.568445906361518
+      },
+      "cycle_amplitude_gain": {
+        "n": 6,
+        "mean": 1.41844712542106,
+        "SD": 0.026145090537117426,
+        "minimum": 1.3757741013471982,
+        "maximum": 1.4415050528323539
+      },
+      "cycle_amplitude_percent_error": {
+        "n": 6,
+        "mean": 41.844712542106,
+        "SD": 2.6145090537117426,
+        "minimum": 37.57741013471983,
+        "maximum": 44.15050528323539
+      },
+      "fundamental_phase_error": {
+        "n": 6,
+        "circular_mean_deg": 126.90996325511222,
+        "circular_SD_deg": 17.68442071345313,
+        "mean_absolute_error_deg": 126.97133675026085,
+        "maximum_absolute_error_deg": 154.6441770080193
+      },
+      "mean_bias_deg": -32.49223787242344,
+      "mean_absolute_error_deg": 32.49223787242344,
+      "maximum_absolute_error_deg": 60.03272746278391,
+      "mean_cycle_maximum_absolute_error_deg": 55.4595591409956,
+      "cycle_maximum_absolute_error_deg": {
+        "n": 6,
+        "mean": 56.71590748607318,
+        "SD": 2.2665730126785215,
+        "minimum": 54.063492444285465,
+        "maximum": 60.03272746278391
+      },
+      "worst_error_cycle_index": 5,
+      "worst_error_cycle_phase_percent": 26.5,
+      "waveform_RMSE_deg": 36.02694699666712,
+      "normalized_RMSE": 1.5050537494427163,
+      "cycle_variability_RMS_deg": 4.176658357734732,
+      "harmonics": [
+        {
+          "order": 1,
+          "reference_amplitude_deg": 6.483381160115726,
+          "simulation_amplitude_deg": 15.747756668653555,
+          "usable": true,
+          "gain": 2.4289419794612943,
+          "gain_dB": 7.708342817298586,
+          "lag_deg": 127.30733246049616
+        },
+        {
+          "order": 2,
+          "reference_amplitude_deg": 3.8570152710379606,
+          "simulation_amplitude_deg": 3.321476051934425,
+          "usable": true,
+          "gain": 0.8611519059504743,
+          "gain_dB": -1.2984046574067698,
+          "lag_deg": 173.25894542844563
+        },
+        {
+          "order": 3,
+          "reference_amplitude_deg": 3.2470540206578415,
+          "simulation_amplitude_deg": 1.1681567010108713,
+          "usable": true,
+          "gain": 0.35975893643254114,
+          "gain_dB": -8.879768187152372,
+          "lag_deg": 84.12481607991062
+        }
+      ],
+      "window_minimum_deg": -46.519078633323964,
+      "window_maximum_deg": -12.002943042259686,
+      "window_total_amplitude_deg": 34.51613559106428,
+      "frequency_content": {
+        "dominant_spectral_Hz": 0.66666666666674,
+        "frequency_bin_width_Hz": 0.11111111111112335,
+        "power_above3Hz_fraction": 0.011832880802772049,
+        "high_frequency_RMS_deg": 1.3242450294609527,
+        "strongest_peak_above3Hz": 3.444444444444824,
+        "scope": "Hann periodogram of unwarped window; 3Hz split is diagnostic, not a universal physiological bound"
+      }
+    }
+  ],
+  "terms": {
+    "cadence_log_error": 0.1460522604266692,
+    "waveform_normalized_RMSE": 1.0535708382397977,
+    "ROM_log_gain_error": 0.8585120297771506,
+    "mean_bias_normalized": 0.5561197161767509,
+    "fundamental_phase_error": 0.5127709459575661,
+    "worst_cycle_max_error_normalized": 1.7193175695135954
+  },
+  "weights": {
+    "cadence_log_error": 2.0,
+    "waveform_normalized_RMSE": 1.0,
+    "ROM_log_gain_error": 0.5,
+    "mean_bias_normalized": 0.5,
+    "fundamental_phase_error": 0.5,
+    "worst_cycle_max_error_normalized": 0.5
+  },
+  "kinematic_loss": 3.1690354898056676,
+  "frequency_statistics": [
+    {
+      "side": "r",
+      "period_s": {
+        "n": 6,
+        "mean": 1.3823333333333336,
+        "SD": 0.011552777443829938,
+        "minimum": 1.362,
+        "maximum": 1.3920000000000012
+      },
+      "frequency_Hz": {
+        "n": 6,
+        "mean": 0.7234569381409021,
+        "SD": 0.006091202959820744,
+        "minimum": 0.7183908045977005,
+        "maximum": 0.7342143906020557
+      },
+      "reference_period_s": 1.2334,
+      "reference_frequency_Hz": 0.8107669855683476,
+      "frequency_error_Hz": {
+        "n": 6,
+        "mean": -0.08731004742744565,
+        "SD": 0.006091202959820745,
+        "minimum": -0.09237618097064704,
+        "maximum": -0.07655259496629185
+      },
+      "frequency_percent_error": {
+        "n": 6,
+        "mean": -10.768821249701148,
+        "SD": 0.7512889730642905,
+        "minimum": -11.393678160919606,
+        "maximum": -9.441997063142438
+      }
+    },
+    {
+      "side": "l",
+      "period_s": {
+        "n": 5,
+        "mean": 1.4428000000000003,
+        "SD": 0.020523157651784293,
+        "minimum": 1.4160000000000004,
+        "maximum": 1.4620000000000006
+      },
+      "frequency_Hz": {
+        "n": 5,
+        "mean": 0.6932093579249476,
+        "SD": 0.009895341128018997,
+        "minimum": 0.6839945280437754,
+        "maximum": 0.7062146892655365
+      },
+      "reference_period_s": 1.2133000000000003,
+      "reference_frequency_Hz": 0.8241984669908512,
+      "frequency_error_Hz": {
+        "n": 5,
+        "mean": -0.1309891090659036,
+        "SD": 0.009895341128018998,
+        "minimum": -0.14020393894707583,
+        "maximum": -0.11798377772531465
+      },
+      "frequency_percent_error": {
+        "n": 5,
+        "mean": -15.892908602966084,
+        "SD": 1.2006017390625452,
+        "minimum": -17.010943912448717,
+        "maximum": -14.31497175141243
+      }
+    }
+  ],
+  "statistics_scope": "Descriptive within-run cycle statistics; SD is sample SD, not independent-subject uncertainty. Maximum waveform error includes every retained cycle, using one shared right-knee anchor; cadence error remains separate.",
+  "statistics_revision": "amplitude_frequency_cycle_phase_maxerror_v1",
+  "valid": true,
+  "accepted": false,
+  "simulation_periods_s": [
+    1.3860000000000001,
+    1.4459999999999997
+  ],
+  "reference_periods_s": [
+    1.2334,
+    1.2133000000000003
+  ],
+  "reference_cadence_within15percent": false,
+  "reference_cadence_gate_applied": false,
+  "comparison_role": "diagnostic_only_air",
+  "air_coordination_terms": {
+    "bilateral_phase_error": 0.1347706634259841,
+    "period_cv": 0.023741600221810554,
+    "normalized_cycle_variability": 0.08327598685494851
+  },
+  "objective": 1000.7808709042067,
+  "acceptance_scope": "Air: existing motion/safety gates, no grounded IK gate or loss. Ground: existing ground assessment plus reference cadence; waveform loss ranks, no validated waveform cutoff yet.",
+  "metric_self_check": {
+    "passed": true,
+    "perfect_loss": 0.0,
+    "double_amplitude_gain": 2.0,
+    "delayed_phase_lag_deg": 45.00000000000001,
+    "half_cadence_loss": 1.3862943611198906
+  }
+}

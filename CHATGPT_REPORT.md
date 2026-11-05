@@ -8896,3 +8896,80 @@ drive. Applying that suppression to heel→contraF is an explicit extension, not
 a replication or already implemented neuronal gate. Existing tests use an
 explicit software event gate. Portable media/report in the existing handoff.
 All bounded jobs completed; no manuscript/Overleaf/physics edits or agent commits.
+
+Session 1 s3k/syn6 follow-up completed: both now pass offline C/D waveform checks
+with mirrored existing-edge PF readouts. s3k needs an Ib-relay output gain0.1
+because RG-E also drives that relay; raw Ib gain alone was not sufficient.
+Physical s3k still fails (excess hip motion); hip attenuation also weakens knees.
+Separate older-readout syn6 ankle candidate passes both air stages, exact fresh
+repeat, period2.005s, residual ankle HF RMS reduced35–40%. Feet unloaded; no ground
+promotion. New-readout syn6 physical stage2 still fails. Full record:
+Code\MuJoCo_SNS\spinal\controller_profiles_20261104\S3K_SYN6_FOLLOWUP_20261104.md.
+GIF/plots: Documentation\Reports and Papers\Dissertation\Defense\
+Session1_Handoff_20261104\experiments_20261104\s3k_syn6_followup.
+No CAD, tendon/damping, manuscript, Overleaf, or agent commit changes.
+
+Session1 2026-11-05: physical database-response objective added to the new body
+fit path (cadence, bilateral ROM gain, bias, waveform RMSE, harmonic gain/phase).
+The old kine_ref.py contained related comparisons; they were not fully used by
+the recent fit path. Both saved s3k/syn6 candidates fail the primary IK comparison.
+Details: Code\MuJoCo_SNS\spinal\controller_profiles_20261104\KINEMATIC_OBJECTIVE_20261105.md.
+Plots/metrics: Session1_Handoff_20261104\experiments_20261104\kinematic_response_20261105.
+Fresh physical scorer integration leaves trajectories/forces array-exact.
+No new training, physics, manuscript, or Overleaf edits in this pass.
+
+## Air-versus-ground scope correction (2026-11-05)
+
+Ben correctly questioned grounded IK as an air-step target. Current default is
+stage_specific_kinematics_v2: during air stages, database gain/phase/amplitude
+and cadence are diagnostic only. Physical air ranking uses phase stability,
+period CV, and cycle repeatability under existing motion/safety gates. Ground
+reference differences cannot change air acceptance or ranking (self-check).
+Hunt et al2017 section2.4.1 sets endogenous CPG PERIOD to twice intended stepping
+period, not a universal2x physical air-step law. Our2.466s target was imposed
+from2*1.233s, not independent confirmation. Compare intrinsic, afferented air,
+and ground conditions separately; measure correlations in paired conditions.
+The original v1 metrics remain historical; corrected saved-run reports are in
+kinematic_response_20261105\air_scope_v2. Syn6 passes air gates; s3k still fails
+its existing hip-motion gate. No training was run using the short-lived v1
+objective, and no physics was changed. KINEMATIC_OBJECTIVE_20261105.md updated.
+Source: https://pmc.ncbi.nlm.nih.gov/articles/PMC5378996/ section2.4.
+
+## Full goodness-of-fit statistics update (2026-11-05)
+
+Primary result tables now show whole-window and per-cycle peak-to-peak amplitude,
+min/max angles, sample SD and amplitude percent error; frequency/period mean+SD
+and errors; per-cycle circular phase mean/SD and maximum absolute phase error;
+and worst absolute waveform error across every retained cycle (plus per-cycle
+maximum-error mean+SD). Joint spectral peaks and >3Hz power are also reported so
+cadence cannot hide ankle ringing. RMSE is supplemental. Ground loss includes
+normalized worst-cycle maximum error and per-cycle phase error. Ground IK
+remains diagnostic for air; no air acceptance/ranking change. Known amplitude,
+phase wrap, delay, and one-cycle100deg spike checks pass. No new training in
+this update. Main portable RESULT.md now contains both models' full statistics,
+not just a methods narrative. See air_scope_v2\{s3k,syn6}\RESULTS.md and JSON.
+
+## Circuit beside neural traces (2026-11-05)
+
+Created expanded s3k/syn6 offline-D figures with left RG/PF/MN schematic,
+primary-group PF-to-MN matrix, and right three-cycle RG/all-PF/MN/target traces.
+Separate exact individual-muscle maps, direct Ia/II/Ib-to-PF maps, and iliacus
+feedback subnetworks are supplied as PNG/PDF/editable SVG. The extracted circuits
+reproduce saved RG/PF/MN/target arrays exactly. All PF-to-MN homologues match
+bilaterally with max difference0.0uS and no missing counterparts.
+
+Flexor Ib is present locally: s3k directly inhibits the homonymous MN (0.035uS
+for iliacus/bifemsh/tib_ant); syn6 uses Ib->IBIN excitatory0.0609156uS then
+IBIN->MN inhibitory0.5uS. These checked flexors have no Ib->RG/PF pathway.
+Central Ib sources are selected stance extensors; Ia/II centrally follow actual
+muscle-carrying PF projections. No wiring was changed for the figures.
+
+S3k uses four shared phase channels, not separate joint PF oscillators. Syn6
+RG-E drivesS2/S3/S6, RG-F drivesS1/S4, both driveS5. Exact muscle allocations
+are in PF_ASSIGNMENTS.md/CSV. Syn6 figure uses the new offline D fit, not the
+older-readout air GIF candidate. Do not mix their weights.
+Portable README/figures:
+Documentation\Reports and Papers\Dissertation\Defense\Session1_Handoff_20261104\
+experiments_20261104\circuit_trace_20261105\README.md.
+Full ledgers remain external under:
+D:\Users\Ben Bolen\ControllerTraining_20261104\circuit_trace_audit_20261105.
