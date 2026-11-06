@@ -1,0 +1,221 @@
+REPAIR RUN START 05-Nov-2026 04:23:39 DESKTOP-5Q16KE9
+fr_targets: ercspn -> targets_v2 exact (ercspn)
+fr_targets: intobl -> targets_v2 exact (intobl)
+fr_targets: extobl -> targets_v2 exact (extobl)
+fr_targets: bifemlh -> targets_v2 exact (bifemlh)
+fr_targets: semimem -> targets_v2 exact (semimem)
+fr_targets: sar -> targets_v2 exact (sar)
+fr_targets: tfl -> targets_v2 exact (tfl)
+fr_targets: rect_fem -> targets_v2 exact (rect_fem)
+fr_targets: grac -> targets_v2 exact (grac)
+fr_targets: bifemsh -> targets_v2 exact (bifemsh)
+fr_targets: vas_int -> targets_v2 exact (vas_int)
+fr_targets: soleus -> targets_v2 exact (soleus)
+fr_targets: med_gas -> targets_v2 exact (med_gas)
+fr_targets: lat_gas -> targets_v2 exact (lat_gas)
+fr_targets: tib_post -> targets_v2 exact (tib_post)
+fr_targets: tib_ant -> targets_v2 exact (tib_ant)
+fr_targets: per_brev -> targets_v2 exact (per_brev)
+fr_targets: per_long -> targets_v2 exact (per_long)
+fr_targets: per_tert -> targets_v2 exact (per_tert)
+fr_targets: flex_dig -> targets_v2 exact (flex_dig)
+fr_targets: flex_hal -> targets_v2 exact (flex_hal)
+fr_targets: ext_dig -> targets_v2 exact (ext_dig)
+fr_targets: ext_hal -> targets_v2 exact (ext_hal)
+fr_targets: glut_max3 -> targets_v2 exact (glut_max3)
+FR_CASES27: add_mag3 femur seed home z_pelvis = 56.9 mm
+fr_targets: add_mag3 -> targets_v2 exact (add_mag3)
+fr_targets: iliacus -> targets_v2 exact (iliacus)
+fr_targets: psoas -> targets_v2 exact (psoas)
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 3 workers.
+Workers 3. Per branch: discrete seed screen, surrogate <=60 eval/12s, pattern <=300 eval/40s.
+START tib_post rigid 05-Nov-2026 04:24:38
+START psoas rigid 05-Nov-2026 04:24:38
+START vas_int rigid 05-Nov-2026 04:24:38
+SCREEN psoas rigid dia10 n2 G3 objective 156.62
+SCREEN tib_post rigid dia20 n2 G1 objective 240.53
+SCREEN vas_int rigid dia20 n16 G1 objective 16990
+DONE psoas rigid meet 0.111 viol 0 05-Nov-2026 04:25:54
+START psoas compliant 05-Nov-2026 04:25:54
+DONE tib_post rigid meet 1.000 viol 0.002753 05-Nov-2026 04:26:11
+START tib_post compliant 05-Nov-2026 04:26:11
+SCREEN psoas compliant dia20 n1 G3 objective 245.69
+DONE vas_int rigid meet 0.000 viol 1.513 05-Nov-2026 04:26:23
+START vas_int compliant 05-Nov-2026 04:26:23
+SCREEN tib_post compliant dia10 n1 G2 objective 249.93
+SCREEN vas_int compliant dia20 n16 G1 objective 10451
+DONE psoas compliant meet 0.333 viol 0 05-Nov-2026 04:27:07
+DONE tib_post compliant meet 0.000 viol 0 05-Nov-2026 04:27:42
+DONE vas_int compliant meet 0.000 viol 1.015 05-Nov-2026 04:27:55
+WAVE 1 psoas: rigid meet 0.111 viol 0; compliant meet 0.333 viol 0
+WAVE 1 vas_int: rigid meet 0.000 viol 1.513; compliant meet 0.000 viol 1.015
+WAVE 1 tib_post: rigid meet 1.000 viol 0.002753; compliant meet 0.000 viol 0
+START flex_dig rigid 05-Nov-2026 04:27:56
+START iliacus rigid 05-Nov-2026 04:27:56
+START bifemsh rigid 05-Nov-2026 04:27:57
+SCREEN iliacus rigid dia20 n1 G3 objective 547.15
+SCREEN bifemsh rigid dia10 n1 G3 objective 359.71
+SCREEN flex_dig rigid dia10 n1 G1 objective 7654.7
+DONE iliacus rigid meet 0.111 viol 0.01181 05-Nov-2026 04:29:08
+START iliacus compliant 05-Nov-2026 04:29:08
+DONE bifemsh rigid meet 0.000 viol 0 05-Nov-2026 04:29:10
+START bifemsh compliant 05-Nov-2026 04:29:10
+DONE flex_dig rigid meet 0.000 viol 0.429 05-Nov-2026 04:29:28
+START flex_dig compliant 05-Nov-2026 04:29:28
+SCREEN iliacus compliant dia10 n1 G3 objective 222.11
+SCREEN bifemsh compliant dia20 n1 G3 objective 472.18
+SCREEN flex_dig compliant dia10 n1 G3 objective 444.48
+DONE iliacus compliant meet 0.222 viol 0 05-Nov-2026 04:30:24
+DONE bifemsh compliant meet 0.000 viol 2.046e-05 05-Nov-2026 04:30:26
+DONE flex_dig compliant meet 0.000 viol 0 05-Nov-2026 04:31:04
+WAVE 2 iliacus: rigid meet 0.111 viol 0.01181; compliant meet 0.222 viol 0
+WAVE 2 bifemsh: rigid meet 0.000 viol 0; compliant meet 0.000 viol 2.046e-05
+WAVE 2 flex_dig: rigid meet 0.000 viol 0.429; compliant meet 0.000 viol 0
+START flex_hal rigid 05-Nov-2026 04:31:05
+START ercspn rigid 05-Nov-2026 04:31:05
+START add_mag3 rigid 05-Nov-2026 04:31:05
+SCREEN ercspn rigid dia10 n2 G2 objective 156.58
+SCREEN flex_hal rigid dia10 n1 G1 objective 6101.1
+SCREEN add_mag3 rigid dia20 n1 G1 objective 840.56
+DONE ercspn rigid meet 0.000 viol 0 05-Nov-2026 04:32:18
+START ercspn compliant 05-Nov-2026 04:32:18
+DONE flex_hal rigid meet 0.000 viol 0.2884 05-Nov-2026 04:32:30
+START flex_hal compliant 05-Nov-2026 04:32:30
+SCREEN ercspn compliant dia10 n2 G3 objective 168.36
+DONE add_mag3 rigid meet 0.000 viol 0.03972 05-Nov-2026 04:32:43
+START add_mag3 compliant 05-Nov-2026 04:32:43
+SCREEN flex_hal compliant dia10 n1 G3 objective 359.03
+DONE ercspn compliant meet 0.000 viol 0 05-Nov-2026 04:33:32
+SCREEN add_mag3 compliant dia20 n1 G1 objective 852.44
+DONE flex_hal compliant meet 0.000 viol 0.002673 05-Nov-2026 04:34:02
+DONE add_mag3 compliant meet 0.000 viol 0.03969 05-Nov-2026 04:34:26
+WAVE 3 ercspn: rigid meet 0.000 viol 0; compliant meet 0.000 viol 0
+WAVE 3 add_mag3: rigid meet 0.000 viol 0.03972; compliant meet 0.000 viol 0.03969
+WAVE 3 flex_hal: rigid meet 0.000 viol 0.2884; compliant meet 0.000 viol 0.002673
+START per_brev rigid 05-Nov-2026 04:34:28
+START intobl rigid 05-Nov-2026 04:34:28
+START semimem rigid 05-Nov-2026 04:34:28
+SCREEN intobl rigid dia10 n2 G1 objective 231.91
+SCREEN per_brev rigid dia20 n2 G3 objective 10572
+SCREEN semimem rigid dia10 n1 G3 objective 10415
+DONE intobl rigid meet 0.000 viol 0 05-Nov-2026 04:35:36
+START intobl compliant 05-Nov-2026 04:35:36
+DONE per_brev rigid meet 0.444 viol 0.0262 05-Nov-2026 04:35:49
+START per_brev compliant 05-Nov-2026 04:35:49
+DONE semimem rigid meet 0.000 viol 1 05-Nov-2026 04:35:51
+START semimem compliant 05-Nov-2026 04:35:51
+SCREEN intobl compliant dia10 n3 G1 objective 238.24
+SCREEN per_brev compliant dia20 n2 G3 objective 9097.4
+SCREEN semimem compliant dia20 n1 G2 objective 9122.5
+DONE intobl compliant meet 0.000 viol 0 05-Nov-2026 04:36:56
+DONE per_brev compliant meet 0.222 viol 0.00883 05-Nov-2026 04:37:19
+DONE semimem compliant meet 0.111 viol 0.02265 05-Nov-2026 04:37:27
+WAVE 4 intobl: rigid meet 0.000 viol 0; compliant meet 0.000 viol 0
+WAVE 4 semimem: rigid meet 0.000 viol 1; compliant meet 0.111 viol 0.02265
+WAVE 4 per_brev: rigid meet 0.444 viol 0.0262; compliant meet 0.222 viol 0.00883
+START per_long rigid 05-Nov-2026 04:37:29
+START extobl rigid 05-Nov-2026 04:37:29
+START bifemlh rigid 05-Nov-2026 04:37:29
+SCREEN extobl rigid dia10 n4 G1 objective 233.39
+SCREEN per_long rigid dia10 n1 G3 objective 707.33
+SCREEN bifemlh rigid dia10 n3 G2 objective 10705
+DONE extobl rigid meet 0.000 viol 0.007234 05-Nov-2026 04:38:36
+START extobl compliant 05-Nov-2026 04:38:36
+SCREEN extobl compliant dia10 n2 G2 objective 240.17
+DONE per_long rigid meet 0.000 viol 0.0442 05-Nov-2026 04:38:57
+START per_long compliant 05-Nov-2026 04:38:57
+DONE bifemlh rigid meet 0.000 viol 1.006 05-Nov-2026 04:38:58
+START bifemlh compliant 05-Nov-2026 04:38:58
+SCREEN bifemlh compliant dia20 n2 G2 objective 6695.1
+SCREEN per_long compliant dia10 n1 G3 objective 718.14
+DONE extobl compliant meet 0.000 viol 0.007062 05-Nov-2026 04:39:49
+DONE bifemlh compliant meet 0.333 viol 0.0348 05-Nov-2026 04:40:28
+DONE per_long compliant meet 0.000 viol 0.03978 05-Nov-2026 04:40:30
+WAVE 5 extobl: rigid meet 0.000 viol 0.007234; compliant meet 0.000 viol 0.007062
+WAVE 5 bifemlh: rigid meet 0.000 viol 1.006; compliant meet 0.333 viol 0.0348
+WAVE 5 per_long: rigid meet 0.000 viol 0.0442; compliant meet 0.000 viol 0.03978
+START soleus rigid 05-Nov-2026 04:40:32
+START rect_fem rigid 05-Nov-2026 04:40:32
+SCREEN soleus rigid dia10 n3 G1 objective 17446
+SCREEN rect_fem rigid dia10 n2 G1 objective 20384
+DONE soleus rigid meet 0.000 viol 1.233 05-Nov-2026 04:41:35
+START soleus compliant 05-Nov-2026 04:41:35
+SCREEN soleus compliant dia10 n2 G1 objective 17231
+DONE rect_fem rigid meet 0.000 viol 1.5 05-Nov-2026 04:41:51
+START rect_fem compliant 05-Nov-2026 04:41:51
+SCREEN rect_fem compliant dia10 n2 G1 objective 20384
+DONE soleus compliant meet 0.000 viol 1.241 05-Nov-2026 04:42:32
+DONE rect_fem compliant meet 0.000 viol 1.567 05-Nov-2026 04:43:06
+WAVE 6 rect_fem: rigid meet 0.000 viol 1.5; compliant meet 0.000 viol 1.567
+WAVE 6 soleus: rigid meet 0.000 viol 1.233; compliant meet 0.000 viol 1.241
+START med_gas rigid 05-Nov-2026 04:43:09
+START grac rigid 05-Nov-2026 04:43:09
+SCREEN grac rigid dia10 n1 G2 objective 10079
+SCREEN med_gas rigid dia10 n2 G1 objective 20488
+DONE med_gas rigid meet 0.000 viol 1.267 05-Nov-2026 04:44:29
+START med_gas compliant 05-Nov-2026 04:44:29
+DONE grac rigid meet 0.444 viol 1 05-Nov-2026 04:44:31
+START grac compliant 05-Nov-2026 04:44:31
+SCREEN med_gas compliant dia10 n2 G1 objective 20486
+SCREEN grac compliant dia20 n1 G2 objective 3004.5
+DONE med_gas compliant meet 0.000 viol 2.01 05-Nov-2026 04:45:51
+DONE grac compliant meet 0.889 viol 0.002273 05-Nov-2026 04:45:58
+WAVE 7 grac: rigid meet 0.444 viol 1; compliant meet 0.889 viol 0.002273
+WAVE 7 med_gas: rigid meet 0.000 viol 1.267; compliant meet 0.000 viol 2.01
+START lat_gas rigid 05-Nov-2026 04:46:01
+START sar rigid 05-Nov-2026 04:46:01
+SCREEN lat_gas rigid dia10 n2 G1 objective 20595
+SCREEN sar rigid dia10 n1 G2 objective 10353
+DONE lat_gas rigid meet 0.000 viol 1.392 05-Nov-2026 04:47:22
+START lat_gas compliant 05-Nov-2026 04:47:22
+DONE sar rigid meet 0.889 viol 1.015 05-Nov-2026 04:47:23
+START sar compliant 05-Nov-2026 04:47:23
+SCREEN lat_gas compliant dia10 n2 G1 objective 20594
+SCREEN sar compliant dia20 n1 G3 objective 7692.3
+DONE lat_gas compliant meet 0.000 viol 2.016 05-Nov-2026 04:48:44
+DONE sar compliant meet 0.444 viol 0.3147 05-Nov-2026 04:48:50
+WAVE 8 sar: rigid meet 0.889 viol 1.015; compliant meet 0.444 viol 0.3147
+WAVE 8 lat_gas: rigid meet 0.000 viol 1.392; compliant meet 0.000 viol 2.016
+START tib_ant rigid 05-Nov-2026 04:48:54
+START tfl rigid 05-Nov-2026 04:48:54
+SCREEN tib_ant rigid dia10 n2 G3 objective 342.11
+SCREEN tfl rigid dia10 n1 G3 objective 305.5
+DONE tib_ant rigid meet 0.000 viol 1.396e-05 05-Nov-2026 04:50:05
+START tib_ant compliant 05-Nov-2026 04:50:05
+DONE tfl rigid meet 0.556 viol 0.01588 05-Nov-2026 04:50:20
+START tfl compliant 05-Nov-2026 04:50:20
+SCREEN tib_ant compliant dia20 n2 G3 objective 497.71
+SCREEN tfl compliant dia10 n1 G3 objective 324.38
+DONE tib_ant compliant meet 0.000 viol 0.005743 05-Nov-2026 04:51:17
+DONE tfl compliant meet 0.667 viol 0.01649 05-Nov-2026 04:51:49
+WAVE 9 tfl: rigid meet 0.556 viol 0.01588; compliant meet 0.667 viol 0.01649
+WAVE 9 tib_ant: rigid meet 0.000 viol 1.396e-05; compliant meet 0.000 viol 0.005743
+START ext_dig rigid 05-Nov-2026 04:51:55
+START glut_max3 rigid 05-Nov-2026 04:51:55
+SCREEN ext_dig rigid dia10 n1 G1 objective 7210.1
+SCREEN glut_max3 rigid dia10 n8 G3 objective 4809.2
+DONE ext_dig rigid meet 0.000 viol 0.5171 05-Nov-2026 04:53:20
+START ext_dig compliant 05-Nov-2026 04:53:20
+DONE glut_max3 rigid meet 0.111 viol 0.02016 05-Nov-2026 04:53:40
+START glut_max3 compliant 05-Nov-2026 04:53:40
+SCREEN ext_dig compliant dia20 n1 G2 objective 1698.4
+SCREEN glut_max3 compliant dia20 n5 G3 objective 460.33
+DONE ext_dig compliant meet 1.000 viol 0.005248 05-Nov-2026 04:55:00
+DONE glut_max3 compliant meet 0.000 viol 0 05-Nov-2026 04:55:21
+WAVE 10 glut_max3: rigid meet 0.111 viol 0.02016; compliant meet 0.000 viol 0
+WAVE 10 ext_dig: rigid meet 0.000 viol 0.5171; compliant meet 1.000 viol 0.005248
+START ext_hal rigid 05-Nov-2026 04:55:28
+SCREEN ext_hal rigid dia10 n1 G1 objective 8678.2
+DONE ext_hal rigid meet 0.778 viol 0.7273 05-Nov-2026 04:56:50
+START ext_hal compliant 05-Nov-2026 04:56:50
+SCREEN ext_hal compliant dia10 n1 G1 objective 1569.9
+DONE ext_hal compliant meet 1.000 viol 0.02291 05-Nov-2026 04:58:14
+WAVE 11 ext_hal: rigid meet 0.778 viol 0.7273; compliant meet 1.000 viol 0.02291
+START per_tert rigid 05-Nov-2026 04:58:19
+SCREEN per_tert rigid dia20 n1 G3 objective 16290
+DONE per_tert rigid meet 0.000 viol 0.8897 05-Nov-2026 04:59:36
+START per_tert compliant 05-Nov-2026 04:59:36
+SCREEN per_tert compliant dia20 n4 G1 objective 18037
+DONE per_tert compliant meet 0.000 viol 1.028 05-Nov-2026 05:00:55
+WAVE 12 per_tert: rigid meet 0.000 viol 0.8897; compliant meet 0.000 viol 1.028

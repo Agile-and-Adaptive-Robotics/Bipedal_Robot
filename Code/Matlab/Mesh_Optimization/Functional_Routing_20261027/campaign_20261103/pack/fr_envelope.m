@@ -21,9 +21,38 @@ env.caseName = caseDef.name;
 env.groupMapId = caseDef.groupMapId;
 env.design = design;
 env.xiBranch = xiBranch;
+env.caseDef = caseDef;
 nG = numel(qPoseList);
 qg = struct('passIdx', caseDef.envelopePassIdx, 'qList', {qPoseList});
 [mech, meta] = fr_mechBuild(C, caseDef, design, kin, xiBranch, qg);
+% Use full solved vessel lengths for every channel, including two-point
+% routes. The old pre-crossing polyline could have no length at all.
+env.capsules = fr_sleevePrimitives(C, caseDef, design, kin, mech, meta);
+env.strainAtPose = mech.strain_p;
+env.exitRow = caseDef.cross(1)-1;
+env.spheres = cell(1,nG);
+for poseIdx=1:nG
+ caps=env.capsules{poseIdx};points=[];radii=[];what={};kind={};
+ for branchIdx=1:numel(caps)
+  cap=caps(branchIdx);
+  p1=cap.p1;p2=cap.p2;rf=max(.006,str2double(caseDef.diaStr)/2000);
+  if isfield(C,'fullFittingEnvelopes')&&C.fullFittingEnvelopes
+   u=(p2-p1)/max(norm(p2-p1),eps);half=caseDef.fittingLength/2;
+   p1=p1-u*half;p2=p2+u*half;rf=hypot(rf,half);
+  end
+  points=[points;p1;p2]; %#ok<AGROW>
+  radii=[radii,rf,rf]; %#ok<AGROW>
+  what=[what,{'fitting_origin','fitting_exit'}];kind=[kind,{'rigid_fitting','rigid_fitting'}]; %#ok<AGROW>
+ end
+ if caseDef.hasTackle
+  fam=C.families(caseDef.txConfig.tackleFamily);
+  points=[points;mean(vertcat(caps.p2),1)];radii=[radii,(fam.od_mm/2+2)/1000]; %#ok<AGROW>
+  what=[what,{'tackle'}];kind=[kind,{'rigid_tackle'}]; %#ok<AGROW>
+ end
+ env.spheres{poseIdx}=struct('p',points,'r',radii,'what',{what},'kind',{kind});
+end
+env.geometryConvention='Full physical sleeve length, route-tangent pinned candidate; all parallel branches.';
+return
 loc = meta.loc;
 Drest = fr_diameter(C, caseDef.diaStr, 0);
 % the SLEEVE (BPA side) spans rows 1..cross(1)-1: the capsule ends at the
@@ -123,13 +152,14 @@ p = (Tm(1:3, 1:3) * prow(:) + Tm(1:3, 4))';
 end
 
 function offs = fr_bundleOffsets(nBPA)
-switch min(nBPA, 3)
+switch nBPA
     case 1
         offs = [0 0];
     case 2
         offs = [0 1; 0 -1];
     otherwise
-        th = (0:2) * 2 * pi / 3;
-        offs = [cos(th)', sin(th)'];
+        th = (0:nBPA-1) * 2 * pi / nBPA;
+        radius = 1/sin(pi/nBPA);
+        offs = radius * [cos(th)', sin(th)'];
 end
 end

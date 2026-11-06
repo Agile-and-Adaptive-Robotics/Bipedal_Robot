@@ -1,0 +1,25 @@
+requirement,status,evidence_or_limit
+"27 groups, rigid and Xi0–Xi3 branches",RUN,54 separate repaired branch results; target success checked separately
+Pulley mechanics,PARTIAL,BiPulley mathematical gains; no qualified physical reeving
+Parallel BPAs,PARTIAL,"Force counts and all vessel channels; fixed bundle layout, not independent branch placement"
+10/20 mm sizing,RUN,Both sizes screened; 10 mm external-diameter convention needs confirmation
+Contraction limits and swelling,RUN,Solved vessel contraction; 16.5%/24%; 20 to 38 mm calibration
+Surface-bounded attachment search,REPAIRED,"Finite seeds, PCA directions, single displacement and bounded disk"
+Erector spinae from stock OpenSim,YES,Default fr_cases27 routeSrc=C.osimStock
+Pelvis centerline ban,CHECKED,All used attachment rows across sampled passes
+Foot tendon and no foot BPA,PARTIAL,Optimized tendon span and conservative full-vessel ankle-plane rule; hardware geometry incomplete
+Knee tendon and pinned sections,PARTIAL,Span requirement and physical section candidates; independent series equilibrium unresolved
+Deep-to-superficial layers,RUN,Provisional anatomical regional order plus coordinated refinement
+Soft muscle interference,YES,BPA penetration is penalized; retained rigid envelopes are hard constraints
+Complete robot CAD clearance,NO,Three closed native bone fields; open surfaces/clouds and robot registration incomplete
+Vasti combined target,YES,vas_int_r + vas_lat_r + vas_med_r
+Vasti cam equilibrium,NO,Existing helper not coupled into mechanics
+Semimem combined target,YES,semimem_r + semiten_r
+Adductor combined target,YES,Three add_mag compartments + add_long + add_brev
+Gluteal aggregate target,YES,All nine glute_max/med/min compartments; no invented three-way repartition
+Psoas–iliacus junction,NO,Contract describes coupling but solver evaluates separate routes
+Two compliant brackets,PARTIAL,Origin and insertion channels; prototype-specific stiffness transfer remains an assumption
+"Small torque-shape penalty, no off-axis penalty",YES,Existing objective specification; no secondary torque term
+At most three tackle designs,CANDIDATES,S/M/L envelopes screened; assembly WLL unresolved
+Bicycle-style Bowden components,CANDIDATES,Catalog dimension references and explicit unverified load/bend placeholders
+"OpenSim first, then Blender",VERIFIED,Serialized blue paths reopened with native OpenSim before Blender build

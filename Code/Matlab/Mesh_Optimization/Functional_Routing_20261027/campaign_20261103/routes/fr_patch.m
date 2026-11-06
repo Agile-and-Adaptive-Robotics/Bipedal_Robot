@@ -29,6 +29,7 @@ function P = fr_patch(C, boneName, seedBodyFrame, seedLoc, patchRadius_mm)
 
 cloud = fr_loadCloud(C, boneName);
 seed = seedLoc(:)';
+assert(all(isfinite(seed)),'fr_patch:InvalidSeed','Non-finite attachment seed on %s (%s)',boneName,seedBodyFrame);
 r_local = min(0.08, 3 * patchRadius_mm / 1000);
 d2 = sum((cloud - seed).^2, 2);
 near = cloud(d2 <= r_local^2, :);
@@ -37,7 +38,7 @@ if size(near, 1) < 8
     [~, ord] = sort(d2s, 'ascend');
     near = cloud(ord(1:min(15, numel(ord))), :);
 end
-[~, S] = svd(near - mean(near, 1), 0);
+[~, ~, S] = svd(near - mean(near, 1), 0);
 n = S(:, 3)';                        % smallest-variance direction = normal
 if dot(n, seed - mean(near, 1)) < 0  % orient outward
     n = -n;
@@ -76,10 +77,15 @@ function p = fr_project(cloud, seed, e1, e2, Rpatch, nAtSeed, s_mm, u, v)
 % freeze u,v on sparse clouds).
 uc = max(-1, min(1, u));
 vc = max(-1, min(1, v));
+r=hypot(uc,vc);if r>1;uc=uc/r;vc=vc/r;end
 c = seed + Rpatch * (uc * e1 + vc * e2);
 d2 = sum((cloud - c).^2, 2);
 [~, k] = min(d2);
-p = cloud(k, :) + Rpatch * (uc * e1 + vc * e2) + (s_mm / 1000) * nAtSeed;
+% c already contains the tangential displacement. Adding the same u/v
+% displacement again after nearest-point selection doubles the search.
+delta=c-cloud(k,:);
+tangent=dot(delta,e1)*e1+dot(delta,e2)*e2;
+p = cloud(k, :) + tangent + (s_mm / 1000) * nAtSeed;
 p = p(:)';
 end
 

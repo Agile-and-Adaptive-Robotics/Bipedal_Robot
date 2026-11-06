@@ -1,3 +1,7 @@
+> **PF design audit:** these reconstructed circuits fail or lack PF timing
+> verification. Their earlier output-fit passes do not validate the PF design.
+> Synapses are now routed outside neurons with segment-level checks.
+> See [timing/design audit](PF_DESIGN_AUDIT_20261105.md).
 # Fitted s3k and syn6: circuits beside neural activity
 
 Machine: **easteregg2**. Session 1, 2026-11-05.
@@ -114,3 +118,4 @@ Every figure has PNG, PDF, and editable SVG versions. `CIRCUIT_SUMMARY.json`
 contains checkpoint identity, exact trace-reconstruction checks, mirror checks,
 direct RG/PF routes, and per-muscle local/central Ib paths. No neural wiring,
 muscle physics, curriculum result, or manuscript was changed to make a diagram.
+

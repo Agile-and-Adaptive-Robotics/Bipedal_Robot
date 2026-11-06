@@ -12,7 +12,12 @@ function C = fr_setup()
 % (maxBPAforce, festo4, bpaR, BiPam_pulley2_20261022) WITHOUT modifying any
 % existing file.
 
-repo = 'D:/GitHub/Bipedal_Robot';
+repo = fileparts(mfilename('fullpath'));
+while ~strcmpi(string(lastFolder(repo)), "Bipedal_Robot")
+    parent = fileparts(repo);
+    assert(~strcmp(parent, repo), 'fr_setup:RepoRoot', 'Cannot locate repository root');
+    repo = parent;
+end
 camp = fullfile(repo, 'Code', 'Matlab', 'Mesh_Optimization', ...
     'Functional_Routing_20261027', 'campaign_20261103');
 
@@ -103,9 +108,11 @@ C.bowden = struct('housingOD_mm', 5.0, 'ferrule_mm', 12.0, ...
 % along the local normal, so a Cartesian step cannot carry the mount far
 % off the bone (master directive item 3).
 C.patchRadiusDefault_mm = 30.0;
-C.standoff_mm = [1.0 12.0];       % [min max] mount standoff, millimeters
+C.standoff_mm = [1.0 35.0];       % Proposed bracket-pin reach; surface root patch remains bounded.
 C.clearanceBone_m = 0.001;        % rigid clearance (buildGeoExclusion.m:20)
 C.clearanceEnvelope_m = 0.003;    % hard inter-layer envelope clearance
+C.exactSegmentDistance = true;
+C.fullFittingEnvelopes = true;
 
 % ---- solver budgets (stage-1 demonstrator scale) -----------------------
 C.solver = struct('MaxFunctionEvaluations', 600, ...
@@ -115,7 +122,10 @@ C.solver = struct('MaxFunctionEvaluations', 600, ...
 C.refinementRounds = 1;           % coordinated refinement rounds after pass 1
 C.refineTolerance = 1e-6;         % allowed degradation of a retained layer's
                                   % objective in a refinement round
-C.parallelMaxWorkers = 10;        % AGENTS.md easteregg2 pool cap
+C.parallelMaxWorkers = min(10, feature('numcores'));
+if strcmpi(getenv('COMPUTERNAME'), 'DESKTOP-5Q16KE9')
+    C.parallelMaxWorkers = min(6, C.parallelMaxWorkers);
+end
 C.rngSeed = 20261103;
 
 % ---- kinematics validation tolerance -----------------------------------
@@ -123,4 +133,8 @@ C.kinTolMm = 0.5;   % vs geometry_20261103 bodyTransformsInGround (6 poses)
 
 % ---- logging ------------------------------------------------------------
 C.verbose = true;
+end
+
+function name = lastFolder(path)
+[~, name] = fileparts(path);
 end
