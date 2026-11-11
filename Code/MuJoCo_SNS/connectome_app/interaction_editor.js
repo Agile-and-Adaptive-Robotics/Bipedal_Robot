@@ -1,11 +1,13 @@
 // Selection and routing are presentation edits; canonical endpoints stay fixed.
 let selectedWirePoints=new Set(), wirePointDrag=null, perimeterDrag=null, nodePointDrag=null;
 const wirePointKey=(e,k)=>e.id+':'+k;
-function selectedPointRecords(){return edges.flatMap(e=>(e.pts||[]).flatMap((p,k)=>selectedWirePoints.has(wirePointKey(e,k))?[{e,k,x:p.x,y:p.y}]:[]));}
+function routingPoints(e){return e.pts?.length?e.pts:e._uiPts||[];}
+function editableRoutingPoints(e){if(!e.pts?.length)e.pts=desktopCopy(e._uiPts||[]);return e.pts;}
+function selectedPointRecords(){return edges.flatMap(e=>routingPoints(e).flatMap((p,k)=>selectedWirePoints.has(wirePointKey(e,k))?[{e,k,x:p.x,y:p.y}]:[]));}
 function selectRectangle(r,add=false){
  if(!add){selSet.clear();selectedWirePoints.clear();}
  for(const n of nodes){const g=desktopGeom(n);if(!isHiddenNode(n)&&n.x+g.w/2>=r.x0&&n.x-g.w/2<=r.x1&&n.y+g.h/2>=r.y0&&n.y-g.h/2<=r.y1)selSet.add(n.id);}
- for(const e of edges)if(!isHiddenNode(nodeById(e.from))&&!isHiddenNode(nodeById(e.to)))for(const[p,k]of(e.pts||[]).map((p,k)=>[p,k]))if(p.x>=r.x0&&p.x<=r.x1&&p.y>=r.y0&&p.y<=r.y1)selectedWirePoints.add(wirePointKey(e,k));
+ for(const e of edges)if(!isHiddenNode(nodeById(e.from))&&!isHiddenNode(nodeById(e.to)))for(const[p,k]of routingPoints(e).map((p,k)=>[p,k]))if(p.x>=r.x0&&p.x<=r.x1&&p.y>=r.y0&&p.y<=r.y1)selectedWirePoints.add(wirePointKey(e,k));
  sel=selSet.size===1?{kind:'node',id:[...selSet][0]}:null;applySelClasses();redrawEdges();updatePanel();status(`${selSet.size} neurons, ${selectedWirePoints.size} wire points selected`);
 }
 function perimeterPort(n,p){
@@ -15,7 +17,7 @@ function perimeterPort(n,p){
  const hit=candidates.sort((a,b)=>a.d-b.d)[0];return{side:hit.side,offset:Math.max(0,Math.min(1,hit.offset))};
 }
 const perimeterAnchor=anchor;
-anchor=function(n,tx,ty,port){if(port?.angle!==undefined){const g=desktopGeom(n);return{x:n.x+g.w/2*Math.cos(port.angle),y:n.y+g.h/2*Math.sin(port.angle)};}return perimeterAnchor(n,tx,ty,port);};
+anchor=function(n,tx,ty,port){const g=desktopGeom(n);if(port?.angle!==undefined)return{x:n.x+g.w/2*Math.cos(port.angle),y:n.y+g.h/2*Math.sin(port.angle)};const p=perimeterAnchor(n,tx,ty,port);if(port&&(g.shape==='circle'||g.shape==='ellipse')){const x=(p.x-n.x)/(g.w/2),y=(p.y-n.y)/(g.h/2),scale=Math.hypot(x,y)||1;return{x:n.x+(p.x-n.x)/scale,y:n.y+(p.y-n.y)/scale};}return p;};
 function startSelectedPointDrag(ev,e,k){
  if(ev.button!==undefined&&ev.button!==0)return;
  ev.stopPropagation();const key=wirePointKey(e,k);
@@ -25,7 +27,7 @@ function startSelectedPointDrag(ev,e,k){
 }
 const routingRenderEdge=renderEdge;
 renderEdge=function(e,hm){routingRenderEdge(e,hm);if(!e.el)return;e.el.querySelectorAll('.bend').forEach(h=>h.remove());
- for(const[p,k]of(e.pts||[]).map((p,k)=>[p,k]))if(selectedWirePoints.has(wirePointKey(e,k))||(sel?.kind==='edge'&&sel.id===e.id)){
+ for(const[p,k]of routingPoints(e).map((p,k)=>[p,k]))if(selectedWirePoints.has(wirePointKey(e,k))||(sel?.kind==='edge'&&sel.id===e.id)){
   const h=dEl('circle',{cx:p.x,cy:p.y,r:6,fill:selectedWirePoints.has(wirePointKey(e,k))?'#CD34B5':'white',stroke:'#A01A91','stroke-width':2,class:'bend'});
   h.addEventListener('mousedown',ev=>startSelectedPointDrag(ev,e,k));h.addEventListener('click',ev=>ev.stopPropagation());e.el.append(h);
  }
@@ -38,9 +40,9 @@ startDrag=function(ev,id){const n=nodeById(id);nodePointDrag=!ev.altKey&&!ev.shi
 const routingMove=onMove;
 onMove=function(ev){
  if(perimeterDrag){const d=perimeterDrag;if(!d.moved)snapshot();d.moved=true;d.e[d.side+'Port']=perimeterPort(nodeById(d.e[d.side]),svgPoint(ev));redrawEdges();return;}
- if(wirePointDrag){const d=wirePointDrag,p=svgPoint(ev),dx=p.x-d.origin.x,dy=p.y-d.origin.y;if(!d.moved&&Math.hypot(dx,dy)<=2)return;if(!d.moved)snapshot();d.moved=true;for(const a of d.points)a.e.pts[a.k]={x:a.x+dx,y:a.y+dy};for(const a of d.neurons){a.n.x=a.x+dx;a.n.y=a.y+dy;a.n.el?.remove();renderNode(a.n,true);}redrawEdges();return;}
+ if(wirePointDrag){const d=wirePointDrag,p=svgPoint(ev),dx=p.x-d.origin.x,dy=p.y-d.origin.y;if(!d.moved&&Math.hypot(dx,dy)<=2)return;if(!d.moved)snapshot();d.moved=true;for(const a of d.points)editableRoutingPoints(a.e)[a.k]={x:a.x+dx,y:a.y+dy};for(const a of d.neurons){a.n.x=a.x+dx;a.n.y=a.y+dy;a.n.el?.remove();renderNode(a.n,true);}redrawEdges();return;}
  routingMove(ev);
- if(nodePointDrag&&drag?.moved){const d=nodePointDrag,n=nodeById(d.id);for(const a of d.points)a.e.pts[a.k]={x:a.x+n.x-d.x,y:a.y+n.y-d.y};redrawEdges();}
+ if(nodePointDrag&&drag?.moved){const d=nodePointDrag,n=nodeById(d.id);for(const a of d.points)editableRoutingPoints(a.e)[a.k]={x:a.x+n.x-d.x,y:a.y+n.y-d.y};redrawEdges();}
 };
 const routingEnd=endDrag;
 endDrag=function(ev){

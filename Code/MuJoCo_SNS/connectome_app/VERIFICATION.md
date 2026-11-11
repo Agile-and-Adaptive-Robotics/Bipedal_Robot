@@ -1,5 +1,61 @@
 # Desktop milestone verification
 
+## Bilateral overview and unpack correction
+
+The first overview now exposes left/right RG, PF, MN, afferent, and reflex
+modules. It removes the extra layer folder from existing generated hierarchies
+on open, preserving every leaf neuron, synapse parameter, source record, and
+explicit input binding. A version marker preserves later intentional regrouping.
+The old RG folder can also be unpacked into labeled Left RG and Right RG blocks.
+Unpacking translates internal wire bends and accepts a single boxed selection.
+
+Sixteen Python tests pass, including migration and per-controller bilateral
+structure. The JavaScript regression checks the exact old-wrapper case, its
+afferent and explicit input targets, and a subsequent expansion into RG cells.
+The Qt desktop checks dispatch the actual Ctrl+Shift+G keyboard shortcut in all
+four controllers, compare the complete canonical synapse operators, verify
+afferent targets, and restore the block with Undo. Native paired saves and the
+four motor views continue to pass. Overview routing uses local paths to keep
+the bilateral blocks readable. No simulation was run.
+
+## Native editing and hierarchical motor views
+
+Verified on EB475WS4 using the existing myo environment for static file checks
+and ConnectomeEditorRuntime for the generated Qt page. No circuit or body
+integration was executed.
+
+- Thirteen Python tests pass. Native checks cover byte-exact unchanged imports,
+  the 108-neuron/216-synapse census, native neuron settings, shared-type cloning
+  for one edited synapse, paired GUI/runtime units, new/reconnected neurons and
+  AddFlow indexes, adapter removal, Save As isolation, drawing ports/bends, and
+  companion-file conflict detection. Rigid-body mechanics is preserved.
+- JavaScript checks cover rectangle selection of wire control points and
+  neurons, moving that combined selection, sliding an endpoint on the same
+  neuron, saving perimeter ports, canonical edits from motor views, deletion and
+  undo restoration of synapses, and motor-view grouping/reopen.
+- `tests/desktop_smoke.py` exercises the actual generated Qt page, its file
+  bridge, and temporary native files. It opens W2L108, enters its left paired MN
+  circuit, checks reflex/physical symbols, performs two native saves, and returns
+  to the hierarchy. It then opens reviewed Syn6, saved s3k, and saved w2lvar;
+  verifies their full censuses; opens their left paired motor views; and tests
+  opening a new tab from a motor view and returning to the original model.
+  All four desktop cases pass.
+- RG is placed above PF and MN. The sidebar exposes left/right hierarchy
+  branches. Off-page aliases refer to canonical neurons, and larger groups can
+  be entered to inspect their individual members. Visibility never deletes
+  model connections. Presentation groups and native model data are saved
+  separately.
+- The editable native package is
+  `D:\Users\Ben Bolen\Connectome_Editor_Projects\Models\W2L108\W2L108.aproj`,
+  with its `.asim`, `.editor.json`, and local assets. The verified reference
+  package and the separately recorded GENTLE108 graph were not overwritten.
+
+The reviewed Syn6 graph contains no Renshaw cells; those are not synthesized
+from another condition. Other families retain JSON graph saves; this update
+implements native write-back for W2L108, not Python source generation for all
+controllers. The original browser editor and existing editor windows are
+unchanged. Relaunch the desktop editor to load these changes.
+
 ## Controller library update
 
 The controller library adds native-file menu entries and full graph hierarchy

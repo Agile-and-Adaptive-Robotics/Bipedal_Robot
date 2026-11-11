@@ -13,6 +13,9 @@ NATIVE=REPO/'Documentation/Reports and Papers/Dissertation/Notes/sns_rebuild_ses
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def side(name):return 'Left' if name.endswith('_l') or name.startswith('L ') else 'Right' if name.endswith('_r') or name.startswith('R ') else 'Shared'
 def kind(name,layer):
+    if name.startswith('IIIN_'):return 'IN-IIIN'
+    if name.startswith('IIX_'):return 'IN-IIX'
+    if name.startswith(('IBIN_','IbIN_')):return 'IN-IbIN'
     if layer=='PF' and name.startswith('PF_S'):return 'PF'
     if 'RG'==layer and ('IN' in name or name.startswith('In')):return 'IN-InE' if 'E' in name or 'ext' in name else 'IN-InF'
     if layer in ('RG','PF') and not ('IN' in name):return ('HC-RG-' if layer=='RG' else 'HC-PF-')+('E' if '_E_' in name or name.endswith(' ext') or '-E_' in name else 'F')
@@ -62,7 +65,8 @@ def hierarchy(flat):
         for key,p in [('from',a),('to',b)]:e[key+'Id']=p[start];e[key+'Path']=p[start+1:]
         target['edges'].append(e)
     root['title']=flat['title']+' — hierarchy';root['presentation']={'style':'schematic','bundle_module_wires':True}
-    root=normalize(root)
+    from graph_ops import bilateral_overview
+    root=bilateral_overview(normalize(root))
     ns,es,_=flatten(root)
     assert {n['id'] for n in ns}=={n['id'] for n in flat['nodes']}
     before={e['id']:(e['fromId'],e['toId'],e['synapse']) for e in flat['edges']}

@@ -97,6 +97,15 @@ class FileSession:
             sidecar=path.with_suffix('.editor.json')
             if sidecar.exists():self.native_hashes[tab][str(sidecar)]=fingerprint(sidecar)
         else:doc=normalize(json.loads(path.read_text(encoding='utf-8-sig')))
+        def classify(graph):
+            for node in graph['nodes']:
+                if node.get('sub') is not None:classify(node['sub'])
+                elif node.get('source_record') and node['type']=='IN-IaIN':
+                    for prefix,kind in [('IIIN_','IN-IIIN'),('IIX_','IN-IIX'),('IBIN_','IN-IbIN'),('IbIN_','IN-IbIN')]:
+                        if node['label'].startswith(prefix):node['type']=kind
+        classify(doc)
+        from graph_ops import bilateral_overview
+        doc=bilateral_overview(doc)
         self.paths[tab]=path;self.hashes[tab]=fingerprint(path)
         return doc
     def save(self,doc,tab,path=None):
