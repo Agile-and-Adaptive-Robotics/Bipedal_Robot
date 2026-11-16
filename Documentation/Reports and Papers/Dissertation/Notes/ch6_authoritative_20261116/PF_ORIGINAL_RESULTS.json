@@ -1,0 +1,752 @@
+{
+  "method_file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_pf_design_20261105\\pf_timing_audit.py",
+  "method_sha256": "94e7686757f7b02283e6ed0e3a635456313ac9abe6cea61c66891981b338d81c",
+  "fsa_sha256": "45519a6b166a6182c84eb262891ce21217c999fa298f74279c1220ab1517f470",
+  "cases": {
+    "s3k": {
+      "raw": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\s3k_relay_output_20261104\\BEST_TRACE.npz",
+      "raw_sha256": "89f58384f9dc85d40866af8505518b16a9aa774414eac80cfd9216657fd73aea",
+      "window_seconds": [
+        2.466,
+        13.556835
+      ],
+      "T": 1.233,
+      "rows": [
+        {
+          "cell": "PF_E1_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.445,
+            "onset_phase_percent": [
+              92.5
+            ],
+            "offset_phase_percent": [
+              37.0
+            ],
+            "peak_phase_percent": 9.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": -56.10892678868149
+          }
+        },
+        {
+          "cell": "PF_E2_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.475,
+            "onset_phase_percent": [
+              93.0
+            ],
+            "offset_phase_percent": [
+              40.5
+            ],
+            "peak_phase_percent": 10.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -60.07626788529009
+          }
+        },
+        {
+          "cell": "PF_F1_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.34,
+            "onset_phase_percent": [
+              46.5
+            ],
+            "offset_phase_percent": [
+              80.5
+            ],
+            "peak_phase_percent": 65.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": 130.42995664730728
+          }
+        },
+        {
+          "cell": "PF_F2_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.41,
+            "onset_phase_percent": [
+              47.0
+            ],
+            "offset_phase_percent": [
+              88.0
+            ],
+            "peak_phase_percent": 66.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 121.98103207573585
+          }
+        },
+        {
+          "cell": "PF_E1_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.435,
+            "onset_phase_percent": [
+              43.0
+            ],
+            "offset_phase_percent": [
+              86.5
+            ],
+            "peak_phase_percent": 60.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": 124.75213728792882
+          }
+        },
+        {
+          "cell": "PF_E2_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.465,
+            "onset_phase_percent": [
+              43.0
+            ],
+            "offset_phase_percent": [
+              89.5
+            ],
+            "peak_phase_percent": 60.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 120.74507978707238
+          }
+        },
+        {
+          "cell": "PF_F1_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.35,
+            "onset_phase_percent": [
+              95.5
+            ],
+            "offset_phase_percent": [
+              30.5
+            ],
+            "peak_phase_percent": 17.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -48.899359301096204
+          }
+        },
+        {
+          "cell": "PF_F2_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.415,
+            "onset_phase_percent": [
+              96.5
+            ],
+            "offset_phase_percent": [
+              38.0
+            ],
+            "peak_phase_percent": 18.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": -57.4655517066204
+          }
+        }
+      ],
+      "rank": {
+        "r": {
+          "actual": {
+            "singular_values": [
+              10.266228940642828,
+              4.651310441450276,
+              0.7217693640285,
+              0.420331031656352
+            ],
+            "rank_for99percent_variance": 2
+          }
+        },
+        "l": {
+          "actual": {
+            "singular_values": [
+              10.231327394791599,
+              4.6639198045025285,
+              0.7334403103044342,
+              0.42435561249000736
+            ],
+            "rank_for99percent_variance": 2
+          }
+        }
+      },
+      "max_feature_delta_from_retained_audit": 0
+    },
+    "syn6": {
+      "raw": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_D_20261104\\syn6\\BEST_TRACE.npz",
+      "raw_sha256": "8c2bcf9a0f265a0ec9020765d4c3689d49e68b2a2377b4bc2f6ed578a3b19251",
+      "window_seconds": [
+        2.466,
+        13.556835
+      ],
+      "T": 1.233,
+      "rows": [
+        {
+          "cell": "PF_S1_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.355,
+            "onset_phase_percent": [
+              54.0
+            ],
+            "offset_phase_percent": [
+              89.5
+            ],
+            "peak_phase_percent": 72.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": 105.36800362489207
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9946410792292756,
+            "excursion": 0.9946410792292756,
+            "duty_fraction": 0.135,
+            "onset_phase_percent": [
+              90.0
+            ],
+            "offset_phase_percent": [
+              3.5000000000000004
+            ],
+            "peak_phase_percent": 97.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": 21.297138082801105
+          },
+          "lag": -84.07086554209096,
+          "passed": false
+        },
+        {
+          "cell": "PF_S2_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.495,
+            "onset_phase_percent": [
+              96.5
+            ],
+            "offset_phase_percent": [
+              46.0
+            ],
+            "peak_phase_percent": 14.000000000000002,
+            "phase_defined": true,
+            "fundamental_phase_deg": -74.74037942726117
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9156653028595245,
+            "excursion": 0.9156653028595245,
+            "duty_fraction": 0.285,
+            "onset_phase_percent": [
+              34.0
+            ],
+            "offset_phase_percent": [
+              62.5
+            ],
+            "peak_phase_percent": 51.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -174.81483214612084
+          },
+          "lag": -100.07445271885966,
+          "passed": false
+        },
+        {
+          "cell": "PF_S3_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.46,
+            "onset_phase_percent": [
+              96.5
+            ],
+            "offset_phase_percent": [
+              42.5
+            ],
+            "peak_phase_percent": 13.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": -70.92633826888489
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9247223335266833,
+            "excursion": 0.9247223335266833,
+            "duty_fraction": 0.135,
+            "onset_phase_percent": [
+              7.5
+            ],
+            "offset_phase_percent": [
+              21.0
+            ],
+            "peak_phase_percent": 13.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": -49.82940127747378
+          },
+          "lag": 21.0969369914111,
+          "passed": false
+        },
+        {
+          "cell": "PF_S4_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.32,
+            "onset_phase_percent": [
+              54.0
+            ],
+            "offset_phase_percent": [
+              86.0
+            ],
+            "peak_phase_percent": 71.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 109.53953055016669
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9987092762187698,
+            "excursion": 0.9987092762187698,
+            "duty_fraction": 0.395,
+            "onset_phase_percent": [
+              0.5,
+              65.5
+            ],
+            "offset_phase_percent": [
+              12.5,
+              93.0
+            ],
+            "peak_phase_percent": 86.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 48.34369091156409
+          },
+          "lag": -61.19583963860259,
+          "passed": false
+        },
+        {
+          "cell": "PF_S5_r",
+          "actual": {
+            "minimum": 0.6845119115948329,
+            "maximum": 0.9592485448198987,
+            "excursion": 0.2747366332250658,
+            "duty_fraction": 1.0,
+            "onset_phase_percent": [],
+            "offset_phase_percent": [],
+            "peak_phase_percent": 73.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": 164.14311770445764
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9991397776578317,
+            "excursion": 0.9991397776578317,
+            "duty_fraction": 0.325,
+            "onset_phase_percent": [
+              22.5,
+              62.5
+            ],
+            "offset_phase_percent": [
+              43.5,
+              74.0
+            ],
+            "peak_phase_percent": 33.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": -145.83474585399188
+          },
+          "lag": 50.022136441550515,
+          "passed": false
+        },
+        {
+          "cell": "PF_S6_r",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.43,
+            "onset_phase_percent": [
+              96.0
+            ],
+            "offset_phase_percent": [
+              39.0
+            ],
+            "peak_phase_percent": 12.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": -66.51256932199252
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9975523121783854,
+            "excursion": 0.9975523121783854,
+            "duty_fraction": 0.235,
+            "onset_phase_percent": [
+              0.5,
+              16.5
+            ],
+            "offset_phase_percent": [
+              12.0,
+              28.499999999999996
+            ],
+            "peak_phase_percent": 5.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": -45.990643331515486
+          },
+          "lag": 20.52192599047703,
+          "passed": false
+        },
+        {
+          "cell": "PF_S1_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.36,
+            "onset_phase_percent": [
+              3.5000000000000004
+            ],
+            "offset_phase_percent": [
+              39.5
+            ],
+            "peak_phase_percent": 22.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -73.02227450055949
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9956562069738317,
+            "excursion": 0.9956562069738317,
+            "duty_fraction": 0.14,
+            "onset_phase_percent": [
+              40.5
+            ],
+            "offset_phase_percent": [
+              54.50000000000001
+            ],
+            "peak_phase_percent": 48.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -161.65635035148478
+          },
+          "lag": -88.63407585092529,
+          "passed": false
+        },
+        {
+          "cell": "PF_S2_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.485,
+            "onset_phase_percent": [
+              46.5
+            ],
+            "offset_phase_percent": [
+              95.0
+            ],
+            "peak_phase_percent": 64.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": 106.95278709407299
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9163466584017821,
+            "excursion": 0.9163466584017821,
+            "duty_fraction": 0.29,
+            "onset_phase_percent": [
+              84.5
+            ],
+            "offset_phase_percent": [
+              13.5
+            ],
+            "peak_phase_percent": 2.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": 2.2691737538793406
+          },
+          "lag": -104.68361334019365,
+          "passed": false
+        },
+        {
+          "cell": "PF_S3_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.45,
+            "onset_phase_percent": [
+              46.5
+            ],
+            "offset_phase_percent": [
+              91.5
+            ],
+            "peak_phase_percent": 63.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 110.79015548944776
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9229413951724913,
+            "excursion": 0.9229413951724913,
+            "duty_fraction": 0.135,
+            "onset_phase_percent": [
+              58.5
+            ],
+            "offset_phase_percent": [
+              72.0
+            ],
+            "peak_phase_percent": 64.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 127.24309085288536
+          },
+          "lag": 16.452935363437604,
+          "passed": false
+        },
+        {
+          "cell": "PF_S4_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.325,
+            "onset_phase_percent": [
+              3.0
+            ],
+            "offset_phase_percent": [
+              35.5
+            ],
+            "peak_phase_percent": 21.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -68.81398307332606
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9933906914753899,
+            "excursion": 0.9933906914753899,
+            "duty_fraction": 0.39,
+            "onset_phase_percent": [
+              16.5,
+              51.5
+            ],
+            "offset_phase_percent": [
+              44.0,
+              63.0
+            ],
+            "peak_phase_percent": 37.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -134.5561756281393
+          },
+          "lag": -65.74219255481324,
+          "passed": false
+        },
+        {
+          "cell": "PF_S5_l",
+          "actual": {
+            "minimum": 0.6884842286925003,
+            "maximum": 0.9575847780654754,
+            "excursion": 0.2691005493729751,
+            "duty_fraction": 1.0,
+            "onset_phase_percent": [],
+            "offset_phase_percent": [],
+            "peak_phase_percent": 23.0,
+            "phase_defined": true,
+            "fundamental_phase_deg": -14.346734610625344
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9998213083256596,
+            "excursion": 0.9998213083256596,
+            "duty_fraction": 0.33,
+            "onset_phase_percent": [
+              13.0,
+              73.5
+            ],
+            "offset_phase_percent": [
+              25.0,
+              94.5
+            ],
+            "peak_phase_percent": 84.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 31.24841696241822
+          },
+          "lag": 45.59515157304355,
+          "passed": false
+        },
+        {
+          "cell": "PF_S6_l",
+          "actual": {
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "excursion": 1.0,
+            "duty_fraction": 0.42,
+            "onset_phase_percent": [
+              46.0
+            ],
+            "offset_phase_percent": [
+              88.0
+            ],
+            "peak_phase_percent": 62.5,
+            "phase_defined": true,
+            "fundamental_phase_deg": 115.21454934757718
+          },
+          "target": {
+            "minimum": 0.0,
+            "maximum": 0.9944057278024793,
+            "excursion": 0.9944057278024793,
+            "duty_fraction": 0.24,
+            "onset_phase_percent": [
+              51.0,
+              67.0
+            ],
+            "offset_phase_percent": [
+              62.5,
+              79.5
+            ],
+            "peak_phase_percent": 56.49999999999999,
+            "phase_defined": true,
+            "fundamental_phase_deg": 131.0629543924619
+          },
+          "lag": 15.848405044884714,
+          "passed": false
+        }
+      ],
+      "rank": {
+        "r": {
+          "actual": {
+            "singular_values": [
+              11.266490518926858,
+              4.814048172392537,
+              1.0511087131110803,
+              0.7032198129980537,
+              0.16321452995800667,
+              0.04867177347639456
+            ],
+            "rank_for99percent_variance": 3
+          },
+          "target": {
+            "singular_values": [
+              5.7932368865845705,
+              4.4689814136182315,
+              4.133914692158188,
+              3.993955586309877,
+              3.0685066099879403,
+              1.1564717660566772
+            ],
+            "rank_for99percent_variance": 6
+          }
+        },
+        "l": {
+          "actual": {
+            "singular_values": [
+              11.239853466470347,
+              4.877183805460406,
+              1.0474364227880362,
+              0.7040108126509714,
+              0.16531995734997387,
+              0.04621760358469473
+            ],
+            "rank_for99percent_variance": 3
+          },
+          "target": {
+            "singular_values": [
+              5.793358394965929,
+              4.469141558772877,
+              4.133805098527456,
+              3.9991914909871062,
+              3.068730939526354,
+              1.1563564639646446
+            ],
+            "rank_for99percent_variance": 6
+          }
+        }
+      },
+      "max_feature_delta_from_retained_audit": 0
+    }
+  },
+  "repaired": {
+    "raw": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_PF_input_repair_mirrored_20261105\\BEST_TRACE.npz",
+    "raw_sha256": "a83ec6920cc3a4f37a0c1b0cb5c9d027662456c7cc35072c7bc96a5f589f5efd",
+    "passed_count": 0,
+    "rows": [
+      {
+        "cell": "PF_S1_l",
+        "lag": -92.07758299757556,
+        "duty_error": 0.07999999999999999,
+        "passed": false
+      },
+      {
+        "cell": "PF_S2_l",
+        "lag": -106.29187510029783,
+        "duty_error": 0.024999999999999967,
+        "passed": false
+      },
+      {
+        "cell": "PF_S3_l",
+        "lag": 6.67888176606445,
+        "duty_error": 0.22999999999999998,
+        "passed": false
+      },
+      {
+        "cell": "PF_S4_l",
+        "lag": -77.73586130900046,
+        "duty_error": 0.11499999999999999,
+        "passed": false
+      },
+      {
+        "cell": "PF_S5_l",
+        "lag": 60.4735933190282,
+        "duty_error": 0.6699999999999999,
+        "passed": false
+      },
+      {
+        "cell": "PF_S6_l",
+        "lag": 1.31616424052649,
+        "duty_error": 0.175,
+        "passed": false
+      },
+      {
+        "cell": "PF_S1_r",
+        "lag": -87.02350491767385,
+        "duty_error": 0.07999999999999999,
+        "passed": false
+      },
+      {
+        "cell": "PF_S2_r",
+        "lag": -101.42387599340374,
+        "duty_error": 0.019999999999999962,
+        "passed": false
+      },
+      {
+        "cell": "PF_S3_r",
+        "lag": 11.824192478928012,
+        "duty_error": 0.22999999999999998,
+        "passed": false
+      },
+      {
+        "cell": "PF_S4_r",
+        "lag": -72.62462163514755,
+        "duty_error": 0.12,
+        "passed": false
+      },
+      {
+        "cell": "PF_S5_r",
+        "lag": 67.23324987125187,
+        "duty_error": 0.675,
+        "passed": false
+      },
+      {
+        "cell": "PF_S6_r",
+        "lag": 6.368916135090984,
+        "duty_error": 0.18,
+        "passed": false
+      }
+    ]
+  }
+}

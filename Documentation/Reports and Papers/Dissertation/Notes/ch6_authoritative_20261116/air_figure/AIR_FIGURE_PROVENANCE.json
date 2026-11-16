@@ -1,0 +1,66 @@
+{
+  "source_files": {
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture\\aligned_trace.npz": "2e905862dc45854c15769a908939871fffc0bf343f4ceafb5324ec33d6e35ce9",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture\\ALIGNED_TRACE_METADATA.json": "2c00bdb05274cc7d8ac63f3f3da55031fe31184dd00e92122fff9ddcf7cbd2ac",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture\\model.mjb": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\body.json": "6673c82243392c5d165b3b2a236339561ce6c7c23b25c526c674803679da6368"
+  },
+  "plotted_window_s": [
+    7,
+    11
+  ],
+  "sample_selector": "7 <= t_state <= 11",
+  "number_plotted": 2000,
+  "saved_samples_total": 7700,
+  "first_last_plotted_s": [
+    7.0,
+    10.998000000000001
+  ],
+  "native_joint_sign": "Flexion negative; no sign reversal",
+  "transformations": [
+    "qpos radians to degrees using numpy.rad2deg",
+    "anatomical superior force column 1; already transformed by recording capture"
+  ],
+  "resampling": false,
+  "smoothing": false,
+  "decimation": false,
+  "phase_shift": false,
+  "amplitude_scaling": false,
+  "force_normalization": "None; raw newtons",
+  "legend_and_channel_map": {
+    "A": [
+      "RG_F_r",
+      "RG_F_l"
+    ],
+    "B": [
+      "MN_vas_int_r",
+      "MN_bifemsh_r"
+    ],
+    "C": [
+      "knee_angle_r",
+      "knee_angle_l"
+    ],
+    "D": [
+      "harness_wrench_anatomical[:,1]",
+      "explicit_support_anatomical_N[:,1]"
+    ]
+  },
+  "coordinate_addresses": {
+    "hip_flexion_r": 6,
+    "knee_angle_r": 11,
+    "ankle_angle_r": 12,
+    "hip_flexion_l": 49,
+    "knee_angle_l": 54,
+    "ankle_angle_l": 55
+  },
+  "minimum_font_pt": 10,
+  "width_cm": 14,
+  "scoring_window_note": "Display only. Adopted support statistic uses legacy result arrays after 5 s; see AIR_EVIDENCE.md.",
+  "compiled_model_sha256_matches_metadata": true,
+  "output_hashes": {
+    "AIR_FIGURE_PROVENANCE.json": "98f223c697c2d4c9a8d8ac899a326bb597e89eb3f5cf7154fa76715ef3d8a363",
+    "biw2lvar_air_aligned_authoritative.alt.txt": "9c12f0ff3dac7bcea3d88da1ea5a07df5fca33694788b6082fe6939b99ab31ff",
+    "biw2lvar_air_aligned_authoritative.pdf": "c330fb6074b6648931de9af9719dbb8cb631fd1043db0af4d4e2746ee881ae72",
+    "biw2lvar_air_aligned_authoritative.png": "565233523651434f76d25057eeea871028fbbdd0ca7558680c4bf2af022e03d4"
+  }
+}

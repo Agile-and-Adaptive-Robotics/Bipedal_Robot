@@ -1,0 +1,1317 @@
+{
+  "scope": "Saved-array statistics only; no neural/mechanical simulation, training, or optimization.",
+  "source_files": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\pf_timing_audit.py": "94e7686757f7b02283e6ed0e3a635456313ac9abe6cea61c66891981b338d81c",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\syn6_s5_timing.py": "30753d05fbae0b46e5fb44b8d85eac04ec73ee69a483f2fd74c06a96e36999a4",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\native_pf_check.py": "7676dc1bb38aa35210c4986d9e42db6cff0b6980fe1fade44dbb5a956c92ff73",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\native_pf.py": "40dcbdbbff04b89e34505993454b8b1813b9da7b0613d5987e636051cc593839",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\TRAINING_RECORD.md": "e5f98ce68c5ba3ad96059cff3d3fbbfbb429512e952eabc0b21ae1c0099d1d2b",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_results\\fsa_backsolve.npz": "45519a6b166a6182c84eb262891ce21217c999fa298f74279c1220ab1517f470",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_ik.mot": "7380251a0e2434bea1ad62aa8ece037e3dc8ff014f8b747395b63c4c8a4d55e2",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_grf.mot": "69a5e8633f8666bc192abd8069e6812fe7b4c8bb8968dc3254d4824abf263662",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_D_20261104\\syn6\\MANIFEST.json": "397dd2542171e755dbdfbba830072f105299f3425924ae9a9734dc58d29bc03a",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_fit_20261104\\syn6\\MANIFEST.json": "b8d7cfc663713851fbbb5e5d3278673d88ab4d8082c9386c4bb56bbaea174c4d",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\final_verified\\TIMING.json": "c3d49714fb9e6005784fccbc43beaad28d23d446d91f01026fdae0d686452ae9",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\final_verified\\SPEC.json": "0e879a4497b6d8e3f519ab0b8a849258f4d2c18b80a6ba2163b7d87f3d1169f7",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\final_verified\\phase_1.0.npz": "8ebff50278d434924d3aef7f30ca0ed9fc25354aecfa075b8938fa89a6bcbfb9",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\final_verified\\phase_0.85.npz": "a8e81a6b5b815f74e136f84fa851f6b5df05507e0907699ae4b2798a990bb0d4",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\final_verified\\phase_1.15.npz": "441a2ed5e8591794c9e372a62b2944fd6b8868bceca806a819bfa69d0517c653",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay\\TIMING.json": "08a7227421f487096da02f27271086fdbafaa660ca6408a6a4d23fc7db3b993b",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay\\SPEC.json": "09c50fa05900dda1102a8182567a2cabd4d7357461ffeac5b806a149ed6e2a81",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay\\phase_1.0.npz": "4bf0804b0532ca16bbdac60563a797bb1f814e1b4028f65297b1afdfd36daade",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay\\phase_0.85.npz": "72d48ace65e4eb39b30f53a8692db2d2808d197d061943e51ca28212e35ea811",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay\\phase_1.15.npz": "7245d0b197a1031f80a1d297e7cb604e66be5de6b3be4c1fe5be35db162f68c7",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay_live_range\\TIMING.json": "c70eb6d9c4bea3ac78ade7d6ae5363c56cca8c0ae0e1499b24908de144e9b77c",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay_live_range\\SPEC.json": "09c50fa05900dda1102a8182567a2cabd4d7357461ffeac5b806a149ed6e2a81",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay_live_range\\phase_0.7.npz": "d8d346a55354fe925711d58575630bf8a56d5c3292bc9eabebaae9c45df7d667",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay_live_range\\phase_0.75.npz": "f34d6f2b64d1ed03177b3e0582b53b438f9ae46bb43651c84014e2208d6c7a10",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\replay_live_range\\phase_0.8.npz": "d803818cfbd3f37bb588edc437f111593931f460a50ecfa82a69039187f6f378",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\body_slow_handover\\capture\\aligned_trace.npz": "ffde541c40943a1f65b69e6e6004be1978cd7b6017e1fbf7234b0cbd0d3df95c",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\live_full_native\\TIMING.json": "4dc824933a8f8c1add224f1ce45c8756b125ace19c247c63614667739eb2fcdc",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\body_slow_handover\\capture\\ALIGNED_TRACE_METADATA.json": "b27bec938117bb0a7918e284f642e051d8a0d2006f8908bd97e110ef55c9cfd8",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\body_slow_handover\\capture\\model.mjb": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage2\\capture\\aligned_trace.npz": "fd1117f70d64bc19bdc82a7c10f520798227f23bc9603bbb216887e55c27f734",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_live_timing\\TIMING.json": "19593a788981c53889fc072f8a2d217dcce49b1e48eb1b10000f982687fde861",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage2\\capture\\ALIGNED_TRACE_METADATA.json": "24c4ddba64779e8c31d07e303c8e74d51239e5fd5d9871cfaaa0c4f31557a3ba",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage2\\capture\\model.mjb": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage2\\body.result.json": "a7967910a6d57b8a1bc5c7f866e8ad418309e0bd04c3a9798a4c94695b6fa550",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage2\\body.json": "a04080c6ba3a17f114c1f7fa207a209a04ed16a73343a7f7c238be6490895281",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage2\\MOTOR_SHA256.txt": "ef96318cdd7a9d4e2fc9615ab5baf41d7b1befdef5da0083e7dd01401763444e",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage3\\body.result.json": "1875a1e3a1a9878002ec39f3e057411aff892cac8022dad897dc6e6d19ca6011",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage3\\body.json": "1b19ea2cc6c374dc7c313017144f7c6b6012c8b025735daccd7d28391c9a0ddf",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage3\\MOTOR_SHA256.txt": "ef96318cdd7a9d4e2fc9615ab5baf41d7b1befdef5da0083e7dd01401763444e",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage3\\capture\\ALIGNED_TRACE_METADATA.json": "8973c2c4a85f8b27e24a19cced184a9be34ebc0ab9ac95fcb575e54070477041",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage3\\capture\\aligned_trace.npz": "2ee3ca9965d39821739de1ea3d1e50d16a1b336698a1440202e72c69f6e8e46d",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage3\\capture\\model.mjb": "506561fb0df5ab03c3cbf642f33ee9ae28c8389a576787663ce0ddfea77f6039",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage4\\body.result.json": "099e43526da8a1afd490057cf0370229a94f1326881f3661033e092ca9284fb8",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage4\\body.json": "779a836107bfeeab874181ca703e276fa624201e78b0735ead862bc5fd3430be",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage4\\MOTOR_SHA256.txt": "ef96318cdd7a9d4e2fc9615ab5baf41d7b1befdef5da0083e7dd01401763444e",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage4\\capture\\ALIGNED_TRACE_METADATA.json": "22ce8c9024fd05cd3b67a234b9d03690e172ef70de5d9927d28459919a2caa48",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage4\\capture\\aligned_trace.npz": "ad49b3620a369a3650fe284f8ded8942c04886c2e6ce2f8b13208406912ffaa0",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage4\\capture\\model.mjb": "506561fb0df5ab03c3cbf642f33ee9ae28c8389a576787663ce0ddfea77f6039",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\closed_loop_knee-25\\STOP.json": "4f491a3893bbe101e67830d2e1b16480bf5133fdcc89174ade6494ae20c6b6d2",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\closed_loop_knee-35\\STOP.json": "2773534cdbfb2f0e3e34a000c150f23f2f6fb8ab340b1b6ac0ac74dfd325a160",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\early_stage2\\STOP.json": "a2c1518c9f0ed062146726545deeb2ccf3b991886145360f7c2b86de63a4a001",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\early_stage3\\STOP.json": "1010b638bd05e1aa31d653eed7d12dbeb58f6c0fd873ab0d49636c3147befeeb",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\early_stage4\\STOP.json": "b5f549100753857ea48238bbc1cecf8b9777a8ec6caca35ae3229b344598e66e",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\stage2\\STOP.json": "62e62260c10af62c0d9df6f0bf385027e27b7e233a8cd7157e2f465d268ca825",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\stage4\\STOP.json": "48e437c97c2f04009ee86ad1b0ed7f23d93427916205c8858279c29cfb73950c",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\state_gated_stage2\\STOP.json": "cbf81a6cccd2780ed862668bca42ce3787b5534471bad96b45173e62e8848998",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\state_gated_stage3\\STOP.json": "0dc2f12b1204f0088f8df1e9f4b4c27f50f82eda61a887f63c75a623a9d81dbe",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\state_gated_stage4\\STOP.json": "e9af754f52ee27321e6730dc6db6abff8ea9540a9086f06e9669d48d37c57bbf",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\late\\STOP.json": "aac74545df78ab74b9bf2ee9bc18ea56ccc4f35002bd74d7226730d9fac5afde",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\overlap\\STOP.json": "5b07eb556dd757a3d1c74f240467701a928070653cbf395d9d26576335ebc9cb",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\target\\STOP.json": "e0cbd6fdf2e42b3b97a810a657713a71eee2d224fc9405870dc065cebf629a28",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\wide\\STOP.json": "0c46c76bb81a9686a7faaa9b3b26ef26ae44abb19bf296006240b1a8a5b24ff5",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\fresh_repeat\\phase_1.0.npz": "8ebff50278d434924d3aef7f30ca0ed9fc25354aecfa075b8938fa89a6bcbfb9",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\fresh_repeat\\phase_0.85.npz": "a8e81a6b5b815f74e136f84fa851f6b5df05507e0907699ae4b2798a990bb0d4",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\fresh_repeat\\phase_1.15.npz": "441a2ed5e8591794c9e372a62b2944fd6b8868bceca806a819bfa69d0517c653",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\body_slow_repeat\\capture\\aligned_trace.npz": "ffde541c40943a1f65b69e6e6004be1978cd7b6017e1fbf7234b0cbd0d3df95c",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\predict150_stage2_repeat\\capture\\aligned_trace.npz": "fd1117f70d64bc19bdc82a7c10f520798227f23bc9603bbb216887e55c27f734",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_PF_relays_20261105\\combined\\RESULT.json": "f0c49df5bd46b06d85f757dc60572333a9387224a4b8b78027caa4b5c5454d42",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_PF_relays_20261105\\combined\\FRESH_REPEAT.json": "a5f2c22ab5e469d5a730e2d02e5210f3ae684aaeb429d1cc0564164ad8cb4501",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\SPEC_150ms.json": "ce20113314c2779eb538845b40102cc85d652497479b87bf2ab212d8b656adb6",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_adaptive_20261105\\SPEC_slow_handover.json": "956e3c4540524f9a891aa13d5580123c35e91c3630880e9e7518552036e1ad33",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\SPEC_late.json": "c01da5876d754678456d04f1dd122e714fd4dfe16b1e4680bdc1b992c0fab396",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\SPEC_overlap.json": "8eb6e1330dd036b34a5ec137a2f6932db9ea52493db8bef65d3830c9888f8f5e",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\SPEC_target.json": "67bbc61bbe9502f5aa33217500ea960dd40424441e86c098c0aedb2863ca85a0",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\SPEC_wide.json": "d0ea9fd8293ce96088f7ee8740eda991d4288c557f0fc77ff19992371e14c6c2"
+  },
+  "target_configuration": {
+    "family": "syn6",
+    "phase": "C",
+    "targets": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\targets\\targets.npz",
+    "targets_sha256": "6441b00f35fcabff08fee8a32a3d8c696f15548186c1472d14727d5bf5155438",
+    "target_start_s": 0.617,
+    "target_period_s": 1.233,
+    "command_F": 0.15,
+    "command_E": 0.15,
+    "controller_profile": {
+      "schema": "gait_four_commands_central_afferents_v1",
+      "command_voltage_fullscale_mV": 5.0,
+      "command_current_fullscale_nA": 5.0,
+      "command_tau_s": 0.05,
+      "flexor_reference_current_nA": 1.2,
+      "extensor_reference_current_nA": 1.2,
+      "contralateral_flexor_fraction": 0.3333333333333333,
+      "alpha_presynaptic_k": 2.0,
+      "rg_type_budget_nA": 0.5,
+      "pf_type_budget_nA": 0.5,
+      "heel_reference_conductance_uS": 0.1,
+      "heel_on": 0.05,
+      "heel_off": 0.02,
+      "heel_rearm_s": 0.08,
+      "heel_decay_s": 0.1,
+      "command": {
+        "F_l": 0.0,
+        "E_l": 0.0,
+        "F_r": 0.0,
+        "E_r": 0.0
+      },
+      "pattern_enable": 1.0,
+      "rg_design": {
+        "nap": {
+          "g_ion": 12.0,
+          "e_ion": 8.0,
+          "k_m": 1.0,
+          "slope_m": 0.8,
+          "e_m": 0.0,
+          "k_h": 1.0,
+          "slope_h": -2.0,
+          "e_h": 2.0,
+          "tau_max_h": 0.35
+        },
+        "tau_h": 0.6313716989889969,
+        "mutual_inhibition": 6.0,
+        "c1_gain": 0.03,
+        "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\step_A\\winner.json",
+        "source_sha256": "7b76918829344eb1a5e47cdb8b4e7c78cc9e86b157977d937a3120e588cd8693"
+      }
+    },
+    "hunt_options": null,
+    "fixed_parameters": {
+      "tau_scale": 1.0,
+      "g_ion_scale": 1.0,
+      "commissural_F": 0.1,
+      "commissural_E": 0.001
+    },
+    "source_sha256": {
+      "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\profile.py": "4e281a1cbba59bb7af7d044f0d854cd9abeafb38505db0348f809cb4cf7399ff",
+      "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\replay_adapter.py": "e1ef9b3849f818fc1fb5b89471cebe96859fb306c51e5166026aeddf10b40e31",
+      "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\controller_profiles_20261104\\train.py": "c0e2d49cbaed2c084f66bd7b3f1c785db20181fdb49338a982999c06896baa94"
+    },
+    "pose_recruitment_replay": false,
+    "feedforward_only": true
+  },
+  "manifest_chain": [
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_D_20261104\\syn6\\MANIFEST.json",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_fit_20261104\\syn6\\MANIFEST.json"
+  ],
+  "left_phase_offset": 0.5081076698556833,
+  "offline": [
+    {
+      "folder": "syn6_native_20261105_v7/final_verified",
+      "factor": "1.0",
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.232000000000001,
+            1.234,
+            1.2319999999999993,
+            1.234
+          ],
+          "passed": 24,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            1.2319999999999993,
+            1.234,
+            1.2319999999999993,
+            1.234
+          ],
+          "passed": 24,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            8.968,
+            10.200000000000001
+          ],
+          [
+            10.200000000000001,
+            11.434000000000001
+          ],
+          [
+            11.434000000000001,
+            12.666
+          ],
+          [
+            12.666,
+            13.9
+          ]
+        ],
+        "r": [
+          [
+            9.588000000000001,
+            10.82
+          ],
+          [
+            10.82,
+            12.054
+          ],
+          [
+            12.054,
+            13.286
+          ],
+          [
+            13.286,
+            14.52
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_native_20261105_v7/final_verified",
+      "factor": "0.85",
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.048,
+            1.048,
+            1.048,
+            1.048
+          ],
+          "passed": 12,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            1.048,
+            1.048,
+            1.048,
+            1.048
+          ],
+          "passed": 4,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            9.718,
+            10.766
+          ],
+          [
+            10.766,
+            11.814
+          ],
+          [
+            11.814,
+            12.862
+          ],
+          [
+            12.862,
+            13.91
+          ]
+        ],
+        "r": [
+          [
+            10.246,
+            11.294
+          ],
+          [
+            11.294,
+            12.342
+          ],
+          [
+            12.342,
+            13.39
+          ],
+          [
+            13.39,
+            14.438
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_native_20261105_v7/final_verified",
+      "factor": "1.15",
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.4179999999999993,
+            1.418000000000001,
+            1.4179999999999993,
+            1.418000000000001
+          ],
+          "passed": 4,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            1.418000000000001,
+            1.4179999999999993,
+            1.418000000000001,
+            1.4179999999999993
+          ],
+          "passed": 4,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            8.894,
+            10.312
+          ],
+          [
+            10.312,
+            11.73
+          ],
+          [
+            11.73,
+            13.148
+          ],
+          [
+            13.148,
+            14.566
+          ]
+        ],
+        "r": [
+          [
+            8.19,
+            9.608
+          ],
+          [
+            9.608,
+            11.026
+          ],
+          [
+            11.026,
+            12.444
+          ],
+          [
+            12.444,
+            13.862
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_adaptive_20261105/replay",
+      "factor": "1.0",
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.232000000000001,
+            1.234,
+            1.2319999999999993,
+            1.234
+          ],
+          "passed": 24,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            1.2319999999999993,
+            1.234,
+            1.2319999999999993,
+            1.234
+          ],
+          "passed": 24,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            8.968,
+            10.200000000000001
+          ],
+          [
+            10.200000000000001,
+            11.434000000000001
+          ],
+          [
+            11.434000000000001,
+            12.666
+          ],
+          [
+            12.666,
+            13.9
+          ]
+        ],
+        "r": [
+          [
+            9.588000000000001,
+            10.82
+          ],
+          [
+            10.82,
+            12.054
+          ],
+          [
+            12.054,
+            13.286
+          ],
+          [
+            13.286,
+            14.52
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_adaptive_20261105/replay",
+      "factor": "0.85",
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.048,
+            1.048,
+            1.048,
+            1.048
+          ],
+          "passed": 24,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            1.048,
+            1.048,
+            1.048,
+            1.048
+          ],
+          "passed": 24,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            9.718,
+            10.766
+          ],
+          [
+            10.766,
+            11.814
+          ],
+          [
+            11.814,
+            12.862
+          ],
+          [
+            12.862,
+            13.91
+          ]
+        ],
+        "r": [
+          [
+            10.246,
+            11.294
+          ],
+          [
+            11.294,
+            12.342
+          ],
+          [
+            12.342,
+            13.39
+          ],
+          [
+            13.39,
+            14.438
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_adaptive_20261105/replay",
+      "factor": "1.15",
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.4179999999999993,
+            1.418000000000001,
+            1.4179999999999993,
+            1.418000000000001
+          ],
+          "passed": 24,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            1.418000000000001,
+            1.4179999999999993,
+            1.418000000000001,
+            1.4179999999999993
+          ],
+          "passed": 24,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            8.894,
+            10.312
+          ],
+          [
+            10.312,
+            11.73
+          ],
+          [
+            11.73,
+            13.148
+          ],
+          [
+            13.148,
+            14.566
+          ]
+        ],
+        "r": [
+          [
+            8.19,
+            9.608
+          ],
+          [
+            9.608,
+            11.026
+          ],
+          [
+            11.026,
+            12.444
+          ],
+          [
+            12.444,
+            13.862
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_adaptive_20261105/replay_live_range",
+      "factor": "0.7",
+      "summary": {
+        "l": {
+          "periods_s": [
+            0.863999999999999,
+            0.8620000000000001,
+            0.8640000000000008,
+            0.8640000000000008
+          ],
+          "passed": 24,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            0.8640000000000008,
+            0.863999999999999,
+            0.8620000000000001,
+            0.8640000000000008
+          ],
+          "passed": 24,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            10.592,
+            11.456
+          ],
+          [
+            11.456,
+            12.318
+          ],
+          [
+            12.318,
+            13.182
+          ],
+          [
+            13.182,
+            14.046000000000001
+          ]
+        ],
+        "r": [
+          [
+            11.026,
+            11.89
+          ],
+          [
+            11.89,
+            12.754
+          ],
+          [
+            12.754,
+            13.616
+          ],
+          [
+            13.616,
+            14.48
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_adaptive_20261105/replay_live_range",
+      "factor": "0.75",
+      "summary": {
+        "l": {
+          "periods_s": [
+            0.9260000000000002,
+            0.9240000000000013,
+            0.9239999999999995,
+            0.9260000000000002
+          ],
+          "passed": 24,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            0.9239999999999995,
+            0.9260000000000002,
+            0.9239999999999995,
+            0.9240000000000013
+          ],
+          "passed": 24,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            10.424,
+            11.35
+          ],
+          [
+            11.35,
+            12.274000000000001
+          ],
+          [
+            12.274000000000001,
+            13.198
+          ],
+          [
+            13.198,
+            14.124
+          ]
+        ],
+        "r": [
+          [
+            10.89,
+            11.814
+          ],
+          [
+            11.814,
+            12.74
+          ],
+          [
+            12.74,
+            13.664
+          ],
+          [
+            13.664,
+            14.588000000000001
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_adaptive_20261105/replay_live_range",
+      "factor": "0.8",
+      "summary": {
+        "l": {
+          "periods_s": [
+            0.9860000000000007,
+            0.9859999999999989,
+            0.9860000000000007,
+            0.9860000000000007
+          ],
+          "passed": 24,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            0.9859999999999989,
+            0.9860000000000007,
+            0.9860000000000007,
+            0.9859999999999989
+          ],
+          "passed": 24,
+          "checks": 24
+        }
+      },
+      "windows": {
+        "l": [
+          [
+            10.134,
+            11.120000000000001
+          ],
+          [
+            11.120000000000001,
+            12.106
+          ],
+          [
+            12.106,
+            13.092
+          ],
+          [
+            13.092,
+            14.078000000000001
+          ]
+        ],
+        "r": [
+          [
+            10.63,
+            11.616
+          ],
+          [
+            11.616,
+            12.602
+          ],
+          [
+            12.602,
+            13.588000000000001
+          ],
+          [
+            13.588000000000001,
+            14.574
+          ]
+        ]
+      },
+      "saved_verdict_reproduced": true
+    }
+  ],
+  "body_timing": [
+    {
+      "folder": "syn6_adaptive_20261105/live_full_native",
+      "body": "syn6_adaptive_20261105/body_slow_handover",
+      "full_native_since_neural_s": 6.241999999999535,
+      "capture_duration_s": 4.1720000000000015,
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.25,
+            1.322000000000001
+          ],
+          "passed": 4,
+          "checks": 12
+        },
+        "r": {
+          "periods_s": [
+            1.1800000000000006,
+            1.306000000000001,
+            1.4320000000000004
+          ],
+          "passed": 7,
+          "checks": 18
+        }
+      },
+      "saved_verdict_reproduced": true
+    },
+    {
+      "folder": "syn6_flexor_handover_20261105/predict150_live_timing",
+      "body": "syn6_flexor_handover_20261105/predict150_stage2",
+      "full_native_since_neural_s": 6.241999999999535,
+      "capture_duration_s": 9.758,
+      "summary": {
+        "l": {
+          "periods_s": [
+            1.241999999999999,
+            1.2620000000000005,
+            1.2680000000000007,
+            1.267999999999999
+          ],
+          "passed": 8,
+          "checks": 24
+        },
+        "r": {
+          "periods_s": [
+            1.2440000000000015,
+            1.2699999999999996,
+            1.2739999999999991,
+            1.2700000000000014
+          ],
+          "passed": 8,
+          "checks": 24
+        }
+      },
+      "saved_verdict_reproduced": true
+    }
+  ],
+  "body_results": [
+    {
+      "body": "syn6_flexor_handover_20261105/predict150_stage2",
+      "assessment": {
+        "score": -18.903542784480994,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          12,
+          11
+        ],
+        "knee_ranges_deg": [
+          76.73794448196936,
+          86.62020224786775
+        ],
+        "hip_ranges_deg": [
+          155.22718032129012,
+          149.40202447691794
+        ],
+        "cycle_phase_error": 0.13806497353102454,
+        "cycle_coverage": 0.5,
+        "period_s": 0.7959999999999994,
+        "period_cv": 0.2865119409136925,
+        "left_right_phases": [
+          0.23228346456692978,
+          0.5767045454545452,
+          0.3193277310924367,
+          0.6819484240687662,
+          0.3815261044176713,
+          0.30537634408602177,
+          0.48994974874371855,
+          0.662222222222222,
+          0.405000000000001,
+          0.6172344689378758,
+          0.6140684410646398
+        ],
+        "frontal_gate": true,
+        "minimum_ankle_width_m": 0.21456100118699176,
+        "minimum_knee_width_m": 0.17439660672201604,
+        "crossed_ankle_fraction": 0.0,
+        "pelvis_local_right_axis": [
+          0.0,
+          4.547414961947327e-16,
+          1.0
+        ],
+        "anatomical_axis_verified_from_hip_anchors": true,
+        "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+        "maximum_knee_extension_deg": [
+          -1.4041674388426155,
+          -1.4522289797069896
+        ],
+        "knee_extension_gate": true,
+        "ground_load_verified": false
+      },
+      "maximum_knee_deg_RL": [
+        -1.4041674388426155,
+        -1.4522289797069898
+      ],
+      "finite_saved_states": {
+        "qpos": true,
+        "qvel": true,
+        "activation": true,
+        "control": true,
+        "neural_voltage": true
+      },
+      "compiled_hash_matches": true,
+      "compiled_model_sha256": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+      "wall_s": 42.8703764998354,
+      "simulated_s": 16.0
+    },
+    {
+      "body": "syn6_flexor_handover_20261105/predict150_stage3",
+      "assessment": {
+        "score": 37.895876758410644,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "tilt_deg": 17.66242764561307,
+        "sway_m": 0.1398485871826354,
+        "normal_force_bw": 0.2390061454349992,
+        "symmetry": 0.41025816443659696,
+        "fall": false,
+        "frontal_gate": true,
+        "minimum_ankle_width_m": 0.25866389702072723,
+        "minimum_knee_width_m": 0.19907461949200572,
+        "crossed_ankle_fraction": 0.0,
+        "pelvis_local_right_axis": [
+          0.0,
+          4.547414961947327e-16,
+          1.0
+        ],
+        "anatomical_axis_verified_from_hip_anchors": true,
+        "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+        "maximum_knee_extension_deg": [
+          -1.7248739087322937,
+          -1.1478425596030608
+        ],
+        "knee_extension_gate": true,
+        "ground_load_verified": true
+      },
+      "maximum_knee_deg_RL": [
+        -1.7248739087322937,
+        -1.1478425596030608
+      ],
+      "finite_saved_states": {
+        "qpos": true,
+        "qvel": true,
+        "activation": true,
+        "control": true,
+        "neural_voltage": true
+      },
+      "compiled_hash_matches": true,
+      "compiled_model_sha256": "506561fb0df5ab03c3cbf642f33ee9ae28c8389a576787663ce0ddfea77f6039",
+      "wall_s": 31.526520499959588,
+      "simulated_s": 8.0
+    },
+    {
+      "body": "syn6_flexor_handover_20261105/predict150_stage4",
+      "assessment": {
+        "score": 63.65151142742936,
+        "accepted": false,
+        "finite": true,
+        "complete": true,
+        "knee_cycles": [
+          11,
+          12
+        ],
+        "knee_ranges_deg": [
+          70.50735921067495,
+          78.39569789622074
+        ],
+        "hip_ranges_deg": [
+          59.20990612496537,
+          47.889608822124046
+        ],
+        "cycle_phase_error": 0.17878958844101728,
+        "cycle_coverage": 0.45454545454545453,
+        "period_s": 0.7220000000000013,
+        "period_cv": 0.19771578183142657,
+        "left_right_phases": [
+          0.5571428571428572,
+          0.36752136752136755,
+          0.44039735099337746,
+          0.9080779944289707,
+          0.8131313131313117,
+          0.38339920948616574,
+          0.49011857707509904,
+          0.6253521126760563,
+          0.3414141414141414,
+          0.09295774647887188
+        ],
+        "contact_cycles": [
+          10,
+          10
+        ],
+        "contact_duty": [
+          0.7217142857142858,
+          0.7758571428571429
+        ],
+        "kine_score": -188.186201925786,
+        "dx_m": 0.024572084037036073,
+        "contact_gate": true,
+        "frontal_gate": true,
+        "minimum_ankle_width_m": 0.22433979286903355,
+        "minimum_knee_width_m": 0.1808216777800494,
+        "crossed_ankle_fraction": 0.0,
+        "pelvis_local_right_axis": [
+          0.0,
+          4.547414961947327e-16,
+          1.0
+        ],
+        "anatomical_axis_verified_from_hip_anchors": true,
+        "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+        "maximum_knee_extension_deg": [
+          -1.5348409783808847,
+          -1.478308489596639
+        ],
+        "knee_extension_gate": true,
+        "ground_load_verified": false,
+        "legacy_contact_gate": true,
+        "measured_contact_gate": false,
+        "movement_gate": false,
+        "ground_tilt_gate": true,
+        "force_movement_gates_without_clearance": false,
+        "foot_clearance_gate": true
+      },
+      "maximum_knee_deg_RL": [
+        -1.5348409783808845,
+        -1.478308489596639
+      ],
+      "finite_saved_states": {
+        "qpos": true,
+        "qvel": true,
+        "activation": true,
+        "control": true,
+        "neural_voltage": true
+      },
+      "compiled_hash_matches": true,
+      "compiled_model_sha256": "506561fb0df5ab03c3cbf642f33ee9ae28c8389a576787663ce0ddfea77f6039",
+      "wall_s": 62.06273640017025,
+      "simulated_s": 16.0
+    }
+  ],
+  "repeat_checks": [
+    {
+      "first": "syn6_native_20261105_v7/final_verified/phase_1.0.npz",
+      "second": "syn6_native_20261105_v7/fresh_repeat/phase_1.0.npz",
+      "same_keys": true,
+      "equal": {
+        "time": true,
+        "names": true,
+        "volts": true,
+        "relay_volts": true,
+        "relay_names": true
+      }
+    },
+    {
+      "first": "syn6_native_20261105_v7/final_verified/phase_0.85.npz",
+      "second": "syn6_native_20261105_v7/fresh_repeat/phase_0.85.npz",
+      "same_keys": true,
+      "equal": {
+        "time": true,
+        "names": true,
+        "volts": true,
+        "relay_volts": true,
+        "relay_names": true
+      }
+    },
+    {
+      "first": "syn6_native_20261105_v7/final_verified/phase_1.15.npz",
+      "second": "syn6_native_20261105_v7/fresh_repeat/phase_1.15.npz",
+      "same_keys": true,
+      "equal": {
+        "time": true,
+        "names": true,
+        "volts": true,
+        "relay_volts": true,
+        "relay_names": true
+      }
+    },
+    {
+      "first": "syn6_adaptive_20261105/body_slow_handover/capture/aligned_trace.npz",
+      "second": "syn6_adaptive_20261105/body_slow_repeat/capture/aligned_trace.npz",
+      "same_keys": true,
+      "equal": {
+        "t_state": true,
+        "t_neural": true,
+        "t_neural_input": true,
+        "physics_clock_s": true,
+        "force_interval_start": true,
+        "force_interval_end": true,
+        "neural_voltage": true,
+        "neural_names": true,
+        "qpos": true,
+        "qvel": true,
+        "activation": true,
+        "control": true,
+        "joint_names": true,
+        "joint_qpos_addresses": true,
+        "foot_force_anatomical_N": true,
+        "regional_vertical_N": true,
+        "harness_wrench_anatomical": true,
+        "explicit_support_anatomical_N": true,
+        "root_anatomical_m": true,
+        "stimulus_nA": true
+      }
+    },
+    {
+      "first": "syn6_flexor_handover_20261105/predict150_stage2/capture/aligned_trace.npz",
+      "second": "syn6_flexor_handover_20261105/predict150_stage2_repeat/capture/aligned_trace.npz",
+      "same_keys": true,
+      "equal": {
+        "t_state": true,
+        "t_neural": true,
+        "t_neural_input": true,
+        "physics_clock_s": true,
+        "force_interval_start": true,
+        "force_interval_end": true,
+        "neural_voltage": true,
+        "neural_names": true,
+        "qpos": true,
+        "qvel": true,
+        "activation": true,
+        "control": true,
+        "joint_names": true,
+        "joint_qpos_addresses": true,
+        "foot_force_anatomical_N": true,
+        "regional_vertical_N": true,
+        "harness_wrench_anatomical": true,
+        "explicit_support_anatomical_N": true,
+        "root_anatomical_m": true,
+        "stimulus_nA": true
+      }
+    }
+  ],
+  "failed_body_stops": [
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\closed_loop_knee-25\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 1.254000000000001,
+          "angle_deg": -1.4558687745322136,
+          "velocity_deg_s": 707.5947078946481,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_native_20261105_v7\\closed_loop_knee-35\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "r",
+          "time_s": 1.6860000000000013,
+          "angle_deg": -0.5699661680382831,
+          "velocity_deg_s": 758.3819709064896,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\early_stage2\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 12.002000000000677,
+          "angle_deg": -1.0449594467163772,
+          "velocity_deg_s": 502.7001044889407,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\early_stage3\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 5.535999999999612,
+          "angle_deg": -1.163099930180397,
+          "velocity_deg_s": 576.3867264520745,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\early_stage4\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "r",
+          "time_s": 13.126000000001053,
+          "angle_deg": -0.7384375281389527,
+          "velocity_deg_s": 631.113751675946,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\stage2\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 4.911999999999681,
+          "angle_deg": -1.1878664124490192,
+          "velocity_deg_s": 629.2812671281231,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\stage4\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 7.927999999999349,
+          "angle_deg": -1.2415776026821683,
+          "velocity_deg_s": 673.1558490657648,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\state_gated_stage2\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "r",
+          "time_s": 5.415999999999626,
+          "angle_deg": -1.025055997192315,
+          "velocity_deg_s": 515.8778877387687,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\state_gated_stage3\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 5.585999999999607,
+          "angle_deg": -0.9968097612379767,
+          "velocity_deg_s": 610.9909148315063,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_flexor_handover_20261105\\state_gated_stage4\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "r",
+          "time_s": 6.357999999999522,
+          "angle_deg": -1.140463689092941,
+          "velocity_deg_s": 878.2933498655741,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\late\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 6.889999999999463,
+          "angle_deg": -1.194086594392418,
+          "velocity_deg_s": 897.0900890343698,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\overlap\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "l",
+          "time_s": 8.049999999999358,
+          "angle_deg": -0.903079865597513,
+          "velocity_deg_s": 696.9319945109228,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\target\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "r",
+          "time_s": 6.449999999999512,
+          "angle_deg": -0.7476523985412458,
+          "velocity_deg_s": 778.6886436260336,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    },
+    {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_s3_single_20261105\\wide\\STOP.json",
+      "stop": {
+        "error": "RuntimeError('Predictive knee guard')",
+        "knee_guard": {
+          "side": "r",
+          "time_s": 9.083999999999703,
+          "angle_deg": -1.036703729795575,
+          "velocity_deg_s": 581.388231463355,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        },
+        "scope": "Failed body probe; inspect capture/log"
+      }
+    }
+  ],
+  "hybrid_relay_record": {
+    "mn_weights_exact": true,
+    "rg_trace_exact": true,
+    "baseline_mn_rmse": 0.15845040855575487,
+    "mn_waveform_rmse": 0.1555564003734772,
+    "scope": "All 12 PF outputs driven simultaneously by hybrid RG-triggered relays in offline D replay",
+    "passed": true,
+    "channel_summary": {
+      "1": {
+        "mean": 2
+      },
+      "2": {
+        "mean": 2
+      },
+      "3": {
+        "mean": 2
+      },
+      "4": {
+        "mean": 2
+      },
+      "5": {
+        "mean": 2
+      },
+      "6": {
+        "mean": 2
+      }
+    }
+  }
+}

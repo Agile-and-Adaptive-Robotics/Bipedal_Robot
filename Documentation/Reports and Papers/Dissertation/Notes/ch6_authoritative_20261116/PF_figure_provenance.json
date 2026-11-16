@@ -1,0 +1,48 @@
+{
+  "figure": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\ch6_authoritative_20261116\\PF_timing_authoritative.pdf",
+  "figure_sha256": "820e98ea7913c2ce632dce6b7229a8a8ad4fa1356e8cbaa7522e49892ab19d32",
+  "png_sha256": "1fb5f6cc71cd489947155c44ad1954935bad2025d913d2a08f166adebc22d83f",
+  "size_cm": [
+    14.0,
+    11.7
+  ],
+  "minimum_text_pt": 10.0,
+  "raw_source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_D_20261104\\syn6\\BEST_TRACE.npz",
+  "raw_sha256": "8c2bcf9a0f265a0ec9020765d4c3689d49e68b2a2377b4bc2f6ed578a3b19251",
+  "source_files": {
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_pf_design_20261105\\pf_timing_audit.py": "94e7686757f7b02283e6ed0e3a635456313ac9abe6cea61c66891981b338d81c",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\fsa_results\\fsa_backsolve.npz": "45519a6b166a6182c84eb262891ce21217c999fa298f74279c1220ab1517f470",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_D_20261104\\syn6\\MANIFEST.json": "397dd2542171e755dbdfbba830072f105299f3425924ae9a9734dc58d29bc03a",
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\waveform_edge_fit_20261104\\syn6\\MANIFEST.json": "b8d7cfc663713851fbbb5e5d3278673d88ab4d8082c9386c4bb56bbaea174c4d",
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\ch6_authoritative_20261116\\PF_figure.py": "676972122d40acf9fd870e561895f3bf260226ddc8b0b1eeb7370d3f383546b9"
+  },
+  "requested_display_window_s": [
+    2.466,
+    4.932
+  ],
+  "actual_display_sample_window_s": [
+    2.466,
+    4.932
+  ],
+  "samples_per_channel": 1234,
+  "side": "right",
+  "channels": [
+    1,
+    2,
+    5
+  ],
+  "transformation": "clip(raw PF membrane voltage / 5 mV,0,1), matching original outgoing transmission; intended target evaluated from the raw FSA right primitive using original target_start/period interpolation",
+  "target_start_s": 0.617,
+  "target_period_s": 1.233,
+  "source_array": "t and pf from BEST_TRACE.npz; time and r_source from fsa_backsolve.npz",
+  "no_smoothing": true,
+  "no_averaging": true,
+  "no_decimation": true,
+  "no_phase_shift": true,
+  "scoring_window_s": [
+    2.466,
+    13.556835
+  ],
+  "scoring_method": "Full0/12 conclusion remains original nine-cycle mean audit, not recomputed from displayed two cycles.",
+  "implementation": "Matplotlib vector PDF with embedded TrueType text; exact140 mm width, no tight-bbox scaling."
+}

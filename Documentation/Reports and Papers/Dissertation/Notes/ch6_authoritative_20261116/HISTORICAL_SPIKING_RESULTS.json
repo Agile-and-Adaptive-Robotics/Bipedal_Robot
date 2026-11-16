@@ -1,0 +1,6246 @@
+{
+  "scope": "Read-only saved arrays/records; no simulations or generator reruns.",
+  "raw": {
+    "s3k": {
+      "keys": {
+        "t": [
+          8000
+        ],
+        "act": [
+          8000,
+          20
+        ],
+        "q": [
+          8000,
+          13
+        ],
+        "qfull": [
+          8000,
+          105
+        ],
+        "com": [
+          8000,
+          3
+        ],
+        "neuro": [
+          8000,
+          14
+        ],
+        "contact": [
+          8000,
+          2
+        ],
+        "footz": [
+          8000,
+          2
+        ],
+        "key_acts": [
+          20
+        ],
+        "key_joints": [
+          13
+        ],
+        "neuro_names": [
+          14
+        ],
+        "cfg": []
+      },
+      "time_s": [
+        0.0,
+        15.998000000000001
+      ],
+      "joint_names": [
+        "pelvis_tilt",
+        "pelvis_list",
+        "pelvis_rotation",
+        "hip_flexion_r",
+        "knee_angle_r",
+        "ankle_angle_r",
+        "hip_adduction_r",
+        "subtalar_angle_r",
+        "hip_flexion_l",
+        "knee_angle_l",
+        "ankle_angle_l",
+        "hip_adduction_l",
+        "subtalar_angle_l"
+      ],
+      "maximum_abs_pelvis_tilt_deg": 22.0975375424625,
+      "contact_shape": [
+        8000,
+        2
+      ],
+      "contact_fraction_after_2.0s_gt20N": [
+        0.6367142857142857,
+        0.9847142857142858
+      ],
+      "contact_fraction_after_4.5s_gt20N": [
+        0.6290434782608696,
+        0.983304347826087
+      ],
+      "contact_fraction_after_5.0s_gt20N": [
+        0.6121818181818182,
+        1.0
+      ],
+      "recomputed_cycles": {
+        "r": {
+          "cycles": 9,
+          "contact_fraction": 0.6367142857142857,
+          "used_contact": true,
+          "mean_cycle_knee_min_deg": -64.29205155222364
+        },
+        "l": {
+          "cycles": 0,
+          "contact_fraction": 0.9847142857142858,
+          "used_contact": false,
+          "mean_cycle_knee_min_deg": null
+        }
+      },
+      "current_source_rescore": {
+        "contact_frac_r": 0.6367142857142857,
+        "contact_frac_l": 0.9847142857142858,
+        "n_cycles_r": 9,
+        "duty_r": 0.47114285714285714,
+        "duty_r_ref": 0.61,
+        "knee_min_r": -64.29205155222364,
+        "knee_min_r_ref": -69.68811020650568,
+        "rmse_hip_r": 15.425043203920556,
+        "range_hip_r": 24.678476463484994,
+        "range_hip_r_ref": 43.29319243218895,
+        "mean_hip_r": 5.615891159184832,
+        "mean_hip_r_ref": 4.340491323383044,
+        "rmse_knee_r": 20.578811333212006,
+        "range_knee_r": 43.67915051542978,
+        "range_knee_r_ref": 70.4553257620587,
+        "mean_knee_r": -51.009459274933846,
+        "mean_knee_r_ref": -25.052680635143876,
+        "rmse_ankle_r": 10.440757234288816,
+        "range_ankle_r": 28.41440143097736,
+        "range_ankle_r_ref": 23.106608540532818,
+        "mean_ankle_r": 23.95524767374859,
+        "mean_ankle_r_ref": 4.204590041315454,
+        "T_r": 1.1451111111111107,
+        "T_r_ref": 1.2334,
+        "period_cv_r": 0.38269815836705967,
+        "n_cycles_l": 0,
+        "frozen_l": true,
+        "ds": 0.4544285714285714,
+        "ds_ref": 0.23243243243243245,
+        "bilateral": false,
+        "kine_score": -161.56754173676563,
+        "n_cycles": 9,
+        "duty": 0.47114285714285714,
+        "duty_ref": 0.61,
+        "knee_min": -64.29205155222364,
+        "knee_min_ref": -69.68811020650568,
+        "rmse_hip": 15.425043203920556,
+        "range_hip": 24.678476463484994,
+        "range_hip_ref": 43.29319243218895,
+        "rmse_knee": 20.578811333212006,
+        "range_knee": 43.67915051542978,
+        "range_knee_ref": 70.4553257620587,
+        "rmse_ankle": 10.440757234288816,
+        "range_ankle": 28.41440143097736,
+        "range_ankle_ref": 23.106608540532818
+      }
+    },
+    "spiking": {
+      "keys": {
+        "t": [
+          8000
+        ],
+        "act": [
+          8000,
+          20
+        ],
+        "q": [
+          8000,
+          13
+        ],
+        "qfull": [
+          8000,
+          105
+        ],
+        "com": [
+          8000,
+          3
+        ],
+        "neuro": [
+          8000,
+          14
+        ],
+        "contact": [
+          8000,
+          2
+        ],
+        "footz": [
+          8000,
+          2
+        ],
+        "key_acts": [
+          20
+        ],
+        "key_joints": [
+          13
+        ],
+        "neuro_names": [
+          14
+        ],
+        "cfg": []
+      },
+      "time_s": [
+        0.0,
+        15.998000000000001
+      ],
+      "joint_names": [
+        "pelvis_tilt",
+        "pelvis_list",
+        "pelvis_rotation",
+        "hip_flexion_r",
+        "knee_angle_r",
+        "ankle_angle_r",
+        "hip_adduction_r",
+        "subtalar_angle_r",
+        "hip_flexion_l",
+        "knee_angle_l",
+        "ankle_angle_l",
+        "hip_adduction_l",
+        "subtalar_angle_l"
+      ],
+      "maximum_abs_pelvis_tilt_deg": 19.22026766617569,
+      "contact_shape": [
+        8000,
+        2
+      ],
+      "contact_fraction_after_2.0s_gt20N": [
+        0.7988571428571428,
+        0.8557142857142858
+      ],
+      "contact_fraction_after_4.5s_gt20N": [
+        0.7768695652173913,
+        0.8417391304347827
+      ],
+      "contact_fraction_after_5.0s_gt20N": [
+        0.7667272727272727,
+        0.8347272727272728
+      ],
+      "recomputed_cycles": {
+        "r": {
+          "cycles": 8,
+          "contact_fraction": 0.7988571428571428,
+          "used_contact": true,
+          "mean_cycle_knee_min_deg": -79.827318008436
+        },
+        "l": {
+          "cycles": 9,
+          "contact_fraction": 0.8557142857142858,
+          "used_contact": true,
+          "mean_cycle_knee_min_deg": -78.20607924091728
+        }
+      },
+      "current_source_rescore": {
+        "contact_frac_r": 0.7988571428571428,
+        "contact_frac_l": 0.8557142857142858,
+        "n_cycles_r": 8,
+        "duty_r": 0.7934285714285715,
+        "duty_r_ref": 0.61,
+        "knee_min_r": -79.827318008436,
+        "knee_min_r_ref": -69.68811020650568,
+        "rmse_hip_r": 15.197526614734986,
+        "range_hip_r": 11.55689597937372,
+        "range_hip_r_ref": 43.29319243218895,
+        "mean_hip_r": -19.597828834580245,
+        "mean_hip_r_ref": 4.340491323383044,
+        "rmse_knee_r": 24.47088632634965,
+        "range_knee_r": 14.774818334657027,
+        "range_knee_r_ref": 70.4553257620587,
+        "mean_knee_r": -72.67694812783972,
+        "mean_knee_r_ref": -25.052680635143876,
+        "rmse_ankle_r": 10.26580314227488,
+        "range_ankle_r": 31.203470642843847,
+        "range_ankle_r_ref": 23.106608540532818,
+        "mean_ankle_r": -42.06334918645026,
+        "mean_ankle_r_ref": 4.204590041315454,
+        "T_r": 1.2785000000000002,
+        "T_r_ref": 1.2334,
+        "period_cv_r": 0.3417913670020912,
+        "n_cycles_l": 9,
+        "duty_l": 0.7728571428571429,
+        "duty_l_ref": 0.61,
+        "knee_min_l": -78.20607924091728,
+        "knee_min_l_ref": -70.62509689835294,
+        "rmse_hip_l": 15.32403551666631,
+        "range_hip_l": 4.924155235012449,
+        "range_hip_l_ref": 44.137088674588234,
+        "mean_hip_l": -25.447856181318787,
+        "mean_hip_l_ref": 3.5293764623717765,
+        "rmse_knee_l": 24.064000745256774,
+        "range_knee_l": 6.018149003209842,
+        "range_knee_l_ref": 70.6955653195196,
+        "mean_knee_l": -75.46120172337008,
+        "mean_knee_l_ref": -23.557536144418,
+        "rmse_ankle_l": 4.423999006713042,
+        "range_ankle_l": 12.983660816631392,
+        "range_ankle_l_ref": 23.956803261189542,
+        "mean_ankle_l": -54.03765129708363,
+        "mean_ankle_l_ref": 2.5856699751157337,
+        "T_l": 0.5286666666666667,
+        "T_l_ref": 1.2133000000000003,
+        "period_cv_l": 0.14583355813919008,
+        "lag_rl": 0.15063672922251964,
+        "lag_rl_ref": 0.5081076698556833,
+        "ds": 0.6651428571428571,
+        "ds_ref": 0.23243243243243245,
+        "bilateral": true,
+        "kine_score": -236.3496680668847,
+        "n_cycles": 8,
+        "duty": 0.7934285714285715,
+        "duty_ref": 0.61,
+        "knee_min": -79.827318008436,
+        "knee_min_ref": -69.68811020650568,
+        "rmse_hip": 15.197526614734986,
+        "range_hip": 11.55689597937372,
+        "range_hip_ref": 43.29319243218895,
+        "rmse_knee": 24.47088632634965,
+        "range_knee": 14.774818334657027,
+        "range_knee_ref": 70.4553257620587,
+        "rmse_ankle": 10.26580314227488,
+        "range_ankle": 31.203470642843847,
+        "range_ankle_ref": 23.106608540532818
+      }
+    }
+  },
+  "rhythm": {
+    "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal4_gate2_traces.npz",
+    "window_s": [
+      0.0,
+      20.0
+    ],
+    "ns_period_s": 0.3992244897959184,
+    "spiking_period_s": 0.6210666666666668,
+    "period_increase_percent": 55.56827863544969,
+    "definition": "Whole20s interpeak mean; graded E-F voltage prominence0.3mV; spiking E-F count envelope100ms, prominence1 and minimum peak distance150ms; same scored filters as source gate."
+  },
+  "animatlab_metrics": {
+    "metrics_baseline_W2L_modern.json": {
+      "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/W2L_modern/W2L_modern.asim",
+      "mode": "graded",
+      "charts": {
+        "L Hip Physical": {
+          "file": "L Hip Physical.txt",
+          "rows": 5001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "hip_L_flx_rec",
+              "type": "Ia",
+              "mean": 2.34936
+            },
+            {
+              "name": "hip_L_ext_rec",
+              "type": "Ia",
+              "mean": 2.22135
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -15.0,
+              "max": 23.2,
+              "range": 38.2
+            },
+            {
+              "name": "hip_L_flx",
+              "type": "Tension",
+              "mean": 386.81199
+            },
+            {
+              "name": "hip_L_ext",
+              "type": "Tension",
+              "mean": 273.60772
+            }
+          ]
+        },
+        "Rhythm Generator": {
+          "file": "Rhythm Generator.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L RG ext IN",
+              "mean_mV": -58.27,
+              "min_mV": -60.0,
+              "max_mV": -52.97,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L RG flx IN",
+              "mean_mV": -58.31,
+              "min_mV": -60.0,
+              "max_mV": -55.62,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.83,
+              "min_mV": -61.07,
+              "max_mV": -52.16,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -58.87,
+              "min_mV": -62.5,
+              "max_mV": -52.84,
+              "crossings_-60mV": 12
+            }
+          ]
+        },
+        "L Hip PF": {
+          "file": "L Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip PF ext IN",
+              "mean_mV": -58.31,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Hip PF flx IN",
+              "mean_mV": -58.35,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -59.03,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -59.08,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            }
+          ]
+        },
+        "L Knee PF": {
+          "file": "L Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee PF flx IN",
+              "mean_mV": -58.35,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee PF ext IN",
+              "mean_mV": -58.31,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee PF flx",
+              "mean_mV": -59.08,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Knee PF ext",
+              "mean_mV": -59.03,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            }
+          ]
+        },
+        "L Hip Sensory Motor": {
+          "file": "L Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip flx Ia",
+              "mean_mV": -57.82,
+              "min_mV": -60.84,
+              "max_mV": -54.0,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Hip ext Ia",
+              "mean_mV": -57.93,
+              "min_mV": -60.85,
+              "max_mV": -54.89,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Hip ext Ia IN",
+              "mean_mV": -56.54,
+              "min_mV": -60.0,
+              "max_mV": -54.28,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Hip flx Ia IN",
+              "mean_mV": -56.31,
+              "min_mV": -60.0,
+              "max_mV": -53.06,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Hip flx Ib",
+              "mean_mV": -54.65,
+              "min_mV": -60.0,
+              "max_mV": -49.35,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Hip ext Ib",
+              "mean_mV": -59.19,
+              "min_mV": -60.0,
+              "max_mV": -57.07,
+              "crossings_-60mV": 13
+            },
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -73.24,
+              "min_mV": -95.25,
+              "max_mV": -44.26,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -67.41,
+              "min_mV": -91.73,
+              "max_mV": -41.19,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Hip MN flx R",
+              "mean_mV": -45.86,
+              "min_mV": -56.93,
+              "max_mV": -43.04,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Hip MN ext R",
+              "mean_mV": -46.1,
+              "min_mV": -57.24,
+              "max_mV": -43.03,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "L Knee Sensory Motor": {
+          "file": "L Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee ext Ia",
+              "mean_mV": -60.85,
+              "min_mV": -62.61,
+              "max_mV": -57.23,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee flx Ia",
+              "mean_mV": -60.88,
+              "min_mV": -62.58,
+              "max_mV": -57.25,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Knee flx Ib",
+              "mean_mV": -59.56,
+              "min_mV": -60.0,
+              "max_mV": -57.45,
+              "crossings_-60mV": 23
+            },
+            {
+              "name": "L Knee ext Ib",
+              "mean_mV": -58.7,
+              "min_mV": -60.0,
+              "max_mV": -57.35,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Knee MN ext",
+              "mean_mV": -71.05,
+              "min_mV": -92.68,
+              "max_mV": -42.46,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Knee MN flx",
+              "mean_mV": -72.02,
+              "min_mV": -97.06,
+              "max_mV": -42.15,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -45.96,
+              "min_mV": -56.99,
+              "max_mV": -42.99,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Knee MN flx RE",
+              "mean_mV": -46.02,
+              "min_mV": -57.23,
+              "max_mV": -42.97,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "L Ankle Sensory Motor": {
+          "file": "L Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Ank flx Ia",
+              "mean_mV": -60.88,
+              "min_mV": -62.6,
+              "max_mV": -57.25,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Ank ext Ia",
+              "mean_mV": -60.84,
+              "min_mV": -62.59,
+              "max_mV": -57.23,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Ank ext Ib",
+              "mean_mV": -59.19,
+              "min_mV": -60.0,
+              "max_mV": -56.57,
+              "crossings_-60mV": 2
+            },
+            {
+              "name": "L Ank flx Ib",
+              "mean_mV": -59.31,
+              "min_mV": -60.0,
+              "max_mV": -58.28,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Ank MN ext",
+              "mean_mV": -71.99,
+              "min_mV": -94.11,
+              "max_mV": -42.41,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Ank MN flx",
+              "mean_mV": -71.86,
+              "min_mV": -96.44,
+              "max_mV": -42.36,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Ank MN flx RE",
+              "mean_mV": -46.01,
+              "min_mV": -57.28,
+              "max_mV": -42.96,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Ank MN ext RE",
+              "mean_mV": -46.0,
+              "min_mV": -56.93,
+              "max_mV": -43.0,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "R Hip Sensory Motor": {
+          "file": "R Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip ext Ia",
+              "mean_mV": -57.84,
+              "min_mV": -60.27,
+              "max_mV": -55.21,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip flx Ia",
+              "mean_mV": -57.98,
+              "min_mV": -60.4,
+              "max_mV": -54.29,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip ext Ia IN",
+              "mean_mV": -56.51,
+              "min_mV": -60.0,
+              "max_mV": -52.67,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Hip flx Ia IN",
+              "mean_mV": -56.51,
+              "min_mV": -60.0,
+              "max_mV": -52.67,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Hip flx Ib",
+              "mean_mV": -52.77,
+              "min_mV": -60.0,
+              "max_mV": -43.78,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Hip ext Ib",
+              "mean_mV": -56.97,
+              "min_mV": -60.0,
+              "max_mV": -51.29,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip MN flx",
+              "mean_mV": -67.69,
+              "min_mV": -94.91,
+              "max_mV": -36.84,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Hip MN ext",
+              "mean_mV": -71.74,
+              "min_mV": -96.0,
+              "max_mV": -41.52,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Hip MN ext RE",
+              "mean_mV": -46.06,
+              "min_mV": -57.39,
+              "max_mV": -43.1,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "R Hip MN flx RE",
+              "mean_mV": -45.89,
+              "min_mV": -56.49,
+              "max_mV": -42.75,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "R Hip PF": {
+          "file": "R Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip PF ext IN",
+              "mean_mV": -58.35,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip PF flx IN",
+              "mean_mV": -58.31,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip PF ext",
+              "mean_mV": -59.08,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Hip PF flx",
+              "mean_mV": -59.03,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            }
+          ]
+        },
+        "R Knee PF": {
+          "file": "R Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee PF ext IN",
+              "mean_mV": -58.35,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Knee PF flx IN",
+              "mean_mV": -58.31,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Knee PF ext",
+              "mean_mV": -59.08,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Knee PF flx",
+              "mean_mV": -59.03,
+              "min_mV": -61.96,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            }
+          ]
+        },
+        "R Knee Sensory Motor": {
+          "file": "R Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee flx Ia",
+              "mean_mV": -60.84,
+              "min_mV": -62.57,
+              "max_mV": -57.23,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Knee ext Ia",
+              "mean_mV": -60.89,
+              "min_mV": -62.59,
+              "max_mV": -57.25,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Knee ext Ib",
+              "mean_mV": -58.72,
+              "min_mV": -60.0,
+              "max_mV": -57.06,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Knee flx Ib",
+              "mean_mV": -59.63,
+              "min_mV": -60.0,
+              "max_mV": -57.76,
+              "crossings_-60mV": 25
+            },
+            {
+              "name": "R Knee MN flx",
+              "mean_mV": -71.79,
+              "min_mV": -94.09,
+              "max_mV": -42.39,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Knee MN ext",
+              "mean_mV": -71.44,
+              "min_mV": -94.97,
+              "max_mV": -42.38,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Knee MN flx RE",
+              "mean_mV": -46.0,
+              "min_mV": -57.04,
+              "max_mV": -43.01,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -45.99,
+              "min_mV": -57.18,
+              "max_mV": -42.94,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "R Ankle Sensory Motor": {
+          "file": "R Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Ank ext Ia",
+              "mean_mV": -60.88,
+              "min_mV": -62.59,
+              "max_mV": -57.25,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Ank flx Ia",
+              "mean_mV": -60.84,
+              "min_mV": -62.6,
+              "max_mV": -57.23,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Ank ext Ib",
+              "mean_mV": -59.23,
+              "min_mV": -60.0,
+              "max_mV": -56.58,
+              "crossings_-60mV": 2
+            },
+            {
+              "name": "R Ank flx Ib",
+              "mean_mV": -59.29,
+              "min_mV": -60.0,
+              "max_mV": -58.3,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Ank MN flx",
+              "mean_mV": -71.48,
+              "min_mV": -93.61,
+              "max_mV": -42.4,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Ank MN ext",
+              "mean_mV": -72.36,
+              "min_mV": -96.47,
+              "max_mV": -42.43,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Ank MN flx RE",
+              "mean_mV": -45.97,
+              "min_mV": -57.09,
+              "max_mV": -42.97,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "R Ank MN ext RE",
+              "mean_mV": -46.03,
+              "min_mV": -57.12,
+              "max_mV": -43.01,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "L CPG Charts": {
+          "file": "L CPG Charts.txt",
+          "rows": 22501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -72.67,
+              "min_mV": -94.75,
+              "max_mV": -44.26,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -67.0,
+              "min_mV": -91.06,
+              "max_mV": -41.19,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -59.05,
+              "min_mV": -61.96,
+              "max_mV": -55.83,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -59.02,
+              "min_mV": -61.96,
+              "max_mV": -55.83,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.84,
+              "min_mV": -61.07,
+              "max_mV": -56.41,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -58.83,
+              "min_mV": -61.07,
+              "max_mV": -56.41,
+              "crossings_-60mV": 10
+            }
+          ]
+        },
+        "L Angles": {
+          "file": "L Angles.txt",
+          "rows": 4501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "ankle_L",
+              "type": "angle_deg",
+              "min": -20.4,
+              "max": -4.0,
+              "range": 16.4
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -15.0,
+              "max": 23.2,
+              "range": 38.2
+            },
+            {
+              "name": "knee_L",
+              "type": "angle_deg",
+              "min": -1.0,
+              "max": 60.3,
+              "range": 61.2
+            }
+          ]
+        }
+      },
+      "rg_bursts": {
+        "L RG ext": {
+          "bursts": 10,
+          "period_s": 0.4432,
+          "freq_Hz": 2.256
+        },
+        "L RG flx": {
+          "bursts": 10,
+          "period_s": 0.4432,
+          "freq_Hz": 2.256
+        }
+      },
+      "independent_raw_joint_ranges": {
+        "L Hip Physical": {
+          "hip_L": {
+            "min": -15.0195156415594,
+            "max": 23.188919771873216,
+            "sample_window_s": [
+              0.0,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        },
+        "L Angles": {
+          "ankle_L": {
+            "min": -20.398443422247567,
+            "max": -4.033279103043917,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "hip_L": {
+            "min": -15.0195156415594,
+            "max": 23.188919771873216,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "knee_L": {
+            "min": -0.9514766329060503,
+            "max": 60.25052286257197,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        }
+      },
+      "independent_raw_rg_metrics": {
+        "Rhythm Generator/L RG ext": {
+          "crossings_or_spikes": 11,
+          "burst_count": 11,
+          "median_period_s": 0.4432400000000012,
+          "source_window_s": [
+            0.0,
+            5.0
+          ]
+        },
+        "Rhythm Generator/L RG flx": {
+          "crossings_or_spikes": 12,
+          "burst_count": 12,
+          "median_period_s": 0.4432400000000001,
+          "source_window_s": [
+            0.0,
+            5.0
+          ]
+        },
+        "L CPG Charts/L RG ext": {
+          "crossings_or_spikes": 10,
+          "burst_count": 10,
+          "median_period_s": 0.4432400000000003,
+          "source_window_s": [
+            0.5,
+            5.0
+          ]
+        },
+        "L CPG Charts/L RG flx": {
+          "crossings_or_spikes": 10,
+          "burst_count": 10,
+          "median_period_s": 0.4432400000000001,
+          "source_window_s": [
+            0.5,
+            5.0
+          ]
+        }
+      }
+    },
+    "metrics_baseline_BipRG_modern.json": {
+      "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/BipRG_modern/BipRG_modern.asim",
+      "mode": "graded",
+      "charts": {
+        "L Hip Physical": {
+          "file": "L Hip Physical.txt",
+          "rows": 5001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "hip_L_flx_rec",
+              "type": "Ia",
+              "mean": 1.90706
+            },
+            {
+              "name": "hip_L_ext_rec",
+              "type": "Ia",
+              "mean": 2.25939
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -6.9,
+              "max": 23.3,
+              "range": 30.1
+            },
+            {
+              "name": "hip_L_flx",
+              "type": "Tension",
+              "mean": 235.62117
+            },
+            {
+              "name": "hip_L_ext",
+              "type": "Tension",
+              "mean": 384.19672
+            }
+          ]
+        },
+        "Rhythm Generator": {
+          "file": "Rhythm Generator.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L RG ext IN",
+              "mean_mV": -57.85,
+              "min_mV": -59.72,
+              "max_mV": -52.52,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L RG flx IN",
+              "mean_mV": -58.44,
+              "min_mV": -60.0,
+              "max_mV": -53.87,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.7,
+              "min_mV": -61.7,
+              "max_mV": -51.66,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -60.0,
+              "min_mV": -64.8,
+              "max_mV": -52.84,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R RG ext IN",
+              "mean_mV": -57.84,
+              "min_mV": -59.75,
+              "max_mV": -55.49,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "R RG flx IN",
+              "mean_mV": -58.42,
+              "min_mV": -60.0,
+              "max_mV": -53.72,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R RG ext",
+              "mean_mV": -58.71,
+              "min_mV": -61.91,
+              "max_mV": -52.84,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R RG flx",
+              "mean_mV": -60.0,
+              "min_mV": -64.34,
+              "max_mV": -52.39,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L c1",
+              "mean_mV": -58.44,
+              "min_mV": -60.0,
+              "max_mV": -53.87,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R c1",
+              "mean_mV": -58.42,
+              "min_mV": -60.0,
+              "max_mV": -53.72,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L V3",
+              "mean_mV": -58.02,
+              "min_mV": -60.0,
+              "max_mV": -52.59,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R V3",
+              "mean_mV": -58.01,
+              "min_mV": -60.0,
+              "max_mV": -55.64,
+              "crossings_-60mV": 10
+            }
+          ]
+        },
+        "L Hip PF": {
+          "file": "L Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip PF ext IN",
+              "mean_mV": -58.18,
+              "min_mV": -60.0,
+              "max_mV": -55.35,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Hip PF flx IN",
+              "mean_mV": -58.39,
+              "min_mV": -60.0,
+              "max_mV": -54.7,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -58.92,
+              "min_mV": -62.02,
+              "max_mV": -52.85,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -59.01,
+              "min_mV": -61.66,
+              "max_mV": -52.85,
+              "crossings_-60mV": 12
+            }
+          ]
+        },
+        "L Knee PF": {
+          "file": "L Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee PF flx IN",
+              "mean_mV": -58.57,
+              "min_mV": -60.0,
+              "max_mV": -54.9,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee PF ext IN",
+              "mean_mV": -58.08,
+              "min_mV": -60.0,
+              "max_mV": -55.41,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Knee PF flx",
+              "mean_mV": -59.23,
+              "min_mV": -61.79,
+              "max_mV": -52.85,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee PF ext",
+              "mean_mV": -58.81,
+              "min_mV": -61.89,
+              "max_mV": -52.85,
+              "crossings_-60mV": 10
+            }
+          ]
+        },
+        "L Hip Sensory Motor": {
+          "file": "L Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip flx Ia",
+              "mean_mV": -58.5,
+              "min_mV": -60.96,
+              "max_mV": -55.44,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Hip ext Ia",
+              "mean_mV": -57.67,
+              "min_mV": -60.59,
+              "max_mV": -54.2,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Hip ext Ia IN",
+              "mean_mV": -56.47,
+              "min_mV": -60.0,
+              "max_mV": -53.65,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Hip flx Ia IN",
+              "mean_mV": -57.08,
+              "min_mV": -60.0,
+              "max_mV": -55.35,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Hip flx Ib",
+              "mean_mV": -56.74,
+              "min_mV": -60.0,
+              "max_mV": -49.89,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Hip ext Ib",
+              "mean_mV": -58.86,
+              "min_mV": -60.0,
+              "max_mV": -57.15,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -70.62,
+              "min_mV": -94.58,
+              "max_mV": -44.12,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -71.0,
+              "min_mV": -95.34,
+              "max_mV": -39.43,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Hip MN flx R",
+              "mean_mV": -45.98,
+              "min_mV": -56.96,
+              "max_mV": -42.93,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Hip MN ext R",
+              "mean_mV": -45.99,
+              "min_mV": -56.91,
+              "max_mV": -42.89,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "L Knee Sensory Motor": {
+          "file": "L Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee ext Ia",
+              "mean_mV": -60.62,
+              "min_mV": -62.62,
+              "max_mV": -57.23,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee flx Ia",
+              "mean_mV": -61.1,
+              "min_mV": -62.61,
+              "max_mV": -57.26,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Knee flx Ib",
+              "mean_mV": -59.65,
+              "min_mV": -60.0,
+              "max_mV": -57.53,
+              "crossings_-60mV": 22
+            },
+            {
+              "name": "L Knee ext Ib",
+              "mean_mV": -58.04,
+              "min_mV": -60.0,
+              "max_mV": -57.09,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Knee MN ext",
+              "mean_mV": -67.07,
+              "min_mV": -90.3,
+              "max_mV": -44.06,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Knee MN flx",
+              "mean_mV": -75.27,
+              "min_mV": -97.68,
+              "max_mV": -41.25,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -45.82,
+              "min_mV": -56.65,
+              "max_mV": -43.09,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Knee MN flx RE",
+              "mean_mV": -46.15,
+              "min_mV": -57.32,
+              "max_mV": -43.01,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "L Ankle Sensory Motor": {
+          "file": "L Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Ank flx Ia",
+              "mean_mV": -61.11,
+              "min_mV": -62.62,
+              "max_mV": -57.26,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Ank ext Ia",
+              "mean_mV": -60.61,
+              "min_mV": -62.59,
+              "max_mV": -57.23,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Ank ext Ib",
+              "mean_mV": -59.15,
+              "min_mV": -60.0,
+              "max_mV": -56.87,
+              "crossings_-60mV": 2
+            },
+            {
+              "name": "L Ank flx Ib",
+              "mean_mV": -59.33,
+              "min_mV": -60.0,
+              "max_mV": -58.3,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "L Ank MN ext",
+              "mean_mV": -68.67,
+              "min_mV": -93.62,
+              "max_mV": -44.17,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "L Ank MN flx",
+              "mean_mV": -74.91,
+              "min_mV": -96.82,
+              "max_mV": -41.29,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "L Ank MN flx RE",
+              "mean_mV": -46.12,
+              "min_mV": -57.36,
+              "max_mV": -42.89,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Ank MN ext RE",
+              "mean_mV": -45.88,
+              "min_mV": -56.6,
+              "max_mV": -43.04,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "R Hip Sensory Motor": {
+          "file": "R Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip ext Ia",
+              "mean_mV": -57.42,
+              "min_mV": -60.36,
+              "max_mV": -54.27,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R Hip flx Ia",
+              "mean_mV": -57.65,
+              "min_mV": -60.44,
+              "max_mV": -53.55,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R Hip ext Ia IN",
+              "mean_mV": -56.03,
+              "min_mV": -60.0,
+              "max_mV": -51.29,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Hip flx Ia IN",
+              "mean_mV": -56.03,
+              "min_mV": -60.0,
+              "max_mV": -51.29,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Hip flx Ib",
+              "mean_mV": -51.0,
+              "min_mV": -60.0,
+              "max_mV": -40.96,
+              "crossings_-60mV": 4
+            },
+            {
+              "name": "R Hip ext Ib",
+              "mean_mV": -55.98,
+              "min_mV": -60.0,
+              "max_mV": -49.66,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip MN flx",
+              "mean_mV": -67.18,
+              "min_mV": -95.19,
+              "max_mV": -34.03,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Hip MN ext",
+              "mean_mV": -69.98,
+              "min_mV": -97.96,
+              "max_mV": -41.54,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Hip MN ext RE",
+              "mean_mV": -45.99,
+              "min_mV": -57.4,
+              "max_mV": -43.32,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "R Hip MN flx RE",
+              "mean_mV": -45.91,
+              "min_mV": -56.49,
+              "max_mV": -42.64,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "R Hip PF": {
+          "file": "R Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip PF ext IN",
+              "mean_mV": -58.2,
+              "min_mV": -60.0,
+              "max_mV": -55.02,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip PF flx IN",
+              "mean_mV": -58.31,
+              "min_mV": -60.0,
+              "max_mV": -54.47,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R Hip PF ext",
+              "mean_mV": -58.97,
+              "min_mV": -62.31,
+              "max_mV": -52.85,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Hip PF flx",
+              "mean_mV": -58.99,
+              "min_mV": -61.84,
+              "max_mV": -52.85,
+              "crossings_-60mV": 11
+            }
+          ]
+        },
+        "R Knee PF": {
+          "file": "R Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee PF ext IN",
+              "mean_mV": -58.08,
+              "min_mV": -60.0,
+              "max_mV": -55.16,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R Knee PF flx IN",
+              "mean_mV": -58.54,
+              "min_mV": -60.0,
+              "max_mV": -54.69,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R Knee PF ext",
+              "mean_mV": -58.85,
+              "min_mV": -62.18,
+              "max_mV": -52.85,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Knee PF flx",
+              "mean_mV": -59.23,
+              "min_mV": -61.93,
+              "max_mV": -52.85,
+              "crossings_-60mV": 11
+            }
+          ]
+        },
+        "R Knee Sensory Motor": {
+          "file": "R Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee flx Ia",
+              "mean_mV": -61.07,
+              "min_mV": -62.62,
+              "max_mV": -57.24,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R Knee ext Ia",
+              "mean_mV": -60.62,
+              "min_mV": -62.65,
+              "max_mV": -57.25,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Knee ext Ib",
+              "mean_mV": -57.97,
+              "min_mV": -60.0,
+              "max_mV": -56.91,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Knee flx Ib",
+              "mean_mV": -59.61,
+              "min_mV": -60.0,
+              "max_mV": -58.24,
+              "crossings_-60mV": 19
+            },
+            {
+              "name": "R Knee MN flx",
+              "mean_mV": -74.75,
+              "min_mV": -96.02,
+              "max_mV": -40.09,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Knee MN ext",
+              "mean_mV": -67.41,
+              "min_mV": -93.45,
+              "max_mV": -42.62,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Knee MN flx RE",
+              "mean_mV": -46.16,
+              "min_mV": -57.12,
+              "max_mV": -42.94,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -45.82,
+              "min_mV": -57.12,
+              "max_mV": -43.01,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "R Ankle Sensory Motor": {
+          "file": "R Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Ank ext Ia",
+              "mean_mV": -60.61,
+              "min_mV": -62.62,
+              "max_mV": -57.25,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Ank flx Ia",
+              "mean_mV": -61.08,
+              "min_mV": -62.63,
+              "max_mV": -57.24,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "R Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Ank ext Ib",
+              "mean_mV": -59.11,
+              "min_mV": -60.0,
+              "max_mV": -56.64,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Ank flx Ib",
+              "mean_mV": -59.33,
+              "min_mV": -60.0,
+              "max_mV": -58.29,
+              "crossings_-60mV": 1
+            },
+            {
+              "name": "R Ank MN flx",
+              "mean_mV": -74.55,
+              "min_mV": -95.6,
+              "max_mV": -40.31,
+              "crossings_-60mV": 11
+            },
+            {
+              "name": "R Ank MN ext",
+              "mean_mV": -69.02,
+              "min_mV": -95.86,
+              "max_mV": -42.75,
+              "crossings_-60mV": 12
+            },
+            {
+              "name": "R Ank MN flx RE",
+              "mean_mV": -46.13,
+              "min_mV": -57.17,
+              "max_mV": -42.85,
+              "crossings_-60mV": 0
+            },
+            {
+              "name": "R Ank MN ext RE",
+              "mean_mV": -45.87,
+              "min_mV": -57.06,
+              "max_mV": -43.0,
+              "crossings_-60mV": 0
+            }
+          ]
+        },
+        "L CPG Charts": {
+          "file": "L CPG Charts.txt",
+          "rows": 22501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -69.89,
+              "min_mV": -94.58,
+              "max_mV": -44.12,
+              "crossings_-60mV": 9
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -70.78,
+              "min_mV": -94.79,
+              "max_mV": -39.43,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -59.01,
+              "min_mV": -61.66,
+              "max_mV": -55.36,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -58.88,
+              "min_mV": -62.02,
+              "max_mV": -56.11,
+              "crossings_-60mV": 9
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.69,
+              "min_mV": -61.7,
+              "max_mV": -56.58,
+              "crossings_-60mV": 10
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -60.01,
+              "min_mV": -64.39,
+              "max_mV": -54.31,
+              "crossings_-60mV": 10
+            }
+          ]
+        },
+        "L Angles": {
+          "file": "L Angles.txt",
+          "rows": 4501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "ankle_L",
+              "type": "angle_deg",
+              "min": -20.3,
+              "max": -4.1,
+              "range": 16.2
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -6.9,
+              "max": 23.3,
+              "range": 30.1
+            },
+            {
+              "name": "knee_L",
+              "type": "angle_deg",
+              "min": -0.3,
+              "max": 37.2,
+              "range": 37.4
+            }
+          ]
+        }
+      },
+      "rg_bursts": {
+        "L RG ext": {
+          "bursts": 10,
+          "period_s": 0.4614,
+          "freq_Hz": 2.167
+        },
+        "L RG flx": {
+          "bursts": 10,
+          "period_s": 0.4634,
+          "freq_Hz": 2.158
+        },
+        "R RG ext": {
+          "bursts": 11,
+          "period_s": 0.4654,
+          "freq_Hz": 2.149
+        },
+        "R RG flx": {
+          "bursts": 10,
+          "period_s": 0.4622,
+          "freq_Hz": 2.164
+        }
+      },
+      "antiphase": {
+        "pair": [
+          "L RG flx",
+          "R RG flx"
+        ],
+        "lag_s": -0.66,
+        "r": 0.869,
+        "lag_cycle_folded": -0.424
+      },
+      "independent_raw_joint_ranges": {
+        "L Hip Physical": {
+          "hip_L": {
+            "min": -6.885463007205155,
+            "max": 23.26449290505097,
+            "sample_window_s": [
+              0.0,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        },
+        "L Angles": {
+          "ankle_L": {
+            "min": -20.324073500439585,
+            "max": -4.144599073059885,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "hip_L": {
+            "min": -6.885463007205155,
+            "max": 23.26449290505097,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "knee_L": {
+            "min": -0.2747642024861668,
+            "max": 37.166855437664296,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        }
+      },
+      "independent_raw_rg_metrics": {
+        "Rhythm Generator/L RG ext": {
+          "crossings_or_spikes": 11,
+          "burst_count": 11,
+          "median_period_s": 0.461564444444444,
+          "source_window_s": [
+            0.0,
+            5.0
+          ]
+        },
+        "Rhythm Generator/L RG flx": {
+          "crossings_or_spikes": 11,
+          "burst_count": 11,
+          "median_period_s": 0.4635126146697113,
+          "source_window_s": [
+            0.0,
+            5.0
+          ]
+        },
+        "Rhythm Generator/R RG ext": {
+          "crossings_or_spikes": 11,
+          "burst_count": 11,
+          "median_period_s": 0.4653999999999998,
+          "source_window_s": [
+            0.0,
+            5.0
+          ]
+        },
+        "Rhythm Generator/R RG flx": {
+          "crossings_or_spikes": 10,
+          "burst_count": 10,
+          "median_period_s": 0.4622085763293313,
+          "source_window_s": [
+            0.0,
+            5.0
+          ]
+        },
+        "L CPG Charts/L RG ext": {
+          "crossings_or_spikes": 10,
+          "burst_count": 10,
+          "median_period_s": 0.46139649122807036,
+          "source_window_s": [
+            0.5,
+            5.0
+          ]
+        },
+        "L CPG Charts/L RG flx": {
+          "crossings_or_spikes": 10,
+          "burst_count": 10,
+          "median_period_s": 0.46339657017852254,
+          "source_window_s": [
+            0.5,
+            5.0
+          ]
+        }
+      }
+    },
+    "metrics_W2L_modern_spiking.json": {
+      "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/W2L_modern_spiking/W2L_modern_spiking.asim",
+      "mode": "spiking",
+      "charts": {
+        "L Hip Physical": {
+          "file": "L Hip Physical.txt",
+          "rows": 5001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "hip_L_flx_rec",
+              "type": "Ia",
+              "mean": 1.68845
+            },
+            {
+              "name": "hip_L_ext_rec",
+              "type": "Ia",
+              "mean": 1.6105
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -0.0,
+              "max": 6.9,
+              "range": 7.0
+            },
+            {
+              "name": "hip_L_flx",
+              "type": "Tension",
+              "mean": 105.67737
+            },
+            {
+              "name": "hip_L_ext",
+              "type": "Tension",
+              "mean": 1.00918
+            }
+          ]
+        },
+        "Rhythm Generator": {
+          "file": "Rhythm Generator.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L RG ext IN",
+              "mean_mV": -59.97,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 3,
+              "rate_Hz": 0.6
+            },
+            {
+              "name": "L RG flx IN",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.2,
+              "min_mV": -59.47,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -58.2,
+              "min_mV": -59.79,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Hip PF": {
+          "file": "L Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip PF ext IN",
+              "mean_mV": -59.96,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "L Hip PF flx IN",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -58.19,
+              "min_mV": -59.46,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -58.21,
+              "min_mV": -61.47,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Knee PF": {
+          "file": "L Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee PF flx IN",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee PF ext IN",
+              "mean_mV": -59.96,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "L Knee PF flx",
+              "mean_mV": -58.21,
+              "min_mV": -61.47,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee PF ext",
+              "mean_mV": -58.19,
+              "min_mV": -59.46,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            }
+          ]
+        },
+        "L Hip Sensory Motor": {
+          "file": "L Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip flx Ia",
+              "mean_mV": -65.26,
+              "min_mV": -65.43,
+              "max_mV": -58.21,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip ext Ia",
+              "mean_mV": -65.23,
+              "min_mV": -65.43,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "L Hip ext Ia IN",
+              "mean_mV": -57.6,
+              "min_mV": -60.0,
+              "max_mV": -57.6,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip flx Ia IN",
+              "mean_mV": -57.46,
+              "min_mV": -60.0,
+              "max_mV": -57.19,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip flx Ib",
+              "mean_mV": -58.54,
+              "min_mV": -60.0,
+              "max_mV": -58.5,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip ext Ib",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -59.21,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -84.05,
+              "min_mV": -100.0,
+              "max_mV": -61.39,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -84.14,
+              "min_mV": -100.0,
+              "max_mV": -78.51,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN flx R",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            },
+            {
+              "name": "L Hip MN ext R",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            }
+          ]
+        },
+        "L Knee Sensory Motor": {
+          "file": "L Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee ext Ia",
+              "mean_mV": -65.23,
+              "min_mV": -65.43,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "L Knee flx Ia",
+              "mean_mV": -65.26,
+              "min_mV": -65.43,
+              "max_mV": -58.21,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ib",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -59.89,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee ext Ib",
+              "mean_mV": -59.57,
+              "min_mV": -60.0,
+              "max_mV": -59.26,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee MN ext",
+              "mean_mV": -84.05,
+              "min_mV": -100.0,
+              "max_mV": -61.39,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee MN flx",
+              "mean_mV": -84.14,
+              "min_mV": -100.0,
+              "max_mV": -78.51,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            },
+            {
+              "name": "L Knee MN flx RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            }
+          ]
+        },
+        "L Ankle Sensory Motor": {
+          "file": "L Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Ank flx Ia",
+              "mean_mV": -65.26,
+              "min_mV": -65.43,
+              "max_mV": -58.21,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ia",
+              "mean_mV": -65.23,
+              "min_mV": -65.43,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "L Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ib",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -58.33,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank flx Ib",
+              "mean_mV": -59.7,
+              "min_mV": -60.0,
+              "max_mV": -59.7,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank MN ext",
+              "mean_mV": -84.05,
+              "min_mV": -100.0,
+              "max_mV": -61.39,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank MN flx",
+              "mean_mV": -84.14,
+              "min_mV": -100.0,
+              "max_mV": -78.51,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank MN flx RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            },
+            {
+              "name": "L Ank MN ext RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            }
+          ]
+        },
+        "R Hip Sensory Motor": {
+          "file": "R Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip ext Ia",
+              "mean_mV": -65.15,
+              "min_mV": -65.43,
+              "max_mV": 0.0,
+              "spikes": 3,
+              "rate_Hz": 0.6
+            },
+            {
+              "name": "R Hip flx Ia",
+              "mean_mV": -65.12,
+              "min_mV": -65.43,
+              "max_mV": 0.0,
+              "spikes": 4,
+              "rate_Hz": 0.8
+            },
+            {
+              "name": "R Hip ext Ia IN",
+              "mean_mV": -57.29,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 5,
+              "rate_Hz": 1.0
+            },
+            {
+              "name": "R Hip flx Ia IN",
+              "mean_mV": -57.29,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 5,
+              "rate_Hz": 1.0
+            },
+            {
+              "name": "R Hip flx Ib",
+              "mean_mV": -59.91,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 9,
+              "rate_Hz": 1.8
+            },
+            {
+              "name": "R Hip ext Ib",
+              "mean_mV": -59.43,
+              "min_mV": -60.0,
+              "max_mV": -56.4,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip MN flx",
+              "mean_mV": -83.74,
+              "min_mV": -100.0,
+              "max_mV": -61.39,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip MN ext",
+              "mean_mV": -84.16,
+              "min_mV": -100.0,
+              "max_mV": -78.51,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip MN ext RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            },
+            {
+              "name": "R Hip MN flx RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            }
+          ]
+        },
+        "R Hip PF": {
+          "file": "R Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip PF ext IN",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip PF flx IN",
+              "mean_mV": -59.96,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "R Hip PF ext",
+              "mean_mV": -58.21,
+              "min_mV": -61.47,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip PF flx",
+              "mean_mV": -58.19,
+              "min_mV": -59.46,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            }
+          ]
+        },
+        "R Knee PF": {
+          "file": "R Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee PF ext IN",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee PF flx IN",
+              "mean_mV": -59.96,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "R Knee PF ext",
+              "mean_mV": -58.21,
+              "min_mV": -61.47,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee PF flx",
+              "mean_mV": -58.19,
+              "min_mV": -59.46,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            }
+          ]
+        },
+        "R Knee Sensory Motor": {
+          "file": "R Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee flx Ia",
+              "mean_mV": -65.23,
+              "min_mV": -65.43,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "R Knee ext Ia",
+              "mean_mV": -65.26,
+              "min_mV": -65.43,
+              "max_mV": -58.21,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ib",
+              "mean_mV": -59.8,
+              "min_mV": -60.0,
+              "max_mV": -58.33,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ib",
+              "mean_mV": -59.99,
+              "min_mV": -60.0,
+              "max_mV": -59.78,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee MN flx",
+              "mean_mV": -84.05,
+              "min_mV": -100.0,
+              "max_mV": -61.39,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee MN ext",
+              "mean_mV": -84.14,
+              "min_mV": -100.0,
+              "max_mV": -78.51,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee MN flx RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            }
+          ]
+        },
+        "R Ankle Sensory Motor": {
+          "file": "R Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Ank ext Ia",
+              "mean_mV": -65.26,
+              "min_mV": -65.43,
+              "max_mV": -58.21,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ia",
+              "mean_mV": -65.23,
+              "min_mV": -65.43,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "R Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank ext Ib",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -58.33,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ib",
+              "mean_mV": -59.76,
+              "min_mV": -60.0,
+              "max_mV": -59.71,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank MN flx",
+              "mean_mV": -84.05,
+              "min_mV": -100.0,
+              "max_mV": -61.39,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank MN ext",
+              "mean_mV": -84.14,
+              "min_mV": -100.0,
+              "max_mV": -78.51,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank MN flx RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            },
+            {
+              "name": "R Ank MN ext RE",
+              "mean_mV": -57.34,
+              "min_mV": -62.37,
+              "max_mV": 0.0,
+              "spikes": 1114,
+              "rate_Hz": 222.8
+            }
+          ]
+        },
+        "L CPG Charts": {
+          "file": "L CPG Charts.txt",
+          "rows": 22501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -83.97,
+              "min_mV": -84.62,
+              "max_mV": -83.72,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -83.97,
+              "min_mV": -84.62,
+              "max_mV": -83.72,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -58.17,
+              "min_mV": -58.18,
+              "max_mV": -58.17,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -58.17,
+              "min_mV": -58.19,
+              "max_mV": -58.17,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.17,
+              "min_mV": -58.18,
+              "max_mV": -58.17,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -58.17,
+              "min_mV": -58.18,
+              "max_mV": -58.17,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Angles": {
+          "file": "L Angles.txt",
+          "rows": 4501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "ankle_L",
+              "type": "angle_deg",
+              "min": -9.8,
+              "max": -9.7,
+              "range": 0.1
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": 6.1,
+              "max": 6.9,
+              "range": 0.8
+            },
+            {
+              "name": "knee_L",
+              "type": "angle_deg",
+              "min": 10.9,
+              "max": 12.2,
+              "range": 1.3
+            }
+          ]
+        }
+      },
+      "rg_bursts": {
+        "L RG ext": {
+          "bursts": 0
+        },
+        "L RG flx": {
+          "bursts": 0
+        }
+      },
+      "independent_raw_joint_ranges": {
+        "L Hip Physical": {
+          "hip_L": {
+            "min": -0.0437928258594547,
+            "max": 6.939206448388426,
+            "sample_window_s": [
+              0.0,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        },
+        "L Angles": {
+          "ankle_L": {
+            "min": -9.7985523249888,
+            "max": -9.697367978368696,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "hip_L": {
+            "min": 6.1460609725888276,
+            "max": 6.939206448388426,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "knee_L": {
+            "min": 10.89118284030328,
+            "max": 12.21116300872567,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        }
+      },
+      "independent_raw_rg_metrics": {
+        "Rhythm Generator/L RG ext": {
+          "crossings_or_spikes": 2,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 0.4
+        },
+        "Rhythm Generator/L RG flx": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        },
+        "L CPG Charts/L RG ext": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        },
+        "L CPG Charts/L RG flx": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        }
+      }
+    },
+    "metrics_BipRG_modern_spiking.json": {
+      "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/BipRG_modern_spiking/BipRG_modern_spiking.asim",
+      "mode": "spiking",
+      "charts": {
+        "L Hip Physical": {
+          "file": "L Hip Physical.txt",
+          "rows": 5001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "hip_L_flx_rec",
+              "type": "Ia",
+              "mean": 1.78765
+            },
+            {
+              "name": "hip_L_ext_rec",
+              "type": "Ia",
+              "mean": 1.6105
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": 0.0,
+              "max": 23.0,
+              "range": 23.0
+            },
+            {
+              "name": "hip_L_flx",
+              "type": "Tension",
+              "mean": 223.95707
+            },
+            {
+              "name": "hip_L_ext",
+              "type": "Tension",
+              "mean": 11.79124
+            }
+          ]
+        },
+        "Rhythm Generator": {
+          "file": "Rhythm Generator.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L RG ext IN",
+              "mean_mV": -54.23,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 847,
+              "rate_Hz": 169.4
+            },
+            {
+              "name": "L RG flx IN",
+              "mean_mV": -59.72,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 52,
+              "rate_Hz": 10.4
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.06,
+              "min_mV": -60.48,
+              "max_mV": 0.0,
+              "spikes": 31,
+              "rate_Hz": 6.2
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -57.33,
+              "min_mV": -58.18,
+              "max_mV": 0.0,
+              "spikes": 45,
+              "rate_Hz": 9.0
+            },
+            {
+              "name": "R RG ext IN",
+              "mean_mV": -48.65,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2224,
+              "rate_Hz": 444.8
+            },
+            {
+              "name": "R RG flx IN",
+              "mean_mV": -48.56,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2245,
+              "rate_Hz": 449.0
+            },
+            {
+              "name": "R RG ext",
+              "mean_mV": -48.43,
+              "min_mV": -59.91,
+              "max_mV": 0.0,
+              "spikes": 2212,
+              "rate_Hz": 442.4
+            },
+            {
+              "name": "R RG flx",
+              "mean_mV": -49.28,
+              "min_mV": -58.0,
+              "max_mV": 0.0,
+              "spikes": 2241,
+              "rate_Hz": 448.2
+            },
+            {
+              "name": "L c1",
+              "mean_mV": -59.72,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 52,
+              "rate_Hz": 10.4
+            },
+            {
+              "name": "R c1",
+              "mean_mV": -48.56,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2245,
+              "rate_Hz": 449.0
+            },
+            {
+              "name": "L V3",
+              "mean_mV": -59.81,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 35,
+              "rate_Hz": 7.0
+            },
+            {
+              "name": "R V3",
+              "mean_mV": -48.73,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2210,
+              "rate_Hz": 442.0
+            }
+          ]
+        },
+        "L Hip PF": {
+          "file": "L Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip PF ext IN",
+              "mean_mV": -59.82,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 32,
+              "rate_Hz": 6.4
+            },
+            {
+              "name": "L Hip PF flx IN",
+              "mean_mV": -48.48,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2270,
+              "rate_Hz": 454.0
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -66.42,
+              "min_mV": -66.77,
+              "max_mV": 0.0,
+              "spikes": 29,
+              "rate_Hz": 5.8
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -48.37,
+              "min_mV": -56.72,
+              "max_mV": 0.0,
+              "spikes": 2267,
+              "rate_Hz": 453.4
+            }
+          ]
+        },
+        "L Knee PF": {
+          "file": "L Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee PF flx IN",
+              "mean_mV": -59.84,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 26,
+              "rate_Hz": 5.2
+            },
+            {
+              "name": "L Knee PF ext IN",
+              "mean_mV": -59.77,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 39,
+              "rate_Hz": 7.8
+            },
+            {
+              "name": "L Knee PF flx",
+              "mean_mV": -58.09,
+              "min_mV": -62.68,
+              "max_mV": 0.0,
+              "spikes": 23,
+              "rate_Hz": 4.6
+            },
+            {
+              "name": "L Knee PF ext",
+              "mean_mV": -58.04,
+              "min_mV": -66.78,
+              "max_mV": 0.0,
+              "spikes": 37,
+              "rate_Hz": 7.4
+            }
+          ]
+        },
+        "L Hip Sensory Motor": {
+          "file": "L Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip flx Ia",
+              "mean_mV": -55.91,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "L Hip ext Ia",
+              "mean_mV": -59.95,
+              "min_mV": -61.72,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "L Hip ext Ia IN",
+              "mean_mV": -57.6,
+              "min_mV": -60.0,
+              "max_mV": -57.6,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip flx Ia IN",
+              "mean_mV": -57.29,
+              "min_mV": -60.0,
+              "max_mV": -55.71,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip flx Ib",
+              "mean_mV": -56.96,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 9,
+              "rate_Hz": 1.8
+            },
+            {
+              "name": "L Hip ext Ib",
+              "mean_mV": -59.97,
+              "min_mV": -60.0,
+              "max_mV": -57.71,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -99.08,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 29,
+              "rate_Hz": 5.8
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -49.75,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 2270,
+              "rate_Hz": 454.0
+            },
+            {
+              "name": "L Hip MN flx R",
+              "mean_mV": -44.46,
+              "min_mV": -62.15,
+              "max_mV": 0.0,
+              "spikes": 2269,
+              "rate_Hz": 453.8
+            },
+            {
+              "name": "L Hip MN ext R",
+              "mean_mV": -61.43,
+              "min_mV": -63.62,
+              "max_mV": 0.0,
+              "spikes": 30,
+              "rate_Hz": 6.0
+            }
+          ]
+        },
+        "L Knee Sensory Motor": {
+          "file": "L Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee ext Ia",
+              "mean_mV": -59.96,
+              "min_mV": -66.62,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "L Knee flx Ia",
+              "mean_mV": -66.68,
+              "min_mV": -66.99,
+              "max_mV": 0.0,
+              "spikes": 7,
+              "rate_Hz": 1.4
+            },
+            {
+              "name": "L Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ib",
+              "mean_mV": -59.99,
+              "min_mV": -60.0,
+              "max_mV": -58.52,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee ext Ib",
+              "mean_mV": -58.18,
+              "min_mV": -60.0,
+              "max_mV": -57.78,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee MN ext",
+              "mean_mV": -98.86,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 37,
+              "rate_Hz": 7.4
+            },
+            {
+              "name": "L Knee MN flx",
+              "mean_mV": -79.05,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 21,
+              "rate_Hz": 4.2
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -61.27,
+              "min_mV": -63.55,
+              "max_mV": 0.0,
+              "spikes": 45,
+              "rate_Hz": 9.0
+            },
+            {
+              "name": "L Knee MN flx RE",
+              "mean_mV": -52.83,
+              "min_mV": -65.41,
+              "max_mV": 0.0,
+              "spikes": 2225,
+              "rate_Hz": 445.0
+            }
+          ]
+        },
+        "L Ankle Sensory Motor": {
+          "file": "L Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Ank flx Ia",
+              "mean_mV": -66.68,
+              "min_mV": -66.99,
+              "max_mV": 0.0,
+              "spikes": 7,
+              "rate_Hz": 1.4
+            },
+            {
+              "name": "L Ank ext Ia",
+              "mean_mV": -59.96,
+              "min_mV": -66.53,
+              "max_mV": 0.0,
+              "spikes": 3,
+              "rate_Hz": 0.6
+            },
+            {
+              "name": "L Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ib",
+              "mean_mV": -59.88,
+              "min_mV": -60.0,
+              "max_mV": -58.32,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank flx Ib",
+              "mean_mV": -59.81,
+              "min_mV": -60.0,
+              "max_mV": -59.05,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank MN ext",
+              "mean_mV": -98.91,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 36,
+              "rate_Hz": 7.2
+            },
+            {
+              "name": "L Ank MN flx",
+              "mean_mV": -79.05,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 21,
+              "rate_Hz": 4.2
+            },
+            {
+              "name": "L Ank MN flx RE",
+              "mean_mV": -52.83,
+              "min_mV": -65.36,
+              "max_mV": 0.0,
+              "spikes": 2225,
+              "rate_Hz": 445.0
+            },
+            {
+              "name": "L Ank MN ext RE",
+              "mean_mV": -61.28,
+              "min_mV": -63.55,
+              "max_mV": 0.0,
+              "spikes": 44,
+              "rate_Hz": 8.8
+            }
+          ]
+        },
+        "R Hip Sensory Motor": {
+          "file": "R Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip ext Ia",
+              "mean_mV": -55.94,
+              "min_mV": -63.23,
+              "max_mV": 0.0,
+              "spikes": 18,
+              "rate_Hz": 3.6
+            },
+            {
+              "name": "R Hip flx Ia",
+              "mean_mV": -55.86,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 18,
+              "rate_Hz": 3.6
+            },
+            {
+              "name": "R Hip ext Ia IN",
+              "mean_mV": -57.01,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 8,
+              "rate_Hz": 1.6
+            },
+            {
+              "name": "R Hip flx Ia IN",
+              "mean_mV": -57.01,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 8,
+              "rate_Hz": 1.6
+            },
+            {
+              "name": "R Hip flx Ib",
+              "mean_mV": -52.65,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 1407,
+              "rate_Hz": 281.4
+            },
+            {
+              "name": "R Hip ext Ib",
+              "mean_mV": -54.53,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 780,
+              "rate_Hz": 156.0
+            },
+            {
+              "name": "R Hip MN flx",
+              "mean_mV": -43.03,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 2270,
+              "rate_Hz": 454.0
+            },
+            {
+              "name": "R Hip MN ext",
+              "mean_mV": -45.04,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 2206,
+              "rate_Hz": 441.2
+            },
+            {
+              "name": "R Hip MN ext RE",
+              "mean_mV": -51.28,
+              "min_mV": -65.44,
+              "max_mV": 0.0,
+              "spikes": 2204,
+              "rate_Hz": 440.8
+            },
+            {
+              "name": "R Hip MN flx RE",
+              "mean_mV": -50.75,
+              "min_mV": -62.15,
+              "max_mV": 0.0,
+              "spikes": 2269,
+              "rate_Hz": 453.8
+            }
+          ]
+        },
+        "R Hip PF": {
+          "file": "R Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip PF ext IN",
+              "mean_mV": -48.78,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2206,
+              "rate_Hz": 441.2
+            },
+            {
+              "name": "R Hip PF flx IN",
+              "mean_mV": -48.46,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2271,
+              "rate_Hz": 454.2
+            },
+            {
+              "name": "R Hip PF ext",
+              "mean_mV": -48.63,
+              "min_mV": -66.77,
+              "max_mV": 0.0,
+              "spikes": 2208,
+              "rate_Hz": 441.6
+            },
+            {
+              "name": "R Hip PF flx",
+              "mean_mV": -49.09,
+              "min_mV": -55.67,
+              "max_mV": 0.0,
+              "spikes": 2272,
+              "rate_Hz": 454.4
+            }
+          ]
+        },
+        "R Knee PF": {
+          "file": "R Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee PF ext IN",
+              "mean_mV": -48.78,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2206,
+              "rate_Hz": 441.2
+            },
+            {
+              "name": "R Knee PF flx IN",
+              "mean_mV": -59.7,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 52,
+              "rate_Hz": 10.4
+            },
+            {
+              "name": "R Knee PF ext",
+              "mean_mV": -45.06,
+              "min_mV": -66.69,
+              "max_mV": 0.0,
+              "spikes": 2208,
+              "rate_Hz": 441.6
+            },
+            {
+              "name": "R Knee PF flx",
+              "mean_mV": -55.62,
+              "min_mV": -58.32,
+              "max_mV": 0.0,
+              "spikes": 45,
+              "rate_Hz": 9.0
+            }
+          ]
+        },
+        "R Knee Sensory Motor": {
+          "file": "R Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee flx Ia",
+              "mean_mV": -59.95,
+              "min_mV": -65.57,
+              "max_mV": 0.0,
+              "spikes": 3,
+              "rate_Hz": 0.6
+            },
+            {
+              "name": "R Knee ext Ia",
+              "mean_mV": -56.02,
+              "min_mV": -63.38,
+              "max_mV": 0.0,
+              "spikes": 3,
+              "rate_Hz": 0.6
+            },
+            {
+              "name": "R Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ib",
+              "mean_mV": -58.17,
+              "min_mV": -60.0,
+              "max_mV": -57.55,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ib",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -57.64,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee MN flx",
+              "mean_mV": -98.53,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 37,
+              "rate_Hz": 7.4
+            },
+            {
+              "name": "R Knee MN ext",
+              "mean_mV": -47.84,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 2207,
+              "rate_Hz": 441.4
+            },
+            {
+              "name": "R Knee MN flx RE",
+              "mean_mV": -61.19,
+              "min_mV": -62.9,
+              "max_mV": 0.0,
+              "spikes": 63,
+              "rate_Hz": 12.6
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -44.88,
+              "min_mV": -65.38,
+              "max_mV": 0.0,
+              "spikes": 2205,
+              "rate_Hz": 441.0
+            }
+          ]
+        },
+        "R Ankle Sensory Motor": {
+          "file": "R Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Ank ext Ia",
+              "mean_mV": -56.01,
+              "min_mV": -63.38,
+              "max_mV": 0.0,
+              "spikes": 6,
+              "rate_Hz": 1.2
+            },
+            {
+              "name": "R Ank flx Ia",
+              "mean_mV": -59.96,
+              "min_mV": -65.57,
+              "max_mV": 0.0,
+              "spikes": 3,
+              "rate_Hz": 0.6
+            },
+            {
+              "name": "R Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank ext Ib",
+              "mean_mV": -58.72,
+              "min_mV": -60.0,
+              "max_mV": -58.16,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ib",
+              "mean_mV": -59.64,
+              "min_mV": -60.0,
+              "max_mV": -58.77,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank MN flx",
+              "mean_mV": -98.55,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 36,
+              "rate_Hz": 7.2
+            },
+            {
+              "name": "R Ank MN ext",
+              "mean_mV": -51.12,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 2205,
+              "rate_Hz": 441.0
+            },
+            {
+              "name": "R Ank MN flx RE",
+              "mean_mV": -61.19,
+              "min_mV": -62.92,
+              "max_mV": 0.0,
+              "spikes": 63,
+              "rate_Hz": 12.6
+            },
+            {
+              "name": "R Ank MN ext RE",
+              "mean_mV": -44.9,
+              "min_mV": -65.38,
+              "max_mV": 0.0,
+              "spikes": 2203,
+              "rate_Hz": 440.6
+            }
+          ]
+        },
+        "L CPG Charts": {
+          "file": "L CPG Charts.txt",
+          "rows": 22501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -100.0,
+              "min_mV": -100.0,
+              "max_mV": -100.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -49.72,
+              "min_mV": -55.34,
+              "max_mV": 0.0,
+              "spikes": 2046,
+              "rate_Hz": 454.7
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -48.38,
+              "min_mV": -53.37,
+              "max_mV": 0.0,
+              "spikes": 2045,
+              "rate_Hz": 454.4
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -66.69,
+              "min_mV": -66.72,
+              "max_mV": -66.63,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.17,
+              "min_mV": -58.2,
+              "max_mV": -58.17,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -57.5,
+              "min_mV": -58.07,
+              "max_mV": -56.78,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Angles": {
+          "file": "L Angles.txt",
+          "rows": 4501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "ankle_L",
+              "type": "angle_deg",
+              "min": -20.0,
+              "max": -19.8,
+              "range": 0.2
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": 23.0,
+              "max": 23.0,
+              "range": 0.0
+            },
+            {
+              "name": "knee_L",
+              "type": "angle_deg",
+              "min": -0.0,
+              "max": -0.0,
+              "range": 0.0
+            }
+          ]
+        }
+      },
+      "rg_bursts": {
+        "L RG ext": {
+          "bursts": 0
+        },
+        "L RG flx": {
+          "bursts": 0
+        },
+        "R RG ext": {
+          "bursts": 2,
+          "period_s": 0.088,
+          "freq_Hz": 11.364
+        },
+        "R RG flx": {
+          "bursts": 1,
+          "note": "single onset (latch?)"
+        }
+      },
+      "antiphase": {
+        "pair": [
+          "L RG flx",
+          "R RG flx"
+        ],
+        "lag_s": 2.0,
+        "r": 0.103,
+        "lag_cycle_folded": null
+      },
+      "independent_raw_joint_ranges": {
+        "L Hip Physical": {
+          "hip_L": {
+            "min": 0.0,
+            "max": 23.027173786307785,
+            "sample_window_s": [
+              0.0,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        },
+        "L Angles": {
+          "ankle_L": {
+            "min": -20.00109719132434,
+            "max": -19.841643036939434,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "hip_L": {
+            "min": 23.00013017837761,
+            "max": 23.00013017837761,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "knee_L": {
+            "min": -0.016463999538863718,
+            "max": -0.015986897582858282,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        }
+      },
+      "independent_raw_rg_metrics": {
+        "Rhythm Generator/L RG ext": {
+          "crossings_or_spikes": 31,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 6.2
+        },
+        "Rhythm Generator/L RG flx": {
+          "crossings_or_spikes": 45,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 9.0
+        },
+        "Rhythm Generator/R RG ext": {
+          "crossings_or_spikes": 2212,
+          "burst_count": 2,
+          "median_period_s": 0.08799984215805998,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 442.4
+        },
+        "Rhythm Generator/R RG flx": {
+          "crossings_or_spikes": 2241,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 448.2
+        },
+        "L CPG Charts/L RG ext": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        },
+        "L CPG Charts/L RG flx": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        }
+      }
+    },
+    "metrics_BipRG_modern_spiking_v2.json": {
+      "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/BipRG_modern_spiking_v2/BipRG_modern_spiking_v2.asim",
+      "mode": "spiking",
+      "charts": {
+        "L Hip Physical": {
+          "file": "L Hip Physical.txt",
+          "rows": 5001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "hip_L_flx_rec",
+              "type": "Ia",
+              "mean": 1.78792
+            },
+            {
+              "name": "hip_L_ext_rec",
+              "type": "Ia",
+              "mean": 1.6105
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": 0.0,
+              "max": 23.1,
+              "range": 23.1
+            },
+            {
+              "name": "hip_L_flx",
+              "type": "Tension",
+              "mean": 265.24353
+            },
+            {
+              "name": "hip_L_ext",
+              "type": "Tension",
+              "mean": 8.5374
+            }
+          ]
+        },
+        "Rhythm Generator": {
+          "file": "Rhythm Generator.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L RG ext IN",
+              "mean_mV": -59.83,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 27,
+              "rate_Hz": 5.4
+            },
+            {
+              "name": "L RG flx IN",
+              "mean_mV": -48.54,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2247,
+              "rate_Hz": 449.4
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -55.64,
+              "min_mV": -56.48,
+              "max_mV": 0.0,
+              "spikes": 26,
+              "rate_Hz": 5.2
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -48.52,
+              "min_mV": -56.15,
+              "max_mV": 0.0,
+              "spikes": 2249,
+              "rate_Hz": 449.8
+            },
+            {
+              "name": "R RG ext IN",
+              "mean_mV": -59.89,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 7,
+              "rate_Hz": 1.4
+            },
+            {
+              "name": "R RG flx IN",
+              "mean_mV": -48.55,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2270,
+              "rate_Hz": 454.0
+            },
+            {
+              "name": "R RG ext",
+              "mean_mV": -55.82,
+              "min_mV": -56.73,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "R RG flx",
+              "mean_mV": -48.99,
+              "min_mV": -55.14,
+              "max_mV": 0.0,
+              "spikes": 2234,
+              "rate_Hz": 446.8
+            },
+            {
+              "name": "L c1",
+              "mean_mV": -48.54,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2247,
+              "rate_Hz": 449.4
+            },
+            {
+              "name": "R c1",
+              "mean_mV": -48.55,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2270,
+              "rate_Hz": 454.0
+            },
+            {
+              "name": "L V3",
+              "mean_mV": -59.83,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 27,
+              "rate_Hz": 5.4
+            },
+            {
+              "name": "R V3",
+              "mean_mV": -59.97,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            }
+          ]
+        },
+        "L Hip PF": {
+          "file": "L Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip PF ext IN",
+              "mean_mV": -59.84,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 25,
+              "rate_Hz": 5.0
+            },
+            {
+              "name": "L Hip PF flx IN",
+              "mean_mV": -48.48,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2269,
+              "rate_Hz": 453.8
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -66.44,
+              "min_mV": -66.77,
+              "max_mV": 0.0,
+              "spikes": 24,
+              "rate_Hz": 4.8
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -43.26,
+              "min_mV": -56.15,
+              "max_mV": 0.0,
+              "spikes": 2271,
+              "rate_Hz": 454.2
+            }
+          ]
+        },
+        "L Knee PF": {
+          "file": "L Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee PF flx IN",
+              "mean_mV": -48.67,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2225,
+              "rate_Hz": 445.0
+            },
+            {
+              "name": "L Knee PF ext IN",
+              "mean_mV": -59.81,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 31,
+              "rate_Hz": 6.2
+            },
+            {
+              "name": "L Knee PF flx",
+              "mean_mV": -45.8,
+              "min_mV": -62.75,
+              "max_mV": 0.0,
+              "spikes": 2229,
+              "rate_Hz": 445.8
+            },
+            {
+              "name": "L Knee PF ext",
+              "mean_mV": -66.31,
+              "min_mV": -66.78,
+              "max_mV": 0.0,
+              "spikes": 31,
+              "rate_Hz": 6.2
+            }
+          ]
+        },
+        "L Hip Sensory Motor": {
+          "file": "L Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip flx Ia",
+              "mean_mV": -51.08,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 1488,
+              "rate_Hz": 297.6
+            },
+            {
+              "name": "L Hip ext Ia",
+              "mean_mV": -65.84,
+              "min_mV": -66.57,
+              "max_mV": -54.05,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip ext Ia IN",
+              "mean_mV": -57.6,
+              "min_mV": -60.0,
+              "max_mV": -57.6,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip flx Ia IN",
+              "mean_mV": -57.29,
+              "min_mV": -60.0,
+              "max_mV": -55.56,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip flx Ib",
+              "mean_mV": -56.37,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 6,
+              "rate_Hz": 1.2
+            },
+            {
+              "name": "L Hip ext Ib",
+              "mean_mV": -59.97,
+              "min_mV": -60.0,
+              "max_mV": -57.87,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -99.37,
+              "min_mV": -100.0,
+              "max_mV": -54.08,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -44.92,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 692,
+              "rate_Hz": 138.4
+            },
+            {
+              "name": "L Hip MN flx R",
+              "mean_mV": -44.6,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 784,
+              "rate_Hz": 156.8
+            },
+            {
+              "name": "L Hip MN ext R",
+              "mean_mV": -53.1,
+              "min_mV": -58.04,
+              "max_mV": -51.68,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Knee Sensory Motor": {
+          "file": "L Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee ext Ia",
+              "mean_mV": -65.67,
+              "min_mV": -66.49,
+              "max_mV": 0.0,
+              "spikes": 29,
+              "rate_Hz": 5.8
+            },
+            {
+              "name": "L Knee flx Ia",
+              "mean_mV": -51.37,
+              "min_mV": -66.82,
+              "max_mV": 0.0,
+              "spikes": 1447,
+              "rate_Hz": 289.4
+            },
+            {
+              "name": "L Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ib",
+              "mean_mV": -59.6,
+              "min_mV": -60.0,
+              "max_mV": -56.52,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee ext Ib",
+              "mean_mV": -57.82,
+              "min_mV": -60.0,
+              "max_mV": -57.45,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee MN ext",
+              "mean_mV": -98.98,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 20,
+              "rate_Hz": 4.0
+            },
+            {
+              "name": "L Knee MN flx",
+              "mean_mV": -45.97,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 657,
+              "rate_Hz": 131.4
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -52.94,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 3,
+              "rate_Hz": 0.6
+            },
+            {
+              "name": "L Knee MN flx RE",
+              "mean_mV": -44.75,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 778,
+              "rate_Hz": 155.6
+            }
+          ]
+        },
+        "L Ankle Sensory Motor": {
+          "file": "L Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Ank flx Ia",
+              "mean_mV": -51.37,
+              "min_mV": -66.94,
+              "max_mV": 0.0,
+              "spikes": 1447,
+              "rate_Hz": 289.4
+            },
+            {
+              "name": "L Ank ext Ia",
+              "mean_mV": -65.67,
+              "min_mV": -66.5,
+              "max_mV": 0.0,
+              "spikes": 30,
+              "rate_Hz": 6.0
+            },
+            {
+              "name": "L Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ib",
+              "mean_mV": -59.85,
+              "min_mV": -60.0,
+              "max_mV": -56.77,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank flx Ib",
+              "mean_mV": -58.32,
+              "min_mV": -60.0,
+              "max_mV": -58.18,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank MN ext",
+              "mean_mV": -99.02,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 16,
+              "rate_Hz": 3.2
+            },
+            {
+              "name": "L Ank MN flx",
+              "mean_mV": -45.97,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 656,
+              "rate_Hz": 131.2
+            },
+            {
+              "name": "L Ank MN flx RE",
+              "mean_mV": -44.74,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 777,
+              "rate_Hz": 155.4
+            },
+            {
+              "name": "L Ank MN ext RE",
+              "mean_mV": -52.94,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            }
+          ]
+        },
+        "R Hip Sensory Motor": {
+          "file": "R Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip ext Ia",
+              "mean_mV": -64.84,
+              "min_mV": -66.87,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip flx Ia",
+              "mean_mV": -52.39,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 960,
+              "rate_Hz": 192.0
+            },
+            {
+              "name": "R Hip ext Ia IN",
+              "mean_mV": -56.83,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "R Hip flx Ia IN",
+              "mean_mV": -56.83,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2,
+              "rate_Hz": 0.4
+            },
+            {
+              "name": "R Hip flx Ib",
+              "mean_mV": -52.19,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 1106,
+              "rate_Hz": 221.2
+            },
+            {
+              "name": "R Hip ext Ib",
+              "mean_mV": -59.68,
+              "min_mV": -60.0,
+              "max_mV": -54.89,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip MN flx",
+              "mean_mV": -41.08,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 2048,
+              "rate_Hz": 409.6
+            },
+            {
+              "name": "R Hip MN ext",
+              "mean_mV": -99.95,
+              "min_mV": -100.0,
+              "max_mV": -81.07,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip MN ext RE",
+              "mean_mV": -56.61,
+              "min_mV": -58.67,
+              "max_mV": -52.87,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip MN flx RE",
+              "mean_mV": -43.3,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 1176,
+              "rate_Hz": 235.2
+            }
+          ]
+        },
+        "R Hip PF": {
+          "file": "R Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip PF ext IN",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip PF flx IN",
+              "mean_mV": -48.46,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2269,
+              "rate_Hz": 453.8
+            },
+            {
+              "name": "R Hip PF ext",
+              "mean_mV": -66.65,
+              "min_mV": -66.77,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip PF flx",
+              "mean_mV": -43.58,
+              "min_mV": -56.15,
+              "max_mV": 0.0,
+              "spikes": 2272,
+              "rate_Hz": 454.4
+            }
+          ]
+        },
+        "R Knee PF": {
+          "file": "R Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee PF ext IN",
+              "mean_mV": -59.98,
+              "min_mV": -60.0,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee PF flx IN",
+              "mean_mV": -48.48,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 2268,
+              "rate_Hz": 453.6
+            },
+            {
+              "name": "R Knee PF ext",
+              "mean_mV": -66.65,
+              "min_mV": -66.77,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee PF flx",
+              "mean_mV": -45.59,
+              "min_mV": -56.64,
+              "max_mV": 0.0,
+              "spikes": 2271,
+              "rate_Hz": 454.2
+            }
+          ]
+        },
+        "R Knee Sensory Motor": {
+          "file": "R Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee flx Ia",
+              "mean_mV": -51.08,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 1490,
+              "rate_Hz": 298.0
+            },
+            {
+              "name": "R Knee ext Ia",
+              "mean_mV": -65.97,
+              "min_mV": -66.96,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ib",
+              "mean_mV": -57.82,
+              "min_mV": -60.0,
+              "max_mV": -57.07,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ib",
+              "mean_mV": -59.54,
+              "min_mV": -60.0,
+              "max_mV": -58.21,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee MN flx",
+              "mean_mV": -44.95,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 683,
+              "rate_Hz": 136.6
+            },
+            {
+              "name": "R Knee MN ext",
+              "mean_mV": -99.95,
+              "min_mV": -100.0,
+              "max_mV": -81.07,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee MN flx RE",
+              "mean_mV": -44.62,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 781,
+              "rate_Hz": 156.2
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -53.08,
+              "min_mV": -57.67,
+              "max_mV": -51.69,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "R Ankle Sensory Motor": {
+          "file": "R Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Ank ext Ia",
+              "mean_mV": -65.97,
+              "min_mV": -66.96,
+              "max_mV": -55.79,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ia",
+              "mean_mV": -51.08,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 1490,
+              "rate_Hz": 298.0
+            },
+            {
+              "name": "R Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank ext Ib",
+              "mean_mV": -59.89,
+              "min_mV": -60.0,
+              "max_mV": -58.16,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ib",
+              "mean_mV": -58.29,
+              "min_mV": -60.0,
+              "max_mV": -57.87,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank MN flx",
+              "mean_mV": -44.95,
+              "min_mV": -100.0,
+              "max_mV": 0.0,
+              "spikes": 683,
+              "rate_Hz": 136.6
+            },
+            {
+              "name": "R Ank MN ext",
+              "mean_mV": -99.95,
+              "min_mV": -100.0,
+              "max_mV": -81.07,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank MN flx RE",
+              "mean_mV": -44.62,
+              "min_mV": -57.67,
+              "max_mV": 0.0,
+              "spikes": 781,
+              "rate_Hz": 156.2
+            },
+            {
+              "name": "R Ank MN ext RE",
+              "mean_mV": -53.08,
+              "min_mV": -57.67,
+              "max_mV": -51.69,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L CPG Charts": {
+          "file": "L CPG Charts.txt",
+          "rows": 22501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -100.0,
+              "min_mV": -100.0,
+              "max_mV": -100.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -44.94,
+              "min_mV": -48.76,
+              "max_mV": 0.0,
+              "spikes": 602,
+              "rate_Hz": 133.8
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -43.18,
+              "min_mV": -48.07,
+              "max_mV": 0.0,
+              "spikes": 2045,
+              "rate_Hz": 454.4
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -66.69,
+              "min_mV": -66.72,
+              "max_mV": -66.63,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -55.73,
+              "min_mV": -55.92,
+              "max_mV": -55.45,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -48.46,
+              "min_mV": -54.23,
+              "max_mV": 0.0,
+              "spikes": 2045,
+              "rate_Hz": 454.4
+            }
+          ]
+        },
+        "L Angles": {
+          "file": "L Angles.txt",
+          "rows": 4501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "ankle_L",
+              "type": "angle_deg",
+              "min": -20.0,
+              "max": -20.0,
+              "range": 0.0
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": 23.0,
+              "max": 23.0,
+              "range": 0.0
+            },
+            {
+              "name": "knee_L",
+              "type": "angle_deg",
+              "min": 32.1,
+              "max": 32.6,
+              "range": 0.5
+            }
+          ]
+        }
+      },
+      "rg_bursts": {
+        "L RG ext": {
+          "bursts": 0
+        },
+        "L RG flx": {
+          "bursts": 1,
+          "note": "single onset (latch?)"
+        },
+        "R RG ext": {
+          "bursts": 1,
+          "note": "single onset (latch?)"
+        },
+        "R RG flx": {
+          "bursts": 1,
+          "note": "single onset (latch?)"
+        }
+      },
+      "antiphase": {
+        "pair": [
+          "L RG flx",
+          "R RG flx"
+        ],
+        "lag_s": 1.86,
+        "r": 0.45,
+        "lag_cycle_folded": null
+      },
+      "independent_raw_joint_ranges": {
+        "L Hip Physical": {
+          "hip_L": {
+            "min": 0.0,
+            "max": 23.115581174096473,
+            "sample_window_s": [
+              0.0,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        },
+        "L Angles": {
+          "ankle_L": {
+            "min": -20.014848178407483,
+            "max": -20.013415783919655,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "hip_L": {
+            "min": 23.00013017837761,
+            "max": 23.000187474157123,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "knee_L": {
+            "min": 32.11852430476661,
+            "max": 32.583250372397224,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        }
+      },
+      "independent_raw_rg_metrics": {
+        "Rhythm Generator/L RG ext": {
+          "crossings_or_spikes": 26,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 5.2
+        },
+        "Rhythm Generator/L RG flx": {
+          "crossings_or_spikes": 2249,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 449.8
+        },
+        "Rhythm Generator/R RG ext": {
+          "crossings_or_spikes": 1,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 0.2
+        },
+        "Rhythm Generator/R RG flx": {
+          "crossings_or_spikes": 2234,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 446.8
+        },
+        "L CPG Charts/L RG ext": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        },
+        "L CPG Charts/L RG flx": {
+          "crossings_or_spikes": 2045,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 454.44444444444446
+        }
+      }
+    },
+    "metrics_Biped_standalone_stale_spiking.json": {
+      "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/Biped_standalone_stale_spiking/Biped_standalone_stale_spiking.asim",
+      "mode": "spiking",
+      "charts": {
+        "L Hip Neural": {
+          "file": "L Hip Neural.txt",
+          "empty": true
+        },
+        "L Hip Physical": {
+          "file": "L Hip Physical.txt",
+          "rows": 5001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "hip_L_flx_rec",
+              "type": "Ia",
+              "mean": 1.83295
+            },
+            {
+              "name": "hip_L_ext_rec",
+              "type": "Ia",
+              "mean": 1.83361
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -15.3,
+              "max": 18.5,
+              "range": 33.8
+            },
+            {
+              "name": "hip_L_flx",
+              "type": "Tension",
+              "mean": 44.83669
+            },
+            {
+              "name": "hip_L_ext",
+              "type": "Tension",
+              "mean": 2.54116
+            }
+          ]
+        },
+        "L Hip PF": {
+          "file": "L Hip PF.txt",
+          "empty": true
+        },
+        "Rhythm Generator": {
+          "file": "Rhythm Generator.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L RG ext IN",
+              "mean_mV": -56.37,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 472,
+              "rate_Hz": 94.4
+            },
+            {
+              "name": "L RG flx IN",
+              "mean_mV": -56.37,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 472,
+              "rate_Hz": 94.4
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -59.58,
+              "min_mV": -66.44,
+              "max_mV": 0.0,
+              "spikes": 58,
+              "rate_Hz": 11.6
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -63.0,
+              "min_mV": -68.19,
+              "max_mV": 0.0,
+              "spikes": 58,
+              "rate_Hz": 11.6
+            }
+          ]
+        }
+      },
+      "rg_bursts": {
+        "L RG ext": {
+          "bursts": 58,
+          "period_s": 0.0848,
+          "freq_Hz": 11.793
+        },
+        "L RG flx": {
+          "bursts": 58,
+          "period_s": 0.0848,
+          "freq_Hz": 11.792
+        }
+      },
+      "same_leg_xcorr": {
+        "L RG ext-vs-flx": {
+          "ext_spikes": 58,
+          "flx_spikes": 58,
+          "r": 1.0,
+          "lag_s": 0.0,
+          "convention": "0.02 s spike-count envelopes, -40 mV rising crossings, 1 ms refractory, +/-2 s scan"
+        }
+      },
+      "independent_raw_joint_ranges": {
+        "L Hip Physical": {
+          "hip_L": {
+            "min": -15.277633128265837,
+            "max": 18.50092179633331,
+            "sample_window_s": [
+              0.0,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        }
+      },
+      "independent_raw_rg_metrics": {
+        "Rhythm Generator/L RG ext": {
+          "crossings_or_spikes": 58,
+          "burst_count": 58,
+          "median_period_s": 0.08479478257120582,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 11.6
+        },
+        "Rhythm Generator/L RG flx": {
+          "crossings_or_spikes": 58,
+          "burst_count": 58,
+          "median_period_s": 0.08479994555887377,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 11.6
+        }
+      },
+      "independent_raw_rg_same_leg_zero_lag_correlation": 1.0
+    },
+    "metrics_bisect_W2L_neuronsonly.json": {
+      "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/bisect/W2L_neuronsonly.asim",
+      "mode": "spiking",
+      "charts": {
+        "L Hip Physical": {
+          "file": "L Hip Physical.txt",
+          "rows": 5001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "hip_L_flx_rec",
+              "type": "Ia",
+              "mean": 2.34162
+            },
+            {
+              "name": "hip_L_ext_rec",
+              "type": "Ia",
+              "mean": 2.2373
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -15.1,
+              "max": 23.2,
+              "range": 38.3
+            },
+            {
+              "name": "hip_L_flx",
+              "type": "Tension",
+              "mean": 345.03886
+            },
+            {
+              "name": "hip_L_ext",
+              "type": "Tension",
+              "mean": 233.07263
+            }
+          ]
+        },
+        "Rhythm Generator": {
+          "file": "Rhythm Generator.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L RG ext IN",
+              "mean_mV": -58.3,
+              "min_mV": -60.43,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "L RG flx IN",
+              "mean_mV": -58.29,
+              "min_mV": -60.0,
+              "max_mV": -55.62,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.85,
+              "min_mV": -61.07,
+              "max_mV": 0.0,
+              "spikes": 1,
+              "rate_Hz": 0.2
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -58.86,
+              "min_mV": -62.84,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Hip PF": {
+          "file": "L Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip PF ext IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip PF flx IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -59.05,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -59.06,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Knee PF": {
+          "file": "L Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee PF flx IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee PF ext IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee PF flx",
+              "mean_mV": -59.06,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee PF ext",
+              "mean_mV": -59.05,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Hip Sensory Motor": {
+          "file": "L Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip flx Ia",
+              "mean_mV": -57.01,
+              "min_mV": -60.28,
+              "max_mV": 0.0,
+              "spikes": 176,
+              "rate_Hz": 35.2
+            },
+            {
+              "name": "L Hip ext Ia",
+              "mean_mV": -56.82,
+              "min_mV": -59.68,
+              "max_mV": 0.0,
+              "spikes": 173,
+              "rate_Hz": 34.6
+            },
+            {
+              "name": "L Hip ext Ia IN",
+              "mean_mV": -56.83,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 57,
+              "rate_Hz": 11.4
+            },
+            {
+              "name": "L Hip flx Ia IN",
+              "mean_mV": -56.86,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 93,
+              "rate_Hz": 18.6
+            },
+            {
+              "name": "L Hip flx Ib",
+              "mean_mV": -56.09,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 147,
+              "rate_Hz": 29.4
+            },
+            {
+              "name": "L Hip ext Ib",
+              "mean_mV": -59.31,
+              "min_mV": -60.0,
+              "max_mV": -57.26,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -76.11,
+              "min_mV": -99.43,
+              "max_mV": 0.0,
+              "spikes": 733,
+              "rate_Hz": 146.6
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -70.53,
+              "min_mV": -95.75,
+              "max_mV": 0.0,
+              "spikes": 847,
+              "rate_Hz": 169.4
+            },
+            {
+              "name": "L Hip MN flx R",
+              "mean_mV": -52.15,
+              "min_mV": -61.14,
+              "max_mV": 0.0,
+              "spikes": 2253,
+              "rate_Hz": 450.6
+            },
+            {
+              "name": "L Hip MN ext R",
+              "mean_mV": -52.39,
+              "min_mV": -61.15,
+              "max_mV": 0.0,
+              "spikes": 2240,
+              "rate_Hz": 448.0
+            }
+          ]
+        },
+        "L Knee Sensory Motor": {
+          "file": "L Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Knee ext Ia",
+              "mean_mV": -59.24,
+              "min_mV": -61.63,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ia",
+              "mean_mV": -59.24,
+              "min_mV": -61.64,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee flx Ib",
+              "mean_mV": -59.68,
+              "min_mV": -60.0,
+              "max_mV": -57.9,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee ext Ib",
+              "mean_mV": -58.96,
+              "min_mV": -60.0,
+              "max_mV": -57.95,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Knee MN ext",
+              "mean_mV": -74.0,
+              "min_mV": -98.34,
+              "max_mV": 0.0,
+              "spikes": 878,
+              "rate_Hz": 175.6
+            },
+            {
+              "name": "L Knee MN flx",
+              "mean_mV": -74.36,
+              "min_mV": -98.73,
+              "max_mV": 0.0,
+              "spikes": 819,
+              "rate_Hz": 163.8
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -52.3,
+              "min_mV": -61.13,
+              "max_mV": 0.0,
+              "spikes": 2241,
+              "rate_Hz": 448.2
+            },
+            {
+              "name": "L Knee MN flx RE",
+              "mean_mV": -52.31,
+              "min_mV": -61.14,
+              "max_mV": 0.0,
+              "spikes": 2252,
+              "rate_Hz": 450.4
+            }
+          ]
+        },
+        "L Ankle Sensory Motor": {
+          "file": "L Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Ank flx Ia",
+              "mean_mV": -59.24,
+              "min_mV": -61.63,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ia",
+              "mean_mV": -59.24,
+              "min_mV": -61.62,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank ext Ib",
+              "mean_mV": -59.48,
+              "min_mV": -60.0,
+              "max_mV": -57.74,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank flx Ib",
+              "mean_mV": -59.44,
+              "min_mV": -60.0,
+              "max_mV": -58.88,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Ank MN ext",
+              "mean_mV": -74.94,
+              "min_mV": -99.23,
+              "max_mV": 0.0,
+              "spikes": 869,
+              "rate_Hz": 173.8
+            },
+            {
+              "name": "L Ank MN flx",
+              "mean_mV": -74.12,
+              "min_mV": -98.57,
+              "max_mV": 0.0,
+              "spikes": 834,
+              "rate_Hz": 166.8
+            },
+            {
+              "name": "L Ank MN flx RE",
+              "mean_mV": -52.3,
+              "min_mV": -61.14,
+              "max_mV": 0.0,
+              "spikes": 2252,
+              "rate_Hz": 450.4
+            },
+            {
+              "name": "L Ank MN ext RE",
+              "mean_mV": -52.33,
+              "min_mV": -61.12,
+              "max_mV": 0.0,
+              "spikes": 2240,
+              "rate_Hz": 448.0
+            }
+          ]
+        },
+        "R Hip Sensory Motor": {
+          "file": "R Hip Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip ext Ia",
+              "mean_mV": -56.45,
+              "min_mV": -59.68,
+              "max_mV": 0.0,
+              "spikes": 74,
+              "rate_Hz": 14.8
+            },
+            {
+              "name": "R Hip flx Ia",
+              "mean_mV": -57.03,
+              "min_mV": -59.68,
+              "max_mV": 0.0,
+              "spikes": 170,
+              "rate_Hz": 34.0
+            },
+            {
+              "name": "R Hip ext Ia IN",
+              "mean_mV": -56.83,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 68,
+              "rate_Hz": 13.6
+            },
+            {
+              "name": "R Hip flx Ia IN",
+              "mean_mV": -56.83,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 68,
+              "rate_Hz": 13.6
+            },
+            {
+              "name": "R Hip flx Ib",
+              "mean_mV": -56.44,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 428,
+              "rate_Hz": 85.6
+            },
+            {
+              "name": "R Hip ext Ib",
+              "mean_mV": -58.07,
+              "min_mV": -60.0,
+              "max_mV": 0.0,
+              "spikes": 43,
+              "rate_Hz": 8.6
+            },
+            {
+              "name": "R Hip MN flx",
+              "mean_mV": -73.75,
+              "min_mV": -99.42,
+              "max_mV": 0.0,
+              "spikes": 805,
+              "rate_Hz": 161.0
+            },
+            {
+              "name": "R Hip MN ext",
+              "mean_mV": -74.7,
+              "min_mV": -98.88,
+              "max_mV": 0.0,
+              "spikes": 715,
+              "rate_Hz": 143.0
+            },
+            {
+              "name": "R Hip MN ext RE",
+              "mean_mV": -52.33,
+              "min_mV": -61.15,
+              "max_mV": 0.0,
+              "spikes": 2251,
+              "rate_Hz": 450.2
+            },
+            {
+              "name": "R Hip MN flx RE",
+              "mean_mV": -52.27,
+              "min_mV": -61.13,
+              "max_mV": 0.0,
+              "spikes": 2240,
+              "rate_Hz": 448.0
+            }
+          ]
+        },
+        "R Hip PF": {
+          "file": "R Hip PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Hip PF ext IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip PF flx IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip PF ext",
+              "mean_mV": -59.06,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Hip PF flx",
+              "mean_mV": -59.05,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "R Knee PF": {
+          "file": "R Knee PF.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee PF ext IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee PF flx IN",
+              "mean_mV": -58.33,
+              "min_mV": -60.0,
+              "max_mV": -55.1,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee PF ext",
+              "mean_mV": -59.06,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee PF flx",
+              "mean_mV": -59.05,
+              "min_mV": -61.96,
+              "max_mV": 0.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "R Knee Sensory Motor": {
+          "file": "R Knee Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Knee flx Ia",
+              "mean_mV": -59.24,
+              "min_mV": -61.62,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ia",
+              "mean_mV": -59.25,
+              "min_mV": -61.64,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee ext Ib",
+              "mean_mV": -58.97,
+              "min_mV": -60.0,
+              "max_mV": -57.41,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee flx Ib",
+              "mean_mV": -59.66,
+              "min_mV": -60.0,
+              "max_mV": -58.29,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Knee MN flx",
+              "mean_mV": -74.65,
+              "min_mV": -99.22,
+              "max_mV": 0.0,
+              "spikes": 881,
+              "rate_Hz": 176.2
+            },
+            {
+              "name": "R Knee MN ext",
+              "mean_mV": -73.76,
+              "min_mV": -98.15,
+              "max_mV": 0.0,
+              "spikes": 827,
+              "rate_Hz": 165.4
+            },
+            {
+              "name": "R Knee MN flx RE",
+              "mean_mV": -52.33,
+              "min_mV": -61.13,
+              "max_mV": 0.0,
+              "spikes": 2240,
+              "rate_Hz": 448.0
+            },
+            {
+              "name": "L Knee MN ext RE",
+              "mean_mV": -52.28,
+              "min_mV": -61.14,
+              "max_mV": 0.0,
+              "spikes": 2253,
+              "rate_Hz": 450.6
+            }
+          ]
+        },
+        "R Ankle Sensory Motor": {
+          "file": "R Ankle Sensory Motor.txt",
+          "rows": 25001,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "R Ank ext Ia",
+              "mean_mV": -59.24,
+              "min_mV": -61.62,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ia",
+              "mean_mV": -59.24,
+              "min_mV": -61.63,
+              "max_mV": -55.49,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank ext Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ia IN",
+              "mean_mV": -60.0,
+              "min_mV": -60.0,
+              "max_mV": -60.0,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank ext Ib",
+              "mean_mV": -59.5,
+              "min_mV": -60.0,
+              "max_mV": -57.8,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank flx Ib",
+              "mean_mV": -59.44,
+              "min_mV": -60.0,
+              "max_mV": -58.81,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "R Ank MN flx",
+              "mean_mV": -74.38,
+              "min_mV": -98.55,
+              "max_mV": 0.0,
+              "spikes": 884,
+              "rate_Hz": 176.8
+            },
+            {
+              "name": "R Ank MN ext",
+              "mean_mV": -74.66,
+              "min_mV": -98.4,
+              "max_mV": 0.0,
+              "spikes": 815,
+              "rate_Hz": 163.0
+            },
+            {
+              "name": "R Ank MN flx RE",
+              "mean_mV": -52.31,
+              "min_mV": -61.13,
+              "max_mV": 0.0,
+              "spikes": 2241,
+              "rate_Hz": 448.2
+            },
+            {
+              "name": "R Ank MN ext RE",
+              "mean_mV": -52.31,
+              "min_mV": -61.12,
+              "max_mV": 0.0,
+              "spikes": 2252,
+              "rate_Hz": 450.4
+            }
+          ]
+        },
+        "L CPG Charts": {
+          "file": "L CPG Charts.txt",
+          "rows": 22501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "L Hip MN ext",
+              "mean_mV": -75.6,
+              "min_mV": -98.83,
+              "max_mV": 0.0,
+              "spikes": 671,
+              "rate_Hz": 149.1
+            },
+            {
+              "name": "L Hip MN flx",
+              "mean_mV": -70.07,
+              "min_mV": -95.28,
+              "max_mV": 0.0,
+              "spikes": 823,
+              "rate_Hz": 182.9
+            },
+            {
+              "name": "L Hip PF flx",
+              "mean_mV": -59.02,
+              "min_mV": -61.96,
+              "max_mV": -55.83,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L Hip PF ext",
+              "mean_mV": -59.04,
+              "min_mV": -61.96,
+              "max_mV": -55.83,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG ext",
+              "mean_mV": -58.86,
+              "min_mV": -61.07,
+              "max_mV": -56.41,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            },
+            {
+              "name": "L RG flx",
+              "mean_mV": -58.81,
+              "min_mV": -61.07,
+              "max_mV": -56.41,
+              "spikes": 0,
+              "rate_Hz": 0.0
+            }
+          ]
+        },
+        "L Angles": {
+          "file": "L Angles.txt",
+          "rows": 4501,
+          "t_end": 5.0,
+          "cols": [
+            {
+              "name": "ankle_L",
+              "type": "angle_deg",
+              "min": -20.2,
+              "max": -4.5,
+              "range": 15.7
+            },
+            {
+              "name": "hip_L",
+              "type": "angle_deg",
+              "min": -15.1,
+              "max": 23.2,
+              "range": 38.3
+            },
+            {
+              "name": "knee_L",
+              "type": "angle_deg",
+              "min": -0.8,
+              "max": 47.9,
+              "range": 48.7
+            }
+          ]
+        }
+      },
+      "rg_bursts": {
+        "L RG ext": {
+          "bursts": 0
+        },
+        "L RG flx": {
+          "bursts": 0
+        }
+      },
+      "independent_raw_joint_ranges": {
+        "L Hip Physical": {
+          "hip_L": {
+            "min": -15.115027706007709,
+            "max": 23.153052613898026,
+            "sample_window_s": [
+              0.0,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        },
+        "L Angles": {
+          "ankle_L": {
+            "min": -20.21939411126919,
+            "max": -4.489221727675172,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "hip_L": {
+            "min": -15.115027706007709,
+            "max": 23.153052613898026,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          },
+          "knee_L": {
+            "min": -0.809996164554396,
+            "max": 47.8965787712997,
+            "sample_window_s": [
+              0.5,
+              5.0
+            ],
+            "matches_saved_rounding": true
+          }
+        }
+      },
+      "independent_raw_rg_metrics": {
+        "Rhythm Generator/L RG ext": {
+          "crossings_or_spikes": 1,
+          "burst_count": 1,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 0.2
+        },
+        "Rhythm Generator/L RG flx": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.0,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        },
+        "L CPG Charts/L RG ext": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        },
+        "L CPG Charts/L RG flx": {
+          "crossings_or_spikes": 0,
+          "burst_count": 0,
+          "median_period_s": null,
+          "source_window_s": [
+            0.5,
+            5.0
+          ],
+          "rate_Hz": 0.0
+        }
+      }
+    }
+  },
+  "hashes": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\kine_ref.py": "dfda44a8bfb54fd2a5f95eb227291306aac4c04a4c428b5f56226912c825417a",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal4_gate2_traces.npz": "6fdba0137ca402084ca43085f4dee3aff45dedcc7aff3c5efd6dbf3a9d093f9d",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run_spkbase_s3k.npz": "6127692c35e2dc5382a6df52cc49bb534f1a36e9e00841417440402fedacb75d",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_ik.mot": "7380251a0e2434bea1ad62aa8ece037e3dc8ff014f8b747395b63c4c8a4d55e2",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_grf.mot": "69a5e8633f8666bc192abd8069e6812fe7b4c8bb8968dc3254d4824abf263662",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run_spkbase_spiking.npz": "0d12e7ab6b16ee0b166ba2da8ec1e1cfec033abb61faf32c12c88e95bfc388e3",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal1_walkers_spiking.md": "a214b64b61b6580ae38f226a954d88a12e2a2b6ef199bffb9fe158df0a06b6bd",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal3_animatlab_spiking.md": "7924846409ed9ab7c6bf0277758a39b42c2278a8af541e9132c9bf57cbdd8e57",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal4_dissertation_spiking.md": "b44c9f388240f494d30785873e29598181c1704bbacf473fdb58f78c75ed1cc4",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\tools\\check_selfsustain_spiking.py": "b15830c16a2c46c91f39d3d742bfd5edc3948b4837ae853960cc02940ffad165",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\tools\\goal4_dump_gate2_traces.py": "4e465a236c26d11311c523b76da2f19b6767a95faacf985835d653ebc9a60b60",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\tools\\baseline_eval.py": "e06dc92b64b9458d74d1121deb866a8301da73dad2c9e6cab849a405d6245ed6",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\tools\\analyze.py": "c05df4c77dd2dd57ce9bdcb2426ec74834556e4d2aa782c4b069d429114bb3dc",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\tools\\make_spiking.py": "43381b4b567dda1b03f1ac17159a5823dead83120779d68a2e7047a3a7d2cdd9",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\tools\\sameleg_xcorr.py": "b551c15b765f3d0a57c5beac711a70b5dbda2037f9aacef78774d842dda1d1de",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\logs\\baseline_s3k.log": "ab3aa3b1d0f4c1390d167db865a7c17e1a7cdcf8340a542a2d4703f0cc760aa5",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\logs\\ground_eval_spiking.log": "34a735a91eed0e5e0f22a0b5e8d2d0e72d600188300a82f367e6f51a404650e5",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\logs\\gate2_rhythm2.log": "4d09dec1271902502083d3053f09d54ffa5643009cf5e7963b38fc2b02c31579",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\metrics_baseline_W2L_modern.json": "9c0e0bfa1c0f7e5b8d481c2129a8d5ae6051d6139ad9d11fad18724ae0677bfd",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern\\W2L_modern.asim": "1005ac19971f2531ef3c2f9fe06d30c9a7e6120e4c52ffd9ab0ecfc51d708c16",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern\\L Hip Physical.txt": "74f6f3b6830a948584a1ac405df786a29440214f5fd8d2ad38539df879fcb731",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern\\L Angles.txt": "2350975f44598881d3bd9b84c45e9e73a9cc3cad1346f1f2390197a1acf775cf",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern\\Rhythm Generator.txt": "66e185803d11be2807809fe2bb802f38922b7eb344fe13d141842e4ab4b0f21e",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern\\L CPG Charts.txt": "f75035de14384728351a4651d846adbd9987b56444156a76736ba04d65a66e5f",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\metrics_baseline_BipRG_modern.json": "64e18db954b487abeb4904b5ba5d62cf0297fda033910c7a435773c7e9f9f36b",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern\\BipRG_modern.asim": "99156cd2b9a591b24a3172df72cd78863ad6612fb53d63d3391be5e1de04714f",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern\\L Hip Physical.txt": "ac91a412153c6f7445ba514f9e1fa4f761e7a8a8a8ade60fa7bfa4af99491981",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern\\L Angles.txt": "035c66406f3dd23831248eea32cd168608f72340ca9e3c7c213e86e22747d359",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern\\Rhythm Generator.txt": "bee07672bd11629c28979a170a659025c3f5c28169d463ae669b0a65608d2a5d",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern\\L CPG Charts.txt": "517ed66fd7dfc480e85bbabab676affac7033135a22e1ee97b3212a15c52d0ac",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\metrics_W2L_modern_spiking.json": "1142b86f04d3d98bdc77d2dcde292bf05f7a60ea346f4f0dbf4514c3c31b2357",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern_spiking\\W2L_modern_spiking.asim": "884589455a3b66e05df628eff8e4b53bfd4bd1cdcf91ba4e73c82be28ec9c6d9",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern_spiking\\L Hip Physical.txt": "5dfbead2d5d01623e19ed35bce89b0df1ea701a59f0b8832230f43c3f52980c3",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern_spiking\\L Angles.txt": "e9776a45a03c93d9e3c49b4029d45bc904493086ea85aae5acfccecb4a81b1cf",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern_spiking\\Rhythm Generator.txt": "106bbcdcd9ca68ac887d51e2163386bec1741262576ffcc49b25bff5245a5fb7",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\W2L_modern_spiking\\L CPG Charts.txt": "25de34e2a3144a96fc7c623ac7ee6208da9b92cefcae48f0e979982b99b200e9",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\metrics_BipRG_modern_spiking.json": "661b3a4c98d9885778f42928c85b98fd2f566a222a632b4e2dae356f7af3c9c5",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking\\BipRG_modern_spiking.asim": "3ddeae3a2017b2201ef45181c8171a23de3dd59e933c7b5f539eaabe7baf88eb",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking\\L Hip Physical.txt": "121348f79be36841292b060517c1ebee7a16e38f3e162bf93d6b9582954854cc",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking\\L Angles.txt": "b612af8230292d3ad670e8fd267ca8837c5996b00f8b253c25be17c070683972",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking\\Rhythm Generator.txt": "a6ad5d59c186413f9f3805ad37419edd2ec8588a3bebbba3a976c10d5ef03edd",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking\\L CPG Charts.txt": "e01204eeac31622e2647a3eefaba67dae6b25acbb2dfd69c96c3f22a96139aea",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\metrics_BipRG_modern_spiking_v2.json": "fb6b3c29c77c0eee6ce6cf555b197fbdefd2e4e0e507e5bc0f1b1f8af783bb56",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking_v2\\BipRG_modern_spiking_v2.asim": "54d09f838a2a058f1c0d1132ae69f63ef0c97a09d398ca7427e1c5e5da6be17e",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking_v2\\L Hip Physical.txt": "9d2394cec07cbc20774f0994703423d366b6456173847ebc45a5339a795ac997",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking_v2\\L Angles.txt": "ae9a0fbabf7d462ce805caf699482d63d5649e2d4d4aa41784fd99224e090737",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking_v2\\Rhythm Generator.txt": "d94894b4e95d08323fbd7ceb2c2dc79a53ca425bfd4880f840604061b1d97d96",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\BipRG_modern_spiking_v2\\L CPG Charts.txt": "d12ab63a63edbacf9560e448204818ea6cf00158c33125235da81226689efe76",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\metrics_Biped_standalone_stale_spiking.json": "06e13b297580e99afd7f373b1b1038b2592b1a158d12631e6535acb8077f46b1",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\Biped_standalone_stale_spiking\\Biped_standalone_stale_spiking.asim": "c76a6b16d8a8c545ba752dcc6681aa4550ca7c1a04c14aaa1c182fe0b5c08211",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\Biped_standalone_stale_spiking\\L Hip Physical.txt": "f640c62b2e32b588fa0114a73c843db6667b76eb0e082c668e26404ef79604fc",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\Biped_standalone_stale_spiking\\Rhythm Generator.txt": "9139e151a3416049cc5beb5d83080d7e01df828e702c6a2cb8dc76a5cc623c62",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\metrics_bisect_W2L_neuronsonly.json": "7453cb88bdb5da5437c38ac525069bd677022baab76cbb16d7a205d2a7aa1fcc",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\bisect\\W2L_neuronsonly.asim": "6bac5185f1be22ab16f440f35aca95eeb237232098df2cb39ba097552915c017",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\bisect\\L Hip Physical.txt": "b4325cbc61b2b23b77dd341d93e7f57741ede88bf23729eb225df99b7d95d24c",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\bisect\\L Angles.txt": "65bc75a5119a5079c3f22f81600e18f316214e0a56d3c7ca3e78bf3821ca2b99",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\bisect\\Rhythm Generator.txt": "deea67f7bbf30dd1be7626602cdf165fc3a269d76a716207194bdfb3ad220616",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\models\\bisect\\L CPG Charts.txt": "5735473b6ee05e6debff228e8bf936fec9dd6e7ceaf3dfd88ae470983f1391b2"
+  }
+}

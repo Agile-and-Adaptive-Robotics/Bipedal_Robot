@@ -1,0 +1,2138 @@
+{
+  "execution": "Read-only saved-array audit; no simulations or timing reruns.",
+  "python": "D:\\Anaconda\\python.exe",
+  "numpy": "1.26.4",
+  "source_native_sparse": {
+    "runs": {
+      "source_native_s1": {
+        "wall_s": 194.55670099996496,
+        "simulated_s": 16.0,
+        "compiled_scalars": {
+          "neural_step_wall_s": 179.0791120993672,
+          "neurons": 1025,
+          "inputs": 420
+        },
+        "configuration": {
+          "biarticular_pair_gain": 0.3,
+          "commissural_gain": 0.0,
+          "learn_reciprocal": true,
+          "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+          "backend": "native",
+          "diagnose_swing": true,
+          "stage": 1,
+          "restriction": 1.0,
+          "height_offset": -0.02,
+          "start_hip_deg": -7.0,
+          "start_knee_deg": -10.0,
+          "start_ankle_deg": 0.0,
+          "balance": {
+            "kp": 0.5,
+            "kd": 0.2,
+            "ka": 0.0,
+            "delay_s": 0.1,
+            "replace_inherited": false,
+            "bilateral_recruitment": true
+          },
+          "force_controlled_support": false,
+          "support_fraction": 0.5,
+          "regional_contacts": true,
+          "cross_contact_gain": 6.0,
+          "cross_contact_event_amplitude": 2.0,
+          "diagnostic_scope": "Matched backend timing and numerical comparison: native SNS forward versus sparse preallocated forward, same source model, inputs, force law, and physical protocol.",
+          "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+          "timing_afferents": true,
+          "timing_scale": 0.01,
+          "knee_training_limits_deg": [
+            -90.0,
+            0.0
+          ],
+          "commissural_e_gain": 0.0,
+          "standing_solver": "coupled_symmetric",
+          "vertical_damping_multiplier": 4.2,
+          "harness_lowering_m": -0.04,
+          "harness_lowering_start_s": 2.0,
+          "harness_lowering_duration_s": 2.0,
+          "vertical_stiffness_scale": 0.01,
+          "rg_tonic_current": 1.2,
+          "align_ground_pose": true,
+          "verification_capture": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_native_s1"
+        },
+        "external_process_timing": {
+          "configuration": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.json",
+          "configuration_sha256": "a3d03a166409380fff912012619b3cf5f1b990fa81bce20ff5c40fdf76aefed0",
+          "command": [
+            "D:\\Anaconda\\envs\\myo\\python.exe",
+            "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\physical_eval.py",
+            "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.json"
+          ],
+          "pid": 54144,
+          "start_utc": "2026-11-02T11:06:48.358019+00:00",
+          "max_wall_s": 900.0,
+          "verification_stop_utc": "2026-11-02T18:28:22+00:00",
+          "end_utc": "2026-11-02T11:10:07.986404+00:00",
+          "total_process_wall_s": 199.6235725999577,
+          "exit_code": 0,
+          "timed_out": false,
+          "success": true,
+          "timing_scope": "Fresh interpreter startup, compilation, full body trial, assessment, and saved outputs. Plotting is separate."
+        },
+        "capture_metadata": {
+          "schema": "aarl_aligned_verification_v1",
+          "native_frame": "legacy_z_up",
+          "display_frame": "x anterior, y superior, z right",
+          "native_to_anatomical": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0
+            ]
+          ],
+          "sample_phase": "After accepted outer physics interval; warmup excluded. Neural input/start and force interval times retained separately.",
+          "voltage_label": "graded model membrane depolarization (mV; rest-relative)",
+          "side_order": [
+            "r",
+            "l"
+          ],
+          "region_order": [
+            "hindfoot",
+            "forefoot"
+          ],
+          "region_split": 0.5,
+          "regional_sensor_definition": "Physical ground contact locations projected from calcaneus toward toes; virtual regions, not calibrated heel/toe pads.",
+          "force_definition": "Once-counted force on each foot, transformed from contact frame into anatomical world axes. Regional trace is true superior component, not normal-force proxy.",
+          "harness_definition": "Pelvis generalized passive-force wrench projected on solver-stage root-joint axes unless caller supplies apparatus wrench; confirm only apparatus spring/damper acts on those coordinates. Explicit support kept separate.",
+          "kinematic_evaluation_phase": "Contact frames/body xpos are from the latest solver evaluation; qpos/qvel are final state. No extra forward call is made to retime those intermediate quantities.",
+          "missing_requested_cells": [],
+          "provenance": {
+            "configuration_file": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.json",
+            "configuration": {
+              "biarticular_pair_gain": 0.3,
+              "commissural_gain": 0.0,
+              "learn_reciprocal": true,
+              "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+              "backend": "native",
+              "diagnose_swing": true,
+              "stage": 1,
+              "restriction": 1.0,
+              "height_offset": -0.02,
+              "start_hip_deg": -7.0,
+              "start_knee_deg": -10.0,
+              "start_ankle_deg": 0.0,
+              "balance": {
+                "kp": 0.5,
+                "kd": 0.2,
+                "ka": 0.0,
+                "delay_s": 0.1,
+                "replace_inherited": false,
+                "bilateral_recruitment": true
+              },
+              "force_controlled_support": false,
+              "support_fraction": 0.5,
+              "regional_contacts": true,
+              "cross_contact_gain": 6.0,
+              "cross_contact_event_amplitude": 2.0,
+              "diagnostic_scope": "Matched backend timing and numerical comparison: native SNS forward versus sparse preallocated forward, same source model, inputs, force law, and physical protocol.",
+              "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+              "timing_afferents": true,
+              "timing_scale": 0.01,
+              "knee_training_limits_deg": [
+                -90.0,
+                0.0
+              ],
+              "commissural_e_gain": 0.0,
+              "standing_solver": "coupled_symmetric",
+              "vertical_damping_multiplier": 4.2,
+              "harness_lowering_m": -0.04,
+              "harness_lowering_start_s": 2.0,
+              "harness_lowering_duration_s": 2.0,
+              "vertical_stiffness_scale": 0.01,
+              "rg_tonic_current": 1.2,
+              "align_ground_pose": true,
+              "verification_capture": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_native_s1"
+            },
+            "source_hashes": {
+              "physical_eval.py": "d06614b52cac0c7e41771332b08654822c39035cec41167494dddd1efdd0afbc",
+              "controller.py": "00112d00d7e65c700c1c89e651f57354588d88335386209e5803b67f7154b57c",
+              "balance.py": "1e69f6f6945ce7ea9ef48fa6cbbbca91e0044c700fc922526290114a5b50c967",
+              "ground_contact_check.py": "c666630f9e1c20da06e9253aa49cebd3cb6a0ede16473cba17564b93101e6ace",
+              "regional_contacts.py": "57296826959aef9edebebbfaffe0cd73f7a346eefce2844a3a6520c8500268eb",
+              "contact_events.py": "d264a62fafc831b855faff4581072f0251a941c58f8b2dd6e0934e0ed25b827f",
+              "bilateral.py": "b33373652fc69b921a8114ebacbfd43dda0b12aacaa67e6a715c64e9d8cb3cd3",
+              "foot_clearance_check.py": "b9e6b7a779ff469d7019707052de700e4d332e08e3b225e23ce0494f5b616b31",
+              "force_law_parameters_file": "9dc7d7ba444a961e06fd6efd15210ea324a84ee70992b251994cb7d7ee7165cf"
+            }
+          },
+          "stimulus_policy": "NaN means not logged; never synthesize an inferred pulse.",
+          "no_model_or_neural_steps": true,
+          "capture_source_sha256": "688002ab5b54ed399c6a0175e8e1a2d01289f7de1110f5718addb7736ba9aa66",
+          "excluded_held_pose_intervals": 300,
+          "samples": 7700,
+          "capacity": 20000,
+          "body_weight_N": 768.756726,
+          "body_weight_definition": "Pelvis subtree mass times9.81; excludes separate fixed ground/apparatus bodies.",
+          "model_file": "model.mjb",
+          "model_sha256": "ccb41ca3ef88ef85ea90d68dd39fc7e34713bfbaa83f32d2eac3a73500c6e9db",
+          "actuator_names": [
+            "glut_med1_r",
+            "glut_med2_r",
+            "glut_med3_r",
+            "glut_min1_r",
+            "glut_min2_r",
+            "glut_min3_r",
+            "semimem_r",
+            "semiten_r",
+            "bifemlh_r",
+            "bifemsh_r",
+            "sar_r",
+            "add_long_r",
+            "add_brev_r",
+            "add_mag1_r",
+            "add_mag2_r",
+            "add_mag3_r",
+            "tfl_r",
+            "pect_r",
+            "grac_r",
+            "glut_max1_r",
+            "glut_max2_r",
+            "glut_max3_r",
+            "iliacus_r",
+            "psoas_r",
+            "quad_fem_r",
+            "gem_r",
+            "peri_r",
+            "rect_fem_r",
+            "vas_med_r",
+            "vas_int_r",
+            "vas_lat_r",
+            "med_gas_r",
+            "lat_gas_r",
+            "soleus_r",
+            "tib_post_r",
+            "flex_dig_r",
+            "flex_hal_r",
+            "tib_ant_r",
+            "per_brev_r",
+            "per_long_r",
+            "per_tert_r",
+            "ext_dig_r",
+            "ext_hal_r",
+            "glut_med1_l",
+            "glut_med2_l",
+            "glut_med3_l",
+            "glut_min1_l",
+            "glut_min2_l",
+            "glut_min3_l",
+            "semimem_l",
+            "semiten_l",
+            "bifemlh_l",
+            "bifemsh_l",
+            "sar_l",
+            "add_long_l",
+            "add_brev_l",
+            "add_mag1_l",
+            "add_mag2_l",
+            "add_mag3_l",
+            "tfl_l",
+            "pect_l",
+            "grac_l",
+            "glut_max1_l",
+            "glut_max2_l",
+            "glut_max3_l",
+            "iliacus_l",
+            "psoas_l",
+            "quad_fem_l",
+            "gem_l",
+            "peri_l",
+            "rect_fem_l",
+            "vas_med_l",
+            "vas_int_l",
+            "vas_lat_l",
+            "med_gas_l",
+            "lat_gas_l",
+            "soleus_l",
+            "tib_post_l",
+            "flex_dig_l",
+            "flex_hal_l",
+            "tib_ant_l",
+            "per_brev_l",
+            "per_long_l",
+            "per_tert_l",
+            "ext_dig_l",
+            "ext_hal_l",
+            "ercspn_r",
+            "ercspn_l",
+            "intobl_r",
+            "intobl_l",
+            "extobl_r",
+            "extobl_l"
+          ],
+          "mujoco_version": "2.3.7"
+        }
+      },
+      "source_baseline_s1": {
+        "wall_s": 25.55459419998806,
+        "simulated_s": 16.0,
+        "compiled_scalars": {
+          "neural_step_wall_s": 9.779516393900849,
+          "neurons": 1025,
+          "inputs": 420
+        },
+        "configuration": {
+          "biarticular_pair_gain": 0.3,
+          "commissural_gain": 0.0,
+          "learn_reciprocal": true,
+          "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+          "backend": "sparse",
+          "diagnose_swing": true,
+          "stage": 1,
+          "restriction": 1.0,
+          "height_offset": -0.02,
+          "start_hip_deg": -7.0,
+          "start_knee_deg": -10.0,
+          "start_ankle_deg": 0.0,
+          "balance": {
+            "kp": 0.5,
+            "kd": 0.2,
+            "ka": 0.0,
+            "delay_s": 0.1,
+            "replace_inherited": false,
+            "bilateral_recruitment": true
+          },
+          "force_controlled_support": false,
+          "support_fraction": 0.5,
+          "regional_contacts": true,
+          "cross_contact_gain": 6.0,
+          "cross_contact_event_amplitude": 2.0,
+          "diagnostic_scope": "Paired November 2 source-setting verification. No inherited air-stage pass is assumed from the directory name.",
+          "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+          "timing_afferents": true,
+          "timing_scale": 0.01,
+          "knee_training_limits_deg": [
+            -90.0,
+            0.0
+          ],
+          "commissural_e_gain": 0.0,
+          "standing_solver": "coupled_symmetric",
+          "vertical_damping_multiplier": 4.2,
+          "harness_lowering_m": -0.04,
+          "harness_lowering_start_s": 2.0,
+          "harness_lowering_duration_s": 2.0,
+          "vertical_stiffness_scale": 0.01,
+          "rg_tonic_current": 1.2,
+          "align_ground_pose": true,
+          "verification_capture": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_baseline_s1"
+        },
+        "external_process_timing": {
+          "configuration": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.json",
+          "configuration_sha256": "94dadc7f44fa999b4052edf3f39fe6c293c8f95d10356be91f47c2061fd46c01",
+          "command": [
+            "D:\\Anaconda\\envs\\myo\\python.exe",
+            "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\physical_eval.py",
+            "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.json"
+          ],
+          "pid": 39972,
+          "start_utc": "2026-11-02T10:41:17.401297+00:00",
+          "max_wall_s": 900.0,
+          "verification_stop_utc": "2026-11-02T18:28:22+00:00",
+          "end_utc": "2026-11-02T10:41:46.685099+00:00",
+          "total_process_wall_s": 29.284279999905266,
+          "exit_code": 0,
+          "timed_out": false,
+          "success": true,
+          "timing_scope": "Fresh interpreter startup, compilation, full body trial, assessment, and saved outputs. Plotting is separate."
+        },
+        "capture_metadata": {
+          "schema": "aarl_aligned_verification_v1",
+          "native_frame": "legacy_z_up",
+          "display_frame": "x anterior, y superior, z right",
+          "native_to_anatomical": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              -1.0,
+              0.0
+            ]
+          ],
+          "sample_phase": "After accepted outer physics interval; warmup excluded. Neural input/start and force interval times retained separately.",
+          "voltage_label": "graded model membrane depolarization (mV; rest-relative)",
+          "side_order": [
+            "r",
+            "l"
+          ],
+          "region_order": [
+            "hindfoot",
+            "forefoot"
+          ],
+          "region_split": 0.5,
+          "regional_sensor_definition": "Physical ground contact locations projected from calcaneus toward toes; virtual regions, not calibrated heel/toe pads.",
+          "force_definition": "Once-counted force on each foot, transformed from contact frame into anatomical world axes. Regional trace is true superior component, not normal-force proxy.",
+          "harness_definition": "Pelvis generalized passive-force wrench projected on solver-stage root-joint axes unless caller supplies apparatus wrench; confirm only apparatus spring/damper acts on those coordinates. Explicit support kept separate.",
+          "kinematic_evaluation_phase": "Contact frames/body xpos are from the latest solver evaluation; qpos/qvel are final state. No extra forward call is made to retime those intermediate quantities.",
+          "missing_requested_cells": [],
+          "provenance": {
+            "configuration_file": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.json",
+            "configuration": {
+              "biarticular_pair_gain": 0.3,
+              "commissural_gain": 0.0,
+              "learn_reciprocal": true,
+              "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+              "backend": "sparse",
+              "diagnose_swing": true,
+              "stage": 1,
+              "restriction": 1.0,
+              "height_offset": -0.02,
+              "start_hip_deg": -7.0,
+              "start_knee_deg": -10.0,
+              "start_ankle_deg": 0.0,
+              "balance": {
+                "kp": 0.5,
+                "kd": 0.2,
+                "ka": 0.0,
+                "delay_s": 0.1,
+                "replace_inherited": false,
+                "bilateral_recruitment": true
+              },
+              "force_controlled_support": false,
+              "support_fraction": 0.5,
+              "regional_contacts": true,
+              "cross_contact_gain": 6.0,
+              "cross_contact_event_amplitude": 2.0,
+              "diagnostic_scope": "Paired November 2 source-setting verification. No inherited air-stage pass is assumed from the directory name.",
+              "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+              "timing_afferents": true,
+              "timing_scale": 0.01,
+              "knee_training_limits_deg": [
+                -90.0,
+                0.0
+              ],
+              "commissural_e_gain": 0.0,
+              "standing_solver": "coupled_symmetric",
+              "vertical_damping_multiplier": 4.2,
+              "harness_lowering_m": -0.04,
+              "harness_lowering_start_s": 2.0,
+              "harness_lowering_duration_s": 2.0,
+              "vertical_stiffness_scale": 0.01,
+              "rg_tonic_current": 1.2,
+              "align_ground_pose": true,
+              "verification_capture": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_baseline_s1"
+            },
+            "source_hashes": {
+              "physical_eval.py": "d06614b52cac0c7e41771332b08654822c39035cec41167494dddd1efdd0afbc",
+              "controller.py": "00112d00d7e65c700c1c89e651f57354588d88335386209e5803b67f7154b57c",
+              "balance.py": "1e69f6f6945ce7ea9ef48fa6cbbbca91e0044c700fc922526290114a5b50c967",
+              "ground_contact_check.py": "c666630f9e1c20da06e9253aa49cebd3cb6a0ede16473cba17564b93101e6ace",
+              "regional_contacts.py": "57296826959aef9edebebbfaffe0cd73f7a346eefce2844a3a6520c8500268eb",
+              "contact_events.py": "d264a62fafc831b855faff4581072f0251a941c58f8b2dd6e0934e0ed25b827f",
+              "bilateral.py": "b33373652fc69b921a8114ebacbfd43dda0b12aacaa67e6a715c64e9d8cb3cd3",
+              "foot_clearance_check.py": "b9e6b7a779ff469d7019707052de700e4d332e08e3b225e23ce0494f5b616b31",
+              "force_law_parameters_file": "9dc7d7ba444a961e06fd6efd15210ea324a84ee70992b251994cb7d7ee7165cf"
+            }
+          },
+          "stimulus_policy": "NaN means not logged; never synthesize an inferred pulse.",
+          "no_model_or_neural_steps": true,
+          "capture_source_sha256": "688002ab5b54ed399c6a0175e8e1a2d01289f7de1110f5718addb7736ba9aa66",
+          "excluded_held_pose_intervals": 300,
+          "samples": 7700,
+          "capacity": 20000,
+          "body_weight_N": 768.756726,
+          "body_weight_definition": "Pelvis subtree mass times9.81; excludes separate fixed ground/apparatus bodies.",
+          "model_file": "model.mjb",
+          "model_sha256": "ccb41ca3ef88ef85ea90d68dd39fc7e34713bfbaa83f32d2eac3a73500c6e9db",
+          "actuator_names": [
+            "glut_med1_r",
+            "glut_med2_r",
+            "glut_med3_r",
+            "glut_min1_r",
+            "glut_min2_r",
+            "glut_min3_r",
+            "semimem_r",
+            "semiten_r",
+            "bifemlh_r",
+            "bifemsh_r",
+            "sar_r",
+            "add_long_r",
+            "add_brev_r",
+            "add_mag1_r",
+            "add_mag2_r",
+            "add_mag3_r",
+            "tfl_r",
+            "pect_r",
+            "grac_r",
+            "glut_max1_r",
+            "glut_max2_r",
+            "glut_max3_r",
+            "iliacus_r",
+            "psoas_r",
+            "quad_fem_r",
+            "gem_r",
+            "peri_r",
+            "rect_fem_r",
+            "vas_med_r",
+            "vas_int_r",
+            "vas_lat_r",
+            "med_gas_r",
+            "lat_gas_r",
+            "soleus_r",
+            "tib_post_r",
+            "flex_dig_r",
+            "flex_hal_r",
+            "tib_ant_r",
+            "per_brev_r",
+            "per_long_r",
+            "per_tert_r",
+            "ext_dig_r",
+            "ext_hal_r",
+            "glut_med1_l",
+            "glut_med2_l",
+            "glut_med3_l",
+            "glut_min1_l",
+            "glut_min2_l",
+            "glut_min3_l",
+            "semimem_l",
+            "semiten_l",
+            "bifemlh_l",
+            "bifemsh_l",
+            "sar_l",
+            "add_long_l",
+            "add_brev_l",
+            "add_mag1_l",
+            "add_mag2_l",
+            "add_mag3_l",
+            "tfl_l",
+            "pect_l",
+            "grac_l",
+            "glut_max1_l",
+            "glut_max2_l",
+            "glut_max3_l",
+            "iliacus_l",
+            "psoas_l",
+            "quad_fem_l",
+            "gem_l",
+            "peri_l",
+            "rect_fem_l",
+            "vas_med_l",
+            "vas_int_l",
+            "vas_lat_l",
+            "med_gas_l",
+            "lat_gas_l",
+            "soleus_l",
+            "tib_post_l",
+            "flex_dig_l",
+            "flex_hal_l",
+            "tib_ant_l",
+            "per_brev_l",
+            "per_long_l",
+            "per_tert_l",
+            "ext_dig_l",
+            "ext_hal_l",
+            "ercspn_r",
+            "ercspn_l",
+            "intobl_r",
+            "intobl_l",
+            "extobl_r",
+            "extobl_l"
+          ],
+          "mujoco_version": "2.3.7"
+        }
+      }
+    },
+    "comparisons": [
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              8000
+            ],
+            "exact": true
+          },
+          "act": {
+            "shape": [
+              8000,
+              20
+            ],
+            "exact": true
+          },
+          "ctrl": {
+            "shape": [
+              8000,
+              92
+            ],
+            "exact": true
+          },
+          "q": {
+            "shape": [
+              8000,
+              13
+            ],
+            "exact": true
+          },
+          "qfull": {
+            "shape": [
+              8000,
+              105
+            ],
+            "exact": true
+          },
+          "com": {
+            "shape": [
+              8000,
+              3
+            ],
+            "exact": true
+          },
+          "neuro": {
+            "shape": [
+              8000,
+              14
+            ],
+            "exact": true
+          },
+          "contact": {
+            "shape": [
+              8000,
+              2
+            ],
+            "exact": true
+          },
+          "footz": {
+            "shape": [
+              8000,
+              2
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "key_acts",
+          "key_joints",
+          "neuro_names",
+          "cfg"
+        ],
+        "t_range": [
+          0.0,
+          15.998000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.assistance.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.assistance.npz",
+        "numeric": {
+          "samples": {
+            "shape": [
+              8000,
+              21
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "columns"
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.contact_events.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.contact_events.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              8000
+            ],
+            "exact": true
+          },
+          "signals": {
+            "shape": [
+              8000,
+              4
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "columns"
+        ],
+        "t_range": [
+          0.0,
+          15.998000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.regional_contacts.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.regional_contacts.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              8000
+            ],
+            "exact": true
+          },
+          "force_N": {
+            "shape": [
+              8000,
+              4
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "columns"
+        ],
+        "t_range": [
+          0.0,
+          15.998000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.mechanics.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.mechanics.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              320
+            ],
+            "exact": true
+          },
+          "currents": {
+            "shape": [
+              320,
+              5,
+              92
+            ],
+            "exact": true
+          },
+          "voltage": {
+            "shape": [
+              320,
+              1025
+            ],
+            "exact": true
+          },
+          "leak_and_bias": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "joints": {
+            "shape": [
+              17
+            ],
+            "exact": true
+          },
+          "qpos": {
+            "shape": [
+              320,
+              105
+            ],
+            "exact": true
+          },
+          "qvel": {
+            "shape": [
+              320,
+              105
+            ],
+            "exact": true
+          },
+          "act": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "ctrl": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "force": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "passive_force": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "rho": {
+            "shape": [
+              320,
+              17,
+              92
+            ],
+            "exact": true
+          },
+          "terms": {
+            "shape": [
+              320,
+              6,
+              17
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "names",
+          "acts",
+          "current_groups",
+          "torque_terms",
+          "scope"
+        ],
+        "t_range": [
+          0.0,
+          15.950000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_baseline_s1\\aligned_trace.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_native_s1\\aligned_trace.npz",
+        "numeric": {
+          "t_state": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "t_neural": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "t_neural_input": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "physics_clock_s": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "force_interval_start": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "force_interval_end": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "neural_voltage": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "qpos": {
+            "shape": [
+              7700,
+              105
+            ],
+            "exact": true
+          },
+          "qvel": {
+            "shape": [
+              7700,
+              105
+            ],
+            "exact": true
+          },
+          "activation": {
+            "shape": [
+              7700,
+              92
+            ],
+            "exact": true
+          },
+          "control": {
+            "shape": [
+              7700,
+              92
+            ],
+            "exact": true
+          },
+          "joint_qpos_addresses": {
+            "shape": [
+              6
+            ],
+            "exact": true
+          },
+          "foot_force_anatomical_N": {
+            "shape": [
+              7700,
+              2,
+              3
+            ],
+            "exact": true
+          },
+          "regional_vertical_N": {
+            "shape": [
+              7700,
+              2,
+              2
+            ],
+            "exact": true
+          },
+          "harness_wrench_anatomical": {
+            "shape": [
+              7700,
+              6
+            ],
+            "exact": true
+          },
+          "explicit_support_anatomical_N": {
+            "shape": [
+              7700,
+              3
+            ],
+            "exact": true
+          },
+          "root_anatomical_m": {
+            "shape": [
+              7700,
+              3
+            ],
+            "exact": true
+          },
+          "stimulus_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "neural_names",
+          "joint_names"
+        ],
+        "t_state_range": [
+          0.602,
+          16.0
+        ],
+        "t_neural_range": [
+          0.602,
+          16.0
+        ],
+        "physics_clock_s_range": [
+          0.002,
+          15.400000000001812
+        ]
+      }
+    ],
+    "numeric_array_count": 45,
+    "repeat_count": 1
+  },
+  "compact_body": {
+    "runs": {
+      "sparse_final": {
+        "wall_s": 92.94409799994901,
+        "simulated_s": 16.0,
+        "accepted": true,
+        "compiled_scalars": {
+          "neural_step_wall_s": 16.906603014096618,
+          "neurons": 1033,
+          "inputs": 424
+        },
+        "configuration": {
+          "biarticular_pair_gain": 0.3,
+          "commissural_gain": 0.0,
+          "learn_reciprocal": true,
+          "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+          "backend": "sparse",
+          "diagnose_swing": true,
+          "stage": 4,
+          "restriction": 1.0,
+          "height_offset": -0.02,
+          "start_hip_deg": -7.0,
+          "start_knee_deg": -10.0,
+          "start_ankle_deg": 0.0,
+          "balance": {
+            "kp": 5.0,
+            "ka": 0.0,
+            "kd": 2.0,
+            "max_current": 3.0,
+            "bilateral_recruitment": true,
+            "delay_s": 0.1,
+            "replace_inherited": true
+          },
+          "force_controlled_support": false,
+          "support_fraction": 0.4,
+          "regional_contacts": true,
+          "cross_contact_gain": 6.0,
+          "cross_contact_event_amplitude": 2.0,
+          "diagnostic_scope": "Same ground9 fitted controller and40%prescribedlift plus explicit FSA-derived autogenicRenshaw repair. Separatecandidate, samephysics; retainedafferent-independent motorcollateral function. Freshcurriculumgatesrequired.",
+          "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+          "timing_afferents": true,
+          "timing_scale": 0.01,
+          "knee_training_limits_deg": [
+            -90.0,
+            0.0
+          ],
+          "commissural_e_gain": 0.0,
+          "standing_solver": "coupled_symmetric",
+          "vertical_damping_multiplier": 4.2,
+          "harness_lowering_m": -0.04,
+          "harness_lowering_start_s": 2.0,
+          "harness_lowering_duration_s": 2.0,
+          "vertical_stiffness_scale": 0.01,
+          "rg_tonic_current": 1.2,
+          "align_ground_pose": true,
+          "integrated_fsa_profile": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\FINAL_BACKEND_PROFILE.json",
+          "suppress_inherited_posture_mn": true,
+          "verification_sparse_currents": true,
+          "verification_capture": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final\\capture",
+          "renshaw_autogenic_profile": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\integration\\renshaw_autogenic_v1\\PROFILE.json"
+        },
+        "model_sha256": "6cd0dca1adddb64be3f7711abda9a500b4ec5a254d081ae747997664c183476a"
+      },
+      "compact_final": {
+        "wall_s": 91.51630390016362,
+        "simulated_s": 16.0,
+        "accepted": true,
+        "compiled_scalars": {
+          "neural_step_wall_s": 16.178931983420625,
+          "neurons": 1033,
+          "inputs": 424
+        },
+        "configuration": {
+          "biarticular_pair_gain": 0.3,
+          "commissural_gain": 0.0,
+          "learn_reciprocal": true,
+          "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+          "backend": "compact",
+          "diagnose_swing": true,
+          "stage": 4,
+          "restriction": 1.0,
+          "height_offset": -0.02,
+          "start_hip_deg": -7.0,
+          "start_knee_deg": -10.0,
+          "start_ankle_deg": 0.0,
+          "balance": {
+            "kp": 5.0,
+            "ka": 0.0,
+            "kd": 2.0,
+            "max_current": 3.0,
+            "bilateral_recruitment": true,
+            "delay_s": 0.1,
+            "replace_inherited": true
+          },
+          "force_controlled_support": false,
+          "support_fraction": 0.4,
+          "regional_contacts": true,
+          "cross_contact_gain": 6.0,
+          "cross_contact_event_amplitude": 2.0,
+          "diagnostic_scope": "Same ground9 fitted controller and40%prescribedlift plus explicit FSA-derived autogenicRenshaw repair. Separatecandidate, samephysics; retainedafferent-independent motorcollateral function. Freshcurriculumgatesrequired.",
+          "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+          "timing_afferents": true,
+          "timing_scale": 0.01,
+          "knee_training_limits_deg": [
+            -90.0,
+            0.0
+          ],
+          "commissural_e_gain": 0.0,
+          "standing_solver": "coupled_symmetric",
+          "vertical_damping_multiplier": 4.2,
+          "harness_lowering_m": -0.04,
+          "harness_lowering_start_s": 2.0,
+          "harness_lowering_duration_s": 2.0,
+          "vertical_stiffness_scale": 0.01,
+          "rg_tonic_current": 1.2,
+          "align_ground_pose": true,
+          "integrated_fsa_profile": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\FINAL_BACKEND_PROFILE.json",
+          "suppress_inherited_posture_mn": true,
+          "verification_sparse_currents": true,
+          "verification_capture": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final\\capture",
+          "renshaw_autogenic_profile": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\integration\\renshaw_autogenic_v1\\PROFILE.json"
+        },
+        "model_sha256": "6cd0dca1adddb64be3f7711abda9a500b4ec5a254d081ae747997664c183476a"
+      }
+    },
+    "comparisons": [
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              8000
+            ],
+            "exact": true
+          },
+          "act": {
+            "shape": [
+              8000,
+              20
+            ],
+            "exact": true
+          },
+          "ctrl": {
+            "shape": [
+              8000,
+              92
+            ],
+            "exact": true
+          },
+          "q": {
+            "shape": [
+              8000,
+              13
+            ],
+            "exact": true
+          },
+          "qfull": {
+            "shape": [
+              8000,
+              105
+            ],
+            "exact": true
+          },
+          "com": {
+            "shape": [
+              8000,
+              3
+            ],
+            "exact": true
+          },
+          "neuro": {
+            "shape": [
+              8000,
+              14
+            ],
+            "exact": true
+          },
+          "contact": {
+            "shape": [
+              8000,
+              2
+            ],
+            "exact": true
+          },
+          "footz": {
+            "shape": [
+              8000,
+              2
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "key_acts",
+          "key_joints",
+          "neuro_names",
+          "cfg"
+        ],
+        "t_range": [
+          0.0,
+          15.998000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.assistance.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.assistance.npz",
+        "numeric": {
+          "samples": {
+            "shape": [
+              8000,
+              21
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "columns"
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.balance.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.balance.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              8000
+            ],
+            "exact": true
+          },
+          "state_and_command": {
+            "shape": [
+              8000,
+              8
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [],
+        "t_range": [
+          0.0,
+          15.998000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.mechanics.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.mechanics.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              320
+            ],
+            "exact": true
+          },
+          "currents": {
+            "shape": [
+              320,
+              5,
+              92
+            ],
+            "exact": true
+          },
+          "voltage": {
+            "shape": [
+              320,
+              1033
+            ],
+            "exact": true
+          },
+          "leak_and_bias": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "joints": {
+            "shape": [
+              17
+            ],
+            "exact": true
+          },
+          "qpos": {
+            "shape": [
+              320,
+              105
+            ],
+            "exact": true
+          },
+          "qvel": {
+            "shape": [
+              320,
+              105
+            ],
+            "exact": true
+          },
+          "act": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "ctrl": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "force": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "passive_force": {
+            "shape": [
+              320,
+              92
+            ],
+            "exact": true
+          },
+          "rho": {
+            "shape": [
+              320,
+              17,
+              92
+            ],
+            "exact": true
+          },
+          "terms": {
+            "shape": [
+              320,
+              6,
+              17
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "names",
+          "acts",
+          "current_groups",
+          "torque_terms",
+          "scope"
+        ],
+        "t_range": [
+          0.0,
+          15.950000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.regional_contacts.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.regional_contacts.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              8000
+            ],
+            "exact": true
+          },
+          "force_N": {
+            "shape": [
+              8000,
+              4
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "columns"
+        ],
+        "t_range": [
+          0.0,
+          15.998000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.contact_events.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.contact_events.npz",
+        "numeric": {
+          "t": {
+            "shape": [
+              8000
+            ],
+            "exact": true
+          },
+          "signals": {
+            "shape": [
+              8000,
+              4
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "columns"
+        ],
+        "t_range": [
+          0.0,
+          15.998000000000001
+        ]
+      },
+      {
+        "a": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final\\capture\\aligned_trace.npz",
+        "b": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final\\capture\\aligned_trace.npz",
+        "numeric": {
+          "t_state": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "t_neural": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "t_neural_input": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "physics_clock_s": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "force_interval_start": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "force_interval_end": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "neural_voltage": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "qpos": {
+            "shape": [
+              7700,
+              105
+            ],
+            "exact": true
+          },
+          "qvel": {
+            "shape": [
+              7700,
+              105
+            ],
+            "exact": true
+          },
+          "activation": {
+            "shape": [
+              7700,
+              92
+            ],
+            "exact": true
+          },
+          "control": {
+            "shape": [
+              7700,
+              92
+            ],
+            "exact": true
+          },
+          "joint_qpos_addresses": {
+            "shape": [
+              6
+            ],
+            "exact": true
+          },
+          "foot_force_anatomical_N": {
+            "shape": [
+              7700,
+              2,
+              3
+            ],
+            "exact": true
+          },
+          "regional_vertical_N": {
+            "shape": [
+              7700,
+              2,
+              2
+            ],
+            "exact": true
+          },
+          "harness_wrench_anatomical": {
+            "shape": [
+              7700,
+              6
+            ],
+            "exact": true
+          },
+          "explicit_support_anatomical_N": {
+            "shape": [
+              7700,
+              3
+            ],
+            "exact": true
+          },
+          "root_anatomical_m": {
+            "shape": [
+              7700,
+              3
+            ],
+            "exact": true
+          },
+          "stimulus_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_V_last_mV": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_applied_current_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_chemical_current_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_leak_current_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_bias_current_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_ionic_current_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_synaptic_conductance_uS": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_synaptic_gE_nA": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_membrane_conductance_uS": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_membrane_capacitance_numeric": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_rest_mV": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_time_factor_membrane": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_update_residual_mV": {
+            "shape": [
+              7700,
+              24
+            ],
+            "exact": true
+          },
+          "neural_current_status": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          },
+          "neural_current_available": {
+            "shape": [
+              7700
+            ],
+            "exact": true
+          }
+        },
+        "nonnumeric": [
+          "neural_names",
+          "joint_names"
+        ],
+        "t_state_range": [
+          0.602,
+          16.0
+        ],
+        "t_neural_range": [
+          0.602,
+          16.0
+        ],
+        "physics_clock_s_range": [
+          0.002,
+          15.400000000001812
+        ]
+      }
+    ],
+    "numeric_array_count": 62,
+    "repeat_count": 1
+  },
+  "physical_eval_current_sha256": "9c8ecec60328e5271817c62996a7ff006f1d07e3ba84a35acd376a6c25e6d145",
+  "physical_eval_saved_sha256": {
+    "sparse_final": "ecda3d37012e593b54ece1166cb9df440c9f961acbc172689db258535bf6ac33",
+    "compact_final": "ecda3d37012e593b54ece1166cb9df440c9f961acbc172689db258535bf6ac33"
+  },
+  "compact_recorded_timer_source": {
+    "git_commit": "9d7b8d4d50d6e7434eb2bd9743bf160578231de3",
+    "path": "Code/MuJoCo_SNS/spinal/hunt_training/physical_eval.py",
+    "line_endings": "CRLF (exact saved hash restored from LF git blob)",
+    "sha256": "ecda3d37012e593b54ece1166cb9df440c9f961acbc172689db258535bf6ac33",
+    "timer_lines": [
+      {
+        "line": 205,
+        "text": "        step_start=time.perf_counter();native_step(u);capture['neural_step_wall_s']+=time.perf_counter()-step_start"
+      },
+      {
+        "line": 264,
+        "text": "start=time.perf_counter()"
+      },
+      {
+        "line": 312,
+        "text": "    wall_s=time.perf_counter()-start,trained_weights={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(cfg.get('weights_directory',H/'runs/fitted')).glob('*weights.json')},"
+      },
+      {
+        "line": 328,
+        "text": "    Path(str(out)+'.result.json').write_text(json.dumps(result,indent=2,default=float))"
+      },
+      {
+        "line": 336,
+        "text": "Path(str(out)+'.result.json').write_text(json.dumps(result,indent=2,default=float));print(json.dumps(result,default=float),flush=True)"
+      }
+    ],
+    "scope": "Evaluator timer starts before R.main, includes capture save and assessment, excludes interpreter imports/pre-run setup and final result/sidecar serialization."
+  },
+  "source_compiled_models_equal": true,
+  "kernels": {
+    "hunt": {
+      "neurons": 1033,
+      "active_ion_entries": 4,
+      "compared_steps": 1200,
+      "exact": true,
+      "max_error": {
+        "V": 0.0,
+        "b_gate": 0.0,
+        "c_gate": 0.0,
+        "outputs": 0.0
+      },
+      "timings_3000steps": {
+        "exact_fast": {
+          "median_s": 6.299572199815884,
+          "repeats_s": [
+            8.260365199996158,
+            6.299572199815884,
+            6.182839900022373
+          ]
+        },
+        "sparse_pairwise": {
+          "median_s": 0.8952872001100332,
+          "repeats_s": [
+            0.8952872001100332,
+            0.9069833001121879,
+            0.8825918000657111
+          ]
+        },
+        "compact_pairwise": {
+          "median_s": 0.5550623000599444,
+          "repeats_s": [
+            0.5387067999690771,
+            0.5550623000599444,
+            0.5718863001093268
+          ]
+        }
+      },
+      "new_vs_current_speedup": 1.6129490329524199,
+      "new_vs_old_speedup": 11.349306553760824,
+      "wrapper_dense_workspaces_removed_bytes": 17073424
+    },
+    "s3k": {
+      "neurons": 410,
+      "active_ion_entries": 4,
+      "compared_steps": 1200,
+      "exact": true,
+      "max_error": {
+        "V": 0.0,
+        "b_gate": 0.0,
+        "c_gate": 0.0,
+        "outputs": 0.0
+      },
+      "timings_3000steps": {
+        "exact_fast": {
+          "median_s": 0.7440919999498874,
+          "repeats_s": [
+            0.7644594998564571,
+            0.7440919999498874,
+            0.6515779001638293
+          ]
+        },
+        "sparse_pairwise": {
+          "median_s": 0.35385579988360405,
+          "repeats_s": [
+            0.35385579988360405,
+            0.3569208001717925,
+            0.34931520000100136
+          ]
+        },
+        "compact_pairwise": {
+          "median_s": 0.32700260006822646,
+          "repeats_s": [
+            0.32700260006822646,
+            0.35707950009964406,
+            0.3206442999653518
+          ]
+        }
+      },
+      "new_vs_current_speedup": 1.0821192241583855,
+      "new_vs_old_speedup": 2.275492610134105,
+      "wrapper_dense_workspaces_removed_bytes": 2689600
+    },
+    "w2lvar": {
+      "neurons": 888,
+      "active_ion_entries": 4,
+      "compared_steps": 1200,
+      "exact": true,
+      "max_error": {
+        "V": 0.0,
+        "b_gate": 0.0,
+        "c_gate": 0.0,
+        "outputs": 0.0
+      },
+      "timings_3000steps": {
+        "exact_fast": {
+          "median_s": 4.152616099920124,
+          "repeats_s": [
+            4.895807699998841,
+            4.152616099920124,
+            3.5444224001839757
+          ]
+        },
+        "sparse_pairwise": {
+          "median_s": 0.7814929001033306,
+          "repeats_s": [
+            0.7814929001033306,
+            0.7734555001370609,
+            0.7858684998936951
+          ]
+        },
+        "compact_pairwise": {
+          "median_s": 0.5450401001144201,
+          "repeats_s": [
+            0.5450401001144201,
+            0.5444925997871906,
+            0.5512926001101732
+          ]
+        }
+      },
+      "new_vs_current_speedup": 1.4338264284394342,
+      "new_vs_old_speedup": 7.618918496177376,
+      "wrapper_dense_workspaces_removed_bytes": 12616704
+    },
+    "syn6": {
+      "neurons": 794,
+      "active_ion_entries": 4,
+      "compared_steps": 1200,
+      "exact": true,
+      "max_error": {
+        "V": 0.0,
+        "b_gate": 0.0,
+        "c_gate": 0.0,
+        "outputs": 0.0
+      },
+      "timings_3000steps": {
+        "exact_fast": {
+          "median_s": 2.3806843000929803,
+          "repeats_s": [
+            3.0469107998069376,
+            2.3806843000929803,
+            2.36989470012486
+          ]
+        },
+        "sparse_pairwise": {
+          "median_s": 0.664793300209567,
+          "repeats_s": [
+            0.651277500204742,
+            0.664793300209567,
+            0.6663866001181304
+          ]
+        },
+        "compact_pairwise": {
+          "median_s": 0.45030369982123375,
+          "repeats_s": [
+            0.4918947000987828,
+            0.45030369982123375,
+            0.4433822000864893
+          ]
+        }
+      },
+      "new_vs_current_speedup": 1.476322092120237,
+      "new_vs_old_speedup": 5.286841527258357,
+      "wrapper_dense_workspaces_removed_bytes": 10086976
+    }
+  },
+  "historical_w2l": {
+    "benchmark": {
+      "steps_compared": 5000,
+      "max_voltage_difference": 0.0,
+      "dense_us": 145.75979000073858,
+      "exact_fast_us": 102.29317999910563,
+      "speedup": 1.424921876531876
+    },
+    "script": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261027_codex\\benchmark_exact.py",
+    "dense_fast_pair": {
+      "a": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261027_codex\\trial458_d30.npz",
+      "b": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261027_codex\\trial458_exact_fast_d30.npz",
+      "numeric": {
+        "t": {
+          "shape": [
+            30000
+          ],
+          "exact": true
+        },
+        "q": {
+          "shape": [
+            30000,
+            6
+          ],
+          "exact": true
+        },
+        "pel": {
+          "shape": [
+            30000,
+            3
+          ],
+          "exact": true
+        },
+        "com": {
+          "shape": [
+            30000,
+            3
+          ],
+          "exact": true
+        },
+        "tilt": {
+          "shape": [
+            30000
+          ],
+          "exact": true
+        },
+        "heelF": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "toeF": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "heelS": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "toeS": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "heelV": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "toeV": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "rgE": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "heelin": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "toein": {
+          "shape": [
+            30000,
+            2
+          ],
+          "exact": true
+        },
+        "rigFz": {
+          "shape": [
+            30000
+          ],
+          "exact": true
+        },
+        "finite": {
+          "shape": [],
+          "exact": true
+        }
+      },
+      "nonnumeric": [
+        "fall_t"
+      ],
+      "t_range": [
+        0.0,
+        29.999000000000002
+      ]
+    },
+    "timing_repeats": 1,
+    "timed_steps_per_backend": 10000,
+    "electrical_comparison_steps": 5000
+  },
+  "cup": {
+    "graded": {
+      "source": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\sns_beer_results.mat",
+      "runs": [
+        {
+          "label": "reflex ON",
+          "k": 1,
+          "stats": {
+            "samples": 2427,
+            "final_time_s": 10.0,
+            "final_load_kg": 0.625,
+            "endpoint_sag_deg": 1.9965350504348054,
+            "maximum_abs_sag_after_2s_deg": 1.9973946758572858,
+            "maximum_abs_sag_after_2s_at_s": 9.821378199012235,
+            "maximum_abs_sag_after_2s_load_kg": 0.6138361374382647,
+            "timeseries_object_count": 6,
+            "load_ramp_max_abs_error_kg": 0.0
+          }
+        },
+        {
+          "label": "reflex OFF",
+          "k": 0,
+          "stats": {
+            "samples": 657,
+            "final_time_s": 10.0,
+            "final_load_kg": 0.625,
+            "endpoint_sag_deg": 7.846412871422803,
+            "maximum_abs_sag_after_2s_deg": 7.846412871422803,
+            "maximum_abs_sag_after_2s_at_s": 10.0,
+            "maximum_abs_sag_after_2s_load_kg": 0.625,
+            "timeseries_object_count": 6,
+            "load_ramp_max_abs_error_kg": 0.0
+          }
+        }
+      ]
+    },
+    "spiking": {
+      "source": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal2_beer_spiking.mat",
+      "runs": [
+        {
+          "label": "reflex ON",
+          "k": 1,
+          "stats": {
+            "samples": 27088,
+            "final_time_s": 10.0,
+            "final_load_kg": 0.625,
+            "endpoint_sag_deg": 1.7775121577393576,
+            "maximum_abs_sag_after_2s_deg": 2.0242912575529264,
+            "maximum_abs_sag_after_2s_at_s": 9.688429131176422,
+            "maximum_abs_sag_after_2s_load_kg": 0.6055268206985264,
+            "timeseries_object_count": 7,
+            "load_ramp_max_abs_error_kg": 0.0,
+            "saved_scalar_checks_exact_within_1e_12": true
+          }
+        },
+        {
+          "label": "reflex OFF",
+          "k": 0,
+          "stats": {
+            "samples": 19644,
+            "final_time_s": 10.0,
+            "final_load_kg": 0.625,
+            "endpoint_sag_deg": 7.846412871381035,
+            "maximum_abs_sag_after_2s_deg": 7.846412871381035,
+            "maximum_abs_sag_after_2s_at_s": 10.0,
+            "maximum_abs_sag_after_2s_load_kg": 0.625,
+            "timeseries_object_count": 7,
+            "load_ramp_max_abs_error_kg": 0.0,
+            "saved_scalar_checks_exact_within_1e_12": true
+          }
+        }
+      ]
+    }
+  },
+  "knee": {
+    "source": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\knee_transient_reflex_20261028\\replay_summary.mat",
+    "names": [
+      "th",
+      "thd",
+      "V_MN_ext",
+      "V_MN_flex",
+      "A_ext",
+      "A_flex",
+      "F_ext",
+      "F_flex",
+      "stim"
+    ],
+    "samples": 50001,
+    "window_s": [
+      0.0,
+      50.0
+    ],
+    "pulse_window_s": [
+      30.0,
+      30.03
+    ],
+    "baseline_paper_deg": -42.639228100789865,
+    "extension_peak_deg": 1.0907928305291834,
+    "peak_latency_s": 0.11100000000000065,
+    "recovery_s": 6.355000000000004,
+    "saved_summary": {
+      "extension_deg": -1.0907928305291834,
+      "peak_latency_s": 0.11100000000000065,
+      "flexion_peak_deg": 0,
+      "baseline_deg": 42.63922810078986,
+      "residual_deg": -9.301098756466251e-07,
+      "control_drift_deg": 1.4694143545033359e-08,
+      "step_error_deg": 5.202734295076041e-05,
+      "recovered": 1,
+      "paper_baseline_deg": -42.63922810078986,
+      "paper_extension_excursion_deg": 1.0907928305291834,
+      "paper_residual_deg": 9.301098756466251e-07,
+      "recovery_s": 6.355000000000004,
+      "onset_001deg_s": 0.01899999999999835
+    },
+    "late_residual_paper_deg": 9.30109875646625e-07,
+    "fine_max_angle_error_deg": 5.202734295076041e-05,
+    "criteria": "Displacement from mean control baseline25<=t<30 <=0.01deg; stimulated absolute angular velocity<=1e-4rad/s; every subsequent resampled point through50s."
+  },
+  "elapsed_read_audit_s": 1.6928211000049487,
+  "source_sha256": {
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.npz": "acdd8fa7977a8f0ab0f1459a7f5c5591178e4b2da5b2c628354bffbeb188119a",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.npz": "acdd8fa7977a8f0ab0f1459a7f5c5591178e4b2da5b2c628354bffbeb188119a",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.assistance.npz": "f1d1a2c55ecab67f0cda41f2bcda25e457dd2a546a816f0acfa1ad1c9a601775",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.assistance.npz": "f1d1a2c55ecab67f0cda41f2bcda25e457dd2a546a816f0acfa1ad1c9a601775",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.contact_events.npz": "6678a7e6e4f5b1d4354db5827a55389ff79bfdfb7585e287dcdce40a02d0ec3c",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.contact_events.npz": "6678a7e6e4f5b1d4354db5827a55389ff79bfdfb7585e287dcdce40a02d0ec3c",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.regional_contacts.npz": "fa2c39af2753949083f1bfdf34880ba27551873039667402daeeb8e0fc7416c5",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.regional_contacts.npz": "fa2c39af2753949083f1bfdf34880ba27551873039667402daeeb8e0fc7416c5",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.mechanics.npz": "5fb36ae1c6cf2429591c0bbb3ef3a286d65188ee113caf60d5e8d2c2747f1853",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.mechanics.npz": "5fb36ae1c6cf2429591c0bbb3ef3a286d65188ee113caf60d5e8d2c2747f1853",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_baseline_s1\\aligned_trace.npz": "38e5ce85b61dec1334607426a857396a0ad43212127b25272cee55d934783e0c",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_native_s1\\aligned_trace.npz": "38e5ce85b61dec1334607426a857396a0ad43212127b25272cee55d934783e0c",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.result.json": "4242655f2619b588d45b1b33f539c36c2749a5e647b9feffe3c3cde25e537aca",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.json": "a3d03a166409380fff912012619b3cf5f1b990fa81bce20ff5c40fdf76aefed0",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\timings\\source_native_s1\\RESULT.json": "4f499f6dec0810bfb69152e2f7b65811bd8773ea61fafa7d4e9130c8fd5bb9e5",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_native_s1\\ALIGNED_TRACE_METADATA.json": "8e565bc413800c70fedb9545de4cfab116c5f27a536aa7fe9deddc618fc98fb4",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_native_s1\\model.mjb": "ccb41ca3ef88ef85ea90d68dd39fc7e34713bfbaa83f32d2eac3a73500c6e9db",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.result.json": "06a06159fa42e91d8982c5ab5f18bb0a65a273815093e37f9bcfea838e2c4b9e",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.json": "94dadc7f44fa999b4052edf3f39fe6c293c8f95d10356be91f47c2061fd46c01",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\timings\\source_baseline_s1\\RESULT.json": "b8cf41d00dcad33d755e558d8e02abf0040fcd7ef2d545450743773bdc281b1d",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_baseline_s1\\ALIGNED_TRACE_METADATA.json": "670a14d3db20e1bfaaf41610a0e3d03e49acf2a1a9a5baf6362e8a14bac053d4",
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\figures\\source_baseline_s1\\model.mjb": "ccb41ca3ef88ef85ea90d68dd39fc7e34713bfbaa83f32d2eac3a73500c6e9db",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.npz": "0212807d9b1de4fec68a3e1765cea4977b4f2838ab8cccca0c404f15e5f2120a",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.npz": "0212807d9b1de4fec68a3e1765cea4977b4f2838ab8cccca0c404f15e5f2120a",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.assistance.npz": "b61267e14f14e15c3e892f3333f1c7a4cda1c3395f5bd3523de9806ea5170e2c",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.assistance.npz": "b61267e14f14e15c3e892f3333f1c7a4cda1c3395f5bd3523de9806ea5170e2c",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.balance.npz": "59ef0017d1b964f775614009c0ce434cf04e81901618223bafcc078dc808773e",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.balance.npz": "59ef0017d1b964f775614009c0ce434cf04e81901618223bafcc078dc808773e",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.mechanics.npz": "e91d783593a193262c44fe84747d5e9fc8120b490347e033f987e4a9aae3ed9b",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.mechanics.npz": "e91d783593a193262c44fe84747d5e9fc8120b490347e033f987e4a9aae3ed9b",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.regional_contacts.npz": "e2f0648e8a2c06dbf65dbe983e31089491ba29f85cb8de065de847450a4bb794",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.regional_contacts.npz": "e2f0648e8a2c06dbf65dbe983e31089491ba29f85cb8de065de847450a4bb794",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.contact_events.npz": "8d910abaf305942cb1b24289dbd2ee595114d2b52c97b1e0fb511bab0317c0d2",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.contact_events.npz": "8d910abaf305942cb1b24289dbd2ee595114d2b52c97b1e0fb511bab0317c0d2",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final\\capture\\aligned_trace.npz": "8617fd0db5083efbb7b7d224182eb0c06cfdc0bb99918d73222dc2eb13dee502",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final\\capture\\aligned_trace.npz": "8617fd0db5083efbb7b7d224182eb0c06cfdc0bb99918d73222dc2eb13dee502",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.result.json": "d8fc0f9b7b3d30be52664a9e3f125ccb26dddf127595fd7ae95e3e24104161b0",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.json": "6528143c975beef50837cded335e000dabaadc6199cbd14975e8e0c89c876280",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final\\capture\\model.mjb": "6cd0dca1adddb64be3f7711abda9a500b4ec5a254d081ae747997664c183476a",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.result.json": "330a9ee76daa1631c7645b9ff607114e0b508f49f1bc0a883374a1a0bde53c19",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.json": "8d443b2f1efa56628c2a12bb4dfdca64b6188d1672db698bcb6f737a70b2bf86",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final\\capture\\model.mjb": "6cd0dca1adddb64be3f7711abda9a500b4ec5a254d081ae747997664c183476a",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\physical_eval.py": "9c8ecec60328e5271817c62996a7ff006f1d07e3ba84a35acd376a6c25e6d145",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\results\\KERNEL_BENCHMARK_hunt.json": "6e108067e834b7bf8ee8ac5e41abe6359cc1807a6fdccd7c228f4461ca4fb0e3",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\results\\KERNEL_BENCHMARK_s3k.json": "a195566977c3f0f103178650539dd54e3de18c983e03545084a75dea5f844463",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\results\\KERNEL_BENCHMARK_w2lvar.json": "0770fdedd263bf2755b1c636fd11015045eb117473dd926975ae7134abcc6be6",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\results\\KERNEL_BENCHMARK_syn6.json": "58efd74ec20b93c2d42e0b79a8eb3118c8f69cac01a11594adb3ce12d2e942e6",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\source\\benchmark.py": "6b3b3f1511bd285615643dcd1f7a5ae8e6e7fd67b9170de8ba929207d16d1d42",
+    "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\source\\summarize_verification.py": "40be8ceaaad125dd86d52d4748902996a96c41ebc1e1e47ea49cd11f1b68dc4d",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261027_codex\\benchmark_exact.json": "15a071457006727e5cfff3eb63c5f164d33761a5ee66627070c1023aaee1b56f",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261027_codex\\benchmark_exact.py": "461c133e64f2abedfa505d70fdc49e662c12865dcba38123ace33993d3f46c7d",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261027_codex\\trial458_d30.npz": "53dd98df62d00d920e8ea4e329f7e4b9f7558d36bc0d155459c133d07fb45875",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261027_codex\\trial458_exact_fast_d30.npz": "53dd98df62d00d920e8ea4e329f7e4b9f7558d36bc0d155459c133d07fb45875",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\sns_beer_results.mat": "17ee8ce65c78cb17f2259baa6541ee5645972a45ff91204536da7aa986b89941",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal2_beer_spiking.mat": "f8620c085ded6b8f72088c77f63770ff563582d839efaeea694634be4ac3cfa2",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_beer_demo.m": "273dbaa5281cf0bd2f5d963658b71654b0114c9b8728efe6d533ffd74bcd694c",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_run_beer_demo.m": "de635637456f917b0b0937d877af50be1c95d8148bafe7049f3c99987aa08ab3",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_beer_spiking.m": "eb670b2b1d8c20496f03fa365a89db55d788976dc28f8240bc5e0b26bad56df3",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_run_beer_spiking.m": "f5778cfbd22810d2b7a716e8f0113ddad4fdb3cd8cd1fc7c8dbaa719e48e0d3c",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\knee_transient_reflex_20261028\\replay_summary.mat": "01a67c749c0a317986cbcc7d55192f0795770c722b15bd4ee52f89cecfd9309c",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\knee_transient_reflex_20261028\\run_transient.m": "8ad5b8164153236c2938e723c88cc09a0255a72da3ea56928fd5107d1693fbb8",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_build_demo.m": "43054f4b2f94fc5f155ed888873c556d0dce65efb566c162e9d8349598abd128"
+  },
+  "derived_untransformed_trace_arrays": {
+    "path": "D:\\GitHub\\Bipedal_Robot\\tmp\\ch6_authoritative_20261116\\TIMING_trace_arrays.npz",
+    "sha256": "4f0aa648fce1702db61a452e8ebd8b49de769eb11a479f3ec28e8c00446aacbb",
+    "scope": "Exact extracted saved cup samples and knee resampled recording arrays; no additional interpolation, smoothing, signs, rescaling, or decimation."
+  }
+}

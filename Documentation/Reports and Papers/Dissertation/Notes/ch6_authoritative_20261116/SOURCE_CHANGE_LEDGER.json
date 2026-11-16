@@ -1,0 +1,2143 @@
+[
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 14,
+    "new_start_line": 14,
+    "old_text": "\\includegraphics[width=\\linewidth,height=0.19\\textheight,keepaspectratio]{OurWalker.png}",
+    "new_text": "\\includegraphics[trim=0bp 0bp 176.275bp 0bp,clip,width=\\linewidth,height=0.19\\textheight,keepaspectratio]{OurWalker.png}",
+    "all_old_numerical_tokens": [
+      "0.19"
+    ],
+    "all_new_numerical_tokens": [
+      "0",
+      "0",
+      "176.275",
+      "0",
+      "0.19"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "0",
+          "0",
+          "176.275",
+          "0"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 36,
+    "new_start_line": 36,
+    "old_text": "\\includegraphics[width=\\textwidth,height=0.76\\textheight,keepaspectratio]{simulation_workflow_20261116.pdf}",
+    "new_text": "\\includegraphics[width=14cm]{simulation_workflow_authoritative.pdf}",
+    "all_old_numerical_tokens": [
+      "0.76",
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [
+      "14"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "0.76",
+          "20261116."
+        ],
+        "new": [
+          "14"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 106,
+    "new_start_line": 106,
+    "old_text": "For block-programmed control of MuJoCo mechanics, I integrated the SNS blocks with the MathWorks MuJoCo--Simulink bridge. Actuator commands enter the mechanical simulation, and joint and actuator measurements return through its sensor interface. Local compatibility and initialization fixes establish the appropriate model state before signal exchange. The bridge retains the selected mechanical timestep and supports different controller and mechanical update rates. Neural and mechanical updates in the reported Gait2392 controller experiments use a \\qty{2}{\\milli\\second} interval; bridge verification also tests a different stated rate combination. Each test retains its actual integration settings.",
+    "new_text": "For block-programmed control of MuJoCo mechanics, I integrated the SNS blocks with the MathWorks MuJoCo--Simulink bridge. Actuator commands enter the mechanical simulation, and joint and actuator measurements return through its sensor interface. Local compatibility and initialization fixes establish the appropriate model state before signal exchange. The bridge retains the selected mechanical timestep and supports different controller and mechanical update rates. Neural and mechanical updates in the reported Gait2392 controller experiments use a \\qty{2}{\\milli\\second} interval; the bridge two-rate test uses a \\qty{1}{\\milli\\second} command-source interval and a \\qty{5}{\\milli\\second} mechanical/sensor interval. Each test retains its actual integration settings.",
+    "all_old_numerical_tokens": [
+      "392",
+      "2"
+    ],
+    "all_new_numerical_tokens": [
+      "392",
+      "2",
+      "1",
+      "5"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "5"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 133,
+    "new_start_line": 133,
+    "old_text": "A candidate advances on the evidence for that same configuration. An earlier supported-ground result cannot establish later stages for a newly revised controller. Similarly, a motor-output fit can compensate for an upstream timing defect without demonstrating that the PF layer performs its intended function. Intermediate circuit tests are therefore required between intrinsic rhythm, pattern formation, motor recruitment, and physical motion.",
+    "new_text": "\\begingroup\\widowpenalty=10000\\clubpenalty=10000\nA candidate advances on the evidence for that same configuration. An earlier supported-ground result cannot establish later stages for a newly revised controller. Similarly, a motor-output fit can compensate for an upstream timing defect without demonstrating that the PF layer performs its intended function. Intermediate circuit tests are therefore required between intrinsic rhythm, pattern formation, motor recruitment, and physical motion.\\par\n\\endgroup",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "10000",
+      "10000"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "10000",
+          "10000"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 152,
+    "new_start_line": 154,
+    "old_text": "Mechanical inspection exposed faults that would otherwise have been attributed to controller behavior. Repairs addressed selected joint-action signs, active force scales, coupled path-point limits, and intended ground contacts. At matched poses and OpenSim static-optimization activations, eight of twelve sampled muscles had force-prediction $R^2$ between 0.87 and 0.98 and mean forces within \\qty{10}{\\percent} of the reference (Figure~\\ref{fig:force-compare}; Table~\\ref{tab:force-r2}). Rectus femoris and biceps femoris short head had negative $R^2$. Thus, the comparison identified useful agreement and important remaining muscle-specific differences. It assigned pose and activation frame by frame, without reproducing trajectory velocities or tendon dynamics, and consequently did not establish dynamic equivalence of the muscle formulations.",
+    "new_text": "Mechanical inspection exposed faults that would otherwise have been attributed to controller behavior. Repairs addressed selected joint-action signs, active force scales, coupled path-point limits, and intended ground contacts. At matched poses and OpenSim static-optimization activations, eight of twelve sampled muscles had force-prediction $R^2$ between 0.87 and 0.98 and mean forces within \\qty{10}{\\percent} of the reference (Table~\\ref{tab:force-r2}). Rectus femoris and biceps femoris short head had negative $R^2$. Thus, the comparison identified useful agreement and important remaining muscle-specific differences. It assigned pose and activation frame by frame, without reproducing trajectory velocities or tendon dynamics, and consequently did not establish dynamic equivalence of the muscle formulations.",
+    "all_old_numerical_tokens": [
+      "2",
+      "0.87",
+      "0.98",
+      "10",
+      "2"
+    ],
+    "all_new_numerical_tokens": [
+      "2",
+      "0.87",
+      "0.98",
+      "10",
+      "2"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 154,
+    "new_start_line": 156,
+    "old_text": "Bridge tests established that a block-programmed controller could deliver muscle commands and receive the corresponding measurements. Single-muscle activation, different control rates, and sensor readback were compared with Python MuJoCo integration. The five tested sensor signals were bit-exact over the scored 80-step window. A separate exported network drove all 92 actuator channels during a \\qty{5}{\\second} run, and a closed-loop reflex experiment exercised both command and sensory return. These results verify the interface operations under their stated conditions.",
+    "new_text": "Bridge tests established that a block-programmed controller could deliver muscle commands and receive the corresponding measurements. Single-muscle activation, different control rates, and sensor readback were compared with Python MuJoCo integration. The five tested sensor arrays were bit-exact over 80 steps from \\qty{0.005}{\\second} to \\qty{0.400}{\\second}, excluding the initial sample. A separate exported network drove all 92 actuator channels during a \\qty{5}{\\second} run, and a closed-loop reflex experiment exercised both command and sensory return. These results verify the interface operations under their stated conditions.",
+    "all_old_numerical_tokens": [
+      "80",
+      "92",
+      "5"
+    ],
+    "all_new_numerical_tokens": [
+      "80",
+      "0.005",
+      "0.400",
+      "92",
+      "5"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "0.005",
+          "0.400"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 160,
+    "new_start_line": 162,
+    "old_text": "For the contact-driven W2L rhythm core, identical neuron definitions, synapses, parameters, drive, and contact inputs were supplied to NumPy and Simulink implementations. Burst periods matched at \\qty{1.000}{\\second}, all ten expected bursts were reproduced, and voltage correlation was at least 0.99996 (Figure~\\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested circuit calculation and its dependence on the specified inputs, before introducing a different mechanical feedback history.",
+    "new_text": "\\begingroup\\widowpenalty=10000\\clubpenalty=10000\nThe contact-driven W2L comparison tested a representative 26-neuron Simulink rhythm core against the corresponding signals of the 95-neuron NumPy network. The core used corresponding neuron parameters and shared pathways under identical drive and prescribed heel inputs. Over the post-startup \\qtyrange{2}{12}{\\second} window, burst periods matched at \\qty{1.000}{\\second} and all ten expected bursts were reproduced. Best-lag correlation of the four shared RG voltage traces was at least 0.99996, allowing a \\qty{2}{\\milli\\second} relative alignment lag (Figure~\\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested shared rhythm core and input dependence, rather than complete-network or unshifted sample agreement.\\par\n\\endgroup",
+    "all_old_numerical_tokens": [
+      "1.000",
+      "0.99996"
+    ],
+    "all_new_numerical_tokens": [
+      "10000",
+      "10000",
+      "26",
+      "95",
+      "2",
+      "12",
+      "1.000",
+      "0.99996",
+      "2"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "10000",
+          "10000",
+          "26",
+          "95",
+          "2",
+          "12"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 166,
+    "new_start_line": 170,
+    "old_text": "\\includegraphics[width=14cm]{sns_knee_reflex_20261116.pdf}",
+    "new_text": "\\includegraphics[width=14cm]{sns_knee_reflex_authoritative.pdf}",
+    "all_old_numerical_tokens": [
+      "14",
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [
+      "14"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "delete",
+        "old": [
+          "20261116."
+        ],
+        "new": []
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 175,
+    "new_start_line": 179,
+    "old_text": "\\includegraphics[width=14cm]{sns_cup_reflex_20261116.pdf}",
+    "new_text": "\\includegraphics[width=14cm]{sns_cup_reflex_authoritative.pdf}",
+    "all_old_numerical_tokens": [
+      "14",
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [
+      "14"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "delete",
+        "old": [
+          "20261116."
+        ],
+        "new": []
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 182,
+    "new_start_line": 186,
+    "old_text": "The revised graded BiW2Lvar+ controller completed both air stages with the same learned weights and shared PF-to-MN expression scale of 0.1. In the \\qty{16}{\\second} deafferented test, the principal-cycle audit detected four cycles on each side, a \\qty{2.466}{\\second} period, and 0.0337-cycle error from bilateral antiphase. The afferented test produced seven cycles per side, a \\qty{1.300}{\\second} period, and 0.0933-cycle phase error (Figure~\\ref{fig:sns_biw2l_air}). The stages had different specified sensory and command conditions; the period change therefore cannot be assigned solely to feedback. Appendix~\\ref{sec:app_biw2l_air} gives both configurations and the retained assessments.",
+    "new_text": "The revised graded BiW2Lvar+ controller completed both air stages with the same learned weights and shared PF-to-MN expression scale of 0.1. In the \\qty{16}{\\second} deafferented test, the principal-cycle audit detected four cycles on each side, a \\qty{2.466}{\\second} period, and 0.0337-cycle error from bilateral antiphase. The afferented test produced seven cycles per side, a \\qty{1.300}{\\second} period, and 0.0933-cycle phase error (Figure~\\ref{fig:sns_biw2l_air}). The retained adapter defines stage 1 with sensory return and sustained flexor/extensor commands disabled, and stage 2 with live sensory return and both normalized commands set to 0.15 bilaterally. Complete applied-command histories and the original launch adapter were not recovered, so these definitions cannot establish sample-by-sample command identity in the original runs. The period change therefore cannot be interpreted as a controlled feedback-only effect. Appendix~\\ref{sec:app_biw2l_air} gives the initialization and retained assessments.",
+    "all_old_numerical_tokens": [
+      "0.1",
+      "16",
+      "2.466",
+      "0.0337",
+      "1.300",
+      "0.0933"
+    ],
+    "all_new_numerical_tokens": [
+      "0.1",
+      "16",
+      "2.466",
+      "0.0337",
+      "1.300",
+      "0.0933",
+      "1",
+      "2",
+      "0.15"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "2",
+          "0.15"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 186,
+    "new_start_line": 190,
+    "old_text": "\\includegraphics[width=\\textwidth]{biw2lvar_air_stage2_20261116.pdf}\n\\caption[BiW2Lvar+ afferented air-stage recording]{Selected aligned RG, knee-MN, knee-motion, and assistance signals from the BiW2Lvar+ afferented air test. The retained knee display shows positive flexion magnitude; the model's coordinate is flexion-negative. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}",
+    "new_text": "\\includegraphics[width=14cm]{biw2lvar_air_aligned_authoritative.pdf}\n\\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \\qtyrange{7}{11}{\\second}: bilateral flexor RG voltage (A), right knee-extensor and knee-flexor MN voltages (B), native flexion-negative knee angles (C), and superior suspension and explicit-support forces (D). Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}",
+    "all_old_numerical_tokens": [
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [
+      "14",
+      "2",
+      "7",
+      "11"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "20261116."
+        ],
+        "new": [
+          "14",
+          "2",
+          "7",
+          "11"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 191,
+    "new_start_line": 195,
+    "old_text": "The stage-2 suspension force averaged \\qty{99.860}{\\percent} of body weight from \\qty{5}{\\second} onward. Ground contact was disabled and measured foot forces were zero. This force describes the air-test apparatus, rather than a measured minimum support requirement for walking. Both knees remained flexed; maximum angles were \\ang{-1.718} and \\ang{-1.801} on the right and left. The result establishes two completed suspended stages. Standing and ground stepping with this revised controller remain separate requirements.",
+    "new_text": "The stage-2 suspension force averaged \\qty{99.860}{\\percent} of the legacy whole-model weight from \\qty{5}{\\second} onward. That denominator includes a fixed ground-body mass; Appendix~\\ref{sec:app_biw2l_air} distinguishes it from the moving-model weight in the aligned recording. Ground contact was disabled and measured foot forces were zero. This force describes the air-test apparatus, rather than a measured minimum support requirement for walking. Both knees remained flexed; maximum angles were \\ang{-1.718} and \\ang{-1.801} on the right and left. The result establishes two completed suspended stages. Standing and ground stepping with this revised controller remain separate requirements.",
+    "all_old_numerical_tokens": [
+      "2",
+      "99.860",
+      "5",
+      "-1.718",
+      "-1.801"
+    ],
+    "all_new_numerical_tokens": [
+      "2",
+      "99.860",
+      "5",
+      "-1.718",
+      "-1.801"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 195,
+    "new_start_line": 199,
+    "old_text": "Layer-specific stimuli also depended on operating phase. A \\qty{2}{\\nano\\ampere}, \\qty{100}{\\milli\\second} PF pulse during a silent phase changed its voltage without crossing the transmission threshold and produced essentially no MN response. During an active phase, the pulse changed PF voltage by up to \\qty{1.14}{\\milli\\volt} and iliacus MN voltage by \\qty{0.16}{\\milli\\volt}. A direct MN pulse subsequently affected RG activity through the closed mechanical and sensory loop. These paired tests show why stimulation site and baseline activity must be identified before interpreting a response (Appendix~\\ref{sec:app_biw2l_stimulus}).",
+    "new_text": "Layer-specific stimuli also depended on operating phase. A \\qty{2}{\\nano\\ampere}, \\qty{100}{\\milli\\second} pulse to the right hip-flexor PF channel at \\qty{7.10}{\\second} changed its voltage without crossing the outgoing rest-relative \\qty{0}{\\milli\\volt} transmission threshold and produced essentially no MN response. With onset at \\qty{7.65}{\\second}, during an active phase, the same pulse changed PF voltage by up to \\qty{1.14}{\\milli\\volt} and right iliacus MN voltage by \\qty{0.16}{\\milli\\volt}. These maxima compare paired trajectories during the \\qty{3.4}{\\second} response window beginning at onset. A direct right iliacus MN pulse subsequently affected RG activity through the closed mechanical and sensory loop. These paired tests show why stimulation site, operating phase, and observation window must be identified before interpreting a response (Appendix~\\ref{sec:app_biw2l_stimulus}).",
+    "all_old_numerical_tokens": [
+      "2",
+      "100",
+      "1.14",
+      "0.16"
+    ],
+    "all_new_numerical_tokens": [
+      "2",
+      "100",
+      "7.10",
+      "0",
+      "7.65",
+      "1.14",
+      "0.16",
+      "3.4"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "7.10",
+          "0",
+          "7.65"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "3.4"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 199,
+    "new_start_line": 203,
+    "old_text": "A historical fixed-controller W2L comparison tested the contribution of sensory return to bilateral ground-contact coordination. With conductances, drive, and support held fixed, disabling the saved sensory-feedback channels shifted median bilateral contact phase from 0.498 to 0.223 cycles. The accepted interval was 0.35--0.65 cycles, centered on antiphase. Joint cycling and forward displacement persisted: displacement over \\qtyrange{4.5}{30}{\\second} was \\qty{2.239}{\\meter} with feedback and \\qty{1.996}{\\meter} without it. The result identifies a contribution to contact coordination, rather than a requirement for all rhythmic movement (Figure~\\ref{fig:sns_ablation_pair}). Additional pathway controls are retained in Appendix~\\ref{sec:app_w2l_perturbations}.",
+    "new_text": "A historical fixed-controller W2L comparison tested the contribution of sensory return to bilateral ground-contact coordination. With conductances, drive, and support held fixed, disabling the saved sensory-feedback channels shifted median bilateral contact phase from 0.498 to 0.223 cycles. The accepted interval was 0.35--0.65 cycles, centered on antiphase. Joint cycling and forward displacement persisted: displacement over \\qtyrange{4.5}{30}{\\second} was \\qty{2.239}{\\meter} with feedback and \\qty{1.996}{\\meter} without it. The retained evaluator also specifies a common \\qty{40}{\\newton} forward pulse from \\qty{8}{\\second} to \\qty{8.15}{\\second} in both conditions; an unforced baseline was not established by this pair. The result identifies a contribution to contact coordination under those matched inputs, rather than a requirement for all rhythmic movement (Figure~\\ref{fig:sns_ablation_pair}). Additional pathway controls are retained in Appendix~\\ref{sec:app_w2l_perturbations}.",
+    "all_old_numerical_tokens": [
+      "0.498",
+      "0.223",
+      "0.35",
+      "-0.65",
+      "4.5",
+      "30",
+      "2.239",
+      "1.996"
+    ],
+    "all_new_numerical_tokens": [
+      "0.498",
+      "0.223",
+      "0.35",
+      "-0.65",
+      "4.5",
+      "30",
+      "2.239",
+      "1.996",
+      "40",
+      "8",
+      "8.15"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "40",
+          "8",
+          "8.15"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "insert",
+    "old_start_line": 208,
+    "new_start_line": 212,
+    "old_text": "",
+    "new_text": "\\FloatBarrier",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 210,
+    "new_start_line": 215,
+    "old_text": "A bounded syn6 gain-only repair improved its fitting loss but still passed none of the twelve channel checks. It was not accepted, and further downstream fitting was held pending a declared and verified PF design. Appendix~\\ref{sec:app_pf_timing} retains the timing overlay and failed attempt. This finding is useful evidence for the workflow: an output fit can conceal an upstream design error, whereas inspecting the transmitted activity can identify it before further mechanical optimization.",
+    "new_text": "A bounded syn6 gain-only repair improved its fitting loss but still passed none of the twelve channel checks. Subsequent RG-triggered relays and native SNS timing circuits addressed the failed function directly. The native circuit passed all 48 channel-cycle checks at the nominal cadence, and adaptive clocks extended that result to six controlled replay cadences. Those later checks evaluated individual cycles under additional onset and offset requirements; their denominator differs from the original twelve channel-mean checks. The improvement did not transfer directly to the live mechanical loop: coupled trials either reached the predictive knee guard or completed without satisfying the retained rhythm and PF-timing requirements. Appendix~\\ref{sec:app_pf_timing} distinguishes the original failure, offline timing success, transmitted live behavior, and unsuccessful physical acceptance. Together these results show why an output fit and a favorable neural replay require separate checks before promotion to a coupled experiment.",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "48"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "48"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 216,
+    "new_start_line": 221,
+    "old_text": "The newer 108-neuron, 216-connection W2L model supplies a separate supported-ground example. A bounded calibration produced eight left and seven right qualifying unloaded, whole-foot-clear swings in \\qty{10}{\\second}, with all qualified transitions alternating. Minimum anatomical knee flexion was \\ang{1.946} and \\ang{2.087}. The selected trajectory repeated byte-exactly in a fresh process. Upward rail and guide assistance averaged \\qty{29.519}{\\percent} of body weight after \\qty{1}{\\second}; the whole-trial signed net assistance was \\qty{35.069}{\\percent}. These distinct windows and measures cannot be interchanged. Rails, guides, and a moving treadmill remained, so belt-relative progression does not establish unsupported overground walking.",
+    "new_text": "The newer 108-neuron, 216-connection W2L model supplies a separate supported-ground example. A bounded calibration produced eight left and seven right qualifying unloaded, whole-foot-clear swings in \\qty{10}{\\second}, with all qualified transitions alternating. Minimum anatomical knee flexion over $1\\leq t<10$\\,s was \\ang{2.087} on the right and \\ang{1.946} on the left. The selected trajectory repeated byte-exactly in a fresh process. Upward rail and guide assistance averaged \\qty{29.519}{\\percent} of body weight over \\qtyrange{1}{10}{\\second}; the whole-trial signed net assistance was \\qty{35.069}{\\percent}. These distinct windows and measures cannot be interchanged. Rails, guides, and a moving treadmill remained, so belt-relative progression does not establish unsupported overground walking.",
+    "all_old_numerical_tokens": [
+      "108",
+      "216",
+      "10",
+      "1.946",
+      "2.087",
+      "29.519",
+      "1",
+      "35.069"
+    ],
+    "all_new_numerical_tokens": [
+      "108",
+      "216",
+      "10",
+      "1",
+      "10",
+      "2.087",
+      "1.946",
+      "29.519",
+      "1",
+      "10",
+      "35.069"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "10",
+          "2.087"
+        ]
+      },
+      {
+        "operation": "delete",
+        "old": [
+          "2.087"
+        ],
+        "new": []
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "10"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 220,
+    "new_start_line": 225,
+    "old_text": "The CAD robot demonstrates a different mechanical and control integration (Figure~\\ref{fig:ah001_supported_control}). Its selected \\qty{28}{\\second} condition produced seven right and six left qualifying clear, unloaded swing intervals during \\qtyrange{16}{28}{\\second}, with minimum knee flexion of \\ang{5.10}. Measured vertical assistance was \\qty{77.5}{\\percent} of body weight in that window; lateral and attitude guidance remained. The controller used SNS timing and an engineering allocator supplying posture, loading, and clearance targets to 54 reference-tension actuators. This is a supported hybrid-control demonstration with ideal tensile actuation, rather than a dynamically calibrated 54-BPA experiment.",
+    "new_text": "The CAD robot demonstrates a different mechanical and control integration (Figure~\\ref{fig:ah001_supported_control}). Its selected \\qty{28}{\\second} condition produced seven right and six left qualifying clear, unloaded swing intervals during \\qtyrange{16}{28}{\\second}. Minimum knee flexion over the complete trial was \\ang{11.20} on the right and \\ang{5.10} on the left. Measured vertical assistance was \\qty{77.5}{\\percent} of body weight during \\qtyrange{16}{28}{\\second}; lateral and attitude guidance remained. The controller used SNS timing and an engineering allocator supplying posture, loading, and clearance targets to 54 reference-tension actuators. This is a supported hybrid-control demonstration with ideal tensile actuation, rather than a dynamically calibrated 54-BPA experiment. The aligned loading and clearance traces in Appendix~\\ref{sec:app_cad_supported_stance} show the mechanical quantities underlying its acceptance.",
+    "all_old_numerical_tokens": [
+      "01",
+      "28",
+      "16",
+      "28",
+      "5.10",
+      "77.5",
+      "54",
+      "54"
+    ],
+    "all_new_numerical_tokens": [
+      "01",
+      "28",
+      "16",
+      "28",
+      "11.20",
+      "5.10",
+      "77.5",
+      "16",
+      "28",
+      "54",
+      "54"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "11.20"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "16",
+          "28"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 233,
+    "new_start_line": 238,
+    "old_text": "The accelerated neural implementations store topology once, evaluate existing synapses, reuse calculation arrays, and compile repeated operations where supported. In a paired Gait2392 benchmark, complete source-process time decreased from \\qty{199.624}{\\second} to \\qty{29.284}{\\second}, a factor of 6.82, while saved numerical trajectories matched exactly (Table~\\ref{tab:sns_runtime}). Time within neural calls decreased by a factor of 18.31. These are different scopes of the same benchmark; neither is a universal speed ratio for every model or actuator option.",
+    "new_text": "The accelerated neural implementations store topology once, evaluate existing synapses, reuse calculation arrays, and compile repeated operations where supported. In one paired Gait2392 source-setting benchmark of the archived \\texttt{hunt} implementation with 1,025 cells, complete source-process time decreased from \\qty{199.624}{\\second} with the native SNS backend to \\qty{29.284}{\\second} with the sparse backend, a factor of 6.82, while saved numerical trajectories matched exactly (Table~\\ref{tab:sns_runtime}). The stage-1 protocol lasts \\qty{16}{\\second}, including \\qty{0.6}{\\second} of held-pose preparation. Time within neural calls decreased by a factor of 18.31. These are different timing scopes of the same single pair; neither is a universal speed ratio for every model or actuator option.",
+    "all_old_numerical_tokens": [
+      "392",
+      "199.624",
+      "29.284",
+      "6.82",
+      "18.31"
+    ],
+    "all_new_numerical_tokens": [
+      "392",
+      "1",
+      "025",
+      "199.624",
+      "29.284",
+      "6.82",
+      "1",
+      "16",
+      "0.6",
+      "18.31"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "025"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "16",
+          "0.6"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 237,
+    "new_start_line": 242,
+    "old_text": "\\caption[Scoped computational performance comparisons]{Matched reference and accelerated timings. The first two rows belong to the same Gait2392 benchmark. The final two compare a later compact implementation with an already accelerated sparse implementation. Warm neural updates and complete diagnostic execution have distinct scopes.}",
+    "new_text": "\\caption[Scoped computational performance comparisons]{Matched reference and accelerated timings. The first two rows use the 1,025-cell source-setting \\texttt{hunt} implementation, native SNS versus sparse execution, in one \\qty{16}{\\second} stage-1 protocol pair. The last two use the separate 1,033-cell implementation labelled Hunt-PT+RC, sparse versus compact execution. Warm-kernel values are medians of three blocks; the evaluator diagnostic is one paired \\qty{16}{\\second} stage-4 trial.}",
+    "all_old_numerical_tokens": [
+      "392"
+    ],
+    "all_new_numerical_tokens": [
+      "1",
+      "025",
+      "16",
+      "1",
+      "1",
+      "033",
+      "16",
+      "4"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "392"
+        ],
+        "new": [
+          "1",
+          "025",
+          "16",
+          "1",
+          "1",
+          "033",
+          "16",
+          "4"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 246,
+    "new_start_line": 251,
+    "old_text": "Compact comparison, full diagnostic body run & 92.944 & 91.516 & $1.0156\\times$ \\\\",
+    "new_text": "Compact comparison, evaluator diagnostic wall time & 92.944 & 91.516 & $1.0156\\times$ \\\\",
+    "all_old_numerical_tokens": [
+      "92.944",
+      "91.516",
+      "1.0156"
+    ],
+    "all_new_numerical_tokens": [
+      "92.944",
+      "91.516",
+      "1.0156"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 251,
+    "new_start_line": 256,
+    "old_text": "The later compact comparison preserved all 62 captured numerical arrays and the compiled model identity in the tested body condition. Its warm neural timing is the median of three runs for a 1,033-cell circuit; its complete diagnostic timing is one paired observation. The small whole-run improvement despite the larger kernel improvement shows the cost of mechanical integration, diagnostics, and other operations outside that kernel. Accelerated execution makes repeated experiments more practical, but timing must remain attached to the measured workload. Appendix~\\ref{sec:app_execution_provenance} retains implementation restrictions, additional benchmarks, and reproduction details.",
+    "new_text": "The later compact comparison preserved all 62 captured numerical arrays and the compiled model identity in the tested body condition. Its warm neural timing is the median of three 3,000-update blocks for the 1,033-cell implementation labelled Hunt-PT+RC. Its separate evaluator timing includes the coupled simulation, capture, and assessment, but excludes process startup, pre-run setup, and final result serialization. The smaller improvement in that diagnostic scope shows the cost of work outside the neural kernel; it is not a measured complete-process speedup. Accelerated execution makes repeated experiments more practical, but timing must remain attached to the measured workload. Appendix~\\ref{sec:app_execution_provenance} retains implementation restrictions, additional benchmarks, and reproduction details.",
+    "all_old_numerical_tokens": [
+      "62",
+      "1",
+      "033"
+    ],
+    "all_new_numerical_tokens": [
+      "62",
+      "3",
+      "000",
+      "1",
+      "033"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "3",
+          "000"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 259,
+    "new_start_line": 264,
+    "old_text": "The evidence is cumulative. Matched circuit calculations test implementation, the reduced reflex models test closed-loop transmission, and the air and ground demonstrations test selected coupled configurations. The PF timing failure further shows that the workflow can identify an unsuccessful design even when a downstream output fit appears acceptable. This supports the dissertation objective of developing research tools rather than treating one visually favorable movement as the sole outcome.",
+    "new_text": "The evidence is cumulative. Matched circuit calculations test implementation, the reduced reflex models test closed-loop transmission, and the air and ground demonstrations test selected coupled configurations. The original PF timing failure shows that the workflow can identify an unsuccessful design even when a downstream output fit appears acceptable. Later timing repairs also show that an accepted intermediate computation can lose its intended behavior when live sensory return replaces prescribed replay inputs. This supports the dissertation objective of developing research tools rather than treating one visually favorable movement as the sole outcome.",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "replace",
+    "old_start_line": 267,
+    "new_start_line": 272,
+    "old_text": "Support conditions are equally important to interpretation. Air motion tests coordination without foot loading; supported ground tests introduce contact while retaining specified assistance. Vertical support, lateral guidance, and attitude restraint each alter the mechanical task. None of the program's recorded results establishes harness-free walking. The current BiW2Lvar+ air stages, historical W2L feedback comparison, newer W2L108 ground result, and CAD hybrid-control result therefore demonstrate complementary capabilities without forming one continuous curriculum completed by a single controller.",
+    "new_text": "Support conditions are equally important to interpretation. Air motion tests coordination without foot loading; supported ground tests introduce contact while retaining specified assistance. Vertical support, lateral guidance, and attitude restraint each alter the mechanical task. The coupled controller-transfer demonstrations reported here do not establish harness-free walking. The current BiW2Lvar+ air stages, historical W2L feedback comparison, newer W2L108 ground result, and CAD hybrid-control result therefore demonstrate complementary capabilities without forming one continuous curriculum completed by a single controller.",
+    "all_old_numerical_tokens": [
+      "08"
+    ],
+    "all_new_numerical_tokens": [
+      "08"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 52,
+    "new_start_line": 52,
+    "old_text": "Figure~\\ref{fig:force-compare} shows representative force sequences normalized to each curve's peak. Table~\\ref{tab:force-r2} retains the saved per-muscle statistics: $R^2=1-\\mathrm{SSE}/\\mathrm{SST}$, squared Pearson correlation, and the best-aligning lag in analysis frames. The calculation and saved values are in \\nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \\nolinkurl{muscle_force_compare.csv}.",
+    "new_text": "Table~\\ref{tab:force-r2} retains the saved per-muscle statistics: $R^2=1-\\mathrm{SSE}/\\mathrm{SST}$, squared Pearson correlation, and the best-aligning lag in analysis frames. The calculation and saved values are in \\nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \\nolinkurl{muscle_force_compare.csv}.",
+    "all_old_numerical_tokens": [
+      "2",
+      "1"
+    ],
+    "all_new_numerical_tokens": [
+      "2",
+      "1"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 56,
+    "new_start_line": 56,
+    "old_text": "  \\caption{MuJoCo vs.\\ OpenSim muscle force along the subject01 walk at\n  matched activations. Lag in analysis frames ($\\approx 17$\\,ms each).}",
+    "new_text": "  \\caption{MuJoCo vs.\\ OpenSim right-side muscle force at matched activations along the subject01 reference interval, \\qtyrange{0.5}{2.5}{\\second} (121 poses). Lag in analysis frames ($\\approx 17$\\,ms each).}",
+    "all_old_numerical_tokens": [
+      "1",
+      "17"
+    ],
+    "all_new_numerical_tokens": [
+      "1",
+      "0.5",
+      "2.5",
+      "121",
+      "17"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "0.5",
+          "2.5",
+          "121"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "delete",
+    "old_start_line": 84,
+    "new_start_line": 83,
+    "old_text": "\\begin{figure}[htbp]\n  \\centering\n  \\includegraphics[width=0.9\\textwidth]{muscle_force_compare_current.pdf}\n  \\caption{Force sequences at matched poses and activations, normalized to each curve's peak. Absolute-force agreement is reported in Table~\\ref{tab:force-r2}.}\n  \\label{fig:force-compare}\n\\end{figure}",
+    "new_text": "",
+    "all_old_numerical_tokens": [
+      "0.9"
+    ],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [
+      {
+        "operation": "delete",
+        "old": [
+          "0.9"
+        ],
+        "new": []
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 113,
+    "new_start_line": 106,
+    "old_text": "The contact-driven W2L rhythm-core comparison uses identical neuron parameters, connections, descending drive, and contact inputs in NumPy and Simulink. Burst periods matched at \\qty{1.000}{\\second}, all ten expected bursts were reproduced, and voltage-trace correlation was at least 0.99996 (Figure~\\ref{fig:w2l_crossengine}). Removing the phasic heel inputs caused latching in both implementations. This result verifies the specified input-dependent rhythm core; it does not demonstrate that the circuit oscillates autonomously or that every larger network agrees across implementations.",
+    "new_text": "The contact-driven W2L comparison maps corresponding neuron parameters and shared rhythm pathways from the 95-neuron NumPy network into a representative 26-neuron Simulink core. Drive and prescribed heel inputs match. Over the post-startup \\qtyrange{2}{12}{\\second} interval, burst periods matched at \\qty{1.000}{\\second} and all ten expected bursts were reproduced. The correlation comparison uses 5,000 matching \\qty{2}{\\milli\\second} samples through \\qty{11.998}{\\second}; best-lag correlations of the four RG traces were at least 0.99996 at a \\qty{2}{\\milli\\second} relative lag (Figure~\\ref{fig:w2l_crossengine}). Removing the phasic heel inputs caused latching in both implementations. The shared-signal agreement does not establish identical complete networks, autonomous oscillation, or sample-exact transfer.",
+    "all_old_numerical_tokens": [
+      "1.000",
+      "0.99996"
+    ],
+    "all_new_numerical_tokens": [
+      "95",
+      "26",
+      "2",
+      "12",
+      "1.000",
+      "5",
+      "000",
+      "2",
+      "11.998",
+      "0.99996",
+      "2"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "95",
+          "26",
+          "2",
+          "12"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "5",
+          "000",
+          "2",
+          "11.998"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 118,
+    "new_start_line": 111,
+    "old_text": "\\caption[Matched-input W2L rhythm-core comparison]{NumPy and Simulink implementations of the contact-driven W2L rhythm core under identical drive and contact inputs. Agreement concerns the displayed neural circuit and prescribed inputs, rather than independent closed-loop mechanical trajectories.}",
+    "new_text": "\\caption[Matched-input W2L rhythm-core comparison]{Corresponding W2L rhythm signals in the full NumPy network and representative Simulink core under identical drive and prescribed heel inputs. The reported correlation is a best-lag measure with \\qty{2}{\\milli\\second} relative alignment; it is not unshifted sample agreement or a comparison of independent closed-loop mechanical trajectories.}",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "2"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 131,
+    "new_start_line": 124,
+    "old_text": "The modified configuration passes baseline settling tests for angle, velocity, all six membrane states, and both activations. Its flexion-negative knee baseline is \\ang{-42.6392}; positive excursions indicate extension. Extension peaks at \\ang{1.0908} after \\qty{111}{\\milli\\second}. Recovery requires displacement within \\ang{0.01} of baseline and absolute angular velocity below \\qty{1e-4}{\\radian\\per\\second}; both remain within those bounds from \\qty{6.355}{\\second} after stimulus onset. The late residual is approximately \\ang{9.3e-7}. A fresh-process replay reproduces the resampled pulse arrays exactly. Halving the ODE45 maximum step from 1 to \\qty{0.5}{\\milli\\second}, at unchanged tolerances, changes the angle trace by at most \\ang{5.21e-5}. Comparisons use linear interpolation onto a \\qty{1}{\\milli\\second} grid, without smoothing. These checks establish numerical recovery in the model, not physiological reflex fidelity. Figure~\\ref{fig:app_knee_transient} shows the stimulus, matched kinematics, neural signals, activations, and forces.",
+    "new_text": "The modified configuration passes baseline settling tests for angle, velocity, all six membrane states, and both activations. Its flexion-negative knee baseline is \\ang{-42.6392}; positive excursions indicate extension. Extension peaks at \\ang{1.0908} after \\qty{111}{\\milli\\second}. Recovery requires displacement within \\ang{0.01} of baseline and absolute angular velocity below \\qty{1e-4}{\\radian\\per\\second}; both remain within those bounds from \\qty{6.355}{\\second} after stimulus onset. The late residual is approximately \\ang{9.3e-7}. A fresh-process replay reproduces the resampled pulse arrays exactly. Halving the ODE45 maximum step from 1 to \\qty{0.5}{\\milli\\second}, at unchanged tolerances, changes the angle trace by at most \\ang{5.20e-5}. Comparisons use linear interpolation onto a \\qty{1}{\\milli\\second} grid, without smoothing. These checks establish numerical recovery in the model, not physiological reflex fidelity. Figure~\\ref{fig:sns_reflex_current} summarizes the stimulus, matched kinematics, and MN response.",
+    "all_old_numerical_tokens": [
+      "-42.6392",
+      "1.0908",
+      "111",
+      "0.01",
+      "1e-4",
+      "6.355",
+      "9.3e-7",
+      "5",
+      "1",
+      "0.5",
+      "5.21e-5",
+      "1"
+    ],
+    "all_new_numerical_tokens": [
+      "-42.6392",
+      "1.0908",
+      "111",
+      "0.01",
+      "1e-4",
+      "6.355",
+      "9.3e-7",
+      "5",
+      "1",
+      "0.5",
+      "5.20e-5",
+      "1"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "5.21e-5"
+        ],
+        "new": [
+          "5.20e-5"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "delete",
+    "old_start_line": 133,
+    "new_start_line": 126,
+    "old_text": "\\begin{figure}[p]\n\\centering\n\\includegraphics[width=\\textwidth,height=0.76\\textheight,keepaspectratio]{knee_transient_response.pdf}\n\\caption[Transient knee sensory-current test]{Stimulus, knee angle, angular velocity, MN voltages, activations, and actuator forces in the graded-response knee model. The pulse enters the extensor Ia sensory neuron after settling. Knee angle is compared with the no-stimulus control; extensor and flexor signals are distinguished in the other paired panels. The display applies only the sign conversion to flexion-negative coordinates.}\n\\label{fig:app_knee_transient}\n\\end{figure}",
+    "new_text": "",
+    "all_old_numerical_tokens": [
+      "0.76"
+    ],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [
+      {
+        "operation": "delete",
+        "old": [
+          "0.76"
+        ],
+        "new": []
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 181,
+    "new_start_line": 168,
+    "old_text": "The original course-project circuit used a shared RG to supply bilateral PF and motor pathways (Figure~\\ref{fig:animatlab_shared_rg}). It is retained as the source-model architecture for the motivating transfer attempt, distinct from the later bilateral W2L108 circuit.",
+    "new_text": "The original course-project circuit used a shared RG to supply bilateral PF and motor pathways. That source-model architecture for the motivating transfer attempt differs from the later W2L108 circuit, which has a separate RG on each side and additional sensory projections.",
+    "all_old_numerical_tokens": [
+      "08"
+    ],
+    "all_new_numerical_tokens": [
+      "08"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "delete",
+    "old_start_line": 183,
+    "new_start_line": 170,
+    "old_text": "\\begin{sidewaysfigure}[p]\n\\centering\n\\includegraphics[width=\\textheight,height=0.78\\textwidth,keepaspectratio]{animatlab_shared_rg_original_20261116.png}\n\\caption[Original shared-RG controller architecture]{Original course-project shared-RG controller. A common rhythm-generating circuit supplies bilateral hip and knee/ankle pattern-formation pathways and motor outputs. This archived drawing identifies the motivating circuit; the later bilateral W2L controller has a separate RG on each side and additional sensory projections.}\n\\label{fig:animatlab_shared_rg}\n\\end{sidewaysfigure}",
+    "new_text": "",
+    "all_old_numerical_tokens": [
+      "0.78",
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [
+      {
+        "operation": "delete",
+        "old": [
+          "0.78",
+          "20261116."
+        ],
+        "new": []
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "insert",
+    "old_start_line": 211,
+    "new_start_line": 192,
+    "old_text": "",
+    "new_text": "The retained adapter defines stage 1 with sensory return disabled and sustained normalized flexor and extensor commands set to zero. It defines stage 2 with live sensory return enabled and each command set to 0.15 on both sides, consistent with the fitted command manifest. That adapter also defines the same initialization seed for both stages, an added 0.4 on the right extensor and left flexor command channels for the first 50 neural calls (\\qty{100}{\\milli\\second}); this seed does not impose a continuing stride clock. It clamps the postural, balance, and functional-command channels off, sets direct tonic RG current to zero, and disables the legacy shared-drive input. The original launch adapter and complete consumed-command traces were not recovered; these are declared adapter settings rather than independently verified input samples from that launch. Thus these air stages cannot be treated as a matched feedback-only comparison. The retained shared descending drive in the separate historical weaning study below belongs to a different configuration.\n",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "1",
+      "2",
+      "0.15",
+      "0.4",
+      "50",
+      "100"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "2",
+          "0.15",
+          "0.4",
+          "50",
+          "100"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 213,
+    "new_start_line": 196,
+    "old_text": "\\caption[Fixed-controller air-stage evaluations]{BiW2Lvar+ air stages using unchanged learned weights. Phase error is distance from bilateral antiphase in cycles. Negative knee angles indicate flexion. These are suspended-motion tests.}",
+    "new_text": "\\caption[Fixed-controller air-stage evaluations]{BiW2Lvar+ air stages using unchanged learned weights. Principal cycles, periods, and phase errors are evaluated over $5\\leq t<14$\\,s of each \\qty{16}{\\second} trial. Phase error is distance from bilateral antiphase in cycles. Negative knee angles indicate flexion. Sensory return and sustained commands both differ between stages.}",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "5",
+      "14",
+      "16"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "5",
+          "14",
+          "16"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 227,
+    "new_start_line": 210,
+    "old_text": "Ground contact is disabled and measured foot forces are zero. From \\qty{5}{\\second} onward in stage 2, the suspension spring carries \\qty{99.860}{\\percent} of body weight, with frontal guidance retained. This measures the apparatus force in an air experiment, not a minimum support requirement for ground walking. Higher-expression trials stopped at the predictive knee-extension guard; the completed condition retains the guard and does not clip joint state. This controller has not completed standing or ground stages.",
+    "new_text": "Ground contact is disabled and measured foot forces are zero. The adopted stage-2 suspension statistic is \\qty{99.860}{\\percent}, calculated from \\qty{768.662}{\\newton} mean spring force over \\qtyrange{5}{16}{\\second} using the legacy total model mass of \\qty{78.4646}{\\kilogram} and weight of \\qty{769.737726}{\\newton}. That mass includes a separate fixed \\qty{0.1}{\\kilogram} ground body. The aligned-recording metadata instead uses the pelvis subtree, \\qty{78.3646}{\\kilogram} or \\qty{768.756726}{\\newton}; dividing the same legacy force samples by that denominator gives \\qty{99.9877}{\\percent}. The adopted percentage is retained with its original denominator. Figure~\\ref{fig:sns_biw2l_air} displays unnormalized force in newtons. The legacy samples are tagged at interval start, while aligned states are tagged at interval end, so an independently selected aligned window must also retain its own timestamps. These measures characterize suspension, with frontal guidance retained, rather than a minimum ground-walking support requirement. Higher-expression trials stopped at the predictive knee-extension guard; the completed condition retains the guard and does not clip joint state. This controller has not completed standing or ground stages.",
+    "all_old_numerical_tokens": [
+      "5",
+      "2",
+      "99.860"
+    ],
+    "all_new_numerical_tokens": [
+      "2",
+      "99.860",
+      "768.662",
+      "5",
+      "16",
+      "78.4646",
+      "769.737726",
+      "0.1",
+      "78.3646",
+      "768.756726",
+      "99.9877"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "delete",
+        "old": [
+          "5"
+        ],
+        "new": []
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "768.662",
+          "5",
+          "16",
+          "78.4646",
+          "769.737726",
+          "0.1",
+          "78.3646",
+          "768.756726",
+          "99.9877"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 233,
+    "new_start_line": 216,
+    "old_text": "Matched baseline and stimulus runs applied \\qty{2}{\\nano\\ampere}, \\qty{100}{\\milli\\second} pulses separately to RG-F, hip-flexor PF, and iliacus MN, together with a \\qty{-2}{\\nano\\ampere} PF control. Pre-pulse neural trajectories agree exactly. At the silent-PF phase, the excitatory pulse changed PF voltage without crossing its outgoing transmission threshold and produced essentially no MN response. At the active phase, it changed PF voltage by up to \\qty{1.14}{\\milli\\volt} and iliacus MN voltage by \\qty{0.16}{\\milli\\volt}. A direct MN pulse changed its voltage by \\qty{1.79}{\\milli\\volt} and subsequently RG-F voltage by \\qty{6.04}{\\milli\\volt} through the closed neural--mechanical loop. These are paired maximum trajectory differences over the response window, not direct synaptic gains.",
+    "new_text": "Matched baseline and stimulus runs applied \\qty{2}{\\nano\\ampere}, \\qty{100}{\\milli\\second} pulses separately to the right RG-F, right hip-flexor PF, and right iliacus MN, together with a \\qty{-2}{\\nano\\ampere} right PF control. The silent-phase series begins at \\qty{7.10}{\\second}, and the active-phase series at \\qty{7.65}{\\second}. Pre-pulse neural trajectories agree exactly. The silent-phase PF pulse reaches only \\qty{-3.058}{\\milli\\volt}, below the outgoing ramp's \\qty{0}{\\milli\\volt} onset; transmission saturates at \\qty{5}{\\milli\\volt}. Its MN difference is below \\qty{6e-8}{\\milli\\volt}. During the active phase, the excitatory PF pulse changes PF voltage by up to \\qty{1.14}{\\milli\\volt} and right iliacus MN voltage by \\qty{0.16}{\\milli\\volt}. The active-phase direct MN pulse changes its voltage by \\qty{1.79}{\\milli\\volt} and subsequently right RG-F voltage by \\qty{6.04}{\\milli\\volt} through the closed neural--mechanical loop. Each maximum is the absolute paired difference over the interval from onset, inclusive, to \\qty{3.4}{\\second} after onset, exclusive: \\qtyrange{7.10}{10.50}{\\second} for the silent series and \\qtyrange{7.65}{11.05}{\\second} for the active series, with the upper endpoint excluded. These are trajectory differences, not direct synaptic gains or changes restricted to the pulse duration.",
+    "all_old_numerical_tokens": [
+      "2",
+      "100",
+      "-2",
+      "1.14",
+      "0.16",
+      "1.79",
+      "6.04"
+    ],
+    "all_new_numerical_tokens": [
+      "2",
+      "100",
+      "-2",
+      "7.10",
+      "7.65",
+      "-3.058",
+      "0",
+      "5",
+      "6e-8",
+      "1.14",
+      "0.16",
+      "1.79",
+      "6.04",
+      "3.4",
+      "7.10",
+      "10.50",
+      "7.65",
+      "11.05"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "7.10",
+          "7.65",
+          "-3.058",
+          "0",
+          "5",
+          "6e-8"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "3.4",
+          "7.10",
+          "10.50",
+          "7.65",
+          "11.05"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 235,
+    "new_start_line": 218,
+    "old_text": "\\begin{sidewaysfigure}[p]",
+    "new_text": "\\begin{figure}[p]",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 237,
+    "new_start_line": 220,
+    "old_text": "\\includegraphics[width=\\textheight]{biw2l_stimulus_neural_20261116.pdf}\n\\caption[Phase-specific interventions in the coupled BiW2Lvar+ model]{Applied current and neural responses to separate RG, PF, and MN pulses in suspended BiW2Lvar+. Each condition retains the same learned parameters and mechanics.}",
+    "new_text": "\\includegraphics[width=14cm]{AIR_stimulus_neural.pdf}\n\\caption[Active-phase interventions in the coupled BiW2Lvar+ model]{Applied current and right-side neural responses to separate RG-F, hip-flexor PF, and iliacus MN pulses in suspended BiW2Lvar+. Pulses act from \\qty{7.65}{\\second} to \\qty{7.75}{\\second}, during the active phase; the silent-phase control is described separately in the text. All raw samples in the common \\qtyrange{7.50}{11.05}{\\second} display window are retained. Each condition uses the same learned parameters and mechanics.}",
+    "all_old_numerical_tokens": [
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [
+      "14",
+      "7.65",
+      "7.75",
+      "7.50",
+      "11.05"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "20261116."
+        ],
+        "new": [
+          "14",
+          "7.65",
+          "7.75",
+          "7.50",
+          "11.05"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 240,
+    "new_start_line": 223,
+    "old_text": "\\end{sidewaysfigure}",
+    "new_text": "\\end{figure}",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 242,
+    "new_start_line": 225,
+    "old_text": "\\begin{sidewaysfigure}[p]",
+    "new_text": "\\begin{figure}[p]",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 245,
+    "new_start_line": 228,
+    "old_text": "\\includegraphics[width=\\textheight]{biw2l_stimulus_mechanics_20261116.pdf}\n\\caption[]{Mechanical responses in the same matched BiW2Lvar+ trials. Time, angles, line identities, and the shaded stimulus interval are unchanged from the source recording.}\n\\end{sidewaysfigure}",
+    "new_text": "\\includegraphics[width=14cm]{AIR_stimulus_mechanics.pdf}\n\\caption[]{Right hip, knee, and ankle responses in the same active-phase trials, on the common time axis. Knee coordinates retain native negative flexion. Shading marks the \\qty{100}{\\milli\\second} stimulus, while the reported maximum differences use the longer \\qty{3.4}{\\second} response window.}\n\\end{figure}",
+    "all_old_numerical_tokens": [
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [
+      "14",
+      "100",
+      "3.4"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "20261116."
+        ],
+        "new": [
+          "14",
+          "100",
+          "3.4"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "insert",
+    "old_start_line": 249,
+    "new_start_line": 232,
+    "old_text": "",
+    "new_text": "\\FloatBarrier",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 251,
+    "new_start_line": 235,
+    "old_text": "Earlier feedforward and feedback output fits for the s3k and syn6 families did not establish that their implemented PF layers produced the intended timing. A subsequent audit evaluated actual outgoing transmission, $\\operatorname{clip}(V/\\qty{5}{\\milli\\volt},0,1)$, on the original calibration clock without shifting individual channels to improve alignment. An active threshold of 0.2 defined burst windows. The combined provisional check required absolute fundamental lag no greater than \\ang{30}, duty error no greater than 0.15, matching burst counts, and transmission excursion at least 0.2. These are declared engineering acceptance criteria, rather than biological laws.",
+    "new_text": "Earlier feedforward and feedback output fits for the s3k and syn6 families did not establish that their implemented PF layers produced the intended timing. A subsequent audit evaluated actual outgoing transmission, $\\operatorname{clip}(V/\\qty{5}{\\milli\\volt},0,1)$, on the original calibration clock without shifting individual channels to improve alignment. Here $V$ is rest-relative membrane voltage. It averaged nine cycles at the \\qty{1.233}{\\second} calibration period, sampling \\qtyrange{2.466}{13.556835}{\\second}. Transmission greater than 0.2 defined burst windows. The combined provisional check required absolute fundamental lag no greater than \\ang{30}, duty error no greater than 0.15, matching burst counts, and transmission excursion at least 0.2. These are declared engineering acceptance criteria, rather than biological laws.",
+    "all_old_numerical_tokens": [
+      "5",
+      "0",
+      "1",
+      "0.2",
+      "30",
+      "0.15",
+      "0.2"
+    ],
+    "all_new_numerical_tokens": [
+      "5",
+      "0",
+      "1",
+      "1.233",
+      "2.466",
+      "13.556835",
+      "0.2",
+      "30",
+      "0.15",
+      "0.2"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1.233",
+          "2.466",
+          "13.556835"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 257,
+    "new_start_line": 241,
+    "old_text": "\\includegraphics[width=\\textwidth]{syn6_pf_timing_selected_20261116.pdf}\n\\caption[Implemented syn6 PF transmission versus intended primitives]{Representative right-side syn6 PF channels S1, S2, and S5 from the full twelve-channel audit, with unaltered time and transmission coordinates. Solid blue curves show actual transmission; dashed black curves show the intended primitive on the original calibration clock. No individual channel is phase shifted. S1 and S2 show displaced timing, while S5 remains active throughout the cycle. All twelve channels fail the combined provisional check in the full audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}",
+    "new_text": "\\includegraphics[width=14cm]{PF_timing_authoritative.pdf}\n\\caption[Implemented syn6 PF transmission versus intended primitives]{Raw right-side syn6 S1, S2, and S5 transmission over two calibration cycles, \\qtyrange{2.466}{4.932}{\\second}. Solid blue curves show actual transmission; dashed black curves show the intended primitive, and dotted lines mark the 0.2 activity threshold. All stored samples are retained, without channel-specific phase shifts. S1 and S2 have displaced timing, while S5 remains active. The zero-of-twelve verdict comes from the separate full nine-cycle averaged audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}",
+    "all_old_numerical_tokens": [
+      "20261116."
+    ],
+    "all_new_numerical_tokens": [
+      "14",
+      "2.466",
+      "4.932",
+      "0.2"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "20261116."
+        ],
+        "new": [
+          "14",
+          "2.466",
+          "4.932",
+          "0.2"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 262,
+    "new_start_line": 246,
+    "old_text": "A bounded gain-only repair improved the mirrored-target objective and reproduced it in a new process, but still passed zero of twelve channels. It was not accepted or installed in the body adapter. New output-fitting and body-optimization launches for these profiles are held until explicit PF targets, measured timing acceptance, and independent replay have been established. The result identifies a missing intermediate design check; downstream fitting cannot establish that the PF requirement was met.",
+    "new_text": "A bounded gain-only repair improved the mirrored-target objective and reproduced it in a new process, but still passed zero of twelve channels. It was not accepted or installed in the body adapter. Subsequent experiments changed the timing design rather than treating this failed repair as sufficient. RG-event-triggered relays first reproduced the intended windows in offline replay. A native SNS implementation then used onset, shutoff, quieting, follower, and ramp cells; an adaptive version adjusted its clock rates from recurrence of bilateral RG events. The adaptive implementation therefore combines graded neural computation with an explicit timing scheduler.\n\nThe later timing gate scores each of the last four complete ipsilateral RG-E intervals separately, at 200 phase samples per interval. Six channels on two sides give 48 channel-cycle checks. RG-E intervals begin at a \\qty{3.5}{\\milli\\volt} crossing after arming below \\qty{1.5}{\\milli\\volt}. In addition to the original lag, duty, burst-count, and excursion requirements, each onset and offset must lie within 0.05 cycles of its target. This differs from the original twelve checks on cycle-averaged channels. Table~\\ref{tab:app_pf_progression} separates the resulting levels of verification. Cadence stress tests scale the legacy-cell integration and RG inactivation constants with the afferent replay cadence, while retaining native relay settings and MN synapses; they do not demonstrate spontaneous cadence adaptation by a freely moving model.\n\n\\begin{table}[htbp]\n\\centering\\small\n\\caption[PF timing repairs and coupled-model limits]{Progression after the original syn6 failure. Later counts refer to channel-cycle checks, rather than the original twelve channel-mean checks. Offline replay and coupled-body acceptance are separate outcomes.}\n\\label{tab:app_pf_progression}\n\\begin{tabularx}{\\textwidth}{@{}>{\\raggedright\\arraybackslash}p{0.27\\textwidth}>{\\raggedright\\arraybackslash}X@{}}\n\\toprule\nCondition & Result and scope \\\\\n\\midrule\nFixed native timing & 48/48 checks at the nominal \\qty{1.233}{\\second} cadence; 16/48 at \\qty{1.048}{\\second} and 8/48 at \\qty{1.418}{\\second}. \\\\\nAdaptive native timing & 48/48 at each of six replay cadences spanning \\qtyrange{0.863}{1.418}{\\second}; frozen MN input synapses retained. \\\\\nAdaptive live-body transfer & Predictive knee guard at \\qty{9.814}{\\second}; 11/30 timing checks after full native handover. \\\\\nAdded projected-knee relay & The \\qty{150}{\\milli\\second} prediction condition completes \\qty{16}{\\second}, but passes only 16/48 live timing checks. Knee-cycle period is \\qty{0.796}{\\second}, with coefficient of variation 0.287; the rhythmic-air assessment rejects it. \\\\\nSeparate physical diagnostics & The same candidate completes \\qty{8}{\\second} standing and \\qty{16}{\\second} supported-ground tests; both assessments reject it. \\\\\n\\bottomrule\n\\end{tabularx}\n\\end{table}\n\nThe post-handover adaptive capture contains three complete right and two complete left RG intervals, explaining its 30-check denominator. The added knee relay recruits S3 and inhibits S2 as projected extension approaches its limit; it does not refit the frozen MN input synapses. Fresh recorded arrays match the corresponding native replay and live repeats exactly. Further single-burst S3 repairs still encounter the knee guard, so no reviewed follow-up satisfies the PF timing, rhythmic-motion, and knee-safety requirements together. Offline timing success is therefore a verified intermediate function, with live sensory coupling remaining a limiting condition.",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "200",
+      "48",
+      "3.5",
+      "1.5",
+      "0.05",
+      "0.27",
+      "48",
+      "48",
+      "1.233",
+      "16",
+      "48",
+      "1.048",
+      "8",
+      "48",
+      "1.418",
+      "48",
+      "48",
+      "0.863",
+      "1.418",
+      "9.814",
+      "11",
+      "30",
+      "150",
+      "16",
+      "16",
+      "48",
+      "0.796",
+      "0.287",
+      "8",
+      "16",
+      "30"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "200",
+          "48",
+          "3.5",
+          "1.5",
+          "0.05",
+          "0.27",
+          "48",
+          "48",
+          "1.233",
+          "16",
+          "48",
+          "1.048",
+          "8",
+          "48",
+          "1.418",
+          "48",
+          "48",
+          "0.863",
+          "1.418",
+          "9.814",
+          "11",
+          "30",
+          "150",
+          "16",
+          "16",
+          "48",
+          "0.796",
+          "0.287",
+          "8",
+          "16",
+          "30"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 266,
+    "new_start_line": 271,
+    "old_text": "A separate 108-cell, 216-connection Li--Deng-derived W2L controller was calibrated for its twelve-muscle mechanical body. The selected \\qty{10}{\\second} trial reproduced all saved numeric arrays exactly in a fresh process and passed its supported ground-stepping criterion with eight left and seven right unloaded, whole-foot-clear swings and alternating qualified transitions. Upward rail/guide assistance averaged \\qty{29.519}{\\percent} of body weight after \\qty{1}{\\second}; continuous harness force was zero, but passive rails and slack guides remained. The whole-trial signed assistance of \\qty{35.069}{\\percent} uses a different window and sign convention and is not a substitute for that upward-force statistic. Its \\qty{0.908}{\\meter} belt-relative progression is not overground displacement. Peak foot force reached 11.727 body weights, identifying impact transients that still require investigation.",
+    "new_text": "A separate 108-cell, 216-connection Li--Deng-derived W2L controller was calibrated for its twelve-muscle mechanical body. The selected \\qty{10}{\\second} trial reproduced all saved numeric arrays exactly in a fresh process and passed its supported ground-stepping criterion with eight left and seven right unloaded, whole-foot-clear swings and alternating qualified transitions. Minimum anatomical knee flexion over $1\\leq t<10$\\,s was \\ang{2.087} on the right and \\ang{1.946} on the left. This model's anatomical angles include initial-pose offsets and differ from the Gait2392 flexion-negative coordinates. Upward rail/guide assistance averaged \\qty{29.519}{\\percent} of the \\qty{411.2254}{\\newton} model weight over $1\\leq t<10$\\,s; continuous harness force was zero, but passive rails and slack guides remained. The positive upward measure excludes downward assistance contributions. The \\qty{35.069}{\\percent} signed net assistance instead retains force signs over $0\\leq t<10$\\,s. Its different window prevents direct comparison as an upward-force reduction. Its \\qty{0.908}{\\meter} belt-relative progression is not overground displacement. Peak foot force reached 11.727 body weights, identifying impact transients that still require investigation.",
+    "all_old_numerical_tokens": [
+      "108",
+      "216",
+      "10",
+      "29.519",
+      "1",
+      "35.069",
+      "0.908",
+      "11.727"
+    ],
+    "all_new_numerical_tokens": [
+      "108",
+      "216",
+      "10",
+      "1",
+      "10",
+      "2.087",
+      "1.946",
+      "392",
+      "29.519",
+      "411.2254",
+      "1",
+      "10",
+      "35.069",
+      "0",
+      "10",
+      "0.908",
+      "11.727"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "10",
+          "2.087",
+          "1.946",
+          "392"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "411.2254"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "10"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "0",
+          "10"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 273,
+    "new_start_line": 278,
+    "old_text": "The saved human-model controller reproduced its cycle-shape score of $-145.07$ in an independent process. The direct overlay in Figure~\\ref{fig:app_gait2392_ik_overlay} uses the Gait2392 walking inverse-kinematics trajectory and its paired ground-reaction-force file. Model cycles begin when vertical foot loading crosses \\qty{50}{\\newton}; reference stance is defined using the same force threshold. Ten cycles per side, with durations between \\qty{0.35}{\\second} and \\qty{2.5}{\\second}, were retained using the existing cycle detector. Each leg was aligned to its own onset and resampled over the gait cycle, without fitting phase, subtracting the mean angle, or scaling amplitude.",
+    "new_text": "The saved human-model controller reproduced its composite kinematic score of $-145.07$ in an independent process. The analysis uses the post-startup \\qtyrange{2}{16}{\\second} recording; the score combines several kinematic terms and is not solely a cycle-shape error. The direct overlay in Figure~\\ref{fig:app_gait2392_ik_overlay} uses the Gait2392 walking inverse-kinematics trajectory and its paired ground-reaction-force file. Model cycles begin when vertical foot loading crosses \\qty{50}{\\newton}; reference stance is defined using the same force threshold. Ten cycles per side, with durations between \\qty{0.35}{\\second} and \\qty{2.5}{\\second}, were retained using the existing cycle detector. Each leg was aligned to its own onset and resampled over the gait cycle, without fitting phase, subtracting the mean angle, or scaling amplitude.",
+    "all_old_numerical_tokens": [
+      "-145.07",
+      "392",
+      "392",
+      "50",
+      "0.35",
+      "2.5"
+    ],
+    "all_new_numerical_tokens": [
+      "-145.07",
+      "2",
+      "16",
+      "392",
+      "392",
+      "50",
+      "0.35",
+      "2.5"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2",
+          "16"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 313,
+    "new_start_line": 318,
+    "old_text": "A separate W2L configuration was evaluated after correcting the delivery of saved per-target gains to the evaluator. Four independent \\qty{30}{\\second} replays produced identical trajectories. Over the \\qtyrange{4.5}{30}{\\second} analysis window, the run had 28 left and 21 right contact events, a median bilateral phase of 0.496 cycles, forward displacement of \\qty{2.246}{\\meter}, and fitted speed of \\qty{0.0918}{\\meter\\per\\second}. All twelve independent reruns with \\qty{1}{\\percent} parameter perturbations passed the supported-stepping criterion. These are results for this configuration, distinct from the drive-weaning configuration.",
+    "new_text": "A separate W2L configuration was evaluated after correcting the delivery of saved per-target gains to the evaluator. Four independent \\qty{30}{\\second} replays produced identical trajectories. Over the \\qtyrange{4.5}{30}{\\second} analysis window, the run had 28 left and 21 right contact events, a median bilateral phase of 0.496 cycles, and a forward displacement of \\qty{2.246}{\\meter}. The fitted speed of \\qty{0.0918}{\\meter\\per\\second} uses the additional \\qtyrange{8}{30}{\\second} fitting window. All twelve independent reruns with \\qty{1}{\\percent} parameter perturbations passed the supported-stepping criterion. These are results for this configuration, distinct from the drive-weaning configuration.",
+    "all_old_numerical_tokens": [
+      "30",
+      "4.5",
+      "30",
+      "28",
+      "21",
+      "0.496",
+      "2.246",
+      "0.0918",
+      "1"
+    ],
+    "all_new_numerical_tokens": [
+      "30",
+      "4.5",
+      "30",
+      "28",
+      "21",
+      "0.496",
+      "2.246",
+      "0.0918",
+      "8",
+      "30",
+      "1"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "8",
+          "30"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 315,
+    "new_start_line": 320,
+    "old_text": "Removing nominal constant weight support did not remove the position-control harness: its mean vertical force still supplied approximately \\qty{16.76}{\\percent} of body weight. Contact duty remained below the strict walking criterion. These trials demonstrate repeatable stepping with that remaining assistance. An accelerated neural backend preserved the complete reference trajectories and reduced the isolated neural-step cost by a factor of 1.425; this does not establish the same speed improvement for the complete neuromechanical simulation.",
+    "new_text": "Removing nominal constant weight support did not remove the position-control harness: its mean vertical force still supplied approximately \\qty{16.75}{\\percent}, using the legacy \\qty{411}{\\newton} weight denominator over \\qtyrange{4.5}{30}{\\second}. Contact duty remained below the strict walking criterion. These trials demonstrate repeatable stepping with that remaining assistance. A separate W2L bilateral-RG+Ib-port neural-core benchmark measured a 1.425 ratio for one block of 10,000 warm updates per backend, following 5,000 parity steps. Its saved \\qty{30}{\\second} body trajectories also agreed exactly. The isolated neural-update ratio does not measure acceleration of the complete neuromechanical simulation.",
+    "all_old_numerical_tokens": [
+      "16.76",
+      "1.425"
+    ],
+    "all_new_numerical_tokens": [
+      "16.75",
+      "411",
+      "4.5",
+      "30",
+      "1.425",
+      "10",
+      "000",
+      "5",
+      "000",
+      "30"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "16.76"
+        ],
+        "new": [
+          "16.75",
+          "411",
+          "4.5",
+          "30"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "10",
+          "000",
+          "5",
+          "000",
+          "30"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 319,
+    "new_start_line": 324,
+    "old_text": "The recovered W2L configuration was evaluated with nominal weight support set to 0.25 and the remaining controller settings fixed. Mild and strong drive reductions, forward and backward \\qty{40}{\\newton} pushes, and separate Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the supported-stepping criterion. Their effects differed: Renshaw deletion reduced forward displacement to \\qty{0.081}{\\meter}, while commissural deletion failed bilateral stepping. Disabling all sensory feedback retained joint cycling and \\qty{1.996}{\\meter} progression but shifted median contact phase to 0.223 cycles, outside the accepted alternation range. The intact comparison produced \\qty{2.239}{\\meter} and a phase of 0.498 cycles. These experiments distinguish rhythm generation, progression, and bilateral contact coordination, rather than treating them as interchangeable outcomes. Figure~\\ref{fig:app_w2l_perturbations} compares the drive, push, and pathway interventions.",
+    "new_text": "The recovered W2L configuration was evaluated with nominal weight support set to 0.25 and the remaining controller settings fixed. The control configuration inherits a \\qty{40}{\\newton} forward pulse from \\qty{8}{\\second} to \\qty{8.15}{\\second} in the retained evaluator. Its explicitly named forward-push recording is identical to the control in every saved numerical array, so it is not an independent push-versus-unforced comparison. Mild and strong drive reductions, reversal to a backward \\qty{40}{\\newton} pulse, and separate Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the supported-stepping criterion. Their effects differed: Renshaw deletion reduced forward displacement to \\qty{0.081}{\\meter}, while commissural deletion failed bilateral stepping. Disabling all sensory feedback retained joint cycling and \\qty{1.996}{\\meter} progression but shifted median contact phase to 0.223 cycles, outside the accepted alternation range. The intact comparison produced \\qty{2.239}{\\meter} and a phase of 0.498 cycles. These experiments distinguish rhythm generation, progression, and bilateral contact coordination, rather than treating them as interchangeable outcomes.",
+    "all_old_numerical_tokens": [
+      "0.25",
+      "40",
+      "0.081",
+      "1.996",
+      "0.223",
+      "2.239",
+      "0.498"
+    ],
+    "all_new_numerical_tokens": [
+      "0.25",
+      "40",
+      "8",
+      "8.15",
+      "40",
+      "0.081",
+      "1.996",
+      "0.223",
+      "2.239",
+      "0.498"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "40",
+          "8",
+          "8.15"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "delete",
+    "old_start_line": 321,
+    "new_start_line": 326,
+    "old_text": "\\begin{figure}[htbp]\n\\centering\n\\includegraphics[width=\\textwidth]{w2l_perturbation_verified.pdf}\n\\caption{Recovered W2L controller responses to drive changes, pushes, and pathway deletions. The same effective controller gains are used across conditions, with the specified intervention applied in each panel.}\n\\label{fig:app_w2l_perturbations}\n\\end{figure}",
+    "new_text": "",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 335,
+    "new_start_line": 334,
+    "old_text": "The latest selected condition completed \\qty{28}{\\second}. During \\qtyrange{16}{28}{\\second}, measured vertical harness force supplied \\qty{77.5}{\\percent} of body weight after the stated support ramp. Seven right and six left qualifying unloaded-clear intervals produced twelve alternations. Each interval required whole-foot mesh clearance above \\qty{5}{\\milli\\meter}, ipsilateral normal load below \\qty{7.36}{\\newton}, contralateral load above \\qty{15}{\\newton}, and duration of at least \\qty{80}{\\milli\\second}. Minimum knee flexion was \\ang{5.10}, checked at every physics step. The \\qty{-74.7}{\\milli\\meter} world-forward displacement describes guided stepping approximately in place. Orientation and lateral guidance remained active.",
+    "new_text": "The selected condition completed \\qty{28}{\\second}. During $16\\leq t<28$\\,s, mean vertical harness force was \\qty{570.20625}{\\newton}, or \\qty{77.5}{\\percent} of the \\qty{735.75}{\\newton} weight of the \\qty{75}{\\kilogram} model. Seven right and six left qualifying unloaded-clear intervals produced twelve alternations. Each interval required whole-foot mesh clearance above \\qty{5}{\\milli\\meter}, ipsilateral normal load below \\qty{7.36}{\\newton}, contralateral load above \\qty{15}{\\newton}, and duration of at least \\qty{80}{\\milli\\second}. The retained every-\\qty{2}{\\milli\\second} knee-bound accumulator reports whole-trial minimum flexion of \\ang{11.20} on the right and \\ang{5.10} on the left, against a \\ang{1} guard. The saved \\qty{10}{\\milli\\second} traces are a different sampling interval and do not independently reconstruct every physics-step extremum. The \\qty{-74.7}{\\milli\\meter} world-forward displacement describes guided stepping approximately in place. Orientation and lateral guidance remained active.\n\n\\begin{figure}[p]\n\\centering\n\\includegraphics[width=14cm]{CAD_supported_traces_20261116.pdf}\n\\caption[Quantitative supported CAD stepping]{CAD signals during $16\\leq t<28$\\,s: RG flexor-minus-extensor voltage (A), native flexion-negative knees (B), foot normal loads (C), and whole-foot mesh heights (D). Right is solid blue; left is dashed orange. All 1,200 samples per series are retained. Reference lines mark the \\ang{-1} guard, \\qtylist{7.36;15}{\\newton} load criteria, and \\qty{5}{\\milli\\meter} clearance. Negative heights indicate soft-contact penetration. Ideal reference tensions and engineering allocation operate with \\qty{77.5}{\\percent} vertical assistance.}\n\\label{fig:app_cad_supported_traces}\n\\end{figure}",
+    "all_old_numerical_tokens": [
+      "28",
+      "16",
+      "28",
+      "77.5",
+      "5",
+      "7.36",
+      "15",
+      "80",
+      "5.10",
+      "-74.7"
+    ],
+    "all_new_numerical_tokens": [
+      "28",
+      "16",
+      "28",
+      "570.20625",
+      "77.5",
+      "735.75",
+      "75",
+      "5",
+      "7.36",
+      "15",
+      "80",
+      "2",
+      "11.20",
+      "5.10",
+      "1",
+      "10",
+      "-74.7",
+      "14",
+      "20261116.",
+      "16",
+      "28",
+      "1",
+      "200",
+      "-1",
+      "7.36",
+      "15",
+      "5",
+      "77.5"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "570.20625"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "735.75",
+          "75"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2",
+          "11.20"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "10"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "14",
+          "20261116.",
+          "16",
+          "28",
+          "1",
+          "200",
+          "-1",
+          "7.36",
+          "15",
+          "5",
+          "77.5"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 339,
+    "new_start_line": 345,
+    "old_text": "A swing-clearance task uses measured minimum foot-mesh height and RG-event-derived swing progress to request muscle-mediated lift. Its velocity feedback is part of the task controller, rather than a change in physical joint damping. The bounded allocator maps this task through hip/knee torque targets while excluding root and distal-foot coordinates. The selected condition reproduces all saved arrays in both a fresh repeat and a reference-backend replay. Five of eight local perturbation cases passed; the nominal result therefore does not establish broad parameter robustness. Retained soft contacts still produced transient penetrations of \\qtylist{16.13;12.91}{\\milli\\meter}. Lower-support rungs failed the retained knee guard.",
+    "new_text": "A swing-clearance task uses measured minimum foot-mesh height and RG-event-derived swing progress to request muscle-mediated lift. Its velocity feedback is part of the task controller, rather than a change in physical joint damping. The bounded allocator maps this task through hip/knee torque targets while excluding root and distal-foot coordinates. All 26 saved numerical arrays agree exactly in the fresh repeat and reference-backend replay. The retained model, route, controller, and dependency hashes agree with the local files, and current compiled geometry reproduces the recorded foot heights. A historical compiled-model binary was not retained, so these checks cannot establish its binary identity. Five of eight local perturbation cases passed; the other three reached the predictive knee margin. The nominal result therefore does not establish broad parameter robustness. Retained soft contacts still produced transient penetrations of \\qtylist{16.13;12.91}{\\milli\\meter}. Lower-support rungs failed the retained knee guard.",
+    "all_old_numerical_tokens": [
+      "16.13",
+      "12.91"
+    ],
+    "all_new_numerical_tokens": [
+      "26",
+      "16.13",
+      "12.91"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "26"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 347,
+    "new_start_line": 353,
+    "old_text": "The Di Russo source mechanical model initialized successfully, but its native custom controller runtime was unavailable for a baseline replay. An exploratory adaptation reproduced its corrected Python equations in a compiled implementation within $3.34\\times10^{-16}$ over 2000 steps. Nevertheless, its 960-trial duration-and-speed search selected a tumbling trajectory, which was rejected as walking. Equation agreement did not establish transfer of the source controller's locomotion. The retained source inventory and rejected-run records identify requirements for a future replication; the unsuccessful search is not evidence of walking.",
+    "new_text": "The custom SCONE runtime for the model of \\citet{dirusso_investigating_2023} was subsequently built, and a \\qty{10}{\\second} replay in the original mechanical model reproduced the native baseline, including an exact saved fresh-process repeat. This verifies execution of that reference stack; it does not validate transfer to Gait2392 or establish physiological validity. An exploratory adaptation reproduced its corrected Python equations in a compiled implementation within $3.34\\times10^{-16}$ over 2000 steps. Nevertheless, its 960-trial duration-and-speed search selected a tumbling trajectory, which was rejected as walking. Equation agreement did not establish transfer of the source controller's locomotion. The native baseline and rejected adaptation are distinct results: reproducing the original stack supplies a reference for transfer, while the unsuccessful search remains rejected as walking.",
+    "all_old_numerical_tokens": [
+      "3.34",
+      "0",
+      "-16",
+      "2000",
+      "960"
+    ],
+    "all_new_numerical_tokens": [
+      "2023",
+      "10",
+      "392",
+      "3.34",
+      "0",
+      "-16",
+      "2000",
+      "960"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2023",
+          "10",
+          "392"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 361,
+    "new_start_line": 367,
+    "old_text": "\\caption{Supported ground evaluation at the same selected parameters (\\qty{16}{\\second}), with no spiking re-tuning. The knee minimum is the minimum of the right leg's mean detected cycle. Contact fraction is the fraction of samples with foot normal force above \\qty{20}{\\newton} during the post-startup evaluation window, whether or not cycles were detected. Thus, the non-spiking left leg can remain in contact for a fraction of 0.985 while completing no detected cycles. The recorded kinematic score summarizes the cycle comparison; less-negative scores indicate closer agreement within this matched test.}",
+    "new_text": "\\caption{Supported ground evaluation at the same selected parameters (\\qty{16}{\\second}), with no spiking re-tuning. The knee minimum is the minimum of the right leg's mean detected cycle. Contact fraction is the fraction of samples with foot normal force above \\qty{20}{\\newton} over $2\\leq t<16$\\,s, whether or not cycles were detected. Thus, the non-spiking left leg can remain in contact for a fraction of 0.985 while completing no detected cycles. The recorded kinematic score summarizes the cycle comparison; less-negative scores indicate closer agreement within this matched test.}",
+    "all_old_numerical_tokens": [
+      "16",
+      "20",
+      "0.985"
+    ],
+    "all_new_numerical_tokens": [
+      "16",
+      "20",
+      "2",
+      "16",
+      "0.985"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2",
+          "16"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 389,
+    "new_start_line": 395,
+    "old_text": "In the earlier beverage example, the spiking implementation retained approximately the same sag, \\ang{2.02} versus \\ang{2.00} in the graded implementation, compared with \\ang{7.85} without the reflex. This comparison demonstrates transfer of the tested response after calibration.",
+    "new_text": "At the beverage experiment's matched \\qty{10}{\\second} endpoint, where the continuing ramp reaches \\qty{0.625}{\\kilogram}, sag was \\ang{1.78} for the spiking implementation, \\ang{2.00} for the graded implementation, and \\ang{7.85} with feedback disabled. These endpoint values demonstrate a corrective response in both tested implementations; they are not equilibrium measurements or evidence of identical trajectories. The spiking post-startup maximum was approximately \\ang{2.02} at \\qty{9.688}{\\second}, a different summary from endpoint sag.",
+    "all_old_numerical_tokens": [
+      "2.02",
+      "2.00",
+      "7.85"
+    ],
+    "all_new_numerical_tokens": [
+      "10",
+      "0.625",
+      "1.78",
+      "2.00",
+      "7.85",
+      "2.02",
+      "9.688"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "2.02"
+        ],
+        "new": [
+          "10",
+          "0.625",
+          "1.78"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "2.02",
+          "9.688"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 405,
+    "new_start_line": 411,
+    "old_text": "Bilateral variant    & \\qty{0.462}{\\second}; antiphase $-0.42$ cycle & sustained unilateral firing; one side at \\qtyrange{442}{450}{\\hertz} \\\\",
+    "new_text": "Bilateral variant    & \\qty{0.462}{\\second}; antiphase $-0.42$ cycle & strongly asymmetric firing; one side at \\qtyrange{442}{450}{\\hertz} \\\\",
+    "all_old_numerical_tokens": [
+      "0.462",
+      "-0.42",
+      "442",
+      "450"
+    ],
+    "all_new_numerical_tokens": [
+      "0.462",
+      "-0.42",
+      "442",
+      "450"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 419,
+    "new_start_line": 425,
+    "old_text": "Runtime measurements retain their denominator and experimental scope. One matched complete-process Gait2392 comparison decreased wall time from \\qty{199.624}{\\second} to \\qty{29.284}{\\second}, a factor of 6.82, while the neural-update portion decreased from \\qty{179.079}{\\second} to \\qty{9.780}{\\second}, a factor of 18.31. Saved trajectories agreed exactly. Neither number should be substituted for a different model, physics configuration, or instrumentation level.",
+    "new_text": "Runtime measurements retain their denominator and experimental scope. One externally timed complete-process Gait2392 comparison used the source-setting 1,025-cell implementation selected by \\texttt{hunt}: native SNS versus the sparse backend in a \\qty{16}{\\second} stage-1 protocol, including \\qty{0.6}{\\second} of held-pose preparation and \\qty{15.4}{\\second} on the physics clock. Wall time decreased from \\qty{199.624}{\\second} to \\qty{29.284}{\\second}, a factor of 6.82, while the neural-call portion decreased from \\qty{179.079}{\\second} to \\qty{9.780}{\\second}, a factor of 18.31. All 45 captured numerical arrays and the compiled-model hash agreed. These are one paired observation, rather than repeated throughput estimates; neither ratio should be substituted for another controller or workload.",
+    "all_old_numerical_tokens": [
+      "392",
+      "199.624",
+      "29.284",
+      "6.82",
+      "179.079",
+      "9.780",
+      "18.31"
+    ],
+    "all_new_numerical_tokens": [
+      "392",
+      "1",
+      "025",
+      "16",
+      "1",
+      "0.6",
+      "15.4",
+      "199.624",
+      "29.284",
+      "6.82",
+      "179.079",
+      "9.780",
+      "18.31",
+      "45"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "1",
+          "025",
+          "16",
+          "1",
+          "0.6",
+          "15.4"
+        ]
+      },
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "45"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 421,
+    "new_start_line": 427,
+    "old_text": "The later compact backend is an incremental comparison against an already accelerated sparse implementation. Warm neural-kernel timing used the median of three 3000-step measurements after an independent 1200-step state comparison in each family. Its largest reported increment was 1.613 for the 1033-cell implementation. In a separate paired \\qty{16}{\\second} Gait2392 diagnostic run, complete-process times were \\qtylist{92.944;91.516}{\\second}, giving only a 1.016 ratio. All 62 saved numeric arrays and compiled-model hashes agreed exactly. That single pair includes capture and diagnostics and is not a repeated throughput estimate. The backend retains the existing summation order; unsupported spiking and electrical channels use their existing implementations.",
+    "new_text": "The later compact backend is an incremental comparison against an already accelerated sparse implementation. Warm neural-kernel timing used the median of three 3,000-update measurements after an independent 1,200-step state comparison in each family. The 1.613 ratio belongs to the 1,033-cell Hunt-PT+RC circuit. A separate paired \\qty{16}{\\second} stage-4 diagnostic with that controller measured evaluator wall times of \\qtylist{92.944;91.516}{\\second}, giving a 1.016 ratio. Its timer surrounds simulation, capture, and assessment, excluding imports, pre-run setup, and final result serialization. This is not a complete-process measurement. All 62 saved numerical arrays and compiled-model hashes agreed exactly. The single diagnostic pair is not a repeated throughput estimate. The backend retains the existing summation order; unsupported spiking and electrical channels use their existing implementations.",
+    "all_old_numerical_tokens": [
+      "3000",
+      "1200",
+      "1.613",
+      "1033",
+      "16",
+      "392",
+      "92.944",
+      "91.516",
+      "1.016",
+      "62"
+    ],
+    "all_new_numerical_tokens": [
+      "3",
+      "000",
+      "1",
+      "200",
+      "1.613",
+      "1",
+      "033",
+      "16",
+      "4",
+      "92.944",
+      "91.516",
+      "1.016",
+      "62"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "replace",
+        "old": [
+          "3000",
+          "1200"
+        ],
+        "new": [
+          "3",
+          "000",
+          "1",
+          "200"
+        ]
+      },
+      {
+        "operation": "replace",
+        "old": [
+          "1033"
+        ],
+        "new": [
+          "1",
+          "033"
+        ]
+      },
+      {
+        "operation": "replace",
+        "old": [
+          "392"
+        ],
+        "new": [
+          "4"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "insert",
+    "old_start_line": 451,
+    "new_start_line": 457,
+    "old_text": "",
+    "new_text": "\\path{controller_profiles_20261104/native_pf.py}; \\path{native_pf_check.py}; \\path{syn6_s5_timing.py} (P) & Native timing relays, cadence-controlled replay checks, and live timing acceptance after handover; separate from the original failed PF checkpoint. \\\\",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "20261104"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "20261104"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 452,
+    "new_start_line": 459,
+    "old_text": "\\path{w2l_cpg/compact_pairwise_eval.py} (P) & Optional compact neural backend; electrical parity and whole-process timing are checked separately. \\\\",
+    "new_text": "\\path{w2l_cpg/compact_pairwise_eval.py} (P) & Optional compact neural backend; numerical agreement and scoped evaluator timing are checked separately. \\\\",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\95-AppendixD.tex",
+    "operation": "replace",
+    "old_start_line": 455,
+    "new_start_line": 462,
+    "old_text": "Here M denotes \\nolinkurl{Solid_Models/OpenSim/Gait2392_Robotbody/}, C denotes \\nolinkurl{Code/MuJoCo_SNS/robot_torso/}, S denotes \\nolinkurl{Code/Matlab/SNS_Simscape/}, and P denotes \\nolinkurl{Code/MuJoCo_SNS/spinal/}. Where a row gives a directory on the first filename, subsequent bare filenames use that same directory. The portable configuration summaries and source bindings used for the newer experiments are retained under \\nolinkurl{Documentation/Reports and Papers/Dissertation/Defense/Session1_Handoff_20261104/}. Raw compiled models and full recordings identified there remain on the originating machine.",
+    "new_text": "Here M denotes \\nolinkurl{Solid_Models/OpenSim/Gait2392_Robotbody/}, C denotes \\nolinkurl{Code/MuJoCo_SNS/robot_torso/}, S denotes \\nolinkurl{Code/Matlab/SNS_Simscape/}, and P denotes \\nolinkurl{Code/MuJoCo_SNS/spinal/}. Where a row gives a directory on the first filename, subsequent bare filenames use that same directory. The portable configuration summaries and source bindings used for the newer experiments are retained in the dissertation's \\path{Defense/Session1_Handoff_20261104/} directory. Raw compiled models and full recordings identified there remain on the originating machine.",
+    "all_old_numerical_tokens": [
+      "392",
+      "20261104"
+    ],
+    "all_new_numerical_tokens": [
+      "392",
+      "20261104"
+    ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  }
+]

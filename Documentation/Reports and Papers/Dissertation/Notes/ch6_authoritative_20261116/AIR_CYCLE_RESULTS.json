@@ -1,0 +1,253 @@
+{
+  "numpy": "1.26.4",
+  "scipy": "1.17.1",
+  "module": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_final\\controller_profiles_20261104\\dominant_cycles.py",
+  "module_sha256": "fc084078e825c99d5d03465576c87e37ea26d01dc389f301035f679cf1078510",
+  "self_check": {
+    "double_hump_antiphase": {
+      "accepted": true,
+      "principal_knee_cycles": [
+        4,
+        3
+      ],
+      "principal_peak_times_s": [
+        [
+          0.616,
+          3.082,
+          5.548,
+          8.014
+        ],
+        [
+          1.85,
+          4.316,
+          6.782
+        ]
+      ],
+      "period_s": 2.4659999999999997,
+      "period_cv": 1.3949311548902706e-16,
+      "bilateral_phase_error": 0.00040551500405515694,
+      "cycle_coverage": 1.0,
+      "knee_ranges_deg": [
+        64.99968426196803,
+        64.99968501507695
+      ],
+      "hip_ranges_deg": [
+        39.99996754037204,
+        39.99996754037204
+      ],
+      "autocorrelation": [
+        0.9999259463517973,
+        0.9999317694813975
+      ],
+      "dominant_spectral_Hz": [
+        0.4444444444444441,
+        0.4444444444444441
+      ],
+      "peak_counts": [
+        {
+          "all_prominent_peaks": 8,
+          "principal_peaks": 4
+        },
+        {
+          "all_prominent_peaks": 6,
+          "principal_peaks": 3
+        }
+      ]
+    },
+    "synchronous": {
+      "accepted": false,
+      "principal_knee_cycles": [
+        4,
+        4
+      ],
+      "principal_peak_times_s": [
+        [
+          0.616,
+          3.082,
+          5.548,
+          8.014
+        ],
+        [
+          0.616,
+          3.082,
+          5.548,
+          8.014
+        ]
+      ],
+      "period_s": 2.4659999999999997,
+      "period_cv": 1.4703865428607932e-16,
+      "bilateral_phase_error": 0.5,
+      "cycle_coverage": 0.0,
+      "knee_ranges_deg": [
+        64.99968426196803,
+        64.99968426196803
+      ],
+      "hip_ranges_deg": [
+        39.99996754037204,
+        39.99996754037204
+      ],
+      "autocorrelation": [
+        0.9999259463517973,
+        0.9999259463517973
+      ],
+      "dominant_spectral_Hz": [
+        0.4444444444444441,
+        0.4444444444444441
+      ],
+      "peak_counts": [
+        {
+          "all_prominent_peaks": 8,
+          "principal_peaks": 4
+        },
+        {
+          "all_prominent_peaks": 8,
+          "principal_peaks": 4
+        }
+      ]
+    },
+    "fast_10Hz": {
+      "accepted": false,
+      "reason": "dominant_frequency_outside_walking_window",
+      "dominant_Hz": [
+        9.999999999999991
+      ]
+    },
+    "frozen": {
+      "accepted": false,
+      "reason": "frozen_joint"
+    },
+    "passed": true
+  },
+  "stages": {
+    "1": {
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1\\capture\\aligned_trace.npz",
+      "source_sha256": "fdedd7b71dfd5a7456750e8193d947a8784171f3ac60d319bf003b8d97e102c9",
+      "window": "5<=t_state<14 s",
+      "recomputed": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          4,
+          4
+        ],
+        "principal_peak_times_s": [
+          [
+            5.254,
+            7.05,
+            9.516,
+            11.982000000000001
+          ],
+          [
+            5.83,
+            8.294,
+            10.760000000000002,
+            13.226
+          ]
+        ],
+        "period_s": 2.4659999999999997,
+        "period_cv": 0.10600945407707325,
+        "bilateral_phase_error": 0.03366668252850866,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          73.90590676595717,
+          72.98174757903891
+        ],
+        "hip_ranges_deg": [
+          39.71626907703847,
+          38.77535833641292
+        ],
+        "autocorrelation": [
+          0.9998267556454012,
+          0.9999352143627981
+        ],
+        "dominant_spectral_Hz": [
+          0.4444444444444934,
+          0.4444444444444934
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 4
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 4
+          }
+        ]
+      },
+      "principal_counts_equal": true,
+      "scalar_absolute_differences": {
+        "period_s": 0.0,
+        "bilateral_phase_error": 0.0,
+        "period_cv": 0.0
+      }
+    },
+    "2": {
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture\\aligned_trace.npz",
+      "source_sha256": "2e905862dc45854c15769a908939871fffc0bf343f4ceafb5324ec33d6e35ce9",
+      "window": "5<=t_state<14 s",
+      "recomputed": {
+        "accepted": true,
+        "principal_knee_cycles": [
+          7,
+          7
+        ],
+        "principal_peak_times_s": [
+          [
+            5.278,
+            6.562,
+            7.848,
+            9.138000000000002,
+            10.430000000000001,
+            11.722000000000001,
+            13.016000000000002
+          ],
+          [
+            5.74,
+            7.046,
+            8.356000000000002,
+            9.670000000000002,
+            10.982000000000001,
+            12.294,
+            13.606000000000002
+          ]
+        ],
+        "period_s": 1.3000000000000003,
+        "period_cv": 0.008536696131938783,
+        "bilateral_phase_error": 0.09327680150520916,
+        "cycle_coverage": 1.0,
+        "knee_ranges_deg": [
+          41.46576937126136,
+          39.66646727014467
+        ],
+        "hip_ranges_deg": [
+          62.86491519313944,
+          62.711708851261236
+        ],
+        "autocorrelation": [
+          0.9997007639108404,
+          0.9998784119273197
+        ],
+        "dominant_spectral_Hz": [
+          0.7777777777778634,
+          0.7777777777778634
+        ],
+        "peak_counts": [
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          },
+          {
+            "all_prominent_peaks": 7,
+            "principal_peaks": 7
+          }
+        ]
+      },
+      "principal_counts_equal": true,
+      "scalar_absolute_differences": {
+        "period_s": 0.0,
+        "bilateral_phase_error": 0.0,
+        "period_cv": 0.0
+      }
+    }
+  }
+}

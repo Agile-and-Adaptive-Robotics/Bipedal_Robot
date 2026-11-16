@@ -1,0 +1,964 @@
+{
+  "scope": "CSV summary/primary script/OpenSim reference/pose-clock audit, plus current static compilation and pure XML-transform inspection; no model forward calculation or integration.",
+  "csv_header_columns": 6,
+  "csv_data_columns": [
+    8
+  ],
+  "csv_header": [
+    "muscle",
+    "R2_matched",
+    "R2shape_matched",
+    "lag_frames",
+    "mj_over_os_mean",
+    "R2_act1"
+  ],
+  "actual_row_order": [
+    "muscle",
+    "R2_matched",
+    "R2shape_matched",
+    "lag_frames",
+    "mj_over_os_mean",
+    "OpenSim_peak_N",
+    "MuJoCo_matched_peak_N",
+    "R2_act1"
+  ],
+  "force_stats": [
+    {
+      "muscle": "soleus_r",
+      "R2": 0.7423303481194259,
+      "corr2": 0.7997166478673421,
+      "lag": 1,
+      "mean_ratio": 0.9156346470253617,
+      "reference_peak_N": 1802.4674216581243,
+      "mj_peak_N": 2473.9451516342333,
+      "R2_act1": -25.528801017013365,
+      "current_reference_interpolated_peak_N": 1802.4674216581243,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "med_gas_r",
+      "R2": 0.88813198330489,
+      "corr2": 0.8940968081762035,
+      "lag": 2,
+      "mean_ratio": 0.9095977479741947,
+      "reference_peak_N": 1468.570539245,
+      "mj_peak_N": 1364.8378211455986,
+      "R2_act1": -3.5122279653909425,
+      "current_reference_interpolated_peak_N": 1468.570539245,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "lat_gas_r",
+      "R2": 0.8836081344161723,
+      "corr2": 0.8871205578360243,
+      "lag": 2,
+      "mean_ratio": 0.9272328154533584,
+      "reference_peak_N": 318.2340795375,
+      "mj_peak_N": 313.45257489166613,
+      "R2_act1": -22.639895619154775,
+      "current_reference_interpolated_peak_N": 318.2340795375,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "tib_ant_r",
+      "R2": 0.9449255928509205,
+      "corr2": 0.9451627709943726,
+      "lag": 0,
+      "mean_ratio": 1.006362600777477,
+      "reference_peak_N": 350.37479616125,
+      "mj_peak_N": 356.6279330825974,
+      "R2_act1": -81.24864293939844,
+      "current_reference_interpolated_peak_N": 350.37479616125,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "vas_lat_r",
+      "R2": 0.9406639033582346,
+      "corr2": 0.9454483494761347,
+      "lag": 1,
+      "mean_ratio": 0.9265095111094074,
+      "reference_peak_N": 613.5031933075,
+      "mj_peak_N": 572.8100433914816,
+      "R2_act1": -65.91955785616324,
+      "current_reference_interpolated_peak_N": 613.5031933075,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "rect_fem_r",
+      "R2": -1.1502919378901044,
+      "corr2": 0.38352261631298634,
+      "lag": 0,
+      "mean_ratio": 1.0878738872872011,
+      "reference_peak_N": 179.58461014875013,
+      "mj_peak_N": 415.5724614725719,
+      "R2_act1": -161.5168051688547,
+      "current_reference_interpolated_peak_N": 179.58461014875013,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "semimem_r",
+      "R2": 0.5650806119443788,
+      "corr2": 0.6206771699311093,
+      "lag": 0,
+      "mean_ratio": 0.7756142078369447,
+      "reference_peak_N": 302.7581204275,
+      "mj_peak_N": 202.60291973471516,
+      "R2_act1": -65.07505226871396,
+      "current_reference_interpolated_peak_N": 302.7581204275,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "bifemsh_r",
+      "R2": -0.26069144364808494,
+      "corr2": 0.8675516761146902,
+      "lag": 0,
+      "mean_ratio": 1.8462983709671927,
+      "reference_peak_N": 324.6081059962502,
+      "mj_peak_N": 437.6976297944449,
+      "R2_act1": -38.764429606869776,
+      "current_reference_interpolated_peak_N": 324.6081059962502,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "psoas_r",
+      "R2": 0.9268307214806719,
+      "corr2": 0.9339191261226732,
+      "lag": 1,
+      "mean_ratio": 0.9461942467504779,
+      "reference_peak_N": 795.745044441875,
+      "mj_peak_N": 732.5054307392918,
+      "R2_act1": -16.981958691045325,
+      "current_reference_interpolated_peak_N": 795.745044441875,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "glut_max2_r",
+      "R2": 0.9259562830346617,
+      "corr2": 0.9430871023204331,
+      "lag": 1,
+      "mean_ratio": 0.9212762572296077,
+      "reference_peak_N": 161.72334526999998,
+      "mj_peak_N": 136.24310396161692,
+      "R2_act1": -126.11214399725579,
+      "current_reference_interpolated_peak_N": 161.72334526999998,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "tfl_r",
+      "R2": 0.9330872419437616,
+      "corr2": 0.9348311057989737,
+      "lag": 0,
+      "mean_ratio": 1.0180463574803724,
+      "reference_peak_N": 56.723740905,
+      "mj_peak_N": 57.860011909404065,
+      "R2_act1": -130.53102703629912,
+      "current_reference_interpolated_peak_N": 56.723740905,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    },
+    {
+      "muscle": "per_brev_r",
+      "R2": 0.9769681745236161,
+      "corr2": 0.9894936902596005,
+      "lag": 0,
+      "mean_ratio": 0.9169773835742645,
+      "reference_peak_N": 39.58641982125,
+      "mj_peak_N": 38.523245465665426,
+      "R2_act1": -1487.6033197866238,
+      "current_reference_interpolated_peak_N": 39.58641982125,
+      "saved_vs_current_reference_peak_abs_difference_N": 0.0
+    }
+  ],
+  "passing_eight": [
+    "med_gas_r",
+    "lat_gas_r",
+    "tib_ant_r",
+    "vas_lat_r",
+    "psoas_r",
+    "glut_max2_r",
+    "tfl_r",
+    "per_brev_r"
+  ],
+  "frame_count": 121,
+  "first_last_time_s": [
+    0.5,
+    2.5
+  ],
+  "median_frame_dt_s": 0.016999999999999904,
+  "saved_npz_arrays": {
+    "t": [
+      121
+    ],
+    "qpos": [
+      121,
+      105
+    ],
+    "signs": [],
+    "acts": [
+      121,
+      92
+    ],
+    "act_names": [
+      92
+    ],
+    "Fmax": [
+      92
+    ],
+    "tau_fit": [
+      121,
+      17
+    ],
+    "fit_joints": [
+      17
+    ],
+    "res_norm": [
+      121
+    ],
+    "L_mj": [
+      121,
+      92
+    ],
+    "L_os_names": [
+      0
+    ],
+    "L_os": [
+      0,
+      0
+    ],
+    "so_names": [
+      0
+    ],
+    "so_act": [
+      0,
+      0
+    ],
+    "grp_prof": [
+      10,
+      20
+    ],
+    "grp_prof_names": [
+      10
+    ],
+    "grp_prof_l": [
+      10,
+      20
+    ],
+    "grp_prof_l_names": [
+      10
+    ],
+    "duty_r": [],
+    "duty_l": [],
+    "hs_r": [
+      2
+    ]
+  },
+  "current_unpatched_compiled_actuator_count": 92,
+  "model_repairs": {
+    "hip_axes": {
+      "hip_flexion_r": {
+        "OLD": "0 0 1",
+        "NEW": "0 0 -1"
+      },
+      "hip_flexion_l": {
+        "OLD": "0 0 1",
+        "NEW": "0 0 -1"
+      },
+      "hip_adduction_r": {
+        "OLD": "1 0 0",
+        "NEW": "-1 0 0"
+      },
+      "hip_adduction_l": {
+        "OLD": "-1 0 0",
+        "NEW": "1 0 0"
+      }
+    },
+    "force_scale_entries": {
+      "ext_hal_r": {
+        "OLD_active": 1.0,
+        "NEW_active": 162.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 162.0
+      },
+      "ext_hal_l": {
+        "OLD_active": 1.0,
+        "NEW_active": 162.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 162.0
+      },
+      "ercspn_r": {
+        "OLD_active": 1.0,
+        "NEW_active": 2500.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 2500.0
+      },
+      "ercspn_l": {
+        "OLD_active": 1.0,
+        "NEW_active": 2500.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 2500.0
+      },
+      "intobl_r": {
+        "OLD_active": 1.0,
+        "NEW_active": 900.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 900.0
+      },
+      "intobl_l": {
+        "OLD_active": 1.0,
+        "NEW_active": 900.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 900.0
+      },
+      "extobl_r": {
+        "OLD_active": 1.0,
+        "NEW_active": 900.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 900.0
+      },
+      "extobl_l": {
+        "OLD_active": 1.0,
+        "NEW_active": 900.0,
+        "passive_unchanged": true,
+        "source_OpenSim_Fmax_N": 900.0
+      }
+    },
+    "disabled_actuators": {
+      "quad_fem_r": {
+        "active": 0.0,
+        "passive": 0.0
+      },
+      "gem_r": {
+        "active": 0.0,
+        "passive": 0.0
+      },
+      "peri_r": {
+        "active": 0.0,
+        "passive": 0.0
+      },
+      "quad_fem_l": {
+        "active": 0.0,
+        "passive": 0.0
+      },
+      "gem_l": {
+        "active": 0.0,
+        "passive": 0.0
+      },
+      "peri_l": {
+        "active": 0.0,
+        "passive": 0.0
+      }
+    },
+    "driver_limits": {
+      "knee_angle_r": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "hip_flexion_r": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "ankle_angle_r": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "subtalar_angle_r": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "mtp_angle_r": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "hip_adduction_r": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "hip_rotation_r": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "knee_angle_l": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "hip_flexion_l": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "ankle_angle_l": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "subtalar_angle_l": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "mtp_angle_l": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "hip_adduction_l": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      },
+      "hip_rotation_l": {
+        "OLD": "false",
+        "NEW": "true",
+        "range_unchanged": true
+      }
+    },
+    "patella_routes": {
+      "rect_fem_r_tendon": {
+        "OLD": [
+          "rect_fem_r_rect_fem_r-P1",
+          "rect_fem_r_rect_fem_r-P2",
+          "rect_fem_r_rect_fem_r-P3"
+        ],
+        "NEW": [
+          "rect_fem_r_rect_fem_r-P1",
+          "vas_med_r_vas_med_r-P4",
+          "rect_fem_r_rect_fem_r-P3"
+        ]
+      },
+      "rect_fem_l_tendon": {
+        "OLD": [
+          "rect_fem_l_rect_fem_l-P1",
+          "rect_fem_l_rect_fem_l-P2",
+          "rect_fem_l_rect_fem_l-P3"
+        ],
+        "NEW": [
+          "rect_fem_l_rect_fem_l-P1",
+          "vas_med_l_vas_med_l-P4",
+          "rect_fem_l_rect_fem_l-P3"
+        ]
+      }
+    },
+    "pathpoint_followers": [
+      {
+        "joint": "knee_r_translation1",
+        "OLD_range": "-0.005574 0.00411",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "knee_r_translation2",
+        "OLD_range": "-0.4226 -0.3953",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "knee_l_translation1",
+        "OLD_range": "-0.005574 0.00411",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "knee_l_translation2",
+        "OLD_range": "-0.4226 -0.3953",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semimem_r_semimem_r-P2_x",
+        "OLD_range": "-0.0348 -0.027",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semimem_r_semimem_r-P2_y",
+        "OLD_range": "-0.04771 -0.03519",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semiten_r_semiten_r-P2_x",
+        "OLD_range": "-0.04203 -0.03322",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semiten_r_semiten_r-P2_y",
+        "OLD_range": "-0.05282 -0.02859",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "grac_r_grac_r-P2_x",
+        "OLD_range": "-0.02657 -0.01943",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "grac_r_grac_r-P2_y",
+        "OLD_range": "-0.05153 -0.0319",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "grac_r_grac_r-P2_z",
+        "OLD_range": "-0.03774 -0.0358",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "iliacus_r_iliacus_r-P3_x",
+        "OLD_range": "-0.0288 -0.0258",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "iliacus_r_iliacus_r-P3_y",
+        "OLD_range": "-0.0805 -0.055",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "psoas_r_psoas_r-P3_x",
+        "OLD_range": "-0.0288 -0.0238",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "psoas_r_psoas_r-P3_y",
+        "OLD_range": "-0.0805 -0.057",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "psoas_r_psoas_r-P3_z",
+        "OLD_range": "0.0759 0.0816",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "rect_fem_r_rect_fem_r-P3_x",
+        "OLD_range": "0.01558 0.0733",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "rect_fem_r_rect_fem_r-P3_y",
+        "OLD_range": "-0.06738 0.02531",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P3_x",
+        "OLD_range": "0.0356 0.037",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P3_y",
+        "OLD_range": "-0.4048 -0.2769",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P3_z",
+        "OLD_range": "-0.0125 0.0009",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P4_x",
+        "OLD_range": "0.0274 0.0356",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P4_y",
+        "OLD_range": "-0.4255 -0.2769",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P4_z",
+        "OLD_range": "-0.0131 0.0009",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P5_x",
+        "OLD_range": "0.009811 0.06795",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_r_vas_med_r-P5_y",
+        "OLD_range": "-0.06562 0.02433",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_r_vas_int_r-P3_y",
+        "OLD_range": "-0.403 -0.2084",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_r_vas_int_r-P3_z",
+        "OLD_range": "0.0055 0.0285",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_r_vas_int_r-P4_x",
+        "OLD_range": "0.008273 0.06844",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_r_vas_int_r-P4_y",
+        "OLD_range": "-0.06857 0.02752",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P3_x",
+        "OLD_range": "0.0269 0.0361",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P3_y",
+        "OLD_range": "-0.403 -0.2591",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P3_z",
+        "OLD_range": "0.0205 0.0409",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P4_x",
+        "OLD_range": "0.0253 0.0269",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P4_y",
+        "OLD_range": "-0.4243 -0.2591",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P4_z",
+        "OLD_range": "0.0184 0.0409",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P5_x",
+        "OLD_range": "0.01429 0.07119",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_r_vas_lat_r-P5_y",
+        "OLD_range": "-0.06534 0.02344",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "med_gas_r_med_gas_r-P2_x",
+        "OLD_range": "-0.03 -0.019",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "med_gas_r_med_gas_r-P2_y",
+        "OLD_range": "-0.4022 -0.3929",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "med_gas_r_med_gas_r-P2_z",
+        "OLD_range": "-0.0258 -0.0235",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "lat_gas_r_lat_gas_r-P2_x",
+        "OLD_range": "-0.03 -0.022",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "lat_gas_r_lat_gas_r-P2_y",
+        "OLD_range": "-0.4018 -0.3946",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semimem_l_semimem_l-P2_x",
+        "OLD_range": "-0.0348 -0.027",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semimem_l_semimem_l-P2_y",
+        "OLD_range": "-0.04771 -0.03519",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semiten_l_semiten_l-P2_x",
+        "OLD_range": "-0.04203 -0.03322",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "semiten_l_semiten_l-P2_y",
+        "OLD_range": "-0.05282 -0.02859",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "grac_l_grac_l-P2_x",
+        "OLD_range": "-0.02657 -0.01943",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "grac_l_grac_l-P2_y",
+        "OLD_range": "-0.05153 -0.0319",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "grac_l_grac_l-P2_z",
+        "OLD_range": "0.0358 0.03774",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "iliacus_l_iliacus_l-P3_x",
+        "OLD_range": "-0.0288 -0.0258",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "iliacus_l_iliacus_l-P3_y",
+        "OLD_range": "-0.0805 -0.055",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "psoas_l_psoas_l-P3_x",
+        "OLD_range": "-0.0288 -0.0238",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "psoas_l_psoas_l-P3_y",
+        "OLD_range": "-0.0805 -0.057",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "psoas_l_psoas_l-P3_z",
+        "OLD_range": "-0.0816 -0.0759",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "rect_fem_l_rect_fem_l-P3_x",
+        "OLD_range": "0.01558 0.0733",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "rect_fem_l_rect_fem_l-P3_y",
+        "OLD_range": "-0.06738 0.02531",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P3_x",
+        "OLD_range": "0.0356 0.037",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P3_y",
+        "OLD_range": "-0.4048 -0.2769",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P3_z",
+        "OLD_range": "-0.0009 0.0125",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P4_x",
+        "OLD_range": "0.0274 0.0356",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P4_y",
+        "OLD_range": "-0.4255 -0.2769",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P4_z",
+        "OLD_range": "-0.0009 0.0131",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P5_x",
+        "OLD_range": "0.009811 0.06795",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_med_l_vas_med_l-P5_y",
+        "OLD_range": "-0.06562 0.02433",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_l_vas_int_l-P3_y",
+        "OLD_range": "-0.403 -0.2084",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_l_vas_int_l-P3_z",
+        "OLD_range": "-0.0285 -0.0055",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_l_vas_int_l-P4_x",
+        "OLD_range": "0.008273 0.06844",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_int_l_vas_int_l-P4_y",
+        "OLD_range": "-0.06857 0.02752",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P3_x",
+        "OLD_range": "0.0269 0.0361",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P3_y",
+        "OLD_range": "-0.403 -0.2591",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P3_z",
+        "OLD_range": "-0.0409 -0.0205",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P4_x",
+        "OLD_range": "0.0253 0.0269",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P4_y",
+        "OLD_range": "-0.4243 -0.2591",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P4_z",
+        "OLD_range": "-0.0409 -0.0184",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P5_x",
+        "OLD_range": "0.01429 0.07119",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "vas_lat_l_vas_lat_l-P5_y",
+        "OLD_range": "-0.06534 0.02344",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "med_gas_l_med_gas_l-P2_x",
+        "OLD_range": "-0.03 -0.019",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "med_gas_l_med_gas_l-P2_y",
+        "OLD_range": "-0.4022 -0.3929",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "med_gas_l_med_gas_l-P2_z",
+        "OLD_range": "0.0235 0.0258",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "lat_gas_l_lat_gas_l-P2_x",
+        "OLD_range": "-0.03 -0.022",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      },
+      {
+        "joint": "lat_gas_l_lat_gas_l-P2_y",
+        "OLD_range": "-0.4018 -0.3946",
+        "NEW_limited": "false",
+        "NEW_armature": "1.0"
+      }
+    ],
+    "contact_pairs": {
+      "OLD": 19,
+      "NEW_ground": 6,
+      "NEW_air": 0
+    },
+    "pathpoint_collision_flags": {
+      "raw_virtual_flags": 32,
+      "patched_virtual_flags_still2": 0
+    }
+  },
+  "source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\_muscle_force_compare.py": "b029ef5dcf613fc8e904d0949bded63fe5bc3c8b23eebb74b6b8956636bf0740",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\muscle_force_compare.csv": "c4f3f519b8a386cdad82ba9772b70dbd906805c9f2d39c11c1b48396a4625eb3",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\runner.py": "1370b4dbc99f04afedcb18dedb84cb9eb39ee76fe329f912c3ee020f04f87a1b",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\bsolve_ik.py": "c7436e32dce91f1d9fc65a2a719385a1af2c1d8c061e35d84f05d4aba4055e47",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\bsolve_out.npz": "34c215d3d976a1f7dbe202585b135352f13d05f3ba875ee4e7f5666064c98ba9",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\gait2392_simbody.osim": "477fffd1ee9cfbcb9d4c20c6b0fe6baf0958e6a640e7df7166b45156cf8cf5f2",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_simbody.osim": "3a79f900364a9216ef66c978d6b3e377a8abebae24bcf45fcb3e8803a6d47a78",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\ResultsBSolve\\zz_bsolve_StaticOptimization_force.sto": "dd10eea5716bff9164648a05e236ec2be8b845f163c245b86cb661f8bf296cb7",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\ResultsBSolve\\zz_bsolve_StaticOptimization_activation.sto": "3356402cd8618ca4de3fe357aba95bdb0346319ec201033324c1ae7b49885dcd",
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody_cvt3.xml": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae"
+  }
+}

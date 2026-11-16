@@ -1,0 +1,302 @@
+{
+  "condition": "clearance77p5_damped",
+  "window_rule": "time >= 16 s; stored trace through 27.99 s from a completed 28 s integration",
+  "first_last_stored_time_s": [
+    0.0,
+    27.990000000000002
+  ],
+  "scoring_first_last_stored_time_s": [
+    16.0,
+    27.990000000000002
+  ],
+  "samples_total": 2800,
+  "samples_scored": 1200,
+  "sample_interval_s": 0.009999999999999787,
+  "compiled_current_mass_kg": 74.99999999999999,
+  "gravity_m_s2": [
+    0.0,
+    -9.81,
+    0.0
+  ],
+  "BW_denominator_N": 735.7499999999999,
+  "actuator_count": 54,
+  "activation_time_constants_s": [
+    0.03
+  ],
+  "mean_vertical_support_BW": 0.775,
+  "mean_vertical_force_N": 570.20625,
+  "mean_ground_load_R_L_N": [
+    78.58304809391797,
+    86.97123334291739
+  ],
+  "clear_unloaded_interval_R_L": [
+    [
+      [
+        16.3,
+        16.6
+      ],
+      [
+        18.17,
+        18.47
+      ],
+      [
+        20.03,
+        20.330000000000002
+      ],
+      [
+        21.85,
+        22.22
+      ],
+      [
+        23.75,
+        24.060000000000002
+      ],
+      [
+        25.63,
+        25.91
+      ],
+      [
+        27.5,
+        27.77
+      ]
+    ],
+    [
+      [
+        17.13,
+        17.61
+      ],
+      [
+        18.990000000000002,
+        19.48
+      ],
+      [
+        20.85,
+        21.36
+      ],
+      [
+        22.73,
+        23.2
+      ],
+      [
+        24.580000000000002,
+        25.060000000000002
+      ],
+      [
+        26.44,
+        26.92
+      ]
+    ]
+  ],
+  "qualifying_intervals_R_L": [
+    7,
+    6
+  ],
+  "alternations": 12,
+  "recorded_not_recomputed_median_RG_period_R_L_s": [
+    1.8599999999999994,
+    1.8599999999999994
+  ],
+  "whole_trial_knee_max_recorded_R_L_deg": [
+    -11.204744882458405,
+    -5.166112629082228
+  ],
+  "whole_trial_knee_max_every_physics_step_R_L_deg": [
+    -11.20413499165558,
+    -5.099541478123707
+  ],
+  "window_knee_max_recorded_R_L_deg": [
+    -14.050862689936496,
+    -6.005939212981872
+  ],
+  "mesh_clearance_min_R_L_mm": [
+    -16.133539964271073,
+    -12.905598638118999
+  ],
+  "mesh_clearance_max_R_L_mm": [
+    35.39540534244893,
+    53.53968754827371
+  ],
+  "current_mesh_recompute_max_abs_height_difference_m": 3.8163916471489756e-16,
+  "current_mesh_recompute_min_world_z_gap_all_10ms_samples_m": 0.0469349038722493,
+  "published_world_z_gap_every_fifth_10ms_sample_m": 0.04722763559833371,
+  "full_trial_world_forward_displacement_m": -0.0747140122415066,
+  "mean_abs_rig_torque_xyz_Nm": [
+    10.799548270635523,
+    0.9292860678348454,
+    110.07534345738493
+  ],
+  "rig_horizontal_force_xz_RMS_N": [
+    1.3505712431060075,
+    2.6951635550253497
+  ],
+  "replay_array_comparisons": {
+    "fresh_repeat": {
+      "same_array_keys": true,
+      "array_count": 26,
+      "all_arrays_exact": true,
+      "same_model_xml_hash": true
+    },
+    "reference": {
+      "same_array_keys": true,
+      "array_count": 26,
+      "all_arrays_exact": true,
+      "same_model_xml_hash": true
+    }
+  },
+  "local_cases": {
+    "clearance77p5_damped_basin00": {
+      "completed": false,
+      "failed": "predictive knee flexion safety margin",
+      "duration_simulated_s": 18.880000000000415,
+      "intervals_R_L": [
+        2,
+        1
+      ],
+      "alternations": 2,
+      "saved_ground_step_gate": false,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 2.709164392661177
+    },
+    "clearance77p5_damped_basin01": {
+      "completed": true,
+      "failed": null,
+      "duration_simulated_s": 27.99999999999536,
+      "intervals_R_L": [
+        7,
+        6
+      ],
+      "alternations": 12,
+      "saved_ground_step_gate": true,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 1.7672309554943435
+    },
+    "clearance77p5_damped_basin02": {
+      "completed": true,
+      "failed": null,
+      "duration_simulated_s": 27.99999999999536,
+      "intervals_R_L": [
+        7,
+        6
+      ],
+      "alternations": 12,
+      "saved_ground_step_gate": true,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 5.8124965773630075
+    },
+    "clearance77p5_damped_basin03": {
+      "completed": false,
+      "failed": "predictive knee flexion safety margin",
+      "duration_simulated_s": 24.46599999999732,
+      "intervals_R_L": [
+        5,
+        4
+      ],
+      "alternations": 8,
+      "saved_ground_step_gate": false,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 1.120033295051926
+    },
+    "clearance77p5_damped_basin04": {
+      "completed": true,
+      "failed": null,
+      "duration_simulated_s": 27.99999999999536,
+      "intervals_R_L": [
+        7,
+        6
+      ],
+      "alternations": 12,
+      "saved_ground_step_gate": true,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 1.8648536476402937
+    },
+    "clearance77p5_damped_basin05": {
+      "completed": true,
+      "failed": null,
+      "duration_simulated_s": 27.99999999999536,
+      "intervals_R_L": [
+        7,
+        6
+      ],
+      "alternations": 12,
+      "saved_ground_step_gate": true,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 4.343128408554989
+    },
+    "clearance77p5_damped_basin06": {
+      "completed": false,
+      "failed": "predictive knee flexion safety margin",
+      "duration_simulated_s": 19.046000000000323,
+      "intervals_R_L": [
+        2,
+        2
+      ],
+      "alternations": 3,
+      "saved_ground_step_gate": false,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 1.0292256301129779
+    },
+    "clearance77p5_damped_basin07": {
+      "completed": true,
+      "failed": null,
+      "duration_simulated_s": 27.99999999999536,
+      "intervals_R_L": [
+        7,
+        6
+      ],
+      "alternations": 12,
+      "saved_ground_step_gate": true,
+      "saved_interval_counts_match": true,
+      "min_flexion_every_physics_step_deg": 4.058886001396201
+    }
+  },
+  "local_passes": 5,
+  "source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\dynamic_routes.py": "e4252c0c1b792ff538b5e41e57a60ed8708cc882f24e74f7a58f30a1cc7b4c18",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\robot_kinematics.py": "79a9c3121f0eaa21dc8256f0bcf28b491d5592fbe052b3c4da8b88b8c713cc56",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network.py": "f6c147ad2e8939e9065fa1ff25149478f376c4ccb678a8b3795139af8f4c0d99",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\params.py": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\w2l_cpg\\exact_fast_eval.py": "1239cb471056384ecadd58f3c50243821da248c320826923a6a3b6616f3dba91",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\anatomical_revision\\models\\routes_toe_base.json": "295be71033dac48f7b43df7da860cc79a1678d69587ec1910739ca08857b6569",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\anatomical_revision\\models\\toe_base_passive_nominal.xml": "cb44a27e9d4262786a51938e0bb9a08899556e18851be82e3b8d931c60054789",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\FINAL_CHECKS.json": "16f4fcfbc05e5ef16938ce71d3e33c0d1f78cf2e4aaf490b09604e8bd9fb8919",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\FINAL_VERIFICATION.json": "671ebe56c464ba095e20ea725a1f03ff738e34b9b2b01dad5d46ff1c189fc071",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped.json": "0efaa0fb2369c2089b17f79da22af6468d5070155a4a066db7d74552cc0debf9",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped.npz": "572c12bf11a38f59494f0e8bcc601beb3a0598ecd4a004d5237ff430dd39d20f",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin00.json": "c94630e8aa40b82c5ce641c3028b94f6e3f26c0e4558aff8e8a4e07f2f994c3d",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin00.npz": "313539f8da59a9dc0bcd9a857cffc8dfa483ec82a23d9e572ebad34003947833",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin01.json": "7b58658b6c4e3d6708c40de85216e670b74591c66c0e9e3c6dcfc5848e0ee3c7",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin01.npz": "3f99501bf7b0390afd5c99aed5453382ae1db86a6c0dc9b74d27fbee6e13b0fe",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin02.json": "c0842da1e5b8fd205e077bb961ae4f072261320f6a90c4ef66b2956a72a1643d",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin02.npz": "7ea4e11d06ef4e46f300ff7659d543dc259ed97292dcc7c31d1cee12429bfca0",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin03.json": "7f3e516f4db31aeb7a5992ddf2455c7d5068b87163a3b0eb852714b27aefe565",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin03.npz": "3396931b9e32b2babfe093c16dc6ecbe3e35f5f2da03a0d740ae27514a00dd9c",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin04.json": "290e7d7060ff19f27f93d1fd9e75c6450982042cf3f7300ccf8ca496100512cf",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin04.npz": "a1b002d718db81b3e3472490fb7863fe65cd4440613b31971728d839917c3c2c",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin05.json": "b87304effe183d50ca8b35606399151cf52ed1818ebddc78e3501f35a3c39930",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin05.npz": "fe32e454a5155edf4a1dab877a5147668084cbbeb3941cee37de61af2836021c",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin06.json": "d0172cf128b879650f2357e7943f87ab8e0a42d6451da8ddf4e80602e0f28047",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin06.npz": "b64342aaa25cd086f9d16025d1ddacfefc8562ad6a939c76e74d2160741450c8",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin07.json": "a1ef70bc5420aaa8659fe08b642a93e02927ebb0770afb708ac71d48b2c71a94",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_basin07.npz": "f7ab2c24874022a187a4efaa30cba2a7b8be43cbb9821012eec27e07bc5cc0ca",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_fresh_repeat.json": "9e2ea4ab0bfb45f1d51912347f59c1653a0a977d31cffeeb79fbcb8f92417c52",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_fresh_repeat.npz": "572c12bf11a38f59494f0e8bcc601beb3a0598ecd4a004d5237ff430dd39d20f",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_physics1ms.json": "c161904112fcc974b3863be0a017d8134d928f48c456215338960be40df430c1",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_physics1ms.npz": "c4dd2cd4aa60e4ed71ca59ad9aa5c7ad180f12aef121db57b65a47527193fe1e",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_reference.json": "60de1db2fc33c96e1cc304238b39e46ba8411a4fe80035e2e41ea67b3f286af0",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\runs\\clearance77p5_damped_reference.npz": "572c12bf11a38f59494f0e8bcc601beb3a0598ecd4a004d5237ff430dd39d20f",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\source\\control_clearance.py": "a54c0a7d0f23a497a07fa3b067937b5fd14b0a8b19a0ad3a140aa4db70266ae4",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\source\\final_basin_cases.json": "3e7c3f93ed42b6b58253b100e045e64d5be0a3e81f9d450ba1c4379174eddbad",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\source\\measure.py": "ab4bd69d539d0747baed1e2df41c84e67996657fbae7ae6c21aebdd8d4de9e3b",
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\source\\prepare_final_checks.py": "36eb4c25460d961e01d19fe61070613bf979f789d3144a27338ede4a46fd67b2"
+  },
+  "saved_source_hash_matches": {
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\anatomical_revision\\models\\toe_base_passive_nominal.xml": true,
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\anatomical_revision\\models\\routes_toe_base.json": true,
+    "D:\\Users\\Ben Bolen\\CAD3DOF_20261102\\contact_handover_20261103\\source\\control_clearance.py": true,
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\dynamic_routes.py": true,
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robot_torso\\robot_kinematics.py": true,
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\build_network.py": true,
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\params.py": true,
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\w2l_cpg\\exact_fast_eval.py": true
+  }
+}

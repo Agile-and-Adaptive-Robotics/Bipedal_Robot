@@ -1,0 +1,137 @@
+{
+  "bridge": {
+    "fields": [
+      "knee_r_pos",
+      "knee_r_vel",
+      "vas_med_r_len",
+      "vas_med_r_vel",
+      "vas_med_r_frc"
+    ],
+    "simulink_samples": 81,
+    "scored_steps": 80,
+    "scored_times_s": [
+      0.005,
+      0.4
+    ],
+    "maximum_sensor_errors": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "exact": true,
+    "pass_a": true,
+    "pass_b": true,
+    "pass_c": true,
+    "sensor_dt_s": 0.005,
+    "two_rate_samples": 81
+  },
+  "w2l": {
+    "scoring_window": "t>=2s through last native sample; truncate Simulink6001point grid to matching NumPy6000point grid, 5000 scoring points",
+    "source_grid_s": 0.002,
+    "comparison": {
+      "L_RG_ext": {
+        "best_lag_ms": -2.0,
+        "best_lag_correlation": 0.9999715821150922,
+        "unshifted_correlation": 0.9994734734775296,
+        "rmse_mV": 0.10687605067082102,
+        "bursts_sim": 10,
+        "bursts_numpy": 10,
+        "period_sim_s": 1.0,
+        "period_numpy_s": 0.9997777777777779
+      },
+      "L_RG_flx": {
+        "best_lag_ms": -2.0,
+        "best_lag_correlation": 0.9999701745385268,
+        "unshifted_correlation": 0.9995913481609914,
+        "rmse_mV": 0.09901650135811732,
+        "bursts_sim": 10,
+        "bursts_numpy": 10,
+        "period_sim_s": 0.9997777777777779,
+        "period_numpy_s": 1.0
+      },
+      "R_RG_ext": {
+        "best_lag_ms": -2.0,
+        "best_lag_correlation": 0.9999619662968479,
+        "unshifted_correlation": 0.9994315224019197,
+        "rmse_mV": 0.11095989175577373,
+        "bursts_sim": 10,
+        "bursts_numpy": 10,
+        "period_sim_s": 0.9997777777777779,
+        "period_numpy_s": 1.0
+      },
+      "R_RG_flx": {
+        "best_lag_ms": -2.0,
+        "best_lag_correlation": 0.9999754082731023,
+        "unshifted_correlation": 0.9995541353808316,
+        "rmse_mV": 0.10337906064313154,
+        "bursts_sim": 10,
+        "bursts_numpy": 10,
+        "period_sim_s": 0.9997777777777779,
+        "period_numpy_s": 1.0
+      }
+    },
+    "saved_verdict": true,
+    "interpretation": "Shared RG signals, representative Simulink core versus full NumPy network; best-lag correlation is not zero-lag agreement. Reference JSON protocol label is stale: code sends alternating heel trains."
+  },
+  "deng_numpy": {
+    "samples": 200001,
+    "window_s": [
+      0.0,
+      20.0
+    ],
+    "native_clock_units": "ms; seconds=t/1000",
+    "bursts_after_0p3s": 10,
+    "period_s": 1.937866666666667,
+    "extensor_flexor_correlation": -0.8547157106619075,
+    "tau_h_mode": "fixed",
+    "names": [
+      "RG_HC_ext    ",
+      "RG_HC_flx    ",
+      "RG_IN_ext    ",
+      "RG_IN_flx    ",
+      "PF_hip_HC_ext",
+      "PF_hip_HC_flx",
+      "PF_ka_HC_ext ",
+      "PF_ka_HC_flx ",
+      "PF_hip_IN_ext",
+      "PF_hip_IN_flx",
+      "PF_ka_IN_ext ",
+      "PF_ka_IN_flx ",
+      "MN_hip_ext   ",
+      "MN_hip_flx   "
+    ],
+    "scope": "Raw NumPy reference only; Simulink pointwise arrays not retained with this run, so Simulink1.938s/-0.857 is checked via source script and primary log. sns_run_deng_demo.m compares seconds directly to rawreference milliseconds, so its printed maxdeltaV is not a valid matched-clock measure."
+  },
+  "source_sha256": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\logs\\bridge_tests_abc.mat": "79ac43ee6d3faf10c79b9fb0c70f39b9b186077ca8b10c44cb33423cbd69d230",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\logs\\gt_const.mat": "36efe8e75ac43d5551b11e38c6a4d8726019c38efcc920134d6794d039d09f84",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\SNS_W2L_CPG_run_20260930.mat": "cdefbc55c3142c0de14e3fc616ae0b0c0b8d4faa4ab5fe9d9eddee396ea8fa0d",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\w2l_numpy_ref.npz": "fab2ae42fa73034a9c8c995788f1f836088fd74a8f5fc24cb2be6c5191a51701",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\deng_cpg_ref.mat": "71ba01104afa352310d7ddc50ff1c4790e2c2100e249bb37fec7aa9da5db81fa",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\w2l_trace_compare.json": "cec489bf17f8c874f7c22c320b1786bbbf7caa0ac87766fd4cd188870ae9bd58",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\w2l_trace_compare_20260930.py": "e12905e8752d95e6bc75baabbbae78be59de79f3ca4b383e49ee24801af7ebe1",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\w2l_numpy_ref_20260930.py": "45895c5e8e0616c239c663b508aec925ab941d23d6e4f868c616c436b2172fe0",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\w2l_numpy_ref.json": "dd1b17e54dc8777049d47990696cd9b81a11e546bdb9447e89be056c14d54291",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\dev\\build_sns_w2l_cpg_20260930.m": "b3fb7717eabec78d24c951df644d5928dfb0769f87c3fff203e539bd337b1b47",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\SNS_W2L_CPG.slx": "dddfb2f6de2158bb6f20cdec1a2742a411980ce104a9b246f265ed8a6cfbdf6b",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\matlab\\run_bridge_tests.m": "543d96d4dba03cb27177c89c41cb5a9057fef2815ef9a2d6b96cf34f0e4e43b9",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\matlab\\bridge_groundtruth.py": "302d59ca0e6d829d213170c2bfd8d3b2117858f1983e009572c9157801002c32",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\matlab\\e2_cpg_open_loop.m": "4efc717ef4dde032b0931a8658dc48164d7ce11e81b79b758656c00a991999af",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\logs\\test_abc.log": "4e556ad926d312b50bbf7ff18a7561b1e400834a4c78726ca1a78d752f0a5efd",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\logs\\test_abc_laptop.log": "5e01caa23e8d9f9ada4eda7672782bceb2b8cdb34df28e8f780fd458cd68528a",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\logs\\e2_cpg.log": "c4e87203c041f1ce2381066cdaad77fc1c99e21db03d6542bc136425cea207cc",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\mujoco_bridge\\matlab\\exp_out\\e2_cpg.mat": "0c9cf82dcda0380b12010ba52fc28f3d5bc0360de4c249c76fccbaddc8cb3240",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\sns_run_deng_demo.m": "fe8d7cd95b609361b1fc6bbe01659b30eb9358de27ec401045701847b0fe093c",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\demos\\SNS_Deng_CPGDemo.slx": "dfc42698f3c91fef71ff4d9c9787b05965206b19dbe19b32aa6d46f1a581d54a",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\logs\\sns_run_deng2.log": "c68b543c0fcb8bd2a340367c031bdd5842d691576cb430ce0624f630a1ab0094",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\logs\\sns_verify.log": "93945a99b71c6d6f5e3531b2981b8ff0587e5fb4d6635875d2f2e9b59582900d",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\logs\\desktop_capability_20261024_b.log": "0f4c6d9a5991833829257c8f0c8fa440f7f4f6ab798d046167efa14971ab4248",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\sns_verify_from_json.m": "198ee19e41e911c1cdc9744ada40f7c0da97a8661beeb8e2a8c0bac9443c30c9",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\verify_ref.mat": "00cf46a390cfc58a9700e2cb659ca5c2dfd906f1b25df6628b34c62737dbe17b",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\SNS_SpinalNetwork.slx": "c214630310e8c0d34a777be193ad6b24169f4840dbc1497ae687b2e7bb697a45",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\SNS_Simscape\\results\\SNS_SpinalNetwork.slx.r2025a": "0c32696f8844c41a5c1379ef38eb11314ca09adf6dc28b8a6136b2ba607501d1",
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\deng_cpg_ode.py": "1e8e1e30046fdd0fcc0b2e2cc64ee122d87885c5912b331f5ecb22ea75e30abb"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "generator": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Notes\\ch6_authoritative_20261116\\AIR_stimulus_figures.py",
+  "generator_sha256": "d7a354875e301762810a7a1cb53fa1bf8a42e98a044d6c8eb98b87d10433fc82",
+  "display_window_s": [
+    7.5,
+    11.05
+  ],
+  "response_scoring_window_s": [
+    7.65,
+    11.05
+  ],
+  "response_end_excluded": true,
+  "stimulus_input_window_s": [
+    7.65,
+    7.75
+  ],
+  "stimulus_targets": {
+    "RG": "RG_F_r",
+    "PF": "PF_HIP-F_r",
+    "MN": "MN_iliacus_r"
+  },
+  "source_files": {
+    "Baseline": {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\Baseline\\capture\\aligned_trace.npz",
+      "sha256": "96f45ae81aa94041956b82a923e0fc563a01e4fcc654518b065fd5390af804f2",
+      "bytes": 24352362
+    },
+    "RG": {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\RG\\capture\\aligned_trace.npz",
+      "sha256": "79f9e7dcf98e8a099ec1ba15c2d0166f923da5ec554275cd459a1942ab83ff38",
+      "bytes": 24352633
+    },
+    "PF": {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\PF\\capture\\aligned_trace.npz",
+      "sha256": "7e5189270a31294e9907c48beecf8aaf6670807a274bccb9ed55df2652e187e0",
+      "bytes": 24352466
+    },
+    "MN": {
+      "path": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\MN\\capture\\aligned_trace.npz",
+      "sha256": "51a124baa66d3b027ec2ff436c16a68c3bfe1f7928f27caa3078d688b447e7a5",
+      "bytes": 24357137
+    }
+  },
+  "operations": [
+    "native sample selection on each signal clock",
+    "radians to degrees for joint coordinates"
+  ],
+  "not_applied": [
+    "smoothing",
+    "interpolation",
+    "phase shift",
+    "amplitude rescaling",
+    "decimation",
+    "new dynamics"
+  ],
+  "panels": {
+    "neural": {
+      "dimensions_cm": [
+        14,
+        15
+      ],
+      "minimum_font_pt": 10.2,
+      "counts": {
+        "Baseline": {
+          "neural_samples": 1776,
+          "input_samples": 1776
+        },
+        "RG": {
+          "neural_samples": 1776,
+          "input_samples": 1776
+        },
+        "PF": {
+          "neural_samples": 1776,
+          "input_samples": 1776
+        },
+        "MN": {
+          "neural_samples": 1776,
+          "input_samples": 1776
+        }
+      },
+      "clocks": [
+        "t_neural_input for current",
+        "t_neural for voltage"
+      ],
+      "cells": [
+        "RG_F_r",
+        "PF_HIP-F_r",
+        "MN_iliacus_r"
+      ]
+    },
+    "mechanics": {
+      "dimensions_cm": [
+        14,
+        12.5
+      ],
+      "minimum_font_pt": 10.2,
+      "counts": {
+        "Baseline": 1776,
+        "RG": 1776,
+        "PF": 1776,
+        "MN": 1776
+      },
+      "clock": "t_state",
+      "joint_names": [
+        "hip_flexion_r",
+        "knee_angle_r",
+        "ankle_angle_r"
+      ],
+      "knee_sign": "Native flexion-negative; no sign reversal"
+    }
+  },
+  "outputs": {
+    "AIR_stimulus_neural.pdf": {
+      "sha256": "859087a4d0469922700c469c518d14e1a1700a10a06e69ccbc9fbcd18de306a1",
+      "bytes": 50782
+    },
+    "AIR_stimulus_neural.svg": {
+      "sha256": "9c26866a51fad8b1b0b84858ce6718937645eedf3ffdc28cbc993f63c0f42ab3",
+      "bytes": 67051
+    },
+    "AIR_stimulus_neural.png": {
+      "sha256": "26e45572cbc5c48b355d053c9af06509cb2103ee2ed4e8911a5c18d343c4364e",
+      "bytes": 167659
+    },
+    "AIR_stimulus_neural.alt.txt": {
+      "sha256": "37e74b255df51b2f29f5c2bdcd46cf2e749c06cf5aef1c06ff098b28900289b5",
+      "bytes": 320
+    },
+    "AIR_stimulus_mechanics.pdf": {
+      "sha256": "acc06620bb9685a09a68a31dba33621f1b52a82a169e344cfd3b6920b6f712f7",
+      "bytes": 54468
+    },
+    "AIR_stimulus_mechanics.svg": {
+      "sha256": "040396344ab73504ce08c3b5e9bc9d6bb2d275574c354401bb31b1e790d1ae02",
+      "bytes": 73166
+    },
+    "AIR_stimulus_mechanics.png": {
+      "sha256": "90904669a5d509e23cd32e98cc0a05d174ec966af6c4fb7e6fb93ae955c1cb3b",
+      "bytes": 183464
+    },
+    "AIR_stimulus_mechanics.alt.txt": {
+      "sha256": "ad1a28adbd8e49f1ea51ec090bdbc58ce97453b0d27afd0c04c797923201adca",
+      "bytes": 275
+    }
+  }
+}

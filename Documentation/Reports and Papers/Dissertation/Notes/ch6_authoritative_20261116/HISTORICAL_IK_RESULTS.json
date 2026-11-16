@@ -1,0 +1,314 @@
+{
+  "score_scope": "Composite kinematic score, including shape, range, mean, phase, period, contact and bilateral terms",
+  "sample_window_s": [
+    2.0,
+    15.998000000000001
+  ],
+  "whole_recording_s": [
+    0.0,
+    15.998000000000001
+  ],
+  "cycle_grid_samples": 100,
+  "LOAD_N": 50.0,
+  "sides": {
+    "r": {
+      "metrics": {
+        "cycles": 10,
+        "model_period_mean_s": 1.2848,
+        "model_contact_duty": 0.7101428571428572,
+        "reference_period_s": 1.2334,
+        "reference_duty": 0.61,
+        "rmse_hip_deg": 28.033261592839022,
+        "rmse_knee_deg": 27.439932039685182,
+        "rmse_ankle_deg": 8.713931732926099
+      },
+      "saved_metric_differences": {
+        "cycles": 0.0,
+        "model_period_mean_s": 0.0,
+        "model_contact_duty": 0.0,
+        "reference_period_s": 0.0,
+        "reference_duty": 0.0,
+        "rmse_hip_deg": 0.0,
+        "rmse_knee_deg": 0.0,
+        "rmse_ankle_deg": 0.0
+      },
+      "onsets_s": [
+        2.494,
+        3.95,
+        5.49,
+        6.848,
+        8.202,
+        9.618,
+        10.986,
+        12.36,
+        14.286,
+        14.382,
+        14.808,
+        14.944,
+        15.574
+      ],
+      "retained_periods_s": [
+        1.456,
+        1.54,
+        1.3579999999999997,
+        1.354,
+        1.4160000000000004,
+        1.3680000000000003,
+        1.3739999999999988,
+        1.9260000000000002,
+        0.42600000000000016,
+        0.629999999999999
+      ],
+      "reference_loading_cycle_s": [
+        0.6283,
+        1.8617
+      ],
+      "csv_max_absolute_errors": {
+        "hip": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "reference": 0.0
+        },
+        "knee": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "reference": 0.0
+        },
+        "ankle": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "reference": 0.0
+        }
+      },
+      "contact_based": true
+    },
+    "l": {
+      "metrics": {
+        "cycles": 10,
+        "model_period_mean_s": 1.2538,
+        "model_contact_duty": 0.6485714285714286,
+        "reference_period_s": 1.2133000000000003,
+        "reference_duty": 0.61,
+        "rmse_hip_deg": 24.653382018602525,
+        "rmse_knee_deg": 28.445183066950996,
+        "rmse_ankle_deg": 7.377904728842839
+      },
+      "saved_metric_differences": {
+        "cycles": 0.0,
+        "model_period_mean_s": 0.0,
+        "model_contact_duty": 0.0,
+        "reference_period_s": 0.0,
+        "reference_duty": 0.0,
+        "rmse_hip_deg": 0.0,
+        "rmse_knee_deg": 0.0,
+        "rmse_ankle_deg": 0.0
+      },
+      "onsets_s": [
+        2.27,
+        3.446,
+        4.7860000000000005,
+        5.832,
+        6.16,
+        7.238,
+        7.47,
+        8.842,
+        10.084,
+        11.886000000000001,
+        13.188,
+        14.280000000000001,
+        14.286,
+        14.294,
+        14.3,
+        14.308,
+        14.32,
+        15.408,
+        15.432,
+        15.454,
+        15.476,
+        15.494,
+        15.504,
+        15.51,
+        15.516,
+        15.522,
+        15.530000000000001,
+        15.544,
+        15.564,
+        15.576,
+        15.586,
+        15.606
+      ],
+      "retained_periods_s": [
+        1.1760000000000002,
+        1.3400000000000003,
+        1.0459999999999994,
+        1.0780000000000003,
+        1.3720000000000008,
+        1.241999999999999,
+        1.8020000000000014,
+        1.3019999999999996,
+        1.0920000000000005,
+        1.0879999999999992
+      ],
+      "reference_loading_cycle_s": [
+        1.255,
+        2.4683
+      ],
+      "csv_max_absolute_errors": {
+        "hip": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "reference": 0.0
+        },
+        "knee": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "reference": 0.0
+        },
+        "ankle": {
+          "mean": 0.0,
+          "sd": 0.0,
+          "reference": 0.0
+        }
+      },
+      "contact_based": true
+    }
+  },
+  "sources": {
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\kine_ref.py": {
+      "bytes": 15390,
+      "sha256": "dfda44a8bfb54fd2a5f95eb227291306aac4c04a4c428b5f56226912c825417a"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\human_ik\\human_fresh.npz": {
+      "bytes": 11468053,
+      "sha256": "f5e3ad24ae780af51f947af9388f39a53ebbecf99e649f4cdbb38df6fc617014"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_ik.mot": {
+      "bytes": 50080,
+      "sha256": "7380251a0e2434bea1ad62aa8ece037e3dc8ff014f8b747395b63c4c8a4d55e2"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_grf.mot": {
+      "bytes": 225132,
+      "sha256": "69a5e8633f8666bc192abd8069e6812fe7b4c8bb8968dc3254d4824abf263662"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\human_ik\\overlay_metrics.json": {
+      "bytes": 627,
+      "sha256": "21a2dabdc84152cebfb4700a3287200ad0cc171ce6235849dba1786eb997dd13"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\human_ik\\human_metrics.json": {
+      "bytes": 4142,
+      "sha256": "0f5d385f61c5bbf24386bc7cc0d8cd1a9208e9fd5567b35846eec6599759bbc7"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\human_ik\\gait2392_ik_overlay.csv": {
+      "bytes": 58645,
+      "sha256": "64925c1d6544b13f5687baf4cd0ae61f9bdb378f88fea7f3f0a6b345fe995d7f"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261016\\wean_human\\finalist_eval.npz": {
+      "bytes": 8332307,
+      "sha256": "223e1b8699639247ec9ad8d08af66107f1ef4f47ef8ff0f23fcba2e033844d03"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\60-sns\\Components\\gait2392_ik_overlay\\publication_ik_overlay_20261028.py": {
+      "bytes": 3898,
+      "sha256": "d135c5cd7ea3d206d246f4c8f655487617c0939d46832d90ec14f5feb6764f3c"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\95-AppendixD\\Components\\generate_gait2392_ik_overlay.py": {
+      "bytes": 2307,
+      "sha256": "5596646f8440df0facf2d40b46049b95d47dd3c3f5b2aec09a2837c7d41e9e71"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Figures\\95-AppendixD\\Components\\gait2392_ik_overlay_provenance.json": {
+      "bytes": 352,
+      "sha256": "038f7982e7e175dabd86b25279680f919419c7731105703ed43affb99a3bd22d"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261016\\wean_human\\round8_best3.json": {
+      "bytes": 2358,
+      "sha256": "2b9cab27c4ce7e5de496f73f20ff8c461c74771c3f26d4ce85454bdc41acf415"
+    },
+    "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261016\\wean_human\\finalist_spec.json": {
+      "bytes": 139,
+      "sha256": "ac4304ae02997fd75358bb63a48e26c8c42c0bc1e5da13ddabd353ddaeb14657"
+    }
+  },
+  "score_recomputed": -145.07280220616852,
+  "saved_score": -145.07280220616852,
+  "score_difference": 0.0,
+  "score_terms": {
+    "contact_frac_r": 0.7807142857142857,
+    "contact_frac_l": 0.8115714285714286,
+    "n_cycles_r": 10,
+    "duty_r": 0.7101428571428572,
+    "duty_r_ref": 0.61,
+    "knee_min_r": -66.74574632397118,
+    "knee_min_r_ref": -69.68811020650568,
+    "rmse_hip_r": 24.468481489157703,
+    "range_hip_r": 29.166774542396425,
+    "range_hip_r_ref": 43.29319243218895,
+    "mean_hip_r": 18.02103112074814,
+    "mean_hip_r_ref": 4.340491323383044,
+    "rmse_knee_r": 23.900588139518106,
+    "range_knee_r": 53.79105361342183,
+    "range_knee_r_ref": 70.4553257620587,
+    "mean_knee_r": -38.532730966194855,
+    "mean_knee_r_ref": -25.052680635143876,
+    "rmse_ankle_r": 8.63742927724221,
+    "range_ankle_r": 19.034611056260857,
+    "range_ankle_r_ref": 23.106608540532818,
+    "mean_ankle_r": 5.356727935291503,
+    "mean_ankle_r_ref": 4.204590041315454,
+    "T_r": 1.2848,
+    "T_r_ref": 1.2334,
+    "period_cv_r": 0.32224357900765976,
+    "n_cycles_l": 10,
+    "duty_l": 0.6485714285714286,
+    "duty_l_ref": 0.61,
+    "knee_min_l": -66.06000761852346,
+    "knee_min_l_ref": -70.62509689835294,
+    "rmse_hip_l": 22.811698323952882,
+    "range_hip_l": 24.888148266900057,
+    "range_hip_l_ref": 44.137088674588234,
+    "mean_hip_l": 12.879010922184591,
+    "mean_hip_l_ref": 3.5293764623717765,
+    "rmse_knee_l": 22.66323971051491,
+    "range_knee_l": 47.65254772562912,
+    "range_knee_l_ref": 70.6955653195196,
+    "mean_knee_l": -40.7478242611453,
+    "mean_knee_l_ref": -23.557536144418,
+    "rmse_ankle_l": 6.3624352298459455,
+    "range_ankle_l": 10.513600845765355,
+    "range_ankle_l_ref": 23.956803261189542,
+    "mean_ankle_l": 6.321027539512573,
+    "mean_ankle_l_ref": 2.5856699751157337,
+    "T_l": 1.2538,
+    "T_l_ref": 1.2133000000000003,
+    "period_cv_l": 0.17072502763680095,
+    "lag_rl": 0.873394495412844,
+    "lag_rl_ref": 0.5081076698556833,
+    "ds": 0.456,
+    "ds_ref": 0.23243243243243245,
+    "bilateral": true,
+    "kine_score": -145.07280220616852,
+    "n_cycles": 10,
+    "duty": 0.7101428571428572,
+    "duty_ref": 0.61,
+    "knee_min": -66.74574632397118,
+    "knee_min_ref": -69.68811020650568,
+    "rmse_hip": 24.468481489157703,
+    "range_hip": 29.166774542396425,
+    "range_hip_ref": 43.29319243218895,
+    "rmse_knee": 23.900588139518106,
+    "range_knee": 53.79105361342183,
+    "range_knee_ref": 70.4553257620587,
+    "rmse_ankle": 8.63742927724221,
+    "range_ankle": 19.034611056260857,
+    "range_ankle_ref": 23.106608540532818
+  },
+  "original_finalist_numeric_comparison": {
+    "t": true,
+    "act": true,
+    "q": true,
+    "qfull": true,
+    "com": true,
+    "neuro": true,
+    "contact": true,
+    "footz": true
+  },
+  "elapsed_s": 0.38868179998826236
+}

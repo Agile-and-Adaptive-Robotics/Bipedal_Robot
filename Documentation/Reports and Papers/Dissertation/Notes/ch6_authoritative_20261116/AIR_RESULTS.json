@@ -1,0 +1,1510 @@
+{
+  "command_conditions": {
+    "sustained_normalized_FE_stage1": 0.0,
+    "sustained_normalized_FE_stage2": [
+      0.15,
+      0.15
+    ],
+    "common_initial_seed": "+0.4 E_r and F_l for first 50 neural calls at 2 ms (=100 ms); initialization, not a stride clock",
+    "stage1_sensory_enabled": false,
+    "stage2_sensory_enabled": true,
+    "both_contact_enabled": false,
+    "POST_BAL_FUNC": "clamped off; rg_tonic_current=0; old DRIVE disabled by Runtime.prepare_inputs"
+  },
+  "air": {
+    "1": {
+      "metadata": {
+        "schema": "aarl_aligned_verification_v1",
+        "native_frame": "legacy_z_up",
+        "display_frame": "x anterior, y superior, z right",
+        "native_to_anatomical": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "sample_phase": "After accepted outer physics interval; warmup excluded. Neural input/start and force interval times retained separately.",
+        "voltage_label": "graded model membrane depolarization (mV; rest-relative)",
+        "side_order": [
+          "r",
+          "l"
+        ],
+        "region_order": [
+          "hindfoot",
+          "forefoot"
+        ],
+        "region_split": 0.5,
+        "regional_sensor_definition": "Physical ground contact locations projected from calcaneus toward toes; virtual regions, not calibrated heel/toe pads.",
+        "force_definition": "Once-counted force on each foot, transformed from contact frame into anatomical world axes. Regional trace is true superior component, not normal-force proxy.",
+        "harness_definition": "Pelvis generalized passive-force wrench projected on solver-stage root-joint axes unless caller supplies apparatus wrench; confirm only apparatus spring/damper acts on those coordinates. Explicit support kept separate.",
+        "kinematic_evaluation_phase": "Contact frames/body xpos are from the latest solver evaluation; qpos/qvel are final state. No extra forward call is made to retime those intermediate quantities.",
+        "missing_requested_cells": [],
+        "provenance": {
+          "configuration_file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1\\body.json",
+          "configuration": {
+            "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+            "knee_training_limits_deg": [
+              -90.0,
+              0.0
+            ],
+            "standing_solver": "coupled_symmetric",
+            "stage": 1,
+            "backend": "compact",
+            "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+            "balance": null,
+            "biarticular_pair_gain": 0.3,
+            "learn_reciprocal": true,
+            "rg_tonic_current": 0.0,
+            "axis_feedback": 0.0,
+            "timing_afferents": false,
+            "restriction": 1.0,
+            "support_fraction": 0.0,
+            "start_hip_deg": -7.0,
+            "start_knee_deg": -10.0,
+            "start_ankle_deg": 0.0,
+            "trace_cells": [
+              "RG_F_r",
+              "RG_F_l",
+              "PF_HIP-F_r",
+              "PF_KNEE-F_r",
+              "MN_iliacus_r",
+              "MN_iliacus_l",
+              "MN_bifemsh_r",
+              "MN_bifemsh_l"
+            ],
+            "verification_capture": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1\\capture",
+            "verification_sparse_currents": false,
+            "diagnostic_scope": "Frozen four-command Hunt fit, matched live afferent encoder, no direct posture/MN command; air curriculum probe",
+            "motor_scale": 0.1,
+            "align_ground_pose": false
+          },
+          "source_hashes": {
+            "physical_eval.py": "ecda3d37012e593b54ece1166cb9df440c9f961acbc172689db258535bf6ac33",
+            "controller.py": "00112d00d7e65c700c1c89e651f57354588d88335386209e5803b67f7154b57c",
+            "balance.py": "1e69f6f6945ce7ea9ef48fa6cbbbca91e0044c700fc922526290114a5b50c967",
+            "ground_contact_check.py": "c666630f9e1c20da06e9253aa49cebd3cb6a0ede16473cba17564b93101e6ace",
+            "regional_contacts.py": "57296826959aef9edebebbfaffe0cd73f7a346eefce2844a3a6520c8500268eb",
+            "contact_events.py": "d264a62fafc831b855faff4581072f0251a941c58f8b2dd6e0934e0ed25b827f",
+            "bilateral.py": "b33373652fc69b921a8114ebacbfd43dda0b12aacaa67e6a715c64e9d8cb3cd3",
+            "foot_clearance_check.py": "b9e6b7a779ff469d7019707052de700e4d332e08e3b225e23ce0494f5b616b31",
+            "force_law_parameters_file": "9dc7d7ba444a961e06fd6efd15210ea324a84ee70992b251994cb7d7ee7165cf"
+          }
+        },
+        "stimulus_policy": "NaN means not logged; never synthesize an inferred pulse.",
+        "no_model_or_neural_steps": true,
+        "capture_source_sha256": "5c30320bfc15bbd3fa3f843044bcc76711c24c63bda43e44247b2f247f1afd72",
+        "excluded_held_pose_intervals": 300,
+        "samples": 7700,
+        "capacity": 20000,
+        "body_weight_N": 768.756726,
+        "body_weight_definition": "Pelvis subtree mass times9.81; excludes separate fixed ground/apparatus bodies.",
+        "model_file": "model.mjb",
+        "model_sha256": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+        "actuator_names": [
+          "glut_med1_r",
+          "glut_med2_r",
+          "glut_med3_r",
+          "glut_min1_r",
+          "glut_min2_r",
+          "glut_min3_r",
+          "semimem_r",
+          "semiten_r",
+          "bifemlh_r",
+          "bifemsh_r",
+          "sar_r",
+          "add_long_r",
+          "add_brev_r",
+          "add_mag1_r",
+          "add_mag2_r",
+          "add_mag3_r",
+          "tfl_r",
+          "pect_r",
+          "grac_r",
+          "glut_max1_r",
+          "glut_max2_r",
+          "glut_max3_r",
+          "iliacus_r",
+          "psoas_r",
+          "quad_fem_r",
+          "gem_r",
+          "peri_r",
+          "rect_fem_r",
+          "vas_med_r",
+          "vas_int_r",
+          "vas_lat_r",
+          "med_gas_r",
+          "lat_gas_r",
+          "soleus_r",
+          "tib_post_r",
+          "flex_dig_r",
+          "flex_hal_r",
+          "tib_ant_r",
+          "per_brev_r",
+          "per_long_r",
+          "per_tert_r",
+          "ext_dig_r",
+          "ext_hal_r",
+          "glut_med1_l",
+          "glut_med2_l",
+          "glut_med3_l",
+          "glut_min1_l",
+          "glut_min2_l",
+          "glut_min3_l",
+          "semimem_l",
+          "semiten_l",
+          "bifemlh_l",
+          "bifemsh_l",
+          "sar_l",
+          "add_long_l",
+          "add_brev_l",
+          "add_mag1_l",
+          "add_mag2_l",
+          "add_mag3_l",
+          "tfl_l",
+          "pect_l",
+          "grac_l",
+          "glut_max1_l",
+          "glut_max2_l",
+          "glut_max3_l",
+          "iliacus_l",
+          "psoas_l",
+          "quad_fem_l",
+          "gem_l",
+          "peri_l",
+          "rect_fem_l",
+          "vas_med_l",
+          "vas_int_l",
+          "vas_lat_l",
+          "med_gas_l",
+          "lat_gas_l",
+          "soleus_l",
+          "tib_post_l",
+          "flex_dig_l",
+          "flex_hal_l",
+          "tib_ant_l",
+          "per_brev_l",
+          "per_long_l",
+          "per_tert_l",
+          "ext_dig_l",
+          "ext_hal_l",
+          "ercspn_r",
+          "ercspn_l",
+          "intobl_r",
+          "intobl_l",
+          "extobl_r",
+          "extobl_l"
+        ],
+        "mujoco_version": "2.3.7"
+      },
+      "sample_columns": [
+        "t",
+        "spring_support_N",
+        "explicit_support_N",
+        "activation_squared",
+        "excitation_squared",
+        "contacts",
+        "max_voltage",
+        "right_vertical_GRF_N",
+        "left_vertical_GRF_N",
+        "harness_Fx_N",
+        "harness_Fy_N",
+        "harness_Fz_N",
+        "harness_Mx_Nm",
+        "harness_My_Nm",
+        "harness_Mz_Nm",
+        "right_GRFx_N",
+        "right_GRFy_N",
+        "right_GRFz_N",
+        "left_GRFx_N",
+        "left_GRFy_N",
+        "left_GRFz_N"
+      ],
+      "legacy_total_mass_kg": 78.46459999999998,
+      "pelvis_subtree_mass_kg": 78.3646,
+      "difference_ground_mass_kg": 0.1,
+      "legacy_BW_N": 769.7377259999998,
+      "pelvis_subtree_BW_N": 768.756726,
+      "legacy_support_window": "body.assistance.samples[:,0] >= 5 s (5.000 through15.998 s, 5500 samples)",
+      "support_N": 768.6444059942947,
+      "legacy_support_percent": 99.857962008516,
+      "same_force_subtree_percent": 99.98538939538265,
+      "aligned_force_mean_N_tstate_ge5": 768.64636670044,
+      "aligned_support_percent_tstate_ge5": 99.98564444435704,
+      "foot_force_max_abs_N": 0.0,
+      "aligned_knee_max_deg_RL": [
+        -1.2999601752155698,
+        -1.3259688611489067
+      ],
+      "adopted": {
+        "stage": 1,
+        "accepted": true,
+        "legacy_assessment": {
+          "score": 42.965741126346416,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            7,
+            7
+          ],
+          "knee_ranges_deg": [
+            73.90590676595717,
+            72.98174757903891
+          ],
+          "hip_ranges_deg": [
+            39.71626907703847,
+            38.77535833641292
+          ],
+          "cycle_phase_error": 0.5,
+          "cycle_coverage": 0.0,
+          "period_s": 1.2329999999999997,
+          "period_cv": 0.46061423320485784,
+          "left_right_phases": [],
+          "frontal_gate": true,
+          "minimum_ankle_width_m": 0.23534196779369024,
+          "minimum_knee_width_m": 0.1967218060331397,
+          "crossed_ankle_fraction": 0.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+          "maximum_knee_extension_deg": [
+            -1.2999601752155698,
+            -1.3259688611489067
+          ],
+          "knee_extension_gate": true,
+          "ground_load_verified": false
+        },
+        "principal_cycle_audit": {
+          "accepted": true,
+          "principal_knee_cycles": [
+            4,
+            4
+          ],
+          "principal_peak_times_s": [
+            [
+              5.254,
+              7.05,
+              9.516,
+              11.982000000000001
+            ],
+            [
+              5.83,
+              8.294,
+              10.760000000000002,
+              13.226
+            ]
+          ],
+          "period_s": 2.4659999999999997,
+          "period_cv": 0.10600945407707325,
+          "bilateral_phase_error": 0.03366668252850866,
+          "cycle_coverage": 1.0,
+          "knee_ranges_deg": [
+            73.90590676595717,
+            72.98174757903891
+          ],
+          "hip_ranges_deg": [
+            39.71626907703847,
+            38.77535833641292
+          ],
+          "autocorrelation": [
+            0.9998267556454012,
+            0.9999352143627981
+          ],
+          "dominant_spectral_Hz": [
+            0.4444444444444934,
+            0.4444444444444934
+          ],
+          "peak_counts": [
+            {
+              "all_prominent_peaks": 7,
+              "principal_peaks": 4
+            },
+            {
+              "all_prominent_peaks": 7,
+              "principal_peaks": 4
+            }
+          ]
+        },
+        "measured": {
+          "mean_spring_support_bw": 0.9985796200851599,
+          "explicit_support_bw": 0.0,
+          "mean_activation_squared": 0.001929491856803567,
+          "mean_excitation_squared": 0.0018518342121039964,
+          "mean_foot_normal_bw": [
+            0.0,
+            0.0
+          ],
+          "body_weight_N": 769.7377259999998,
+          "ground_enabled": false,
+          "contact_samples": 0,
+          "lateral_harness_rms_bw": 0.00433346134032793,
+          "lateral_harness_peak_bw": 0.07681246393414685,
+          "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+          "horizontal_harness_rms_bw": 0.029073545712358456,
+          "late_window_available": true
+        },
+        "wall_s": 26.688954700017348,
+        "simulated_s": 16.0,
+        "scope": "Suspended-air validation only; legacy assessment retained; no ground stepping or body-balance claim"
+      },
+      "cycle_window": "5 <= t_state < 14 s; knee sign inverted only for flexion-peak detection, raw coordinates retained"
+    },
+    "2": {
+      "metadata": {
+        "schema": "aarl_aligned_verification_v1",
+        "native_frame": "legacy_z_up",
+        "display_frame": "x anterior, y superior, z right",
+        "native_to_anatomical": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "sample_phase": "After accepted outer physics interval; warmup excluded. Neural input/start and force interval times retained separately.",
+        "voltage_label": "graded model membrane depolarization (mV; rest-relative)",
+        "side_order": [
+          "r",
+          "l"
+        ],
+        "region_order": [
+          "hindfoot",
+          "forefoot"
+        ],
+        "region_split": 0.5,
+        "regional_sensor_definition": "Physical ground contact locations projected from calcaneus toward toes; virtual regions, not calibrated heel/toe pads.",
+        "force_definition": "Once-counted force on each foot, transformed from contact frame into anatomical world axes. Regional trace is true superior component, not normal-force proxy.",
+        "harness_definition": "Pelvis generalized passive-force wrench projected on solver-stage root-joint axes unless caller supplies apparatus wrench; confirm only apparatus spring/damper acts on those coordinates. Explicit support kept separate.",
+        "kinematic_evaluation_phase": "Contact frames/body xpos are from the latest solver evaluation; qpos/qvel are final state. No extra forward call is made to retime those intermediate quantities.",
+        "missing_requested_cells": [],
+        "provenance": {
+          "configuration_file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\body.json",
+          "configuration": {
+            "force_law_parameters_file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\shared_force_law_v3.json",
+            "knee_training_limits_deg": [
+              -90.0,
+              0.0
+            ],
+            "standing_solver": "coupled_symmetric",
+            "stage": 2,
+            "backend": "compact",
+            "weights_directory": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\hunt_training\\runs\\symmetric_bothcadence_20261030_s1_v2\\tonic_0p02_exact\\aligned_support_ladder_v1\\weights_snapshot",
+            "balance": null,
+            "biarticular_pair_gain": 0.3,
+            "learn_reciprocal": true,
+            "rg_tonic_current": 0.0,
+            "axis_feedback": 0.0,
+            "timing_afferents": false,
+            "restriction": 1.0,
+            "support_fraction": 0.0,
+            "start_hip_deg": -7.0,
+            "start_knee_deg": -10.0,
+            "start_ankle_deg": 0.0,
+            "trace_cells": [
+              "RG_F_r",
+              "RG_F_l",
+              "PF_HIP-F_r",
+              "PF_KNEE-F_r",
+              "MN_iliacus_r",
+              "MN_iliacus_l",
+              "MN_bifemsh_r",
+              "MN_bifemsh_l"
+            ],
+            "verification_capture": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture",
+            "verification_sparse_currents": false,
+            "diagnostic_scope": "Frozen four-command Hunt fit, matched live afferent encoder, no direct posture/MN command; air curriculum probe",
+            "motor_scale": 0.1,
+            "align_ground_pose": false
+          },
+          "source_hashes": {
+            "physical_eval.py": "ecda3d37012e593b54ece1166cb9df440c9f961acbc172689db258535bf6ac33",
+            "controller.py": "00112d00d7e65c700c1c89e651f57354588d88335386209e5803b67f7154b57c",
+            "balance.py": "1e69f6f6945ce7ea9ef48fa6cbbbca91e0044c700fc922526290114a5b50c967",
+            "ground_contact_check.py": "c666630f9e1c20da06e9253aa49cebd3cb6a0ede16473cba17564b93101e6ace",
+            "regional_contacts.py": "57296826959aef9edebebbfaffe0cd73f7a346eefce2844a3a6520c8500268eb",
+            "contact_events.py": "d264a62fafc831b855faff4581072f0251a941c58f8b2dd6e0934e0ed25b827f",
+            "bilateral.py": "b33373652fc69b921a8114ebacbfd43dda0b12aacaa67e6a715c64e9d8cb3cd3",
+            "foot_clearance_check.py": "b9e6b7a779ff469d7019707052de700e4d332e08e3b225e23ce0494f5b616b31",
+            "force_law_parameters_file": "9dc7d7ba444a961e06fd6efd15210ea324a84ee70992b251994cb7d7ee7165cf"
+          }
+        },
+        "stimulus_policy": "NaN means not logged; never synthesize an inferred pulse.",
+        "no_model_or_neural_steps": true,
+        "capture_source_sha256": "5c30320bfc15bbd3fa3f843044bcc76711c24c63bda43e44247b2f247f1afd72",
+        "excluded_held_pose_intervals": 300,
+        "samples": 7700,
+        "capacity": 20000,
+        "body_weight_N": 768.756726,
+        "body_weight_definition": "Pelvis subtree mass times9.81; excludes separate fixed ground/apparatus bodies.",
+        "model_file": "model.mjb",
+        "model_sha256": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+        "actuator_names": [
+          "glut_med1_r",
+          "glut_med2_r",
+          "glut_med3_r",
+          "glut_min1_r",
+          "glut_min2_r",
+          "glut_min3_r",
+          "semimem_r",
+          "semiten_r",
+          "bifemlh_r",
+          "bifemsh_r",
+          "sar_r",
+          "add_long_r",
+          "add_brev_r",
+          "add_mag1_r",
+          "add_mag2_r",
+          "add_mag3_r",
+          "tfl_r",
+          "pect_r",
+          "grac_r",
+          "glut_max1_r",
+          "glut_max2_r",
+          "glut_max3_r",
+          "iliacus_r",
+          "psoas_r",
+          "quad_fem_r",
+          "gem_r",
+          "peri_r",
+          "rect_fem_r",
+          "vas_med_r",
+          "vas_int_r",
+          "vas_lat_r",
+          "med_gas_r",
+          "lat_gas_r",
+          "soleus_r",
+          "tib_post_r",
+          "flex_dig_r",
+          "flex_hal_r",
+          "tib_ant_r",
+          "per_brev_r",
+          "per_long_r",
+          "per_tert_r",
+          "ext_dig_r",
+          "ext_hal_r",
+          "glut_med1_l",
+          "glut_med2_l",
+          "glut_med3_l",
+          "glut_min1_l",
+          "glut_min2_l",
+          "glut_min3_l",
+          "semimem_l",
+          "semiten_l",
+          "bifemlh_l",
+          "bifemsh_l",
+          "sar_l",
+          "add_long_l",
+          "add_brev_l",
+          "add_mag1_l",
+          "add_mag2_l",
+          "add_mag3_l",
+          "tfl_l",
+          "pect_l",
+          "grac_l",
+          "glut_max1_l",
+          "glut_max2_l",
+          "glut_max3_l",
+          "iliacus_l",
+          "psoas_l",
+          "quad_fem_l",
+          "gem_l",
+          "peri_l",
+          "rect_fem_l",
+          "vas_med_l",
+          "vas_int_l",
+          "vas_lat_l",
+          "med_gas_l",
+          "lat_gas_l",
+          "soleus_l",
+          "tib_post_l",
+          "flex_dig_l",
+          "flex_hal_l",
+          "tib_ant_l",
+          "per_brev_l",
+          "per_long_l",
+          "per_tert_l",
+          "ext_dig_l",
+          "ext_hal_l",
+          "ercspn_r",
+          "ercspn_l",
+          "intobl_r",
+          "intobl_l",
+          "extobl_r",
+          "extobl_l"
+        ],
+        "mujoco_version": "2.3.7"
+      },
+      "sample_columns": [
+        "t",
+        "spring_support_N",
+        "explicit_support_N",
+        "activation_squared",
+        "excitation_squared",
+        "contacts",
+        "max_voltage",
+        "right_vertical_GRF_N",
+        "left_vertical_GRF_N",
+        "harness_Fx_N",
+        "harness_Fy_N",
+        "harness_Fz_N",
+        "harness_Mx_Nm",
+        "harness_My_Nm",
+        "harness_Mz_Nm",
+        "right_GRFx_N",
+        "right_GRFy_N",
+        "right_GRFz_N",
+        "left_GRFx_N",
+        "left_GRFy_N",
+        "left_GRFz_N"
+      ],
+      "legacy_total_mass_kg": 78.46459999999998,
+      "pelvis_subtree_mass_kg": 78.3646,
+      "difference_ground_mass_kg": 0.1,
+      "legacy_BW_N": 769.7377259999998,
+      "pelvis_subtree_BW_N": 768.756726,
+      "legacy_support_window": "body.assistance.samples[:,0] >= 5 s (5.000 through15.998 s, 5500 samples)",
+      "support_N": 768.6619824496157,
+      "legacy_support_percent": 99.86024544282449,
+      "same_force_subtree_percent": 99.98767574355061,
+      "aligned_force_mean_N_tstate_ge5": 768.6609911999603,
+      "aligned_support_percent_tstate_ge5": 99.98754680163415,
+      "foot_force_max_abs_N": 0.0,
+      "aligned_knee_max_deg_RL": [
+        -1.7179745408236142,
+        -1.8008293752985627
+      ],
+      "adopted": {
+        "stage": 2,
+        "accepted": true,
+        "legacy_assessment": {
+          "score": 99.66966848539896,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            7,
+            7
+          ],
+          "knee_ranges_deg": [
+            41.46576937126136,
+            39.66646727014467
+          ],
+          "hip_ranges_deg": [
+            62.86491519313944,
+            62.711708851261236
+          ],
+          "cycle_phase_error": 0.09327680150520919,
+          "cycle_coverage": 1.0,
+          "period_s": 1.3000000000000003,
+          "period_cv": 0.008536696131938784,
+          "left_right_phases": [
+            0.35981308411214985,
+            0.3763608087091759,
+            0.3937984496124035,
+            0.41176470588235303,
+            0.4272445820433434,
+            0.44204018547140567,
+            0.6294027565084227,
+            0.6122137404580147,
+            0.5951293759512938,
+            0.5792682926829269,
+            0.5640243902439028,
+            0.550304878048781
+          ],
+          "frontal_gate": true,
+          "minimum_ankle_width_m": 0.24230271579173762,
+          "minimum_knee_width_m": 0.19537628434482437,
+          "crossed_ankle_fraction": 0.0,
+          "pelvis_local_right_axis": [
+            0.0,
+            4.547414961947327e-16,
+            1.0
+          ],
+          "anatomical_axis_verified_from_hip_anchors": true,
+          "frontal_scope": "Pelvis-frame calcaneus/tibia origins; not foot-edge clearance or full self-collision.",
+          "maximum_knee_extension_deg": [
+            -1.7179745408236142,
+            -1.8008293752985627
+          ],
+          "knee_extension_gate": true,
+          "ground_load_verified": false
+        },
+        "principal_cycle_audit": {
+          "accepted": true,
+          "principal_knee_cycles": [
+            7,
+            7
+          ],
+          "principal_peak_times_s": [
+            [
+              5.278,
+              6.562,
+              7.848,
+              9.138000000000002,
+              10.430000000000001,
+              11.722000000000001,
+              13.016000000000002
+            ],
+            [
+              5.74,
+              7.046,
+              8.356000000000002,
+              9.670000000000002,
+              10.982000000000001,
+              12.294,
+              13.606000000000002
+            ]
+          ],
+          "period_s": 1.3000000000000003,
+          "period_cv": 0.008536696131938783,
+          "bilateral_phase_error": 0.09327680150520916,
+          "cycle_coverage": 1.0,
+          "knee_ranges_deg": [
+            41.46576937126136,
+            39.66646727014467
+          ],
+          "hip_ranges_deg": [
+            62.86491519313944,
+            62.711708851261236
+          ],
+          "autocorrelation": [
+            0.9997007639108404,
+            0.9998784119273197
+          ],
+          "dominant_spectral_Hz": [
+            0.7777777777778634,
+            0.7777777777778634
+          ],
+          "peak_counts": [
+            {
+              "all_prominent_peaks": 7,
+              "principal_peaks": 7
+            },
+            {
+              "all_prominent_peaks": 7,
+              "principal_peaks": 7
+            }
+          ]
+        },
+        "measured": {
+          "mean_spring_support_bw": 0.9986024544282449,
+          "explicit_support_bw": 0.0,
+          "mean_activation_squared": 0.0014340654261941923,
+          "mean_excitation_squared": 0.0012971090112290664,
+          "mean_foot_normal_bw": [
+            0.0,
+            0.0
+          ],
+          "body_weight_N": 769.7377259999998,
+          "ground_enabled": false,
+          "contact_samples": 0,
+          "lateral_harness_rms_bw": 0.002369328271330292,
+          "lateral_harness_peak_bw": 0.019637357565394014,
+          "harness_wrench_frame": "Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.",
+          "horizontal_harness_rms_bw": 0.03839739950279448,
+          "late_window_available": true
+        },
+        "wall_s": 32.59931129985489,
+        "simulated_s": 16.0,
+        "scope": "Suspended-air validation only; legacy assessment retained; no ground stepping or body-balance claim"
+      },
+      "cycle_window": "5 <= t_state < 14 s; knee sign inverted only for flexion-peak detection, raw coordinates retained"
+    }
+  },
+  "cycle_recalculation_blocked": "[WinError 5] Access is denied: 'D:\\\\Anaconda\\\\envs\\\\myo\\\\lib\\\\site-packages\\\\scipy\\\\.libs'",
+  "stimuli": [
+    {
+      "phase": "silent",
+      "layer": "RG",
+      "target": "RG_F_r",
+      "onset_s": 7.1000000000000005,
+      "last_input_s": 7.198,
+      "pulse_samples": 50,
+      "current_nA": 2.0,
+      "response_window_s": [
+        7.1000000000000005,
+        10.5
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 10.095660857407768,
+        "PF_HIP-F_r": 1.6511094231771093,
+        "MN_iliacus_r": 0.17431559949066178
+      },
+      "peak_times_s": {
+        "RG_F_r": 7.846,
+        "PF_HIP-F_r": 8.156,
+        "MN_iliacus_r": 7.888
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        -3.6086480966258647,
+        -3.565462910012242
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "phase": "silent",
+      "layer": "PF",
+      "target": "PF_HIP-F_r",
+      "onset_s": 7.1000000000000005,
+      "last_input_s": 7.198,
+      "pulse_samples": 50,
+      "current_nA": 2.0,
+      "response_window_s": [
+        7.1000000000000005,
+        10.5
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 7.648312130292823e-07,
+        "PF_HIP-F_r": 0.5504426114627634,
+        "MN_iliacus_r": 5.1956629165683665e-08
+      },
+      "peak_times_s": {
+        "RG_F_r": 9.152000000000001,
+        "PF_HIP-F_r": 7.2,
+        "MN_iliacus_r": 7.52
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        -3.509907354456687,
+        -3.0576319227209217
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "phase": "silent",
+      "layer": "MN",
+      "target": "MN_iliacus_r",
+      "onset_s": 7.1000000000000005,
+      "last_input_s": 7.198,
+      "pulse_samples": 50,
+      "current_nA": 2.0,
+      "response_window_s": [
+        7.1000000000000005,
+        10.5
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 5.017084866273191,
+        "PF_HIP-F_r": 0.5670179853694841,
+        "MN_iliacus_r": 1.8814941030757957
+      },
+      "peak_times_s": {
+        "RG_F_r": 7.872,
+        "PF_HIP-F_r": 8.192,
+        "MN_iliacus_r": 7.2
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        -3.609069714194899,
+        -3.565462910012242
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "phase": "silent",
+      "layer": "PF_inhibition",
+      "target": "PF_HIP-F_r",
+      "onset_s": 7.1000000000000005,
+      "last_input_s": 7.198,
+      "pulse_samples": 50,
+      "current_nA": -2.0,
+      "response_window_s": [
+        7.1000000000000005,
+        10.5
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 7.648311095564964e-07,
+        "PF_HIP-F_r": 0.5504426114627621,
+        "MN_iliacus_r": 5.195662944323942e-08
+      },
+      "peak_times_s": {
+        "RG_F_r": 9.152000000000001,
+        "PF_HIP-F_r": 7.2,
+        "MN_iliacus_r": 7.52
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        -4.158908023011845,
+        -3.621018465567798
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "phase": "active",
+      "layer": "RG",
+      "target": "RG_F_r",
+      "onset_s": 7.65,
+      "last_input_s": 7.748,
+      "pulse_samples": 50,
+      "current_nA": 2.0,
+      "response_window_s": [
+        7.65,
+        11.05
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 0.33385911215005937,
+        "PF_HIP-F_r": 1.3308460479422024e-05,
+        "MN_iliacus_r": 1.3432220591358401e-06
+      },
+      "peak_times_s": {
+        "RG_F_r": 7.75,
+        "PF_HIP-F_r": 9.166,
+        "MN_iliacus_r": 9.200000000000001
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        2.0676357038855784,
+        2.521355581792525
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.41352714077711566,
+        0.504271116358505
+      ]
+    },
+    {
+      "phase": "active",
+      "layer": "PF",
+      "target": "PF_HIP-F_r",
+      "onset_s": 7.65,
+      "last_input_s": 7.748,
+      "pulse_samples": 50,
+      "current_nA": 2.0,
+      "response_window_s": [
+        7.65,
+        11.05
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 1.0896112470415247,
+        "PF_HIP-F_r": 1.1419853440503611,
+        "MN_iliacus_r": 0.16137843519800188
+      },
+      "peak_times_s": {
+        "RG_F_r": 7.858,
+        "PF_HIP-F_r": 7.75,
+        "MN_iliacus_r": 7.756
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        2.0676357038855784,
+        3.656654075483352
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.41352714077711566,
+        0.7313308150966704
+      ]
+    },
+    {
+      "phase": "active",
+      "layer": "MN",
+      "target": "MN_iliacus_r",
+      "onset_s": 7.65,
+      "last_input_s": 7.748,
+      "pulse_samples": 50,
+      "current_nA": 2.0,
+      "response_window_s": [
+        7.65,
+        11.05
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 6.0388068375322925,
+        "PF_HIP-F_r": 0.7106880179255081,
+        "MN_iliacus_r": 1.7909916818118488
+      },
+      "peak_times_s": {
+        "RG_F_r": 9.146,
+        "PF_HIP-F_r": 9.462000000000002,
+        "MN_iliacus_r": 7.75
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        2.0676357038855784,
+        2.521163452931781
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.41352714077711566,
+        0.5042326905863562
+      ]
+    },
+    {
+      "phase": "active",
+      "layer": "PF_inhibition",
+      "target": "PF_HIP-F_r",
+      "onset_s": 7.65,
+      "last_input_s": 7.748,
+      "pulse_samples": 50,
+      "current_nA": -2.0,
+      "response_window_s": [
+        7.65,
+        11.05
+      ],
+      "response_end_exclusive": true,
+      "pre_pulse_max_abs_mV": 0.0,
+      "maximum_absolute_differences_mV": {
+        "RG_F_r": 1.0462552247885673,
+        "PF_HIP-F_r": 1.1419802176571492,
+        "MN_iliacus_r": 0.16759950288856684
+      },
+      "peak_times_s": {
+        "RG_F_r": 7.862,
+        "PF_HIP-F_r": 7.75,
+        "MN_iliacus_r": 7.758
+      },
+      "PF_voltage_range_during_pulse_mV": [
+        1.3860617566442404,
+        2.0676357038855784
+      ],
+      "PF_transmission_range_during_pulse": [
+        0.2772123513288481,
+        0.41352714077711566
+      ]
+    }
+  ],
+  "W2L108": {
+    "robot_mass_kg": 41.919002,
+    "BW_N": 411.22540962,
+    "joint_names": [
+      "hip_L",
+      "knee_L",
+      "ankle_L",
+      "hip_R",
+      "knee_R",
+      "ankle_R"
+    ],
+    "minimum_saved_angles_deg_by_column": [
+      -7.571705604397676,
+      1.94615322165828,
+      -12.383565619633725,
+      -4.663648653905607,
+      2.0866977889947975,
+      -12.395863177260164
+    ],
+    "maximum_saved_angles_deg_by_column": [
+      20.159740866483947,
+      36.706791328560726,
+      5.452549022427921,
+      20.66932363310786,
+      31.304184805386548,
+      4.090920898797552
+    ],
+    "result_keys": [
+      "machine",
+      "source_sha256",
+      "mode",
+      "feedback",
+      "reference",
+      "contact_si",
+      "physics_dt",
+      "neural_dt",
+      "neurons",
+      "nonspiking_edges",
+      "bank_units",
+      "muscle_actuators",
+      "duration_requested_s",
+      "duration_completed_s",
+      "warmed_wall_s",
+      "simulated_s_per_wall_s",
+      "failure",
+      "root_y_min_m",
+      "root_y_final_m",
+      "root_x_change_m",
+      "anatomical_knee_min_deg",
+      "joint_range_deg",
+      "mean_rail_support_BW",
+      "mean_foot_vertical_N",
+      "scope",
+      "shared_pf_knee_flex_scale",
+      "tuned_edges",
+      "ankle_pf_crossed",
+      "ankle_phase_edits",
+      "symmetric_rg_ext_tonic_nA",
+      "sagittal_harness_scale",
+      "harness_force_rms_N",
+      "harness_torque_rms_Nm",
+      "neural_time_scale",
+      "robot_mass_kg",
+      "pooled_inherited_hip_physics",
+      "belt_motor_end_s",
+      "fixed_air_root_pose",
+      "v3_output_scale",
+      "v3_output_edits",
+      "rg_final_current_terms",
+      "rg_current_term_scope",
+      "guide_clearance_m",
+      "guide_geometry",
+      "guide_force_rms_N",
+      "guide_torque_rms_Nm",
+      "guide_contact_fraction",
+      "pelvis_euler_XYZ_range_deg",
+      "pelvis_rotational_energy_max_J",
+      "yaw_perturb_nm",
+      "yaw_perturb_start_s",
+      "yaw_perturb_duration_s",
+      "mean_net_vertical_assistance_BW",
+      "measurement_axes",
+      "rail_height_offset_m",
+      "belt_world_x_change_m",
+      "root_forward_relative_to_belt_m",
+      "implementation_sha256",
+      "logging",
+      "segment_mass_scale",
+      "segment_mass_variant",
+      "contact_rg_scale",
+      "contact_pf_scale",
+      "contact_mn_scale",
+      "contact_gmax",
+      "contact_edge_edits",
+      "contact_gain_symmetry_verified",
+      "pf_mn_recruitment_scale",
+      "toe_mn_gmax",
+      "recruitment",
+      "initial_qpos",
+      "hip_pf_mn_scale",
+      "hip_flexor_pf_mn_scale",
+      "source_neural_clock_scale",
+      "source_profile",
+      "source_embedded_guides",
+      "neural_pulse",
+      "neural_pulse_logged_integral_nA_s",
+      "belt_command_m_s",
+      "slide_travel_checks"
+    ],
+    "result_knee_min_deg": [
+      1.94615322165828,
+      2.0866977889947975
+    ],
+    "assessment": {
+      "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\LiDeng_W2L_20261104\\fresh_repeat\\W2L_VirtualWalker_Newer\\repeat",
+      "evaluation_start_s": 1.0,
+      "criteria": "Whole-foot clearance>1mm for80ms, peak\u226510mm, load<.025BW; opposite foot bears>.05BW for\u2265half interval. \u22653 swings per leg and\u226580% alternating transitions. Knee peaks separately reported.",
+      "legs": {
+        "L": {
+          "knee_peak_count": 7,
+          "period_median_s": 1.2409999999999999,
+          "unloaded_clear_swings": 8,
+          "swing_intervals": [
+            {
+              "start_s": 1.0,
+              "end_s": 1.558,
+              "peak_clearance_m": 0.0984611057188407,
+              "other_stance_fraction": 0.8566308243727598
+            },
+            {
+              "start_s": 2.244,
+              "end_s": 2.7880000000000003,
+              "peak_clearance_m": 0.09568109374341263,
+              "other_stance_fraction": 0.9448529411764706
+            },
+            {
+              "start_s": 3.462,
+              "end_s": 4.034,
+              "peak_clearance_m": 0.0933646969277597,
+              "other_stance_fraction": 0.7972027972027972
+            },
+            {
+              "start_s": 4.702,
+              "end_s": 5.2780000000000005,
+              "peak_clearance_m": 0.0914941896526847,
+              "other_stance_fraction": 0.7916666666666666
+            },
+            {
+              "start_s": 5.948,
+              "end_s": 6.516,
+              "peak_clearance_m": 0.10010242148950707,
+              "other_stance_fraction": 0.823943661971831
+            },
+            {
+              "start_s": 7.188,
+              "end_s": 7.7620000000000005,
+              "peak_clearance_m": 0.0900401918239531,
+              "other_stance_fraction": 0.794425087108014
+            },
+            {
+              "start_s": 8.43,
+              "end_s": 9.002,
+              "peak_clearance_m": 0.09579038041301334,
+              "other_stance_fraction": 0.8076923076923077
+            },
+            {
+              "start_s": 9.674,
+              "end_s": 9.998,
+              "peak_clearance_m": 0.09753312329930351,
+              "other_stance_fraction": 0.852760736196319
+            }
+          ],
+          "loaded_fraction": 0.4331111111111111,
+          "max_whole_foot_clearance_m": 0.10010242148950707,
+          "min_anatomical_knee_flexion_deg": 1.94615322165828
+        },
+        "R": {
+          "knee_peak_count": 14,
+          "period_median_s": 0.486,
+          "unloaded_clear_swings": 7,
+          "swing_intervals": [
+            {
+              "start_s": 1.544,
+              "end_s": 2.198,
+              "peak_clearance_m": 0.1172305083191434,
+              "other_stance_fraction": 0.764525993883792
+            },
+            {
+              "start_s": 2.7880000000000003,
+              "end_s": 3.436,
+              "peak_clearance_m": 0.11653239137329967,
+              "other_stance_fraction": 0.7716049382716049
+            },
+            {
+              "start_s": 4.0280000000000005,
+              "end_s": 4.678,
+              "peak_clearance_m": 0.11695142122035936,
+              "other_stance_fraction": 0.796923076923077
+            },
+            {
+              "start_s": 5.26,
+              "end_s": 5.92,
+              "peak_clearance_m": 0.11727295393322511,
+              "other_stance_fraction": 0.803030303030303
+            },
+            {
+              "start_s": 6.5120000000000005,
+              "end_s": 7.162,
+              "peak_clearance_m": 0.11676961321794727,
+              "other_stance_fraction": 0.7784615384615384
+            },
+            {
+              "start_s": 7.746,
+              "end_s": 8.404,
+              "peak_clearance_m": 0.11633933780385915,
+              "other_stance_fraction": 0.7933130699088146
+            },
+            {
+              "start_s": 8.994,
+              "end_s": 9.646,
+              "peak_clearance_m": 0.1167853229807717,
+              "other_stance_fraction": 0.7944785276073619
+            }
+          ],
+          "loaded_fraction": 0.43,
+          "max_whole_foot_clearance_m": 0.11727295393322511,
+          "min_anatomical_knee_flexion_deg": 2.0866977889947975
+        }
+      },
+      "alternating_swing_transitions": 14,
+      "alternating_transition_fraction": 1.0,
+      "alternating_supported_stepping_gate": true,
+      "walking_claim": false,
+      "reason": "Passive support rails bear substantial weight; this gate does not establish independent walking."
+    },
+    "source_model_xml_sha256": "296422d21116b22b88cd167c9ad2b0e13512aa2fda8c45ac2d9b3dc013dd5e74",
+    "window_after1": [
+      1.0,
+      9.998
+    ],
+    "upward_percent_after1": 29.518768828866964,
+    "signed_net_percent_whole": 35.06857456379923,
+    "repeat_verified_now": {
+      "t": true,
+      "q": true,
+      "angles": true,
+      "neuro": true,
+      "forces": true,
+      "root": true,
+      "rail_vertical": true,
+      "foot_vertical": true,
+      "foot_clearance": true,
+      "harness_force": true,
+      "harness_torque": true,
+      "pelvis_quaternion": true,
+      "pelvis_euler_XYZ_deg": true,
+      "pelvis_omega_world": true,
+      "pelvis_rotational_energy_J": true,
+      "com_position": true,
+      "com_velocity": true,
+      "rail_force_world": true,
+      "rail_torque_about_pelvis": true,
+      "guide_force_world": true,
+      "guide_torque_about_pelvis": true,
+      "guide_contact_count": true,
+      "foot_force_world": true,
+      "foot_region_force_world": true,
+      "foot_cop_world": true,
+      "foot_body_position": true,
+      "guide_carriage_x": true,
+      "guide_carriage_vx": true,
+      "guide_carriage_kinetic_J": true,
+      "perturb_torque": true,
+      "contact_sensor_binary": true,
+      "neural_stimulus_nA": true
+    },
+    "stored_parity": true,
+    "selected_path": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\LiDeng_W2L_20261104\\body_trials\\W2L_VirtualWalker_Newer\\rustuna108_trial_0010_1793854859534189500"
+  },
+  "noise": {
+    "cases": [
+      {
+        "label": "zero",
+        "sigma_nA": 0.0,
+        "seed": 41001,
+        "accepted": true
+      },
+      {
+        "label": "0.01_41001",
+        "sigma_nA": 0.01,
+        "seed": 41001,
+        "accepted": true
+      },
+      {
+        "label": "0.01_41002",
+        "sigma_nA": 0.01,
+        "seed": 41002,
+        "accepted": true
+      },
+      {
+        "label": "0.01_41003",
+        "sigma_nA": 0.01,
+        "seed": 41003,
+        "accepted": true
+      },
+      {
+        "label": "0.025_41001",
+        "sigma_nA": 0.025,
+        "seed": 41001,
+        "accepted": true
+      },
+      {
+        "label": "0.025_41002",
+        "sigma_nA": 0.025,
+        "seed": 41002,
+        "accepted": true
+      },
+      {
+        "label": "0.025_41003",
+        "sigma_nA": 0.025,
+        "seed": 41003,
+        "accepted": true
+      },
+      {
+        "label": "repeat",
+        "sigma_nA": 0.025,
+        "seed": 41001,
+        "accepted": true
+      }
+    ],
+    "stored_repeat": {
+      "qpos": 0.0,
+      "neural_voltage": 0.0,
+      "stimulus_nA": 0.0
+    },
+    "repeat_verified_now": {
+      "qpos": 0.0,
+      "neural_voltage": 0.0,
+      "stimulus_nA": 0.0
+    }
+  },
+  "elapsed_s": 1.606278299994301,
+  "sources": {
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\COMPLETE.json": {
+      "sha256": "0f857f0e3537432060c84b3d9c5c3b070422f16bc18bbb4a37dbf1aa1ac5220b",
+      "bytes": 7394
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\ordered_output_fits_v5\\hunt\\C\\MANIFEST.json": {
+      "sha256": "62782f60b3ea83dcd67b83334eaccee6108d3605acb42346604fa18076564f6e",
+      "bytes": 3340
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_final\\controller_profiles_20261104\\dominant_cycles.py": {
+      "sha256": "fc084078e825c99d5d03465576c87e37ea26d01dc389f301035f679cf1078510",
+      "bytes": 4856
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1\\body.assistance.npz": {
+      "sha256": "4eff685ec3b45bdc800956163854d95f1313bf507d3aa9c439f29445690fcd39",
+      "bytes": 572825
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1\\capture\\aligned_trace.npz": {
+      "sha256": "fdedd7b71dfd5a7456750e8193d947a8784171f3ac60d319bf003b8d97e102c9",
+      "bytes": 22080420
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1\\capture\\model.mjb": {
+      "sha256": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+      "bytes": 8118930
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1\\capture\\ALIGNED_TRACE_METADATA.json": {
+      "sha256": "81baee913d9a21a811ca1e17d1a79926ba22909ac4d90461c4fea34b1342b237",
+      "bytes": 6393
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\body.assistance.npz": {
+      "sha256": "cbbf91c8686abc121f1a01ea3d977c421d78cbe35973151b94470bdd1525973c",
+      "bytes": 583687
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture\\aligned_trace.npz": {
+      "sha256": "2e905862dc45854c15769a908939871fffc0bf343f4ceafb5324ec33d6e35ce9",
+      "bytes": 23876806
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture\\model.mjb": {
+      "sha256": "a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc",
+      "bytes": 8118930
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2\\capture\\ALIGNED_TRACE_METADATA.json": {
+      "sha256": "2c00bdb05274cc7d8ac63f3f3da55031fe31184dd00e92122fff9ddcf7cbd2ac",
+      "bytes": 6393
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\Baseline\\capture\\aligned_trace.npz": {
+      "sha256": "96f45ae81aa94041956b82a923e0fc563a01e4fcc654518b065fd5390af804f2",
+      "bytes": 24352362
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\RG\\body.json": {
+      "sha256": "9b468f9c11357da23aa806cac4860743d0d444340bced810e31dfd17f0bcd4dc",
+      "bytes": 2391
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\RG\\capture\\aligned_trace.npz": {
+      "sha256": "88558788f043b50b16738b897b4fc5ac4ede007e9d8ae3b6894a566fe89bac51",
+      "bytes": 24354967
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\PF\\body.json": {
+      "sha256": "54e3417782dba4749f672095b8ca5ce4f4babe78e023b2a5b7a1c7967fb5d948",
+      "bytes": 2395
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\PF\\capture\\aligned_trace.npz": {
+      "sha256": "692adda381780bb1af3ebae8bde4814f59020cf172eb2a6be239d0abf2b22c6a",
+      "bytes": 24352475
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\MN\\body.json": {
+      "sha256": "6d710182580babbecda0cee4cdc8f1ac0336a4099972df26ee0fba03c0310383",
+      "bytes": 2397
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\MN\\capture\\aligned_trace.npz": {
+      "sha256": "d13312c07aba2dd29c97ae45ab34f42f9043581f338805a9270694c6a9a4b8d4",
+      "bytes": 24353316
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\PF_inhibition\\body.json": {
+      "sha256": "17110e2711de7215e4a6531de899c02c1292c642e16a82f7f1810a431ef08259",
+      "bytes": 2407
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_layer_stimulus_2nA_v2\\PF_inhibition\\capture\\aligned_trace.npz": {
+      "sha256": "a8d672109e79c0346cd8d34e0c86e2205c1482efeee788c1f9479b812b612818",
+      "bytes": 24352623
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\RG\\body.json": {
+      "sha256": "d7c1642c8ff797d67611045e9cd0200426b074914a8dc29c8d4e008e7f03922e",
+      "bytes": 2395
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\RG\\capture\\aligned_trace.npz": {
+      "sha256": "79f9e7dcf98e8a099ec1ba15c2d0166f923da5ec554275cd459a1942ab83ff38",
+      "bytes": 24352633
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\PF\\body.json": {
+      "sha256": "ea2f7b10dc4dc9876182649a72d8b6f069840f0661d376cf8884f1820d7ae5e1",
+      "bytes": 2399
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\PF\\capture\\aligned_trace.npz": {
+      "sha256": "7e5189270a31294e9907c48beecf8aaf6670807a274bccb9ed55df2652e187e0",
+      "bytes": 24352466
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\MN\\body.json": {
+      "sha256": "3e60e5376b0a8fd589f0041a1194b4680a182475a455ad6b193e07b30fb0d00f",
+      "bytes": 2401
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\MN\\capture\\aligned_trace.npz": {
+      "sha256": "51a124baa66d3b027ec2ff436c16a68c3bfe1f7928f27caa3078d688b447e7a5",
+      "bytes": 24357137
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\PF_inhibition\\body.json": {
+      "sha256": "28b4875b511baca614325d4555f10cb030a816be8831be3f189243b4f50c075a",
+      "bytes": 2411
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_active_phase_stimulus_v3\\PF_inhibition\\capture\\aligned_trace.npz": {
+      "sha256": "a84040be0233bf6ea869243199c8a6d626a33c7895448a4e7a5f9bc348bb5f8b",
+      "bytes": 24353360
+    },
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\LiDeng_W2L_20261104\\FRESH_VERIFICATION.json": {
+      "sha256": "09ba36f547e20f683a7d31337618dd25f39f9819671dbd8cb9ea0584267242e7",
+      "bytes": 39013
+    },
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\LiDeng_W2L_20261104\\fresh_repeat\\W2L_VirtualWalker_Newer\\repeat\\trajectory.npz": {
+      "sha256": "7357c693d19538e541722d7724a8d7039a0472f9722078f00736fe391f429b9b",
+      "bytes": 6479795
+    },
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\LiDeng_W2L_20261104\\fresh_repeat\\W2L_VirtualWalker_Newer\\repeat\\model.xml": {
+      "sha256": "296422d21116b22b88cd167c9ad2b0e13512aa2fda8c45ac2d9b3dc013dd5e74",
+      "bytes": 22391
+    },
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\LiDeng_W2L_20261104\\body_trials\\W2L_VirtualWalker_Newer\\rustuna108_trial_0010_1793854859534189500\\trajectory.npz": {
+      "sha256": "7357c693d19538e541722d7724a8d7039a0472f9722078f00736fe391f429b9b",
+      "bytes": 6479795
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\COMPLETE.json": {
+      "sha256": "a8e38c8e39362739a7f65ddb98b6da081f4d7a037cd7d7999ca6553bed2ecedc",
+      "bytes": 24747
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\0.025_41001\\capture\\aligned_trace.npz": {
+      "sha256": "ba8555368c153291a5e5f6f8df65f6ac9d20d3f1dc9348fd78d344375a6f573e",
+      "bytes": 24618027
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_rg_noise_v1\\repeat\\capture\\aligned_trace.npz": {
+      "sha256": "ba8555368c153291a5e5f6f8df65f6ac9d20d3f1dc9348fd78d344375a6f573e",
+      "bytes": 24618027
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_final\\controller_profiles_20261104\\body_probe.py": {
+      "sha256": "acc6c287b5c8a91232b65e1209e22a36fc1eb9977cf11e47931012876ec3a341",
+      "bytes": 14671
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_final\\controller_profiles_20261104\\profile.py": {
+      "sha256": "4e281a1cbba59bb7af7d044f0d854cd9abeafb38505db0348f809cb4cf7399ff",
+      "bytes": 24054
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_final\\controller_profiles_20261104\\stimulus_figures.py": {
+      "sha256": "6c9bed0d4ebadaea82c05a3a86dd0e2d5743e2d72f3c5a470219e0898720ac5d",
+      "bytes": 4868
+    },
+    "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\source_snapshot_final\\existing_dependencies\\hunt_training__physical_eval.py": {
+      "sha256": "ecda3d37012e593b54ece1166cb9df440c9f961acbc172689db258535bf6ac33",
+      "bytes": 27225
+    },
+    "D:\\Users\\Ben Bolen\\NeuroCampaign_20261031\\LiDeng_W2L_20261104\\ADAPTER_SOURCE.py": {
+      "sha256": "fdef17be56c69d36a16d45ff934780cf3ef50b0df26bd09e817eff1e30a82920",
+      "bytes": 4198
+    }
+  }
+}
