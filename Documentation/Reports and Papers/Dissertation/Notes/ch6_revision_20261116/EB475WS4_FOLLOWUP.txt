@@ -1,0 +1,13 @@
+Continue the Chapter 6 and Appendix D revision after I have committed and synchronized the laptop changes.
+
+Run hostname first and read the EB475WS4 instructions in AGENTS.md. The repository is D:\Github\Bipedal_Robot. Read the dissertation skill and Documentation\Reports and Papers\Dissertation\Notes\ch6_revision_20261116\REVISION_REPORT.md, CHAPTER_REVIEW.md, APPENDIX_REVIEW.md, GRAPHICS_REVIEW.md, SUPERVISOR_REVIEW.md, and FIGURE_ORGANIZATION.json.
+
+The canonical source is Documentation\Reports and Papers\Dissertation\Final\main.tex. Edit Chapter 6 at Final\chapters\60-sns.tex and Appendix D at Final\chapters\95-AppendixD.tex. Active figures belong in the sibling Figures\60-sns and Figures\95-AppendixD folders. Superseded figures belong in their Deprecated folders. Do not create a ZIP, extract an older manuscript over Final, or work from ProofFinal. Preserve my Introduction, published muscle chapter, torque results, bibliography, and unrelated edits.
+
+Check whether this desktop has newer relevant results or graphics than the November 4-5 portable handoff. Compare actual configuration/source hashes and scoring windows, rather than file timestamps. Apply only verified, relevant updates and record every numerical change with its generating file or saved result.
+
+Check the SNS-Simscape icons against slide 69 of Bolen_PhD_Defense_v34a.pptx and the current SNS_Library. The laptop corrected three display-only coordinate expressions in Code\Matlab\SNS_Simscape\sns_icon_muscle.m. Existing SLX files still contain their old expanded masks. Use Notes\ch6_revision_20261116\figscripts\refresh_sns_library_icons.m to make and inspect a separate corrected library copy. Verify all block equations, parameters, ports, and connections before replacing a working library. Do not alter scientific parameters for appearance.
+
+Run the supplied SNS figure renderer in a normal MATLAB session if compatible. Preserve 14 cm width, at least 10 pt text, all six actual knee/cup feedback connections, and the saved traces. The knee uses a simplified force element. Cup sag values are 10-second ramp endpoints at 0.625 kg, not equilibrium values. Keep the reviewed vector figures unless replacements demonstrably improve them without changing data.
+
+Compile Final\main.tex directly in a fresh build directory, with absolute bibliography search paths. Verify errors, citations, references, figures, float sizes, and the rendered Chapter 6/Appendix D pages. Have an independent reviewer assess prose, captions, evidence scope, and readability. Return full Windows paths, a concise verification report, and exactly what I should commit. No agent commits, pushes, Overleaf uploads, new optimization campaigns, or unrelated revisions.

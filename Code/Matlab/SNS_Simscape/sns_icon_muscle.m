@@ -17,14 +17,14 @@ cmd = {};
 
 % body: black backing patch (heavier outline), then the fill patch
 cmd{end+1} = sprintf('patch([%s], [%s], [0 0 0]);', ...
-    vecstr(g.bodyX), vecstr(g.bodyY + edgeSign(g.bodyY, g.edge)));
+    vecstr(g.bodyX), vecstr(edgeSign(g.bodyY, g.edge)));
 cmd{end+1} = sprintf('patch([%s], [%s], [%.3g %.3g %.3g]);', ...
     vecstr(g.bodyX), vecstr(g.bodyY), g.fill);
 
 if isfield(g, 'braid')
     cmd{end+1} = 'color(''black'');';
     for i = 1:size(g.braid, 1)
-        cmd{end+1} = sprintf('plot([%.4g %.4g], [%.4g %.4g]);', g.braid(i, :));
+        cmd{end+1} = sprintf('plot([%.4g %.4g], [%.4g %.4g]);', g.braid(i, [1 3 2 4]));
     end
     caps = {g.capR, g.capL};
     for c = 1:2
@@ -37,7 +37,7 @@ if isfield(g, 'braid')
 elseif isfield(g, 'fibers')
     cmd{end+1} = 'color(''black'');';
     for i = 1:size(g.fibers, 1)
-        cmd{end+1} = sprintf('plot([%.4g %.4g], [%.4g %.4g]);', g.fibers(i, :));
+        cmd{end+1} = sprintf('plot([%.4g %.4g], [%.4g %.4g]);', g.fibers(i, [1 3 2 4]));
     end
     tns = {g.tendonR, g.tendonL};
     for c = 1:2
