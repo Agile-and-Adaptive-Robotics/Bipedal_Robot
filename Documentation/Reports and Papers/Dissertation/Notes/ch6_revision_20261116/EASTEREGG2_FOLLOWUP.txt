@@ -1,0 +1,18 @@
+Verify and update the evidence supporting revised Chapter 6 and Appendix D after I have committed and synchronized the laptop changes.
+
+Run hostname first and read the easteregg2 instructions in AGENTS.md. The repository is D:\GitHub\Bipedal_Robot. Read the dissertation skill and Documentation\Reports and Papers\Dissertation\Notes\ch6_revision_20261116\REVISION_REPORT.md and its chapter, appendix, graphics, and supervisor reviews.
+
+The canonical source is Documentation\Reports and Papers\Dissertation\Final\main.tex, with 60-sns.tex and 95-AppendixD.tex under Final\chapters. Active figures belong in the sibling Figures\60-sns and Figures\95-AppendixD folders; old versions belong in Deprecated. Do not create a ZIP, overwrite Final from an older download, or use ProofFinal as the working source. Preserve unrelated chapters, published results, and bibliography entries.
+
+Inspect the saved raw recordings and provenance in D:\Users\Ben Bolen\ControllerTraining_20261104, D:\Users\Ben Bolen\NeuroCampaign_20261031\LiDeng_W2L_20261104, and D:\Users\Ben Bolen\NeuroAcceleration_20261104. Follow the exact CAD experiment paths in Defense\Session1_Handoff_20261104\records\CAD_CONTACT_HANDOVER_EXPERIMENT_RECORD.md and the November 5 PF audit/checkpoints. Identify any newer verified results before replacing a claim.
+
+Check these distinctions against the actual arrays and configurations:
+- BiW2Lvar+ passed suspended stages 1 and 2 with the same learned weights. Their sensory and command conditions differ; the period change is not isolated evidence of a feedback effect. Ground contact is disabled. Verify the noise trials and paired active/silent-phase layer stimuli.
+- The newer W2L108 ground test has 8 left/7 right clear swings and 29.519% body-weight upward assistance after 1 second. Rails/guides remain. The lower-support slow candidate failed its shuffle criteria.
+- The CAD test uses 54 ideal reference-tension actuators with SNS timing and engineering allocation. Verify 77.5% measured support over 16-28 seconds, 7 right/6 left clear swings, 5.10-degree minimum flexion, and 5/8 local perturbation passes. It is not a dynamically calibrated 54-BPA or harness-free result.
+- The superseding PF audit found 0/12 syn6 timing passes and variance rank 3 per side versus six intended primitives; s3k rank 2 lacked declared timing windows. Output fitting alone did not verify PF function. Do not revive superseded success claims.
+- Keep complete-process 6.82x and neural-call 18.31x speed ratios separate from the later 1.613x warm-kernel increment and 1.0156x diagnostic-run increment.
+
+Where useful, regenerate readable vector plots directly from the raw aligned arrays. Preserve data, units, sign conventions, common time axes, and at least 10 pt fonts at final size. Move superseded assets to Deprecated and update the TeX references. Document exact source files, hashes, windows, and every numerical change. Replays must use separate output folders and unchanged saved parameters; do not refit or launch training/optimization.
+
+Finish with an independent prose/evidence/figure review and a clean full build of Final\main.tex. Return full Windows paths, verified replacements, unresolved gaps, and the files I should commit. Do not commit, push, upload to Overleaf, or alter unrelated work.

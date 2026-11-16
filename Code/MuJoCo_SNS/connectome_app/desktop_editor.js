@@ -46,11 +46,55 @@ function desktopNodeHit(n,p){const g=desktopGeom(n);return Math.abs(p.x-n.x)<=g.
 function anchor(n,tx,ty,port){const g=desktopGeom(n),dx=tx-n.x,dy=ty-n.y;if(port){const o=Math.max(0,Math.min(1,port.offset??.5));return port.side==='left'?{x:n.x-g.w/2,y:n.y-g.h/2+g.h*o}:port.side==='right'?{x:n.x+g.w/2,y:n.y-g.h/2+g.h*o}:port.side==='top'?{x:n.x-g.w/2+g.w*o,y:n.y-g.h/2}:{x:n.x-g.w/2+g.w*o,y:n.y+g.h/2};}const scale=g.shape==='circle'||g.shape==='ellipse'?1/(Math.hypot(dx/(g.w/2),dy/(g.h/2))||1):Math.min(g.w/2/(Math.abs(dx)||1e-12),g.h/2/(Math.abs(dy)||1e-12));return{x:n.x+dx*scale,y:n.y+dy*scale};}
 function edgeVerts(e){const a=nodeById(e.from),b=nodeById(e.to);if(!a||!b)return null;const ps=e.pts?.length?e.pts:e._uiPts||[],first=ps[0]||b,last=ps.at(-1)||a,vs=[anchor(a,first.x,first.y,e.fromPort||e._uiFromPort),...ps.map(p=>({...p})),anchor(b,last.x,last.y,e.toPort||e._uiToPort)],segs=[];for(let i=0;i<vs.length-1;i++)segs.push({x1:vs[i].x,y1:vs[i].y,x2:vs[i+1].x,y2:vs[i+1].y});return{vs,segs};}
 const dEl=(tag,attrs={},value)=>{const e=document.createElementNS(NS,tag);for(const[k,v]of Object.entries(attrs))e.setAttribute(k,v);if(value!==undefined)e.textContent=value;return e;};
+const schematicFont = 'Arial, Helvetica, sans-serif';
+let labelMeasure;
+
+function renderSchematicLabel(text, node, geometry) {
+ const caption = geometry.shape === 'spindle';
+ const compactSymbol = ['circle','ellipse','muscle','tendon'].includes(geometry.shape);
+ const maxWidth = Math.max(1, geometry.w * (compactSymbol ? .78 : 1) - (compactSymbol ? 2 : 16));
+ const maxHeight = caption ? Infinity : Math.max(1, geometry.h - 10);
+ labelMeasure ??= document.createElement('canvas').getContext('2d');
+ const paragraphs = node.label.split('\n');
+ let fontSize = desktopSchematic() ? (node.sub ? 34 : 32) : 16;
+ let lines;
+ for (;;) {
+  labelMeasure.font = `700 ${fontSize}px ${schematicFont}`;
+  lines = paragraphs.flatMap(paragraph => {
+   if (compactSymbol || labelMeasure.measureText(paragraph).width <= maxWidth) return [paragraph];
+   const wrapped = [''];
+   for (const word of paragraph.split(/\s+/)) {
+    const current = wrapped.at(-1);
+    const next = current ? current + ' ' + word : word;
+    if (current && labelMeasure.measureText(next).width > maxWidth) wrapped.push(word);
+    else wrapped[wrapped.length - 1] = next;
+   }
+   return wrapped;
+  });
+  const width = Math.max(...lines.map(line => labelMeasure.measureText(line).width));
+  const height = (lines.length - 1) * fontSize * 1.04 + fontSize * .84;
+  if (fontSize <= 1 || (width <= maxWidth && height <= maxHeight)) break;
+  fontSize--;
+ }
+ const lineHeight = fontSize * 1.04;
+ const span = (lines.length - 1) * lineHeight;
+ const baseline = caption ? node.y - geometry.h / 2 - fontSize * .28 - 5 - span
+                          : node.y + fontSize * .32 - span / 2;
+ text.replaceChildren();
+ text.style.fontFamily = schematicFont;
+ text.style.fontWeight = '700';
+ text.style.fontSize = `${fontSize}px`;
+ text.setAttribute('fill', '#17232d');
+ text.setAttribute('x', node.x);
+ text.setAttribute('y', baseline);
+ lines.forEach((line, i) => text.appendChild(dEl('tspan', {x:node.x, dy:i ? lineHeight : 0}, line)));
+}
+
 const desktopOriginalRenderNode=renderNode;
 renderNode=function(n,keep){desktopOriginalRenderNode(n,keep);if(!n.el)return;const g=desktopGeom(n),el=n.el,old=el.querySelector('circle,ellipse,rect');if(old)old.remove();const x=n.x-g.w/2,y=n.y-g.h/2,color=n.view?.fill||(['HC-PF-E','HC-PF-F','HC-RG-E','HC-RG-F'].includes(n.type)?'#FFE52E':n.type==='SUB'?'#DDEBCC':n.type==='ADAPTER'?'#FA8E80':['MUSCLE','SPINDLE','TENDON'].includes(n.type)?'#F4D8BE':'#9AD8F1');let shape;
  if(g.shape==='circle'||g.shape==='ellipse')shape=dEl('ellipse',{cx:n.x,cy:n.y,rx:g.w/2,ry:g.h/2});else if(g.shape==='muscle')shape=dEl('path',{d:`M ${n.x} ${y} C ${x+g.w*7/6} ${y+g.h*.17} ${x+g.w*7/6} ${y+g.h*.83} ${n.x} ${y+g.h} C ${x-g.w/6} ${y+g.h*.83} ${x-g.w/6} ${y+g.h*.17} ${n.x} ${y} Z`});else if(g.shape==='tendon')shape=dEl('path',{d:`M ${n.x} ${y} L ${x+g.w} ${n.y} L ${n.x} ${y+g.h} L ${x} ${n.y} Z`});else shape=dEl('rect',{x,y,width:g.w,height:g.h,rx:12});shape.setAttribute('fill',desktopSchematic()?(n.type==='PF'?'#FFE52E':color):'#fff');shape.setAttribute('stroke','#263238');shape.setAttribute('stroke-width','1.5');el.insertBefore(shape,el.firstChild);
- const txt=el.querySelector('text');txt.replaceChildren();txt.style.fontSize=desktopSchematic()?(n.sub?'24px':'18px'):'11px';txt.setAttribute('x',n.x);txt.setAttribute('y',n.y-((n.label.match(/\n/g)||[]).length)*10+6);for(const[s,i]of n.label.split('\n').map((s,i)=>[s,i]))txt.appendChild(dEl('tspan',{x:n.x,dy:i?20:0},s));
- if(g.shape==='spindle'){const pts=[];for(let k=0;k<11;k++)pts.push(`${x+g.w*.15+k*g.w*.07},${n.y+(k%2?8:-8)}`);el.insertBefore(dEl('polyline',{points:pts.join(' '),fill:'none',stroke:'#73533E','stroke-width':1.4}),txt);txt.setAttribute('y',y-6);}
+ const txt=el.querySelector('text');renderSchematicLabel(txt,n,g);
+ if(g.shape==='spindle'){const pts=[];for(let k=0;k<11;k++)pts.push(`${x+g.w*.15+k*g.w*.07},${n.y+(k%2?8:-8)}`);el.insertBefore(dEl('polyline',{points:pts.join(' '),fill:'none',stroke:'#73533E','stroke-width':1.4}),txt);}
  const ring=el.querySelector('.subring');if(ring){ring.remove();el.appendChild(dEl('rect',{x:x-5,y:y-5,width:g.w+10,height:g.h+10,rx:14,fill:'none',stroke:'#526B45','stroke-dasharray':'4 3','pointer-events':'none'}));}
 };
 function desktopPath(G,hm){let d=`M ${G.vs[0].x} ${G.vs[0].y}`;for(let i=0;i<G.segs.length;i++){const a=G.vs[i],b=G.vs[i+1],len=Math.hypot(b.x-a.x,b.y-a.y)||1,ux=(b.x-a.x)/len,uy=(b.y-a.y)/len,r0=i?Math.min(10,len/3,Math.hypot(a.x-G.vs[i-1].x,a.y-G.vs[i-1].y)/3):0,r1=i<G.segs.length-1?Math.min(10,len/3,Math.hypot(b.x-G.vs[i+2].x,b.y-G.vs[i+2].y)/3):0;if(i)d+=` Q ${a.x} ${a.y} ${a.x+ux*r0} ${a.y+uy*r0}`;let done=r0;for(const h of(hm?.[i]||[]).slice().sort((a,b)=>a.t-b.t)){const c=h.t*len;if(c-7<=done+1||c+7>=len-r1-1)continue;d+=` L ${a.x+ux*(c-7)} ${a.y+uy*(c-7)} A 7 7 0 0 1 ${a.x+ux*(c+7)} ${a.y+uy*(c+7)}`;done=c+7;}d+=` L ${b.x-ux*r1} ${b.y-uy*r1}`;}return d;}
@@ -80,7 +124,7 @@ function desktopDisplayEdges(){
 function redrawEdges(){
  for(const e of edges){e.el?.remove();e.el=null;}const display=desktopDisplayEdges(),all=edges;let hops;
  try{edges=display;hops=computeHops();}finally{edges=all;}
- for(const e of display){renderEdge(e,hops.get(e.id));if(e.el&&e._uiBundle?.length>1){const G=edgeVerts(e),p=pointAtFrac(G.segs,.52);e.el.append(dEl('text',{x:p.x+10,y:p.y-8,'font-family':'Arial','font-size':18,fill:'#333',stroke:'white','stroke-width':4,'paint-order':'stroke','pointer-events':'none'},'×'+e._uiBundle.length));}}
+ for(const e of display){renderEdge(e,hops.get(e.id));if(e.el&&e._uiBundle?.length>1){const G=edgeVerts(e),p=pointAtFrac(G.segs,.52);e.el.append(dEl('text',{x:p.x+10,y:p.y-8,'font-family':schematicFont,'font-weight':700,'font-size':26,fill:'#17232d',stroke:'white','stroke-width':4,'paint-order':'stroke','pointer-events':'none'},'×'+e._uiBundle.length));}}
 }
 selectEdge=function(id){desktopOriginalSelectEdge(id);redrawEdges();applySelClasses();};
 selectNode=function(id){desktopOriginalSelectNode(id);redrawEdges();};
@@ -92,7 +136,23 @@ function showEdgePanel(e){document.getElementById('pTitle').textContent=e.kind==
  desktopField(panel,'Tuning tag',e.tag||'',v=>e.tag=v,'text');for(const side of['from','to']){const label=document.createElement('label');label.textContent=side==='from'?'Source port':'Destination port';const s=document.createElement('select');for(const face of['auto','left','right','top','bottom']){const o=document.createElement('option');o.value=face;o.textContent=face;s.append(o);}s.value=e[side+'Port']?.side||'auto';s.onchange=()=>{snapshot();e[side+'Port']=s.value==='auto'?undefined:{side:s.value,offset:.5};redrawEdges();persist();};panel.append(label,s);if(e[side+'Port'])desktopField(panel,'Position along side (0–1)',e[side+'Port'].offset,v=>e[side+'Port'].offset=Math.max(0,Math.min(1,v)));}
  const b=document.createElement('button');b.textContent='Remove bend points';b.onclick=()=>{snapshot();e.pts=[];redrawEdges();persist();};panel.append(b);desktopRaw(panel,desktopClean(e));}
 function desktopStyleState(){const e=document.getElementById('dStyle');if(e)e.checked=desktopSchematic();}
-function fitView(){const visible=nodes.filter(n=>!isHiddenNode(n));if(!visible.length)return;const points=[];for(const n of visible){const g=desktopGeom(n);points.push({x:n.x-g.w/2,y:n.y-g.h/2},{x:n.x+g.w/2,y:n.y+g.h/2});}for(const e of edges)if(e.el)points.push(...(edgeVerts(e)?.vs||[]));const x0=Math.min(...points.map(p=>p.x)),x1=Math.max(...points.map(p=>p.x)),y0=Math.min(...points.map(p=>p.y)),y1=Math.max(...points.map(p=>p.y)),rect=svg.getBoundingClientRect();view.k=Math.max(.01,Math.min((rect.width-80)/(x1-x0||1),(rect.height-80)/(y1-y0||1)));view.x=rect.width/2-(x0+x1)/2*view.k;view.y=rect.height/2-(y0+y1)/2*view.k;applyView();}
+function fitView(){
+ const visible=nodes.filter(n=>!isHiddenNode(n));
+ if(!visible.length)return;
+ const points=[];
+ for(const n of visible){
+  const g=desktopGeom(n);
+  points.push({x:n.x-g.w/2,y:n.y-g.h/2},{x:n.x+g.w/2,y:n.y+g.h/2});
+  const label=g.shape==='spindle' ? n.el?.querySelector('text')?.getBBox() : null;
+  if(label)points.push({x:label.x,y:label.y},{x:label.x+label.width,y:label.y+label.height});
+ }
+ for(const e of edges)if(e.el)points.push(...(edgeVerts(e)?.vs||[]));
+ const x0=Math.min(...points.map(p=>p.x)),x1=Math.max(...points.map(p=>p.x));
+ const y0=Math.min(...points.map(p=>p.y)),y1=Math.max(...points.map(p=>p.y));
+ const rect=svg.getBoundingClientRect();
+ view.k=Math.max(.01,Math.min((rect.width-80)/(x1-x0||1),(rect.height-80)/(y1-y0||1)));
+ view.x=rect.width/2-(x0+x1)/2*view.k;view.y=rect.height/2-(y0+y1)/2*view.k;applyView();
+}
 const desktopOriginalStartDrag=startDrag;
 startDrag=function(ev,id){if(!ev.shiftKey&&!ev.altKey)snapshot();desktopOriginalStartDrag(ev,id);};
 const desktopOriginalTabs=renderTabs;

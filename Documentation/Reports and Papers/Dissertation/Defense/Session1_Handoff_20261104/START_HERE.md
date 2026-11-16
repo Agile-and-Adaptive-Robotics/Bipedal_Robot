@@ -57,7 +57,7 @@ The workflow diagrams include proposed orchestration as described in their sourc
 
 ## Dissertation source and committee preparation
 
-- [Final revision source entry](<../../Final/main.tex>), [revision overview](<../../Final/README.md>), [build/review report](<../../Final/BUILD_REVIEW.md>).
+- [Final revision source entry](<../../Final/main.tex>), [revision overview](<../../Notes/final_source_records_20261104/README.md>), [build/review report](<../../Notes/final_source_records_20261104/BUILD_REVIEW.md>).
 - [Chapter 6](<../../Final/chapters/60-sns.tex>): the first rewrite follows the human-model and graphical/CAD workflows.
 - [Chapter 7](<../../Final/chapters/70-overall.tex>) and [Appendix D](<../../Final/chapters/95-AppendixD.tex>): now explicitly describe the embedded-interface scaffold and unfinished SNS/hardware binding.
 - [Controller math and evidence](<../../../../../Code/MuJoCo_SNS/spinal/fsa_design_20261101/DEFENSE_CONTROLLER_MATH_20261102.md>), [design decisions](<../../../../../Code/MuJoCo_SNS/spinal/fsa_design_20261101/DEFENSE_DESIGN_DECISIONS.md>). They describe the versions identified in those reports, not an already validated new postural controller.
