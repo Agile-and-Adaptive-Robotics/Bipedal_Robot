@@ -1,6 +1,15 @@
 --- before/60-sns.tex
 +++ Final/chapters/60-sns.tex
-@@ -11,7 +11,7 @@
+@@ -1,5 +1,8 @@
+ \chapter{Tools for Constructing and Testing Neuromechanical Models}\label{ch:sns}
+ \graphicspath{{../Figures/60-sns/}{figs/60-sns/}}
++\edef\snsSavedWidowPenalty{\the\widowpenalty}
++\edef\snsSavedClubPenalty{\the\clubpenalty}
++\widowpenalty=10000\clubpenalty=10000
+ 
+ \section{Introduction: The Controller-Transfer Problem}\label{sec:prior_walker}\label{sec:animatlab_results}\label{sec:sns_gaps}
+ 
+@@ -11,7 +14,7 @@
  \centering
  \begin{minipage}[c]{0.46\textwidth}\centering
  \textbf{(A)}\\[2pt]
@@ -9,7 +18,7 @@
  \end{minipage}\hfill
  \begin{minipage}[c]{0.46\textwidth}\centering
  \textbf{(B)}\\[2pt]
-@@ -33,7 +33,7 @@
+@@ -33,7 +36,7 @@
  
  \begin{figure}[p]
  \centering
@@ -18,7 +27,7 @@
  \caption[Workflow for neuromechanical model construction and testing]{Mechanical preparation supplies an executable model. Neural commands pass through the actuator interface to generate force, while mechanical measurements return through sensory encoding. Functional calibration, physical tests, and aligned recordings support inspection of the coupled response.}
  \label{fig:simulation_workflow}
  \end{figure}
-@@ -103,7 +103,7 @@
+@@ -103,7 +106,7 @@
  
  SADb supplies the physiological context for selecting sensory pathways (Chapter~\ref{ch:database}). A source record can motivate a homonymous, reciprocal, or phase-dependent connection, but it does not uniquely specify its numerical gain in another body. The implemented encoding and connection sign therefore remain part of the hypothesis being tested. Local afferent pathways can act at MNs while additional pathways affect PF or RG activity. Their effects must be established through the actual circuit rather than inferred from a sensory label alone.
  
@@ -27,18 +36,7 @@
  
  \subsection{Functional Design, Neural Calibration, and Physical Curriculum}\label{sec:sns_curriculum_main}\label{sec:sns_literature_methods}
  
-@@ -130,7 +130,9 @@
- \end{tabularx}
- \end{table}
- 
--A candidate advances on the evidence for that same configuration. An earlier supported-ground result cannot establish later stages for a newly revised controller. Similarly, a motor-output fit can compensate for an upstream timing defect without demonstrating that the PF layer performs its intended function. Intermediate circuit tests are therefore required between intrinsic rhythm, pattern formation, motor recruitment, and physical motion.
-+\begingroup\widowpenalty=10000\clubpenalty=10000
-+A candidate advances on the evidence for that same configuration. An earlier supported-ground result cannot establish later stages for a newly revised controller. Similarly, a motor-output fit can compensate for an upstream timing defect without demonstrating that the PF layer performs its intended function. Intermediate circuit tests are therefore required between intrinsic rhythm, pattern formation, motor recruitment, and physical motion.\par
-+\endgroup
- 
- \subsection{Automated Execution and Experimental Protocols}\label{sec:sns_repeatability_main}\label{sec:sns_w2l_methods}
- 
-@@ -149,21 +151,23 @@
+@@ -149,21 +152,21 @@
  
  \subsection{Mechanical and Signal-Interface Verification}\label{sec:crossengine_results}
  
@@ -54,9 +52,7 @@
  \subsection{Matched Circuit Calculations and Reflex Responses}\label{sec:sns_simulink_demos}
  
 -For the contact-driven W2L rhythm core, identical neuron definitions, synapses, parameters, drive, and contact inputs were supplied to NumPy and Simulink implementations. Burst periods matched at \qty{1.000}{\second}, all ten expected bursts were reproduced, and voltage correlation was at least 0.99996 (Figure~\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested circuit calculation and its dependence on the specified inputs, before introducing a different mechanical feedback history.
-+\begingroup\widowpenalty=10000\clubpenalty=10000
-+The contact-driven W2L comparison tested a representative 26-neuron Simulink rhythm core against the corresponding signals of the 95-neuron NumPy network. The core used corresponding neuron parameters and shared pathways under identical drive and prescribed heel inputs. Over the post-startup \qtyrange{2}{12}{\second} window, burst periods matched at \qty{1.000}{\second} and all ten expected bursts were reproduced. Best-lag correlation of the four shared RG voltage traces was at least 0.99996, allowing a \qty{2}{\milli\second} relative alignment lag (Figure~\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested shared rhythm core and input dependence, rather than complete-network or unshifted sample agreement.\par
-+\endgroup
++The contact-driven W2L comparison tested a representative 26-neuron Simulink rhythm core against the corresponding signals of the 95-neuron NumPy network. The core used corresponding neuron parameters and shared pathways under identical drive and prescribed heel inputs. Over the post-startup \qtyrange{2}{12}{\second} window, burst periods matched at \qty{1.000}{\second} and all ten expected bursts were reproduced. Best-lag correlation of the four shared RG voltage traces was at least 0.99996, allowing a \qty{2}{\milli\second} relative alignment lag (Figure~\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested shared rhythm core and input dependence, rather than complete-network or unshifted sample agreement.
  
  Reduced reflex models then tested the closed loop. The knee example contains homonymous Ia excitation, reciprocal Ia inhibition, and homonymous Ib inhibition for each antagonist, giving six feedback connections (Figure~\ref{fig:sns_reflex_current}). A \qty{2}{\nano\ampere}, \qty{30}{\milli\second} pulse at the extensor Ia sensory input produced \ang{1.09} of extension, peaking \qty{111}{\milli\second} after onset. The response met the specified recovery thresholds after \qty{6.355}{\second}. Broadened MN and Ia saturation ramps produced this graded transient; the earlier narrow ramps maintained oscillations. The actuators in this reduced knee test use the simplified linear BPA-force element. It is a numerical circuit-response test, not a physiologically calibrated tendon tap or validation of the complete Festo force surface.
  
@@ -67,7 +63,7 @@
  \caption[Transient knee feedback response]{Six feedback connections (A), sensory-current pulse (B), knee response (C), and MN activity (D). Panel B enlarges the pulse interval; C and D show the longer recovery. The \qty{2}{\nano\ampere}, \qty{30}{\milli\second} pulse follows settling. This test uses simplified linear actuation and broadened synaptic saturation ramps; flexion is negative.}
  \label{fig:sns_reflex_current}\label{fig:simulink_reflex_topology}
  \end{figure}
-@@ -172,31 +176,31 @@
+@@ -172,31 +175,31 @@
  
  \begin{figure}[p]
  \centering
@@ -109,7 +105,7 @@
  
  \begin{figure}[p]
  \centering
-@@ -205,19 +209,20 @@
+@@ -205,19 +208,20 @@
  \label{fig:sns_ablation_pair}
  \end{figure}
  
@@ -133,7 +129,7 @@
  
  \begin{figure}[htbp]
  \centering
-@@ -230,11 +235,11 @@
+@@ -230,11 +234,11 @@
  
  \subsection{Computational Performance}\label{sec:sns_execution}
  
@@ -150,7 +146,7 @@
  \label{tab:sns_runtime}
  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrr@{}}
  \toprule
-@@ -243,12 +248,12 @@
+@@ -243,12 +247,12 @@
  Gait2392 complete source process & 199.624 & 29.284 & $6.82\times$ \\
  Same trial, neural-call portion & 179.079 & 9.780 & $18.31\times$ \\
  Compact comparison, 3,000 warm neural updates & 0.895287 & 0.555062 & $1.613\times$ \\
@@ -169,7 +165,7 @@
  
  \section{Discussion}\label{sec:sns_discussion}
  
-@@ -256,7 +261,7 @@
+@@ -256,7 +260,7 @@
  
  The developed tools make construction, calibration, and investigation of a coupled model part of a reproducible process. Mechanical checks establish how forces act; editable neural blocks expose the calculations and pathways; explicit interfaces connect those computations to movement and sensory return. Automated drivers then support bounded fitting and controlled experiments. Their value follows from the questions they permit a researcher to ask: whether a force discrepancy precedes controller tuning, whether a pathway changes timing or recruitment, and whether a selected result survives replay under its recorded conditions.
  
@@ -178,7 +174,7 @@
  
  Graphical and scripted environments serve complementary purposes. A readable circuit can reveal an unexpected sign or shared input; automated execution can determine whether changing that connection affects the declared behavior over many trials. Neither eliminates the need for the other. The current contribution is the demonstrated integration and experiment procedures built on established software and published neural formulations, with model-specific preparation and evaluation made explicit.
  
-@@ -264,7 +269,7 @@
+@@ -264,7 +268,7 @@
  
  Implementation agreement, functional response, and biological validation answer different questions. Agreement under matched inputs establishes that a calculation was reproduced for those inputs. A corrective reflex response establishes the behavior of the implemented loop. Resemblance to biological organization motivates the model, but quantitative physiological validation would additionally require appropriate measured targets, sensory conditions, and perturbations. The inverse-mechanics activation targets and engineering acceptance thresholds used here have narrower purposes.
  
@@ -187,6 +183,12 @@
  
  The actuator formulation also changes the scientific question. Biological muscles, ideal reference tensions, and quasi-static BPAs provide different relations among neural command, force, length, and sensory feedback. The characterized BPA force surface gives an experimental basis for static force generation, but it cannot establish valve response or dynamic hysteresis. The simplified knee-reflex actuator isolates circuit response, whereas the cup example exercises the BPA20 block. Those distinctions permit targeted verification before a more detailed actuator model is used in a full-body controller.
  
+@@ -280,3 +284,5 @@
+ 
+ This chapter developed and verified components for preparing mechanical models, constructing neural controllers, exchanging actuator and sensory signals, and conducting repeatable neuromechanical experiments. Matched calculations, reduced reflex responses, staged air motion, supported-ground examples, and recorded failures establish the capabilities and current limits of those tools. Together they provide an experimental basis for investigating how neural pathways, actuator behavior, and mechanical design interact, and for extending that investigation toward the physical biomimetic robot.
+ 
++\widowpenalty=\snsSavedWidowPenalty\relax
++\clubpenalty=\snsSavedClubPenalty\relax
 --- before/95-AppendixD.tex
 +++ Final/chapters/95-AppendixD.tex
 @@ -49,12 +49,11 @@

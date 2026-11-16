@@ -62,10 +62,35 @@ while i<len(parts):
     if 'R' in code or 'C' in code:
         item['original_relative_path']=parts[i];i+=1
     items.append(item)
-(HERE/'COMMIT_FILES.json').write_text(json.dumps({'preexisting_changes':[],
-    'baseline':'Initial git status --short was empty before session writes.',
-    'session_changes':items},indent=2)+'\n')
-(HERE/'COMMIT_FILES.txt').write_text('Pre-existing repository changes: NONE (initial working tree clean).\n\nThis session only; no commit or push performed.\n\n'+'\n'.join(x['status']+' '+x['absolute_path'] for x in items)+'\n')
+resume_path=HERE/'RESUME_VERIFICATION.json'
+resume=json.loads(resume_path.read_text()) if resume_path.exists() else None
+# Both self-describing manifests will change on this completion pass.
+for name in ['COMMIT_FILES.json','COMMIT_FILES.txt']:
+    p=HERE/name;rel=p.relative_to(ROOT).as_posix()
+    if not any(x['relative_path']==rel for x in items):
+        tracked=bool(subprocess.check_output(['git','ls-files','--',rel],cwd=ROOT).strip())
+        items.append({'status':' M' if tracked else '??','relative_path':rel,'absolute_path':str(p)})
+items.sort(key=lambda x:x['relative_path'])
+committed=[]
+if resume:
+    prefixes=['Documentation/Reports and Papers/Dissertation/Notes/ch6_authoritative_20261116/',
+        'Documentation/Reports and Papers/Dissertation/Figures/60-sns/',
+        'Documentation/Reports and Papers/Dissertation/Figures/95-AppendixD/']
+    exact=['CHATGPT_REPORT.md','Documentation/Reports and Papers/Dissertation/Final/chapters/60-sns.tex',
+        'Documentation/Reports and Papers/Dissertation/Final/chapters/95-AppendixD.tex']
+    committed=[x for x in resume['committed_revision_paths']
+        if x['relative_path'] in exact or any(x['relative_path'].startswith(k) for k in prefixes)]
+payload={'preexisting_changes':[],
+    'baseline':'Initial revision and resumed working trees were both clean before agent writes.',
+    'resume_head':resume['head_at_resume'] if resume else None,
+    'already_committed_revision_files':committed,'session_changes':items,
+    'scope':'session_changes are the remaining completion files to commit now; earlier sources/figures already in resume_head.'}
+(HERE/'COMMIT_FILES.json').write_text(json.dumps(payload,indent=2)+'\n')
+header='Pre-existing uncommitted changes at initial start/resume: NONE.\nNo agent commit or push performed.\n'
+if resume:header+='\nEarlier revision already present in commit '+resume['head_at_resume']+'.\n'
+body='\nCOMPLETION FILES TO COMMIT NOW:\n\n'+'\n'.join(x['status']+' '+x['absolute_path'] for x in items)
+if committed:body+='\n\nEARLIER REVISION VERSIONS ALREADY COMMITTED (any completion changes listed above still require commit):\n\n'+'\n'.join(x['absolute_path'] for x in committed)
+(HERE/'COMMIT_FILES.txt').write_text(header+body+'\n')
 (HERE/'PREEXISTING_STATUS.txt').write_text('Initial git status --short was empty, before session file creation.\nNo pre-existing working-tree changes were present.\n')
 print(json.dumps({'source_hunks':len(ledger),'changed_final_files':len(changes),
     'preserved_final_files':len(unchanged),'session_commit_paths':len(items)}))

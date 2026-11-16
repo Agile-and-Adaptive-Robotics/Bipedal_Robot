@@ -60,3 +60,27 @@ Tables D5–D9 show no clipped columns, missing rows, broken rules, or unreadabl
 **No material visual defect remains in the reviewed pages.** CAD and spiking captions fit, the compact main figures remain readable, numerical tables are legible, and page transitions are complete. This closes the actual-page verification gap previously left open in `CAD_FINAL_REVIEW.md` for this assigned page range and the two main-figure spot checks.
 
 The earlier Chapter 6 and Appendix D pages outside this exact coverage are owned by the coordinating build reviewer and air-evidence reviewer. This review does not claim their page inspection. It also does not change the scientific-evidence limits already disclosed for the historical CAD compiled binary and unsaved complete 2 ms trajectory. No simulation, optimizer, figure regeneration, manuscript edit, commit, push, or upload was performed during this compiled-page review.
+
+## Final r7 closure
+
+The final canonical build is r7, **318 PDF pages**, at:
+
+`D:\GitHub\Bipedal_Robot\tmp\ch6_authoritative_20261116\build_final_r7\main.pdf`
+
+SHA256 was rechecked after the connection returned and matches the already reviewed PDF: `03314775553c05483786f42950e991512e18e8958169d6cc6c29a920a97ce104`.
+
+Every final full-page 144 dpi image from **PDF pages 295-314 inclusive**, printed pages **275-294**, was opened and reviewed individually before the connection interruption. This section persists that completed review; no generation, audit, or visual inspection was rerun after reconnection. Pagination changes moved some floats by one page and others by two, so final review did not assume a uniform offset from r6.
+
+| Final PDF pages | Printed pages | Final coverage |
+|---|---|---|
+| 295-298 | 275-278 | PF progression, Table D5, W2L108 conditions, historical IK methods, and Table D6 |
+| 299 | 279 | Figure D5 historical IK overlay and complete caption |
+| 300-301 | 280-281 | Supported-model distinctions, assistance, and pathway-control protocols |
+| 302-305 | 282-285 | Complete CAD protocol, Figure D6 on PDF 303, and literature-controller/spiking transition |
+| 306-309 | 286-289 | Table D7, Figure D7 on PDF 307, cup endpoint/max distinction, Table D8, and execution transition |
+| 310-313 | 290-293 | Runtime definitions and complete four-page Table D9 with repeated column headings |
+| 314 | 294 | Complete hardware-interface boundary and appendix ending |
+
+The final CAD and spiking figures and captions fit cleanly, with readable legends, units, panel identities, native knee signs, and thresholds. Tables and page transitions remain complete. The earlier `Reports and Papers` URL-space issue is resolved by the accurate dissertation-relative `Defense/Session1_Handoff_20261104/` reference, inspected on final PDF page 313. Long identifiers continue to wrap within table columns, but remain readable without clipped content.
+
+**No remaining material visual issue was found in the final reviewed range.** This r7 closure supersedes the r6 page-location and path-typography notes above. The earlier r6 main knee/cup spot checks remain explicitly identified as r6; final Chapter 6 coverage belongs to the coordinating build reviewer. No figure, manuscript source, scientific evidence, or build output was modified while persisting this closure.

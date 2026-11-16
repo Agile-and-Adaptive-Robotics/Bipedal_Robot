@@ -1,9 +1,33 @@
 [
   {
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "insert",
+    "old_start_line": 3,
+    "new_start_line": 3,
+    "old_text": "",
+    "new_text": "\\edef\\snsSavedWidowPenalty{\\the\\widowpenalty}\n\\edef\\snsSavedClubPenalty{\\the\\clubpenalty}\n\\widowpenalty=10000\\clubpenalty=10000",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [
+      "10000",
+      "10000"
+    ],
+    "numerical_token_changes": [
+      {
+        "operation": "insert",
+        "old": [],
+        "new": [
+          "10000",
+          "10000"
+        ]
+      }
+    ],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 14,
-    "new_start_line": 14,
+    "new_start_line": 17,
     "old_text": "\\includegraphics[width=\\linewidth,height=0.19\\textheight,keepaspectratio]{OurWalker.png}",
     "new_text": "\\includegraphics[trim=0bp 0bp 176.275bp 0bp,clip,width=\\linewidth,height=0.19\\textheight,keepaspectratio]{OurWalker.png}",
     "all_old_numerical_tokens": [
@@ -34,7 +58,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 36,
-    "new_start_line": 36,
+    "new_start_line": 39,
     "old_text": "\\includegraphics[width=\\textwidth,height=0.76\\textheight,keepaspectratio]{simulation_workflow_20261116.pdf}",
     "new_text": "\\includegraphics[width=14cm]{simulation_workflow_authoritative.pdf}",
     "all_old_numerical_tokens": [
@@ -62,7 +86,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 106,
-    "new_start_line": 106,
+    "new_start_line": 109,
     "old_text": "For block-programmed control of MuJoCo mechanics, I integrated the SNS blocks with the MathWorks MuJoCo--Simulink bridge. Actuator commands enter the mechanical simulation, and joint and actuator measurements return through its sensor interface. Local compatibility and initialization fixes establish the appropriate model state before signal exchange. The bridge retains the selected mechanical timestep and supports different controller and mechanical update rates. Neural and mechanical updates in the reported Gait2392 controller experiments use a \\qty{2}{\\milli\\second} interval; bridge verification also tests a different stated rate combination. Each test retains its actual integration settings.",
     "new_text": "For block-programmed control of MuJoCo mechanics, I integrated the SNS blocks with the MathWorks MuJoCo--Simulink bridge. Actuator commands enter the mechanical simulation, and joint and actuator measurements return through its sensor interface. Local compatibility and initialization fixes establish the appropriate model state before signal exchange. The bridge retains the selected mechanical timestep and supports different controller and mechanical update rates. Neural and mechanical updates in the reported Gait2392 controller experiments use a \\qty{2}{\\milli\\second} interval; the bridge two-rate test uses a \\qty{1}{\\milli\\second} command-source interval and a \\qty{5}{\\milli\\second} mechanical/sensor interval. Each test retains its actual integration settings.",
     "all_old_numerical_tokens": [
@@ -90,32 +114,8 @@
   {
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
-    "old_start_line": 133,
-    "new_start_line": 133,
-    "old_text": "A candidate advances on the evidence for that same configuration. An earlier supported-ground result cannot establish later stages for a newly revised controller. Similarly, a motor-output fit can compensate for an upstream timing defect without demonstrating that the PF layer performs its intended function. Intermediate circuit tests are therefore required between intrinsic rhythm, pattern formation, motor recruitment, and physical motion.",
-    "new_text": "\\begingroup\\widowpenalty=10000\\clubpenalty=10000\nA candidate advances on the evidence for that same configuration. An earlier supported-ground result cannot establish later stages for a newly revised controller. Similarly, a motor-output fit can compensate for an upstream timing defect without demonstrating that the PF layer performs its intended function. Intermediate circuit tests are therefore required between intrinsic rhythm, pattern formation, motor recruitment, and physical motion.\\par\n\\endgroup",
-    "all_old_numerical_tokens": [],
-    "all_new_numerical_tokens": [
-      "10000",
-      "10000"
-    ],
-    "numerical_token_changes": [
-      {
-        "operation": "insert",
-        "old": [],
-        "new": [
-          "10000",
-          "10000"
-        ]
-      }
-    ],
-    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
-  },
-  {
-    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
-    "operation": "replace",
     "old_start_line": 152,
-    "new_start_line": 154,
+    "new_start_line": 155,
     "old_text": "Mechanical inspection exposed faults that would otherwise have been attributed to controller behavior. Repairs addressed selected joint-action signs, active force scales, coupled path-point limits, and intended ground contacts. At matched poses and OpenSim static-optimization activations, eight of twelve sampled muscles had force-prediction $R^2$ between 0.87 and 0.98 and mean forces within \\qty{10}{\\percent} of the reference (Figure~\\ref{fig:force-compare}; Table~\\ref{tab:force-r2}). Rectus femoris and biceps femoris short head had negative $R^2$. Thus, the comparison identified useful agreement and important remaining muscle-specific differences. It assigned pose and activation frame by frame, without reproducing trajectory velocities or tendon dynamics, and consequently did not establish dynamic equivalence of the muscle formulations.",
     "new_text": "Mechanical inspection exposed faults that would otherwise have been attributed to controller behavior. Repairs addressed selected joint-action signs, active force scales, coupled path-point limits, and intended ground contacts. At matched poses and OpenSim static-optimization activations, eight of twelve sampled muscles had force-prediction $R^2$ between 0.87 and 0.98 and mean forces within \\qty{10}{\\percent} of the reference (Table~\\ref{tab:force-r2}). Rectus femoris and biceps femoris short head had negative $R^2$. Thus, the comparison identified useful agreement and important remaining muscle-specific differences. It assigned pose and activation frame by frame, without reproducing trajectory velocities or tendon dynamics, and consequently did not establish dynamic equivalence of the muscle formulations.",
     "all_old_numerical_tokens": [
@@ -139,7 +139,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 154,
-    "new_start_line": 156,
+    "new_start_line": 157,
     "old_text": "Bridge tests established that a block-programmed controller could deliver muscle commands and receive the corresponding measurements. Single-muscle activation, different control rates, and sensor readback were compared with Python MuJoCo integration. The five tested sensor signals were bit-exact over the scored 80-step window. A separate exported network drove all 92 actuator channels during a \\qty{5}{\\second} run, and a closed-loop reflex experiment exercised both command and sensory return. These results verify the interface operations under their stated conditions.",
     "new_text": "Bridge tests established that a block-programmed controller could deliver muscle commands and receive the corresponding measurements. Single-muscle activation, different control rates, and sensor readback were compared with Python MuJoCo integration. The five tested sensor arrays were bit-exact over 80 steps from \\qty{0.005}{\\second} to \\qty{0.400}{\\second}, excluding the initial sample. A separate exported network drove all 92 actuator channels during a \\qty{5}{\\second} run, and a closed-loop reflex experiment exercised both command and sensory return. These results verify the interface operations under their stated conditions.",
     "all_old_numerical_tokens": [
@@ -170,16 +170,14 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 160,
-    "new_start_line": 162,
+    "new_start_line": 163,
     "old_text": "For the contact-driven W2L rhythm core, identical neuron definitions, synapses, parameters, drive, and contact inputs were supplied to NumPy and Simulink implementations. Burst periods matched at \\qty{1.000}{\\second}, all ten expected bursts were reproduced, and voltage correlation was at least 0.99996 (Figure~\\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested circuit calculation and its dependence on the specified inputs, before introducing a different mechanical feedback history.",
-    "new_text": "\\begingroup\\widowpenalty=10000\\clubpenalty=10000\nThe contact-driven W2L comparison tested a representative 26-neuron Simulink rhythm core against the corresponding signals of the 95-neuron NumPy network. The core used corresponding neuron parameters and shared pathways under identical drive and prescribed heel inputs. Over the post-startup \\qtyrange{2}{12}{\\second} window, burst periods matched at \\qty{1.000}{\\second} and all ten expected bursts were reproduced. Best-lag correlation of the four shared RG voltage traces was at least 0.99996, allowing a \\qty{2}{\\milli\\second} relative alignment lag (Figure~\\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested shared rhythm core and input dependence, rather than complete-network or unshifted sample agreement.\\par\n\\endgroup",
+    "new_text": "The contact-driven W2L comparison tested a representative 26-neuron Simulink rhythm core against the corresponding signals of the 95-neuron NumPy network. The core used corresponding neuron parameters and shared pathways under identical drive and prescribed heel inputs. Over the post-startup \\qtyrange{2}{12}{\\second} window, burst periods matched at \\qty{1.000}{\\second} and all ten expected bursts were reproduced. Best-lag correlation of the four shared RG voltage traces was at least 0.99996, allowing a \\qty{2}{\\milli\\second} relative alignment lag (Figure~\\ref{fig:w2l_crossengine}). Removing the phasic heel input caused both realizations to latch. This verifies the tested shared rhythm core and input dependence, rather than complete-network or unshifted sample agreement.",
     "all_old_numerical_tokens": [
       "1.000",
       "0.99996"
     ],
     "all_new_numerical_tokens": [
-      "10000",
-      "10000",
       "26",
       "95",
       "2",
@@ -193,8 +191,6 @@
         "operation": "insert",
         "old": [],
         "new": [
-          "10000",
-          "10000",
           "26",
           "95",
           "2",
@@ -215,7 +211,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 166,
-    "new_start_line": 170,
+    "new_start_line": 169,
     "old_text": "\\includegraphics[width=14cm]{sns_knee_reflex_20261116.pdf}",
     "new_text": "\\includegraphics[width=14cm]{sns_knee_reflex_authoritative.pdf}",
     "all_old_numerical_tokens": [
@@ -240,7 +236,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 175,
-    "new_start_line": 179,
+    "new_start_line": 178,
     "old_text": "\\includegraphics[width=14cm]{sns_cup_reflex_20261116.pdf}",
     "new_text": "\\includegraphics[width=14cm]{sns_cup_reflex_authoritative.pdf}",
     "all_old_numerical_tokens": [
@@ -265,7 +261,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 182,
-    "new_start_line": 186,
+    "new_start_line": 185,
     "old_text": "The revised graded BiW2Lvar+ controller completed both air stages with the same learned weights and shared PF-to-MN expression scale of 0.1. In the \\qty{16}{\\second} deafferented test, the principal-cycle audit detected four cycles on each side, a \\qty{2.466}{\\second} period, and 0.0337-cycle error from bilateral antiphase. The afferented test produced seven cycles per side, a \\qty{1.300}{\\second} period, and 0.0933-cycle phase error (Figure~\\ref{fig:sns_biw2l_air}). The stages had different specified sensory and command conditions; the period change therefore cannot be assigned solely to feedback. Appendix~\\ref{sec:app_biw2l_air} gives both configurations and the retained assessments.",
     "new_text": "The revised graded BiW2Lvar+ controller completed both air stages with the same learned weights and shared PF-to-MN expression scale of 0.1. In the \\qty{16}{\\second} deafferented test, the principal-cycle audit detected four cycles on each side, a \\qty{2.466}{\\second} period, and 0.0337-cycle error from bilateral antiphase. The afferented test produced seven cycles per side, a \\qty{1.300}{\\second} period, and 0.0933-cycle phase error (Figure~\\ref{fig:sns_biw2l_air}). The retained adapter defines stage 1 with sensory return and sustained flexor/extensor commands disabled, and stage 2 with live sensory return and both normalized commands set to 0.15 bilaterally. Complete applied-command histories and the original launch adapter were not recovered, so these definitions cannot establish sample-by-sample command identity in the original runs. The period change therefore cannot be interpreted as a controlled feedback-only effect. Appendix~\\ref{sec:app_biw2l_air} gives the initialization and retained assessments.",
     "all_old_numerical_tokens": [
@@ -304,7 +300,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 186,
-    "new_start_line": 190,
+    "new_start_line": 189,
     "old_text": "\\includegraphics[width=\\textwidth]{biw2lvar_air_stage2_20261116.pdf}\n\\caption[BiW2Lvar+ afferented air-stage recording]{Selected aligned RG, knee-MN, knee-motion, and assistance signals from the BiW2Lvar+ afferented air test. The retained knee display shows positive flexion magnitude; the model's coordinate is flexion-negative. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}",
     "new_text": "\\includegraphics[width=14cm]{biw2lvar_air_aligned_authoritative.pdf}\n\\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \\qtyrange{7}{11}{\\second}: bilateral flexor RG voltage (A), right knee-extensor and knee-flexor MN voltages (B), native flexion-negative knee angles (C), and superior suspension and explicit-support forces (D). Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}",
     "all_old_numerical_tokens": [
@@ -336,7 +332,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 191,
-    "new_start_line": 195,
+    "new_start_line": 194,
     "old_text": "The stage-2 suspension force averaged \\qty{99.860}{\\percent} of body weight from \\qty{5}{\\second} onward. Ground contact was disabled and measured foot forces were zero. This force describes the air-test apparatus, rather than a measured minimum support requirement for walking. Both knees remained flexed; maximum angles were \\ang{-1.718} and \\ang{-1.801} on the right and left. The result establishes two completed suspended stages. Standing and ground stepping with this revised controller remain separate requirements.",
     "new_text": "The stage-2 suspension force averaged \\qty{99.860}{\\percent} of the legacy whole-model weight from \\qty{5}{\\second} onward. That denominator includes a fixed ground-body mass; Appendix~\\ref{sec:app_biw2l_air} distinguishes it from the moving-model weight in the aligned recording. Ground contact was disabled and measured foot forces were zero. This force describes the air-test apparatus, rather than a measured minimum support requirement for walking. Both knees remained flexed; maximum angles were \\ang{-1.718} and \\ang{-1.801} on the right and left. The result establishes two completed suspended stages. Standing and ground stepping with this revised controller remain separate requirements.",
     "all_old_numerical_tokens": [
@@ -360,7 +356,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 195,
-    "new_start_line": 199,
+    "new_start_line": 198,
     "old_text": "Layer-specific stimuli also depended on operating phase. A \\qty{2}{\\nano\\ampere}, \\qty{100}{\\milli\\second} PF pulse during a silent phase changed its voltage without crossing the transmission threshold and produced essentially no MN response. During an active phase, the pulse changed PF voltage by up to \\qty{1.14}{\\milli\\volt} and iliacus MN voltage by \\qty{0.16}{\\milli\\volt}. A direct MN pulse subsequently affected RG activity through the closed mechanical and sensory loop. These paired tests show why stimulation site and baseline activity must be identified before interpreting a response (Appendix~\\ref{sec:app_biw2l_stimulus}).",
     "new_text": "Layer-specific stimuli also depended on operating phase. A \\qty{2}{\\nano\\ampere}, \\qty{100}{\\milli\\second} pulse to the right hip-flexor PF channel at \\qty{7.10}{\\second} changed its voltage without crossing the outgoing rest-relative \\qty{0}{\\milli\\volt} transmission threshold and produced essentially no MN response. With onset at \\qty{7.65}{\\second}, during an active phase, the same pulse changed PF voltage by up to \\qty{1.14}{\\milli\\volt} and right iliacus MN voltage by \\qty{0.16}{\\milli\\volt}. These maxima compare paired trajectories during the \\qty{3.4}{\\second} response window beginning at onset. A direct right iliacus MN pulse subsequently affected RG activity through the closed mechanical and sensory loop. These paired tests show why stimulation site, operating phase, and observation window must be identified before interpreting a response (Appendix~\\ref{sec:app_biw2l_stimulus}).",
     "all_old_numerical_tokens": [
@@ -403,7 +399,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 199,
-    "new_start_line": 203,
+    "new_start_line": 202,
     "old_text": "A historical fixed-controller W2L comparison tested the contribution of sensory return to bilateral ground-contact coordination. With conductances, drive, and support held fixed, disabling the saved sensory-feedback channels shifted median bilateral contact phase from 0.498 to 0.223 cycles. The accepted interval was 0.35--0.65 cycles, centered on antiphase. Joint cycling and forward displacement persisted: displacement over \\qtyrange{4.5}{30}{\\second} was \\qty{2.239}{\\meter} with feedback and \\qty{1.996}{\\meter} without it. The result identifies a contribution to contact coordination, rather than a requirement for all rhythmic movement (Figure~\\ref{fig:sns_ablation_pair}). Additional pathway controls are retained in Appendix~\\ref{sec:app_w2l_perturbations}.",
     "new_text": "A historical fixed-controller W2L comparison tested the contribution of sensory return to bilateral ground-contact coordination. With conductances, drive, and support held fixed, disabling the saved sensory-feedback channels shifted median bilateral contact phase from 0.498 to 0.223 cycles. The accepted interval was 0.35--0.65 cycles, centered on antiphase. Joint cycling and forward displacement persisted: displacement over \\qtyrange{4.5}{30}{\\second} was \\qty{2.239}{\\meter} with feedback and \\qty{1.996}{\\meter} without it. The retained evaluator also specifies a common \\qty{40}{\\newton} forward pulse from \\qty{8}{\\second} to \\qty{8.15}{\\second} in both conditions; an unforced baseline was not established by this pair. The result identifies a contribution to contact coordination under those matched inputs, rather than a requirement for all rhythmic movement (Figure~\\ref{fig:sns_ablation_pair}). Additional pathway controls are retained in Appendix~\\ref{sec:app_w2l_perturbations}.",
     "all_old_numerical_tokens": [
@@ -446,7 +442,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "insert",
     "old_start_line": 208,
-    "new_start_line": 212,
+    "new_start_line": 211,
     "old_text": "",
     "new_text": "\\FloatBarrier",
     "all_old_numerical_tokens": [],
@@ -458,7 +454,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 210,
-    "new_start_line": 215,
+    "new_start_line": 214,
     "old_text": "A bounded syn6 gain-only repair improved its fitting loss but still passed none of the twelve channel checks. It was not accepted, and further downstream fitting was held pending a declared and verified PF design. Appendix~\\ref{sec:app_pf_timing} retains the timing overlay and failed attempt. This finding is useful evidence for the workflow: an output fit can conceal an upstream design error, whereas inspecting the transmitted activity can identify it before further mechanical optimization.",
     "new_text": "A bounded syn6 gain-only repair improved its fitting loss but still passed none of the twelve channel checks. Subsequent RG-triggered relays and native SNS timing circuits addressed the failed function directly. The native circuit passed all 48 channel-cycle checks at the nominal cadence, and adaptive clocks extended that result to six controlled replay cadences. Those later checks evaluated individual cycles under additional onset and offset requirements; their denominator differs from the original twelve channel-mean checks. The improvement did not transfer directly to the live mechanical loop: coupled trials either reached the predictive knee guard or completed without satisfying the retained rhythm and PF-timing requirements. Appendix~\\ref{sec:app_pf_timing} distinguishes the original failure, offline timing success, transmitted live behavior, and unsuccessful physical acceptance. Together these results show why an output fit and a favorable neural replay require separate checks before promotion to a coupled experiment.",
     "all_old_numerical_tokens": [],
@@ -480,7 +476,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 216,
-    "new_start_line": 221,
+    "new_start_line": 220,
     "old_text": "The newer 108-neuron, 216-connection W2L model supplies a separate supported-ground example. A bounded calibration produced eight left and seven right qualifying unloaded, whole-foot-clear swings in \\qty{10}{\\second}, with all qualified transitions alternating. Minimum anatomical knee flexion was \\ang{1.946} and \\ang{2.087}. The selected trajectory repeated byte-exactly in a fresh process. Upward rail and guide assistance averaged \\qty{29.519}{\\percent} of body weight after \\qty{1}{\\second}; the whole-trial signed net assistance was \\qty{35.069}{\\percent}. These distinct windows and measures cannot be interchanged. Rails, guides, and a moving treadmill remained, so belt-relative progression does not establish unsupported overground walking.",
     "new_text": "The newer 108-neuron, 216-connection W2L model supplies a separate supported-ground example. A bounded calibration produced eight left and seven right qualifying unloaded, whole-foot-clear swings in \\qty{10}{\\second}, with all qualified transitions alternating. Minimum anatomical knee flexion over $1\\leq t<10$\\,s was \\ang{2.087} on the right and \\ang{1.946} on the left. The selected trajectory repeated byte-exactly in a fresh process. Upward rail and guide assistance averaged \\qty{29.519}{\\percent} of body weight over \\qtyrange{1}{10}{\\second}; the whole-trial signed net assistance was \\qty{35.069}{\\percent}. These distinct windows and measures cannot be interchanged. Rails, guides, and a moving treadmill remained, so belt-relative progression does not establish unsupported overground walking.",
     "all_old_numerical_tokens": [
@@ -537,7 +533,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 220,
-    "new_start_line": 225,
+    "new_start_line": 224,
     "old_text": "The CAD robot demonstrates a different mechanical and control integration (Figure~\\ref{fig:ah001_supported_control}). Its selected \\qty{28}{\\second} condition produced seven right and six left qualifying clear, unloaded swing intervals during \\qtyrange{16}{28}{\\second}, with minimum knee flexion of \\ang{5.10}. Measured vertical assistance was \\qty{77.5}{\\percent} of body weight in that window; lateral and attitude guidance remained. The controller used SNS timing and an engineering allocator supplying posture, loading, and clearance targets to 54 reference-tension actuators. This is a supported hybrid-control demonstration with ideal tensile actuation, rather than a dynamically calibrated 54-BPA experiment.",
     "new_text": "The CAD robot demonstrates a different mechanical and control integration (Figure~\\ref{fig:ah001_supported_control}). Its selected \\qty{28}{\\second} condition produced seven right and six left qualifying clear, unloaded swing intervals during \\qtyrange{16}{28}{\\second}. Minimum knee flexion over the complete trial was \\ang{11.20} on the right and \\ang{5.10} on the left. Measured vertical assistance was \\qty{77.5}{\\percent} of body weight during \\qtyrange{16}{28}{\\second}; lateral and attitude guidance remained. The controller used SNS timing and an engineering allocator supplying posture, loading, and clearance targets to 54 reference-tension actuators. This is a supported hybrid-control demonstration with ideal tensile actuation, rather than a dynamically calibrated 54-BPA experiment. The aligned loading and clearance traces in Appendix~\\ref{sec:app_cad_supported_stance} show the mechanical quantities underlying its acceptance.",
     "all_old_numerical_tokens": [
@@ -586,7 +582,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 233,
-    "new_start_line": 238,
+    "new_start_line": 237,
     "old_text": "The accelerated neural implementations store topology once, evaluate existing synapses, reuse calculation arrays, and compile repeated operations where supported. In a paired Gait2392 benchmark, complete source-process time decreased from \\qty{199.624}{\\second} to \\qty{29.284}{\\second}, a factor of 6.82, while saved numerical trajectories matched exactly (Table~\\ref{tab:sns_runtime}). Time within neural calls decreased by a factor of 18.31. These are different scopes of the same benchmark; neither is a universal speed ratio for every model or actuator option.",
     "new_text": "The accelerated neural implementations store topology once, evaluate existing synapses, reuse calculation arrays, and compile repeated operations where supported. In one paired Gait2392 source-setting benchmark of the archived \\texttt{hunt} implementation with 1,025 cells, complete source-process time decreased from \\qty{199.624}{\\second} with the native SNS backend to \\qty{29.284}{\\second} with the sparse backend, a factor of 6.82, while saved numerical trajectories matched exactly (Table~\\ref{tab:sns_runtime}). The stage-1 protocol lasts \\qty{16}{\\second}, including \\qty{0.6}{\\second} of held-pose preparation. Time within neural calls decreased by a factor of 18.31. These are different timing scopes of the same single pair; neither is a universal speed ratio for every model or actuator option.",
     "all_old_numerical_tokens": [
@@ -633,7 +629,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 237,
-    "new_start_line": 242,
+    "new_start_line": 241,
     "old_text": "\\caption[Scoped computational performance comparisons]{Matched reference and accelerated timings. The first two rows belong to the same Gait2392 benchmark. The final two compare a later compact implementation with an already accelerated sparse implementation. Warm neural updates and complete diagnostic execution have distinct scopes.}",
     "new_text": "\\caption[Scoped computational performance comparisons]{Matched reference and accelerated timings. The first two rows use the 1,025-cell source-setting \\texttt{hunt} implementation, native SNS versus sparse execution, in one \\qty{16}{\\second} stage-1 protocol pair. The last two use the separate 1,033-cell implementation labelled Hunt-PT+RC, sparse versus compact execution. Warm-kernel values are medians of three blocks; the evaluator diagnostic is one paired \\qty{16}{\\second} stage-4 trial.}",
     "all_old_numerical_tokens": [
@@ -673,7 +669,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 246,
-    "new_start_line": 251,
+    "new_start_line": 250,
     "old_text": "Compact comparison, full diagnostic body run & 92.944 & 91.516 & $1.0156\\times$ \\\\",
     "new_text": "Compact comparison, evaluator diagnostic wall time & 92.944 & 91.516 & $1.0156\\times$ \\\\",
     "all_old_numerical_tokens": [
@@ -693,7 +689,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 251,
-    "new_start_line": 256,
+    "new_start_line": 255,
     "old_text": "The later compact comparison preserved all 62 captured numerical arrays and the compiled model identity in the tested body condition. Its warm neural timing is the median of three runs for a 1,033-cell circuit; its complete diagnostic timing is one paired observation. The small whole-run improvement despite the larger kernel improvement shows the cost of mechanical integration, diagnostics, and other operations outside that kernel. Accelerated execution makes repeated experiments more practical, but timing must remain attached to the measured workload. Appendix~\\ref{sec:app_execution_provenance} retains implementation restrictions, additional benchmarks, and reproduction details.",
     "new_text": "The later compact comparison preserved all 62 captured numerical arrays and the compiled model identity in the tested body condition. Its warm neural timing is the median of three 3,000-update blocks for the 1,033-cell implementation labelled Hunt-PT+RC. Its separate evaluator timing includes the coupled simulation, capture, and assessment, but excludes process startup, pre-run setup, and final result serialization. The smaller improvement in that diagnostic scope shows the cost of work outside the neural kernel; it is not a measured complete-process speedup. Accelerated execution makes repeated experiments more practical, but timing must remain attached to the measured workload. Appendix~\\ref{sec:app_execution_provenance} retains implementation restrictions, additional benchmarks, and reproduction details.",
     "all_old_numerical_tokens": [
@@ -724,7 +720,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 259,
-    "new_start_line": 264,
+    "new_start_line": 263,
     "old_text": "The evidence is cumulative. Matched circuit calculations test implementation, the reduced reflex models test closed-loop transmission, and the air and ground demonstrations test selected coupled configurations. The PF timing failure further shows that the workflow can identify an unsuccessful design even when a downstream output fit appears acceptable. This supports the dissertation objective of developing research tools rather than treating one visually favorable movement as the sole outcome.",
     "new_text": "The evidence is cumulative. Matched circuit calculations test implementation, the reduced reflex models test closed-loop transmission, and the air and ground demonstrations test selected coupled configurations. The original PF timing failure shows that the workflow can identify an unsuccessful design even when a downstream output fit appears acceptable. Later timing repairs also show that an accepted intermediate computation can lose its intended behavior when live sensory return replaces prescribed replay inputs. This supports the dissertation objective of developing research tools rather than treating one visually favorable movement as the sole outcome.",
     "all_old_numerical_tokens": [],
@@ -736,7 +732,7 @@
     "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
     "operation": "replace",
     "old_start_line": 267,
-    "new_start_line": 272,
+    "new_start_line": 271,
     "old_text": "Support conditions are equally important to interpretation. Air motion tests coordination without foot loading; supported ground tests introduce contact while retaining specified assistance. Vertical support, lateral guidance, and attitude restraint each alter the mechanical task. None of the program's recorded results establishes harness-free walking. The current BiW2Lvar+ air stages, historical W2L feedback comparison, newer W2L108 ground result, and CAD hybrid-control result therefore demonstrate complementary capabilities without forming one continuous curriculum completed by a single controller.",
     "new_text": "Support conditions are equally important to interpretation. Air motion tests coordination without foot loading; supported ground tests introduce contact while retaining specified assistance. Vertical support, lateral guidance, and attitude restraint each alter the mechanical task. The coupled controller-transfer demonstrations reported here do not establish harness-free walking. The current BiW2Lvar+ air stages, historical W2L feedback comparison, newer W2L108 ground result, and CAD hybrid-control result therefore demonstrate complementary capabilities without forming one continuous curriculum completed by a single controller.",
     "all_old_numerical_tokens": [
@@ -745,6 +741,18 @@
     "all_new_numerical_tokens": [
       "08"
     ],
+    "numerical_token_changes": [],
+    "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
+  },
+  {
+    "file": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Final\\chapters\\60-sns.tex",
+    "operation": "insert",
+    "old_start_line": 283,
+    "new_start_line": 287,
+    "old_text": "",
+    "new_text": "\\widowpenalty=\\snsSavedWidowPenalty\\relax\n\\clubpenalty=\\snsSavedClubPenalty\\relax",
+    "all_old_numerical_tokens": [],
+    "all_new_numerical_tokens": [],
     "numerical_token_changes": [],
     "interpretation_and_source_mapping": "NUMERICAL_CHANGE_LEDGER.md; AIR/PF/CAD/TIMING evidence reviews"
   },

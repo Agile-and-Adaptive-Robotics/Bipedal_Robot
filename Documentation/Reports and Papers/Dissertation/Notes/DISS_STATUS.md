@@ -1,3 +1,13 @@
+<!-- BEGIN AUTHORITATIVE CH6 20261116 -->
+## Authoritative Chapter 6 and Appendix D completion - 16 November 2026
+
+Canonical `Final/main.tex` compiles to **318 pages** using BibTeX and four MiKTeX passes, with no build errors, unresolved references/citations, duplicate TeX labels, missing graphics, oversized floats, or remaining rerun request. Final target-page review is complete; compiled vector text is at least 10 pt. The accepted PDF is `D:\GitHub\Bipedal_Robot\tmp\ch6_authoritative_20261116\build_final_r7\main.pdf`. Exact hashes, source conservation, nonfatal notices, and review coverage are in `Notes/ch6_authoritative_20261116/BUILD_RESULT.json`, `BUILD_REVIEW.md`, and `REVISION_REPORT.md`.
+
+The revision preserves the tools framing while correcting PF chronology, air-command provenance/weight denominators, stimulus windows, controller/body/actuation identities, W2L sides/support/push protocols, timing scopes, native literature-model baseline chronology, and the matched spiking-cup endpoint. All numerical changes and sources/windows are in `NUMERICAL_CHANGE_LEDGER.md`; source diff/conservation and figure moves/hashes accompany it. No model parameter, controller weight, scientific recording, bibliography, or unrelated Final file changed. The other 21 Final source/support files remain byte-identical, including Introduction, protected muscle chapter, and Chapter 7's supplementary/shared-drive distinction.
+
+Earlier sources/figures already reside in commit `0f493de8`; continuation completes reports and review records only. The connection interruption is resolved. The exact remaining commit list is `Notes/ch6_authoritative_20261116/COMMIT_FILES.txt`; no agent commit/push/upload/ZIP or simulation/optimization run. Further SSH was waived by Ben. Earlier dated checkpoints below remain historical.
+<!-- END AUTHORITATIVE CH6 20261116 -->
+
 ## Chapter 6 and Appendix D revision - 16 November 2026
 
 Ben subsequently requested synchronization of the other chapters with the latest downloaded source. Sixteen chapter/front-matter TeX files are now synchronized in Final, with pre-sync copies in `Archive/final_source_sync_20261116/chapters/`. The revised Chapter 6 and Appendix D are preserved. Chapter 7 retains the verified supplementary/shared-drive clarification as one disclosed exception. Main.tex, bibliographies, and figures required no additional import. `FINAL_SOURCE_SYNC.json` and `OTHER_CHAPTERS_SYNC.diff` record the exact scope; all Final static reference/citation/graphic checks pass.
