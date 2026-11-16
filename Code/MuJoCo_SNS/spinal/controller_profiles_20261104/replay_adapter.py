@@ -84,6 +84,8 @@ class Replay:
 
     def evaluate(self, parameters, deadline=None):
         tick = time.perf_counter()
+        if hasattr(self.net, 'native_pf_cadence'):
+            self.net.native_pf_cadence.reset()
         self.c.gmax[:] = self.base_g
         for key, value in self.initial.items():
             getattr(self.core, key)[:] = value

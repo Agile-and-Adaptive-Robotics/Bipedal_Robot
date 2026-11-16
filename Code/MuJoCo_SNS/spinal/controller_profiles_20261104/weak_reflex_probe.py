@@ -16,7 +16,8 @@ def main():
  cases += [dict(local_Ia=.001,local_Ib=g,local_II=.001)for g in(.1,1.)]
  if a.relay_outputs:
   cases=[dict(local_Ia=.1,local_Ib=.1,local_II=.01,relay_Ib_output=ib,relay_II_output=ii)for ib,ii in((1.,1.),(.1,1.),(1.,.1),(.1,.1),(.03,.03),(.01,.01),(.001,.001),(.1,.01))]
- preflight=dict(op='preflight',fit=str(a.fit),fit_sha256=hashlib.sha256((a.fit/'FINAL.json').read_bytes()).hexdigest())
+ preflight=dict(op='preflight',fit=str(a.fit),fit_sha256=hashlib.sha256((a.fit/'FINAL.json').read_bytes()).hexdigest(),
+                capture_root=str(a.output.resolve()))
  manifest=dict(**preflight,cases=cases,scope='Offline sensitivity diagnostic, mirrored positive gains; accepted requires original D waveform gate and C peak preservation',source_sha256={f.name:hashlib.sha256(f.read_bytes()).hexdigest()for f in(Path(__file__),HERE/'motor_adapter.py',HERE/'readout_keys.py',HERE/'replay_adapter.py',HERE/'pose_replay.py')})
  (a.output/'MANIFEST.json').write_text(json.dumps(manifest,indent=2))
  def guard(r):

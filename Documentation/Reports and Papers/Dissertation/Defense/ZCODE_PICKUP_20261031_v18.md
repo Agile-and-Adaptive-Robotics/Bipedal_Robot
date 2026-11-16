@@ -1,5 +1,9 @@
 # ZCode pickup: validated defense deck v18
 
+This is a historical handoff for the October 31 revision. The retired deck workspaces are preserved from commit `a6fa2fac5f36df1f1800e9f9d477fd0a3e187778` in the local archive [retired_workspaces_HEAD.zip](../Archive/defense_workspaces_retired_20261116/retired_workspaces_HEAD.zip). The archive contains the files tracked in Git, including the v18 helpers and submitted-source snapshot. Generated files that were ignored by Git require their original local copies. [The v18 source in Git history](https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/tree/a6fa2fac5f36df1f1800e9f9d477fd0a3e187778/Documentation/Reports%20and%20Papers/Dissertation/Defense/C3NS_Revision_20261031_v18) supplies the same tracked source.
+
+The current local presentation is `C:\Users\Ben Bolen\Documents\Bolen_PhD_Defense_v34a.pptx`, recorded in [current_deck.json](current_deck.json). The paths, validation statements, and continuation instructions below describe v18 at the time of this handoff.
+
 Run `hostname` first, then read repository `AGENTS.md`. These paths are for easteregg2. The current deck pointer is `Defense/current_deck.json`.
 
 ## Deliverables

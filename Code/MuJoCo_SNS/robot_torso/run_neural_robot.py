@@ -82,8 +82,19 @@ def run(args):
     if not 0<=args.activation_floor<1:raise ValueError('Activation floor must be in [0,1).')
     source_paths=(args.model,HERE/'robotbody_routes.json',Path(__file__),HERE/'dynamic_routes.py',HERE/'robot_kinematics.py',
                   SPINAL/'build_network.py',SPINAL/'params.py',SPINAL/'w2l_cpg/exact_fast_eval.py')
+    torso_stage=getattr(args,'torso_stage',None)
+    lumbar_fit=getattr(args,'lumbar_pf_fit',None)
+    if lumbar_fit is not None and (torso_stage is None or args.diagnostic_direct):
+        raise ValueError('The lumbar PF fit requires a torso-supported native SNS diagnostic')
+    if torso_stage is not None:
+        sys.path.insert(0,str(HERE.parent))
+        from torso_support import TorsoSupport, trunk_gate
+        source_paths+=(HERE.parent/'torso_support.py',)
+        if lumbar_fit is not None:
+            source_paths+=(SPINAL/'controller_profiles_20261104/lumbar_pf.py',)
     source_hashes={str(p.relative_to(HERE.parent)):hashlib.sha256(p.read_bytes()).hexdigest() for p in source_paths}
-    snapshot_dir=HERE/'runs/source_snapshots';snapshot_dir.mkdir(parents=True,exist_ok=True)
+    snapshot_dir=(args.output.parent/'source_snapshots' if torso_stage is not None else HERE/'runs/source_snapshots')
+    snapshot_dir.mkdir(parents=True,exist_ok=True)
     runner_bytes=Path(__file__).read_bytes();runner_hash=hashlib.sha256(runner_bytes).hexdigest()
     snapshot=snapshot_dir/(runner_hash+'.py')
     if not snapshot.exists():snapshot.write_bytes(runner_bytes)
@@ -105,6 +116,17 @@ def run(args):
             vertices=model.mesh_vert[model.mesh_vertadr[mid]:model.mesh_vertadr[mid]+model.mesh_vertnum[mid]]
             minimum=min(minimum,float((vertices@data.geom_xmat[gid].reshape(3,3)[1]+data.geom_xpos[gid,1]).min()))
         data.qpos[1]-=minimum+.0002
+    torso_support=None
+    if torso_stage is not None:
+        model.opt.disableflags |= int(mujoco.mjtDisableBit.mjDSBL_CONTACT)
+        data.qpos[1]+=.12
+        mujoco.mj_forward(model,data)
+        torso_support=TorsoSupport(model,data,stage=torso_stage,
+                                   scale=getattr(args,'torso_guide_scale',1.),fraction=args.support,
+                                   lateral_stiffness=args.lateral_stiffness,
+                                   vertical_stiffness=args.vertical_stiffness,
+                                   angular_stiffness=args.rig_angular_stiffness,
+                                   angular_damping=args.rig_angular_damping)
     dynamic.update(data)
     acts=[mujoco.mj_id2name(model,mujoco.mjtObj.mjOBJ_ACTUATOR,i) for i in range(model.nu)]
     # Keep production defaults untouched; these settings exist only in this
@@ -114,9 +136,30 @@ def run(args):
     params.G['heel_rge']=.15
     params.G['toe_rge']=.05
     params.TAU['rg_nap_h']=args.rg_tau_h
-    net=bn.build(acts,dt=model.opt.timestep,interleg=True)
-    if args.backend=='exact_fast':net.compiled=ExactFastForward(net.compiled)
+    lumbar=None
+    if lumbar_fit is None:
+        net=bn.build(acts,dt=model.opt.timestep,interleg=torso_stage!=1)
+        if args.backend=='exact_fast':net.compiled=ExactFastForward(net.compiled)
+    else:
+        from controller_profiles_20261104.lumbar_pf import Runtime, ROUTES, attach
+        from compact_pairwise_eval import CompactPairwiseForward
+        net=bn.SpinalNetwork(muscles={name:bn.classify(name) for name in acts},
+                             sides=('l','r'),interleg=torso_stage!=1)
+        spec=json.loads(lumbar_fit.read_text())
+        attach(net,spec)
+        net.compile(dt=model.opt.timestep)
+        net.compiled=CompactPairwiseForward(net.compiled)
+        c=net.compiled
+        def sync():
+            c.c.g_max_non[c.post,c.pre]=c.gmax
+        net.sync=sync
+        lumbar=Runtime(net,torso_stage,args.lumbar_kp,args.lumbar_kd,
+                       load_compensation=torso_stage==2,precharge=True,dt=model.opt.timestep,
+                       pose_recruitment=torso_stage==2)
+        lumbar.apply_weights()
     currents=net.make_inputs();ports={name:i for i,name in enumerate(net.inputs)}
+    if lumbar is not None:
+        trunk_post_ports=[ports['POST_'+name] for name in ROUTES]
     mn=np.array([net.idx['MN_'+name] for name in acts])
     capacities=-model.actuator_gainprm[:,0]
     route_ids=model.actuator_trnid[:,0]
@@ -280,6 +323,8 @@ def run(args):
                 currents[:]=0
                 for i,name in enumerate(acts):currents[ports['POST_'+name]]=float(warm_post[i])
                 currents[ports['POSTURE']]=.15
+                if lumbar is not None:
+                    currents[trunk_post_ports]=0.
                 net.step(currents)
             data.act[:]=np.clip(net.compiled.V[mn]/params.E_HI,0.,1.)
             if args.disable_muscles:data.act[:]=0
@@ -304,6 +349,10 @@ def run(args):
             for part,prefix in enumerate(('HEEL_c_','TOE_c_')):
                 name=prefix+side
                 if name in ports:currents[ports[name]]=min(2.,loads[si,part]/200.)
+        if lumbar is not None:
+            torso_support.apply(model,data)
+            currents[trunk_post_ports]=0.
+            lumbar.update(currents,model,data)
         net.step(currents)
         data.ctrl[:]=np.clip(net.compiled.V[mn]/params.E_HI,0.,1.)
         if args.diagnostic_direct:data.ctrl[:]=desired_activation
@@ -321,7 +370,14 @@ def run(args):
         force[1]=np.clip(force[1],0,support_cap*weight)
         previous_vertical_force=force[1]
         torque=-args.rig_angular_stiffness*rotation_error(data.qpos[3:7])-args.rig_angular_damping*data.qvel[3:6]
-        data.xfrc_applied[:]=0;data.xfrc_applied[pelvis,:3]=force;data.xfrc_applied[pelvis,3:]=torque
+        data.xfrc_applied[:]=0
+        if torso_support is None:
+            data.xfrc_applied[pelvis,:3]=force;data.xfrc_applied[pelvis,3:]=torque
+        else:
+            torso_support.vertical_cap_bw=support_cap
+            torso_support.apply(model,data)
+            force,torque=torso_support.wrench[:3].copy(),torso_support.wrench[3:].copy()
+            previous_vertical_force=force[1]
         data.qfrc_applied[:]=0
         dynamic.apply_force_correction(data)
         if args.frontal_assist:
@@ -336,6 +392,8 @@ def run(args):
                     force,torque,loads,rg,list(dynamic.coordinates(data).values()),data.ten_length.copy(),dynamic.active_counts.copy())
             for key,value in zip(log,values):log[key].append(value)
         mujoco.mj_step(model,data)
+        if torso_support is not None:
+            torso_support.record(data)
         if not np.isfinite(data.qpos).all() or not np.isfinite(net.compiled.V).all():failed='nonfinite state';break
         if any(w.number for w in data.warning):failed='MuJoCo numerical warning';break
         if data.qpos[1]<root_height-.3:failed='pelvis height failure';break
@@ -346,7 +404,8 @@ def run(args):
     np.savez_compressed(args.output.with_suffix('.npz'),**arrays)
     trunk_address=model.jnt_qposadr[torso]
     trunk_angles=[np.linalg.norm(rotation_error(q[trunk_address:trunk_address+4])) for q in arrays['qpos']]
-    summary=dict(machine='easteregg2',model_path=str(args.model),mode=args.mode,backend=args.backend,
+    summary=dict(machine='easteregg2',model_path=str(args.model),mode=args.mode,
+                 backend='compact' if lumbar is not None else args.backend,
         duration_simulated_s=float(data.time),requested_duration_s=args.duration,wall_s=time.perf_counter()-start,
         failed=failed,finite=failed not in ('nonfinite state','MuJoCo numerical warning'),
         neuron_count=len(net.idx),neural_inputs=len(net.inputs),actuators=model.nu,
@@ -372,6 +431,13 @@ def run(args):
         force_model='30 ms first-order reference tension, capped by existing 27-actuator map MIFs; not calibrated BPA hardware',
         controller='Layered SNS with Ia/II/Ib/contact inputs, descending postural torque allocation, compensated MN target currents, and RG-driven stepping references',
         status='Supported neural-control diagnostic; walking classification requires trajectory/contact review')
+    if torso_support is not None:
+        summary['torso_support']=torso_support.summary()
+        summary['trunk_support_gate']=failed is None and trunk_gate(summary['torso_support'])
+    if lumbar is not None:
+        summary['lumbar_pf_fit_sha256']=hashlib.sha256(lumbar_fit.read_bytes()).hexdigest()
+        summary['lumbar_pf_command_peaks']=lumbar.command_peak.tolist()
+        np.savez_compressed(args.output.with_suffix('.lumbar_pf.npz'),samples=np.asarray(lumbar.history))
     args.output.with_suffix('.json').write_text(json.dumps(summary,indent=2))
     print(json.dumps(summary,indent=2),flush=True)
     return summary
@@ -386,6 +452,11 @@ if __name__=='__main__':
     parser.add_argument('--duration',type=float,default=10.)
     parser.add_argument('--stand-time',type=float,default=3.)
     parser.add_argument('--support',type=float,default=.8)
+    parser.add_argument('--torso-stage',type=int,choices=(1,2),help='Suspend from the torso for an early-stage trunk diagnostic')
+    parser.add_argument('--torso-guide-scale',type=float,default=1.,help='Scale torso guidance stiffness independently of vertical weight support')
+    parser.add_argument('--lumbar-pf-fit',type=Path,help='Use a measured CAD lumbar PF fit')
+    parser.add_argument('--lumbar-kp',type=float,default=180.)
+    parser.add_argument('--lumbar-kd',type=float,default=18.)
     parser.add_argument('--horizontal-stiffness',type=float,default=20.)
     parser.add_argument('--lateral-shift',type=float,default=0.,help='Explicit RG-timed lateral pelvis support target amplitude in metres')
     parser.add_argument('--lateral-stiffness',type=float,default=250.)

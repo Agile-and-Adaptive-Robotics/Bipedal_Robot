@@ -80,7 +80,12 @@ if ~any(strcmp(xi3Mode, {'legacyMaxEnvelope', 'perPose'}))
 end
 
 % ---- 1. location rows in their class-convention frames ------------------
-[loc, rowBodies] = fr_locForPass(C, caseDef, design, kin, qg.passIdx);
+if isfield(qg, 'resolvedRoute')
+    loc = qg.resolvedRoute.points;
+    rowBodies = qg.resolvedRoute.frames;
+else
+    [loc, rowBodies] = fr_locForPass(C, caseDef, design, kin, qg.passIdx);
+end
 caseDef = fr_caseForPass(caseDef, qg.passIdx);   % per-pass cross/rows
 caseDef.rowBodiesUsed = rowBodies;
 
@@ -90,6 +95,10 @@ kmax = campaignLminFraction(C, caseDef.diaStr) * rest;
 
 % ---- 3. discrete transmission configuration (kept distinct) -------------
 cfg = caseDef.txConfig;
+% An independent actuator has its own tendon and both of its own brackets.
+% Identical routes can share the geometric solve, then sum their wrenches.
+forceCopies = caseDef.seed.nBPA;
+cfg.nPulleyBPA = [1 1];
 % Mathematical gain does not uniquely determine physical reeving. These
 % metadata fields are not consumed by the force/equilibrium classes.
 cfg.sheaveCountPhysical = NaN;
@@ -99,6 +108,9 @@ cfg.sectionLengths_m = [rest * design.seriesSplit, ...
     rest * (1 - design.seriesSplit)];
 
 % ---- 4. Xi branch constants ----------------------------------------------
+% Xi3 belongs to contact that bends a pressurized vessel. The current
+% route builder emits straight vessels, so all modeled turns are excluded
+% from Xi3. The legacy bend helpers are retained for diagnostic geometry.
 switch xiBranch
     case 'rigid'
         % the class's rigid convention is INFINITE bracket stiffness
@@ -122,7 +134,8 @@ switch xiBranch
             cfgMount.bowdenBracketMaterial = 'aluminum6061T6';
             cfgMount.bowdenBracketSection = [0.025 0.005 0.040];
         end
-        xi3On = true;
+        % Current vessels are straight. All guide and sheave turns are cable.
+        xi3On = false;
         if strcmp(xi3Mode, 'perPose') ...
                 && ~(isfield(C.Xi, 'noInsBracket') && C.Xi.noInsBracket)
             % dissertation two-bracket mechanics: the INSERTION bracket
@@ -143,7 +156,19 @@ switch xiBranch
 end
 
 % ---- 5. transform grid: slot 1 per pose, slot 2 replicated ---------------
-T = zeros(4, 4, nG, 2);
+coupled = isfield(qg,'qList2');
+paired = isfield(qg,'pairedPoseGrid') && qg.pairedPoseGrid;
+if paired
+    assert(~coupled && strcmp(xi3Mode,'perPose'));
+    cfg.pairedPoseGrid = true;
+end
+n2 = 2;
+if coupled
+    assert(strcmp(xi3Mode,'perPose'),'Coupled grid requires the per-pose mechanics class');
+    n2 = numel(qg.qList2);
+    assert(n2>=2 && n2<=nG, 'Coupled grid needs 2 <= N2 <= N1');
+end
+T = zeros(4, 4, nG, n2);
 T1list = cell(1, nG);
 T2list = cell(1, nG);
 for i = 1:nG
@@ -152,9 +177,17 @@ for i = 1:nG
     T2list{i} = pass.T2(kin, qList{i});
 end
 T2ref = T2list{ceil(nG / 2)};
-T(:,:,1, 2) = T2ref;
-if nG >= 2
-    T(:,:,2, 2) = T2ref;
+if paired
+    for i=1:nG; T(:,:,i,2)=T2list{i}; end
+elseif coupled
+    for j = 1:n2
+        T(:,:,j,2) = pass.T2(kin,qg.qList2{j});
+    end
+else
+    T(:,:,1, 2) = T2ref;
+    if nG >= 2
+        T(:,:,2, 2) = T2ref;
+    end
 end
 
 % ---- 6. construct + Xi3 coupling (explicit A/B switch) --------------------
@@ -200,10 +233,17 @@ switch xi3Mode
             activeKp = 1;
         end
         bendCols = fr_bendProfile(C, caseDef, loc, T1list, T2list, activeKp);
-        bendGrid = zeros(nG, 2);
-        bendGrid(:, 1) = sum(bendCols, 2);   % per-pose total over contacts
-        bendGrid(:, 2) = bendGrid(ceil(nG / 2), 1);   % T2ref replica slot
-        if xi3On
+        bendGrid = zeros(nG, n2);
+        if ~coupled
+            bendGrid(:, 1) = sum(bendCols, 2);   % per-pose total over contacts
+            bendGrid(:, 2) = bendGrid(ceil(nG / 2), 1);   % T2ref replica slot
+        end
+        if isfield(caseDef,'bpaBendArc_m')
+            bendGrid(:)=caseDef.bpaBendArc_m;
+            bendCols=repmat(caseDef.bpaBendArc_m,nG,1);
+        end
+        if paired; bendGrid=bendGrid(:,1); end
+        if xi3On || (strcmp(xiBranch,'compliant') && isfield(caseDef,'bpaBendArc_m'))
             xi3val = C.Xi.Xi3;
             if isfield(C.Xi, 'xi3Override') && ~isempty(C.Xi.xi3Override)
                 xi3val = C.Xi.xi3Override;   % probe knob (fr_xi3_check)
@@ -230,6 +270,7 @@ mech.kmax = kmax;
 mech.cfg = mergeCfg(cfg, cfgMount);
 mech.qg = qg;
 mech.cell = m;
+mech.forceCopies = forceCopies;
 mech.nG = nG;
 % The legacy strain reconstructs muscle length from the whole routed path.
 % A reverse transmission decouples that path change from BPA shortening.
@@ -239,7 +280,7 @@ mech.strain_p = m.sContraction(:, 1) / rest;
 mech.sleeveLength_m = rest - m.sContraction(:, 1);
 mech.FsingleBPA = m.FsingleBPA(:, 1);
 mech.Ftendon = m.Ftendon(:, 1);
-mech.segTension = m.segTension(1:nG, :);
+mech.segTension = forceCopies*m.segTension(1:nG, :);
 mech.deltaL = squeeze(m.deltaL(:, 1, :));
 mech.PulleyInfeasible = m.PulleyInfeasible(:, 1);
 mech.PulleySlack = m.PulleySlack(:, 1);

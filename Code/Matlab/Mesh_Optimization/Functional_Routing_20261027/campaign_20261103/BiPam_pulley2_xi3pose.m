@@ -338,6 +338,7 @@ classdef BiPam_pulley2_xi3pose < handle
         Cross                       %1x2, first row of the middle and distal frames
         Diameter                    %Diameter of the BPA
         TransformationMat           %4x4xN1xN2 (two-hinge orientation grid)
+        PairedPoseGrid = false       % both transforms vary along N1
         RestingL                    %Resting Length of the muscle
         Kmax                        %Length of BPA at maximum contraction
         FittingLength               %Length of each end cap (center of hole to bottom port)
@@ -529,6 +530,9 @@ classdef BiPam_pulley2_xi3pose < handle
                 PD.Cross = cross;                 % [c1 c2] crossing rows
                 PD.Diameter = diameter;           % BPA diameter, mm
                 PD.TransformationMat = t;         % frame transforms (4x4xN1xN2)
+                if isfield(pulleyConfig,'pairedPoseGrid')
+                    PD.PairedPoseGrid = pulleyConfig.pairedPoseGrid;
+                end
                 PD.RestingL = rest;               % BPA resting length, m
                 PD.Kmax = kmax;                   % fully contracted length, m
                 PD.TendonL = tendon;              % tendon length, m
@@ -1258,6 +1262,7 @@ classdef BiPam_pulley2_xi3pose < handle
         function [N1, N2] = gridSize(obj)
             N1 = size(obj.TransformationMat, 3);
             N2 = size(obj.TransformationMat, 4);
+            if obj.PairedPoseGrid; N2 = 1; end
         end
 
         %% -------------- Strain floor (base Tor rule) ------------
@@ -1291,6 +1296,7 @@ classdef BiPam_pulley2_xi3pose < handle
         % frame, chaining T1/T2 consistently (parent chain downward, inverse
         % chain upward). POINT transform: translations included.
             T1 = obj.TransformationMat(:, :, ii, 1);   % frame2 -> frame1
+            if obj.PairedPoseGrid; iii = ii; end
             T2 = obj.TransformationMat(:, :, iii, 2);  % frame3 -> frame2
             f = sourceFrame;
             while f > frame
@@ -1319,6 +1325,7 @@ classdef BiPam_pulley2_xi3pose < handle
         % joint translations (mapping a direction with the point
         % transform corrupts it by the joint offset).
             T1 = obj.TransformationMat(:, :, ii, 1);   % frame2 -> frame1
+            if obj.PairedPoseGrid; iii = ii; end
             T2 = obj.TransformationMat(:, :, iii, 2);  % frame3 -> frame2
             f = sourceFrame;
             while f > frame

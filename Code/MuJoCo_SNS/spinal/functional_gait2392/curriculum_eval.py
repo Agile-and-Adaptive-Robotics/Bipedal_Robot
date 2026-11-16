@@ -53,6 +53,8 @@ def build(acts,dt,interleg):
 BN.build=build
 args=['--eval','--drive',str(p['drive'])]
 if stage in (1,2,4):args+=['--no-ground']
+if stage in (1,2):
+    args+=['--torso-stage',str(stage),'--torso-support-scale',str(cfg.get('torso_guide_scale',1.))]
 if stage==1:args+=['--no-afferents','--no-interleg']
 if stage==3:args=['--stand-eval','8','--rig-scale',str(p['rig_scale'])]
 if stage in (3,5):
@@ -60,6 +62,10 @@ if stage in (3,5):
     if stage==5:args+=['--rig-scale',str(p['rig_scale'])]
 start=time.perf_counter();metrics=R.main(args)
 assessment=assess(out.with_suffix('.npz'),metrics,stage)
+if stage in (1,2):
+    from torso_support import trunk_gate
+    assessment['trunk_support_gate']=trunk_gate(metrics['torso_support'])
+    assessment['accepted'] &= assessment['trunk_support_gate']
 assessment['pre_frontal_screen_accepted']=assessment['accepted']
 assessment.update(assess_frontal(out.with_suffix('.npz')))
 assessment['accepted']=bool(assessment['accepted'] and assessment['frontal_gate'])

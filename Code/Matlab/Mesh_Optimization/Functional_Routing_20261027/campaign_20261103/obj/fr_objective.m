@@ -101,7 +101,7 @@ dTheta = cs.passes{scorePass}.th1(2) - cs.passes{scorePass}.th1(1);
 tauClass = zeros(nG, 1);
 for i = 1:nG
     tq = mech.cell.Torque_ins(i, :, 1, kPrim);
-    tauClass(i) = dot(reshape(tq, 1, 3), reshape(cs.primaryAxis, 1, 3)) ...
+    tauClass(i) = mech.forceCopies*dot(reshape(tq, 1, 3), reshape(cs.primaryAxis, 1, 3)) ...
         / max(norm(cs.primaryAxis), eps);
 end
 % Project the insertion wrench through the actual joint-coordinate motion.
@@ -142,7 +142,7 @@ deficitVec = max(0, abs(tauT) - proj);     % wrong sign: |tauT| + |tauPrim|
 termDeficit = sum(deficitVec) / max(normCap, eps);
 termRom = mean(deficitVec > 1e-6);
 termShape = mean((tauPrim - tauT).^2) / max(mean(tauT.^2), eps);
-[termOverlap, overlapMaxMm] = fr_softOverlap(C, cs, design, kin, mech, meta);
+termOverlap = 0;  % retained for compatibility with existing objective reports
 
 % attachment_deviation (Ben 2026-11-04, Connor-methods lineage, light):
 % mean displacement of the movable attachments from their ORIGINAL human
@@ -155,10 +155,7 @@ qHomeZF = fieldnames(qHomeZ);
 for i3 = 1:numel(qHomeZF)
     qHomeZ.(qHomeZF{i3}) = 0;
 end
-csH = cs;
-csH.passes{scorePass}.qStructs = repmat(qHomeZ, 1, ...
-    numel(cs.passes{scorePass}.qStructs));
-[locHome, ~] = fr_locForPass(C, csH, design, kin, scorePass);
+[locHome, ~] = fr_locForPass(C, cs, design, kin, scorePass);
 absRowsD = find(cs.rowUse{scorePass});
 devSum = 0;
 devN = 0;
@@ -228,18 +225,17 @@ end
 
 % ---- 4. hard constraints (with metadata) ---------------------------------
 
-% 1. centerline z=0 (every attachment + anchor, every pass pose, per-pass
-% used-row indexing so masks of different passes each index correctly)
-% UNITS: meters in the pelvis frame; tol 1e-4 m (0.1 mm numerical noise)
+% Check attachment ownership in the zero pose only.
+qHome = kin.qDefault;
+coords = fieldnames(qHome);
+for j = 1:numel(coords)
+    qHome.(coords{j}) = 0;
+end
 zmin = inf;
 for p = 1:numel(cs.passes)
-    qL = cs.passes{p}.qStructs;
     [locP, ~] = fr_locForPass(C, cs, design, kin, p);
-    for i = 1:numel(qL)
-        for u = 1:size(locP, 1)
-            zw = fr_rowZPelvis(cs, kin, qL{i}, p, u, locP(u, :));
-            zmin = min(zmin, zw);
-        end
+    for u = 1:size(locP, 1)
+        zmin = min(zmin, fr_rowZPelvis(cs, kin, qHome, p, u, locP(u, :)));
     end
 end
 ci = ci + 1; cvec(ci) = -zmin; clabels{ci} = 'centerline_z0';
@@ -270,7 +266,8 @@ for p = 1:numel(cs.passes)
         if p == 1
             rep.spanRequired = sp;
             rep.tendonHardware_m = cs.tendonHardware_m;
-            rep.spanChordMax_m = sp.spanMax_m;
+            rep.spanRouteMax_m = sp.spanMax_m;
+            rep.spanChordMax_m = sp.spanMax_m;  % legacy report field
         end
     end
 end
@@ -278,15 +275,30 @@ end
 % 4. transmission feasibility over ALL passes
 % UNITS: fraction of grid cells (infeasible/slack); strain floor normalized
 infeasFrac = 0; slackFrac = 0; elongViol = 0; contractionViol = 0;
+reactionPeakByPass = zeros(1, numel(cs.passes));
+tensionPeakByPass = zeros(1, numel(cs.passes));
 physicalSleeves=cell(1,numel(cs.passes));
+overlapMax_m = 0;
+guideMin = inf;
 for p = 1:numel(cs.passes)
     qgp = struct('passIdx', p, 'qList', {cs.passes{p}.qStructs});
     [mp, metap] = fr_mechBuild(C, cs, design, kin, xiBranch, qgp);
     physicalSleeves{p}=fr_sleevePrimitives(C,cs,design,kin,mp,metap);
+    overlapMax_m = max(overlapMax_m, fr_bundlePenetration(physicalSleeves{p}));
+    if isfield(cs,'distalSleeveGuideRow')
+        ids=find(cs.rowUse{p});
+        row=find(ids==cs.distalSleeveGuideRow,1);
+        guideSpan=sum(vecnorm(diff(metap.loc(1:row,:)),2,2));
+        guideMin=min(guideMin,guideSpan-2*cs.fittingLength-max(mp.sleeveLength_m));
+    end
     infeasFrac = max(infeasFrac, mean(mp.PulleyInfeasible));
     slackFrac = max(slackFrac, mean(mp.PulleySlack));
     elongViol = max(elongViol, max(0, -min(mp.strain_p) - strainFloor(cs)));
     contractionViol = max(contractionViol, max(mp.strain_p) - (1-mp.kmax/mp.rest));
+    if cs.hasTackle
+        reactionPeakByPass(p) = max([0; mp.ReactionFmag(:)]);
+        tensionPeakByPass(p) = max([0; mp.Ftendon(:)]);
+    end
 end
 ci = ci + 1; cvec(ci) = infeasFrac; clabels{ci} = 'tx_infeasible_cells';
 cunits{ci} = 'fraction of cells'; cnorm{ci} = 'fraction of cells'; ...
@@ -301,6 +313,13 @@ ci = ci + 1; cvec(ci) = contractionViol; clabels{ci} = 'physical_contraction_cei
 cunits{ci} = 'contraction fraction'; cnorm{ci} = 'strain (unitless)'; ctol(ci) = 1e-9;
 ci=ci+1;cvec(ci)=mean(invalidTorque);clabels{ci}='invalid_torque_cells';
 cunits{ci}='fraction of cells';cnorm{ci}='fraction of cells';ctol(ci)=1e-12;
+overlapMaxMm = 1000 * overlapMax_m;
+ci = ci + 1; cvec(ci) = overlapMax_m; clabels{ci} = 'within_group_bpa_overlap';
+cunits{ci} = 'm'; cnorm{ci} = 'dimensional (m)'; ctol(ci) = 1e-9;
+if isfinite(guideMin)
+    ci=ci+1; cvec(ci)=-guideMin; clabels{ci}='distal_sleeve_guide_clearance';
+    cunits{ci}='m'; cnorm{ci}='dimensional (m)'; ctol(ci)=1e-4;
+end
 if cs.footTipRule
  tipMin=inf;
  for p=1:numel(cs.passes)
@@ -317,24 +336,16 @@ if cs.footTipRule
  cunits{ci}='m above ankle plane';cnorm{ci}='dimensional (m)';ctol(ci)=1e-4;
 end
 
-% 5. rated hardware loads
+% 5. tackle sizing diagnostics (no rejection or objective penalty)
 % UNITS: normalized by the assigned family's catalog capacity (which is a
 % weight capacity whose dynamic convention is UNRESOLVED - handoff open item)
 if cs.hasTackle
     fam = C.families(cs.txConfig.tackleFamily);
     cap = fam.capacity_N;
-    loadMax = max(mech.ReactionFmag);
-    revMax = 2 * max(mech.Ftendon);   % 180-deg reversing sheave worst case
-    ci = ci + 1; cvec(ci) = (loadMax - cap) / cap;
-    clabels{ci} = sprintf('tackle_load_%s', cs.txConfig.tackleFamily);
-    cunits{ci} = 'N';
-    cnorm{ci} = 'fraction of family catalog capacity_N';
-    ctol(ci) = 1e-6;
-    ci = ci + 1; cvec(ci) = (revMax - cap) / cap;
-    clabels{ci} = 'reversing_sheave_2T';
-    cunits{ci} = 'N';
-    cnorm{ci} = 'fraction of family catalog capacity_N';
-    ctol(ci) = 1e-6;
+    [loadMax, rep.tackleLoadPass] = max(reactionPeakByPass);
+    [tensionMax, rep.reversingSheaveLoadPass] = max(tensionPeakByPass);
+    revMax = 2 * tensionMax;  % 180-degree reversing sheave bound
+    rep.tackleExceedsSizingCapacity = max(loadMax, revMax) > cap;
     rep.tackleLoadMax_N = loadMax;
     rep.reversingSheaveMax_N = revMax;
     rep.tackleCapacity_N = cap;
@@ -344,10 +355,15 @@ end
 % simultaneous per pass). v2: fr_obstacles returns the RIGID-only envelope
 % margin (hard) plus the SOFT BPA-corridor penetration (objective term)
 obsBoneMin = inf; obsRigidMin = inf;
+footLeadMin = inf;
 corrDepth = 0; corrMaxMm = 0; corrWhich = '';
 for p = 1:numel(cs.passes)
     [ptsP, bodP] = fr_locForPass(C, cs, design, kin, p);
     csP = cs; csP.cross = cs.crossFor{p};
+    if isfield(cs, 'allowFootLeadCorrection') && cs.allowFootLeadCorrection
+        footLeadMin = min(footLeadMin, fr_tibialLeadMargin(C, kin, ptsP, bodP, ...
+            cs.rowOwning(cs.rowUse{p}), cs.passes{p}.qStructs, 0.002));
+    end
     ob = fr_obstacles(C, csP, ptsP, bodP, kin, ...
         cs.passes{p}.qStructs, opts.envelopes,physicalSleeves{p});
     obsBoneMin = min(obsBoneMin, ob.boneMargin);
@@ -364,6 +380,11 @@ end
 ci = ci + 1; cvec(ci) = -obsBoneMin; clabels{ci} = 'bone_exclusion';
 cunits{ci} = 'm (clearance incl. inflated radius + rigid clearance)';
 cnorm{ci} = 'dimensional (m)'; ctol(ci) = 1e-4;
+if isfinite(footLeadMin)
+    ci = ci + 1; cvec(ci) = -footLeadMin; clabels{ci} = 'tibial_lead_clearance';
+    cunits{ci} = 'm (including 2 mm clearance)';
+    cnorm{ci} = 'dimensional (m)'; ctol(ci) = 1e-4;
+end
 ci = ci + 1; cvec(ci) = -obsRigidMin; ...
     clabels{ci} = 'retained_rigid_envelopes';
 cunits{ci} = 'm (clearance incl. radii + rigid clearance)';
@@ -533,100 +554,19 @@ else
 end
 end
 
-function [depth, depthMaxMm] = fr_softOverlap(C, cs, ~, ~, mech, meta)
-% soft BPA-BPA overlap between the group's OWN parallel sleeves from the
-% pose-dependent inflated envelopes (physically simultaneous poses only)
-depth = 0;
-depthMaxMm = 0;
-nB = cs.seed.nBPA;
-if nB < 2
-    return
-end
-Drest = fr_diameter(C, cs.diaStr, 0);
-distanceFn=@segSegDistMin;
-if isfield(C,'exactSegmentDistance')&&C.exactSegmentDistance;distanceFn=@fr_segmentDistance;end
-exitRow = cs.cross(1);
-nG = mech.nG;
-for i = 1:nG
-    T1 = meta.T1list{i};
-    T2 = meta.T2list{i};
-    p1 = fr_applyT(T1, meta.loc(1, :));
-    p2 = fr_applyT(T2 * T1, meta.loc(exitRow, :));
-    u = (p2 - p1) / max(norm(p2 - p1), 1e-9);
-    u = u(:)';   % row 1x3 for the perp basis below
-    if any(~isfinite(u))
-        u = [1; 0; 0]';
-    end
-    uc = u(:);   % 3x1 column
-    perp = null(uc');
-    perp = perp(:, 1:min(2, size(perp, 2)));   % 3x1 or 3x2 columns
-    if size(perp, 2) < 2 || any(~isfinite(perp(:)))
-        % degenerate axis: fixed perpendicular frame, columns 3x1
-        alt = [1; 0; 0];
-        if abs(dot(alt, uc)) > 0.9
-            alt = [0; 1; 0];
-        end
-        perp = [cross(alt, uc), cross(uc, alt)];   % 3x2, both columns perp
-    end
-    spread = 1.0;
-    if isfield(cs, 'bundleSpread'); spread = cs.bundleSpread; end
-    offs = fr_ringOffsets(nB) * (Drest / 2) / 1000 * spread;
-    Dinfl = fr_diameter(C, cs.diaStr, mech.strain_p(i));
-    r = (Dinfl / 2) / 1000;
-    ctr = cell(1, size(offs, 1));
-    for b = 1:size(offs, 1)
-        o = perp * offs(b, :)';
-        ctr{b} = [p1 + o'; p2 + o'];   % 2x3 endpoints
-    end
-    for a = 1:numel(ctr)
-        for b2 = a+1:numel(ctr)
-            d = distanceFn(ctr{a}(1, :), ctr{a}(2, :), ...
-                ctr{b2}(1, :), ctr{b2}(2, :));
-            ov = 2 * r - d;
-            if ov > 0
-                % Ben 2026-11-04: steep escalation - a few mm of BPA
-                % squish is mild; 20 mm is hard-interference scale.
-                % Linear below 5 mm, quadratic to 10x by 20 mm.
-                dmm = ov * 1000;
-                steep = 1 + 9 * min(4, max(0, (dmm - 5) / 15))^2;
-                depth = depth + (ov / (Drest / 1000)) * steep;
-                depthMaxMm = max(depthMaxMm, ov * 1000);
-            end
+function overlap = fr_bundlePenetration(poses)
+% Compare the actual solved sleeve capsules at each simultaneous pose.
+overlap = 0;
+for i = 1:numel(poses)
+    parts = poses{i};
+    for a = 1:numel(parts)
+        for b = a+1:numel(parts)
+            x = parts(a); y = parts(b);
+            if x.branch==y.branch && x.section==y.section; continue; end
+            d = fr_segmentDistance(x.p1, x.p2, y.p1, y.p2);
+            overlap = max(overlap, x.r + y.r - d);
         end
     end
-end
-end
-
-function d = segSegDistMin(p1, p2, q1, q2)
-u = p2 - p1; v = q2 - q1; w0 = p1 - q1;
-a = dot(u, u); b = dot(u, v); c = dot(v, v);
-d0 = dot(u, w0); e = dot(v, w0);
-D = a * c - b * b;
-if D < 1e-24
-    sc = 0;
-    tc = max(0, min(1, e / max(c, eps)));
-else
-    sc = max(0, min(1, (b * e - c * d0) / D));
-    tc = max(0, min(1, (a * e - b * d0) / D));
-    den = a * c - b * b;
-    if abs(den) > 1e-24
-        sc = max(0, min(1, (b * tc - d0) / den));
-        tc = max(0, min(1, (b * sc - e) / max(c, eps)));
-    end
-end
-d = norm(p1 + sc * u - (q1 + tc * v));
-end
-
-function offs = fr_ringOffsets(nB)
-switch nB
-    case 1
-        offs = [0 0];
-    case 2
-        offs = [0 1; 0 -1];
-    otherwise
-        th = (0:nB-1) * 2 * pi / nB;
-        radius = 1/sin(pi/nB);
-        offs = radius * [cos(th)', sin(th)'];
 end
 end
 

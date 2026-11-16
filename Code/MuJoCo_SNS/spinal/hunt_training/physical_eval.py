@@ -14,6 +14,11 @@ from mechanics import CoupledArms,JOINTS
 from curriculum_metrics import assess
 from frontal_metrics import assess_frontal
 stage=cfg['stage'];capture={};extra=np.zeros((8500,21));balance_log=np.zeros((8500,8));count=0
+if stage in (1,2):
+    cfg.setdefault('support_attachment','torso')
+    if cfg['support_attachment'] not in ('torso','legacy_pelvis'):
+        raise ValueError('Early curriculum support must use torso or an explicit legacy_pelvis replay')
+torso_stage=stage in (1,2) and cfg['support_attachment']=='torso'
 cfg.setdefault('align_ground_pose',stage>=3)
 trace_cells=cfg.get('trace_cells',[]);cell_log=np.zeros((8500,len(trace_cells)))
 event_amplitude=float(cfg.get('cross_contact_event_amplitude',0.))
@@ -21,6 +26,9 @@ event_log=np.zeros((8500,4)) if event_amplitude>0. else None
 regional_log=np.zeros((8500,4)) if cfg.get('regional_contacts',False) else None
 if event_amplitude>0. and cfg.get('cross_contact_gain',0.)<=0.:raise ValueError('Contact events require an enabled crossed contact projection')
 source_hashes={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__),H/'controller.py',H/'balance.py',H/'ground_contact_check.py',H/'regional_contacts.py',H/'contact_events.py',H/'bilateral.py',H/'foot_clearance_check.py')}
+if torso_stage:
+    support_source=S.parent/'torso_support.py'
+    source_hashes[support_source.name]=hashlib.sha256(support_source.read_bytes()).hexdigest()
 oldpose=R.apply_start_pose
 def pose(m,d):
     oldpose(m,d);targets=np.load(H/'runs/targets/targets.npz',allow_pickle=True)
@@ -87,7 +95,7 @@ def standing_solver(model,data,Fmax,preload=True):
         return activation
     if cfg.get('standing_solver') not in ('coupled_symmetric','contact_symmetric'):return legacy_standing_solver(model,data,Fmax,preload=preload)
     from physics_fidelity.standing_solver import solve_standing_activations
-    if cfg.get('support_fraction',0.):data.xfrc_applied[model.body('pelvis').id,2]=cfg['support_fraction']*model.body_mass.sum()*9.81
+    if cfg.get('support_fraction',0.) and not torso_stage:data.xfrc_applied[model.body('pelvis').id,2]=cfg['support_fraction']*model.body_mass.sum()*9.81
     activation,diagnostics=solve_standing_activations(model,data,Fmax,preload=False,bilateral=True,return_diagnostics=True)
     capture['standing_solver_diagnostics']=diagnostics
     return activation
@@ -199,7 +207,7 @@ def build(acts,dt,interleg):
         # A finite, explicitly declared 100 ms pelvis impulse, never a phase clock.
         d.xfrc_applied[pb,0]=cfg.get('push_N',0.) if cfg.get('push_time',7.)<=count*dt<cfg.get('push_time',7.)+.1 else 0.
         d.xfrc_applied[pb,1]=cfg.get('lateral_push_N',0.) if cfg.get('push_time',7.)<=count*dt<cfg.get('push_time',7.)+.1 else 0.
-        d.xfrc_applied[pb,2]=cfg.get('support_fraction',0.)*m.body_mass.sum()*9.81
+        d.xfrc_applied[pb,2]=0. if torso_stage else cfg.get('support_fraction',0.)*m.body_mass.sum()*9.81
         if cfg.get('suppress_inherited_posture',False):
             u[n.ports['POSTURE']]=0.
         step_start=time.perf_counter();native_step(u);capture['neural_step_wall_s']+=time.perf_counter()-step_start
@@ -231,12 +239,20 @@ def build(acts,dt,interleg):
                     if world[2]<0:world=-world
                     grf[side]+=world;loads[side]+=world[2];break
                 body=m.body_parentid[body]
-        if count<len(extra):extra[count]=[count*dt,support,d.xfrc_applied[pb,2],np.mean(d.act**2),np.mean(d.ctrl**2),d.ncon,np.max(abs(n.compiled.V)),*loads,*wrench,*grf.ravel()]
+        explicit_vertical=d.xfrc_applied[pb,2]
+        if torso_stage:
+            wrench=d.xfrc_applied[m.body('torso').id].copy()
+            explicit_vertical=wrench[2]
+            support=0.
+        if count<len(extra):extra[count]=[count*dt,support,explicit_vertical,np.mean(d.act**2),np.mean(d.ctrl**2),d.ncon,np.max(abs(n.compiled.V)),*loads,*wrench,*grf.ravel()]
         count+=1;return n.compiled.V
     n.step=advance;capture.update(network=n,neurons=len(n.compiled.V),inputs=len(n.inputs));return n
 BN.build=build
 args=['--eval','--drive','2.5']
 if stage in (1,2):args+=['--no-ground']
+if torso_stage:
+    args+=['--torso-stage',str(stage),'--torso-support-scale',str(cfg.get('torso_guide_scale',1.)),
+           '--torso-support-bw',str(cfg.get('torso_support_bw',1.))]
 if stage==1:args+=['--no-afferents','--no-interleg']
 if stage==3:args=['--stand-eval','8']
 verification=None
@@ -258,7 +274,8 @@ if cfg.get('verification_capture'):
             verification.metadata['excluded_held_pose_intervals']=verification_prep_intervals
         verification.sample(data,state_time_s=logical_time_s+step_s,neural_time_s=logical_time_s+step_s,
             neural_input_time_s=logical_time_s,force_interval_start_s=logical_time_s,
-            explicit_support_native=np.array([0.,0.,cfg.get('support_fraction',0.)*model.body_mass.sum()*9.81]),
+            explicit_support_native=(data.xfrc_applied[model.body('torso').id,:3].copy() if torso_stage else
+                                     np.array([0.,0.,cfg.get('support_fraction',0.)*model.body_mass.sum()*9.81])),
             sparse_current_backend=cfg.get('backend','sparse')if cfg.get('verification_sparse_currents',False)else None)
     R.VERIFICATION_POST_PHYSICS=observe_verified_interval
 start=time.perf_counter()
@@ -278,6 +295,14 @@ knee_max=np.array([max(float(np.max(z['qfull'][:count,m.joint('knee_angle_'+s).q
 assessment['maximum_knee_extension_deg']=np.degrees(knee_max).tolist()
 assessment['knee_extension_gate']=bool(np.all(knee_max<=0.))
 assessment['accepted']=bool(assessment['accepted'] and assessment['knee_extension_gate'])
+if torso_stage:
+    torso_evidence=metrics['torso_support']
+    from torso_support import trunk_gate
+    assessment['trunk_support_gate']=trunk_gate(torso_evidence,float(cfg.get('torso_max_lumbar_excursion_deg',15.)))
+    assessment['accepted'] &= assessment['trunk_support_gate']
+    if cfg.get('lumbar_phase_teacher'):
+        assessment['phase_teacher_motion_gate']=assessment['accepted']
+        assessment['accepted']=False
 late_window_available=bool(np.any(window))
 if not np.any(window):window=extra[:count,0]>=0.
 if not np.any(late):late=extra[:count,0]>=0.
@@ -290,6 +315,10 @@ measured.update(lateral_harness_rms_bw=float(np.sqrt(np.mean(extra[:count][windo
     harness_wrench_frame='Native world x anterior, y left, z superior. Anatomical right force = -world y. Torque is pelvis joint-restraint generalized torque projected on instantaneous axes; not a physical single attachment load cell.')
 measured['horizontal_harness_rms_bw']=float(np.sqrt(np.mean(np.sum(extra[:count][window,9:11]**2,axis=1)))/BW)
 measured['late_window_available']=late_window_available
+if torso_stage:
+    measured['torso_support']=torso_evidence
+    measured['explicit_support_bw']=torso_evidence['mean_upward_support_bw']
+    measured['harness_wrench_frame']='Torso-mounted support measured separately from legacy pelvis spring channels.'
 # Independently count each physical contact once. The legacy runner contact
 # logger assigns the same force to both heel and toe; its totals are doubled.
 assessment['ground_load_verified']=bool(late_window_available and stage>=3 and np.mean(ct[window].sum(axis=1))>.2 and np.all(np.max(ct[window],axis=0)>.1))

@@ -8,8 +8,8 @@ function S = fr_spans(C, kin, pts, rowBodies, passQList, spanKind)
 %
 % pts: nRows x 3 current route points in their assigned frame per row
 % (from fr_mechBuild's location); rowBodies: owning frame per row.
-% Required span = max over the pose list of the exit-point-to-insertion
-% CHORD distance (the longest span the tendon must accommodate; a shorter
+% Required span = max over the pose list of the routed tendon length
+% (the longest span the tendon must accommodate; a shorter
 % fixed tendon would jam at deep flexion) plus
 %   2 x ferrule (12 mm PLACEHOLDER from the Blender library, unverified)
 %   + 1 x housing-stop allowance (20 mm stand-in).
@@ -38,11 +38,12 @@ nG = numel(passQList);
 span = zeros(nG, 1);
 for i = 1:nG
     q = passQList{i};
-    Te = fr_bodyT(kin, q, rowBodies{exitIdx});
-    Ti = fr_bodyT(kin, q, rowBodies{insIdx});
-    pe = Te(1:3, 1:3) * pts(exitIdx, :)' + Te(1:3, 4);
-    pi_ = Ti(1:3, 1:3) * pts(insIdx, :)' + Ti(1:3, 4);
-    span(i) = norm(pi_ - pe);
+    world = zeros(insIdx - exitIdx + 1, 3);
+    for r = exitIdx:insIdx
+        T = fr_bodyT(kin, q, rowBodies{r});
+        world(r - exitIdx + 1, :) = (T(1:3, 1:3) * pts(r, :)' + T(1:3, 4))';
+    end
+    span(i) = sum(vecnorm(diff(world, 1, 1), 2, 2));
 end
 allowance = 2 * (C.bowden.ferrule_mm / 1000) + C.bowden.stopAllowance_mm / 1000;
 S.spanMax_m = max(span);
@@ -51,7 +52,7 @@ S.allowance_m = allowance;
 S.requiredSpan_m = S.spanMax_m + allowance;
 S.kind = spanKind;
 S.exitIdx = exitIdx;
-S.note = sprintf(['required %s tendon span = max chord (%.1f mm) over ' ...
+S.note = sprintf(['required %s tendon span = max routed length (%.1f mm) over ' ...
     'the case motion range + 2 ferrules (12 mm PLACEHOLDER) + stop ' ...
     'allowance (20 mm stand-in) = %.1f mm'], spanKind, ...
     S.spanMax_m * 1000, S.requiredSpan_m * 1000);

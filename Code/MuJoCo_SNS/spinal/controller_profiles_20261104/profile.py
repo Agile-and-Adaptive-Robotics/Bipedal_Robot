@@ -414,12 +414,17 @@ def build(family, acts, dt=.002, options=None, config=None, backend='compact'):
     # inherited central projections are removed by compose(), not stacked.
     for key in ('heel_rge', 'toe_rge', 'ib_rge'):
         B.G[key] = 1.
+    lumbar_spec = (config or {}).get('lumbar_pf')
+    if lumbar_spec is not None:
+        from controller_profiles_20261104.lumbar_pf import attach as attach_lumbar_pf
     if family == 'hunt':
         import controller as C
         original, original_backend = C.HuntNetwork, C.SparsePairwiseForward
         class PreparedHunt(original):
             def compile(self, *args, **kwargs):
                 compose(self, family, config)
+                if lumbar_spec is not None:
+                    attach_lumbar_pf(self, lumbar_spec)
                 return super().compile(*args, **kwargs)
         # Dedicated-process factory; never use global builder patching in threads.
         C.HuntNetwork = PreparedHunt
@@ -437,11 +442,22 @@ def build(family, acts, dt=.002, options=None, config=None, backend='compact'):
             raise ValueError('Unknown actuator')
         net = cls[family](muscles=muscles, sides=('l', 'r'), interleg=True)
         compose(net, family, config)
+        if lumbar_spec is not None:
+            attach_lumbar_pf(net, lumbar_spec)
+        if config and config.get('native_pf') is not None:
+            if family != 'syn6':
+                raise ValueError('Native PF timing is specific to syn6')
+            from controller_profiles_20261104.native_pf import install
+            install(net, config['native_pf'], connections)
         net.compile(dt)
         net.compiled = (CompactPairwiseForward if backend == 'compact' else SparsePairwiseForward)(net.compiled)
     for key in ('heel_rge', 'toe_rge', 'ib_rge'):
         B.G[key] = 1.
     # Retain Hunt's exact pre-install sparse slot map, including fitted zeros.
     net.command_runtime = Runtime(net, dt)
+    spec = (config or {}).get('native_pf')
+    if family == 'syn6' and spec and spec.get('adaptive'):
+        from controller_profiles_20261104.native_pf import Cadence
+        net.native_pf_cadence = Cadence(net, spec, dt)
     net.controller_display_name = DISPLAY_NAMES[family]
     return net

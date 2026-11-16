@@ -144,6 +144,11 @@ def run(newer=False,mode='supported',duration=4.,feedback=True,reference=False,t
  finally:K.neural_steps=oldneural
  elapsed=time.perf_counter()-started;arrays={k:v[:completed] for k,v in arrays.items()};np.savez_compressed(trialdir/'trajectory.npz',**arrays,neuron_names=controller.names,muscle_names=[b['name'] for b in bank],joint_names=joints)
  summary=dict(machine='easteregg2',source_sha256=meta['source_sha256'],mode=mode,feedback=feedback,reference=reference,contact_si=contact_si,physics_dt=dt,neural_dt=controller.dt,neurons=nj,nonspiking_edges=len(controller.edges),bank_units=nb,muscle_actuators=len(act),duration_requested_s=duration,duration_completed_s=completed*dt,warmed_wall_s=elapsed,simulated_s_per_wall_s=completed*dt/elapsed,failure=failure,root_y_min_m=float(arrays['root'][:,1].min()),root_y_final_m=float(arrays['root'][-1,1]),root_x_change_m=float(arrays['root'][-1,0]-arrays['root'][0,0]),anatomical_knee_min_deg=arrays['angles'][:,[1,4]].min(0).tolist(),joint_range_deg=np.ptp(arrays['angles'],axis=0).tolist(),mean_rail_support_BW=float(np.mean(arrays['rail_vertical'])/((meta['total_dynamic_mass_kg']-4)*9.81)),mean_foot_vertical_N=arrays['foot_vertical'].mean(0).tolist(),scope='Source-specific graded controller and Hill law. Vortex/MuJoCo contact dynamics not equivalent. No training or walking pass inferred from rhythm/translation alone.')
+ if mode=='air':
+  sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
+  from torso_support import torso_roster
+  summary['trunk_support']={'roster':torso_roster(m),'trunk_exercised':False,
+                            'reason':'The virtual walker air fixture holds its source root.'}
  if mode=='native_kinematic':
   comparisons={}
   for pre,target,coeff in controller.outputs:

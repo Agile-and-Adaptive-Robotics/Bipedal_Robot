@@ -13,7 +13,8 @@ def main():
     from pf_design_gate import require_pf_design_ready
     require_pf_design_ready(json.loads((a.fit/'MANIFEST.json').read_text())['configuration']['family'])
     a.output.mkdir(parents=True,exist_ok=False)
-    preflight=dict(op='preflight',fit=str(a.fit),fit_sha256=hashlib.sha256((a.fit/'FINAL.json').read_bytes()).hexdigest())
+    preflight=dict(op='preflight',fit=str(a.fit),fit_sha256=hashlib.sha256((a.fit/'FINAL.json').read_bytes()).hexdigest(),
+                   capture_root=str(a.output.resolve()))
     manifest=dict(**preflight,source_sha256={str(f):hashlib.sha256(f.read_bytes()).hexdigest()for f in (Path(__file__),HERE/'motor_adapter.py',HERE/'replay_adapter.py',HERE/'profile.py')},space=dict(local_Ia=[.05,3.],local_Ib=[.05,3.]),seed=61104,scope='Offline Hunt D; peak solution frozen, Ia/Ib refined, not a body trial')
     manifest['source_sha256'][str(HERE/'pose_replay.py')]=hashlib.sha256((HERE/'pose_replay.py').read_bytes()).hexdigest()
     manifest['scope']='Ordered D waveform refinement; fixed timing and feedforward weights, mirrored local sensory gains; no body integration'

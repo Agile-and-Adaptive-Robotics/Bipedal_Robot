@@ -93,6 +93,7 @@ dias={'10','20'};gains=unique([max(base.txConfig.gain),1,2,3]);bestF=inf;bestX=[
  fixed=bestX;fun=@(z)safeObjective(C,cs,kin,expand(z,fixed,free),branch,opts);
  [z,fp,exitflag,output]=patternsearch(fun,bestX(free),[],[],[],[],cs.lb(free),cs.ub(free),[],po);
  if fp<bestF;bestX=expand(z,fixed,free);bestF=fp;end
+ [cs,bestF]=fr_screenViaGuides(C,cs,kin,bestX,branch,opts,bestF);
  [~,rep]=fr_objective(C,cs,kin,bestX,branch,opts);design=fr_unpackX(cs,bestX);
  env=fr_envelope(C,cs,design,kin,cs.passes{1}.qStructs,branch);
  chosen=struct('caseDef',cs,'design',design,'rep',rep,'envelope',env,'exitflag',exitflag,'solverOutput',output,'xBest',bestX,'fBest',bestF);

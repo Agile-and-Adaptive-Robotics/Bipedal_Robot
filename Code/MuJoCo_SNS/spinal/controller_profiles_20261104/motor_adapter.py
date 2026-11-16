@@ -6,11 +6,16 @@ import numpy as np
 from replay_adapter import Replay
 from muscle_map import classify
 from readout_keys import multiplier
-INSTANCE=None;FIXED=None
+INSTANCE=None;FIXED=None;CAPTURE_ROOT=None
+TRAINING_ROOT=Path(r'D:\Users\Ben Bolen\ControllerTraining_20261104')
+REPO_TMP=Path(__file__).resolve().parents[4]/'tmp'
 
 def handle_request(request):
-    global INSTANCE,FIXED
+    global INSTANCE,FIXED,CAPTURE_ROOT
     if request['op']=='preflight':
+        CAPTURE_ROOT=Path(request.get('capture_root',TRAINING_ROOT)).resolve()
+        if not any(CAPTURE_ROOT.is_relative_to(root.resolve()) for root in (TRAINING_ROOT,REPO_TMP)):
+            raise ValueError('Capture root must be in the training directory or repository tmp')
         fit=Path(request['fit']);raw=(fit/'FINAL.json').read_bytes()
         if hashlib.sha256(raw).hexdigest()!=request['fit_sha256']:raise ValueError('Peak checkpoint changed')
         final=json.loads(raw);saved=json.loads((fit/'MANIFEST.json').read_text())
@@ -34,6 +39,6 @@ def handle_request(request):
     result=INSTANCE.evaluate({**FIXED,**request['params']},time.time()+180.)
     if request['op']=='capture':
         path=Path(request['path']).resolve()
-        if not path.is_relative_to(Path(r'D:\Users\Ben Bolen\ControllerTraining_20261104')):raise ValueError('Unowned output')
+        if not path.is_relative_to(CAPTURE_ROOT):raise ValueError('Unowned output')
         r=INSTANCE;np.savez_compressed(path,t=r.t,rg=r.rg_trace,pf=r.pf_trace,mn=r.output,desired=r.desired,acts=np.array(r.acts),rg_names=np.array([r.names[i]for i in r.rg]),pf_names=np.array([r.names[i]for i in r.pf]))
     return result

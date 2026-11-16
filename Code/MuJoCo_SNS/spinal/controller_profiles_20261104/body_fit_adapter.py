@@ -21,7 +21,7 @@ def handle_request(request):
     for source,expected in CONFIG['source_sha256'].items():
         if hashlib.sha256(Path(source).read_bytes()).hexdigest()!=expected:raise ValueError('Source changed during study: '+source)
     with log.open('a',encoding='utf-8')as stream:
-        run=subprocess.run([sys.executable,str(HERE/'body_probe.py'),'--reflex-fit',CONFIG['reflex_fit'],'--stage','2','--expression',str(params['expression']),'--local-ii-scale',str(params['local_II_scale']),'--output',str(folder)],stdout=stream,stderr=subprocess.STDOUT,timeout=180,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+        run=subprocess.run([sys.executable,str(HERE/'body_probe.py'),'--reflex-fit',CONFIG['reflex_fit'],'--stage','2','--expression',str(params['expression']),'--local-ii-scale',str(params['local_II_scale']),'--feedback-scale',str(params.get('feedback_scale',1.)),'--output',str(folder)],stdout=stream,stderr=subprocess.STDOUT,timeout=180,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     path=folder/'body.result.json'
     if not path.exists():return dict(ok=True,value=10000.,diagnostics=dict(accepted=False,body_folder=str(folder),stop=json.loads((folder/'STOP.json').read_text())if(folder/'STOP.json').exists()else dict(exit_code=run.returncode)))
     result=json.loads(path.read_text());z=np.load(folder/'capture/aligned_trace.npz');t=z['t_state'];keep=(t>=5.)&(t<14.);names=z['joint_names'].tolist();q=z['qpos'][:,z['joint_qpos_addresses']]
@@ -40,4 +40,7 @@ def handle_request(request):
     elif CONFIG.get('objective_profile')=='stage_specific_kinematics_v2':
         response=json.loads((folder/'body.kinematics.json').read_text())
         value=response['objective'];accepted=response['accepted']
+    if not old.get('trunk_support_gate',True):
+        accepted=False
+        value+=100.
     return dict(ok=True,value=float(value),diagnostics=dict(accepted=accepted,body_folder=str(folder),principal=principal,target_period_relative_error=error,legacy=old,kinematic_response=response,measured=result['measured'],wall_s=result['wall_s']))

@@ -613,10 +613,14 @@ end
 % bundleSpread (Ben 2026-11-04: "build 2 or 3 different vastus muscles
 % that can each take a load of the combined vastus force and reduce
 % deformation"): multi-BPA groups spread their branch ring into distinct
-% corridors instead of one tight bundle -- each branch behaves as its own
-% vastus unit; soft overlap still governs collisions.
+% corridors instead of one tight bundle.
 if cs.groupMapId == 11 || cs.groupMapId == 24 || cs.groupMapId == 25
     cs.bundleSpread = 2.5;
+end
+if cs.seed.nBPA > 1
+    inflatedDiameter = fr_diameter(C, cs.diaStr, fr_kmaxFraction27(C, cs.diaStr));
+    restDiameter = fr_diameter(C, cs.diaStr, 0);
+    cs.bundleSpread = max(cs.bundleSpread, inflatedDiameter / restDiameter);
 end
 for p = 1:numel(cs.passes)
     cs.passes{p} = fr_fillQ27(kin, cs.passes{p});
@@ -692,6 +696,7 @@ for m = 1:numel(cs.movable)
     cs.movable(m).patch = fr_patch(C, mv.cloud, cs.rowOwning{r}, ...
         cs.seedLoc(r, :), mv.radius_mm);
 end
+cs.allowFootLeadCorrection = any(ismember(cs.rowOwning, {'talus_r', 'calcn_r', 'toes_r'}));
 qg = struct('passIdx', 1, 'qList', {cs.passes{1}.qStructs});
 [ptsSeed, rowBSeed] = fr_locForPass(C, cs, fr_seedDesign27(cs), kin, 1);
 if ~strcmp(cs.spanKind, 'none')
@@ -737,8 +742,12 @@ cs.xSeed(3 * nMov + 2) = cs.tendonSeed * 10;
 cs.xSeed(end) = 0.5;
 lb = cs.xSeed; ub = cs.xSeed;
 for m = 1:nMov
-    lb(3 * m - 2:3 * m) = [-1; -1; C.standoff_mm(1)];
-    ub(3 * m - 2:3 * m) = [1; 1; C.standoff_mm(2)];
+    row = cs.movable(m).row;
+    onFoot = any(strcmp(cs.rowOwning{row}, {'talus_r', 'calcn_r', 'toes_r'}));
+    if ~onFoot || cs.allowFootLeadCorrection
+        lb(3 * m - 2:3 * m) = [-1; -1; C.standoff_mm(1)];
+        ub(3 * m - 2:3 * m) = [1; 1; C.standoff_mm(2)];
+    end
 end
 lb(3 * nMov + 1) = 0.4 * cs.L0Seed * 10;
 ub(3 * nMov + 1) = 2.5 * cs.L0Seed * 10;
@@ -1089,7 +1098,7 @@ function s = fr_mLSeed27(cs, kin, q) %#ok<INUSD>
 % grid calibrates L0Seed against the probe build, which removes any
 % local-vs-grid measurement mismatch)
 d = fr_seedDesign27(cs);
-[P, ~] = fr_locForPass([], cs, d, kin, 1);
+[P, ~] = fr_locForPass([], cs, d, kin, 1, true);
 s = sum(sqrt(sum(diff(P).^2, 2)));
 end
 

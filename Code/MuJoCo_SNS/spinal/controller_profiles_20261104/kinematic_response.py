@@ -36,6 +36,8 @@ def reference(path=None):
   for side in('r','l'):
    ref[side]={joint:np.asarray(z[side+'_'+joint])for joint in('hip','knee','ankle')}
    ref['T_'+side]=float(z['T_'+side])
+   if 'duty_'+side in z:
+    ref['duty_'+side]=float(z['duty_'+side])
   ref['lag_rl']=float(z['lag_rl']);sources=[path];identity=path.name
  if not all(np.isfinite(ref['T_'+s])and ref['T_'+s]>0 for s in('r','l')):raise ValueError('Invalid reference period')
  for side in('r','l'):
@@ -53,7 +55,8 @@ def reference(path=None):
  aligned=np.column_stack([np.interp((GRID+anchor)%1.,GRID,raw[:,i],period=1.)for i in range(6)])
  return dict(identity=identity,period_s=[ref['T_r'],ref['T_l']],cycle_deg=aligned,
              source_sha256={str(p):hashlib.sha256(p.read_bytes()).hexdigest()for p in sources},
-             right_knee_anchor_fraction=anchor,reference_left_loading_phase=float(ref['lag_rl']))
+             right_knee_anchor_fraction=anchor,reference_left_loading_phase=float(ref['lag_rl']),
+             contact_duty=[ref.get('duty_r'),ref.get('duty_l')])
 
 def harmonics(y):
  # Complex cosine convention: y=mean+Re(C_k exp(i*2*pi*k*phase)).
@@ -79,7 +82,7 @@ def compare(cycles,periods,ref):
    phase_usable=usable and abs(sim_h[k,i])>=.1
    lag=-np.angle(ratio,deg=True)if phase_usable else None
    if k==0 and usable:phase_cost.append(abs(lag)/180. if phase_usable else 1.)
-   hs.append(dict(order=k+1,reference_amplitude_deg=float(abs(ref_h[k,i])),simulation_amplitude_deg=float(abs(sim_h[k,i])),usable=bool(usable),gain=float(abs(ratio))if usable else None,gain_dB=float(20*np.log10(max(abs(ratio),1e-12)))if usable else None,lag_deg=float(lag)if usable else None))
+   hs.append(dict(order=k+1,reference_amplitude_deg=float(abs(ref_h[k,i])),simulation_amplitude_deg=float(abs(sim_h[k,i])),usable=bool(usable),gain=float(abs(ratio))if usable else None,gain_dB=float(20*np.log10(max(abs(ratio),1e-12)))if usable else None,lag_deg=float(lag)if phase_usable else None))
   errors=cycles[:,:,i]-target[None,:,i];per_cycle_amplitude=np.ptp(cycles[:,:,i],axis=1)
   per_cycle_max=np.max(abs(errors),axis=1);worst=np.unravel_index(np.argmax(abs(errors)),errors.shape)
   usable_phase=(abs(ref_h[0,i])>=1.)&(abs(cycle_h[:,0,i])>=.1)
@@ -109,6 +112,9 @@ def score_recording(folder,ref=None,start=5.,end=14.):
  ref=reference()if ref is None else ref;report['reference']=ref['identity'];report['reference_source_sha256']=ref['source_sha256']
  periods=[]
  for p in principal['principal_peak_times_s']:periods.append(float(np.median(np.diff(p)))if len(p)>1 else 0.)
+ if not all(period>0. for period in periods):
+  report.update(valid=False,accepted=False,objective=10000.,reason='Bilateral cadence is unavailable because one side has fewer than two principal peaks')
+  return report,None,None
  result,mean=compare(np.asarray(cycles),periods,ref);report.update(result)
  from scipy.signal import periodogram
  for i,row in enumerate(report['joints']):
@@ -142,6 +148,9 @@ def self_check():
  assert abs(doubled['joints'][0]['harmonics'][0]['gain']-2.)<1e-12
  assert abs(delayed['joints'][0]['harmonics'][0]['lag_deg']-45.)<1e-10
  assert slow['kinematic_loss']>perfect['kinematic_loss']
+ stationary,_=compare(np.zeros((2,*y.shape)),[1.,1.],ref)
+ assert stationary['joints'][0]['harmonics'][0]['gain']==0.
+ assert stationary['joints'][0]['harmonics'][0]['lag_deg'] is None
  biased,_=compare(np.stack([y+10,y+10]),[1.,1.],ref)
  swapped=y.copy();swapped[:,3:]*=-1.;wrong_side,_=compare(np.stack([swapped,swapped]),[1.,1.],ref)
  assert biased['kinematic_loss']>perfect['kinematic_loss']

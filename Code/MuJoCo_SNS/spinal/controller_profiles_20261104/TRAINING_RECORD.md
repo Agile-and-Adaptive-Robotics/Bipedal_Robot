@@ -1,5 +1,41 @@
 # Session 1: four-command controller experiments
 
+## Syn6 PF relay timing prototype, 2026-11-05
+
+`syn6_s5_timing.py` first restores S5's two bursts, then applies the same
+design to all six bilateral PF channels. RG rising transitions reset software
+timers with Schmitt thresholds of 1.5 and 3.5 mV. Each burst uses its own onset
+and shutoff thresholds, rise/fall slopes, and excitation gain. Delays scale by
+the most recent period of the triggering RG channel. The relay conductances
+enter the existing PF membrane equations as currents. This hybrid test
+suppresses the original incoming PF connections, including direct sensory
+inputs to PF, during offline D replay. Its relay timing is generated online
+from RG voltage. Fitting uses reference cycles 2–6 and checks cycles 7–10 at
+the same cadence with the same periodic reference.
+
+S5 duty dropped from 100% to 34.0% left and 33.5% right, versus 33.0% and
+32.5% targets. Mean measured burst windows were 12.5–25.0% and 73.0–94.5%
+on the left, versus 13.0–25.0% and 73.5–94.5%. On the right they were
+23.5–44.5% and 63.0–75.5%, versus 22.5–43.5% and 62.5–74.0%.
+
+The simultaneous replay passed all 48 channel-stride checks across 12 PF
+outputs and four strides. Worst onset/shutoff error was 2.0 percentage
+points of a stride, worst fundamental phase error 13.27 degrees, and worst
+samplewise activation error 0.3085. The gate checks matching burst counts,
+onset/shutoff error at most 5 percentage points, fundamental lag at most
+30 degrees, duty error at most 15 percentage points, and excursion at least
+0.2. The combined run repeated exactly in a fresh process. RG traces and MN
+conductance arrays matched baseline exactly. MN waveform RMSE was 0.15556
+versus 0.15845 at baseline.
+
+Results and source checkpoints are recorded under
+`D:\Users\Ben Bolen\ControllerTraining_20261104\syn6_PF_relays_20261105`.
+`S5\S5_TIMING.png` overlays the original, target, and relay-generated activity.
+`combined\RESULT.json` contains every timing measurement and the relay settings.
+`combined\FRESH_REPEAT.json` records the repeat. Native SNS implementation and
+cadence/generalization and physical curriculum tests remain open. The
+downstream optimization hold still applies to the original syn6 revision.
+
 Naming correction: `hunt` below is the saved selector for Ben Bolen's
 BiW2Lvar+ controller calibrated with Hunt's four-step method and Bolen's
 five-stage curriculum,
@@ -329,3 +365,219 @@ Dissertation\Defense\Session1_Handoff_20261104\experiments_20261104\
 circuit_trace_20261105\PF_DESIGN_AUDIT_20261105.md.
 Raw repair results: D:\Users\Ben Bolen\ControllerTraining_20261104\
 syn6_PF_input_repair_mirrored_20261105. All bounded experiments completed.
+# Native syn6 onset and shutoff, 2026-11-05
+
+The opt-in syn6 build adds bilateral graded SNS trigger, clock, onset,
+shutoff, and quiet-shunt cells. The two clocks per side reset at the RG
+extensor or flexor onset. All relay integration uses the compact SNS backend
+at 2 ms. The new circuit replaces the legacy RG-to-PF projections and
+PF-to-PF-interneuron drive. The sensory projections remain active, including
+Ia and II, and Ib under its existing load gate. The suspended stage does not
+deliver heel or toe events. PF-to-MN projections and all other fitted MN
+input synapses have identical named endpoints, conductances, activation
+ranges, and reversal potentials in the replay and live comparisons.
+
+Final experiment on easteregg2 is in
+`D:\Users\Ben Bolen\ControllerTraining_20261104\syn6_native_20261105_v7`.
+See `timing\SPEC.json`, `timing\TIMING.json`, `final_verified\PF_TIMING.png`,
+and `live_timing_knee-25\TIMING.json` and `live_timing_knee-35\TIMING.json`.
+The legacy closed-loop comparison is in
+`D:\Users\Ben Bolen\ControllerTraining_20261104\syn6_native_20261105_v5\baseline_body`.
+
+| Measured replay period | Passed L | Passed R | Bilateral channels passing all four strides |
+| --- | ---: | ---: | --- |
+| 1.048 s | 12/24 | 4/24 | S1 |
+| 1.233 s | 24/24 | 24/24 | S1–S6 |
+| 1.418 s | 4/24 | 4/24 | S1 |
+
+The cadence stress test rescales the legacy neuronal integration and RG
+inactivation time constants and the afferent replay cadence together. The
+native relay time constants, thresholds, and conductances stay fixed. Timing
+is relative to each leg's RG extensor onset, with the target origin locked to
+the nominal reference. The nominal worst absolute edge error was 4.5 percentage
+points and the worst fundamental phase error was 14.81 degrees. All three
+recorded neural traces repeated byte-for-byte in a fresh process.
+
+The native Stage 2 Gait2392 probe with live Ia, II, and Ib signals hit the
+predictive knee guard at 0.332 s with the initial 10-degree knee flexion.
+At 25 and 35 degrees of initial flexion, the final native candidate hit the
+guard at 1.254 and 1.686 s. Each longer capture contains one measurable left RG
+interval with zero of six PF timing passes and no complete right interval.
+The native candidate remains experimental and does not clear the live-body
+or cadence-range gates.
+
+## RG-cadence adaptation and live knee-guard diagnosis
+
+The opt-in adaptive configuration estimates four E/F recurrence intervals
+from the actual bilateral RG voltages. It scales each native clock's
+integration rate inversely with its latest valid period. It starts with the
+legacy PF timing inputs and hands over only after all four clocks have
+measured a period. The scheduler changes PF timing edges and clock rates.
+Native SNS neurons still perform the onset and shutoff integration. Frozen
+MN synapse digests match the original replay and all live runs. Ia, II, and
+load-gated Ib remain enabled, and the knee guard is unchanged.
+
+Run directory on easteregg2:
+`D:\Users\Ben Bolen\ControllerTraining_20261104\syn6_adaptive_20261105`.
+`replay\TIMING.json` and `replay_live_range\TIMING.json` record 48/48
+passes at each of six measured periods spanning 0.863–1.418 s. These
+are cadence-controlled replays with sensory input. See `replay\PF_TIMING.png`.
+
+In the original matched 10-degree flexion startup, right bifemsh MN
+voltage was about 1.3 mV through the first extension. Fixed-clock native
+timing dropped it below rest while the vastus intermedius MN rose to about
+0.6 mV, and peak right knee extension speed rose from approximately
+368 to 770 deg/s. After adaptive handover, the same pattern appeared on
+the left with sustained S5 and rising S2 during the extension transient.
+This is a measured loss of flexor recruitment relative to extensor
+recruitment. It does not isolate individual muscle or passive joint torques.
+
+| Adaptive live Stage 2 condition | Guard time | Side |
+| --- | ---: | --- |
+| One-cycle handover, 10-degree start | 3.582 s | Left |
+| One-cycle handover, 25-degree start | 3.316 s | Right |
+| Three-cycle handover, 10-degree start | 9.814 s | Left |
+| Three-cycle handover, 25-degree start | 4.724 s | Left |
+| Three-cycle handover with flexor phase correction, 10-degree start | 5.572 s | Left |
+
+The longest run repeated byte-for-byte in a fresh process and spent 4.17 s
+at full native timing before the guard. Its fully native capture passed
+11/30 timing checks across five complete RG intervals
+(`live_full_native\TIMING.json`). The measured left E-to-F transition near
+the stop was about 45% of the cycle versus 57% in nominal replay. A separate
+variant shifted F-triggered thresholds to compensate for this duty change.
+It stopped during the handover at 98.1% native and is not selected.
+No adaptive live Stage 2 trial passed.
+
+## Syn6 knee-torque audit and flexor handover
+
+Results on easteregg2 are in
+`D:\Users\Ben Bolen\ControllerTraining_20261104\syn6_flexor_handover_20261105`.
+The torque audit restores measured state, activation, and control into the
+saved MuJoCo model and recomputes actuator force and equality-aware moment
+arms. Positive moments extend the knee. The values are muscle contributions
+and exclude inertial coupling, passive joint terms, and contact.
+
+In the 118 ms before the original fixed-native right-knee stop, rectus
+femoris averaged 11.71 N·m extension, vastus lateralis 4.27, vastus
+intermedius 2.79, and vastus medialis 2.66. Right semimembranosus and both
+biceps femoris heads fell from a combined 17.35 N·m flexion in the matched
+legacy time window to 1.00 N·m with fixed-native PF. Net muscle extension
+rose from 12.85 to 20.01 N·m despite lower rectus femoris extension.
+In the adaptive left-knee failure, rectus femoris was again the largest
+extensor at 10.58 N·m, with the three vasti totaling 6.58 N·m.
+
+S3 strongly recruits semimembranosus and both biceps femoris heads.
+S2 strongly recruits rectus femoris and the vasti. The first candidate
+extended the S3 timing window across S2. The later candidates retained the
+original adaptive windows and added bilateral joint-state premotor relays.
+The relay input rises when the knee is extending toward neutral. It excites
+S3, suppresses the S3 quiet shunt, and inhibits S2. Neither intervention
+changes the PF-to-MN or other fitted MN synapses. All compared live motor
+digests match. Muscle afferents remain enabled and grounded diagnostics
+use separately measured hindfoot events and whole-foot load.
+
+| PF intervention | Stage 2 | Stage 3 | Stage 4 |
+| --- | --- | --- | --- |
+| S3 overlap | Guard at 4.912 s | Completed, failed load gate | Guard at 7.928 s |
+| Joint-state relay, 65 ms prediction | Guard at 5.416 s | Guard at 5.586 s | Guard at 6.358 s |
+| Earlier joint-state relay, 120 ms | Guard at 12.002 s | Guard at 5.536 s | Guard at 13.126 s |
+| Joint-state relay, 150 ms | Completed, failed rhythm gate | Completed, failed standing gate | Completed, failed load and movement gates |
+
+The 120 ms candidate ran approximately 6.36 s fully native in Stage 2.
+At the left guard, its short-head biceps femoris supplied about 3.00 N·m
+flexion versus 0.11 N·m at the earlier adaptive stop, but the candidate still
+hit the predictive limit. Stage 4 used 0.65 BW explicit upward support plus
+0.173 BW mean vertical spring support in the 120 ms run. The feet contacted
+the ground and averaged 0.177 BW combined vertical load over the captured
+interval. The run stopped before meeting the supported-stepping criterion.
+
+The 150 ms candidate completed all three evaluations with the predictive
+knee guard enabled throughout. Stage 2 ran 16 s with 12 right and 11 left
+knee cycles, a median cycle period of 0.796 s, and a period CV of 0.287.
+Maximum knee extensions were −1.40° and −1.45°. After full handover the
+PF timing gate passed 8/24 checks per side. The compact run used 42.87 s
+wall time including setup and recording. Its aligned trace repeated
+byte-for-byte in a fresh process.
+
+Stage 3 ran 8 s. Feet carried approximately 0.24 BW, spring support
+averaged 0.76 BW, torso tilt was 17.7°, and sway was 0.140 m. Stage 4 ran
+16 s with 0.65 BW explicit support and approximately 0.18 BW mean spring
+support in the scored window. The force gate counted six right and eight
+left contact cycles. The mesh clearance gate counted three right and
+five left swings, with peaks of 26.7 and 54.3 mm. Mean combined foot load
+was 0.164 BW, phase error was 0.213 cycles, and the movement gate failed.
+The grounded tests use the same frozen circuit with no added standing
+or walking posture controller.
+
+## Stage 2 PF regularity
+
+Results on easteregg2 are in
+`D:\Users\Ben Bolen\ControllerTraining_20261104\syn6_stage2_regularize_20261105`.
+All trials retained the frozen MN synapses, live afferents, and predictive
+knee guard. Stage 4 weaning was held. The reference 150 ms case showed one
+or two S2 onsets and three or four S3 onsets per leg per complete RG cycle
+in the 7–14 s comparison window. The extra S3 onsets coincided with
+repeated knee-protection relay activation.
+
+| Change | Stage 2 outcome | Knee period | Period CV | Bilateral phase error |
+| --- | --- | ---: | ---: | ---: |
+| Reference 150 ms | Completed, rejected | 0.796 s | 0.287 | 0.138 cycles |
+| Shared same-leg clock, smoothing 0.35 | Guard at 5.374 s | — | — | — |
+| Separate clocks, smoothing 0.65 | Completed, rejected | 0.678 s | 0.364 | 0.153 cycles |
+| Five-cycle handover | Completed, rejected | 0.788 s | 0.344 | 0.278 cycles |
+| 70 ms premotor release | Guard at 4.060 s | — | — | — |
+| 120 ms premotor release | Completed, rejected | 0.520 s | 0.144 | 0.207 cycles |
+| S2 latch until next ipsilateral RG extensor onset | Completed, rejected | 0.752 s | 0.235 | 0.203 cycles |
+
+The S2 latch gave exactly one S2 onset in all 11 complete bilateral RG
+intervals counted in the figure window. S3 still opened three or four
+times per RG cycle, and the full PF timing score remained 16/48.
+The compact S2 latch run took 28.31 s for 16 s of simulation. Figures
+and per-joint range, phase, and maximum-error comparisons are in
+`latch_figures`. The time trace spans three right RG cycles. The overlay
+uses a shared right-knee maximum-flexion anchor for all six joint traces
+and compares suspended motion to Subject01 and Ong 1.25 m/s ground
+walking IK. Foot load was zero throughout the air trials.
+
+## S3 single-burst Stage 2 diagnostics
+
+Results are in
+`D:\Users\Ben Bolen\ControllerTraining_20261104\syn6_s3_single_20261105`.
+In the S2-latch recording, the knee-protection encoder repeatedly rose as
+the knee re-entered extension. Each activation both excited S3 and
+suppressed its quiet shunt. Representative right S3 onsets followed the
+knee relay by about 6 ms. The reflex responds to the projected knee
+angle and extension velocity every step, independently of RG phase.
+
+After handover the single-window candidate routes S3 through a dedicated
+RG-timed relay. It removes the repeated knee-relay drive into S3 while
+retaining the knee relay's inhibitory S2 exit, the existing afferents,
+the frozen motor digest, and the predictive guard.
+
+| S3 drive window, fraction of ipsilateral RG cycle | Guard time |
+| --- | ---: |
+| 0.26–0.41 | 6.450 s |
+| 0.20–0.65 | 8.050 s |
+| 0.16–0.88 | 9.084 s |
+| 0.40–0.88 | 6.890 s |
+
+The widest window gave one S3 onset in each of five complete, fully native
+RG intervals before the guard. Its measured onsets ranged from 12% to 24%
+of the cycle, earlier than the nominal target near 30%. The target-length
+window stopped before producing a complete fully native interval. No
+candidate met the single-burst, timing, and knee-safety requirements together.
+
+`SYN6_WIRING.html` lists S1–S6 separately, including left and right MN
+destinations, frozen synapse values, other PF exits, and exact central
+afferent routes. `phase_labeled_overlay\KINEMATIC_OVERLAY.png` adds separate
+stance/swing bands for both benchmarks and both legs to the completed
+S2-latch comparison. Both simulated feet remained unloaded in that air run.
+
+The editable drawing is `SYN6_CONNECTOME_EDITOR.html`, with
+`SYN6_MOTOR_AFFERENTS.json` for importing into the existing editor.
+The navigation is leg → PF channel → muscle → off-page feedback targets.
+Motor pools shared by several PF channels appear as references on each
+relevant page. The editor's materializer preserved all nested edges.
+`left_right_figures` has the corrected bilateral order and identifies
+the Ong et al. benchmark as a 1.25 m/s walking simulation.

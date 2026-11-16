@@ -738,6 +738,9 @@ def main(argv):
     harness = 1500.0     # default ON (balance assist); 0 disables
     use_aff = True
     no_ground = False
+    torso_stage = None
+    torso_support_scale = 1.0
+    torso_support_bw = 1.0
     leg_damping = None
     view = False
     scope_on = False
@@ -939,6 +942,12 @@ def main(argv):
             use_aff = False
         elif a == "--no-ground":
             no_ground = True
+        elif a == "--torso-stage":
+            torso_stage = int(args.pop(0))
+        elif a == "--torso-support-scale":
+            torso_support_scale = float(args.pop(0))
+        elif a == "--torso-support-bw":
+            torso_support_bw = float(args.pop(0))
         elif a == "--no-interleg":
             interleg = False
         elif a == "--eval":
@@ -1133,6 +1142,7 @@ def main(argv):
     if not straight_start:
         apply_start_pose(model, data)
     key_pose = capture_pose(model, data)
+    source_model = model if torso_stage is not None else None
 
     # standing-activation solve ALWAYS runs on a ground-contact copy of the
     # model: in suspended-air configs there is no contact force to carry
@@ -1170,6 +1180,16 @@ def main(argv):
     data = mujoco.MjData(model)
     seed_pose(model, data, key_pose)
     mujoco.mj_forward(model, data)
+    torso_support = None
+    if torso_stage is not None:
+        if not no_ground:
+            raise ValueError("Use --no-ground for torso-supported curriculum stages 1 and 2")
+        sys.path.insert(0, str(HERE.parent))
+        from torso_support import LUMBAR_JOINTS, PELVIS_JOINTS, TorsoSupport, restore_joint_mechanics
+        restore_joint_mechanics(model, source_model, PELVIS_JOINTS + LUMBAR_JOINTS)
+        torso_support = TorsoSupport(model, data, stage=torso_stage, scale=torso_support_scale,
+                                     fraction=torso_support_bw)
+        print(f"Stage {torso_stage}: torso support at scale {torso_support_scale:g}", flush=True)
     # reflex-stand: capture the per-muscle STANDING-POSE length as the II
     # setpoint (L0), before any dynamics move it
     L0_pose = data.actuator_length.copy() if reflex_stand else None
@@ -1267,7 +1287,7 @@ def main(argv):
     Lhalf = np.maximum((Lrange[:, 1] - Lrange[:, 0]) / 2, 1e-3)
     Fmax = np.maximum(model.actuator_gainprm[:, 2], 5.0)
     act_stand = solve_standing_activations(model_solve, data_solve, Fmax,
-                                           preload=not reflex_stand)
+                                           preload=not reflex_stand and torso_support is None)
     if reflex_stand:
         print("reflex-stand: preload-FREE gravity-only standing solve "
               "(alpha bias); II setpoint = standing-pose length; BAL_* "
@@ -1313,7 +1333,8 @@ def main(argv):
             "AARL_NET", "").strip().lower() == "syn6":
         # goal4 syn6 variant: watch the first four synergy PF layers
         _pf_watch = ("PF_S1_r", "PF_S2_r", "PF_S3_r", "PF_S4_r")
-    elif G.get("joint_pf", 0.0) > 0.0:
+    elif G.get("joint_pf", 0.0) > 0.0 or _os.environ.get(
+            "AARL_NET", "").strip().lower() == "w2lvar":
         _pf_watch = ("PF_HIP-E_r", "PF_KNEE-E_r",
                      "PF_KNEE-F_r", "PF_ANK-F_r")
     else:
@@ -1732,6 +1753,8 @@ def main(argv):
             u[iport[f"POST_{a}"]] = 6.0 * act_stand[i] * sf
 
         # --- neural step + motor mapping ---
+        if torso_support is not None:
+            torso_support.apply(model, data)
         v = net.step(u)
         if fast_io:
             np.take(v, fast_mn_indices, out=fast_controls)
@@ -1827,6 +1850,8 @@ def main(argv):
                 _adaptive_step(model, data, adaptive_tol)
             else:
                 mujoco.mj_step(model, data)
+            if torso_support is not None:
+                torso_support.record(data)
         if VERIFICATION_POST_PHYSICS is not None:
             VERIFICATION_POST_PHYSICS(model, data, net, k, t, DT, t < WARMUP)
         if k % 10 == 0:
@@ -2066,6 +2091,8 @@ def main(argv):
             bal_act_sum=bal_act_sum,
             bal_cocon_act=bal_cocon_act,
         )
+        if torso_support is not None:
+            metrics["torso_support"] = torso_support.summary()
         return metrics
 
     # ---------------- honest summary ----------------

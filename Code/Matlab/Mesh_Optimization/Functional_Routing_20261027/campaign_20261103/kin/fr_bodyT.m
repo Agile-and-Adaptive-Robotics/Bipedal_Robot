@@ -8,6 +8,10 @@ if strcmp(body, 'ground')
     return
 end
 S = kin.chain.(body);
+if strcmp(body,'tibia_r') && isfield(kin,'robotKnee')
+    T=fr_bodyT(kin,q,S.parentBody)*fr_robotKneeT(kin.robotKnee,rad2deg(q.knee_angle_r));
+    return
+end
 J = kin.joints.(S.jointName);
 Tj = fr_jointT(kin, q, J);                                    % off_P <- off_C
 % the joint's OWN scoped offset frames (names collide across joints)

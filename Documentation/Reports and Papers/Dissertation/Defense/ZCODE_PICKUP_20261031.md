@@ -1,5 +1,9 @@
 # ZCode pickup: defense deck and W2L recording models
 
+This is a historical handoff for the October 31 defense and model work. The retired deck workspaces are preserved from commit `a6fa2fac5f36df1f1800e9f9d477fd0a3e187778` in the local archive [retired_workspaces_HEAD.zip](../Archive/defense_workspaces_retired_20261116/retired_workspaces_HEAD.zip). The archive contains the files tracked in Git, including the v18 helper scripts and submitted-source snapshot. Generated files that were ignored by Git require their original local copies. [The v18 source in Git history](https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/tree/a6fa2fac5f36df1f1800e9f9d477fd0a3e187778/Documentation/Reports%20and%20Papers/Dissertation/Defense/C3NS_Revision_20261031_v18) supplies the same tracked source.
+
+The current local presentation is `C:\Users\Ben Bolen\Documents\Bolen_PhD_Defense_v34a.pptx`, recorded in [current_deck.json](current_deck.json). The deck paths, validation statements, and revision instructions below describe the historical v18 workflow. The model sections retain their original dated context.
+
 ## Start here
 
 This handoff is for continuing the 31 October 2026 defense-deck and W2L work on **easteregg2**. Run `hostname` first, then read the repository `AGENTS.md`. These absolute paths are valid on easteregg2. Do not interpret a missing `D:` path on another machine as a stale file.

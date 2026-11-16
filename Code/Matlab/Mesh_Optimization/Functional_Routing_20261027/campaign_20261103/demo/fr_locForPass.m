@@ -1,4 +1,4 @@
-function [pts, bodies, absRows] = fr_locForPass(~, cs, design, ~, passIdx)
+function [pts, bodies, absRows] = fr_locForPass(C, cs, design, kin, passIdx, lockFoot)
 %FR_LOCFORPASS Route locations for one pass: nUsed x 3 in each row's
 % ASSIGNED frame (cs.rowFrame{k}{absRow}), with movable attachments placed
 % by their surface patches (fr_patch.project) in their OWNING body frame
@@ -9,7 +9,23 @@ function [pts, bodies, absRows] = fr_locForPass(~, cs, design, ~, passIdx)
 % standoff in millimeters, so a Cartesian search step cannot carry a mount
 % far off the bone.
 mask = cs.rowUse{passIdx};
+if nargin < 6
+    lockFoot = false;
+end
 absRows = find(mask);
+footBodies = {'talus_r', 'calcn_r', 'toes_r'};
+release = false(1, numel(cs.rows));
+if ~lockFoot && isfield(cs, 'allowFootLeadCorrection') && cs.allowFootLeadCorrection
+    for k = 1:numel(cs.passes)
+        [seedPts, seedFrames, ids] = fr_locForPass(C, cs, design, kin, k, true);
+        owning = cs.rowOwning(ids);
+        foot = find(ismember(owning, footBodies), 1);
+        if ~isempty(foot) && fr_tibialLeadMargin(C, kin, seedPts, seedFrames, ...
+                owning, cs.passes{k}.qStructs, 0) < 0
+            release(ids(foot)) = true;
+        end
+    end
+end
 nU = numel(absRows);
 pts = zeros(nU, 3);
 bodies = cell(1, nU);
@@ -17,7 +33,8 @@ for u = 1:nU
     rAbs = absRows(u);
     p = cs.seedLoc(rAbs, :);
     mvIdx = find([cs.movable.row] == rAbs, 1);
-    if ~isempty(mvIdx)
+    onFoot = any(strcmp(cs.rows{rAbs}.body, footBodies));
+    if ~isempty(mvIdx) && (~onFoot || release(rAbs))
         mv = cs.movable(mvIdx);
         uv = design.uv(mvIdx, :);
         if isfield(mv, 'patch') && ~isempty(mv.patch)

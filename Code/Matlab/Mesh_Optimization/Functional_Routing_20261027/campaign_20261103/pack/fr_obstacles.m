@@ -51,7 +51,10 @@ if nargin>=8 && ~isempty(sleeves)
   for j=1:numel(cap)
    a=cap(j).p1;b=cap(j).p2;
    if isfield(C,'fullFittingEnvelopes')&&C.fullFittingEnvelopes
-    u=(b-a)/max(norm(b-a),eps);a=a-u*caseDef.fittingLength;b=b+u*caseDef.fittingLength;
+    u=(b-a)/max(norm(b-a),eps);
+    same=find([cap.branch]==cap(j).branch & [cap.section]==cap(j).section);
+    if j==same(1); a=a-u*caseDef.fittingLength; end
+    if j==same(end); b=b+u*caseDef.fittingLength; end
    end
    w(3*j-2,:)=a;w(3*j-1,:)=b;
   end
@@ -63,6 +66,7 @@ end
 obs.boneClouds = {};
 obs.boneMargin = inf;
 obs.boneActive = false;
+obs.boneWitness = [];
 for b = 1:numel(caseDef.obstacleBones)
     cloud = fr_loadCloudCache(C, caseDef.obstacleBones{b});
     m = inf;
@@ -78,7 +82,18 @@ for b = 1:numel(caseDef.obstacleBones)
                 nSample=max(2,ceil(norm(w(r+1,:)-w(r,:))/.003)+1);
                 t=linspace(0,1,nSample)';sample=w(r,:)+t.*(w(r+1,:)-w(r,:));
                 local=(Tbone(1:3,1:3)'*(sample'-Tbone(1:3,4)))';
-                d=min(fr_surfaceDistance(C,body,local))-norm(w(r+1,:)-w(r,:))/(2*(nSample-1));
+                [distance,nominal]=fr_surfaceDistance(C,body,local);
+                [nearest,index]=min(distance);
+                allowance=norm(w(r+1,:)-w(r,:))/(2*(nSample-1));
+                d=nearest-allowance;
+                margin=d-sleeveR-C.clearanceBone_m;
+                if margin<obs.boneMargin
+                    obs.boneMargin=margin;
+                    obs.boneWitness=struct('body',body,'poseIndex',i, ...
+                        'capsuleIndex',floor((r-1)/3)+1,'closest_m',local(index,:), ...
+                        'segment_m',local([1 end],:),'nominalDistance_m',nominal(index), ...
+                        'radius_m',sleeveR,'margin_m',margin);
+                end
             else
                 d = segPointDist(cloudWorld, w(r, :), w(r + 1, :));
             end

@@ -31,6 +31,13 @@ env.capsules = fr_sleevePrimitives(C, caseDef, design, kin, mech, meta);
 env.strainAtPose = mech.strain_p;
 env.exitRow = caseDef.cross(1)-1;
 env.spheres = cell(1,nG);
+[~, ~, usedRows] = fr_locForPass(C, caseDef, design, kin, qg.passIdx);
+owning = caseDef.rowOwning(usedRows);
+firstFoot = find(ismember(owning, {'talus_r', 'calcn_r', 'toes_r'}), 1);
+stopRow = [];
+if ~isempty(firstFoot) && firstFoot > 1 && strcmp(owning{firstFoot-1}, 'tibia_r')
+    stopRow = firstFoot - 1;
+end
 for poseIdx=1:nG
  caps=env.capsules{poseIdx};points=[];radii=[];what={};kind={};
  for branchIdx=1:numel(caps)
@@ -43,6 +50,14 @@ for poseIdx=1:nG
   points=[points;p1;p2]; %#ok<AGROW>
   radii=[radii,rf,rf]; %#ok<AGROW>
   what=[what,{'fitting_origin','fitting_exit'}];kind=[kind,{'rigid_fitting','rigid_fitting'}]; %#ok<AGROW>
+ end
+ if ~isempty(stopRow)
+  T = fr_bodyT(kin, qPoseList{poseIdx}, meta.rowBodies{stopRow});
+  stop = (T(1:3,1:3)*meta.loc(stopRow,:)' + T(1:3,4))';
+  % Enclose the provisional stop length and housing OD in a rigid sphere.
+  radius = hypot(C.bowden.stopAllowance_mm, C.bowden.housingOD_mm)/2000;
+  points = [points; stop]; radii = [radii, radius];
+  what = [what, {'shank_tendon_stop'}]; kind = [kind, {'rigid_bowden_stop'}];
  end
  if caseDef.hasTackle
   fam=C.families(caseDef.txConfig.tackleFamily);

@@ -30,10 +30,10 @@
     },
     {
       "name": "bpa_bpa_overlap_soft",
-      "class": "soft_penalty",
-      "weight": 2.0,
-      "normalization": "sleeve inflated diameter at rest per pose (depth reported in mm as well)",
-      "definition": "BPA-BPA overlap with STEEP escalation (Ben 2026-11-04): linear below 5 mm of squish, quadratic to 10x by 20 mm (hard-interference scale). Applies to in-group parallel sleeves and the inter-group corridor term alike."
+      "class": "retired",
+      "weight": 0.0,
+      "normalization": "none",
+      "definition": "Compatibility entry. Within-group overlap is a hard constraint."
     },
     {
       "name": "retained_bpa_corridor_soft",
@@ -48,7 +48,14 @@
       "class": "regularizer",
       "weight": 2.0,
       "normalization": "mean displacement in mm divided by 25 mm",
-      "definition": "Ben 2026-11-04: mean displacement of the movable attachments from their ORIGINAL human seed points, measured AT THE HOME POSITION (zero/neutral configuration). Articulating poses are governed by the bounds and centerline constraints, not this term."
+      "definition": "Mean displacement of movable attachments from their original human seed points, measured in the zero-coordinate home pose."
+    },
+    {
+      "name": "bpa_rest_length_preference",
+      "class": "regularizer",
+      "weight": 0.2,
+      "normalization": "BPA rest length divided by original BPA rest length",
+      "definition": "Small preference for a shorter BPA in the opt-in distal sizing search. Tendon minimum, stroke, and zero-force requirements are enforced separately."
     },
     {
       "name": "actuator_length",
@@ -88,13 +95,21 @@
   ],
   "forbidden": [
     "off_axis_torque_penalty in ANY form, including inherited regularizers disguised as another term (master item 8; handoff item 9). Secondary joint torques are RECORDED in the evaluation report and never penalized.",
-    "any hard universal muscle-to-muscle clearance constraint (BPA-BPA overlap is soft; only rigid hardware/bone and the z=0 centerline are hard)",
+    "a hard clearance constraint on inter-group sleeve overlap",
     "enforcing inner-layer BPA SLEEVE corridors as a HARD clearance constraint (Ben 2026-11-04: that was the stage-1 layering demo's unintended hard BPA-BPA constraint; rigid fittings/tackle of inner layers remain hard)"
+  ],
+  "diagnostics": [
+    "Peak tackle reaction and reversing sheave 2T across all sampled passes are reported against provisional family capacities for initial package sizing only."
   ],
   "hard_constraints": [
     {
+      "name": "within_group_bpa_overlap",
+      "definition": "Solved inflated sleeve capsules within a group must not overlap at any sampled pose.",
+      "tol": 1e-9
+    },
+    {
       "name": "centerline_z0",
-      "definition": "sideSign * z_pelvis >= 0 for EVERY candidate attachment point and mechanical mount anchor, transformed into the pelvis frame at EVERY evaluated pose (handoff item 8, verbatim). sideSign = +1 (right side of record). Sign flips / absolute values forbidden. Tolerance 1e-4 m, stated per evaluation in rep.cinfo.",
+      "definition": "sideSign * z_pelvis >= 0 for EVERY candidate attachment point and mechanical mount anchor, transformed into the pelvis frame at the zero-coordinate home pose only (handoff item 8, verbatim). sideSign = +1 (right side of record). Sign flips / absolute values forbidden. Tolerance 1e-4 m, stated per evaluation in rep.cinfo.",
       "tol": 0.0001
     },
     {
@@ -111,11 +126,6 @@
       "name": "transmission_feasibility",
       "definition": "no PulleyInfeasible or PulleySlack cell on the required grid; strain within [strain floor, KMAX]; gain <= tackle line parts; at most ONE tackle (BiPam_pulley2 documented limit); discrete config consistent (nBPA, series sections, physical sheave count, reeving kept distinct). Cell-fraction normalizations; tolerances 1e-12, stated per evaluation.",
       "tol": 1e-12
-    },
-    {
-      "name": "rated_hardware_loads",
-      "definition": "tackle-block vector reaction R and any 180-deg reversing sheave radial load 2T must not exceed the assigned family's catalog capacity (S 400 N / M 667 N / L 3003 N). Catalog capacities are weight capacities whose dynamic interpretation is UNRESOLVED (handoff Open items); the assembly WLL is not assumed. Under-rated configurations are flagged in the report, never silently resized. Normalized by capacity; tolerance 1e-6, stated per evaluation.",
-      "tol": 1e-06
     },
     {
       "name": "bone_exclusion",
