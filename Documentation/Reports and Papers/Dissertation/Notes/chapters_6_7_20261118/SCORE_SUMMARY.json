@@ -1,0 +1,173 @@
+{
+  "advisor_signals_by_month": {
+    "2026-07": {
+      "events": 4,
+      "comments": 4,
+      "tracked_edits": 0,
+      "deductions": -7
+    },
+    "2026-09": {
+      "events": 64,
+      "comments": 47,
+      "tracked_edits": 17,
+      "deductions": -98
+    },
+    "2026-10": {
+      "events": 320,
+      "comments": 174,
+      "tracked_edits": 146,
+      "deductions": -404
+    },
+    "2026-11": {
+      "events": 41,
+      "comments": 2,
+      "tracked_edits": 39,
+      "deductions": -42
+    }
+  },
+  "count": 429,
+  "observed_score": -551,
+  "scoring_unit": "Each distinct, attributable event appearing in the audited captures, linked by issue within source. This is a recoverable sample.",
+  "distinct_issue_month_pairs": 362,
+  "screened_units": 117,
+  "screened_by_kind": {
+    "prose": 78,
+    "caption": 16,
+    "table": 23
+  },
+  "dated_local_judgments": 13,
+  "retrospective_method": "Exact original Introduction text only; all training examples predate November. Match the top three distinct issues against the editorial families observed later. n=3, selected because the advisor edited them. This checks historical retrieval, not classification accuracy, coverage of unmarked prose, or generalization.",
+  "november_intro_retrieval": [
+    {
+      "line": 10,
+      "query": "The first mechanical design consideration is to select artificial muscles that can meet the robot joints' torque requirements within the available space. The McKibben-style braided pneumatic actuators (BPAs) used here combine low mass, high force-to-weight ratio, and intrinsic compliance with a force--length curve that qualitatively resembles that of skeletal muscle \\citep{liang_comparative_2020, hunt_modeling_2017}. Our initial work with Festo BPAs showed that at shorter resting (uninflated) lengths, they delivered less force and contraction than what the manufacturer specifies. Existing empirical models describe useful pressure--contraction relationships \\citep{sarosi_comparative_2017, martens_modeling_2017, hunt_modeling_2017}, but choosing actuator lengths required evaluating how resting length affects their output. Therefore, I built a jig to perform isometric force experiments with Festo BPAs. This allowed the development of force models that account for resting length, pressure, and contraction. The work in Chapter~\\ref{ch:muscles} provides a basis for actuator sizing within the tested isometric conditions.",
+      "sha256": "9fbe98fa8a561bd2d6f7926622b856ed3ee06e4314fdc45ed44022b92586be56",
+      "closest_pre_november_examples": [
+        {
+          "id": "OCT-T-c7c6f35240e7ee7c",
+          "date": "2026-10-23",
+          "issue": "OCT-I-c7c6f35240e7ee7c",
+          "tags": [
+            "definitions_and_terminology"
+          ],
+          "cosine": 0.4355
+        },
+        {
+          "id": "OCT-T-8472cce44f103fe4",
+          "date": "2026-10-23",
+          "issue": "OCT-I-8472cce44f103fe4",
+          "tags": [
+            "gap_and_motivation"
+          ],
+          "cosine": 0.4301
+        },
+        {
+          "id": "OCT-C-6acfc2f6e5979f005bd27aa9",
+          "date": "2026-10-14",
+          "issue": "OCT-I-6acfc2f6e5979f005bd27aa9",
+          "tags": [
+            "gap_and_motivation",
+            "praise"
+          ],
+          "cosine": 0.4115
+        }
+      ],
+      "expected_families_from_later_edits": [
+        "evidence_and_validation",
+        "mechanism"
+      ],
+      "families_retrieved": []
+    },
+    {
+      "line": 12,
+      "query": "The next mechanical design consideration is predicting joint torque of an assembled robot over the required knee motion. A robot knee transmits actuator force to the skeleton through mounting brackets and artificial tendons. Brackets and fixtures can deflect under load, tendons can stretch, and contact with the knee bends an actuator and changes its usable length. Differences between nominal and effective musculotendon length, series compliance, and actuator bending can therefore cause rigid-body predictions to differ from measured torque. Initial tests showed that joint torque and the usable range of motion (RoM) could be lower than predicted. I therefore built an isometric knee-torque test jig to develop correction factors, progressing from pinned-knee configurations to the biomimetic four-bar knee. The improved model was then used to design and test musculotendon routes against selected human-muscle torque targets (Chapter~\\ref{ch:torque}).",
+      "sha256": "7e69915ceb58bbd22778575db6161e5abd23c02da62729c169aa5710dbe00614",
+      "closest_pre_november_examples": [
+        {
+          "id": "OCT-T-214f59f2fe9c3364",
+          "date": "2026-10-22",
+          "issue": "OCT-I-214f59f2fe9c3364",
+          "tags": [
+            "definitions_and_terminology"
+          ],
+          "cosine": 0.1595
+        },
+        {
+          "id": "OCT-C-6adb86f90608193cdf189d2e",
+          "date": "2026-10-23",
+          "issue": "OCT-I-6adb86f90608193cdf189d2e",
+          "tags": [
+            "evidence_and_validation"
+          ],
+          "cosine": 0.1555
+        },
+        {
+          "id": "OCT-T-089914f1b271a269",
+          "date": "2026-10-22",
+          "issue": "OCT-I-089914f1b271a269",
+          "tags": [
+            "copyediting"
+          ],
+          "cosine": 0.1549
+        }
+      ],
+      "expected_families_from_later_edits": [
+        "evidence_and_validation",
+        "mechanism",
+        "result_first"
+      ],
+      "families_retrieved": [
+        "evidence_and_validation"
+      ]
+    },
+    {
+      "line": 14,
+      "query": "The first neural control design consideration is selecting sensory feedback pathways and defining how they influence a synthetic nervous system. Neural control architectures are often presented as schematic diagrams resembling flowcharts. These diagrams simplify biological neural circuits by showing selected connections and functional relationships, while implementing those relationships requires information about the pathways, their effects, and the conditions under which they operate. Therefore, it was necessary to gather and curate documented sensory pathways and rules describing how sensory input influences neural activity and movement, relying on computational models, animal experiments, and literature reviews. These findings are distributed across species, preparations, and experimental protocols, so their interpretation requires preserving the context in which they were reported \\citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}. The Sensory Afferent Database (SADb) was developed to organize this information into a searchable resource linked to its sources. The work in Chapter~\\ref{ch:database} supports the selection of feedback pathways and the definition of biologically informed interactions in neuromechanical models.",
+      "sha256": "98f31bad5adb887721da1581c8d496c05a9cfbe88d87fd551144de04f53096e8",
+      "closest_pre_november_examples": [
+        {
+          "id": "OCT-T-fc65f65415d6780b",
+          "date": "2026-10-23",
+          "issue": "OCT-I-fc65f65415d6780b",
+          "tags": [
+            "definitions_and_terminology"
+          ],
+          "cosine": 0.1671
+        },
+        {
+          "id": "OCT-T-65d94ea6a9558923",
+          "date": "2026-10-23",
+          "issue": "OCT-I-65d94ea6a9558923",
+          "tags": [
+            "scope_and_uncertainty"
+          ],
+          "cosine": 0.1608
+        },
+        {
+          "id": "OCT-T-8f4e939eed28bef6",
+          "date": "2026-10-23",
+          "issue": "OCT-I-8f4e939eed28bef6",
+          "tags": [
+            "reader_use"
+          ],
+          "cosine": 0.1604
+        }
+      ],
+      "expected_families_from_later_edits": [
+        "contribution_and_credit",
+        "gap_and_motivation",
+        "reader_use"
+      ],
+      "families_retrieved": [
+        "reader_use"
+      ]
+    }
+  ],
+  "review_table_rows": {
+    "prior": 688,
+    "historical_advisor": 388,
+    "current_passages": 13,
+    "new_user_directives": 2,
+    "total": 1091
+  }
+}

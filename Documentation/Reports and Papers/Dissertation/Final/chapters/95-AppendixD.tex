@@ -71,7 +71,7 @@ Table~\ref{tab:force-r2} gives $R^2=1-\mathrm{SSE}/\mathrm{SST}$, squared Pearso
   \end{tabular}
 \end{table}
 
-Eight of twelve right-side muscles had $R^2$ between 0.87 and 0.98 and mean MuJoCo forces within \qty{10}{\percent} of OpenSim. Mean MuJoCo/OpenSim force ratios for the other four were 0.916 for soleus, 0.776 for semimembranosus, 1.088 for rectus femoris, and 1.846 for biceps femoris short head. The latter two had negative $R^2$, so predicting the mean reference force would give a smaller squared error. For biceps femoris short head, a squared shape correlation of 0.868 concealed its large force-scale error. The altered rectus femoris path is one candidate explanation for its discrepancy.
+Eight of twelve right-side muscles had $R^2$ between 0.88 and 0.98 and mean MuJoCo forces within \qty{10}{\percent} of OpenSim. Mean MuJoCo/OpenSim force ratios for the other four were 0.916 for soleus, 0.776 for semimembranosus, 1.088 for rectus femoris, and 1.846 for biceps femoris short head. The latter two had negative $R^2$, so predicting the mean reference force would give a smaller squared error. For biceps femoris short head, a squared shape correlation of 0.868 concealed its large force-scale error. The altered rectus femoris path is one candidate explanation for its discrepancy.
 
 Lag describes alignment of the sampled force sequences. Attributing a lag or scale error to a particular mechanism would require matched velocities, activation histories, and tendon dynamics. The comparison preserves the per-muscle statistics. The historical framewise MuJoCo forces are unavailable for a fresh calculation of every $R^2$.
 

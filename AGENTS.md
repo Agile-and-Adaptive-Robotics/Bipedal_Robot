@@ -338,6 +338,13 @@ machine, NOT staleness.
 
 ## Standing conventions
 
+- For dissertation prose revisions, use the historical feedback in
+  `Documentation/Reports and Papers/Dissertation/Notes/advisor_feedback_history/README.md`
+  and run its `review.py` on the current chapters. Record the marked historical example,
+  the current passage, and what the revised wording lets a reader answer. Keep actual
+  advisor deductions and local readiness scores distinct. Reopen a prior judgment
+  when fresh feedback repeats the concern. Silence earns no credit.
+
 - **Robot anatomical frame (Ben, 2026-10-27): x anterior, y superior, z right,
   matching OpenSim/ISB. New MuJoCo robot models use gravity [0,-9.81,0] and a
   y-up ground plane. Normalize CAD assembly placement through the pelvis datum;
