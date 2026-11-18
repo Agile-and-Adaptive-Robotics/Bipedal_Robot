@@ -1,7 +1,7 @@
 \chapter{Appendix A: Muscle Force and Joint Torque Calculations}\label{app:muscle_calcs}
 \graphicspath{{../Figures/92-AppendixA/}{figs/92-AppendixA/}}
 
-This appendix documents the reference implementation of the force, torque, and compliance equations used in Chapters~\ref{ch:muscles} and~\ref{ch:torque}. When present in MATLAB code, file names are given so that any number in this dissertation can be traced to the code that produced it.
+This appendix gives the force, torque, and compliance equations used in Chapters~\ref{ch:muscles} and~\ref{ch:torque} and identifies the MATLAB functions that implement them.
 
 \section{Human muscle force calculations}
 \subsection{OpenSim Thelen2003 and Millard2012 Formulations}
@@ -117,24 +117,16 @@ The damped formulation adds $\beta\tilde v_M$ inside the brackets, as in Equatio
 \subsection{OpenSim Moment Arms and Human Torque Targets}
 \label{sec:app_opensim_targets}
 
-The human torque targets of Section~\ref{sec:optimization} are OpenSim
-tendon-excursion moment arms: for each muscle, the moment arm about the
-knee is the partial derivative of muscle-tendon length with respect to
-the knee coordinate, with positive tensile force and torque positive in the coordinate direction, $r(\theta_{k}) = -\partial l_{\mathrm{MT}} /
-\partial\theta_{k}$, evaluated across the range of motion. The exported
-analysis tables archived with the test data
-(\nolinkurl{OpenSim_Vasti_MomentArm.txt}, \nolinkurl{OpenSim_Vasti_Results.txt},
-\nolinkurl{OpenSim_Bifem_MomentArm.txt}, \nolinkurl{OpenSim_Bifem_Results.txt})
-carry the per-muscle moment arms and the corresponding
-maximum-isometric torque curves (moment arm multiplied by each
-muscle's maximum isometric force) for vastus intermedius,
-lateralis, and medialis, and for the biceps femoris short head; the
-optimization loads the vastus medialis and biceps femoris short-head
-columns as its targets (\texttt{buildKneeExtContext20mm.m} lines
-119--140; \nolinkurl{Knee_Flexor_Data_20mm.m} line 546). For an unconstrained planar rotation, this
-derivative definition and the geometric perpendicular-foot construction
-of Equation~(\ref{eq:app_perpfoot}) below are equivalent for a straight
-muscle path crossing a planar revolute joint; the constrained and moving-path-point geometry is evaluated by OpenSim rather than by substituting the robot-side straight-path construction.
+For each Gait2392 muscle, the signed tendon-excursion moment arm about the knee is
+$r_k(\theta_k)=-\partial l_{\mathrm{MT}}/\partial\theta_k$, in meters, with the knee angle in radians and the other independent coordinates fixed.
+Positive tension acting through a positive moment arm produces torque in the positive knee-coordinate direction.
+The reference torque in Section~\ref{sec:optimization} is $\tau_{k,\mathrm{ref}}(\theta_k)=r_k(\theta_k)F_{\mathrm{iso}}(\theta_k)$, in newton meters, where $F_{\mathrm{iso}}$ denotes the muscle's isometric tensile force at that pose.
+The archived \nolinkurl{OpenSim_Vasti_MomentArm.txt} and \nolinkurl{OpenSim_Bifem_MomentArm.txt} contain the moment arms.
+The corresponding \nolinkurl{OpenSim_Vasti_Results.txt} and \nolinkurl{OpenSim_Bifem_Results.txt} contain the torque curves.
+The extensor search reads the vastus medialis torque column, and the flexor search reads the biceps femoris short-head torque column
+(\texttt{buildKneeExtContext20mm.m}, lines 119--139, and \texttt{buildKneeFlexorContext20mm.m}, lines 129--134).
+For a straight path crossing one planar revolute joint, the signed moment arm obtained from Equation~\eqref{eq:app_perpfoot} below agrees with the tendon-excursion definition.
+OpenSim evaluates the human muscle paths with their moving points and couplings.
 
 \section{Converted MuJoCo Muscle Formulation}
 \label{sec:muscle-models}
@@ -179,12 +171,13 @@ The resting-length-dependent maximum force of Equation~(\ref{eq:Fmax_3D}) is imp
 
 Path length accumulates the Euclidean norm of each segment between via points, applying the body-frame transformation whenever the path crosses between the femur and tibia frames (\texttt{MonoPamDataExplicit.m} lines 78--95, total at lines 122--133).
 
-The vector moment arm is implemented as the perpendicular foot of the joint origin onto the line of action,
+The vector from the joint origin to the nearest point on the line of action is
 \begin{equation}
     \mathbf{r} \;=\; \mathbf{p} \;-\; \hat{\mathbf{u}}\left(\hat{\mathbf{u}}\cdot\mathbf{p}\right),
     \label{eq:app_perpfoot}
 \end{equation}
-where $\mathbf{p}$ is the vector from the joint origin to the muscle-path crossing point and $\hat{\mathbf{u}}$ is the unit force direction (\texttt{MonoPamDataExplicit.m} lines 156--168; identical implementations in \texttt{MonoMuscleData.m} lines 111--123, the \texttt{Mom} function of \texttt{minimizeFlxPin.m} at line 539, and \nolinkurl{MonoPam_mult.m} lines 186--201). This is the same quantity as the cross-product projection of Equation~(\ref{eq:project_ma}); the planar scalar moment arm about the joint axis is the magnitude of the in-plane components, computed as \texttt{hypot(mA(:,1), mA(:,2))} (\texttt{predictKneeFlexor20mm.m} line 217). Torque about the joint $z$-axis is $\mathbf{m} = \mathbf{r}\times\mathbf{f}$, evaluated only where the BPA is in tension (values are discarded for $\varepsilon < -0.02$, the excessive stretching region; \texttt{MonoPamDataExplicit.m} line 308).
+where $\mathbf{p}$ runs from the joint origin to the crossing point and $\hat{\mathbf{u}}$ points along the tensile force (\texttt{MonoPamDataExplicit.m}, lines 156--168, \texttt{MonoMuscleData.m}, lines 111--123, \texttt{Mom} in \texttt{minimizeFlxPin.m}, and \nolinkurl{MonoPam_mult.m}, lines 186--201).
+The force $\mathbf{f}=F\hat{\mathbf{u}}$ produces the moment vector $\mathbf{m}=\mathbf{r}\times\mathbf{f}$. Its signed knee-axis component is $M_{\mathbf{k}}=\hat{\mathbf{z}}_{\mathbf{k}}\cdot(\mathbf{r}\times\mathbf{f})$, so the signed moment arm per unit tensile force is $\hat{\mathbf{z}}_{\mathbf{k}}\cdot(\mathbf{r}\times\hat{\mathbf{u}})$. Equation~\eqref{eq:project_ma} uses the projected line of action and the corresponding in-plane force magnitude to obtain the same knee-axis torque. The flexor predictor also reports the unsigned in-plane length of $\mathbf{r}$ as \texttt{hypot(mA(:,1),mA(:,2))} (\texttt{predictKneeFlexor20mm.m}, line 217). The force routine clips negative tension to zero and discards moments for excessive stretching, $\varepsilon<-0.02$ (\texttt{MonoPamDataExplicit.m}, lines 283--287 and 307--311).
 
 \section{Compliance Model Implementation}
 
@@ -195,21 +188,21 @@ The compliance-corrected muscle length entering Equation~(\ref{eq:Lm}) is comput
     k_{\hat{u},br} = \left(\hat{u}^{\,T}\mathbf{K}_{br}^{-1}\hat{u}\right)^{-1},
     \label{eq:app_kbr}
 \end{equation}
-matching Equation~(\ref{eq:bktstiffness}). The origin-side bracket contributes an additional scalar compliance $c_{b2}$ in series. Both bracket frames use the two-rotation construction of Equation~\eqref{eq:app_bracketframe}. Their stiffness arrays are $[X_1,X_2,X_1]$ at insertion and $[X_1,X_1,X_2]$ at origin, as listed in Table~\ref{tab:app_stiffness_arrays}.
+matching Equation~\ref{eq:bktstiffness}. The origin-side bracket adds a scalar compliance $c_{b2}$ in series. The adopted pinned-flexor fit, row 77 of \nolinkurl{minimizeFlxPin10_results.mat}, used \nolinkurl{minimizeFlxPin2brk.m} with both brackets enabled and the \texttt{2trans} setting. Each bracket frame therefore used both rotations in Equation~\eqref{eq:app_bracketframe}. The stiffness arrays were $[X_1,X_2,X_1]$ at insertion and $[X_1,X_1,X_2]$ at origin (Table~\ref{tab:app_stiffness_arrays}). The separate \nolinkurl{minimizeFlxPin.m} uses only the first, $z$-axis rotation at both attachments.
 
 The artificial tendon is modeled as an axial spring with stiffness
 \begin{equation}
     k_{ten} \;=\; \frac{n\,A_{c}\,E}{L_{ten}},
     \label{eq:app_tendon}
 \end{equation}
-with $n=2$ parallel cable strands ($\times 6$ for the \qty{20}{\mm} assembly), $A_{c} = \qty{1.51e-6}{\metre\squared}$ (19-strand cable), and $E = \qty{193e9}{\pascal}$ (\nolinkurl{MonoPam_mult.m}, function \texttt{Spr()}, lines 627--637; the evaluators obtain the spring rate through \nolinkurl{Spr(bpa_i)}, \texttt{minimizeFlxPin.m} line 156). Series combination with the projected bracket compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1} + c_{b2}\right)^{-1}$ (\texttt{minimizeFlxPin.m} lines 394--409).
+where $n$ counts the parallel cables. The \qty{10}{\mm} assembly uses $n=2$, and the \qty{20}{\mm} assembly uses $n=6$. Each 19-strand cable has $A_c=\qty{1.51e-6}{\metre\squared}$ and $E=\qty{193e9}{\pascal}$ (\nolinkurl{MonoPam_mult.m}, function \texttt{Spr()}, lines 628--637). The evaluators obtain the spring rate through \nolinkurl{Spr(bpa_i)} (\texttt{minimizeFlxPin.m}, line 156). Series combination with the projected bracket compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1} + c_{b2}\right)^{-1}$ (\texttt{minimizeFlxPin.m}, lines 394--409).
 
 The scalar compliance displacement $\delta$ of Equation~(\ref{eq:complianceforcebalance}) is found numerically with \texttt{fzero} on the bracket $[0,\, l_{m}-l_{620}]$,
 \begin{equation}
     F_{620}(l_{0})\,F^{*}\!\left(\varepsilon^{*}(\delta),P^{*}\right) - k_{eq}\,\delta = 0,
     \label{eq:app_forcebalance}
 \end{equation}
-with $\delta \equiv 0$ when the uncorrected relative strain already exceeds unity (\texttt{minimizeFlxPin.m} lines 434--441). The vector bracket deflection is then $\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1}\left(\norm{\mathbf{f}}\,\hat{\mathbf{u}}\right)$ (line 461), the cable stretch is $\norm{\mathbf{f}}/k_{ten}$ (line 478), and the attachment point, path, moment arm, and torque are recomputed. For the two-BPA flexor grouping, the coupled balance shares one common force between both muscles and is solved analogously on $[0, F_{620}]$ (\nolinkurl{MonoPam_mult.m} lines 556--612).
+with $\delta \equiv 0$ when the uncorrected relative strain already exceeds unity (\texttt{minimizeFlxPin.m} lines 434--441). The vector bracket deflection is then $\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1}\left(\norm{\mathbf{f}}\,\hat{\mathbf{u}}\right)$ (line 461), the cable stretch is $\norm{\mathbf{f}}/k_{ten}$ (line 478), and the attachment point, path, moment arm, and torque are recomputed. For the two-BPA flexor, both muscles share one force. The solver uses \texttt{fzero} when finite residuals of opposite sign bracket a root on $[0,F_{620}]$. If it cannot bracket or solve the root, it uses the mean of the two initial force estimates and bounds the result to the same interval (\nolinkurl{MonoPam_mult.m}, lines 556--584).
 
 \section{Wrapping-Loss Implementation}
 

@@ -5,7 +5,7 @@ This appendix defines the neuron and synapse equations and records the parameter
 
 \section{Spiking Neuron Model}
 
-Each spiking neuron is a conductance-based leaky integrator with threshold and adaptation,
+In the archived AnimatLab walker, the spiking neuron is a conductance-based leaky integrator with a firing threshold and accommodation,
 \begin{equation}
     C_{m}\,\dot{V} \;=\; -\,g_{\text{leak}}\left(V - E_{\text{rest}}\right)
                       \;+\; I_{\text{syn}} \;+\; I_{\text{app}},
@@ -138,7 +138,7 @@ Synaptic time constants & \qty{5}{\milli\second} (exc), \qty{20}{\milli\second} 
 
 \subsection{Verification Gates of the MuJoCo Mirror}
 
-Table~\ref{tab:app_spk_gates} records the complete gate set of Section~\ref{sec:spiking_methods} with verdicts and headline numbers. The two failures are reported as failures: the constant-drive period misses its tolerance with the tuning knobs identified, and the air-regime cadence clause misses while every structural clause passes. Gate scripts, logs, and machine-readable outputs are archived in the reports folder (\nolinkurl{tools/}, \nolinkurl{logs/}, and the \texttt{json} metric files respectively).
+Table~\ref{tab:app_spk_gates} gives the tests from Section~\ref{sec:spiking_methods}. The graded and spiking networks retained the same directed connections under each of three gain settings. Under constant drive the spiking rhythm alternated between the legs, but its period exceeded the specified tolerance. With the model suspended, the spiking network also produced finite joint motion at a different cadence from the graded network. The scripts, logs, and numerical results are archived in the reports folder (\nolinkurl{tools/}, \nolinkurl{logs/}, and the \texttt{json} files).
 
 \begin{sidewaystable}
 \caption{Complete verification-gate table of the spiking mirror. Baseline scores reproduce digit for digit; ``split'' denotes a gate whose clauses pass and fail in part.}
@@ -150,11 +150,11 @@ Table~\ref{tab:app_spk_gates} records the complete gate set of Section~\ref{sec:
 Pipeline compile & PASS & runner, curriculum, parameters, and network builder all compile. \\
 Defaults gate & PASS & $(410,\,376,\,1186)$ populations, inputs, and connections after the selector edit; variant build $(888,\,382,\,7430)$. \\
 Non-spiking bit-identity & PASS & complete numerical baseline outputs identical before and after the edit for all three tested configurations. \\
-Topology mirror & PASS & directed edge multisets identical in three gain configurations ($1{,}186$ / $7{,}908$ / $7{,}762$); inputs and motor-neuron maps identical; readout taps 12 / 12 / 16. \\
+Topology mirror & PASS & directed connections and their signs matched with conditional pathways off, with those pathways enabled, and with joint-level PF enabled ($1{,}186$ / $7{,}908$ / $7{,}762$). Inputs and motor-neuron maps matched. The spiking network added 12 / 12 / 16 readout taps. \\
 Constant-drive rhythm & SPLIT & sustained bilateral antiphase (E \qty{4.9}{\hertz}, F \qty{3.2}{\hertz} per leg; swing \qty{5.13}{\mV} in every window) = PASS; period \qty{0.621}{\second} versus analog \qty{0.399}{\second} ($+55.6\,\% > 20\,\%$) = FAIL. \\
 Perturbation basin & PASS & 12/12 trials under \qty{1}{\percent} jitter on every scalar; final swing minimum \qty{4.58}{\mV} (margin $0.89\times$); zero explosions. \\
 Air-regime smoke & FAIL (cadence) & finite, 53 envelope rises, knee range \ang{106.0} of twin's \ang{117.9}, hip \ang{50.4} of \ang{71.1}; period \qty{0.215}{\second} versus \qty{2.108}{\second}. \\
-Untuned ground evaluation & ran & score $-236.35$; bilateral (8 right / 9 left cycles); cycle knee minimum \ang{-79.8}; no non-finite states; stayed up. Single run, no statistics. \\
+Untuned ground evaluation & ran & score $-236.35$ and 8 right / 9 left cycles over $2\leq t<16$\,s. Cycle knee minimum \ang{-79.8}. The single supported run remained finite and upright. \\
 Simulink regression & PASS & all committed demonstrations and units tests reproduce exactly with the spiking blocks in the library (two-neuron test \qty{6.07e-04}{\mV}). \\
 AnimatLab baselines & PASS & five baseline simulations completed without errors, with periods and antiphase reproducing the records (\qty{0.443}{\second}, \qty{0.462}{\second}, \qty{1.305}{\second}). \\
 \bottomrule
@@ -182,7 +182,7 @@ Bilateral v2        & calibrated            & 96  & 20 & 208 & no sustained alte
 Project export v1   & \qty{-55}{\milli\volt}/\qty{-59}{\milli\volt}        & 122 & 50 & 243 & synchronous \qty{11.8}{\hertz} co-bursting \\
 Project export v2   & calibrated            & 122 & 50 & 243 & passive relaxation without rhythm \\
 Ablation            & spiking, graded synapses & 80 & 0  & 0   & oscillates, near-baseline ranges \\
-2023 reference (baseline) & spiking from birth & 56 & 3 (spiking) & 84 & \qty{1.305}{\second} bursts, antiphase $+0.494$ cycle \\
+2023 reference (baseline) & archived spiking model & 56 & 3 (spiking) & 84 & \qty{1.305}{\second} bursts, antiphase $+0.494$ cycle \\
 \bottomrule
 \end{tabularx}
 \end{sidewaystable}
@@ -197,14 +197,14 @@ Figure~\ref{fig:spike_animatlab} compares the graded baseline (A1), full spiking
 \label{fig:spike_animatlab}
 \end{figure}
 
-The spiking conversions were verified through simulations run without opening the graphical model editor. These tests establish the reported simulated responses, but do not verify how the converted projects appear in that editor. The mirror work also scoped, but did not attempt, two further conversions: the full 410-population Simulink spinal network (whose every one of 1,392 gains is tuned for graded voltages, making a spiking conversion a full re-tune rather than a parameter port) and the spiking mirrors of the alternative MuJoCo network variants (separate architectures whose fresh tuning is future work).
+The converted AnimatLab models ran from their exported files. The graded Simulink spinal model has 410 neurons and 1,392 synapses. Converting that model to spike-based signaling and fitting the separate MuJoCo network variants for spiking control were outside these comparisons.
 
 \section{Connectome of the Verified W2L Model}\label{app:connectomes}
 \graphicspath{{../Figures/93-AppendixB/}{figs/93-AppendixB/}}
 
 Figures~\ref{fig:app_circuit_full} and~\ref{fig:app_circuit_core} document the W2L configuration used for the independent replays in Section~\ref{sec:app_supported_replays}. The corrected bilateral template compiles to 96 neurons, 204 chemical synapses, and 22 input channels. The node and connection lists were read from the compiled SNS-Toolbox network using the saved configuration \nolinkurl{w2l_verified_config.json}. This is a different network from the 410-neuron Gait2392 model used in the earlier spiking comparisons; their neuron counts and results are not interchangeable.
 
-The two sides each contain 48 neurons. RG denotes rhythm-generator cells; RG-IN, their local interneurons; PF, pattern-formation cells; PF-IN, their local interneurons; MN, motor neurons; RC, Renshaw cells; Ia, Ib, and II, muscle-afferent encoders; and Ia-IN, reciprocal-inhibition interneurons. The c1 and V3 commissural interneuron populations follow the bilateral organization of \citet{shinohara_mechanisms_2025}: c1 mediates inhibitory coupling between the flexor rhythm generators, while V3 excites contralateral extensor interneurons. Contact comprises heel and toe encoders. The motor outputs drive six actuator channels per side. External inputs and actuator outputs are interfaces, not additional neurons.
+The two sides each contain 48 neurons. RG and PF are the rhythm-generator and pattern-formation cells, and RG-IN and PF-IN are their local interneurons. MN denotes motor neurons, RC Renshaw cells, and Ia-IN reciprocal-inhibition interneurons. Ia, Ib, and II label muscle-afferent populations. In this controller, four heel and toe channels carry foot contact. Six Ib input channels on each side receive the same normalized extensor-force signal for that side. The other inputs are two initiation channels and four tonic-drive channels. The compiled input list contains no separate muscle-length or velocity channels for Ia or II. The c1 and V3 commissural interneurons follow the organization of \citet{shinohara_mechanisms_2025}. c1 inhibits the opposite flexor rhythm generator, and V3 excites contralateral extensor interneurons. Motor outputs drive six actuator channels per side.
 
 Figure~\ref{fig:app_circuit_full} groups individual connections by their presynaptic and postsynaptic populations. A symbol indicates at least one connection of that sign; a population pair can contain both excitatory and inhibitory connections. The diagonal quadrants contain within-side pathways, and the other quadrants show interleg pathways. The matrix exposes the sensory projections to both RG and PF populations as well as to motor circuitry.
 

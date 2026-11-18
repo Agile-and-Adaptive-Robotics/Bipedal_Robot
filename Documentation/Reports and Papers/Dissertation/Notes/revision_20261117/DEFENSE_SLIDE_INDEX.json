@@ -1,0 +1,1328 @@
+{
+  "source": "\\\\tsclient\\F\\Bolen_PhD_Defense_v34a.pptx",
+  "source_sha256": "9af4c36a3ef2c70fc19d8801a687bbe03ccfc2a35094d404fbd097960f624370",
+  "notes_scope": "Body content of each original PowerPoint notes page. Empty means the notes body has no words.",
+  "visual_scope": "PowerPoint 16 read-only export of 114 slides at 1600 × 900. Slides 9, 16–18, and 59–114 are individually described. Animations are identified separately from static slide renders.",
+  "slides": [
+    {
+      "original_slide": 1,
+      "printed_number": null,
+      "title": "Tools to Design a Biomimetic Humanoid Robot",
+      "hidden": false,
+      "package_member": "ppt/slides/slide1.xml",
+      "speaker_notes": "Good morning. Iʼm Ben Bolen, a mechanical engineering PhD candidate at Portland State University. I study how artificial muscles, robot mechanics, and neural controllers work together. Today Iʼll show how I used human movement as a design reference and built tools to predict and test how a biomimetic robot moves."
+    },
+    {
+      "original_slide": 2,
+      "printed_number": "2",
+      "title": "Biomimetic robots mimic behavior of organisms",
+      "hidden": false,
+      "package_member": "ppt/slides/slide2.xml",
+      "speaker_notes": "Kengoro applies the same idea to a robot, reproducing aspects of the human skeleton, joints, and tendon-driven actuation. Watch the coordinated arm and racket movement.\nSource: Asano, Okada, and Inaba (2017), https://doi.org/10.1126/scirobotics.aaq0899 . Authors' footage distributed at https://wired.jp/2018/01/16/freaky-humanoid-robot/ ."
+    },
+    {
+      "original_slide": 3,
+      "printed_number": "3",
+      "title": "Robots still struggle",
+      "hidden": false,
+      "package_member": "ppt/slides/slide3.xml",
+      "speaker_notes": "Here the robot must coordinate changing foot contact, balance, and its body weight. A repeating movement can fail when those conditions change.\nBiology offers another design principle: generate the repeating pattern locally, then adjust it using sensory feedback. That introduces neural control.\nSource: retained DARPA Robotics Challenge footage."
+    },
+    {
+      "original_slide": 4,
+      "printed_number": "4",
+      "title": "Which parts of movement can a robot help us study?",
+      "hidden": false,
+      "package_member": "ppt/slides/slide4.xml",
+      "speaker_notes": "Ask the audience to think of a movement that looks simple until we try to reproduce it. My examples focus on force, joint mechanics, and sensory feedback."
+    },
+    {
+      "original_slide": 5,
+      "printed_number": "5",
+      "title": "Biology guides robot design; robot experiments generate biological predictions",
+      "hidden": false,
+      "package_member": "ppt/slides/slide5.xml",
+      "speaker_notes": "Biomimetic means using useful features of biology in an engineered system. The loop runs in both directions. Biological principles guide robot design. Then, controlled robot experiments test ideas about movement: change one property, measure its effect, and make a prediction that biology can test.\nWhat we learn informs the next biological model and the next robot design. Start with the engineering benefit."
+    },
+    {
+      "original_slide": 6,
+      "printed_number": "6",
+      "title": "Biological principles can improve how machines move",
+      "hidden": false,
+      "package_member": "ppt/slides/slide6.xml",
+      "speaker_notes": "Bodies combine structures that carry load, muscles that pull, and mechanisms that coordinate movement. Copying a useful function can improve a machine's performance. The next example copies part of the spring-like behavior of our muscle–tendon system."
+    },
+    {
+      "original_slide": 7,
+      "printed_number": "7",
+      "title": "How are humans and state-of-the-art robots different?",
+      "hidden": false,
+      "package_member": "ppt/slides/slide7.xml",
+      "speaker_notes": "Ask for two or three differences. If needed, prompt the audience to think about what produces force, what controls motion, and what carries the load. Then reveal the human and robot comparison."
+    },
+    {
+      "original_slide": 8,
+      "printed_number": "8",
+      "title": "Humans and robots solve the same movement problems differently",
+      "hidden": false,
+      "package_member": "ppt/slides/slide8.xml",
+      "speaker_notes": "Compare the two sides row by row. The point of biomimetic design is to choose useful biological principles for a particular engineering task."
+    },
+    {
+      "original_slide": 9,
+      "printed_number": "9",
+      "title": "My goal is to connect a neural controller to a biomechanical robot model",
+      "hidden": false,
+      "package_member": "ppt/slides/slide9.xml",
+      "speaker_notes": "The mechanical model represents joints and actuator routes. The neural controller supplies commands and receives sensory measurements. I use the physical robot to establish and test the mechanics those tools need to represent.\nBrain image from https://mypremiertherapy.com/mind-muscle-connection/",
+      "render_observation": "The biomechanical model and neural controller flank a photograph of the robot."
+    },
+    {
+      "original_slide": 10,
+      "printed_number": "10",
+      "title": "Muscle-like actuators can create more biomimetic robots",
+      "hidden": false,
+      "package_member": "ppt/slides/slide10.xml",
+      "speaker_notes": "Introduce word BPA here.\nFesto's Airic's_arm and Humanoid show artificial muscles pulling on human-inspired structures. Watch actuator shortening become joint movement.\nA braided pneumatic actuator, or BPA, expands outward and shortens when pressurized. Its low mass and compliance are useful for biomimetic design. Compliance means deformation under load. I need to predict the force and travel that each actuator can deliver.\nSource: Festo demonstrations, supplied captures Airics_arm.mp4 and Festo_Humanoid.mp4."
+    },
+    {
+      "original_slide": 11,
+      "printed_number": "11",
+      "title": "Air pressure makes a braided pneumatic actuator pull",
+      "hidden": false,
+      "package_member": "ppt/slides/slide11.xml",
+      "speaker_notes": "BPA stands for braided pneumatic actuator. Point to the uninflated and pressurized actuator on the next slide. The braid converts radial expansion into axial shortening."
+    },
+    {
+      "original_slide": 12,
+      "printed_number": "12",
+      "title": "BPA length is measured between the inner edges of the clamps",
+      "hidden": false,
+      "package_member": "ppt/slides/slide12.xml",
+      "speaker_notes": "This picture shows the same actuator uninflated and pressurized without a load. The inner clamp edges define its active length. Contraction is shortening divided by the initial length."
+    },
+    {
+      "original_slide": 13,
+      "printed_number": "13",
+      "title": "Copying muscle routes does not reproduce the human-model torque curve",
+      "hidden": false,
+      "package_member": "ppt/slides/slide13.xml",
+      "speaker_notes": "The horizontal axis is knee angle. The vertical axis is isometric torque magnitude. Both views use the same Gait2392 anatomy, viewed from the right, with the hip at zero degrees. The left knee reaches 120 degrees of flexion. The right stops near 38 degrees, where this BPA route runs out of active force. The moving dots show the corresponding torques. Matching anatomy alone does not reproduce muscle capability.\nSource: unchanged historical_torque_2d.csv, the hip = 0 degree section of the saved Bolen (2019) BFLH human/robot grids. The first nonzero BPA sample is -38.1 degrees; the preceding zero sample is -39.4 degrees. The illustrated full plotted interval is -120 to +8.7 degrees. Both views use the same OpenSim Gait2392 anatomical model through its MyoConverter copy, with coupled joint translations applied. Camera position and orientation are verified against OpenSim +Z and +Y. This is prescribed coordinate playback; the right angle is clamped to the plotted nonzero-BPA interval. Body-segment weight is omitted at Ben's direction. The complete comparison is a single embedded looping GIF, so both motions and graph markers stay synchronized."
+    },
+    {
+      "original_slide": 14,
+      "printed_number": "14",
+      "title": "For MS work, hand tuned BPA attachment locations to better match human torque capabilities",
+      "hidden": false,
+      "package_member": "ppt/slides/slide14.xml",
+      "speaker_notes": "In my master's work, I designed this human-inspired robot with 27 actuator routes per leg and built the physical mechanism. Anatomical paths provided the starting point. The next challenge was capability: predict the actual BPA force and joint torque, then redesign the routes to deliver the required movement.\nSource: Bolen (2019), Movement and Control of Biomimetic Humanoid Robots; original anatomical-route and physical-robot comparison."
+    },
+    {
+      "original_slide": 15,
+      "printed_number": "15",
+      "title": "The baseline has active force over more angles than useful torque",
+      "hidden": false,
+      "package_member": "ppt/slides/slide15.xml",
+      "speaker_notes": "The horizontal axis is mean coverage across 27 actuator sites. Each site contributes the fraction of its tested joint-position range that passes the condition. The gold bars show the inherited baseline: 93.00 percent for active force and 37.35 percent for meeting the selected human torque target."
+    },
+    {
+      "original_slide": 16,
+      "printed_number": "16",
+      "title": "What is missing",
+      "hidden": false,
+      "package_member": "ppt/slides/slide16.xml",
+      "speaker_notes": "These three gaps define the dissertation. First I need a force law for the actuators. Then I need to predict how the loaded structure turns that force into joint torque. Finally I need to connect the model to a controller and tune it systematically.",
+      "render_observation": "Three gaps on screen include connecting the model to a neural controller."
+    },
+    {
+      "original_slide": 17,
+      "printed_number": "17",
+      "title": "Three knowledge gaps stand between biological inspiration and a tested robot design",
+      "hidden": false,
+      "package_member": "ppt/slides/slide17.xml",
+      "speaker_notes": "Three questions define my contributions. What force does a BPA actually produce? Which mechanical corrections improve joint-torque prediction? What tools connect neural control to an anatomical or CAD-derived body for repeatable experiments?\nCAD means computer-aided design. I built actuator models, joint-design tools, and neural–mechanical interfaces to answer those questions. First, actuator force.",
+      "render_observation": "The three-image roadmap places the neural-control experiments on the right."
+    },
+    {
+      "original_slide": 18,
+      "printed_number": "18",
+      "title": "Aim 1: Develop an accurate force-length-pressure relationship for BPAs",
+      "hidden": false,
+      "package_member": "ppt/slides/slide18.xml",
+      "speaker_notes": "The first gap is the actuator prediction. I measured force over initial length, pressure, and contraction and developed a model that represents the observed behavior. I also examined maximum contraction because it determines how much movement a route can deliver.\nI will explain the measurements and build the most important comparison in stages.",
+      "render_observation": "The repeated roadmap highlights the first aim, illustrating the selection convention used again on 59."
+    },
+    {
+      "original_slide": 19,
+      "printed_number": "19",
+      "title": "A short BPA delivered less force than the manufacturer predicted",
+      "hidden": false,
+      "package_member": "ppt/slides/slide19.xml",
+      "speaker_notes": "Muscle Mutt motivated the actuator tests. The comparison on the right is for the same short BPA at its initial length and 620 kilopascals. I measured 350.9 newtons against the manufacturerʼs prediction of 498.6. That gap motivated a force model based on measured actuator behavior."
+    },
+    {
+      "original_slide": 20,
+      "printed_number": "20",
+      "title": "I measured force, pressure and length",
+      "hidden": false,
+      "package_member": "ppt/slides/slide20.xml",
+      "speaker_notes": "I used this jig to hold actuator length, set air pressure, and measure pulling force.\nClick 1: the frame supports the fixed-length test. Click 2: the load cell measures pulling force. Click 3: the air line supplies pressure. Click 4: the end caps connect the actuator to the fixtures. Click 5: the hose clamps define the measured length. Click 6: I measure the distance between those clamp edges. Click 7: the pressure sensor records the supplied pressure.\nWith the length held fixed, this is an isometric force test. Repeating it across initial lengths, pressures, and contractions gives the data needed for the force model.\nSource: original testJigs1.pptx component photograph; same apparatus as the published study."
+    },
+    {
+      "original_slide": 21,
+      "printed_number": "21",
+      "title": "Our measurements show less maximum force in shorter BPAs",
+      "hidden": false,
+      "package_member": "ppt/slides/slide21.xml",
+      "speaker_notes": "Initial BPA length is on the horizontal axis, and maximum pulling force in newtons is on the vertical axis. I held each 10 millimetre BPA at its initial length and measured its force at 620 kilopascals. Short actuators produce less force, which matters when space is limited."
+    },
+    {
+      "original_slide": 22,
+      "printed_number": "22",
+      "title": "The manufacturer’s force prediction was wrong",
+      "hidden": false,
+      "package_member": "ppt/slides/slide22.xml",
+      "speaker_notes": "The horizontal axis still shows initial BPA length. The vertical axis still shows maximum force at 620 kilopascals. The manufacturer predicts more force as the actuator gets shorter. My measurements show less."
+    },
+    {
+      "original_slide": 23,
+      "printed_number": "23",
+      "title": "My model captures maximum force as a function of length",
+      "hidden": false,
+      "package_member": "ppt/slides/slide23.xml",
+      "speaker_notes": "The axes are initial length and maximum force at 620 kilopascals. My fitted curve captures the measured rise toward a plateau. The end-cap offset comes from the minimum clamp spacing at internal end-cap contact."
+    },
+    {
+      "original_slide": 24,
+      "printed_number": "24",
+      "title": "BPA length is measured between the inner edges of the clamps",
+      "hidden": false,
+      "package_member": "ppt/slides/slide24.xml",
+      "speaker_notes": "This is the active length between the clamp edges. Contraction is shortening divided by the initial length. The offset in the force equation is the clamp spacing at internal end-cap contact. I fix it from the geometry."
+    },
+    {
+      "original_slide": 25,
+      "printed_number": "25",
+      "title": "The 10 mm tests show data all over the place",
+      "hidden": false,
+      "package_member": "ppt/slides/slide25.xml",
+      "speaker_notes": "The horizontal axis is shortening in millimetres. The vertical axis is pulling force in newtons. The thirteen series start at different forces and run out of travel at different lengths. First I normalize the force axis. Then I normalize travel."
+    },
+    {
+      "original_slide": 26,
+      "printed_number": "26",
+      "title": "Maximum force differs with initial BPA length",
+      "hidden": false,
+      "package_member": "ppt/slides/slide26.xml",
+      "speaker_notes": "The horizontal axis is initial BPA length. The vertical axis is maximum force at 620 kilopascals. The fitted blue curve estimates the force scale for a given initial length. We can divide the force for each actuator by its own starting value."
+    },
+    {
+      "original_slide": 27,
+      "printed_number": "27",
+      "title": "Normalize force first to align the starting force",
+      "hidden": false,
+      "package_member": "ppt/slides/slide27.xml",
+      "speaker_notes": "The horizontal axis still shows shortening in millimetres. On the vertical axis I divide force by the force at zero shortening, so each series starts at one. The actuators still run out of travel at different lengths."
+    },
+    {
+      "original_slide": 28,
+      "printed_number": "28",
+      "title": "Normalize contraction next to flatten the line",
+      "hidden": false,
+      "package_member": "ppt/slides/slide28.xml",
+      "speaker_notes": "The horizontal axis is shortening divided by each actuatorʼs free shortening. The vertical axis is force divided by the force at zero shortening. One on the horizontal axis is the measured free-contraction limit. The normalized measurements show the common force–contraction pattern."
+    },
+    {
+      "original_slide": 29,
+      "printed_number": "29",
+      "title": "I developed a generalized force model for all BPAs",
+      "hidden": false,
+      "package_member": "ppt/slides/slide29.xml",
+      "speaker_notes": "The horizontal axis is normalized contraction. The vertical axis is force relative to the reference maximum. Colors distinguish pressure conditions. The dots are measurements, the solid lines are my model, and the dashed lines show the manufacturer comparison."
+    },
+    {
+      "original_slide": 30,
+      "printed_number": "30",
+      "title": "The new model reduces error tenfold",
+      "hidden": false,
+      "package_member": "ppt/slides/slide30.xml",
+      "speaker_notes": "The large bars show measured and predicted force on the left axis. The narrow black bars show prediction error on the right. My model reduces the error from 42.1 percent to 4.5 percent for this short BPA. That gives a designer a more reliable basis for selecting an actuator. Next are longer actuators."
+    },
+    {
+      "original_slide": 31,
+      "printed_number": "31",
+      "title": "Aim 1 | BPA force characterization improvement",
+      "hidden": false,
+      "package_member": "ppt/slides/slide31.xml",
+      "speaker_notes": "I established the actuator force law.\nI was first to fit a model and publish about the relationship BPA max force in a BPA and its resting length\nI showed that normalizing force and contraction revealed a shared pattern across lengths and developed an equation that predicted force better than the manufacturer and other researchers.\nPublished: Bolen et al., Actuators 15(5), 230 (2026).\nRelated: Elzein, Lutz, Bolen, & Hunt, Living Machines\nThe next question is how that force translates into torque when the robot structure deflects."
+    },
+    {
+      "original_slide": 32,
+      "printed_number": "32",
+      "title": "Aim 2: Design factors for accurate joint torque predictions",
+      "hidden": false,
+      "package_member": "ppt/slides/slide32.xml",
+      "speaker_notes": "A better force prediction leaves a second question: what happens at the loaded joint? I hypothesized that length offset, attachment deformation, and bending of the actuator also affect torque.\nI identified corrections from physical measurements, then used the corrected model to redesign the knee."
+    },
+    {
+      "original_slide": 33,
+      "printed_number": "33",
+      "title": "I measure joint torque while holding the knee at a fixed angle",
+      "hidden": false,
+      "package_member": "ppt/slides/slide33.xml",
+      "speaker_notes": "I hold the joint at a selected angle and measure its turning force.\nClick 1: the femur and frame are fixed. Click 2: the BPA supplies the pull. Click 3: the knee is the joint being tested. Click 4: the tibia is the moving lower-leg segment. Click 5: the load cell measures force. Click 6: the winch and cable set and hold the loading position. Click 7: the swing arm carries that loading path.\nMeasured force and its leverage give torque. These fixed-angle tests check the prediction before I use it for redesign."
+    },
+    {
+      "original_slide": 34,
+      "printed_number": "34",
+      "title": "The torque measurements establish the result the model needs to predict",
+      "hidden": false,
+      "package_member": "ppt/slides/slide34.xml",
+      "speaker_notes": "The horizontal axis is knee angle, and the vertical axis is torque in newton-metres. Negative torque represents knee flexion. Each blue point is the torque I measured with the knee held at that angle."
+    },
+    {
+      "original_slide": 35,
+      "printed_number": "35",
+      "title": "But the prediction is wrong",
+      "hidden": false,
+      "package_member": "ppt/slides/slide35.xml",
+      "speaker_notes": "The horizontal axis is knee angle, and the vertical axis is knee torque. Negative torque represents flexion. Blue points are measurements. The curve uses my BPA force model with the rigid attachment geometry. Ask why the curve still misses the data."
+    },
+    {
+      "original_slide": 36,
+      "printed_number": "36",
+      "title": "Why don’t they match?",
+      "hidden": false,
+      "package_member": "ppt/slides/slide36.xml",
+      "speaker_notes": "Pause for audience participation. Ask what could make the rigid prediction differ from the measurements. Take two or three answers before revealing the candidate causes."
+    },
+    {
+      "original_slide": 37,
+      "printed_number": "37",
+      "title": "Potential causes of error:",
+      "hidden": false,
+      "package_member": "ppt/slides/slide37.xml",
+      "speaker_notes": "Connect audience answers to these possibilities. I can separate them by measuring what happens to the actuator and its route under load."
+    },
+    {
+      "original_slide": 38,
+      "printed_number": "38",
+      "title": "I back-calculated torque from measured operating conditions",
+      "hidden": false,
+      "package_member": "ppt/slides/slide38.xml",
+      "speaker_notes": "I measure pressure and actuator length and use them to evaluate the BPA force law. I also measure the moment arm, the perpendicular distance from the knee pivot to the force line. Force times that moment arm gives the hybrid torque. The schematic shows the calculation for a fixed knee angle."
+    },
+    {
+      "original_slide": 39,
+      "printed_number": "39",
+      "title": "Measured length, pressure, and leverage bring the prediction close",
+      "hidden": false,
+      "package_member": "ppt/slides/slide39.xml",
+      "speaker_notes": "Knee angle is horizontal, and knee torque is vertical. The dashed curve is the same rigid-geometry prediction from slide 35. The gold hybrid points use the same BPA force model with measured pressure, actuator length, and moment arm. They track the blue torque measurements more closely."
+    },
+    {
+      "original_slide": 40,
+      "printed_number": "40",
+      "title": "If it’s not the muscle model, what is it?",
+      "hidden": false,
+      "package_member": "ppt/slides/slide40.xml",
+      "speaker_notes": "Pause for suggestions. The hybrid points track the measurements more closely. Next I examine the difference between measured actuator length and the rigid prediction."
+    },
+    {
+      "original_slide": 41,
+      "printed_number": "41",
+      "title": "The loaded actuator is shorter than the rigid model predicts",
+      "hidden": false,
+      "package_member": "ppt/slides/slide41.xml",
+      "speaker_notes": "The loaded BPA was shorter than rigid geometry predicted. It therefore operated at a different contraction and produced a different force. This gives me a physical mechanism behind the torque mismatch. I developed corrections for the length offset and deformation of the loaded system."
+    },
+    {
+      "original_slide": 42,
+      "printed_number": "42",
+      "title": "Remember that increasing contraction decreases force",
+      "hidden": false,
+      "package_member": "ppt/slides/slide42.xml",
+      "speaker_notes": "The horizontal axis is normalized contraction. The vertical axis is force relative to the reference maximum. For a given pressure, the more contracted a BPA is, the less force it will have to pull"
+    },
+    {
+      "original_slide": 43,
+      "printed_number": "43",
+      "title": "There is a minimum offset",
+      "hidden": false,
+      "package_member": "ppt/slides/slide43.xml",
+      "speaker_notes": ""
+    },
+    {
+      "original_slide": 44,
+      "printed_number": "44",
+      "title": "The difference grows when there is more force",
+      "hidden": false,
+      "package_member": "ppt/slides/slide44.xml",
+      "speaker_notes": "Knee angle is on the horizontal axis and BPA length is on the vertical axis. The curves show a persistent offset between predicted and measured length. I represent that offset with chi zero.\nThe same axes show the length difference growing under load. When the attachment structure deflects, BPA length and its line of pull change. That changes force and the moment arm."
+    },
+    {
+      "original_slide": 45,
+      "printed_number": "45",
+      "title": "χ₀ accounts for a constant offset in active actuator length",
+      "hidden": false,
+      "package_member": "ppt/slides/slide45.xml",
+      "speaker_notes": "Chi zero corrects a constant offset in the active actuator length used by the joint model. I subtract the two end-fitting lengths from the total route and apply this identified offset.\nThe arrows show those dimensions. This joint-model offset is separate from the known end-cap contact spacing in the earlier maximum-force equation. Next, I account for deformation under load.\nSource: dissertation Chapter 4 and Appendix C, adopted length convention."
+    },
+    {
+      "original_slide": 46,
+      "printed_number": "46",
+      "title": "Attachment location changes under load",
+      "hidden": false,
+      "package_member": "ppt/slides/slide46.xml",
+      "speaker_notes": "Knee angle is on the horizontal axis and moment arm is on the vertical axis. As the actuator pulls, the loaded mechanism deflects. That changes the BPA length and therefore its force. It also changes the moment arm. I represent the combined stiffness of the loaded assembly with chi one and chi two."
+    },
+    {
+      "original_slide": 47,
+      "printed_number": "47",
+      "title": "The correction improves prediction in a held-out 46 cm flexor test",
+      "hidden": false,
+      "package_member": "ppt/slides/slide47.xml",
+      "speaker_notes": "Knee angle is on the horizontal axis, and knee torque is on the vertical axis. Blue dots are the measured flexor torque. The corrected curve tracks them more closely. This 46 centimetre configuration was held out from fitting."
+    },
+    {
+      "original_slide": 48,
+      "printed_number": "48",
+      "title": "Additionally, active length is lost when the actuator bends around the knee",
+      "hidden": false,
+      "package_member": "ppt/slides/slide48.xml",
+      "speaker_notes": "The actuator wraps around the knee as it pulls. The highlighted segment shows the active-length loss I represent with chi three. The equation scales that loss with wrap radius, wrap angle, and BPA contraction. I tested the resulting correction on the extensor."
+    },
+    {
+      "original_slide": 49,
+      "printed_number": "49",
+      "title": "The correction improves prediction in a held-out 40 cm extensor test",
+      "hidden": false,
+      "package_member": "ppt/slides/slide49.xml",
+      "speaker_notes": "Knee angle is on the horizontal axis, and torque is vertical. The corrected magenta curve follows the blue measurements more closely. This 40 centimetre configuration was held out from the fit."
+    },
+    {
+      "original_slide": 50,
+      "printed_number": "50",
+      "title": "I searched for actuator routes that meet human torque targets",
+      "hidden": false,
+      "package_member": "ppt/slides/slide50.xml",
+      "speaker_notes": "Optimization means systematically searching design choices to meet a stated goal. Here, I vary attachment positions, resting BPA length, and tendon length. The tendon is the cable that transmits the actuator's pull.\nAt each knee angle, I predict torque using the fixed design factors. The goal is the human torque magnitude plus a five-percent design margin, while checking pressure, contraction, clearance from the bones, and the wrapped path. This lets me design the route for the task."
+    },
+    {
+      "original_slide": 51,
+      "printed_number": "51",
+      "title": "Two actuators follow the redesigned flexor route through knee motion",
+      "hidden": false,
+      "package_member": "ppt/slides/slide51.xml",
+      "speaker_notes": "The origin and insertion are the ends of each colored actuator path. I used the corrected torque model to select those locations. Watch the two routes move with the knee. The next slide compares the measured torque with the human flexor target."
+    },
+    {
+      "original_slide": 52,
+      "printed_number": "52",
+      "title": "The redesigned flexor beats the human target",
+      "hidden": false,
+      "package_member": "ppt/slides/slide52.xml",
+      "speaker_notes": "Knee angle is on the horizontal axis, and knee torque is on the vertical axis. Larger negative magnitudes mean greater flexor torque. The blue measurements meet or exceed the black dashed biceps femoris short-head target at all 15 tested angles."
+    },
+    {
+      "original_slide": 53,
+      "printed_number": "53",
+      "title": "My cam changes the BPA force path and leverage as the knee moves",
+      "hidden": false,
+      "package_member": "ppt/slides/slide53.xml",
+      "speaker_notes": "The direct extensor route overloaded the hardware. I added the cam to change the line of pull and the moment arm across knee angles. Follow the contact point in the animation. The next slide shows the measured torque from this design."
+    },
+    {
+      "original_slide": 54,
+      "printed_number": "54",
+      "title": "The cam-assisted extensor meets the human target",
+      "hidden": false,
+      "package_member": "ppt/slides/slide54.xml",
+      "speaker_notes": "Knee angle is horizontal, and positive knee-extension torque is vertical. Blue dots are the physical measurements. The black dashed line is the human vastus medialis target. The measurements meet or exceed the target at all nine tested angles."
+    },
+    {
+      "original_slide": 55,
+      "printed_number": "55",
+      "title": "A reverse pulley gives more tendon travel while reducing the available force",
+      "hidden": false,
+      "package_member": "ppt/slides/slide55.xml",
+      "speaker_notes": "The BPAs pull the moving pulley toward their origins. Two cable spans change length, producing twice the tendon travel with half the combined pulling force in this ideal arrangement. The tendon applies knee-extension torque. The tibia and crossed links move together. This is another design option when actuator travel limits movement.\nSource: reverse_pulley_principle.pdf and reverse_pulley_biomimetic.pdf schematic coordinates. Repaired illustration closes the crossed four-bar and preserves cable length including the changing tangent at the fixed redirect. This is a kinematic teaching illustration, not measured efficiency or a new hardware result. GIF embedded in this file."
+    },
+    {
+      "original_slide": 56,
+      "printed_number": "56",
+      "title": "Sizing and pulley choices raise predicted torque coverage almost two-fold",
+      "hidden": false,
+      "package_member": "ppt/slides/slide56.xml",
+      "speaker_notes": "The horizontal axis is average coverage across 27 actuator sites. Each percentage describes the share of evaluated joint positions that pass the stated criterion. The lower pair compares torque coverage, which rises from 37.35 to 65.81 percent with actuator sizing and pulley changes."
+    },
+    {
+      "original_slide": 57,
+      "printed_number": "57",
+      "title": "The selected designs keep the routes and change how each site pulls",
+      "hidden": false,
+      "package_member": "ppt/slides/slide57.xml",
+      "speaker_notes": "On the left is the original right-side BPA route view from slide 14. On the right I show the saved survey paths in a similar oblique projection. The selected designs inherited all 27 sets of attachment and via points. I changed the actuator configurations. Green is one direct BPA, blue is a parallel bundle, and dashed orange is a bundle with tackle. There are 69 BPAs across the 27 selected sites. The psoas is shown in its own local frame. The saved transmission model records line parts rather than a physical sheave layout."
+    },
+    {
+      "original_slide": 58,
+      "printed_number": "58",
+      "title": "Aim 2 summary | I found robust knee torque correction terms and optimized robot design",
+      "hidden": false,
+      "package_member": "ppt/slides/slide58.xml",
+      "speaker_notes": "In 2020, I came up with an artificial muscle placement optimization that sped up the process of hand tuning BPA attachment point locations from my MSME work. I’ve presented some of the preliminary work in abstracts and posters. I am preparing the isometric knee torque manuscript for submission to Frontiers in Neurorobotics very soon."
+    },
+    {
+      "original_slide": 59,
+      "printed_number": "59",
+      "title": "Aim 3 | Build and tune neural controllers for biomechanical models",
+      "hidden": false,
+      "package_member": "ppt/slides/slide59.xml",
+      "speaker_notes": "The synthetic nervous system, or SNS, is the controller.\nThe third aim is to connect the controller to the moving model and make the combination testable. Commands must become forces, the body must move, and measurements of that motion must return to the controller.\nMy tools provide the components and interfaces needed to build that loop. An earlier transfer experiment explains why I needed a more systematic workflow.",
+      "render_observation": "The border highlights the third roadmap image and the label “Tools for neural control experiments.”"
+    },
+    {
+      "original_slide": 60,
+      "printed_number": "60",
+      "title": "My goal is to connect a neural controller to a biomechanical robot model",
+      "hidden": false,
+      "package_member": "ppt/slides/slide60.xml",
+      "speaker_notes": "The mechanical model represents joints and actuator routes. The neural controller supplies commands and receives sensory measurements. I use the physical robot to establish and test the mechanics those tools need to represent.\nBrain image from https://mypremiertherapy.com/mind-muscle-connection/",
+      "render_observation": "The human-model image and controller illustration lead to the physical robot photograph."
+    },
+    {
+      "original_slide": 61,
+      "printed_number": "61",
+      "title": "AnimatLab made controller tuning slow and manual",
+      "hidden": false,
+      "package_member": "ppt/slides/slide61.xml",
+      "speaker_notes": "I started with the Li walker and the published Deng controller in AnimatLab. I could change settings and run the simulation, but the older solver and manual tuning made a large parameter search impractical. My goal was a biomechanical robot model connected to a neural controller that I could tune systematically.",
+      "render_observation": "The Li walker and a Deng controller diagram are linked bidirectionally. The manual-transfer difficulty motivates repeatable trials."
+    },
+    {
+      "original_slide": 62,
+      "printed_number": "62",
+      "title": "The walker cycled its legs when held up, then fell when released",
+      "hidden": false,
+      "package_member": "ppt/slides/slide62.xml",
+      "speaker_notes": "The transferred controller produced alternating leg motion while the body was supported. Once released, the model fell. Each tuning decision led to another manual trial. That was the bottleneck I set out to solve.",
+      "render_observation": "Two embedded MP4s show the held-up leg motion and the released model falling. Decoded beginning, middle, and ending frames confirm each sequence."
+    },
+    {
+      "original_slide": 63,
+      "printed_number": "63",
+      "title": "I moved W2L controller experiments into MuJoCo",
+      "hidden": false,
+      "package_member": "ppt/slides/slide63.xml",
+      "speaker_notes": "MuJoCo became the simulation backend for the new workflow. This supported W2L replay shows the kind of coupled experiment I could now run repeatedly. I used existing models and neural architectures as the starting point and built the integrations and experiment drivers. Next I show the two ways I bring mechanical models into that workflow.",
+      "render_observation": "The animation shows a pelvis supported by physical rails and guides with 30 mm slack. The embedded caption gives 39.24% BW."
+    },
+    {
+      "original_slide": 64,
+      "printed_number": "64",
+      "title": "Two routes connect biomechanics to neural control in MuJoCo",
+      "hidden": false,
+      "package_member": "ppt/slides/slide64.xml",
+      "speaker_notes": "The top path starts from OpenSim. I repaired the converted models, connected neural control, and added the BPA actuator interface. The bottom path starts from our CAD and uses my SNS-Simscape tools and the existing MathWorks bridge. The center column identifies my additions. MuJoCo is the common simulation backend.",
+      "render_observation": "The OpenSim pathway highlights model repairs and actuator interfaces between existing modeling and simulation packages."
+    },
+    {
+      "original_slide": 65,
+      "printed_number": "65",
+      "title": "OpenSim route | I connected neural control to gait2392_simbody",
+      "hidden": false,
+      "package_member": "ppt/slides/slide65.xml",
+      "speaker_notes": "First I used the OpenSim human model, gait2392_simbody, with biological muscle models. I connected the neural controller in MuJoCo and used supported steps to check the coupled system. The front and side views show the same saved trial.",
+      "render_observation": "Front and side views show a guided Gait2392 skeleton. The recording identifies 48.8% BW and 115.6 N horizontal restraint RMS."
+    },
+    {
+      "original_slide": 66,
+      "printed_number": "66",
+      "title": "I adapted gait2392_robotbody to use my BPA force model",
+      "hidden": false,
+      "package_member": "ppt/slides/slide66.xml",
+      "speaker_notes": "gait2392_robotbody let me substitute artificial muscles for biological muscle models. I moved the actuator attachments to match the robot routes and connected the characterized BPA force model. This let me ask how the same type of controller would behave with different actuation. The next route starts from our own CAD geometry.\nPoint to the motion, then to the force-law box. This is the gait2392_robotbody geometry after conversion. The actuator routes are where the artificial muscles pull. The BPA interface computes a pull from air pressure and actuator length.\nKeep the evidence separate. The clip shows suspended leg cycling with the converted Hill-type muscle actuators. The two legs do not show sustained alternating stepping. The BPA interface is a separate implementation and test result.\nNext: what changes when the starting geometry comes straight from our CAD?\nSource: robotbody conversion and BPA interface, dissertation Chapter 6.\nClip: MuJoCo air diagnostic on gait2392_robot_cvt3.xml, gravity-only initializer, no ground contact, and a retained support rig.",
+      "render_observation": "The left suspended recording uses Hill-type muscles. The separate diagram credits robot-specific routes and the pressure/length-dependent BPA interface."
+    },
+    {
+      "original_slide": 67,
+      "printed_number": "67",
+      "title": "Two routes connect biomechanics to neural control in MuJoCo",
+      "hidden": false,
+      "package_member": "ppt/slides/slide67.xml",
+      "speaker_notes": "The top path starts from OpenSim. I repaired the converted models, connected neural control, and added the BPA actuator interface. The bottom path starts from our CAD and uses my SNS-Simscape tools and the existing MathWorks bridge. The center column identifies my additions. MuJoCo is the common simulation backend.",
+      "render_observation": "The CAD pathway highlights CAD import and SNS-Simscape blocks. The MathWorks bridge appears at the runtime end."
+    },
+    {
+      "original_slide": 68,
+      "printed_number": "68",
+      "title": "CAD route | I brought my robot geometry into the simulation",
+      "hidden": false,
+      "package_member": "ppt/slides/slide68.xml",
+      "speaker_notes": "For our own geometry I started from the previous CAD design. I assembled the model with its joint frames, inertias, and actuator routes. This saved supported trial uses reference tensions on the CAD model. It shows why the second path matters. I can run experiments with the geometry we actually design.",
+      "render_observation": "Two views of the supported CAD robot share a saved time. The animation reports 77.5% BW support and individual foot loading."
+    },
+    {
+      "original_slide": 69,
+      "printed_number": "69",
+      "title": "My graphical blocks make controller design easier to inspect",
+      "hidden": false,
+      "package_member": "ppt/slides/slide69.xml",
+      "speaker_notes": "A controller can have roughly 800 neurons and 8,000 connections. I built reusable graphical blocks so I can design and inspect the controller by function. The icons represent neurons, synapses, sensors, biological muscle models, and BPA actuators. The GUI makes circuit changes manageable before I send a design to automated trials.\nPick three icons. The blue neuron processes a signal. A synapse passes a signal between neurons. The yellow sensors report stretch or load, and the actuator blocks turn commands into a modeled pull.\nThe same vocabulary makes a larger circuit easier to read. A reader can follow what a connection does without memorizing the whole network.\nNext: follow two of those connections in a real W2L subnetwork.\nSource: SNS-Simscape block library, dissertation Chapter 6.",
+      "render_observation": "Twelve library icons include graded and spiking neurons, synapses, sensors, biological muscle, and BPA blocks."
+    },
+    {
+      "original_slide": 70,
+      "printed_number": "70",
+      "title": "I can revise the CAD model and retest the controller",
+      "hidden": false,
+      "package_member": "ppt/slides/slide70.xml",
+      "speaker_notes": "The graphical tools let me edit the controller at the level of a function or block. I can bring in a CAD revision and retest that controller with updated geometry. I built the model preparation, blocks, and interfaces. The MathWorks bridge provides the runtime exchange with MuJoCo.\nStart with the upper row. A pattern neuron sends a signal through a synapse to the motor neuron for straightening. Follow the lower row for bending.\nThis is a small excerpt from the left side of the saved Simscape W2L controller. I redrew the two connections with the same icons as the library slide. The rest of the network supplies timing and other inputs.\nPoint right. Once I can inspect the circuit, I can revise the mechanical model and use the interfaces to run another test.\nSource: SNS_W2L_CPG.slx, L_PF_ext → L_MN_ext and L_PF_flx → L_MN_flx.",
+      "render_observation": "Two left-leg PF-to-MN connections sit beside the CAD revision, interface update, and retest sequence."
+    },
+    {
+      "original_slide": 71,
+      "printed_number": "71",
+      "title": "I replaced hand tuning with staged optimization",
+      "hidden": false,
+      "package_member": "ppt/slides/slide71.xml",
+      "speaker_notes": "I choose a function, set a target and bounds, then run and score candidate parameter sets. I rerun the selected settings and check their behavior at the next stage. This makes it practical to search systematically instead of adjusting a large network by hand.",
+      "render_observation": "A three-box method specifies function and target, bounded trials, and rerunning selected settings."
+    },
+    {
+      "original_slide": 72,
+      "printed_number": "72",
+      "title": "Aim 3 summary | New tools",
+      "hidden": false,
+      "package_member": "ppt/slides/slide72.xml",
+      "speaker_notes": "I started with hand tuning in AnimatLab. I built two model paths into MuJoCo, graphical controller tools, and the actuator interfaces I needed for biological muscles and BPAs. I used staged optimization to automate the parameter trials. The paired full-process benchmark ran 6.82 times faster with the same recorded trajectories. My earlier conference work explored vestibular feedback on a robot leg.",
+      "render_observation": "Three contributions appear on screen: model integration, graphical SNS/actuator tools, and automated fitting with a 6.82-fold paired speedup."
+    },
+    {
+      "original_slide": 73,
+      "printed_number": "73",
+      "title": "Future work | Test the mechanics and make the tools easier to reuse",
+      "hidden": false,
+      "package_member": "ppt/slides/slide73.xml",
+      "speaker_notes": "Two next steps follow from the work: measure torque while the joint moves, and package the simulation tools in one workspace so other researchers can repeat the experiments.",
+      "render_observation": "The reciprocal biological-model/robot schematic introduces controlled-motion measurement and tool reuse as future work."
+    },
+    {
+      "original_slide": 74,
+      "printed_number": "74",
+      "title": "Measure joint torque during controlled motion",
+      "hidden": false,
+      "package_member": "ppt/slides/slide74.xml",
+      "speaker_notes": "I could adapt human dynamometer methods to the robotic knee. An isokinetic test prescribes joint speed. An isotonic test applies a specified load while allowing movement. These tests would show how useful torque changes when the joint moves. The inset shows sensor and stimulation signals over time during the reference experiment.",
+      "render_observation": "A dynamometer experiment illustrates the proposed dynamic joint-torque test."
+    },
+    {
+      "original_slide": 75,
+      "printed_number": "75",
+      "title": "A guided application could bring the existing tools into one experimental workspace",
+      "hidden": false,
+      "package_member": "ppt/slides/slide75.xml",
+      "speaker_notes": "Future: one saved setup for model selection, tests, and results\nThe editor and simulation tools shown here exist. A guided application could bring them together: select a body and controller, configure tests, and inspect results from one saved setup. That would make comparisons across participants, speeds, actuator designs, and neural impairments easier for other researchers to repeat.\nSource: actual editor screenshot and saved supported Gait2392 recording. A unified end-to-end graphical application is proposed.",
+      "render_observation": "A real editor screenshot sits beside the saved human-model replay. The caption identifies the unified guided workspace as proposed."
+    },
+    {
+      "original_slide": 76,
+      "printed_number": "76",
+      "title": "I improved actuator prediction, guided knee design, and enabled neural testing",
+      "hidden": false,
+      "package_member": "ppt/slides/slide76.xml",
+      "speaker_notes": "I measured BPA force and built a model that captures how it changes with pressure and length. I identified the corrections needed to predict loaded knee torque and used them to design and test new routes. I then connected the biomechanics to graphical neural controllers and built the tools to optimize their parameters. Together these tools make it possible to test how a mechanical change or a neural pathway affects movement.",
+      "render_observation": "The right panel is labeled “Supported Gait2392” but shows the exact same CAD GIF as slide 68, cropped to its oblique view."
+    },
+    {
+      "original_slide": 77,
+      "printed_number": "77",
+      "title": "Thank you for your support",
+      "hidden": false,
+      "package_member": "ppt/slides/slide77.xml",
+      "speaker_notes": "I thank my advisor, Alex Hunt, for his patience and mentorship; my committee for their guidance; and NSF and PSU for supporting this work. I thank my mother, Julie Jackson, and my partner, Jasmine Bradley, for their love and support over the years. Thank you all for coming. I welcome your questions.\nPresentation navigation: the three labeled images open actuator-force, joint-torque, and neural-control supporting slides. The right arrow continues into the backup slides, and each backup has a Return to questions link.",
+      "render_observation": "The three thumbnail links open the force, torque, and neural-control backups. The neural thumbnail depicts the human-model condition."
+    },
+    {
+      "original_slide": 78,
+      "printed_number": "78",
+      "title": "The 10 mm force model uses a fixed end-cap contact offset",
+      "hidden": false,
+      "package_member": "ppt/slides/slide78.xml",
+      "speaker_notes": "The length offset is fixed by the end-cap contact geometry: 7.5 mm for the 10 mm BPA and 13 mm for the 20 mm BPA. The remaining two parameters describe force scale and curve shape. The saved measured values and fit curve are retained.",
+      "render_observation": "10 mm maximum force versus initial length, with measured points, the fitted curve, and manufacturer curve."
+    },
+    {
+      "original_slide": 79,
+      "printed_number": "79",
+      "title": "The 20 mm force model uses a fixed end-cap contact offset",
+      "hidden": false,
+      "package_member": "ppt/slides/slide79.xml",
+      "speaker_notes": "The length offset is fixed by the end-cap contact geometry: 7.5 mm for the 10 mm BPA and 13 mm for the 20 mm BPA. The remaining two parameters describe force scale and curve shape. The saved measured values and fit curve are retained.",
+      "render_observation": "20 mm maximum force versus initial length compares the same three sources."
+    },
+    {
+      "original_slide": 80,
+      "printed_number": "80",
+      "title": "Maximum free contraction still requires an individual measurement",
+      "hidden": false,
+      "package_member": "ppt/slides/slide80.xml",
+      "speaker_notes": "Free contraction is how far an unloaded actuator shortens when pressurized. I measure that limit for each actuator and use it to describe contraction consistently in the force model.",
+      "render_observation": "Free-contraction strain versus resting length shows individual measurements with error bars and a fit."
+    },
+    {
+      "original_slide": 81,
+      "printed_number": "81",
+      "title": "The normalized model captures force for both tested BPA diameters",
+      "hidden": false,
+      "package_member": "ppt/slides/slide81.xml",
+      "speaker_notes": "The normalized model captures force for both tested BPA diameters.\nThe generalized normalized equation is the published positive-force expression written as max(0, expression). The 10 mm coefficients are c0 = 0.5682, c1 = 4.254, and c2 = 0.5597; the 20 mm coefficients are c0 = 0.2579, c1 = 6.477, and c2 = 1.321.",
+      "render_observation": "A normalized force equation accompanies separate 10 mm and 20 mm pressure curves and coefficient sets."
+    },
+    {
+      "original_slide": 82,
+      "printed_number": "82",
+      "title": "The new model lowers prediction error for ⌀10 mm BPAs",
+      "hidden": false,
+      "package_member": "ppt/slides/slide82.xml",
+      "speaker_notes": "This table compares force-prediction error for the tested 10 mm actuators. RMSE summarizes the typical error, maximum error gives the largest absolute difference, and FVU compares prediction error with the variation in the measured data. Lower values indicate better agreement. My model has lower errors in the displayed comparisons.",
+      "render_observation": "The 10 mm model-comparison table distinguishes initial lengths and reports RMSE, FVU, and maximum error.",
+      "native_table_rows": [
+        [
+          [
+            "l₀ (mm)",
+            "Model",
+            "RMSE (N)",
+            "FVU",
+            "Max. error (N)"
+          ],
+          [
+            "257",
+            "New model",
+            "22.9",
+            "0.0353",
+            "46.0"
+          ],
+          [
+            "257",
+            "Sárosi",
+            "143.8",
+            "1.3903",
+            "235.8"
+          ],
+          [
+            "257",
+            "Martens and Boblan",
+            "73.8",
+            "0.3668",
+            "122.9"
+          ],
+          [
+            "233",
+            "New model",
+            "16.8",
+            "0.0187",
+            "30.3"
+          ],
+          [
+            "233",
+            "Sárosi",
+            "132.7",
+            "1.1655",
+            "222.6"
+          ],
+          [
+            "233",
+            "Martens and Boblan",
+            "62.6",
+            "0.2590",
+            "101.2"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 83,
+      "printed_number": "83",
+      "title": "The new model lowers prediction error for ⌀20 mm BPAs",
+      "hidden": false,
+      "package_member": "ppt/slides/slide83.xml",
+      "speaker_notes": "This table gives the corresponding comparisons for the tested 20 mm actuators. RMSE and maximum error are in newtons; FVU is dimensionless. My model has lower values across the three displayed error measures for these cases.",
+      "render_observation": "The corresponding 20 mm table compares the same metrics at two lengths.",
+      "native_table_rows": [
+        [
+          [
+            "l₀ (mm)",
+            "Model",
+            "RMSE (N)",
+            "FVU",
+            "Max. error (N)"
+          ],
+          [
+            "300",
+            "New model",
+            "35.6",
+            "0.0144",
+            "114.0"
+          ],
+          [
+            "300",
+            "Sárosi",
+            "132.1",
+            "0.1992",
+            "313.4"
+          ],
+          [
+            "300",
+            "Martens and Boblan",
+            "72.8",
+            "0.0605",
+            "137.8"
+          ],
+          [
+            "450",
+            "New model",
+            "67.6",
+            "0.0258",
+            "166.6"
+          ],
+          [
+            "450",
+            "Sárosi",
+            "177.7",
+            "0.1785",
+            "294.8"
+          ],
+          [
+            "450",
+            "Martens and Boblan",
+            "862.1",
+            "4.2022",
+            "1321.1"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 84,
+      "printed_number": "84",
+      "title": "My normalized force model describes the 20 mm BPA across contraction and pressure",
+      "hidden": false,
+      "package_member": "ppt/slides/slide84.xml",
+      "speaker_notes": "I divide force by its measured reference maximum, and shortening by the measured maximum free shortening. One marks each reference. The dots are measurements, solid curves are my model, and dashed curves are the manufacturer; colors identify pressure. The next slide checks the same relationship for the larger diameter.\nThe same normalization also describes the 10 millimetre actuators. We can now use initial length, diameter, pressure, and contraction to predict pulling force. Let’s  check those predictions directly against measurements.",
+      "render_observation": "20 mm force versus contraction is shown at five pressures. Dots and two line styles distinguish sources."
+    },
+    {
+      "original_slide": 85,
+      "printed_number": "85",
+      "title": "Previously unreported ⌀20 mm data show how maximum contraction varies with length",
+      "hidden": false,
+      "package_member": "ppt/slides/slide85.xml",
+      "speaker_notes": "These are the new 20 mm maximum-contraction measurements. Each dot is one saved initial-length and contraction pair. The shorter actuators show a clearer length dependence, and the longer actuators approach a plateau.\nThese measurements extend the actuator characterization to the larger diameter. I will add the same length-measurement sensitivity used for the 10 mm comparison.\nSource: Benʼs kmax20fitvar.mat, saved 3 November 2026, x/y pairs; 58 measurements. No fit recomputed.",
+      "render_observation": "Maximum contraction versus initial length shows 58 saved 20 mm measurement pairs."
+    },
+    {
+      "original_slide": 86,
+      "printed_number": "86",
+      "title": "The same ±1 mm length sensitivity matters most for the shortest 20 mm BPAs",
+      "hidden": false,
+      "package_member": "ppt/slides/slide86.xml",
+      "speaker_notes": "The dots are unchanged. The bars show the bounds on calculated contraction when both the initial length and inflated length vary by up to one millimetre. The same measurement change has a larger effect when the actuator is short.\nI now have the two ingredients needed to scale the general force relationship: maximum force and maximum contraction.\nSource: kmax20fitvar.mat, original measurement pairs; ε = 1 − l620/l0; propagated ±1 mm bounds.",
+      "render_observation": "The previous data acquire propagated length-sensitivity bars, largest at short lengths."
+    },
+    {
+      "original_slide": 87,
+      "printed_number": "87",
+      "title": "My model also improves force prediction for the longer 10 mm BPAs",
+      "hidden": false,
+      "package_member": "ppt/slides/slide87.xml",
+      "speaker_notes": "The diagonal represents a perfect prediction: predicted force equals measured force. My model follows it more closely for these longer 10 millimetre BPAs. Together with the short-actuator result, this establishes a useful force prediction. The next aim asks whether that equation is sufficient to predict torque in a loaded knee.\nSource: unchanged saved Comparison.fig measurements and predictions; published error statistics and the 20 mm comparison remain in the committee slides.",
+      "render_observation": "Two measured-versus-predicted force panels compare models for 0.233 m and 0.257 m 10 mm BPAs."
+    },
+    {
+      "original_slide": 88,
+      "printed_number": "88",
+      "title": "The torque shortfall identifies where the flexor needs redesign",
+      "hidden": false,
+      "package_member": "ppt/slides/slide88.xml",
+      "speaker_notes": "This comparison shows why the flexor needed redesign. The single BPA falls below the human-model torque magnitude over part of the range. It identifies where the mechanism needs more capacity.\nI used the corrected prediction to search for actuator dimensions and routes that address that shortfall. The target turns the problem into a specific engineering design task.",
+      "render_observation": "A single-BPA biomimetic flexor plot shows the measured torque, corrected and rigid predictions, and human target."
+    },
+    {
+      "original_slide": 89,
+      "printed_number": "89",
+      "title": "The design factors improve all three measures of pinned-flexor fit",
+      "hidden": false,
+      "package_member": "ppt/slides/slide89.xml",
+      "speaker_notes": "This table compares torque-prediction error before and after the corrections. It separates the fitting tests from the additional validation tests. The corrected predictions improve the displayed error measures, and the additional checks informed selection of the adopted factors.",
+      "render_observation": "Before-and-after flexor fit table separates fit-set and validation-set means.",
+      "native_table_rows": [
+        [
+          [
+            "l₀; lₜₑₙ (cm)",
+            "RMSE",
+            "FVU",
+            "Max.",
+            "RMSE",
+            "FVU",
+            "Max."
+          ],
+          [
+            "Fit: 48.5; —",
+            "7.617",
+            "2.1278",
+            "25.531",
+            "2.165",
+            "0.1718",
+            "5.467"
+          ],
+          [
+            "Fit: 41.0; —",
+            "9.694",
+            "2.1149",
+            "21.076",
+            "1.084",
+            "0.0277",
+            "1.766"
+          ],
+          [
+            "Fit mean",
+            "8.656",
+            "2.1213",
+            "23.303",
+            "1.624",
+            "0.0998",
+            "3.617"
+          ],
+          [
+            "Val: 45.7; —",
+            "8.803",
+            "1.9380",
+            "26.264",
+            "1.368",
+            "0.0468",
+            "3.614"
+          ],
+          [
+            "Val: 40.6; 3.5",
+            "6.373",
+            "0.5935",
+            "16.859",
+            "1.611",
+            "0.0427",
+            "5.891"
+          ],
+          [
+            "Validation mean",
+            "7.588",
+            "1.2657",
+            "21.562",
+            "1.490",
+            "0.0447",
+            "4.752"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 90,
+      "printed_number": "90",
+      "title": "The same stiffness pair improves pinned-extensor torque predictions",
+      "hidden": false,
+      "package_member": "ppt/slides/slide90.xml",
+      "speaker_notes": "I retained the flexor's effective stiffness pair when evaluating the extensor and identified the extensor-specific length-offset and bending terms. The six panels show the resulting comparison across the extensor configurations. This tests a shared mechanical description across the two actuator directions.",
+      "render_observation": "Six extensor panels separate three training conditions from three held-out tests. A jig photograph and legend accompany them."
+    },
+    {
+      "original_slide": 91,
+      "printed_number": "91",
+      "title": "Route redesign prioritizes the worst torque shortfall",
+      "hidden": false,
+      "package_member": "ppt/slides/slide91.xml",
+      "speaker_notes": "Route redesign prioritizes the worst torque shortfall.\nThe design variables are attachment locations, unloaded BPA length, and artificial-tendon length. The adopted design factors remain fixed.",
+      "render_observation": "Equations define a worst torque shortfall relative to the human target plus 5% and a normalized squared shortfall."
+    },
+    {
+      "original_slide": 92,
+      "printed_number": "92",
+      "title": "Route search penalizes violations of actuator and packaging limits",
+      "hidden": false,
+      "package_member": "ppt/slides/slide92.xml",
+      "speaker_notes": "Route search penalizes violations of actuator and packaging limits.\nFlexor/extensor differences are intentional. Auxiliary terms include a small flexor shape penalty and extensor overshoot penalty.",
+      "render_observation": "The penalty table compares flexor and extensor actuator and packaging constraints.",
+      "native_table_rows": [
+        [
+          [
+            "Term",
+            "Flexor",
+            "Extensor"
+          ],
+          [
+            "Rest-length penalty",
+            "10⁶",
+            "10⁶"
+          ],
+          [
+            "Strain bounds",
+            "10⁷",
+            "10⁴"
+          ],
+          [
+            "Contraction cap",
+            "—",
+            "10⁶"
+          ],
+          [
+            "Off-axis loading",
+            "10³",
+            "—"
+          ],
+          [
+            "Wrapping feasibility",
+            "10³",
+            "—"
+          ],
+          [
+            "Geometry / length",
+            "10⁻² / 10⁻³",
+            "10⁻² / 10⁻³"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 93,
+      "printed_number": "93",
+      "title": "A global search supplies candidates for local refinement",
+      "hidden": false,
+      "package_member": "ppt/slides/slide93.xml",
+      "speaker_notes": "Surrogate optimization explores the bounded route-design space, and pattern search refines a selected candidate. The table records the saved evaluation budgets for those two roles. This separates the broad search for candidate geometry from local improvement.",
+      "render_observation": "The table lists global and local route-redesign solver budgets for three configurations.",
+      "native_table_rows": [
+        [
+          [
+            "Design",
+            "surrogateopt",
+            "patternsearch"
+          ],
+          [
+            "Flexor",
+            "1,000",
+            "15,000"
+          ],
+          [
+            "Direct extensor",
+            "3,000",
+            "15,000"
+          ],
+          [
+            "Cam extensor",
+            "1,000",
+            "1,500"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 94,
+      "printed_number": "94",
+      "title": "Saved solver settings distinguish identification from route design",
+      "hidden": false,
+      "package_member": "ppt/slides/slide94.xml",
+      "speaker_notes": "Saved solver settings distinguish identification from route design.\nThese settings are read from the authoritative saved records. The extensor opts object preserves population 50, maximum generations 150, crossover fraction 0.8, scattered crossover, adaptive-feasible mutation, function tolerance 0.001, Pareto fraction 0.35, and maximum stalled generations 100.",
+      "render_observation": "A distinct table lists multiobjective identification settings for flexor and extensor fits.",
+      "native_table_rows": [
+        [
+          [
+            "gamultiobj setting",
+            "Flexor",
+            "Extensor"
+          ],
+          [
+            "Population size",
+            "150",
+            "50"
+          ],
+          [
+            "Maximum generations",
+            "600",
+            "150"
+          ],
+          [
+            "Crossover fraction",
+            "Not archived",
+            "0.8"
+          ],
+          [
+            "Pareto fraction",
+            "Not archived",
+            "0.35"
+          ],
+          [
+            "Function tolerance",
+            "Not archived",
+            "0.001"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 95,
+      "printed_number": "95",
+      "title": "The corrections also improve predictions on the biomimetic knee",
+      "hidden": false,
+      "package_member": "ppt/slides/slide95.xml",
+      "speaker_notes": "The corrections improve the predictions on the more human-like moving-pivot knee as well as on the pinned joint. The flexor result also shows where the existing design lacks enough torque relative to the human target.\nThat turns the model into a design tool: I can search for actuator dimensions and routes that address the shortfall, then check the result on hardware.",
+      "render_observation": "Separate extensor, 10 mm flexor, and 20 mm flexor plots compare measured and corrected biomimetic-knee torque."
+    },
+    {
+      "original_slide": 96,
+      "printed_number": "96",
+      "title": "The direct extensor route met the model target but overloaded hardware",
+      "hidden": false,
+      "package_member": "ppt/slides/slide96.xml",
+      "speaker_notes": "An extensor muscle produces knee-extension torque. The direct extensor route met the model target, but its actuator loading overloaded the hardware. I used that result to change the mechanical leverage. Increasing the moment arm reduces the pulling force needed for the same torque.\nThat led me to the cam-assisted extensor. The force prediction helped identify the target, and the hardware test identified the load that the mechanism needed to handle differently.",
+      "render_observation": "A direct-route animation motivates increasing the extensor moment arm after excessive hardware loading."
+    },
+    {
+      "original_slide": 97,
+      "printed_number": "97",
+      "title": "A reverse pulley gives more tendon travel while reducing the available force",
+      "hidden": false,
+      "package_member": "ppt/slides/slide97.xml",
+      "speaker_notes": "The BPAs pull the moving pulley toward their origins. Two cable spans change length, producing twice the tendon travel with half the combined pulling force in this ideal arrangement. The tendon applies knee-extension torque. The tibia and crossed links move together. This is another design option when actuator travel limits movement.\nSource: reverse_pulley_principle.pdf and reverse_pulley_biomimetic.pdf schematic coordinates. Repaired illustration closes the crossed four-bar and preserves cable length including the changing tangent at the fixed redirect. This is a kinematic teaching illustration, not measured efficiency or a new hardware result. GIF embedded in this file.",
+      "render_observation": "The reverse-tackle schematic labels twice the ideal working travel and half the combined pulling force."
+    },
+    {
+      "original_slide": 98,
+      "printed_number": "98",
+      "title": "Saved parallel BPA counts and tackle line parts by site",
+      "hidden": false,
+      "package_member": "ppt/slides/slide98.xml",
+      "speaker_notes": "These are exact saved configuration counts for the selected surveys. Line parts describe the modeled tackle ratio. The records do not specify a physical wheel count or mounting layout.",
+      "render_observation": "The site inventory lists parallel actuator counts and tackle-line parts for 27 sites."
+    },
+    {
+      "original_slide": 99,
+      "printed_number": "99",
+      "title": "I adapted existing walker and human models for coupled neural testing",
+      "hidden": false,
+      "package_member": "ppt/slides/slide99.xml",
+      "speaker_notes": "The model library links simplified walkers with detailed human mechanics.\nThe first two rows of Table 6.1 supply complementary test bodies. Li–Deng/W2L is a simplified sagittal controller-transfer example.",
+      "render_observation": "Side-by-side walker and human renderings identify two model families. The walker still itself says 40.50% BW and identifies its reduced hip recruitment."
+    },
+    {
+      "original_slide": 100,
+      "printed_number": "100",
+      "title": "A biomechanical model becomes neuromechanical when control and feedback close the loop",
+      "hidden": false,
+      "package_member": "ppt/slides/slide100.xml",
+      "speaker_notes": "",
+      "render_observation": "Opposing activation and length/velocity arrows describe closed-loop control of a model."
+    },
+    {
+      "original_slide": 101,
+      "printed_number": "101",
+      "title": "The same mechanical coordinates can be tested with different actuator models",
+      "hidden": false,
+      "package_member": "ppt/slides/slide101.xml",
+      "speaker_notes": "",
+      "render_observation": "The robotbody reference and factorized BPA force relation illustrate replacing an actuator law at the same coordinates."
+    },
+    {
+      "original_slide": 102,
+      "printed_number": "102",
+      "title": "The BPA blocks evaluate the measured force model during simulation",
+      "hidden": false,
+      "package_member": "ppt/slides/slide102.xml",
+      "speaker_notes": "My BPA blocks calculate force from actuator length, resting length, and pressure during the simulation. This brings the measured actuator model into the moving-body calculation and keeps the same physical inputs visible to the controller-building workflow.",
+      "render_observation": "The equation, 10 mm block, and measured normalized force curves link the characterization to the runtime implementation."
+    },
+    {
+      "original_slide": 103,
+      "printed_number": "103",
+      "title": "The graphical editor exposes neural connection parameters",
+      "hidden": false,
+      "package_member": "ppt/slides/slide103.xml",
+      "speaker_notes": "My graphical editor exposes the parameters of individual neural connections. I can select a connection, inspect its settings, and change it while retaining the circuit structure. This makes specified pathway interventions easier to construct and inspect.",
+      "render_observation": "The editor screenshot exposes selectable elements, connections, and a parameter pane."
+    },
+    {
+      "original_slide": 104,
+      "printed_number": "104",
+      "title": "The MuJoCo–Simulink bridge links graphical controllers to an existing mechanical model",
+      "hidden": false,
+      "package_member": "ppt/slides/slide104.xml",
+      "speaker_notes": "",
+      "render_observation": "A three-block interface diagram puts Simulink control and the MuJoCo model on opposite sides of a two-way bridge."
+    },
+    {
+      "original_slide": 105,
+      "printed_number": "105",
+      "title": "Bridge checks exercise commands, sample rates, and sensor return",
+      "hidden": false,
+      "package_member": "ppt/slides/slide105.xml",
+      "speaker_notes": "",
+      "render_observation": "The bridge test table reports 0 to −549.9 N, 81 sensor samples at 5 ms, and five channels agreeing with the reference."
+    },
+    {
+      "original_slide": 106,
+      "printed_number": "106",
+      "title": "Staged tests separate rhythm, feedback, and mechanical support",
+      "hidden": false,
+      "package_member": "ppt/slides/slide106.xml",
+      "speaker_notes": "",
+      "render_observation": "A five-row table distinguishes suspended rhythm, sensory feedback, standing/perturbations, supported ground contact, and mechanism/intervention questions.",
+      "native_table_rows": [
+        [
+          [
+            "Condition introduced",
+            "Question tested"
+          ],
+          [
+            "Suspended, without sensory feedback",
+            "Can the circuit generate activity?"
+          ],
+          [
+            "Sensory feedback",
+            "How does feedback reshape the output?"
+          ],
+          [
+            "Standing and perturbations",
+            "Can the model maintain posture?"
+          ],
+          [
+            "Supported ground contact",
+            "Does physical coordination meet the criterion?"
+          ],
+          [
+            "Reference and intervention comparisons",
+            "Which mechanism or mismatch explains the result?"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 107,
+      "printed_number": "107",
+      "title": "A saved W2L controller reproduces its trajectory in four independent replays",
+      "hidden": false,
+      "package_member": "ppt/slides/slide107.xml",
+      "speaker_notes": "",
+      "render_observation": "The bar chart counts four identical replays and zero different replays for the archived W2L candidate."
+    },
+    {
+      "original_slide": 108,
+      "printed_number": "108",
+      "title": "The supported W2L result persists in twelve local gain-perturbation reruns",
+      "hidden": false,
+      "package_member": "ppt/slides/slide108.xml",
+      "speaker_notes": "",
+      "render_observation": "The bar chart counts 12 retained supported outcomes and zero failed runs under local ±1% perturbations."
+    },
+    {
+      "original_slide": 109,
+      "printed_number": "109",
+      "title": "The saved AH001 replay shows supported hybrid motion",
+      "hidden": false,
+      "package_member": "ppt/slides/slide109.xml",
+      "speaker_notes": "",
+      "render_observation": "A distinct 12-second AH001 clip begins at 20 s, shows anterior/oblique views and an 80% vertical-support label, and identifies hybrid control."
+    },
+    {
+      "original_slide": 110,
+      "printed_number": "110",
+      "title": "The same selected controller passed the first four physical stages",
+      "hidden": false,
+      "package_member": "ppt/slides/slide110.xml",
+      "speaker_notes": "I tested the selected human-model controller through the first four physical stages: rhythm in air, sensory feedback in air, supported standing, and supported ground steps. The ground condition produced five right and four left qualifying swings. The fifth row is the separate quarter-strength contact-feedback comparison.",
+      "render_observation": "The five-row table displays stages 1–4 of the historical Hunt–PT and the separate stage-5 quarter-strength intervention, both ground rows with 5 R/4 L swings.",
+      "native_table_rows": [
+        [
+          [
+            "Physical condition",
+            "Result"
+          ],
+          [
+            "1. Air, rhythm test",
+            "Pass"
+          ],
+          [
+            "2. Air, sensory feedback",
+            "Pass"
+          ],
+          [
+            "3. Supported standing",
+            "Pass"
+          ],
+          [
+            "4. Supported ground steps",
+            "Pass, 5 right / 4 left"
+          ],
+          [
+            "5. Contact-PF scale 0.25",
+            "Pass, 5 right / 4 left"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 111,
+      "printed_number": "111",
+      "title": "I developed a workflow combines implemented tools with proposed GUI orchestration",
+      "hidden": false,
+      "package_member": "ppt/slides/slide111.xml",
+      "speaker_notes": "This supplied figure documents the named workflow or saved experimental condition. The solid implemented components are distinct from proposed GUI orchestration. The detailed FSA sequence, Hunt calibration, and physical curriculum are complementary parts of controller design and testing; they are not interchangeable stage lists.",
+      "render_observation": "A dashed proposed GUI orchestration band sits above the implemented preparation, execution, experiment, and export steps."
+    },
+    {
+      "original_slide": 112,
+      "printed_number": "112",
+      "title": "Functional design, Hunt calibration, and physical testing have distinct roles",
+      "hidden": false,
+      "package_member": "ppt/slides/slide112.xml",
+      "speaker_notes": "This supplied figure documents the named workflow or saved experimental condition. The solid implemented components are distinct from proposed GUI orchestration. The detailed FSA sequence, Hunt calibration, and physical curriculum are complementary parts of controller design and testing; they are not interchangeable stage lists.",
+      "render_observation": "The diagram separates functional design, four Hunt calibration blocks, and five physical conditions."
+    },
+    {
+      "original_slide": 113,
+      "printed_number": "113",
+      "title": "Faster execution made repeated optimization trials practical",
+      "hidden": true,
+      "package_member": "ppt/slides/slide113.xml",
+      "speaker_notes": "The table reports elapsed seconds for the same paired Gait2392 trial. The complete process went from 199.624 to 29.284 seconds, a 6.82 times speedup, with identical recorded trajectories. Neural updates alone improved by 18.31 times.",
+      "render_observation": "The hidden table compares native/sparse external process time and accumulated neural-update time; it gives 6.82× and 18.31×, respectively.",
+      "native_table_rows": [
+        [
+          [
+            "Runtime scope",
+            "Native (s)",
+            "Accelerated (s)",
+            "Speed-up"
+          ],
+          [
+            "Complete process",
+            "199.624",
+            "29.284",
+            "6.82×"
+          ],
+          [
+            "Neural updates",
+            "179.079",
+            "9.780",
+            "18.31×"
+          ]
+        ]
+      ]
+    },
+    {
+      "original_slide": 114,
+      "printed_number": "114",
+      "title": "SADb makes 1,393 literature records searchable in one offline collection",
+      "hidden": false,
+      "package_member": "ppt/slides/slide114.xml",
+      "speaker_notes": "",
+      "render_observation": "The offline SADb screenshot states 1,393 full-table records and 943 Papers entries. It is a database backup."
+    }
+  ]
+}

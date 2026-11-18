@@ -1,23 +1,23 @@
 \chapter{Appendix E: Supporting SADb Records}\label{app:sadb_records}
 \graphicspath{{../Figures/96-AppendixE/}{figs/96-AppendixE/}}
 
-This appendix records the curation snapshot and pathway examples supporting Chapter~\ref{ch:database}. Counts refer to the stated audited or retained set; they are not estimates of the size of the neuroscience literature.
+This appendix describes the records in the SADb Explorer export and the experimental evidence behind selected pathway labels used in Chapter~\ref{ch:database}.
 
 \section{Record Sets and Coverage}
 
-The application contains 1,393 records from the five-table base: 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. Of these, 436 are in the app but not in Airtable due to their 1000 entry limitation. The retained working base in Airtable contains 957 records: 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The application table includes all record types, while its pivot and citation views use the paper set.
+The SADb Explorer export contains 1,393 records across five tables. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. At the time of curation the Airtable working base had a 1,000-record limit. I retained 957 records there, comprising 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The application preserves the other 436 records as archived entries. They comprise 382 Papers and 54 records from the other tables whose paper links had been removed. The Table view includes all five record types. The Pivot and citation views use the Papers category.
 
 Coverage of the application's Papers category is reported in Chapter~\ref{ch:database}. The following counts describe the retained maintenance subset and use a different denominator.
 
-Among the 561 retained papers, 523 carry curation notes, 426 preparation tags, 240 notes assessing animal-study potential, 118 links to named feedback pathways, 86 an afferent classification, and 258 robot/simulation translation notes. There are 550 DOIs. These fields overlap and should not be summed as disjoint categories.
+Of the 561 retained Papers, 523 have curation notes, 426 have preparation tags, 240 have an animal-study assessment, and 118 link to at least one named feedback pathway. Afferent classes are recorded for 86 Papers, robot or simulation translation notes for 258, and a DOI for 550. A paper can contribute to several of these counts.
 
-Chapter~\ref{ch:database} reports the full citation-graph counts and shows the citation view (Figure~\ref{fig:sadb_clusters}); Figure~\ref{fig:sadb_explorer} shows a filtered record and its details. Citation proximity is a navigation aid, not mechanistic evidence.
+Chapter~\ref{ch:database} gives the citation-graph counts. Figure~\ref{fig:sadb_clusters} uses citation proximity to locate related papers, and Figure~\ref{fig:sadb_explorer} shows the evidence recorded for a selected paper.
 
 
 
 \section{Afferent Classes and Linked Pathways}
 
-Table~\ref{tab:sadb_afferents} summarizes the afferent classes, receptors, and signals available as candidate model inputs. Table~\ref{tab:sadb_pathways} connects representative feedback pathways to their reported actions in the step cycle and the linked studies. Their record names are database labels; pathway action depends on the experimental preparation and locomotor state described in the cited sources. Translating these records into a controller requires an explicit encoding and verification step.
+Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input. Table~\ref{tab:sadb_pathways} gives the pathway names as they appear in the database. In the Table view, the \emph{Ib disynaptic excitation} pathway filter returns six Papers. The record for \citet{mccrea_disynaptic_1995} carries both Ia and Ib tags and links to both \emph{Ib disynaptic excitation} and \emph{Ib disynaptic inhibition}. Chapter~\ref{ch:overall} compares the experimental conditions behind those two links.
 
 \begin{table}[htbp]
 \caption{Afferent classes, encoded signals, and pathway roles represented in the Sensory Afferent Database. References link to corpus records; Ia, II, and Ib signal summaries follow \citet{prochazka_ensemble_1998}.}
@@ -28,8 +28,8 @@ Table~\ref{tab:sadb_afferents} summarizes the afferent classes, receptors, and s
 \textbf{Class} & \textbf{Receptor} & \textbf{Signal carried} & \textbf{Recorded pathway roles (anchors)} \\
 \midrule
 Ia & muscle spindle primary & muscle length and velocity & homonymous stretch excitation \citep{eccles_integrative_1958}; reciprocal inhibition of the antagonist pool \citep{jankowska_effect_1967} \\
-II & muscle spindle secondary & static muscle length & midlumbar disynaptic relay onto motor nuclei \citep{edgley_interneuronal_1987}; stance-phase support of extensor activity \citep{mazzaro_afferent_2006} \\
-Ib & Golgi tendon organ & whole-muscle force & autogenic inhibition at rest, stance-phase reversal to excitation, and the load gate on swing onset \citep{dietz_significance_2000, dominguez_candidate_2020} \\
+II & muscle spindle secondary & static muscle length & midlumbar relay to motor nuclei in the cat \citep{edgley_interneuronal_1987} and evidence for a contribution to soleus activity during human stance \citep{mazzaro_afferent_2006} \\
+Ib & Golgi tendon organ & whole-muscle force & extensor load feedback contributes to support during stance and to the timing of swing onset \citep{dietz_significance_2000, dominguez_candidate_2020} \\
 III/IV & free nerve endings & metabolic and nociceptive signals, converging with cutaneous and group II--III afferents as flexor-reflex afferents & phase-dependent resetting of the locomotor rhythm \citep{schomburg_flexor_1998} \\
 Cutaneous & skin and foot-pad receptors & contact and perturbation events & flexor excitation and phase-modulated stance correction \citep{sherrington_flexion_1910, forssberg_stumbling_1979} \\
 \bottomrule
@@ -37,20 +37,20 @@ Cutaneous & skin and foot-pad receptors & contact and perturbation events & flex
 \end{table}
 
 \begin{sidewaystable}[p]
-\caption{Principal feedback pathways, named by afferent, action, and phase, with linked demonstrating papers. Counts are identical in the audited 943-paper corpus and retained 561-paper corpus.}
+\caption{Selected SADb pathway records, their reported actions, and the number of Papers linked to each. Each pathway has the same count in the 943-paper export and the 561-paper retained subset.}
 \label{tab:sadb_pathways}
 \fontsize{10pt}{12pt}\selectfont
-\begin{tabularx}{\textheight}{@{}llXrp{0.26\textheight}@{}}
+\setlength{\tabcolsep}{4pt}\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.18\linewidth}>{\raggedright\arraybackslash}p{0.085\linewidth}>{\raggedright\arraybackslash}X>{\centering\arraybackslash}p{0.065\linewidth}>{\raggedright\arraybackslash}p{0.23\linewidth}@{}}
 \toprule
-\textbf{Pathway record} & \textbf{Class} & \textbf{Recorded action in the step cycle} & \textbf{Linked papers} & \textbf{Demonstrating references} \\
+\textbf{Pathway record} & \textbf{Afferents studied} & \textbf{Reported action} & \textbf{Papers} & \textbf{Selected references} \\
 \midrule
 Ia monosynaptic excitation & Ia & stretch excitation of the homonymous motor pool, with the pathway gain modulated over the step cycle & 7 & \citep{eccles_integrative_1958, capaday_amplitude_1986} \\
 Ia reciprocal inhibition & Ia & inhibition of the antagonist motor pool through the Ia inhibitory interneurons, rhythmically active in fictive locomotion & 6 & \citep{jankowska_effect_1967, pratt_ia_1987} \\
-Ib disynaptic inhibition & Ib & autogenic non-reciprocal group I inhibition of the loaded muscle's own pool, reduced during stance & 5 & \citep{jankowska_common_1981, stephens_short_1996} \\
-Ib disynaptic excitation & Ib & the locomotor reversal: group I input excites synergist extensor pools during the extensor phase, replacing the resting inhibition & 6 & \citep{mccrea_disynaptic_1995, pearson_enhancement_1998} \\
-Ib stance to swing & Ib & the load gate: Ib input from ankle extensors prolongs stance, so swing is not initiated while the leg is loaded & 17 & \citep{dietz_significance_2000, dominguez_candidate_2020} \\
+Ib disynaptic inhibition & I (Ia, Ib) & ankle extensor Ia and Ib afferents converge on spinal interneurons in cats. In humans, conditioning the soleus reflex from the medial gastrocnemius nerve produced less inhibition during walking than during quiet sitting & 5 & \citep{jankowska_common_1981, stephens_short_1996} \\
+Ib disynaptic excitation & I (Ia, Ib) & plantaris group I input excited medial gastrocnemius motoneurons during the extensor phase of midbrain-evoked fictive locomotion in cats & 6 & \citep{mccrea_disynaptic_1995, pearson_enhancement_1998} \\
+Ib stance to swing & I (includes Ib) & extensor load feedback can delay swing onset. During fictive locomotion in cats, stimulation of extensor group I afferents can prolong extension or reset the rhythm to extension & 17 & \citep{dietz_significance_2000, dominguez_candidate_2020} \\
 Ia or II stance to swing & Ia, II & flexor-length gate on stance termination: lengthening of flexor muscles in late stance ends extension and resets the cycle & 10 & \citep{hiebert_contribution_1996, akay_degradation_2014} \\
-type II excitatory & II & stance-phase support of ankle-extensor activity through the midlumbar group II relay & 5 & \citep{edgley_interneuronal_1987, mazzaro_afferent_2006} \\
+type II excitatory & II & a midlumbar relay projects to motor nuclei in cats. Human ankle perturbations suggest a group II contribution to soleus activity during stance & 5 & \citep{edgley_interneuronal_1987, mazzaro_afferent_2006} \\
 Cutaneous flexor excitation & Cutaneous & flexion withdrawal and the stumbling corrective reaction, phase-modulated over the cycle & 16 & \citep{sherrington_flexion_1910, forssberg_stumbling_1979} \\
 \bottomrule
 \end{tabularx}

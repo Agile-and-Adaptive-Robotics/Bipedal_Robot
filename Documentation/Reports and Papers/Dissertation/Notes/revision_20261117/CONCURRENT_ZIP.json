@@ -1,0 +1,45 @@
+{
+  "path": "D:\\GitHub\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\Bolen_Dissertation.zip",
+  "head_sha256": "01a02a623dbd987e4525a57559ccf7f9f78927bd92869380cfdf2659df5a1678",
+  "current_sha256": "1e0d36104a09cd4bffcfc136059bb03ea7460e6c82ee5694fab64f5ba0d13264",
+  "old_file_count": 203,
+  "new_file_count": 203,
+  "different_members": {
+    "chapters/60-sns.tex": [
+      [
+        "db2e2fa8b38b050a96d9d3d283e49b9f463a5794ad982b31c7f4f05e09075316",
+        48309
+      ],
+      [
+        "e1b452fe62a614d0542c89bcdaf951f6c442f393ba934c942c0a195c1785f5ca",
+        48310
+      ]
+    ]
+  },
+  "captured_text_vs_current_zip": {
+    "01-copyright.tex": true,
+    "02-abstract.tex": true,
+    "04-dedication.tex": true,
+    "06-ack.tex": true,
+    "10-introduction.tex": true,
+    "15-background.tex": true,
+    "20-muscles.tex": true,
+    "30-torque.tex": true,
+    "50-database.tex": true,
+    "60-sns.tex": true,
+    "70-overall.tex": true,
+    "80-conclusion.tex": true,
+    "90-bib.tex": true,
+    "92-AppendixA.tex": true,
+    "93-AppendixB.tex": true,
+    "94-AppendixC.tex": true,
+    "95-AppendixD.tex": true,
+    "96-AppendixE.tex": true,
+    "BolenFrontiers22.bib": true,
+    "Frontiers-Harvard.bst": true,
+    "main.tex": true,
+    "psutex.cls": true,
+    "thesis.bib": true
+  },
+  "old_to_current_ch6_diff": "--- \n+++ \n@@ -7 +7 @@\n-This chapter presents tools for constructing synthetic neural controllers, coupling them to different mechanical models, and testing their behavior efficiently. Earlier controller-transfer work in AnimatLab required substantial manual adaptation and parameter tuning, motivating a more flexible workflow for neuromechanical modeling. Building on established neural architectures and simulation software, this workflow requires interfaces that translate neural outputs into actuator commands and return mechanical measurements as sensory feedback. Graphical, block-based programming supports the construction and inspection of neural circuits and their signal paths, while headless simulation enables repeated experiments and automated parameter tuning without continuous interaction with a graphical interface. I developed graphical neural-modeling tools, simulation interfaces, and Python scripts that connect these capabilities to support controller construction and testing with human biomechanical models and BPA-actuated robot models.\n+This chapter presents tools for constructing synthetic neural controllers, coupling them to different mechanical models, and testing their behavior efficiently. Earlier controller development work in AnimatLab required substantial manual adaptation and parameter tuning, motivating a more flexible workflow for neuromechanical modeling. Building on established neural architectures and simulation software, this workflow requires interfaces that connect neural outputs with actuator commands and return mechanical measurements as sensory feedback. Graphical, block-based programming supports the construction and inspection of neural circuits and their signal paths, while headless simulation enables repeated experiments and automated parameter tuning without continuous interaction with a graphical interface. I developed graphical neural-modeling tools, simulation interfaces, and Python scripts that connect these capabilities to support controller construction and testing with human biomechanical models and BPA-actuated robot models.\n"
+}

@@ -1,0 +1,172 @@
+{
+  "pdf_sha256": "10126c24720774c651db780ab91a6b88d6a18e4d5262bb3723b9e73b54255409",
+  "pdf_pages_total": 313,
+  "appendix_physical_pages_one_based": [
+    269,
+    309
+  ],
+  "appendix_printed_pages": [
+    249,
+    289
+  ],
+  "excerpt_physical_page": 278,
+  "excerpt_printed_page": 258,
+  "ascii_commands_extracted_from_pdf": [
+    "s = fullfile(pwd,\"Code\",\"Matlab\",\"SNS_Simscape\",\"results\");",
+    "s = fullfile(s,\"knee_transient_reflex_20261028\");",
+    "b = fullfile(s,\"original_snapshot\");",
+    "w = tempname; d = fullfile(w,\"demos\");",
+    "p = fullfile(w,\"results\",\"knee\");",
+    "mkdir(d); mkdir(p);",
+    "copyfile(fullfile(b,\"SNS_Library.slx\"),w);",
+    "copyfile(fullfile(b,\"KneeReflexDemo.slx\"),d);",
+    "copyfile(fullfile(s,\"run_transient.m\"),p);",
+    "addpath(p);",
+    "run_transient(char(\"reader\"));",
+    "m = jsondecode(fileread(fullfile(p,\"reader_summary.json\")));",
+    "ref = jsondecode(fileread(fullfile(s,\"replay_summary.json\")));",
+    "isequaln(m,ref)"
+  ],
+  "extraction": "pdftotext -enc UTF-8 -layout; page indentation removed, punctuation unchanged. All 14 lines compare exactly with the TeX code block.",
+  "matlab_version": "25.1.0.2973910 (R2025a) Update 1",
+  "fresh_process": true,
+  "logical_result": 1,
+  "input_sha256": {
+    "run_transient.m": "8ad5b8164153236c2938e723c88cc09a0255a72da3ea56928fd5107d1693fbb8",
+    "original_snapshot/KneeReflexDemo.slx": "a8bc960cf41ed3380029c26c62f457c1f0676d8f95735fa870ec6d07e6233f2b",
+    "original_snapshot/SNS_Library.slx": "8347dfe854316220ff18311c0020b9a36c30e2c1b82a865b250ecff77a4cb3ef"
+  },
+  "expected_and_observed_json_sha256": "d0ccf9d0f3603949777442a63012453e75ab48d9732d98914463f316c0401e32",
+  "metrics": {
+    "extension_deg": -1.0907928305291834,
+    "peak_latency_s": 0.11100000000000065,
+    "flexion_peak_deg": 0,
+    "baseline_deg": 42.63922810078986,
+    "residual_deg": -9.301098756466251e-07,
+    "control_drift_deg": 1.4694143545033359e-08,
+    "step_error_deg": 5.202734295076041e-05,
+    "recovered": true,
+    "paper_baseline_deg": -42.63922810078986,
+    "paper_extension_excursion_deg": 1.0907928305291834,
+    "paper_residual_deg": 9.301098756466251e-07,
+    "recovery_s": 6.355000000000004,
+    "onset_001deg_s": 0.01899999999999835
+  },
+  "arrays": {
+    "t": {
+      "shape": [
+        50001,
+        1
+      ],
+      "dtype": "float64",
+      "equal_bytes": true,
+      "sha256_float64_c_order": "a5c01d231195f23c692a2c39c63beb0b376b8fc3b83969ee8e318f88f4108036"
+    },
+    "C": {
+      "shape": [
+        50001,
+        9
+      ],
+      "dtype": "float64",
+      "equal_bytes": true,
+      "sha256_float64_c_order": "fa36858435da9b93809f92229bc90c0278d4df7e82d78e954b6dede498fb5650"
+    },
+    "P": {
+      "shape": [
+        50001,
+        9
+      ],
+      "dtype": "float64",
+      "equal_bytes": true,
+      "sha256_float64_c_order": "c4a1f1f792127098b92343b486199ea2b172343be588483cca77f8cc703d099e"
+    },
+    "F": {
+      "shape": [
+        50001,
+        9
+      ],
+      "dtype": "float64",
+      "equal_bytes": true,
+      "sha256_float64_c_order": "f1bf8343f6e6772438cbfeb8801d313d1f259aec0f9a4a94bbe649fe3151b47f"
+    }
+  },
+  "page_review": {
+    "render_dpi": 112,
+    "previous_pages_inspected_full_size": 42,
+    "new_page_bodies_inspected_full_size": [
+      278,
+      279,
+      280,
+      281,
+      282,
+      284,
+      285,
+      286
+    ],
+    "other_page_bodies_pixel_equal_to_previous": {
+      "269": 270,
+      "270": 271,
+      "271": 272,
+      "272": 273,
+      "273": 274,
+      "274": 275,
+      "275": 276,
+      "276": 277,
+      "277": 278,
+      "283": 284,
+      "287": 289,
+      "288": 290,
+      "289": 291,
+      "290": 292,
+      "291": 293,
+      "292": 294,
+      "293": 295,
+      "294": 296,
+      "295": 297,
+      "296": 298,
+      "297": 299,
+      "298": 300,
+      "299": 301,
+      "300": 302,
+      "301": 303,
+      "302": 304,
+      "303": 305,
+      "304": 306,
+      "305": 307,
+      "306": 308,
+      "307": 309,
+      "308": 310,
+      "309": 311
+    },
+    "boundary_full_size_checks": [
+      269,
+      309
+    ],
+    "adjacent_chapter_checks": [
+      268,
+      310
+    ]
+  },
+  "pdf_used_for_matlab_execution_sha256": "1703b08b27b706967fc7e8932bcfbba4fd88f578e6807c795da6d65ff3553309",
+  "delivered_pdf_check": {
+    "exact_ASCII_lines_equal_to_executed_script": true,
+    "lines": 14,
+    "normalized_line_ending_sha256": "ed88439cce74bb380c7ead0843e4643ef233750987638665efc1abdae5fe4320",
+    "source_pdf_for_matlab_execution_sha256": "1703b08b27b706967fc7e8932bcfbba4fd88f578e6807c795da6d65ff3553309",
+    "delivered_pdf_sha256": "5f5404dc1987bed12f507db3351810ab6a575a048c73e4bd0407708b86f29e3e",
+    "all_41_full_page_renders_including_page_numbers_identical_to_execution_proof": true,
+    "dpi": 112
+  },
+  "previous_independently_reviewed_pdf_sha256": "5f5404dc1987bed12f507db3351810ab6a575a048c73e4bd0407708b86f29e3e",
+  "delivery_page_comparison": {
+    "prior_document_sha256": "5f5404dc1987bed12f507db3351810ab6a575a048c73e4bd0407708b86f29e3e",
+    "physical_range": [
+      269,
+      309
+    ],
+    "render_dpi": 144,
+    "all_page_rasters_and_extracted_text_identical": true,
+    "matlab_recipe_page": 278,
+    "copied_recipe_identical_to_executed_recipe": true
+  }
+}

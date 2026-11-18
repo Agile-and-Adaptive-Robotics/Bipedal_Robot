@@ -1,0 +1,42 @@
+--- git/60-sns.tex
++++ live/60-sns.tex
+@@ -4,4 +4,6 @@
+ \edef\snsSavedClubPenalty{\the\clubpenalty}
+ \widowpenalty=10000\clubpenalty=10000
++
++This chapter presents tools for constructing synthetic neural controllers, coupling them to different mechanical models, and testing their behavior efficiently. Earlier controller development work in AnimatLab required substantial manual adaptation and parameter tuning, motivating a more flexible workflow for neuromechanical modeling. Building on established neural architectures and simulation software, this workflow requires interfaces that connect neural outputs with actuator commands and return mechanical measurements as sensory feedback. Graphical, block-based programming supports the construction and inspection of neural circuits and their signal paths, while headless simulation enables repeated experiments and automated parameter tuning without continuous interaction with a graphical interface. I developed graphical neural-modeling tools, simulation interfaces, and Python scripts that connect these capabilities to support controller construction and testing with human biomechanical models and BPA-actuated robot models.
+ 
+ \section{Introduction: The Controller-Transfer Problem}\label{sec:prior_walker}\label{sec:animatlab_results}\label{sec:sns_gaps}
+@@ -273,9 +275,9 @@
+ The actuator formulation also changes the scientific question. Biological muscles, ideal reference tensions, and quasi-static BPAs provide different relations among neural command, force, length, and sensory feedback. The characterized BPA force surface gives an experimental basis for static force generation, but it cannot establish valve response or dynamic hysteresis. The simplified knee-reflex actuator isolates circuit response, whereas the cup example exercises the BPA20 block. Those distinctions permit targeted verification before a more detailed actuator model is used in a full-body controller.
+ 
+-\subsection{Requirements for Further Integration}
+-
+-The immediate controller requirement is to verify the intended transformations at each neural layer before optimizing the body response. PF channels need declared timing windows and measured transmission, followed by motor recruitment and physical-stage checks. Full-body postural control then needs to be integrated and tested with locomotor commands under explicit mode transitions. A successful isolated postural circuit or an earlier supported controller provides useful evidence for that work, but cannot establish its completed outcome.
+-
+-Mechanical fidelity requires equally focused development. Remaining muscle-force discrepancies need matched dynamic comparisons with stated velocities, activation histories, and tendon assumptions. BPA pressure and loading-history models need dynamic measurements before their parameters can be interpreted physically. CAD routes, contacts, and allowable joint motion must continue to be checked when the geometry changes. These requirements connect controller testing to the actuator characterization and joint-design studies rather than assuming that neural retuning can compensate for every mechanical-model error.
++\subsection{Opportunities for Further Integration}
++
++The controller next step is to verify the intended transformations at each neural layer before optimizing the body response. PF channels need declared timing windows and measured transmission, followed by motor recruitment and physical-stage checks. Full-body postural control then needs to be integrated and tested with locomotor commands under explicit mode transitions. A successful isolated postural circuit or an earlier supported controller provides useful evidence for that work, but cannot establish its completed outcome.
++
++Mechanical fidelity is another tract for development. Remaining muscle-force discrepancies need matched dynamic comparisons with stated velocities, activation histories, and tendon assumptions. BPA pressure and loading-history models need dynamic measurements before their parameters can be interpreted physically. CAD routes, contacts, and allowable joint motion must continue to be checked when the geometry changes. These requirements connect controller testing to the actuator characterization and joint-design studies rather than assuming that neural retuning can compensate for every mechanical-model error.
+ 
+ Hardware transfer adds sensor calibration, communication timing, valve behavior, and measured end-to-end latency. The existing embedded-interface scaffold supplies organizational elements for sensory encoding, command exchange, and watchdogs, but the compiled SNS binding and physical I/O integration remain incomplete (Appendix~\ref{sec:app_embedded_interfaces}). The simulation tools provide the model identities, signal definitions, and controlled tests needed to approach those experiments. Chapter~\ref{ch:overall} considers their integration with mechanical design and sensory evidence in the broader robot program.
+
+--- git/thesis.bib
++++ live/thesis.bib
+@@ -2295,13 +2295,2 @@
+   url = {https://doi.org/10.1371/journal.pone.0256311}
+ }
+-
+-
+-@article{rybak_operation_regimes_2024,
+- author = {Rybak, Ilya A. and Shevtsova, Natalia A. and Markin, Sergey N. and Prilutsky, Boris I. and Frigon, Alain},
+- title = {Operation regimes of spinal circuits controlling locomotion and the role of supraspinal drives and sensory feedback},
+- journal = {eLife},
+- year = {2024},
+- volume = {13},
+- pages = {RP98841},
+- doi = {10.7554/eLife.98841.3}
+-}
+
