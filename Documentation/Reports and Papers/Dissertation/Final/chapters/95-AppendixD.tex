@@ -42,38 +42,42 @@ The converted model defined 19 explicit ground--body contact pairs independently
 \subsection{Matched-Pose Force Comparison}
 \label{sec:muscle-models-compare}
 
-At each reference pose I assigned the OpenSim static-optimization activations and coordinates to the converted MuJoCo model and evaluated its muscle forces. OpenSim static optimization allocates forces frame by frame \citep{opensim_static_optimization_docs}. Neither the trajectory velocities nor a forward history of activation or fiber state entered this comparison. It measures agreement at matched posture and activation under the converted rigid-tendon approximation.
+The reference was the muscle force estimated by OpenSim static optimization along the subject01 walking trajectory \citep{opensim_static_optimization_docs}. For each of 121 poses, the MuJoCo model received the corresponding joint positions and OpenSim activations. Its rigid-tendon actuators then supplied a second force estimate. This framewise comparison tests posture and activation. It does not reproduce the muscle velocities, compliant-tendon history, or forward dynamics of a walking trial.
 
-Table~\ref{tab:force-r2} gives $R^2=1-\mathrm{SSE}/\mathrm{SST}$, squared Pearson correlation, and the lag in analysis frames that best aligns each pair of force sequences. The calculation and its per-muscle results are in \nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \nolinkurl{muscle_force_compare.csv}.
+For each muscle, let $F_i$ be the OpenSim force at pose $i$, $\hat F_i$ the MuJoCo force, and $\bar F$ the mean of the OpenSim forces over the sampled poses. The force-agreement score in Table~\ref{tab:force-r2} is
+\[
+R^2=1-\frac{\sum_i(\hat F_i-F_i)^2}{\sum_i(F_i-\bar F)^2}.
+\]
+The denominator is the squared error from using one constant, $\bar F$, at every pose. A score of one indicates identical force traces. A score below zero means the converted model accumulated more squared error than that constant estimate. The separate squared Pearson correlation measures how the traces vary together and can remain high when their force magnitudes differ. The mean force ratio is MuJoCo divided by OpenSim. Lag is the offset, in analysis frames, of maximum cross-correlation. The calculation and the retained results are in \nolinkurl{Code/MuJoCo_SNS/spinal/_muscle_force_compare.py} and \nolinkurl{muscle_force_compare.csv}.
 
 \begin{table}[htbp]
   \centering
-  \caption{MuJoCo vs.\ OpenSim right-side muscle force at matched activations along the subject01 reference interval, \qtyrange{0.5}{2.5}{\second} (121 poses). Lag in analysis frames ($\approx 17$\,ms each).}
+  \caption[Muscle force at matched poses and activations]{Right-side muscle forces from MuJoCo and OpenSim across 121 poses of the subject01 walk, \qtyrange{0.5}{2.5}{\second}. The mean ratio compares force magnitude. Squared correlation compares the variation across poses. Each lag frame is approximately \qty{17}{\milli\second}.}
   \label{tab:force-r2}
   \small
-  \begin{tabular}{lrrr}
+  \begin{tabular}{lrrrr}
     \toprule
-    Muscle & $R^2$ & shape corr$^2$ & lag [frames] \\
+    Muscle & Force $R^2$ & Shape $r^2$ & Mean ratio & Lag (frames) \\
     \midrule
-    soleus   & 0.742 & 0.800 & 1 \\
-    med.\ gastrocnemius & 0.888 & 0.894 & 2 \\
-    lat.\ gastrocnemius & 0.884 & 0.887 & 2 \\
-    tibialis anterior & 0.945 & 0.945 & 0 \\
-    vastus lateralis & 0.941 & 0.945 & 1 \\
-    rectus femoris & $-1.15$ & 0.384 & 0 \\
-    semimembranosus & 0.565 & 0.621 & 0 \\
-    biceps femoris short & $-0.26$ & 0.868 & 0 \\
-    psoas & 0.927 & 0.934 & 1 \\
-    gluteus maximus (2) & 0.926 & 0.943 & 1 \\
-    tensor fasciae latae & 0.933 & 0.935 & 0 \\
-    peroneus brevis & 0.977 & 0.989 & 0 \\
+    soleus   & 0.742 & 0.800 & 0.916 & 1 \\
+    med.\ gastrocnemius & 0.888 & 0.894 & 0.910 & 2 \\
+    lat.\ gastrocnemius & 0.884 & 0.887 & 0.927 & 2 \\
+    tibialis anterior & 0.945 & 0.945 & 1.006 & 0 \\
+    vastus lateralis & 0.941 & 0.945 & 0.927 & 1 \\
+    rectus femoris & $-1.15$ & 0.384 & 1.088 & 0 \\
+    semimembranosus & 0.565 & 0.621 & 0.776 & 0 \\
+    biceps femoris short head & $-0.26$ & 0.868 & 1.846 & 0 \\
+    psoas & 0.927 & 0.934 & 0.946 & 1 \\
+    gluteus maximus (2) & 0.926 & 0.943 & 0.921 & 1 \\
+    tensor fasciae latae & 0.933 & 0.935 & 1.018 & 0 \\
+    peroneus brevis & 0.977 & 0.989 & 0.917 & 0 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Eight of twelve right-side muscles had $R^2$ between 0.88 and 0.98 and mean MuJoCo forces within \qty{10}{\percent} of OpenSim. Mean MuJoCo/OpenSim force ratios for the other four were 0.916 for soleus, 0.776 for semimembranosus, 1.088 for rectus femoris, and 1.846 for biceps femoris short head. The latter two had negative $R^2$, so predicting the mean reference force would give a smaller squared error. For biceps femoris short head, a squared shape correlation of 0.868 concealed its large force-scale error. The altered rectus femoris path is one candidate explanation for its discrepancy.
+Eight muscles had force-agreement scores of 0.88--0.98 and mean forces within \qty{10}{\percent} of OpenSim. The rectus femoris mean ratio was 1.088, but the force estimates followed different patterns across poses ($r^2=0.384$). Its summed squared force error was about 2.15 times the mean-reference squared error. For biceps femoris short head, the shape correlation was higher ($r^2=0.868$), but the mean ratio of 1.846 indicates that the converted actuator produced about \qty{85}{\percent} more force on average. Its squared error was about 1.26 times the mean-reference error. Both scores compare errors in force magnitude at matched poses.
 
-Lag describes alignment of the sampled force sequences. Attributing a lag or scale error to a particular mechanism would require matched velocities, activation histories, and tendon dynamics. The comparison preserves the per-muscle statistics. The historical framewise MuJoCo forces are unavailable for a fresh calculation of every $R^2$.
+The paired forces for every pose are archived in \path{force_arrays.npz} with the force-comparison figure components for this appendix. At \qty{1.550}{\second}, for example, rectus femoris produced \qty{96.38}{\newton} in OpenSim and \qty{415.57}{\newton} in MuJoCo. The short head of biceps femoris averaged \qty{112.80}{\newton} in OpenSim and \qty{208.27}{\newton} in MuJoCo. The rectus femoris path was altered during conversion, and the two models use different tendon mechanics. Distinguishing path, tendon, and activation effects would require a controlled comparison at matched motion and activation histories.
 
 \subsection{Neural and Actuator Signal Contracts}\label{sec:app_signal_contracts}
 
@@ -89,7 +93,7 @@ The biological-muscle block takes dimensionless activation, musculotendon length
 
 The reduced knee and loaded-cup demonstrations each implement six connections. On each side, Ia excites its own MN and inhibits the antagonist MN, and Ib inhibits its own MN. The Ia block combines a position signal and signed velocity and clips its output to \qtyrange{0}{10}{\nano\ampere}. For knee angle $q$ and angular range $R$, the extensor velocity input is $\dot q/R$. The implemented flexor path applies a second gain of $-1/R$ to that signal, giving $-\dot q/R^2$. In the cup model, the two muscles receive opposite signed deviations and velocities, each divided by \qty{0.3}{\radian}. Both models feed tensile force directly to Ib. The knee's extensor and flexor gains are 0.0200 and \qty{0.0222}{\nano\ampere\per\newton}, respectively. Both cup gains are \qty{0.008}{\nano\ampere\per\newton}. The knee uses a simplified linear actuator. In the cup, filtered activation $A$ supplies $620A$\,kPa to each characterized BPA20 block. Neither circuit has an independent group II or foot-contact input.
 
-The graphical editor's Build action imports the saved graded neurons, synapses, and external current destinations into Simulink. In the saved W2L example, the left extensor PF projects to the left extensor MN, and the corresponding left flexor PF projects to the flexor MN. A user can inspect each connection's conductance, reversal potential, and activation ramp. The separate demonstration builders add mechanical equations, actuator blocks, and sensory wiring. The worked knee experiment below uses the coupled model generated by its demonstration builder.
+The SNS-Simscape interface's Build action imports the saved nonspiking neurons, synapses, and external current destinations into Simulink. In the saved W2L example, the left extensor PF projects to the left extensor MN, and the corresponding left flexor PF projects to the flexor MN. A user can inspect each connection's conductance, reversal potential, and activation ramp. The separate demonstration builders add mechanical equations, actuator blocks, and sensory wiring. The worked knee experiment below uses the coupled model generated by its demonstration builder. From \path{Code/Matlab/SNS_Simscape/gui}, the command \verb|app = SNSGui()| opens the editor. The Build action calls \path{sns_build_from_json.m}.
 
 The MathWorks MuJoCo--Simulink C++ S-function exchanges command and measurement arrays with an existing MuJoCo mechanism. I adapted the build for MuJoCo 2.3.7 and Windows MinGW, selected keyframe 0 on reset when present, and added five right-side readbacks to an MJCF copy. They report knee angle and angular speed and vastus medialis path length, velocity, and force. The runtime interface preserves the mechanism supplied to it. Preparing that mechanism from OpenSim requires the corresponding geometry paths and MyoConverter patches.
 
@@ -114,7 +118,7 @@ The separately translated Deng circuit produced a \qty{1.938}{\second} period ag
 
 \subsection{Transient Knee Sensory-Current Response}\label{sec:app_knee_transient}
 
-In Section~\ref{sec:sns_simulink_demos}, I asked whether the single-joint knee would extend after a brief increase in extensor Ia current and return to its original posture (Figure~\ref{fig:sns_reflex_current}). In the original circuit, angle spanned \ang{0.712} during the intended baseline, $25\leq t<30$\,s. To obtain a settled posture I broadened the two MN output ramps from 1 to \qty{10}{\milli\volt} and the four Ia synaptic ramps from 0.5 to \qty{10}{\milli\volt}. These six changes reduce loop gain. The equations, thresholds, conductances, connections, tonic drive, activation dynamics, and single-joint mechanics are the same in the original and modified circuits.
+In Section~\ref{sec:sns_simulink_demos}, I asked whether the single-joint knee would extend after a brief increase in extensor Ia current and return to its original posture (Figure~\ref{fig:sns_reflex_current}). In the original circuit, angle spanned \ang{0.712} during the intended baseline, $25\leq t<30$\,s. To obtain a settled posture I broadened the two MN output ramps from 1 to \qty{10}{\milli\volt} and the four Ia synaptic ramps from 0.5 to \qty{10}{\milli\volt}. These six changes reduce loop gain. The equations, thresholds, conductances, connections, tonic drive, activation dynamics, and single-joint mechanics are the same in the original and modified circuits. The reproduction driver is \path{run_transient.m}, using the archived \texttt{KneeReflexDemo} model.
 
 I ran a control and a stimulated trial continuously for \qty{50}{\second} from the same initial knee flexion of \qty{0.26}{\radian}, zero angular velocity and activation, and MN voltages of \qty{-52}{\milli\volt}. Tonic drive was \qty{4.2}{\nano\ampere} to the extensor MN and \qty{2.5}{\nano\ampere} to the flexor MN. In the stimulated trial I added \qty{2}{\nano\ampere} at \path{SN_Ia_ext}, after the spindle transducer and before the extensor Ia sensory-neuron membrane, for $30.000\leq t<30.030$\,s. Angle, speed, six membrane states, and two activations settled before stimulation. I report the negative of the model's internal flexion coordinate so that positive excursions indicate extension. The baseline was the mean control angle for $25\leq t<30$\,s, \ang{-42.6392}. The initial extension came from increased extensor force, which rose from \qty{7.37}{\newton} at pulse onset to \qty{25.94}{\newton} at pulse offset. The flexor MN output was zero at baseline, and flexor force was negligible during the pulse. Flexor force subsequently exceeded \qty{0.001}{\newton} at \qty{38}{\milli\second} after onset and reached \qty{14.4}{\newton} before maximum knee extension.
 
@@ -178,14 +182,14 @@ I reran the archived models in AnimatLab as references for translation. Eleven r
 
 When I transferred Li's controller and body to MuJoCo, mean forward speed fell to \qty{0.040}{\meter\per\second} in a \qty{20}{\second} ground test. The right foot had eleven stance episodes with a period of \qty{1.294}{\second}. The left foot had none. Right-side cadence alone would have missed the transfer failure.
 
-In our earlier course project, Morrow and I coupled Li's walker mechanics to a Deng-derived circuit with one shared RG and bilateral PF and motor pathways. The legs cycled while the walker was held up and the model fell on release in the demonstration shown in Chapter~\ref{ch:sns}. The later W2L108 circuit uses a separate RG on each side and additional sensory projections.
+In our earlier course project, Morrow and I coupled Li's walker mechanics to a Deng-derived circuit with one shared RG and bilateral PF and motor pathways. The legs made stepping-like movements while the model was suspended in air. The model fell over when it was lowered to the ground and its support was removed, as shown in Chapter~\ref{ch:sns}. The later W2L108 circuit uses a separate RG on each side and additional sensory projections.
 
 The earlier instrumented AnimatLab configuration provides a different recording, with joint, neural, sensory, and body-motion channels over \qty{10}{\second} at \qty{0.2}{\milli\second} intervals (Figure~\ref{fig:animatlab_short_response}). Contact-sensory channels record membrane voltage. The trial starts with an external horizontal force and has no recorded timed vertical release, so the aligned window supports analysis of the suspended circuit response. A reorganized bilateral project also ran to completion, although its networks did not sustain alternation.
 
 \begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{animatlab_short_response_20261116.png}
-\caption[Archived AnimatLab neural and mechanical recording]{Aligned RG, PF, and MN activity and hip, knee, and ankle motion from the same suspended AnimatLab trial over \qtyrange{1}{2.5}{\second}. Extensor and flexor pathways are blue solid and orange dashed. Voltages are graded membrane signals, and the original joint conventions, including positive knee flexion, are retained. This is the earlier instrumented configuration.}
+\caption[Archived AnimatLab neural and mechanical recording]{Aligned RG, PF, and MN activity and hip, knee, and ankle motion from the same suspended AnimatLab trial over \qtyrange{1}{2.5}{\second}. Extensor and flexor pathways are blue solid and orange dashed. The traces show continuously varying membrane voltages, and the original joint conventions, including positive knee flexion, are retained. This is the earlier instrumented configuration.}
 \label{fig:animatlab_short_response}
 \end{figure}
 
@@ -197,7 +201,7 @@ I required finite states, completion of the test duration, anatomical knee bound
 
 \subsection{BiW2Lvar+ Air Stages}\label{sec:app_biw2l_air}
 
-The revised graded BiW2Lvar+ controller completed two \qty{16}{\second} air trials on the repaired Gait2392 human model with native MuJoCo biological muscles. The trials share learned weights and a PF-to-MN expression scale of 0.1. The software selector \texttt{hunt} identifies this implementation in the records. Hunt supplied the calibration method. Table~\ref{tab:app_air_stages} gives the principal knee-flexion peaks and the intervals from which the periods were measured.
+The revised nonspiking BiW2Lvar+ controller completed two \qty{16}{\second} air trials on the repaired Gait2392 human model with native MuJoCo biological muscles. The trials share learned weights and a PF-to-MN expression scale of 0.1. The four training stages follow \citet{hunt_development_2017}. Table~\ref{tab:app_air_stages} gives the principal knee-flexion peaks and the intervals from which the periods were measured.
 
 The retained adapter and fitted command settings specify zero sustained flexor and extensor command in stage 1 and normalized command 0.15 to all four channels in stage 2. The same startup signal adds 0.4 to right extensor and left flexor commands for the first 50 neural updates (\qty{100}{\milli\second}). The adapter suppresses postural, balance, and functional commands and sets the direct tonic RG and legacy shared-drive inputs to zero. Sensory return is disabled in stage 1 and enabled in stage 2. Both sustained command and sensory return therefore change together. The original launch adapter and the complete consumed command stream are unavailable. These settings describe the compatible retained implementation.
 
@@ -244,7 +248,7 @@ I next applied separate \qty{2}{\nano\ampere}, \qty{100}{\milli\second} pulses t
 \FloatBarrier
 \subsection{A PF-Timing Failure Exposed by Intermediate Verification}\label{sec:app_pf_timing}
 
-Feedforward and feedback fits in the s3k and syn6 families tested motor output. To test the intermediate PF computation, I measured outgoing transmission, $\operatorname{clip}(V/\qty{5}{\milli\volt},0,1)$, where $V$ is rest-relative membrane voltage. I averaged nine cycles on the original \qty{1.233}{\second} calibration clock, from \qty{2.466}{\second} through \qty{13.556835}{\second}, without shifting individual channels. Transmission above 0.2 defined a burst. Each channel had to match the target burst count, have absolute fundamental lag of at most \ang{30} and duty error of at most 0.15, and span at least 0.2 transmission. These thresholds define the engineering timing test.
+Feedforward and feedback fits in s3k (the Gait2392 reference controller with four pattern-formation cells per leg) and syn6 (the six-synergy controller) tested motor output. To test the intermediate PF computation, I measured outgoing transmission, $\operatorname{clip}(V/\qty{5}{\milli\volt},0,1)$, where $V$ is rest-relative membrane voltage. I averaged nine cycles on the original \qty{1.233}{\second} calibration clock, from \qty{2.466}{\second} through \qty{13.556835}{\second}, without shifting individual channels. Transmission above 0.2 defined a burst. Each channel had to match the target burst count, have absolute fundamental lag of at most \ang{30} and duty error of at most 0.15, and span at least 0.2 transmission. These thresholds define the engineering timing test.
 
 None of the twelve syn6 channels met all four requirements. Three components per side captured \qty{99}{\percent} of the centered variance in the measured outputs, compared with six for the target primitives. The fifth primitive stayed active throughout the cycle on both sides despite target duties of approximately 0.325 and 0.330. Two components per side captured the corresponding s3k variance. Its intended onset and duration windows had not been specified, precluding the same target comparison. Figure~\ref{fig:app_pf_timing} shows the timing defects that a downstream activation fit can conceal. The component counts describe waveform variance.
 
@@ -255,7 +259,7 @@ None of the twelve syn6 channels met all four requirements. Three components per
 \label{fig:app_pf_timing}
 \end{figure}
 
-A gain-only repair improved the mirrored-target objective in a fresh process but still passed zero of twelve channels. I kept this candidate out of the body adapter and changed the timing design. RG-event-triggered relays first reproduced the target windows in offline replay. The native SNS version used onset, shutoff, quieting, follower, and ramp cells. Its adaptive version adjusted clock rates from recurring bilateral RG events, combining graded neural computation with an explicit timing scheduler.
+A gain-only repair improved the mirrored-target objective in a fresh process but still passed zero of twelve channels. I kept this candidate out of the body adapter and changed the timing design. RG-event-triggered relays first reproduced the target windows in offline replay. The native SNS version used onset, shutoff, quieting, follower, and ramp cells. Its adaptive version adjusted clock rates from recurring bilateral RG events, combining nonspiking neural computation with an explicit timing scheduler.
 
 The later timing gate scores each of the last four complete ipsilateral RG-E intervals separately, at 200 phase samples per interval. Six channels on two sides give 48 channel-cycle checks. RG-E intervals begin at a \qty{3.5}{\milli\volt} crossing after arming below \qty{1.5}{\milli\volt}. In addition to the original lag, duty, burst-count, and excursion requirements, each onset and offset must lie within 0.05 cycles of its target. This differs from the original twelve checks on cycle-averaged channels. Table~\ref{tab:app_pf_progression} separates the resulting levels of verification. Cadence stress tests scale the legacy-cell integration and RG inactivation constants with the afferent replay cadence, while retaining native relay settings and MN synapses; they do not demonstrate spontaneous cadence adaptation by a freely moving model.
 
@@ -277,6 +281,8 @@ Separate physical diagnostics & The same candidate completes \qty{8}{\second} st
 \end{table}
 
 After full native handover, three complete right and two complete left RG intervals gave 30 channel-cycle checks. The added knee relay recruits S3 and inhibits S2 near the projected extension limit with the MN input synapses fixed. The saved arrays matched the corresponding fresh native replay and live repeats. Further single-burst S3 candidates still reached the knee guard. No candidate in this series met the PF timing, rhythmic-motion, and knee-safety requirements together in the body.
+
+Figure~\ref{fig:sns_syn6_overlay} uses the completed suspended trial in which a shutoff latch kept the second channel silent until the next extensor rhythm signal on the same side. The motor-neuron input weights were fixed, sensory feedback remained active, and the knee-extension guard remained enabled. The second channel had one onset in each of six left and five right rhythm cycles. The third channel had three or four onsets per cycle. Both feet recorded zero vertical load. Seven complete intervals between right-knee flexion peaks, from \qtyrange{8.004}{13.652}{\second}, were sampled at 200 phase points. All joints share the right-knee phase origin. The reported \ang{19} and \ang{34} excursions are the ranges of the phase-averaged left and right knee curves. Measuring each cycle's excursion before averaging gives \ang{48.6} and \ang{49.6}, respectively. Variation among cycles reduces the excursion of the mean curves. The primary record is \path{s2_latch/capture/aligned_trace.npz}. The script \path{stage2_timing_figures.py} calculates the reference overlays and the per-channel burst counts.
 
 An earlier syn6 air experiment retained its older motor readout and adjusted ankle recruitment. Its deafferented and afferented median knee periods were \qtylist{2.466;2.005}{\second} over $5\leq t<14$\,s. Stage 2 had four principal peaks per side and right/left knee ranges of \ang{20.450} and \ang{22.840}. The maximum native knee angles over the full record were \ang{-1.910} and \ang{-1.937}, and measured foot force was zero. These measurements identify the older air configuration independently of both the syn6 timing redesign and the BiW2Lvar+ comparison in Table~\ref{tab:app_air_stages}.
 
@@ -342,11 +348,11 @@ The combined sensory deletion set 35 nonzero fitted parameters to zero, includin
 
 I counted primary heel strikes over $4.5\leq t<30$\,s from rising crossings above \qty{20}{\newton}, accepting successive strikes on the same side only when they were more than \qty{0.45}{\second} apart. Median phase locates a left strike between two successive right strikes. The historical criterion required a finite trial without a fall, at least six strikes per side, phase in $[0.35,0.65]$, and forward displacement greater than \qty{0.05}{\meter}. The intact condition yielded 34 left and 22 right strikes, phase 0.498, and \qty{2.239}{\meter} progression. The combined deletion yielded 20 left and 31 right strikes and \qty{1.996}{\meter} progression, but its phase of 0.223 failed alternation. Ib-only deletion yielded 19 left and 20 right strikes, phase 0.494, and \qty{2.302}{\meter}. Fresh replays reproduced all 15 numerical trajectory arrays for each condition.
 
-Mild and strong drive reductions, reversal to a \qty{40}{\newton} backward push, and individual Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the historical supported-stepping criterion. Renshaw deletion reduced forward displacement to \qty{0.081}{\meter}, and commissural deletion failed bilateral stepping. Heel-strike phase, progression, and continued joint cycling thus distinguished interventions that a count of moving limbs alone would group together.
+Mild and strong drive reductions, reversal to a \qty{40}{\newton} backward push, and individual Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the historical supported-stepping criterion. Renshaw deletion reduced forward displacement to \qty{0.081}{\meter}, and commissural deletion failed bilateral stepping. Heel-strike phase, progression, and continuing joint flexion and extension thus distinguished interventions that a count of moving limbs alone would group together.
 
 \subsection{CAD Robot: Contact Handover and Supported Clearance}\label{sec:app_cad_supported_stance}
 
-The CAD-derived model retains its four-bar knees and spherical hips in the anatomical frame $x$ anterior, $y$ superior, and $z$ right. Its controller has 262 graded cells, 230 inputs, and 54 ideal reference-tension actuators. The RG supplies timing. An engineering force allocator sets posture, stance-load, and clearance targets for the MNs. Compensating MN target currents limit the contribution of ordinary PF and reflex inputs. This hybrid allocation defines how neural activity influenced the recorded motion.
+The CAD-derived model retains its four-bar knees and spherical hips in the anatomical frame $x$ anterior, $y$ superior, and $z$ right. Its controller has 262 nonspiking cells, 230 inputs, and 54 ideal reference-tension actuators. The RG supplies timing. An engineering force allocator sets posture, stance-load, and clearance targets for the MNs. Compensating MN target currents limit the contribution of ordinary PF and reflex inputs. This hybrid allocation defines how neural activity influenced the recorded motion.
 
 The model completed \qty{28}{\second}. During $16\leq t<28$\,s, mean vertical harness force was \qty{570.20625}{\newton}, or \qty{77.5}{\percent} of the \qty{735.75}{\newton} weight of the \qty{75}{\kilogram} model. Seven right and six left unloaded, whole-foot-clear intervals gave twelve alternations. Each interval required foot-mesh clearance above \qty{5}{\milli\meter}, ipsilateral normal load below \qty{7.36}{\newton}, contralateral load above \qty{15}{\newton}, and duration of at least \qty{80}{\milli\second}. The \qty{2}{\milli\second} guard calculation recorded whole-trial minimum anatomical flexion of \ang{11.20} right and \ang{5.10} left against a \ang{1} limit. Figure~\ref{fig:app_cad_supported_traces} shows the signed native angle sampled every \qty{10}{\milli\second}, which can miss a physics-step extremum. Whole-trial world-forward displacement was \qty{-74.7}{\milli\meter} with orientation and lateral guidance active.
 
@@ -369,20 +375,20 @@ In an exploratory transfer of the controller of \citet{dirusso_investigating_202
 
 \section{Spiking-Neuron Comparisons}\label{sec:spiking_methods}\label{sec:spiking_results}\label{sec:disc_spiking}
 
-The spiking variants replace afferent, rhythm-generator, and interneuron populations while retaining graded MNs. Calibration by mean conductance preserves the continuous activation interface at the MNs. The following comparisons test what happens to timing and movement under that calibration. Appendix~\ref{app:neuron_equations} gives the conversion tables.
+The spiking variants replace afferent, rhythm-generator, and interneuron populations while retaining nonspiking MNs. Calibration by mean conductance preserves the continuous activation interface at the MNs. The following comparisons test what happens to timing and movement under that calibration. Appendix~\ref{app:neuron_equations} gives the conversion tables.
 
 Action potentials add voltage fluctuations to the signal received by downstream neurons. Figure~\ref{fig:spike_ground} compares filtered neural readouts, muscle activation, and joint motion under the same drive, support, and selected parameters. A hardware comparison would also need a common pulse-width modulation (PWM) encoder and the same valve limits.
 
 \subsection{MuJoCo Network and Ground Evaluation}
 
-Under constant drive, rhythm period increased from \qty{0.399}{\second} in the non-spiking network to \qty{0.621}{\second} in the spiking network, a \qty{55.6}{\percent} increase. At the same selected parameters, the untuned spiking version cycled both legs in the supported ground trial, while the graded winner cycled predominantly on the right (Table~\ref{tab:spike_ground} and Figure~\ref{fig:spike_ground}). The spiking version also had a poorer kinematic score. The two measures answer different questions about this matched pair.
+Under constant drive, rhythm period increased from \qty{0.399}{\second} in the nonspiking network to \qty{0.621}{\second} in the spiking network, a \qty{55.6}{\percent} increase. At the same selected parameters, the untuned spiking version produced repeated movements in both legs during the supported ground trial, while movement in the nonspiking winner occurred predominantly on the right (Table~\ref{tab:spike_ground} and Figure~\ref{fig:spike_ground}). The spiking version also had a poorer kinematic score. The two measures answer different questions about this matched pair.
 
 \begin{table}[htbp]
-\caption{Supported ground trial with the same selected parameters for \qty{16}{\second} and no spiking retuning. The kinematic score, detected cycles, and contact fractions use $2\leq t<16$\,s. Less-negative scores indicate closer kinematic agreement. The signed knee minimum is the minimum of the right leg's mean detected cycle, with flexion negative. Contact fraction counts samples with normal force above \qty{20}{\newton} independently of cycle detection. The non-spiking left leg therefore remains loaded for a fraction of 0.985 while completing no detected cycles.}
+\caption{Supported ground trial with the same selected parameters for \qty{16}{\second} and no spiking retuning. The kinematic score, detected cycles, and contact fractions use $2\leq t<16$\,s. Less-negative scores indicate closer kinematic agreement. The signed knee minimum is the minimum of the right leg's mean detected cycle, with flexion negative. Contact fraction counts samples with normal force above \qty{20}{\newton} independently of cycle detection. The nonspiking left leg therefore remains loaded for a fraction of 0.985 while completing no detected cycles.}
 \label{tab:spike_ground}
 \begin{tabular}{@{}lcc@{}}
 \toprule
-\textbf{Metric} & \textbf{Non-spiking winner} & \textbf{Spiking mirror (untuned)} \\
+\textbf{Metric} & \textbf{Nonspiking winner} & \textbf{Spiking mirror (untuned)} \\
 \midrule
 Kinematic score                & $-161.57$          & $-236.35$ \\
 Gait cycles, right / left      & 9 / 0 (left frozen) & 8 / 9 (bilateral) \\
@@ -398,27 +404,28 @@ Fell                            & no                  & no \\
 \begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
-\caption[Matched neural and mechanical responses with graded and spiking controllers]{Matched \qtyrange{10}{12.5}{\second} ground-trial window: graded controller (left) and untuned spiking controller (right), at the same selected parameters and support settings. Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural rows pair extensor (orange solid) and flexor (blue dashed) outputs; joint rows pair right (orange solid) and left (blue dashed) legs. Spiking signals are filtered readouts, and muscle activation is the actuator state.}
+\caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Both controllers used the same parameters and support. Columns show nonspiking (left) and untuned spiking (right) responses during the \qtyrange{10}{12.5}{\second} ground-trial window. Solid orange and dashed blue distinguish extensors and flexors in the right-side RG, PF, and muscle traces (vastus lateralis and semimembranosus). For hip, knee, and ankle angles they distinguish right and left. Spiking readouts are filtered. Muscle activation is the actuator state.}
 \label{fig:spike_rhythm}\label{fig:spike_ground}
 \end{figure}
 
+\FloatBarrier
 \subsection{Simulink Demonstrations}
 
-The earlier \qty{5}{\second} knee trial compared startup in the graded circuit and its spiking twin. Its final-window measurements characterize startup activity. Section~\ref{sec:app_knee_transient} gives the settled pulse test and the inputs needed to reproduce it.
+The earlier \qty{5}{\second} knee trial compared startup in the nonspiking circuit and its spiking twin. Its final-window measurements characterize startup activity. Section~\ref{sec:app_knee_transient} gives the settled pulse test and the inputs needed to reproduce it.
 
-At \qty{10}{\second} in the beverage experiment, the continuing load ramp reached \qty{0.625}{\kilogram}. Sag was \ang{1.78} in the spiking model, \ang{2.00} in the graded model, and \ang{7.85} with feedback disabled. Both controllers reduced sag at that common endpoint. The spiking model reached a larger post-startup maximum of approximately \ang{2.02} at \qty{9.688}{\second}. The load was still changing at both times.
+At \qty{10}{\second} in the beverage experiment, the continuing load ramp reached \qty{0.625}{\kilogram}. Sag was \ang{1.78} in the spiking model, \ang{2.00} in the nonspiking model, and \ang{7.85} with feedback disabled. Both controllers reduced sag at that common endpoint. The spiking model reached a larger post-startup maximum of approximately \ang{2.02} at \qty{9.688}{\second}. The load was still changing at both times.
 
 \subsection{AnimatLab Conversions}
 
-In the AnimatLab conversions, changing neuron thresholds while retaining graded synapses preserved near-baseline oscillations. Converting synaptic amplitudes and decay changed or eliminated alternation (Table~\ref{tab:spike_animatlab}). This identifies synaptic calibration as a limitation of the tested conversion.
+In the AnimatLab conversions, changing neuron thresholds while retaining voltage-dependent synapses preserved near-baseline oscillations. Converting synaptic amplitudes and decay changed or eliminated alternation (Table~\ref{tab:spike_animatlab}). This identifies synaptic calibration as a limitation of the tested conversion.
 
 \begin{table}[htbp]
-\caption{AnimatLab spiking conversions versus their graded baselines (\qty{5.1}{\second} simulations; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the graded synapses.}
+\caption{AnimatLab spiking conversions versus their nonspiking baselines (\qty{5.1}{\second} simulations; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the voltage-dependent synapses.}
 \label{tab:spike_animatlab}
 \small
 \begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{Variant} & \textbf{Baseline (graded)} & \textbf{Spiking copy} \\
+\textbf{Variant} & \textbf{Baseline (nonspiking)} & \textbf{Spiking copy} \\
 \midrule
 Two-layer walker     & \qty{0.443}{\second} rhythm;   & no sustained rhythm (2 spikes; \\
                      & hip $-15$ to $+23$, knee $-1$ to $+60$ & hip pinned near $+6$) \\
@@ -426,20 +433,33 @@ Bilateral variant    & \qty{0.462}{\second}; antiphase $-0.42$ cycle & strongly 
 Reorganized project  & no alternation under tonic drives & synchronous \qty{11.8}{\hertz} co-bursting; \\
 (standalone export)  &                        & same-leg envelopes $r = 1.000$ at lag 0 \\
 Thresholds only      & \multirow{2}{=}{hip $-15$ to $+23$, knee $-1$ to $+60$} & oscillates: hip $-15.1$ to $+23.2$, \\
-(graded synapses)    &                        & knee $-0.8$ to $+47.9$ \\
+(voltage-dependent synapses)    &                        & knee $-0.8$ to $+47.9$ \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \section{Execution, Provenance, and Reproduction Tools}\label{sec:app_execution_provenance}
 
-I timed one complete Gait2392 process per backend for the 1,025-cell source configuration selected by \texttt{hunt}. Its \qty{16}{\second} stage-1 protocol included \qty{0.6}{\second} of held-pose preparation and \qty{15.4}{\second} on the physics clock. Elapsed process time was \qty{199.624}{\second} with native SNS and \qty{29.284}{\second} with the sparse backend, a 6.82-fold speedup. Within those processes, accumulated neural-call time was \qty{179.079}{\second} and \qty{9.780}{\second}, an 18.31-fold speedup. All 45 captured numerical arrays and the compiled-model hash agreed.
+Figure~\ref{fig:app_research_toolchain} follows a saved experiment from model preparation to inspection. The SNS-Simscape interface supports graphical wiring of a Simulink neural circuit, and each experiment can be run from its corresponding script.
 
-I next compared compact and sparse implementations of the 1,033-cell Hunt-PT+RC circuit. After a separate 1,200-step state-agreement check in each family, the median of three 3,000-update warm neural-kernel timings was \qty{0.8953}{\second} for sparse and \qty{0.5551}{\second} for compact, a factor of 1.613. In one paired \qty{16}{\second} stage-4 diagnostic, evaluator time fell from \qty{92.944}{\second} to \qty{91.516}{\second}, a factor of 1.016. That interval included simulation, capture, and assessment, excluding imports, pre-run setup, and final serialization. All 62 numerical arrays and compiled-model hashes agreed. The backend preserves summation order. Spiking and electrical channels continue to use their existing implementations.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{research_toolchain_workflow.pdf}
+\caption[Neuromechanical experimentation workflow]{The source model determines the mechanical preparation required. The researcher connects a neural circuit to actuators and sensors, executes the simulation, and compares the recorded signals across trials. The solid boxes show steps supported by the tools listed in Table~\ref{tab:app_script_map}. The dashed band identifies a proposed interface for selecting and launching experiments across all six steps.}
+\label{fig:app_research_toolchain}
+\end{figure}
+
+I timed one complete Gait2392 process per backend for the earlier 1,025-cell BiW2Lvar+ configuration. Its \qty{16}{\second} stage-1 protocol included \qty{0.6}{\second} of held-pose preparation and \qty{15.4}{\second} on the physics clock. Elapsed process time was \qty{199.624}{\second} with native SNS and \qty{29.284}{\second} with the sparse backend, a 6.82-fold speedup. Within those processes, accumulated neural-call time was \qty{179.079}{\second} and \qty{9.780}{\second}, an 18.31-fold speedup. All 45 captured numerical arrays and the compiled-model hash agreed.
+
+I next compared compact and sparse implementations of the 1,033-cell circuit with the balance pathway and recurrent Renshaw inhibition. After a separate 1,200-step state-agreement check in each family, the median of three 3,000-update warm neural-kernel timings was \qty{0.8953}{\second} for sparse and \qty{0.5551}{\second} for compact, a factor of 1.613. In one paired \qty{16}{\second} stage-4 diagnostic, evaluator time fell from \qty{92.944}{\second} to \qty{91.516}{\second}, a factor of 1.016. That interval included simulation, capture, and assessment, excluding imports, pre-run setup, and final serialization. All 62 numerical arrays and compiled-model hashes agreed. The backend preserves summation order. Spiking and electrical channels continue to use their existing implementations.
 
 In the bilateral-RG W2L circuit with Ib input ports, the ratio was 1.425 for one warm block of 10,000 neural updates per backend following 5,000 state-comparison steps. The paired \qty{30}{\second} body trajectories agreed exactly. This measurement times the isolated W2L neural updates. Only the first Gait2392 comparison above timed the complete process externally.
 
-Table~\ref{tab:app_script_map} gives the executable sources. Section~\ref{sec:app_knee_transient} includes a complete run from two portable model files and compares the output with the expected JSON. For the newer coupled experiments, the available records vary by test. The noise and pulse runs include the applied currents and aligned states. For BiW2Lvar+, the archived launch adapter and full consumed command stream are unavailable (Section~\ref{sec:app_biw2l_air}). The CAD repeat preserves model and dependency hashes and matched numerical arrays, while the original compiled binary is unavailable (Section~\ref{sec:app_cad_supported_stance}). The source entries identify the corresponding checks.
+Table~\ref{tab:app_script_map} lists the scripts for preparing mechanics, assembling the neural and actuator model, executing a trial, and inspecting the saved results. The SNS-Simscape interface builds the neural portion of a Simulink model. The preparation, parameter searches, and replay have model-specific script entry points. Section~\ref{sec:app_knee_transient} includes a complete run from two portable model files and compares the output with the expected JSON. For the newer coupled experiments, the available records vary by test. The noise and pulse runs include the applied currents and aligned states. For BiW2Lvar+, the archived launch adapter and full consumed command stream are unavailable (Section~\ref{sec:app_biw2l_air}). The CAD repeat preserves model and dependency hashes and matched numerical arrays, while the original compiled binary is unavailable (Section~\ref{sec:app_cad_supported_stance}). The source entries identify the corresponding checks.
+
+A saved connectome drawing in \path{Neuromechanical_Models/Mujoco_SNS_models/} shows the four-cell rectus femoris and hamstring circuit on each side of an earlier BiW2Lvar+ configuration. Changes to the drawing are saved separately from the controller used in a simulation.
+
+For the recorded Gait2392 body trial, the recorder writes input and neural-update times, joint states, muscle commands, foot loads, and harness forces, together with the compiled model used for replay. A separate mechanics file contains the individual actuator forces. The plotting tools read each signal on its own time base. To render a different view of the same trial, the replay restores the saved positions and recomputes the geometry for each frame.
 
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.43\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}@{}}
 \caption[Reproducible implementation and experiment sources]{Relevant source scripts and the tests they support. Prefixes are given below the table. Model builders and test drivers are distinguished from figure-only exporters.}\label{tab:app_script_map}\\
@@ -463,6 +483,8 @@ Table~\ref{tab:app_script_map} gives the executable sources. Section~\ref{sec:ap
 \path{mujoco_bridge/matlab/laptop_build_bridge.m} (S) & Build and check the MuJoCo--Simulink runtime bridge; command/measurement exchange, not mechanism conversion. \\
 \path{mujoco_bridge/matlab/run_bridge_tests.m}, \path{e1_sns_reflex_loop.m}, and \path{e2_cpg_open_loop.m} (S) & With the patched blockset installed, call \path{run_bridge_tests} from its MATLAB directory. Test b gives 81 samples at \qty{5}{\milli\second}, and test c gives zero maximum difference for all five sensors. E1 and E2 exercise closed- and open-loop commands. \\
 \path{_muscle_force_compare.py} (P) & Assign matched OpenSim poses/activations and compute force-comparison statistics. \\
+\path{controller_profiles_20261104/train.py}; \path{fit_waveform_edges.py} (P) & Search bounded rhythm and timing parameters, or fit bilateral pattern-formation weights to motor recruitment by least squares. \\
+\path{hunt_training/verification_capture.py}; \path{verification_figures.py} (P) & Record signals and sampling times, plot selected intervals, and replay saved body positions with the corresponding model. \\
 \path{controller_profiles_20261104/campaign.py} (P) & Ordered neural fitting with stored manifests and independent repeats; output fitting is separate from physical acceptance. \\
 \path{controller_profiles_20261104/air_validation.py} and \path{dominant_cycles.py} (P) & Run coupled air tests and identify principal knee-flexion peaks and interpeak intervals, including detector rejection controls. \\
 \path{controller_profiles_20261104/noise_trials.py}; \path{stimulus_trials.py} (P) & Frozen-controller current-noise and layer-current interventions; actual input samples retained with aligned states. \\

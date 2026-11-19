@@ -1,7 +1,7 @@
 \chapter{Appendix B: Neuron Model Equations}\label{app:neuron_equations}
 \graphicspath{{../Figures/93-AppendixB/}{figs/93-AppendixB/}}
 
-This appendix defines the neuron and synapse equations and records the parameters used in the paired graded/spiking comparisons. The archived AnimatLab and 410-neuron Gait2392 comparisons are distinct from the independently replayed W2L configuration in Chapter~\ref{ch:sns}. The final section documents that W2L configuration directly from its compiled network.
+This appendix defines the neuron and synapse equations and records the parameters used in the paired nonspiking/spiking comparisons. The archived AnimatLab and 410-neuron Gait2392 comparisons are distinct from the independently replayed W2L configuration in Chapter~\ref{ch:sns}. The final section documents that W2L configuration directly from its compiled network.
 
 \section{Spiking Neuron Model}
 
@@ -35,9 +35,9 @@ AHP time constant        & $\tau_{\text{AHP}}$ & \qty{3}{\ms}   \\
 \end{tabularx}
 \end{table}
 
-\section{Non-Spiking (Graded) Chemical Synapses}
+\section{Voltage-Dependent Chemical Synapses}
 
-Pattern-formation and motoneuron-drive connections in the walker use graded chemical synapses, whose conductance is a clipped linear ramp of the presynaptic potential,
+Pattern-formation and motoneuron-drive connections in the walker use voltage-dependent chemical synapses, whose conductance is a clipped linear ramp of the presynaptic potential,
 \begin{equation}
     g_{\text{syn}}(V_{\text{pre}})
     \;=\; g_{\text{max}}\;
@@ -48,7 +48,7 @@ Pattern-formation and motoneuron-drive connections in the walker use graded chem
     I_{\text{syn}} = g_{\text{syn}}\left(E_{\text{syn}} - V_{\text{post}}\right),
     \label{eq:app_nonsyn}
 \end{equation}
-Here inward current is positive, consistently with Equation~\eqref{eq:app_membrane}; an excitatory reversal potential above the postsynaptic voltage therefore produces depolarization. The quantities $V_{\text{th}}$ and $V_{\text{sat}}$ are the synaptic threshold and saturation potentials and $E_{\text{syn}}$ the reversal potential. The walker model instantiates three non-spiking synapse types:
+Here inward current is positive, consistently with Equation~\eqref{eq:app_membrane}; an excitatory reversal potential above the postsynaptic voltage therefore produces depolarization. The quantities $V_{\text{th}}$ and $V_{\text{sat}}$ are the synaptic threshold and saturation potentials and $E_{\text{syn}}$ the reversal potential. The walker model instantiates three nonspiking synapse types:
 
 \begin{itemize}
     \item \textbf{Nicotinic ACh (excitatory drive):}
@@ -67,7 +67,7 @@ Spiking chemical synapses and electrical synapses (rectifying coupling weight 0.
 
 \section{Relation to the SNS-Toolbox Implementation}
 
-SNS-Toolbox implements corresponding non-spiking and spiking conductance-based neurons and synapses \citep{nourse_sns_2023}. The AnimatLab parameters initialized a 410-neuron SNS-Toolbox network with per-leg rhythm-generator half-centers, phase-shifted pattern-formation groups, motoneuron pools for all 92 muscle-tendon actuators, and Ia, Ib, and II afferent populations. Its non-spiking equations have the forms of Equations~\eqref{eq:app_membrane} and~\eqref{eq:app_nonsyn}, with spiking threshold and accommodation removed. Afferent resting-tone offsets are zero, so Ia and Ib encode activity without a tonic offset.
+SNS-Toolbox implements corresponding nonspiking and spiking conductance-based neurons and synapses \citep{nourse_sns_2023}. The AnimatLab parameters initialized a 410-neuron SNS-Toolbox network with per-leg rhythm-generator half-centers, phase-shifted pattern-formation groups, motoneuron pools for all 92 muscle-tendon actuators, and Ia, Ib, and II afferent populations. Its nonspiking equations have the forms of Equations~\eqref{eq:app_membrane} and~\eqref{eq:app_nonsyn}, with spiking threshold and accommodation removed. Afferent resting-tone offsets are zero, so Ia and Ib encode activity without a tonic offset.
 
 The rhythm-generator layer oscillated under tonic drive with the legs in antiphase (Section~\ref{sec:spiking_methods}). The layer-specific tests apply constant $I_{\text{app}}$ at MN, PF, or RG cells. The matched circuit checks in Chapter~\ref{ch:sns} concern selected implementations and do not establish equivalence of the larger networks.
 
@@ -109,11 +109,11 @@ Spiking chemical synapses, in both the toolbox class used in the MuJoCo mirror a
     \qquad g \leftarrow \min\!\left(g_{\max},\, g + g_{\text{inc}}\right) \;\;\text{per spike},
     \label{eq:app_spk_syn}
 \end{equation}
-with $I_{\text{syn}} = g\,(E_{\text{syn}} - V_{\text{post}})$ as for the graded synapse of Equation~(\ref{eq:app_nonsyn}). The Simulink \texttt{HybridSpikingSynapse} implements the same dynamics with the spike detected from the presynaptic voltage crossing a detection threshold that must sit strictly between the presynaptic resting and firing potentials (a detection threshold equal to the firing potential fires nothing, because the presynaptic voltage resets at threshold). Reversal potentials are \qty{0}{\mV} (excitation, above rest) and \qty{-70}{\mV} (inhibition, shunting at rest) in the spiking frame, and \qty{+8}{\milli\volt}/\qty{-5}{\milli\volt} in the motor neurons' \qtyrange{0}{5}{\milli\volt} frame. The graded-to-spiking command pathways (descending drive, posture, and bias surrogates) keep the graded synapse of Equation~(\ref{eq:app_nonsyn}).
+with $I_{\text{syn}} = g\,(E_{\text{syn}} - V_{\text{post}})$ as for the voltage-dependent synapse of Equation~(\ref{eq:app_nonsyn}). The Simulink \texttt{HybridSpikingSynapse} implements the same dynamics with the spike detected from the presynaptic voltage crossing a detection threshold that must sit strictly between the presynaptic resting and firing potentials (a detection threshold equal to the firing potential fires nothing, because the presynaptic voltage resets at threshold). Reversal potentials are \qty{0}{\mV} (excitation, above rest) and \qty{-70}{\mV} (inhibition, shunting at rest) in the spiking frame, and \qty{+8}{\milli\volt}/\qty{-5}{\milli\volt} in the motor neurons' \qtyrange{0}{5}{\milli\volt} frame. The nonspiking-to-spiking command pathways (descending drive, posture, and bias surrogates) keep the voltage-dependent synapse of Equation~(\ref{eq:app_nonsyn}).
 
 \subsection{Calibration of Record}
 
-Table~\ref{tab:app_spk_cal} lists every calibration factor produced by \nolinkurl{calibrate_spiking.py} (\nolinkurl{spiking_calibration.json}), with the measured residual of each. The spike-to-motor-neuron factors are bisected so that a steady \qty{40}{\hertz} presynaptic train reproduces the non-spiking steady-state motor-neuron voltage; the spike-to-spiking factors are rate-calibrated (a \qty{40}{\hertz} source drives a relay cell at \qty{40}{\hertz}, and a calibrated inhibitory factor silences a \qty{40}{\hertz}-driven cell); the readout-tap factor maps a \qty{50}{\hertz} train to the full-scale analog level. The rhythm-generator threshold increment was set by an isolated-pair sweep followed by a full-network sweep over alternation quality and period target.
+Table~\ref{tab:app_spk_cal} lists every calibration factor produced by \nolinkurl{calibrate_spiking.py} (\nolinkurl{spiking_calibration.json}), with the measured residual of each. The spike-to-motor-neuron factors are bisected so that a steady \qty{40}{\hertz} presynaptic train reproduces the nonspiking steady-state motor-neuron voltage; the spike-to-spiking factors are rate-calibrated (a \qty{40}{\hertz} source drives a relay cell at \qty{40}{\hertz}, and a calibrated inhibitory factor silences a \qty{40}{\hertz}-driven cell); the readout-tap factor maps a \qty{50}{\hertz} train to the full-scale analog level. The rhythm-generator threshold increment was set by an isolated-pair sweep followed by a full-network sweep over alternation quality and period target.
 
 \begin{table}[htbp]
 \caption{Calibration factors for the spiking mirror (\nolinkurl{spiking_calibration.json}). Residuals are the measured deviation at each factor's calibration target.}
@@ -122,10 +122,10 @@ Table~\ref{tab:app_spk_cal} lists every calibration factor produced by \nolinkur
 \toprule
 \textbf{Factor} & \textbf{Value} & \textbf{Calibrated against} & \textbf{Residual} \\
 \midrule
-Graded saturation reference & 0.9567 & analog network measurement & --- \\
+Nonspiking saturation reference & 0.9567 & analog network measurement & --- \\
 Spike-to-MN, excitatory ($k_{sn,exc}$) & 5.4087 & MN steady voltage & \qty{1.0e-04}{\mV} \\
 Spike-to-MN, inhibitory ($k_{sn,inh}$) & 1.2284 & MN steady voltage & \qty{2.6e-04}{\mV} \\
-Graded-to-spiking drive ($k_{ns}$) & 0.35 & relay firing rate & \qty{-0.67}{\hertz} \\
+Nonspiking-to-spiking drive ($k_{ns}$) & 0.35 & relay firing rate & \qty{-0.67}{\hertz} \\
 Spike-to-spiking, excitation & 1.8754 & \qty{40}{\hertz} rate transfer & \qty{0.0}{\hertz} \\
 Spike-to-spiking, inhibition & 0.9996 & silences \qty{40}{\hertz} cell & \qty{0.0}{\hertz} \\
 Readout tap ($g_{inc}$) & 1.7093 & \qty{50}{\hertz} $\to$ full scale & \qty{5.00}{\mV} check \\
@@ -138,7 +138,7 @@ Synaptic time constants & \qty{5}{\milli\second} (exc), \qty{20}{\milli\second} 
 
 \subsection{Verification Gates of the MuJoCo Mirror}
 
-Table~\ref{tab:app_spk_gates} gives the tests from Section~\ref{sec:spiking_methods}. The graded and spiking networks retained the same directed connections under each of three gain settings. Under constant drive the spiking rhythm alternated between the legs, but its period exceeded the specified tolerance. With the model suspended, the spiking network also produced finite joint motion at a different cadence from the graded network. The scripts, logs, and numerical results are archived in the reports folder (\nolinkurl{tools/}, \nolinkurl{logs/}, and the \texttt{json} files).
+Table~\ref{tab:app_spk_gates} gives the tests from Section~\ref{sec:spiking_methods}. The nonspiking and spiking networks retained the same directed connections under each of three gain settings. Under constant drive the spiking rhythm alternated between the legs, but its period exceeded the specified tolerance. With the model suspended, the spiking network also produced finite joint motion at a different cadence from the nonspiking network. The scripts, logs, and numerical results are archived in the reports folder (\nolinkurl{tools/}, \nolinkurl{logs/}, and the \texttt{json} files).
 
 \begin{sidewaystable}
 \caption{Complete verification-gate table of the spiking mirror. Baseline scores reproduce digit for digit; ``split'' denotes a gate whose clauses pass and fail in part.}
@@ -149,7 +149,7 @@ Table~\ref{tab:app_spk_gates} gives the tests from Section~\ref{sec:spiking_meth
 \midrule
 Pipeline compile & PASS & runner, curriculum, parameters, and network builder all compile. \\
 Defaults gate & PASS & $(410,\,376,\,1186)$ populations, inputs, and connections after the selector edit; variant build $(888,\,382,\,7430)$. \\
-Non-spiking bit-identity & PASS & complete numerical baseline outputs identical before and after the edit for all three tested configurations. \\
+Nonspiking bit-identity & PASS & complete numerical baseline outputs identical before and after the edit for all three tested configurations. \\
 Topology mirror & PASS & directed connections and their signs matched with conditional pathways off, with those pathways enabled, and with joint-level PF enabled ($1{,}186$ / $7{,}908$ / $7{,}762$). Inputs and motor-neuron maps matched. The spiking network added 12 / 12 / 16 readout taps. \\
 Constant-drive rhythm & SPLIT & sustained bilateral antiphase (E \qty{4.9}{\hertz}, F \qty{3.2}{\hertz} per leg; swing \qty{5.13}{\mV} in every window) = PASS; period \qty{0.621}{\second} versus analog \qty{0.399}{\second} ($+55.6\,\% > 20\,\%$) = FAIL. \\
 Perturbation basin & PASS & 12/12 trials under \qty{1}{\percent} jitter on every scalar; final swing minimum \qty{4.58}{\mV} (margin $0.89\times$); zero explosions. \\
@@ -163,7 +163,7 @@ AnimatLab baselines & PASS & five baseline simulations completed without errors,
 
 \subsection{AnimatLab Conversion Variants}
 
-Table~\ref{tab:app_spk_animatlab_full} lists spiking copies of the AnimatLab exports made with \nolinkurl{tools/make_spiking.py}. Unreachable positive thresholds were replaced by \qty{-55}{\mV}, or \qty{-59}{\mV} for motor neurons, in v1. The v2 copies use measured graded peaks: \qty{-53.5}{\mV} for RG, PF, and interneurons, \qty{-44}{\mV} for motor neurons, and \qty{-44.5}{\mV} for Renshaw cells. Relative accommodation was zeroed. Each graded chemical synapse became a per-spike synapse with its identifier and amplitude retained, \qty{10}{\ms} decay, and maximum conductance $\max(5,\,2\times\text{amplitude})$.
+Table~\ref{tab:app_spk_animatlab_full} lists spiking copies of the AnimatLab exports made with \nolinkurl{tools/make_spiking.py}. Unreachable positive thresholds were replaced by \qty{-55}{\mV}, or \qty{-59}{\mV} for motor neurons, in v1. The v2 copies use measured nonspiking peaks: \qty{-53.5}{\mV} for RG, PF, and interneurons, \qty{-44}{\mV} for motor neurons, and \qty{-44.5}{\mV} for Renshaw cells. Relative accommodation was zeroed. Each voltage-dependent chemical synapse became a per-spike synapse with its identifier and amplitude retained, \qty{10}{\ms} decay, and maximum conductance $\max(5,\,2\times\text{amplitude})$.
 
 The per-connection class tag was also changed to the spiking type; changing the synapse type alone prevented loading. Structural checks confirmed that neuron, connection, synapse-type, chart, and stimulus sets were retained and every connection class matched its synapse type.
 
@@ -181,23 +181,23 @@ Bilateral v1        & \qty{-55}{\milli\volt}/\qty{-59}{\milli\volt}        & 96 
 Bilateral v2        & calibrated            & 96  & 20 & 208 & no sustained alternation \\
 Project export v1   & \qty{-55}{\milli\volt}/\qty{-59}{\milli\volt}        & 122 & 50 & 243 & synchronous \qty{11.8}{\hertz} co-bursting \\
 Project export v2   & calibrated            & 122 & 50 & 243 & passive relaxation without rhythm \\
-Ablation            & spiking, graded synapses & 80 & 0  & 0   & oscillates, near-baseline ranges \\
+Ablation            & spiking, voltage-dependent synapses & 80 & 0  & 0   & oscillates, near-baseline ranges \\
 2023 reference (baseline) & archived spiking model & 56 & 3 (spiking) & 84 & \qty{1.305}{\second} bursts, antiphase $+0.494$ cycle \\
 \bottomrule
 \end{tabularx}
 \end{sidewaystable}
 
-Figure~\ref{fig:spike_animatlab} compares the graded baseline (A1), full spiking conversion (B1), and threshold-only conversion with graded synapses retained (C1). Joint oscillation persists in C1 but not B1, identifying the synapse conversion as the breaking change in this two-layer comparison (Table~\ref{tab:spike_animatlab}).
+Figure~\ref{fig:spike_animatlab} compares the nonspiking baseline (A1), full spiking conversion (B1), and threshold-only conversion with voltage-dependent synapses retained (C1). Joint oscillation persists in C1 but not B1, identifying the synapse conversion as the breaking change in this two-layer comparison (Table~\ref{tab:spike_animatlab}).
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{animatlab_spiking_conversion.pdf}
 % ALT TEXT: see animatlab_spiking_conversion_alt.txt beside the figure file.
-\caption{AnimatLab left hip (left column) and knee (right) angles over \qtyrange{0.5}{5}{\second}: graded baseline (row A1), full spiking conversion (row B1), and spiking thresholds with graded synapses retained (row C1).}
+\caption{AnimatLab left hip (left column) and knee (right) angles over \qtyrange{0.5}{5}{\second}: nonspiking baseline (row A1), full spiking conversion (row B1), and spiking thresholds with voltage-dependent synapses retained (row C1).}
 \label{fig:spike_animatlab}
 \end{figure}
 
-The converted AnimatLab models ran from their exported files. The graded Simulink spinal model has 410 neurons and 1,392 synapses. Converting that model to spike-based signaling and fitting the separate MuJoCo network variants for spiking control were outside these comparisons.
+The converted AnimatLab models ran from their exported files. The nonspiking Simulink spinal model has 410 neurons and 1,392 synapses. Converting that model to spike-based signaling and fitting the separate MuJoCo network variants for spiking control were outside these comparisons.
 
 \section{Connectome of the Verified W2L Model}\label{app:connectomes}
 \graphicspath{{../Figures/93-AppendixB/}{figs/93-AppendixB/}}

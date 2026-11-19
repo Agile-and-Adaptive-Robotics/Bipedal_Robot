@@ -1,0 +1,30 @@
+# Which syn6 recording supports Section 6.5.3?
+
+The figure Ben identified shows the completed, suspended **S2-latch** trial of the six-synergy Gait2392 controller. Its source capture and original plot are on easteregg2. I verified the second machine’s hostname as EB475WS4 over SSH and read its archived simulations with its project Python. Both machines contain three other relevant records. Their controllers, conditions, and phase conventions distinguish them from the figure used in the chapter.
+
+## The figure and its controller
+
+Under `D:/Users/Ben Bolen/ControllerTraining_20261104/` on easteregg2, the image is `syn6_s3_single_20261105/left_right_figures/KINEMATIC_OVERLAY.png`. Its `OVERLAY_METRICS.json` points back to `syn6_stage2_regularize_20261105/s2_latch`. The four S3 repair trials in the image's parent directory stopped at the knee guard. I found no copy of the exact image in the EB475WS4 repository, its C: and D: user home directories, lab artifact and thumb-drive backup directories, D:/temp, or the mounted F: drive.
+
+| Original easteregg2 artifact | SHA-256 |
+| --- | --- |
+| User-linked image | `f66123d0164bf021c966c4edc673d455bf6e104ecb8622cf9adab19f3ee19a5d` |
+| Its `OVERLAY_METRICS.json` | `6fad0f922d5ca3a9843ab4bccbfafeb69af54e8aec2923cd0f50171e09048d33` |
+| `s2_latch/capture/aligned_trace.npz` | `d99a8de96fec5a9a7a6c9086ef947dad05cb7fc1796bf6f1050eb987ddd59f81` |
+| `s2_latch/capture/model.mjb` | `a9a82bdfa201510d9976f9f1cc4a55ec701d1756707d92fe376cadce591ea1fc` |
+
+I recalculated the six joint waveforms from 7,700 state samples at 2 ms intervals. In the 7–14 s search, eight right-knee flexion maxima bounded seven cycles between 8.004 and 13.652 s. The six joints share that right-knee origin and retain their relative phase on a 200-point cycle. For each reference, the left cycle was restored to its measured or simulated loading lag before all six reference curves were shifted to that reference’s right-knee maximum. The two stance rows describe each reference's own foot contact. Both model feet recorded zero force. From 5 s to the end, the spring support supplied a mean upward force of 0.999 model weights. The run configuration set explicit constant unloading to zero. The fitted flexor and extensor command levels were 0.15 on each side, with a temporary 0.4 increase to the right extensor and left flexor for the first 50 neural steps. These command settings come from the manifest and `body_probe.py`.
+
+The knee ranges of the phase-averaged curves were 18.979° left and 34.456° right. Averaging each individual cycle’s excursion instead gave 48.556° and 49.594°. The same mean-curve measure gave 70.618° and 70.432° for recorded Subject01 walking and 72.102° and 71.058° for Ong’s 1.25 m/s walking simulation. Real-time median knee periods were 0.797 s left and 0.752 s right. The closed-loop trial missed the rhythm criteria.
+
+In the original replay, outgoing S5 transmission remained above 0.68 on both sides across the averaged cycle. Its active duty was 100%, against targets of 33.0% left and 32.5% right. Zero of 12 channels passed the combined timing test. The revised circuit could pass with sensory input calculated from prescribed reference movement. In the completed S2-latch body trial, I counted one S2 onset in every complete same-side rhythm-generator interval (six left, five right). S3 had three or four onsets in every such interval. The full-body timing audit passed 16 of 48 checks. The recorded signals locate a remaining controller error. The chapter’s evidence does not assign the entire joint-angle discrepancy to that error. [Trial settings, timings, and full source paths](EASTEREGG2_SYN6.md)
+
+## Other overlays verified on EB475WS4
+
+| Experiment and local source | What the data show |
+| --- | --- |
+| Earlier November ankle-recruitment trial. `Defense/Session1_Handoff_20261104/experiments_20261104/kinematic_response_20261105/air_scope_v2/syn6/` under the dissertation | This suspended trial passed its own rhythm assessment. The overlay uses three complete common right-knee cycles in 5–14 s. Median periods were 2.004 s right and 2.008 s left. Knee ranges reached 29.0% and 32.2% of the Subject01 mean curves. `IK_OVERLAY.png`, `KINEMATIC_RESPONSE.json`, and `RESULTS.md` matched byte for byte across machines. [Original result](../../Defense/Session1_Handoff_20261104/experiments_20261104/kinematic_response_20261105/air_scope_v2/syn6/RESULTS.md) |
+| September syn6 on the ground. `Code/MuJoCo_SNS/spinal/reports_20260925/figs/tmp/figs_npz_syn6.npz` | Contact and the support rig were enabled, with shared drive 2.7864. The plotter used 2–15.998 s of the 16 s recording and aligned each foot to its own loading. Four right cycles averaged 1.878 s. The left foot stayed loaded throughout, giving zero left cycles. Right mean knee and ankle absolute-angle RMSE against Subject01 were 33.67° and 55.62°. The later `spinal_run_curr_syn6_s5_reseed_20261003_resume.npz` had zero qualified cycles on either side. |
+| October human controller, s3k family. `Code/MuJoCo_SNS/spinal/reports_20261028_publication_flow/human_ik/human_fresh.npz` | The supported feedback-retuned human model stepped in place with shared drive 2.0773 and supplementary drive scale 0.38074. Ten foot-loading cycles per side in 2–16 s averaged 1.285 s right and 1.254 s left. Knee RMSE was 27.44° right and 28.45° left. This separate result supports Appendix D’s historical overlay. |
+
+I independently evaluated the September and October arrays on EB475WS4. SHA-256 matched easteregg2 for the September raw record (`e26bfb429df50952454de1962dfa3223342d0ef045e27eeacc7cc3aad5667500`), October raw record (`f5e3ad24ae780af51f947af9388f39a53ebbecf99e649f4cdbb38df6fc617014`), and earlier November air image (`180beac1bb791dcd54800556b6e4eb4ecf539bc9418d050a20c0fffa49fb66d4`). Both machines also carry matching Subject01 IK and ground reaction files and the matching Ong reference. The two copies of `stage2_timing_figures.py` differ only in LF/CRLF line endings, with identical normalized SHA-256 `f421397757df19640bb47be8471736635a2cac84d9a339ac2a31a0a11c6c58f8`.

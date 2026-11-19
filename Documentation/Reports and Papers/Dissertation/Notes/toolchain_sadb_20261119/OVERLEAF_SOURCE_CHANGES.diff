@@ -1,0 +1,705 @@
+--- author_export/chapters/50-database.tex
++++ local_revision/chapters/50-database.tex
+@@ -1,22 +1,24 @@
+ \chapter{The Sensory Afferent Database}\label{ch:database}
+ \graphicspath{{../Figures/50-database/}{figs/50-database/}}
+ 
+-I developed the Sensory Afferent Database (SADb), a curated literature resource for studying sensory feedback in locomotion and posture. It links findings from animal and human studies to afferent classes, sensory afferent pathways, and computational models. Researchers can use these records to compare individual feedback connections or whole neural circuits before implementing a neuromechanical model. This work forms part of the AARL's NeuroNex Communication, Coordination, and Control in Nervous Systems (C3NS) effort.
++Choosing a sensory connection for a locomotor controller requires more than the name of a receptor. A researcher needs to know which nerve was stimulated, which motor neurons responded, and whether the animal was at rest or moving. Those details are scattered across studies that used different species, preparations, and tasks. I developed the Sensory Afferent Database (SADb) to keep a proposed feedback pathway linked to the experiment that supports it. The collection also links to computational models so that a researcher can compare an experimental finding with the assumptions used to represent it. This work forms part of the AARL's NeuroNex Communication, Coordination, and Control in Nervous Systems (C3NS) effort.
+ 
+ \noindent Presentation credits: The SADb resource was presented as an abstract and poster at Neuroscience 2023 \citep{bolen_sensory_2023}. The AI-assisted curation study was presented as an abstract and poster at Neuroscience 2024 \citep{bolen_using_2024}.
+ 
+-SADb addresses the need to recover measured afferent properties, feedback pathways, and experimental conditions from a dispersed literature. A researcher performing neuromechanical modeling needs to know what was measured, how a pathway was stimulated or represented, and the locomotor or postural state in which it was studied. SADb brings individual studies into a searchable collection so that researchers can compare findings, locate evidence relevant to a candidate sensory afferent pathway, and follow each record to its source.
+-
+-The primary deliverable is SADb Explorer, a browser application containing 1,393 literature and related records. It has four main tabs (Figure~\ref{fig:sadb_clusters}, callout~(A)): Table searches individual records, Pivot compares classifications, Bubble map explores citation links among papers, and Search (online) finds candidate additions through OpenAlex, an open bibliographic index. The records, notes, and citation graph are embedded in the application, so the first three tabs can be used without an internet connection. Search (online) requires an internet connection and lets the user save candidate records for later curation. The application preserves both the records retained for active curation and archived records from the collected material.
++\begin{samepage}
++Open SADb Explorer in a browser using \path{SADb_audit/app/sadb_app.html} in the project repository. Three tabs work offline (Figure~\ref{fig:sadb_clusters}A). Table retrieves individual records, Pivot counts papers that share classifications, and Bubble map follows citations. Search (online) queries the OpenAlex bibliographic index for candidates to save for later curation.\par
++\end{samepage}
+ 
+ \begin{sidewaysfigure}[p]
+ \centering
+ \includegraphics[width=\linewidth]{sadb_bubble.pdf}
+-\caption[SADb Explorer citation-map functions]{SADb Explorer with Grillner (1985) selected. Callouts identify the four main tabs (A), map controls (B), selected record (C), curation and translation notes (D), citation neighborhood (E), connected papers (F), and the topic-cluster color key (G).}
++\caption[SADb Explorer citation-map functions]{Citation map of the 943 Papers in an earlier Explorer snapshot, with Grillner (1985) selected. Callouts identify the four main tabs (A), map controls (B), selected record (C), curation and translation notes (D), citation neighborhood (E), connected papers (F), and the topic-cluster color key (G).}
+ \label{fig:sadb_clusters}
+ \end{sidewaysfigure}
+ 
+-The database was curated in Airtable, an online database system, before being transferred to SADb Explorer. Linked tables connect papers to feedback pathways and computational models, with separate records for reviews and recording methods. Paper records contain bibliographic information, curation notes, and classification tags; pathway and model records link these sources to candidate feedback mechanisms and their implementations.
++\begin{samepage}
++I curated the database in Airtable, an online database system. Linked tables connect papers, pathways, and models. Exporting the records with those links preserves the route from a pathway name to the relevant paper, its curation note, and the original study in the standalone Explorer.\par
++\end{samepage}
+ 
+ \section{Curation Methods}\label{sec:sadb_methods}
+ 
+@@ -26,61 +28,73 @@
+ 
+ I implemented a monthly literature watch that queries OpenAlex and Crossref for candidate additions matching selected authors and keywords. Its search terms include ``Ia afferent,'' ``Ib afferent,'' ``muscle spindle,'' ``proprioceptive feedback,'' and ``central pattern generator.'' The script removes DOI and version duplicates, verifies shortlisted DOIs through Crossref, and writes a shortlist for manual curation. Source-access limitations are recorded with the shortlist; inclusion and classification decisions remain manual.
+ 
+-
+ \begin{figure}[htbp]
+ \centering
+-\begin{tikzpicture}[every node/.style={font=\small},curationstep/.style={draw,rounded corners,align=center,text width=3.3cm,minimum height=0.9cm}]
++\usetikzlibrary{arrows.meta}
++\begin{tikzpicture}[every node/.style={font=\small},curationstep/.style={draw,rounded corners,align=center,text width=3.3cm,minimum height=0.9cm},flow/.style={-{Latex[length=3.4mm,width=2.6mm]},line width=1.1pt}]
+ \node[curationstep] (a) at (0,0) {\mbox{Collect candidate}\\records};
+ \node[curationstep] (b) at (4.1,0) {Remove duplicates};
+ \node[curationstep] (c) at (8.2,0) {Screen scope and source access};
+ \node[curationstep] (d) at (8.2,-1.7) {\mbox{Read retained}\\sources};
+ \node[curationstep] (e) at (4.1,-1.7) {Classify and annotate};
+ \node[curationstep] (f) at (0,-1.7) {Transfer to Explorer};
+-\draw[->,line width=0.6pt] (a)--(b);\draw[->,line width=0.6pt] (b)--(c);\draw[->,line width=0.6pt] (c)--(d);\draw[->,line width=0.6pt] (d)--(e);\draw[->,line width=0.6pt] (e)--(f);
++\draw[flow] (a)--(b);\draw[flow] (b)--(c);\draw[flow] (c)--(d);\draw[flow] (d)--(e);\draw[flow] (e)--(f);
+ \end{tikzpicture}
+-\caption{SADb curation workflow. The monthly skimmer supplies candidate records; source review, inclusion, classification, and annotation remain manual.}
++\caption{Curation of SADb records. The monthly search supplies candidate papers. A curator reads each source, decides whether it belongs in the collection, and records the classifications and supporting evidence.}
+ \label{fig:sadb_curation_workflow}
+ \end{figure}
+ 
+ \section{Results: Application and Corpus Coverage}\label{sec:sadb_corpus}
+ 
+-The application contains 1,393 entries in five record categories: 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. The searchable table includes the complete 1,393-entry collection. The Pivot and Bubble map tabs use the 943 entries in the Papers category. Archived records remain searchable in the application.
++The searchable Table contains 1,393 entries. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. It includes archived entries. Pivot and Bubble map draw from the 943 Papers. Appendix~\ref{app:sadb_records} explains which records were retained in the working database and how to interpret the coverage counts.
+ 
+-Within the application's Papers category, containing 943 entries, 833 carry curation notes, 606 have tags for the animals or human participants studied, 316 carry animal-study assessments, 119 link to feedback pathways, 95 carry an afferent classification, and 363 carry robot-or-simulation translation notes. DOI identifiers are present for 892 papers, and 318 have attached-PDF indicators. Within the Papers category, 730 papers are connected by 11,130 directed citation pairs. The Louvain algorithm identifies citation communities: groups of papers with comparatively dense citation connections. The application labels these communities as 18 named topic clusters (Figure~\ref{fig:sadb_clusters}, callout~(G)), which help users navigate related studies in the Bubble map tab.
++Within the application's Papers category, containing 943 entries, 833 carry curation notes, 606 have tags for the animals or human participants studied, 316 carry animal-study assessments, 119 link to feedback pathways, 95 carry an afferent classification, and 363 carry robot-or-simulation translation notes. DOI identifiers are present for 892 papers, and 318 have attached-PDF indicators. Of these Papers, 730 cite at least one other Paper in the collection. Counting both citing and cited papers gives 816 distinct Papers connected by 11,130 directed citation pairs. The Louvain algorithm identifies groups of papers with relatively dense citation links. The application labels these communities as 18 named topic clusters (Figure~\ref{fig:sadb_clusters}, callout~(G)), which help users navigate related studies in the Bubble map tab.
+ 
+-The Table tab combines text search with filters for animal or human study category, pathway, afferent class, record type, archive status, year, and note or PDF availability (Figure~\ref{fig:sadb_explorer}). Selecting a record opens its source information, curation notes, and notes on how the reported findings could inform a robot or simulation. The Search (online) tab queries OpenAlex for candidate additions and marks DOIs already represented in SADb.
++The Table tab retrieves both a paper and the evidence recorded for it. For example, choosing \emph{Ib disynaptic excitation} in the \emph{Pathway} filter returns six Papers (Figure~\ref{fig:sadb_explorer}). Select the row for \citet{mccrea_disynaptic_1995} to open its record. The drawer shows the source DOI, the Cat classification, both Ia and Ib afferent tags, and two pathway labels, \emph{Ib disynaptic excitation} and \emph{Ib disynaptic inhibition}. Reading the experiment explains why both labels apply.
+ 
+-\begin{figure}[p]
++\begin{figure}[H]
+ \centering
+-\includegraphics[width=\textwidth]{sadb_table_record.jpg}
+-\par\vspace{0.6em}
+-\includegraphics[width=0.53\textwidth,height=0.65\textheight,keepaspectratio]{sadb_table_detail.jpg}
+-\caption{SADb Table view after a text search (top) and the selected record's detail view (bottom), showing its source information, linked records, and curation note.}
++\includegraphics[width=\textwidth]{sadb_table_record_guide.pdf}
++
++\caption[Finding the experimental evidence for a pathway]{The SADb Explorer pathway filter (A) returns six Papers. Selecting the McCrea row in the results (B) opens the record (C), which gives the source DOI, the afferent classes, and the two pathway labels. The DOI opens the experiment that supports the classifications.}
+ \label{fig:sadb_explorer}
+ \end{figure}
+ 
+-The Bubble map tab offers two selectable layouts (Figure~\ref{fig:sadb_clusters}). The year--citations layout places publication year on the horizontal axis and citation count on the vertical axis. The topic landscape instead draws papers as nodes joined by citation links. A spring-layout algorithm balances attraction along links with repulsion between nodes to arrange connected groups together. Its coordinates arrange the network; neither axis measures publication year or citation count. The user controls the layout, display style, record grouping, citation-neighborhood depth, and click action (Figure~\ref{fig:sadb_clusters}, callout~(B)).
++\subsection{From a Pathway Record to a Controller Rule}\label{sec:sadb_worked_rule}
++In decerebrate cats at rest, stimulating the plantaris nerve at group~I strength inhibited medial gastrocnemius motor neurons. With the same stimulus during extension in midbrain-evoked fictive locomotion, the recorded response was excitatory. In this preparation the neural rhythm was present while the animal was immobilized. Nerve stimulation recruited group~I fibers and did not isolate Ib fibers.
+ 
+-Selecting a paper makes it the reference for the displayed citation neighborhood; the application calls this the focus paper. Its source information appears in the left record area (Figure~\ref{fig:sadb_clusters}, callout~(C)), together with its curation note and notes on possible applications to a robot or simulation (Figure~\ref{fig:sadb_clusters}, callout~(D)). The neighborhood selector displays papers up to one, two, or three citation links from the focus paper, following either its references or papers that cite it (Figure~\ref{fig:sadb_clusters}, callout~(E)). A two-link neighborhood adds one level beyond the directly connected papers. Directly connected papers retain color, while papers reached through additional links are gray. In the illustrated neighborhood of the Grillner (1985) focus paper, 57 in-corpus papers cite it, it cites 13 in-corpus papers, and 555 papers lie within two links. Green triangles identify papers that cite the focus paper, and red circles identify papers cited by it.
++Figure~\ref{fig:sadb_group_i_rule} shows one rule a modeler could take from this record. During simulated rest, a brief input from the plantaris group~I pathway would reduce activity in the synergist motor pool. During the active extensor phase, the same input would increase its activity. The measurements constrain the sign and timing of the net response. Choosing the interneurons, synaptic strengths, and delays that produce it is a separate modeling decision. Appendix~\ref{app:sadb_records} shows how the result changes in a different preparation.
++
++\begin{figure}[!htbp]
++\centering
++\includegraphics[width=\textwidth]{sadb_group_i_rule.pdf}
++\caption[An experimental constraint on a sensory feedback rule]{The plantaris nerve stimulus and recorded medial gastrocnemius motor pool were the same in both conditions. Stimulation inhibited the motor neurons at rest and excited them during the extensor phase of midbrain-evoked fictive locomotion \citep{mccrea_disynaptic_1995}. The two signed connections represent a candidate model's net response through spinal circuitry.}
++\label{fig:sadb_group_i_rule}
++\end{figure}
++\FloatBarrier
++
++\subsection{Comparing Groups of Papers}
++
++Pivot answers a different question. With the Table filters cleared, choose \emph{Afferent types} and \emph{Animal}, then select the Ib--Cat cell (Figure~\ref{fig:sadb_pivot}). Table opens the 21 Papers counted in that cell. \emph{Back to pivot} restores the comparison. A paper can carry more than one afferent or animal tag and appear in several cells. A cell count consequently describes how much material a researcher can inspect for a particular combination.
++
++\begin{figure}[H]
++\centering
++\includegraphics[width=\textwidth]{sadb_pivot_guide.pdf}
++\caption[The SADb Explorer pivot view]{With afferent type and animal selected (A), the Ib row and Cat column intersect at 21 (B). Selecting the cell opens the 21 matching Papers in Table. The return control restores the pivot (C).}
++\label{fig:sadb_pivot}
++\end{figure}
++
++\subsection{Following Citations in Bubble Map}
++
++The Bubble map tab offers two selectable layouts (Figure~\ref{fig:sadb_clusters}). The year--citations layout places publication year on the horizontal axis and citation count on a logarithmic vertical axis. The topic landscape instead draws papers as nodes joined by citation links. A spring-layout algorithm balances attraction along links with repulsion between nodes to arrange connected groups together. Its coordinates arrange the network; neither axis measures publication year or citation count. The user controls the layout, display style, record grouping, citation-neighborhood depth, and click action (Figure~\ref{fig:sadb_clusters}, callout~(B)).
++
++Selecting a paper makes it the reference for the displayed citation neighborhood; the application calls this the focus paper. Its source information appears in the left record area (Figure~\ref{fig:sadb_clusters}, callout~(C)), together with its curation note and notes on possible applications to a robot or simulation (Figure~\ref{fig:sadb_clusters}, callout~(D)). The neighborhood selector in callout~(B) displays papers up to one, two, or three citation links from the focus paper. Callout~(E) marks the resulting neighborhood, which includes both references and citing papers. A two-link neighborhood adds one level beyond the directly connected papers. Directly connected papers retain color, while papers reached through additional links are gray. In the illustrated neighborhood of the Grillner (1985) focus paper, 57 in-corpus papers cite it, it cites 13 in-corpus papers, and the two-link display contains 555 papers including the focus paper itself. Green triangles identify papers that cite the focus paper, and red circles identify papers cited by it.
+ 
+ The connection list separates papers citing the focus paper from its references (Figure~\ref{fig:sadb_clusters}, callout~(F)). Selecting a listed paper makes it the new focus paper, allowing a reader to follow the development of an idea without repeatedly searching for individual titles. The reference-only and cited-by views isolate either direction, and the detail action opens the underlying record. A researcher can therefore start from a known experiment, inspect earlier studies supporting it, follow subsequent models or experiments citing it, and read the associated translation notes before choosing a candidate pathway for simulation.
+ 
+-\begin{samepage}
+-For example, a researcher may ask whether type Ia feedback excites the muscle from which it originates or inhibits its antagonist. SADb contains separate pathway records for ``Ia monosynaptic excitation'' and ``Ia inhibitory.'' These describe complementary connections: direct excitation of the agonist motor pool and inhibition of an antagonist through an inhibitory interneuron. The researcher can inspect the linked studies and model records to compare their target muscles, intervening neurons, and task conditions before choosing how to implement the sensory afferent pathways. The afferent class alone does not specify the sign of every connection.\par
+-\end{samepage}
++\begingroup
+ 
+-The Pivot tab counts papers by two selected dimensions, including topic cluster, decade, primary author, animal or human study category, feedback pathway, and afferent classification. Figure~\ref{fig:sadb_pivot} crosses afferent classes with categories of animal and human studies: each cell counts papers carrying both tags. Rows and columns can be ordered alphabetically or by count. Selecting a cell opens the corresponding records in the Table tab, and a return control restores the pivot. The pivot is computed over the 943 entries in the Papers category, including archived entries, rather than all 1,393 records. Because a paper can carry several animal or afferent tags, it can contribute to several cells. The counts describe the distribution of curated records, not independent experimental observations or the strength of evidence for a pathway.
+-
+-\begin{figure}[H]
+-\centering
+-\includegraphics[width=0.96\textwidth,trim=0 610bp 0 0,clip]{sadb_pivot_app.png}
+-\caption[The SADb Explorer pivot view]{SADb Explorer pivot table by afferent classification and animal or human study category. Each cell counts papers carrying both tags and links to those records.}
+-\label{fig:sadb_pivot}
+-\end{figure}
+-
+-\begingroup
+-\widowpenalty=10000
+-The feedback-pathway records extend beyond the mammalian core of Table~\ref{tab:sadb_pathways}: paired excitation and inhibition records cover the chordotonal organs and trochanteral hair plates of insect legs, a load-feedback record covers the campaniform sensilla, and further records hold fictive locomotion without sensory feedback (12 linked papers), group III/IV fatigue, and one paper each for somatosensory, vestibular, and visual contributions to postural control. The controller of Chapter~\ref{ch:sns} implements the mammalian subset.
++The feedback-pathway records extend beyond the mammalian core of Table~\ref{tab:sadb_pathways}: paired excitation and inhibition records cover the chordotonal organs and trochanteral hair plates of insect legs, a load-feedback record covers the campaniform sensilla, and further records hold fictive locomotion without sensory feedback (12 linked papers), group III/IV fatigue, and one paper each for somatosensory, vestibular, and visual contributions to postural control. These records let a researcher identify candidate pathways across species. Chapter~\ref{ch:sns} tests selected mammalian feedback connections in specific controllers.
+ \par
+ \endgroup
+ 
+@@ -91,9 +105,9 @@
+ \section{Discussion}
+ \subsection{Uses of the Database}\label{sec:sadb_use}
+ 
+-SADb helps researchers connect an account of sensory feedback to the experiments and models supporting it. Searchable notes, linked records, and citation neighborhoods provide complementary routes through a literature spread across animal studies, human studies, and modeling disciplines. A reader can begin with a familiar paper, follow its references and later citing studies, and compare the conditions under which a feedback mechanism was observed. This makes the resource useful for learning a research area and for identifying questions that require a closer reading of the primary evidence.
++For a modeler, the value of a curated record lies in the distinctions it preserves. The plantaris experiment yielded a different sign at rest and during extension. A controller with a single positive gain for every group~I input would miss that difference. A modeler can return to the source to choose which preparation the controller should represent and what stimulus would test it.
+ 
+-The database also supports the design of neural models for locomotion and balance. Table~\ref{tab:sadb_afferents} in Appendix~\ref{app:sadb_records} summarizes afferent classes, receptors, and encoded signals for selecting model inputs. Table~\ref{tab:sadb_pathways} gives representative feedback pathways, their actions in the step cycle, and the studies linked to those records. These source links let a modeler examine the experimental basis for a candidate connection and the assumptions needed to implement it.
++Table~\ref{tab:sadb_afferents} in Appendix~\ref{app:sadb_records} relates each receptor to a possible model input. Table~\ref{tab:sadb_pathways} lists the pathway records and the papers linked to them. For example, \emph{Ia monosynaptic excitation} concerns the motor pool of the muscle containing the spindle, while \emph{Ia reciprocal inhibition} concerns the antagonist motor pool and an intervening inhibitory neuron. Selecting the pathway as well as the afferent specifies which connection the researcher wants to examine.
+ 
+ SADb supplies records and source connections through which a researcher can compare experimental evidence with model assumptions. \citet{ting_limited_2005} linked muscle-activation synergies to limb endpoint-force vectors in cats responding to support-surface translations. \citet{latash_organization_2020} compared cat stepping patterns with a mathematical model to investigate how rhythm-generator operation could change with control drive under tied-belt and split-belt conditions. The first study connects measured muscle activity to postural output; the second tests a candidate circuit explanation for locomotor phase patterns. Following the source papers exposes these differences in task, preparation, and explanation.
+ 
+@@ -101,5 +115,5 @@
+ 
+ The balance, posture, and multisensory-recalibration clusters provide entry points for the vestibular and visual extensions proposed in Section~\ref{sec:fw_senses}. Searches of existing animal studies let users compare the conditions and tasks behind a proposed feedback rule before testing it in a robotic or computational model. Reusing this evidence for model-based tests supports the aim of reducing reliance on further animal experimentation (Section~\ref{sec:bg_ethics}).
+ 
+-SADb supports selecting sensory afferent pathways and comparing whole neural circuits for neuromechanical models. The researcher can trace candidate mechanisms to their source studies and compare species, task conditions, and modeling assumptions. Their encoding, connection signs, gains, and interaction with the body must then be implemented and tested. Robotic experiments can examine these neural mechanisms under controlled mechanical conditions and generate questions for the biological literature. Chapter~\ref{ch:sns} develops the models and simulation tools needed for that next step.
++SADb supplies the source, preparation, stimulus, and measured response behind a candidate rule. The rule can then be tested by holding the mechanical model fixed, changing the sensory connection, and repeating the same stimulus. Chapter~\ref{ch:sns} develops the tools for that comparison.
+ 
+--- author_export/chapters/60-sns.tex
++++ local_revision/chapters/60-sns.tex
+@@ -1,14 +1,11 @@
+ \chapter{Tools for Constructing and Testing Neuromechanical Models}\label{ch:sns}
+ \graphicspath{{../Figures/60-sns/}{figs/60-sns/}}
+-\edef\snsSavedWidowPenalty{\the\widowpenalty}
+-\edef\snsSavedClubPenalty{\the\clubpenalty}
+-\widowpenalty=10000\clubpenalty=10000
+-
+-I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I built a graphical editor to construct neural circuits for these experiments. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.
++
++I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I developed Simulink blocks and a graphical interface for building nonspiking circuits. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.
+ 
+ \section{The Limits of Hand Tuning in AnimatLab}\label{sec:prior_walker}\label{sec:animatlab_results}\label{sec:sns_gaps}
+ 
+-I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs cycled in a stepping-like motion while in air, but the model fell when active support was removed (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.
++I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.
+ 
+ \begin{figure}[htbp]
+ \centering
+@@ -20,7 +17,7 @@
+ \textbf{(B)}\\[2pt]
+ \includegraphics[width=\linewidth,height=0.19\textheight,keepaspectratio]{LI_DENG_FALL_FRAME.png}
+ \end{minipage}
+-\caption[Original controller-transfer experiment]{The Li--Deng model cycled its legs in suspension (A) and tipped when released for the ground test (B).}
++\caption[Original controller-transfer experiment]{The legs of the Li--Deng model made stepping-like movements while the model was suspended in air (A). The model fell over when it was lowered to the ground and its support was removed (B).}
+ \label{fig:animatlab_model_architecture}
+ \end{figure}
+ 
+@@ -51,10 +48,10 @@
+ \toprule
+ Mechanical model & Actuation and controller & Experimental use \\
+ \midrule
+-Li--Deng walker in AnimatLab & Opposing muscle models with contractile and elastic elements (Hill-type) and a shared RG & Compare suspended cycling with the fall on release. \\
++Li--Deng walker in AnimatLab & Opposing muscle models with contractile and elastic elements (Hill-type) and a shared RG & Compare stepping-like motion in suspension with the fall on release. \\
+ W2L walker in MuJoCo & Leg muscle actuators and bilateral circuits with contact feedback & Test footfall coordination on fixed ground and, with a later controller, on a moving treadmill. \\
+ Gait2392 human & Biological muscles with prescribed activations for the force test and neural drive for movement & Check force at matched poses and test recruitment with continuously varying neural signals or discrete spikes. \\
+-Gait2392 robot counterpart & Relocated paths with selectable muscle or BPA force laws & Test actuation on the robot routes. The suspended cycling example used Hill-type muscles. \\
++Gait2392 robot counterpart & Relocated paths with selectable muscle or BPA force laws & Test actuation on the robot routes. The suspended leg-motion example used Hill-type muscles. \\
+ CAD robot & The SNS sets timing. A second controller distributes tension among 54 ideal actuators. & Test contact handover and swing clearance under measured assistance. \\
+ Single-joint knee & Antagonist reflex circuit and simplified tensile actuators & Pulse the extensor sensory pathway and measure the knee response. \\
+ Single-joint arm & Reflex circuit with nominal \qty{20}{\milli\meter} diameter BPAs (BPA20) & Raise the cup load and measure arm sag. \\
+@@ -70,7 +67,7 @@
+ 
+ \subsection{Relocating the Actuators on the Robot Counterpart}
+ 
+-I next used \path{gait2392_robotbody.osim} to represent the routes proposed for the robot. In my earlier design I had moved actuator origins, insertions, and via points to respect the usable BPA contraction and avoid interference \citep{bolen_bipedal_2019,morrow_optimization_2020}. My preparation script mirrored the intended right-side routes to the left and wrote \path{gait2392_robot.osim} for conversion. Applying human muscle parameters to the new paths caused equilibrium failures because the routed lengths had changed. With converted Hill-type actuators, the robot model cycled its legs in suspension. To test a BPA on the same geometry, I supplied a separate force law.
++I next used \path{gait2392_robotbody.osim} to represent the routes proposed for the robot. In my earlier design I had moved actuator origins, insertions, and via points to respect the usable BPA contraction and avoid interference \citep{bolen_bipedal_2019,morrow_optimization_2020}. My preparation script mirrored the intended right-side routes to the left and wrote \path{gait2392_robot.osim} for conversion. Applying human muscle parameters to the new paths caused equilibrium failures because the routed lengths had changed. With converted Hill-type actuators, the legs of the suspended robot model made repeated stepping-like movements. To test a BPA on the same geometry, I supplied a separate force law.
+ 
+ For BPA actuation, my interface evaluates the quasi-static force law from Chapter~\ref{ch:muscles} at the current routed length and commanded pressure and applies tensile force along the route. This allows a researcher to change the force law while retaining the mechanical geometry. The calculation assumes that commanded pressure is available at the actuator. Valve filling and loading-history effects require separate measurements.
+ 
+@@ -82,11 +79,11 @@
+ 
+ In the supported CAD stepping experiment, the SNS set the timing and an engineering controller distributed reference tensions among 54 actuators. Foot forces and clearances showed whether one leg accepted load while the other unloaded and swung. In a pressure-driven experiment, the separate BPA interface calculates the available tension from commanded pressure and routed length.
+ 
+-\section{Designing and Testing Neural Controllers Graphically}\label{sec:sns_new_tools}\label{sec:w2l_matlab_attempt}
++\section{SNS-Simscape Block Programming for Neural Controllers}\label{sec:sns_new_tools}\label{sec:w2l_matlab_attempt}
+ 
+ I adapted W2L to the Gait2392 human model. In this variant, W2Lvar, pattern-formation (PF) channels time the activity of motor neurons (MNs), the neurons that recruit muscles. One pair of channels coordinates the hip muscles on each side, and another coordinates the knee and ankle muscles. The circuit contains 888 neurons and 7,868 connected neuron pairs. To change how a knee extensor is recruited, a researcher needs to find the group of motor neurons that drives it, trace the inputs to that group, and inspect the strength and sign of each connection.
+ 
+-AnimatLab provides a drawing surface for wiring neurons and synapses. In the SNS-Toolbox workflow, the researcher specifies those connections in Python and can render a diagram of the resulting network \citep{cofer_animatlab_2010,nourse_sns_2023}. A diagram helps locate a pathway. An editable diagram also lets the researcher change the connection where it is drawn. I built a graphical circuit editor and a library of Simulink blocks to make selected pathways in a connectome, the map of connections among neurons, accessible in this way. A nonspiking neuron continuously transmits changes in membrane voltage through its synapses over their operating range. A spiking neuron signals by emitting a discrete spike when its voltage reaches threshold. Scripts remain useful for generating repeated connections and testing many parameter settings. Table~\ref{tab:sns_capability} identifies the tools used for each task.
++AnimatLab provides a drawing surface for wiring neurons and synapses. In the SNS-Toolbox workflow, the researcher specifies those connections in Python and can render a diagram of the resulting network \citep{cofer_animatlab_2010,nourse_sns_2023}. I developed the SNS-Simscape block library and its graphical interface so a researcher can place nonspiking neurons, set synaptic parameters where the blocks connect, and build the corresponding circuit in Simulink. A nonspiking neuron continuously transmits changes in membrane voltage through its synapses over their operating range. A spiking neuron signals by emitting a discrete spike when its voltage reaches threshold. Scripts remain useful for generating repeated connections and testing many parameter settings. Table~\ref{tab:sns_capability} identifies the tools used for each task.
+ 
+ \begin{table}[!htbp]
+ \centering\small
+@@ -105,11 +102,11 @@
+ \end{tabularx}
+ \end{table}
+ 
+-\subsection{Building a Circuit in the Graphical Editor}
++\subsection{Building a Nonspiking Circuit in Simulink}
+ 
+ I implemented SNS-Simscape as Simulink blocks for neural activity, synapses, sensory signals, muscle activation, and actuator force (Figure~\ref{fig:simulink_sns_implementation}). The library includes both nonspiking equations based on SNS-Toolbox \citep{nourse_sns_2023} and a leaky integrate-and-fire (LIF) block. Sensory blocks represent group Ia fibers, which respond to muscle stretch, and group Ib fibers, which respond to tension.
+ 
+-In the graphical editor, a researcher can place nonspiking neurons, draw synapses between them, inspect a synapse's strength and reversal potential, and save the circuit. The Build action generates a Simulink circuit from that saved description. Appendix~\ref{sec:app_signal_contracts} gives the editor command and build script. The knee and arm examples use separate builders to add their actuator, sensory, and mechanical blocks.
++In the SNS-Simscape interface, \texttt{SNSGui}, a researcher can place nonspiking neurons, connect them with synapses, inspect a synapse's strength and reversal potential, and save the circuit. Choosing \emph{Build} generates the neural portion of a Simulink model. Appendix~\ref{sec:app_signal_contracts} gives the command and build script. Separate builders connect the knee and arm circuits to their actuators, sensory inputs, and mechanical models.
+ 
+ \begin{figure}[!htbp]
+ \centering
+@@ -172,7 +169,7 @@
+ 
+ I adapted the four-stage training method of \citet{hunt_development_2017} to the human model. The first stage sets the intrinsic period to approximately twice the target locomotor period. The second tunes the circuit to synchronize with the sensory input. The third fits feedforward motor recruitment, and the fourth refines it with sensory feedback. The recruitment targets came from inverse mechanics applied to reference motion. Agreement with those targets measures how closely the circuit reproduces the estimated muscle activation.
+ 
+-The search scripts bound the parameters, tie corresponding left and right values when symmetry is intended, and use tree-structured Parzen estimation to select candidates from earlier scores. They save the parameters, components of the score, and reason each trial ended. A selected candidate is rerun in a fresh process before any intervention.
++For rhythm and sensory timing, the search scripts use tree-structured Parzen estimation to propose new parameter sets from earlier scores. For the s3k and syn6 controllers, a separate bounded least-squares fit adjusts the connections from pattern-formation channels to motor neurons to match the reference muscle recruitment. Corresponding weights are tied across sides when the fit calls for symmetry. The physical test then loads the saved settings, records the components of its score and the reason the trial ended, and repeats a selected trial in a fresh process before an intervention.
+ 
+ The physical tasks change the loads and sensory information available to a saved controller (Table~\ref{tab:sns_curriculum}). During suspension, \emph{deafferented} means that sensory feedback to the controller is disabled and \emph{afferented} means that it is enabled. Suspension permits a test of recruitment and timing before the feet meet the ground. Standing and supported stepping then test whether the legs bear load and transfer it between the feet.
+ 
+@@ -193,19 +190,19 @@
+ \end{tabularx}
+ \end{table}
+ 
+-Progress on one task does not establish performance on the next. Accurate motor recruitment can coexist with a timing error in the circuit, and cycling the legs in suspension requires no weight transfer. The tests therefore examine PF transmission separately from motor recruitment and foot loading separately from joint motion.
++Progress on one task does not establish performance on the next. Accurate motor recruitment can coexist with a timing error in the circuit, and moving the legs in suspension places no load on the feet. The tests therefore examine PF transmission separately from motor recruitment and foot loading separately from joint motion.
+ 
+ Acceptance begins with finite states, completion of the prescribed duration, and protected joint bounds. Suspended experiments assess meaningful joint excursion, cadence, and bilateral phase. Ground tests additionally require unloading, whole-foot clearance, contralateral loading, and a minimum interval duration specified for the model. Appendix~\ref{app:simulation_verification} gives the force, clearance, and duration thresholds for each contact test. Assistance is calculated from recorded forces over a declared window. Vertical lift, horizontal guidance, and attitude restraint are reported separately because reducing one does not remove the others. A nominal support setting is therefore insufficient to characterize the loading experienced by the model.
+ 
+-In a pathway-removal experiment, the unaffected controller parameters, drive, support, and external force protocol stay fixed. In a stimulation experiment, the driver changes the injected current at one location and repeats the trial from the same state. Aligning RG, PF, and MN voltages with joint motion, actuator force, and support force identifies where the responses first diverge.
++In a pathway-removal experiment, the unaffected controller parameters, drive, support, and external force stay fixed. For a stimulation experiment, the driver changes the injected current at one location and repeats the trial from the same state. For the Gait2392 trials, I developed a recorder that saves the timing of neural inputs and updates alongside joint states, muscle commands, foot loads, and harness forces. A researcher can align the signals at the stimulus or foot-contact event and locate the first response that differs. The saved joint states also allow the movement to be viewed again without running the controller a second time.
+ 
+ The timing comparison uses the same neural and mechanical trajectories as its starting point. Timing neural updates and the complete simulation separately accounts for the time spent on initialization, mechanics, and recording.
+ 
+ \subsection{Testing Bilateral Coordination in Suspension}\label{sec:preliminary_sim_results}\label{sec:sns_biw2l_results}
+ 
+-I extended W2Lvar to coordinate muscles that span the hip and knee. The resulting nonspiking controller, BiW2Lvar+, was calibrated using the four-stage method above. Suspension provided a first test of whether the two legs could cycle in alternation before either foot had to support weight.
+-
+-With the same fitted weights, the Gait2392 model cycled both legs in each suspended trial (Figure~\ref{fig:sns_biw2l_air}). The period shortened from \qty{2.466}{\second} to \qty{1.300}{\second} in the second trial. Both sensory feedback and sustained neural drive changed between trials, so this comparison cannot attribute the shorter period to feedback alone. The feet carried no load. Appendix~\ref{sec:app_biw2l_air} gives the controller settings, support forces, and joint-angle measurements.
++I extended W2Lvar to coordinate muscles that span the hip and knee. The resulting nonspiking controller, BiW2Lvar+, was calibrated using the four-stage method above. Suspension provided a first test of whether the two legs could move in alternation before either foot had to support weight.
++
++With the same fitted weights, both legs of the suspended Gait2392 model made repeated stepping-like movements in each trial (Figure~\ref{fig:sns_biw2l_air}). The period shortened from \qty{2.466}{\second} to \qty{1.300}{\second} in the second trial. Both sensory feedback and sustained neural drive changed between trials, so this comparison cannot attribute the shorter period to feedback alone. The feet carried no load. Appendix~\ref{sec:app_biw2l_air} gives the controller settings, support forces, and joint-angle measurements.
+ 
+ \begin{figure}[!htbp]
+ \centering
+@@ -237,7 +234,7 @@
+ \begin{figure}[!htbp]
+ \centering
+ \includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short_20261031.pdf}
+-\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. Solid lines show the left leg and dashed lines the right. Joint cycling continued in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
++\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. Solid lines show the left leg and dashed lines the right. The joints continued to flex and extend in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
+ \label{fig:sns_ablation_pair}
+ \end{figure}
+ 
+@@ -254,13 +251,13 @@
+ 
+ \subsection{Execution Time for Repeated Controller Trials}\label{sec:sns_execution}
+ 
+-{\interlinepenalty=10000 The sparse neural implementation stores the circuit topology once and reuses its arrays at each update. I timed it against the controller's NumPy reference implementation in SNS-Toolbox only after matching the trajectories of the same controller and body. In one paired \qty{16}{\second} Gait2392 stage-1 trial using the 1,025-cell \texttt{hunt} source configuration, the complete external process took \qty{199.624}{\second} with the NumPy reference and \qty{29.284}{\second} with the sparse backend. This measures a $6.82\times$ speedup for the process, including \qty{0.6}{\second} of simulated held-pose preparation. Timing just the neural calls within that pair gave $18.31\times$ (Table~\ref{tab:sns_runtime}).\par}
+-
+-In the second timing test, Hunt-PT+RC used a Peterka--Ting-inspired balance pathway (PT) that responds to motion of the model's center of mass. Its Renshaw cells (RC) receive motor-neuron input and feed inhibition back to the same motor pool. I compared sparse execution with a compact version that reuses working arrays and calculates ionic current only for channels with nonzero conductance.
++The sparse neural implementation stores the circuit topology once and reuses its arrays at each update. I timed it against the controller's NumPy reference implementation in SNS-Toolbox only after matching the trajectories of the same controller and body. In one paired \qty{16}{\second} Gait2392 stage-1 trial using an earlier 1,025-cell configuration of BiW2Lvar+, the complete external process took \qty{199.624}{\second} with the NumPy reference and \qty{29.284}{\second} with the sparse backend. This measures a $6.82\times$ speedup for the process, including \qty{0.6}{\second} of simulated held-pose preparation. Timing just the neural calls within that pair gave $18.31\times$ (Table~\ref{tab:sns_runtime}).
++
++The second timing test used a 1,033-cell configuration with a Peterka--Ting-inspired balance pathway that responds to motion of the model's center of mass. Its Renshaw cells receive motor-neuron input and feed inhibition back to the same motor pool. I compared sparse execution with a compact version that reuses working arrays and calculates ionic current only for channels with nonzero conductance.
+ 
+ \begin{table}[htbp]
+ \centering\small
+-\caption[Scoped computational performance comparisons]{Matched reference and accelerated timings. The first two rows use the 1,025-cell source-setting \texttt{hunt} implementation, SNS-Toolbox NumPy reference versus sparse execution, in one \qty{16}{\second} stage-1 protocol pair. The last two use the separate 1,033-cell implementation labelled Hunt-PT+RC, sparse versus compact execution. The third row gives median times from three blocks after initialization. The evaluator diagnostic is one paired \qty{16}{\second} stage-4 trial.}
++\caption[Scoped computational performance comparisons]{Matched reference and accelerated timings. The first two rows compare reference and sparse execution of a 1,025-cell BiW2Lvar+ configuration in a single paired \qty{16}{\second} stage-1 protocol. The last two compare sparse and compact execution of the 1,033-cell configuration with balance feedback and Renshaw cells. The third row gives median times from three blocks after initialization. The evaluator diagnostic is one paired \qty{16}{\second} stage-4 trial.}
+ \label{tab:sns_runtime}
+ \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrr@{}}
+ \toprule
+@@ -274,7 +271,7 @@
+ \end{tabularx}
+ \end{table}
+ 
+-{\interlinepenalty=10000 For the 1,033-cell Hunt-PT+RC controller, the compact backend reproduced all 62 captured arrays and the compiled model identity. After initialization, I timed three blocks of 3,000 neural updates and reported the median. The separate \qty{16}{\second} stage-4 diagnostic timed the coupled evaluator, recording, and assessment. The timer excluded process startup, pre-run setup, and final serialization. Improving the neural calculation by $1.613\times$ improved that evaluator time by only $1.0156\times$. This difference matters when estimating how many complete trials a parameter search can run (Appendix~\ref{sec:app_execution_provenance}).\par}
++For the 1,033-cell configuration with balance feedback and Renshaw cells, the compact backend reproduced all 62 captured arrays and the compiled model identity. After initialization, I timed three blocks of 3,000 neural updates and reported the median. The separate \qty{16}{\second} stage-4 diagnostic timed the coupled evaluator, recording, and assessment. The timer excluded process startup, pre-run setup, and final serialization. Improving the neural calculation by $1.613\times$ improved that evaluator time by only $1.0156\times$. This difference matters when estimating how many complete trials a parameter search can run (Appendix~\ref{sec:app_execution_provenance}).
+ 
+ \section{Discussion}\label{sec:sns_discussion}
+ 
+@@ -294,9 +291,6 @@
+ 
+ \section{Conclusion}
+ 
+-I developed the SNS-Simscape block library and graphical editor so that a researcher can draw a nonspiking circuit, inspect an individual connection, and generate a Simulink model from the saved circuit. The actuator and sensory blocks link muscle recruitment to force and joint motion in the single-joint demonstrations. For experiments with MuJoCo mechanics, the adapted interface sends actuator commands to a prepared model and returns joint and actuator measurements. The mechanical preparation tools make the Gait2392 human model, its rerouted robot counterpart, and a model assembled from the lab robot's CAD available for controller experiments.
+-
+-The calibration and recording scripts make comparisons repeatable. A future researcher can load a saved circuit, change one sensory pathway, and repeat the trial with the body, drive, and support held fixed. The recordings show how that change affects neural activity, muscle force, joint motion, and foot contact. A change in muscle routing can be tested with the controller settings held fixed. The sparse neural implementation shortens repeated trials on the tested Gait2392 controller (Table~\ref{tab:sns_runtime}). These capabilities allow researchers to use human mechanics as a reference and simulate how a change in the controller or the robot's design affects coordination.
+-
+-\widowpenalty=\snsSavedWidowPenalty\relax
+-\clubpenalty=\snsSavedClubPenalty\relax
++I developed the SNS-Simscape block library and its Simulink circuit interface so that a researcher can draw a nonspiking circuit, inspect an individual connection, and generate a Simulink model from the saved circuit. The actuator and sensory blocks link muscle recruitment to force and joint motion in the single-joint demonstrations. For experiments with MuJoCo mechanics, the adapted interface sends actuator commands to a prepared model and returns joint and actuator measurements. The mechanical preparation tools make the Gait2392 human model, its rerouted robot counterpart, and a model assembled from the lab robot's CAD available for controller experiments.
++
++The calibration and recording scripts make comparisons repeatable. A researcher can load a saved controller configuration in its simulation script, change one sensory pathway, and repeat the trial with the body, drive, and support held fixed. The recordings show how that change affects neural activity, muscle force, joint motion, and foot contact. A change in muscle routing can be tested with the controller settings held fixed. The sparse neural implementation shortens repeated trials on the tested Gait2392 controller (Table~\ref{tab:sns_runtime}). These capabilities allow researchers to use human mechanics as a reference and simulate how a change in the controller or the robot's design affects coordination.
+--- author_export/chapters/70-overall.tex
++++ local_revision/chapters/70-overall.tex
+@@ -26,19 +26,27 @@
+ 
+ One explanation for the resting-length effect concerns the shape of the pressurized tube. Near each end fitting the outer diameter remains close to its uninflated value. It increases through a transition region to the nominal inflated diameter in the central span (Figure~\ref{fig:bpa_construction}A). If the transition occupies a similar axial length at a given pressure, a shorter actuator has a smaller fraction of its wall operating as a uniform cylinder. The physical end cap raises a different question. Measuring relative displacement across Onyx and aluminum caps under matched tensile loads, with the actuator pressurized and unpressurized, would isolate the contribution of cap and attachment compliance. An axial profile of tube diameter is needed to test the transition-region explanation.
+ 
+-Can deformation near the fittings account for the difference in isometric force between short and long actuators? Future researchers can test this explanation with a geometrically nonlinear finite-element model. Festo describes a pressure-sealing rubber wall reinforced by aramid fabric \citep[p.~2]{festo_2026}. The model can represent the wall as a nearly incompressible hyperelastic material and the braid as two embedded families of tension-only truss elements following the measured fiber angles. A curved membrane can represent the taut central span when bending is negligible. A thin shell adds bending where curvature varies over distances large compared with wall thickness. A thick shell can represent transverse shear in a shorter transition, while mixed displacement--pressure solids through the thickness are appropriate where the fitting compresses the rubber or produces local contact stress. A flat plate would discard the circumferential load path. Researchers can embed the fibers where they are bonded to the rubber and use measured frictional contact at a mechanically clamped interface that can slip. Sectioning a specimen and marking the wall relative to the fitting would distinguish bonded regions from sliding surfaces. Pressure would follow the deforming inner wall, with the closed-end pressure resultant included once, as the tube expands and the fiber angles change.
++Can deformation near the fittings account for the difference in isometric force between short and long actuators? Future researchers can test this explanation with a geometrically nonlinear finite-element model. Festo describes a pressure-sealing rubber wall reinforced by aramid fabric \citep[p.~2]{festo_2026}. The exploded view in Figure~\ref{fig:bpa_exploded_wall}C illustrates how the wall, reinforcement, and end fitting can be represented in the model. The model can represent the wall as a nearly incompressible hyperelastic material and the braid as two embedded families of tension-only truss elements following the measured fiber angles. A curved membrane can represent the taut central span when bending is negligible. A thin shell adds bending where curvature varies over distances large compared with wall thickness. A thick shell can represent transverse shear in a shorter transition, while mixed displacement--pressure solids through the thickness are appropriate where the fitting compresses the rubber or produces local contact stress. A flat plate would discard the circumferential load path. Researchers can embed the fibers where they are bonded to the rubber and use measured frictional contact at a mechanically clamped interface that can slip. Sectioning a specimen and marking the wall relative to the fitting would distinguish bonded regions from sliding surfaces. Pressure would follow the deforming inner wall, with the closed-end pressure resultant included once, as the tube expands and the fiber angles change.
+ 
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=14cm]{bpa_construction.pdf}\par\smallskip
+-\includegraphics[width=14cm]{bpa_exploded_cutaway.pdf}
+-\caption[End deformation and proposed BPA experiments]{Proposed investigation of the end effect. (A) The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. (B) An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
++\includegraphics[width=14cm]{bpa_loading_conditions.pdf}
++\caption[BPA end deformation, proposed tests, and exploded wall model]{Proposed investigation of the end effect. (A) The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. (B) An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
+ \label{fig:bpa_construction}
+ \end{figure}
+ 
+ Future researchers can prescribe the same measured gauge-pressure ramp from zero to \qty{500}{\kPa} for two quasi-static tests, fixing the upper fitting in both. For free contraction the lower fitting would translate along the axis with its fixture weight counterbalanced. For loaded contraction it would lift a known suspended mass with axial load $mg$, including the moving fixture in $m$. At each pressure plateau they can measure fitting separation, the diameter profile along the tube, and axial force at the fixed support. A third test would hold fitting separation fixed and measure the change in reaction with pressure. Agreement in the axial profile and the held-length force across resting lengths would test the end-effect hypothesis directly. Dynamic loading would then address a separate question about pressure response and hysteresis \citep{elzein_pressure_2025}. Appendix~\ref{app:muscle_calcs} gives the biological-muscle formulations used for comparison \citep{thelen_adjustment_2003,millard_flexing_2013}.
+ 
+-\subsection{Isometric Joint Design Factors}
++\begin{figure}[H]
++\ContinuedFloat
++\centering
++\includegraphics[trim=0 0 0 20bp,clip,width=\textwidth]{bpa_exploded_cutaway.pdf}
++\caption[]{\textit{Continued.} (C) Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}
++\label{fig:bpa_exploded_wall}
++\end{figure}
++
++\subsection{Joint Design Factors}
+ 
+ On the biomimetic knee, the original rigid-body model overpredicted the torque from the extensor route (Chapter~\ref{ch:torque}). I accounted for length offsets, compliance in the loaded force path, and the loss of usable BPA length where it wraps. The fitted stiffness pair includes the compliance of the fixtures and the loading connection. I then used the corrected model to size two routes and tested them on the knee. At the sampled angles, the flexor met or exceeded the isometric torque magnitude of the Gait2392 biceps femoris short head, and the extensor met or exceeded that of the vastus medialis. These tests extend earlier work on geometric attachment placement \citep{bolen_bipedal_2019,bolen_determination_2019,morrow_optimization_2020} by checking the torque each route delivers under load.
+ 
+@@ -50,15 +58,17 @@
+ 
+ \subsection{Sensory Afferent Database}
+ 
+-In the SADb a researcher can trace a proposed connection to the stimulus and response that support it, then compare the preparations in which the response changed. In the Table view, selecting \emph{Ib disynaptic excitation} under \emph{Pathway} returns linked papers. The record for \citet{mccrea_disynaptic_1995} opens a curation note, its pathway links, and the article DOI. In decerebrate cats, stimulating the plantaris nerve inhibited medial gastrocnemius motoneurons at rest. During the extensor phase of midbrain-evoked fictive locomotion, the same stimulation excited these synergist motoneurons. In an acute spinal preparation treated with clonidine, inhibition decreased without the short-latency excitation. The record also links to \emph{Ib disynaptic inhibition}. Reading the original experiment shows why those two links belong together and why a controller designer would test a state-dependent group~I pathway. The stimulation recruited group~I afferents and did not isolate Ib input.
++The SADb links sensory pathways to the experiments in which they were observed. For example, the two pathway labels in the McCrea record lead to the same nerve stimulus producing opposite responses under different conditions (Section~\ref{sec:sadb_worked_rule}). A researcher choosing feedback for an extensor controller can recover the stimulus and locomotor state associated with each sign before assigning that connection in a model.
+ 
+ \subsubsection{Future Work}\label{sec:fw_database}
+ 
+-The monthly literature watch supplies candidates for manual curation (Section~\ref{sec:sadb_methods}). For a pathway such as extensor group~I excitation, the most useful addition to a record would be a direct link from each reported sign to its preparation, stimulus, and phase. A reader could then distinguish a measured reversal from an assumption in a computational model before following their citation links. The Bubble map already identifies citation communities by color. Grouping their papers spatially would provide a second way to locate related studies \citep{bolen_using_2024}.
++The monthly literature watch supplies candidates for curation (Section~\ref{sec:sadb_methods}). Linking each reported response directly to its stimulus, preparation, and locomotor phase would make it easier to compare papers that use the same pathway name. The Bubble map already distinguishes citation communities by color. Grouping papers from each community spatially would give readers another way to find related studies.
++
++Future researchers can revisit large language models for classification as the tools improve. In our earlier evaluation, finding related papers was more successful than assigning them to the right categories \citep{bolen_using_2024}. A model could propose a pathway label and identify the passage that supports it. A researcher would read the experiment and approve, correct, or reject the label before it enters SADb. \citet{chomsky_false_promise_2023} distinguish predicting plausible text from explaining why a conclusion follows. In the McCrea example, the words \emph{Ib disynaptic excitation} alone do not tell a curator which fibers were stimulated. Comparing suggested labels with independently curated records, and measuring the time required to check them, would show whether newer models help with that work.
+ 
+ \subsection{SNS Tools and Neuromechanical Experiments}
+ 
+-For an earlier course project, I built a neuromechanical model in AnimatLab and worked with Morrow to couple the Deng circuit to the Li walker and tune it by hand. The legs performed stepping-like motion while it was suspended in air. However, but the model fell over when lowered to the ground and support was removed. I developed the tools in Chapter~\ref{ch:sns} to trace the consequences of a controller or mechanical change from neural activity to muscle force and joint motion. For example, an extensor sensory pulse extended the simulated knee. In a supported walker, removing selected sensory inputs changed the timing of footfalls even though the body continued to move forward. Recording both contact and movement exposed the coordination deficit.
++For an earlier course project, I built a neuromechanical model in AnimatLab and worked with Morrow to couple the Deng circuit to the Li walker and tune it by hand. The legs performed stepping-like motion while it was suspended in air. However, the model fell over when lowered to the ground and support was removed. I developed the tools in Chapter~\ref{ch:sns} to trace the consequences of a controller or mechanical change from neural activity to muscle force and joint motion. For example, an extensor sensory pulse extended the simulated knee. In a supported walker, removing selected sensory inputs changed the timing of footfalls even though the body continued to move forward. Recording both contact and movement exposed the coordination deficit.
+ 
+ The human-model drive experiment tested a different dependence. The human model continued to step in place under its support rig with the supplementary left and right hand-drive channels set to zero and the shared descending drive still active. A separate W2L robot model progressed with reduced supplementary drive under its harness (Section~\ref{sec:sns_controller_comparison}). These tests identify which command was removed and what mechanical support the remaining controller had to work against.
+ 
+@@ -67,6 +77,8 @@
+ Future researchers can test whether particular sensory inputs contribute to the extra bursts in the third pattern-formation channel during movement. The suspended six-synergy trial provides a record of the extra bursts and the joint motion at their onset. Replaying the same recorded motion while changing one sensory pathway at a time can distinguish the effect of that pathway from the accompanying change in knee angle. The layer-specific stimuli already tested in a reduced circuit can then be applied to the six-synergy controller under load. Stimulating the rhythm generator, a pattern-formation channel, or a motor neuron in separate trials can distinguish a reset of the rhythm from a missing motor burst with preserved phase (Section~\ref{sec:app_layer_stimulus}). Published responses provide a reference for those interventions \citep{selionov_tonic_2009,rybak_modelling_2006,markin_afferent_2010,shevtsova_modeling_2016}.
+ 
+ The force comparison in Appendix~\ref{sec:muscle-models-compare} identifies two muscles for a separate mechanical test. Future researchers can prescribe the same motion and activation history to rigid- and compliant-tendon models, then vary activation with the tendon model fixed. On the robot model, a measured pressure history can drive a characterized BPA route. Repeating a controller or contact experiment with that force law tests whether the force available at the measured length changes coordination.
++
++Future researchers can develop an application that links a connectome drawing to the controller used in a simulation. A researcher could select a sensory connection in the drawing, change its strength in the controller, and rerun a saved experiment with the same mechanical model, stimulus, and support. Reproducing the result of the same change made directly in the controller would test that the application updated the intended synapse.
+ 
+ \paragraph{Sensory and Higher-Level Control}\label{sec:fw_senses}
+ 
+@@ -102,4 +114,11 @@
+ 
+ \section{From Design Tools to Neuromechanical Experiments}
+ 
+-The four contributions make it possible to ask where a proposed controller and a particular leg first disagree. A force shortfall at a known pressure points to actuator or route mechanics. Correct force with a mistimed footfall points to recruitment, sensory encoding, or the support condition. The measurements and interventions developed here allow those explanations to be tested separately.
++Figure~\ref{fig:discussion_neuromechanical_workflow} shows how to locate the first change in coordination. To test a sensory pathway, repeat the stimulus with the body, drive, and support held fixed. To test an actuator route, keep the controller fixed. A force shortfall at a known pressure points to the actuator or its route. If force is adequate but the foot accepts load late, compare when the muscle was recruited and when the joint moved.
++
++\begin{figure}[!htbp]
++\centering
++\includegraphics[width=5.5in]{neuromechanical_experiment_workflow.pdf}
++\caption[Comparing controller and mechanical changes in simulation]{Each repeat changes one sensory pathway or one actuator route. Aligning the responses at the stimulus or foot contact reveals which signal diverges first. Appendix~\ref{sec:app_execution_provenance} identifies the tools used to prepare, run, and inspect each trial.}
++\label{fig:discussion_neuromechanical_workflow}
++\end{figure}
+--- author_export/chapters/95-AppendixD.tex
++++ local_revision/chapters/95-AppendixD.tex
+@@ -93,7 +93,7 @@
+ 
+ The reduced knee and loaded-cup demonstrations each implement six connections. On each side, Ia excites its own MN and inhibits the antagonist MN, and Ib inhibits its own MN. The Ia block combines a position signal and signed velocity and clips its output to \qtyrange{0}{10}{\nano\ampere}. For knee angle $q$ and angular range $R$, the extensor velocity input is $\dot q/R$. The implemented flexor path applies a second gain of $-1/R$ to that signal, giving $-\dot q/R^2$. In the cup model, the two muscles receive opposite signed deviations and velocities, each divided by \qty{0.3}{\radian}. Both models feed tensile force directly to Ib. The knee's extensor and flexor gains are 0.0200 and \qty{0.0222}{\nano\ampere\per\newton}, respectively. Both cup gains are \qty{0.008}{\nano\ampere\per\newton}. The knee uses a simplified linear actuator. In the cup, filtered activation $A$ supplies $620A$\,kPa to each characterized BPA20 block. Neither circuit has an independent group II or foot-contact input.
+ 
+-The graphical editor's Build action imports the saved nonspiking neurons, synapses, and external current destinations into Simulink. In the saved W2L example, the left extensor PF projects to the left extensor MN, and the corresponding left flexor PF projects to the flexor MN. A user can inspect each connection's conductance, reversal potential, and activation ramp. The separate demonstration builders add mechanical equations, actuator blocks, and sensory wiring. The worked knee experiment below uses the coupled model generated by its demonstration builder. From \path{Code/Matlab/SNS_Simscape/gui}, the command \verb|app = SNSGui()| opens the editor. The Build action calls \path{sns_build_from_json.m}.
++The SNS-Simscape interface's Build action imports the saved nonspiking neurons, synapses, and external current destinations into Simulink. In the saved W2L example, the left extensor PF projects to the left extensor MN, and the corresponding left flexor PF projects to the flexor MN. A user can inspect each connection's conductance, reversal potential, and activation ramp. The separate demonstration builders add mechanical equations, actuator blocks, and sensory wiring. The worked knee experiment below uses the coupled model generated by its demonstration builder. From \path{Code/Matlab/SNS_Simscape/gui}, the command \verb|app = SNSGui()| opens the editor. The Build action calls \path{sns_build_from_json.m}.
+ 
+ The MathWorks MuJoCo--Simulink C++ S-function exchanges command and measurement arrays with an existing MuJoCo mechanism. I adapted the build for MuJoCo 2.3.7 and Windows MinGW, selected keyframe 0 on reset when present, and added five right-side readbacks to an MJCF copy. They report knee angle and angular speed and vastus medialis path length, velocity, and force. The runtime interface preserves the mechanism supplied to it. Preparing that mechanism from OpenSim requires the corresponding geometry paths and MyoConverter patches.
+ 
+@@ -182,7 +182,7 @@
+ 
+ When I transferred Li's controller and body to MuJoCo, mean forward speed fell to \qty{0.040}{\meter\per\second} in a \qty{20}{\second} ground test. The right foot had eleven stance episodes with a period of \qty{1.294}{\second}. The left foot had none. Right-side cadence alone would have missed the transfer failure.
+ 
+-In our earlier course project, Morrow and I coupled Li's walker mechanics to a Deng-derived circuit with one shared RG and bilateral PF and motor pathways. The legs cycled while the walker was held up and the model fell on release in the demonstration shown in Chapter~\ref{ch:sns}. The later W2L108 circuit uses a separate RG on each side and additional sensory projections.
++In our earlier course project, Morrow and I coupled Li's walker mechanics to a Deng-derived circuit with one shared RG and bilateral PF and motor pathways. The legs made stepping-like movements while the model was suspended in air. The model fell over when it was lowered to the ground and its support was removed, as shown in Chapter~\ref{ch:sns}. The later W2L108 circuit uses a separate RG on each side and additional sensory projections.
+ 
+ The earlier instrumented AnimatLab configuration provides a different recording, with joint, neural, sensory, and body-motion channels over \qty{10}{\second} at \qty{0.2}{\milli\second} intervals (Figure~\ref{fig:animatlab_short_response}). Contact-sensory channels record membrane voltage. The trial starts with an external horizontal force and has no recorded timed vertical release, so the aligned window supports analysis of the suspended circuit response. A reorganized bilateral project also ran to completion, although its networks did not sustain alternation.
+ 
+@@ -201,7 +201,7 @@
+ 
+ \subsection{BiW2Lvar+ Air Stages}\label{sec:app_biw2l_air}
+ 
+-The revised nonspiking BiW2Lvar+ controller completed two \qty{16}{\second} air trials on the repaired Gait2392 human model with native MuJoCo biological muscles. The trials share learned weights and a PF-to-MN expression scale of 0.1. The software selector \texttt{hunt} identifies this implementation in the records. The four training stages follow \citet{hunt_development_2017}. Table~\ref{tab:app_air_stages} gives the principal knee-flexion peaks and the intervals from which the periods were measured.
++The revised nonspiking BiW2Lvar+ controller completed two \qty{16}{\second} air trials on the repaired Gait2392 human model with native MuJoCo biological muscles. The trials share learned weights and a PF-to-MN expression scale of 0.1. The four training stages follow \citet{hunt_development_2017}. Table~\ref{tab:app_air_stages} gives the principal knee-flexion peaks and the intervals from which the periods were measured.
+ 
+ The retained adapter and fitted command settings specify zero sustained flexor and extensor command in stage 1 and normalized command 0.15 to all four channels in stage 2. The same startup signal adds 0.4 to right extensor and left flexor commands for the first 50 neural updates (\qty{100}{\milli\second}). The adapter suppresses postural, balance, and functional commands and sets the direct tonic RG and legacy shared-drive inputs to zero. Sensory return is disabled in stage 1 and enabled in stage 2. Both sustained command and sensory return therefore change together. The original launch adapter and the complete consumed command stream are unavailable. These settings describe the compatible retained implementation.
+ 
+@@ -348,7 +348,7 @@
+ 
+ I counted primary heel strikes over $4.5\leq t<30$\,s from rising crossings above \qty{20}{\newton}, accepting successive strikes on the same side only when they were more than \qty{0.45}{\second} apart. Median phase locates a left strike between two successive right strikes. The historical criterion required a finite trial without a fall, at least six strikes per side, phase in $[0.35,0.65]$, and forward displacement greater than \qty{0.05}{\meter}. The intact condition yielded 34 left and 22 right strikes, phase 0.498, and \qty{2.239}{\meter} progression. The combined deletion yielded 20 left and 31 right strikes and \qty{1.996}{\meter} progression, but its phase of 0.223 failed alternation. Ib-only deletion yielded 19 left and 20 right strikes, phase 0.494, and \qty{2.302}{\meter}. Fresh replays reproduced all 15 numerical trajectory arrays for each condition.
+ 
+-Mild and strong drive reductions, reversal to a \qty{40}{\newton} backward push, and individual Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the historical supported-stepping criterion. Renshaw deletion reduced forward displacement to \qty{0.081}{\meter}, and commissural deletion failed bilateral stepping. Heel-strike phase, progression, and continued joint cycling thus distinguished interventions that a count of moving limbs alone would group together.
++Mild and strong drive reductions, reversal to a \qty{40}{\newton} backward push, and individual Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the historical supported-stepping criterion. Renshaw deletion reduced forward displacement to \qty{0.081}{\meter}, and commissural deletion failed bilateral stepping. Heel-strike phase, progression, and continuing joint flexion and extension thus distinguished interventions that a count of moving limbs alone would group together.
+ 
+ \subsection{CAD Robot: Contact Handover and Supported Clearance}\label{sec:app_cad_supported_stance}
+ 
+@@ -381,7 +381,7 @@
+ 
+ \subsection{MuJoCo Network and Ground Evaluation}
+ 
+-Under constant drive, rhythm period increased from \qty{0.399}{\second} in the nonspiking network to \qty{0.621}{\second} in the spiking network, a \qty{55.6}{\percent} increase. At the same selected parameters, the untuned spiking version cycled both legs in the supported ground trial, while the nonspiking winner cycled predominantly on the right (Table~\ref{tab:spike_ground} and Figure~\ref{fig:spike_ground}). The spiking version also had a poorer kinematic score. The two measures answer different questions about this matched pair.
++Under constant drive, rhythm period increased from \qty{0.399}{\second} in the nonspiking network to \qty{0.621}{\second} in the spiking network, a \qty{55.6}{\percent} increase. At the same selected parameters, the untuned spiking version produced repeated movements in both legs during the supported ground trial, while movement in the nonspiking winner occurred predominantly on the right (Table~\ref{tab:spike_ground} and Figure~\ref{fig:spike_ground}). The spiking version also had a poorer kinematic score. The two measures answer different questions about this matched pair.
+ 
+ \begin{table}[htbp]
+ \caption{Supported ground trial with the same selected parameters for \qty{16}{\second} and no spiking retuning. The kinematic score, detected cycles, and contact fractions use $2\leq t<16$\,s. Less-negative scores indicate closer kinematic agreement. The signed knee minimum is the minimum of the right leg's mean detected cycle, with flexion negative. Contact fraction counts samples with normal force above \qty{20}{\newton} independently of cycle detection. The nonspiking left leg therefore remains loaded for a fraction of 0.985 while completing no detected cycles.}
+@@ -404,10 +404,11 @@
+ \begin{figure}[p]
+ \centering
+ \includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
+-\caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Matched \qtyrange{10}{12.5}{\second} ground-trial window: nonspiking controller (left) and untuned spiking controller (right), at the same selected parameters and support settings. Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural rows pair extensor (orange solid) and flexor (blue dashed) outputs; joint rows pair right (orange solid) and left (blue dashed) legs. Spiking signals are filtered readouts, and muscle activation is the actuator state.}
++\caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Both controllers used the same parameters and support. Columns show nonspiking (left) and untuned spiking (right) responses during the \qtyrange{10}{12.5}{\second} ground-trial window. Solid orange and dashed blue distinguish extensors and flexors in the right-side RG, PF, and muscle traces (vastus lateralis and semimembranosus). For hip, knee, and ankle angles they distinguish right and left. Spiking readouts are filtered. Muscle activation is the actuator state.}
+ \label{fig:spike_rhythm}\label{fig:spike_ground}
+ \end{figure}
+ 
++\FloatBarrier
+ \subsection{Simulink Demonstrations}
+ 
+ The earlier \qty{5}{\second} knee trial compared startup in the nonspiking circuit and its spiking twin. Its final-window measurements characterize startup activity. Section~\ref{sec:app_knee_transient} gives the settled pulse test and the inputs needed to reproduce it.
+@@ -439,7 +440,7 @@
+ 
+ \section{Execution, Provenance, and Reproduction Tools}\label{sec:app_execution_provenance}
+ 
+-Figure~\ref{fig:app_research_toolchain} follows a saved experiment from model preparation to inspection. The circuit editor supports graphical wiring, and each experiment can be run from its corresponding script.
++Figure~\ref{fig:app_research_toolchain} follows a saved experiment from model preparation to inspection. The SNS-Simscape interface supports graphical wiring of a Simulink neural circuit, and each experiment can be run from its corresponding script.
+ 
+ \begin{figure}[htbp]
+ \centering
+@@ -448,13 +449,17 @@
+ \label{fig:app_research_toolchain}
+ \end{figure}
+ 
+-I timed one complete Gait2392 process per backend for the 1,025-cell source configuration selected by \texttt{hunt}. Its \qty{16}{\second} stage-1 protocol included \qty{0.6}{\second} of held-pose preparation and \qty{15.4}{\second} on the physics clock. Elapsed process time was \qty{199.624}{\second} with native SNS and \qty{29.284}{\second} with the sparse backend, a 6.82-fold speedup. Within those processes, accumulated neural-call time was \qty{179.079}{\second} and \qty{9.780}{\second}, an 18.31-fold speedup. All 45 captured numerical arrays and the compiled-model hash agreed.
+-
+-I next compared compact and sparse implementations of the 1,033-cell Hunt-PT+RC circuit. After a separate 1,200-step state-agreement check in each family, the median of three 3,000-update warm neural-kernel timings was \qty{0.8953}{\second} for sparse and \qty{0.5551}{\second} for compact, a factor of 1.613. In one paired \qty{16}{\second} stage-4 diagnostic, evaluator time fell from \qty{92.944}{\second} to \qty{91.516}{\second}, a factor of 1.016. That interval included simulation, capture, and assessment, excluding imports, pre-run setup, and final serialization. All 62 numerical arrays and compiled-model hashes agreed. The backend preserves summation order. Spiking and electrical channels continue to use their existing implementations.
++I timed one complete Gait2392 process per backend for the earlier 1,025-cell BiW2Lvar+ configuration. Its \qty{16}{\second} stage-1 protocol included \qty{0.6}{\second} of held-pose preparation and \qty{15.4}{\second} on the physics clock. Elapsed process time was \qty{199.624}{\second} with native SNS and \qty{29.284}{\second} with the sparse backend, a 6.82-fold speedup. Within those processes, accumulated neural-call time was \qty{179.079}{\second} and \qty{9.780}{\second}, an 18.31-fold speedup. All 45 captured numerical arrays and the compiled-model hash agreed.
++
++I next compared compact and sparse implementations of the 1,033-cell circuit with the balance pathway and recurrent Renshaw inhibition. After a separate 1,200-step state-agreement check in each family, the median of three 3,000-update warm neural-kernel timings was \qty{0.8953}{\second} for sparse and \qty{0.5551}{\second} for compact, a factor of 1.613. In one paired \qty{16}{\second} stage-4 diagnostic, evaluator time fell from \qty{92.944}{\second} to \qty{91.516}{\second}, a factor of 1.016. That interval included simulation, capture, and assessment, excluding imports, pre-run setup, and final serialization. All 62 numerical arrays and compiled-model hashes agreed. The backend preserves summation order. Spiking and electrical channels continue to use their existing implementations.
+ 
+ In the bilateral-RG W2L circuit with Ib input ports, the ratio was 1.425 for one warm block of 10,000 neural updates per backend following 5,000 state-comparison steps. The paired \qty{30}{\second} body trajectories agreed exactly. This measurement times the isolated W2L neural updates. Only the first Gait2392 comparison above timed the complete process externally.
+ 
+-Table~\ref{tab:app_script_map} lists the scripts for preparing mechanics, assembling the neural and actuator model, executing a trial, and inspecting the saved results. The graphical editor covers circuit wiring. The preparation, parameter searches, and replay have model-specific script entry points. Section~\ref{sec:app_knee_transient} includes a complete run from two portable model files and compares the output with the expected JSON. For the newer coupled experiments, the available records vary by test. The noise and pulse runs include the applied currents and aligned states. For BiW2Lvar+, the archived launch adapter and full consumed command stream are unavailable (Section~\ref{sec:app_biw2l_air}). The CAD repeat preserves model and dependency hashes and matched numerical arrays, while the original compiled binary is unavailable (Section~\ref{sec:app_cad_supported_stance}). The source entries identify the corresponding checks.
++Table~\ref{tab:app_script_map} lists the scripts for preparing mechanics, assembling the neural and actuator model, executing a trial, and inspecting the saved results. The SNS-Simscape interface builds the neural portion of a Simulink model. The preparation, parameter searches, and replay have model-specific script entry points. Section~\ref{sec:app_knee_transient} includes a complete run from two portable model files and compares the output with the expected JSON. For the newer coupled experiments, the available records vary by test. The noise and pulse runs include the applied currents and aligned states. For BiW2Lvar+, the archived launch adapter and full consumed command stream are unavailable (Section~\ref{sec:app_biw2l_air}). The CAD repeat preserves model and dependency hashes and matched numerical arrays, while the original compiled binary is unavailable (Section~\ref{sec:app_cad_supported_stance}). The source entries identify the corresponding checks.
++
++A saved connectome drawing in \path{Neuromechanical_Models/Mujoco_SNS_models/} shows the four-cell rectus femoris and hamstring circuit on each side of an earlier BiW2Lvar+ configuration. Changes to the drawing are saved separately from the controller used in a simulation.
++
++For the recorded Gait2392 body trial, the recorder writes input and neural-update times, joint states, muscle commands, foot loads, and harness forces, together with the compiled model used for replay. A separate mechanics file contains the individual actuator forces. The plotting tools read each signal on its own time base. To render a different view of the same trial, the replay restores the saved positions and recomputes the geometry for each frame.
+ 
+ \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.43\textwidth}>{\raggedright\arraybackslash}p{0.52\textwidth}@{}}
+ \caption[Reproducible implementation and experiment sources]{Relevant source scripts and the tests they support. Prefixes are given below the table. Model builders and test drivers are distinguished from figure-only exporters.}\label{tab:app_script_map}\\
+@@ -478,6 +483,8 @@
+ \path{mujoco_bridge/matlab/laptop_build_bridge.m} (S) & Build and check the MuJoCo--Simulink runtime bridge; command/measurement exchange, not mechanism conversion. \\
+ \path{mujoco_bridge/matlab/run_bridge_tests.m}, \path{e1_sns_reflex_loop.m}, and \path{e2_cpg_open_loop.m} (S) & With the patched blockset installed, call \path{run_bridge_tests} from its MATLAB directory. Test b gives 81 samples at \qty{5}{\milli\second}, and test c gives zero maximum difference for all five sensors. E1 and E2 exercise closed- and open-loop commands. \\
+ \path{_muscle_force_compare.py} (P) & Assign matched OpenSim poses/activations and compute force-comparison statistics. \\
++\path{controller_profiles_20261104/train.py}; \path{fit_waveform_edges.py} (P) & Search bounded rhythm and timing parameters, or fit bilateral pattern-formation weights to motor recruitment by least squares. \\
++\path{hunt_training/verification_capture.py}; \path{verification_figures.py} (P) & Record signals and sampling times, plot selected intervals, and replay saved body positions with the corresponding model. \\
+ \path{controller_profiles_20261104/campaign.py} (P) & Ordered neural fitting with stored manifests and independent repeats; output fitting is separate from physical acceptance. \\
+ \path{controller_profiles_20261104/air_validation.py} and \path{dominant_cycles.py} (P) & Run coupled air tests and identify principal knee-flexion peaks and interpeak intervals, including detector rejection controls. \\
+ \path{controller_profiles_20261104/noise_trials.py}; \path{stimulus_trials.py} (P) & Frozen-controller current-noise and layer-current interventions; actual input samples retained with aligned states. \\
+--- author_export/chapters/96-AppendixE.tex
++++ local_revision/chapters/96-AppendixE.tex
+@@ -1,7 +1,7 @@
+ \chapter{Appendix E: Supporting SADb Records}\label{app:sadb_records}
+ \graphicspath{{../Figures/96-AppendixE/}{figs/96-AppendixE/}}
+ 
+-This appendix describes the records in the SADb Explorer export and the experimental evidence behind selected pathway labels used in Chapter~\ref{ch:database}.
++Chapter~\ref{ch:database} follows a researcher from one pathway search to a candidate rule. This appendix explains which records each view counts, why two labels can apply to the same paper, and which sources support the named pathways.
+ 
+ \section{Record Sets and Coverage}
+ 
+@@ -9,28 +9,26 @@
+ 
+ Coverage of the application's Papers category is reported in Chapter~\ref{ch:database}. The following counts describe the retained maintenance subset and use a different denominator.
+ 
+-Of the 561 retained Papers, 523 have curation notes, 426 have preparation tags, 240 have an animal-study assessment, and 118 link to at least one named feedback pathway. Afferent classes are recorded for 86 Papers, robot or simulation translation notes for 258, and a DOI for 550. A paper can contribute to several of these counts.
++Of the 561 retained Papers, 523 have curation notes, 426 have an animal or human study tag, 240 have an animal-study assessment, and 118 link to at least one named feedback pathway. Afferent classes are recorded for 86 Papers, robot or simulation translation notes for 258, and a DOI for 550. A paper can contribute to several of these counts.
+ 
+-Chapter~\ref{ch:database} gives the citation-graph counts. Figure~\ref{fig:sadb_clusters} uses citation proximity to locate related papers, and Figure~\ref{fig:sadb_explorer} shows the evidence recorded for a selected paper.
+-
+-
++For a single paper, use Table to check the record type and archive status. For a group of papers, start in Pivot and open a cell to read the underlying records. Tagged groups overlap. For example, a Paper tagged with both Ia and Ib can appear in both afferent rows for the same animal. Adding those rows would count that Paper twice. The citation neighborhood in Figure~\ref{fig:sadb_clusters} answers a separate question about which papers cite one another.
+ 
+ \section{Afferent Classes and Linked Pathways}
+ 
+-Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input. Table~\ref{tab:sadb_pathways} gives the pathway names as they appear in the database. In the Table view, the \emph{Ib disynaptic excitation} pathway filter returns six Papers. The record for \citet{mccrea_disynaptic_1995} carries both Ia and Ib tags and links to both \emph{Ib disynaptic excitation} and \emph{Ib disynaptic inhibition}. Chapter~\ref{ch:overall} compares the experimental conditions behind those two links.
++Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input, and Table~\ref{tab:sadb_pathways} gives the searchable pathway names. The two pathway links in the McCrea record illustrate why the preparation belongs alongside the label (Section~\ref{sec:sadb_worked_rule}). In the acute spinal preparation treated with clonidine, the inhibition seen at rest diminished during fictive locomotion, but the short-latency excitation seen in the midbrain-evoked preparation did not appear \citep{mccrea_disynaptic_1995}. A model of the spinal preparation would therefore need a different test from the one drawn in Figure~\ref{fig:sadb_group_i_rule}. The Ib pathway label is a way to retrieve this paper. Its Ia and Ib afferent tags preserve the broader identity of the stimulated group~I fibers.
+ 
+ \begin{table}[htbp]
+-\caption{Afferent classes, encoded signals, and pathway roles represented in the Sensory Afferent Database. References link to corpus records; Ia, II, and Ib signal summaries follow \citet{prochazka_ensemble_1998}.}
++\caption{Afferent classes, encoded signals, and pathway roles represented in the Sensory Afferent Database. The cited studies give examples of these pathways. Ia, II, and Ib signal summaries follow \citet{prochazka_ensemble_1998}.}
+ \label{tab:sadb_afferents}
+ \small
+ \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}X@{}}
+ \toprule
+-\textbf{Class} & \textbf{Receptor} & \textbf{Signal carried} & \textbf{Recorded pathway roles (anchors)} \\
++\textbf{Class} & \textbf{Receptor} & \textbf{Signal carried} & \textbf{Examples of pathway roles} \\
+ \midrule
+ Ia & muscle spindle primary & muscle length and velocity & homonymous stretch excitation \citep{eccles_integrative_1958}; reciprocal inhibition of the antagonist pool \citep{jankowska_effect_1967} \\
+ II & muscle spindle secondary & static muscle length & midlumbar relay to motor nuclei in the cat \citep{edgley_interneuronal_1987} and evidence for a contribution to soleus activity during human stance \citep{mazzaro_afferent_2006} \\
+ Ib & Golgi tendon organ & whole-muscle force & extensor load feedback contributes to support during stance and to the timing of swing onset \citep{dietz_significance_2000, dominguez_candidate_2020} \\
+-III/IV & free nerve endings & metabolic and nociceptive signals, converging with cutaneous and group II--III afferents as flexor-reflex afferents & phase-dependent resetting of the locomotor rhythm \citep{schomburg_flexor_1998} \\
++III/IV & free nerve endings & metabolic and nociceptive signals & convergence with cutaneous and group II--III flexor-reflex afferents and phase-dependent resetting of the locomotor rhythm \citep{schomburg_flexor_1998} \\
+ Cutaneous & skin and foot-pad receptors & contact and perturbation events & flexor excitation and phase-modulated stance correction \citep{sherrington_flexion_1910, forssberg_stumbling_1979} \\
+ \bottomrule
+ \end{tabularx}
+--- author_export/main.tex
++++ local_revision/main.tex
+@@ -13,6 +13,7 @@
+ %\usepackage{indentfirst}
+ %\usepackage{fancyhdr}
+ \usepackage{graphicx,epstopdf}
++\usepackage[pass]{geometry}
+ \usepackage{lastpage}
+ \usepackage{float}
+ \usepackage{amsmath, bm}
+@@ -38,7 +39,7 @@
+ \usepackage{tabularx}
+ \usepackage{pbox} % For biography environment
+ \usepackage{ragged2e} % For command \justifying
+-\usepackage[subfigure]{tocloft} % For dots in TOC. If subfigure package is loaded, the subfigure option needs to be added here to avoid clash: \usepackage[subfigure]{tocloft}
++\usepackage[titles,subfigure]{tocloft} % For dots in TOC. If subfigure package is loaded, the subfigure option needs to be added here to avoid clash: \usepackage[subfigure]{tocloft}
+ \usepackage{marginnote} % For left column
+ \reversemarginpar % To have the left column on the left side
+ \usepackage{marginfix} % For command \clearmargin for manually moving the left column to the next page
+@@ -130,13 +131,33 @@
+ % ---------------------- Begin Document ---------------------------------
+ 
+ \setlength{\emergencystretch}{1.5em}
++\makeatletter
++\ifdefined\pdfrunninglinkoff
++  \ifdefined\pdfannot@link@off@@
++    \let\pdfannot@link@off@@\pdfrunninglinkoff
++    \let\pdfannot@link@on@@\pdfrunninglinkon
++    \AddToHook{shipout/before}{\setbox\ShipoutBox=\vbox{\pdfrunninglinkoff\box\ShipoutBox}}
++  \fi
++\fi
++\makeatother
+ \begin{document}
+ 
++\hypersetup{pageanchor=false}
++\newgeometry{margin=1in,left=\dimexpr1in+4bp\relax,right=\dimexpr1in+4bp\relax,headheight=0pt,headsep=0pt,footskip=0pt}
+ \maketitle
+ 
+ %-------------------------Pretext Pages----------------------------
+ % Copyright
+ \include{chapters/01-copyright}
++
++\newgeometry{margin=1in,left=\dimexpr1in+4bp\relax,right=\dimexpr1in+4bp\relax,includehead,headheight=.5in,headsep=.05in}
++\pagenumbering{roman}
++\hypersetup{pageanchor=true}
++\begingroup
++\microtypesetup{protrusion=false}
++\makeatletter
++\renewcommand{\@makeschapterhead}[1]{\noindent{\centering\normalfont\bfseries\normalsize #1\par}\nobreak\vspace{\baselineskip}}
++\makeatother
+ 
+ % Abstract
+ \include{chapters/02-abstract}
+@@ -168,6 +189,9 @@
+ % Isometric Force Characterization of BPAs, Isometric Knee Torque,
+ % Sensory Afferent Database, Synthetic Nervous System Simulation,
+ % Discussion, Conclusion, Bibliography
++\clearpage
++\endgroup
++\restoregeometry
+ \mainmatter
+ 
+ \include{chapters/10-introduction}
+--- author_export/psutex.cls
++++ local_revision/psutex.cls
+@@ -53,9 +53,9 @@
+ \newcommand{\@texwidth}{}
+ 
+ \DeclareOption{1in}{%
+-  \renewcommand{\@lmarwidth}{0in}%
+-  \renewcommand{\@smarwidth}{0in}%
+-  \renewcommand{\@texwidth}{6.5in}%
++  \renewcommand{\@lmarwidth}{4bp}%
++  \renewcommand{\@smarwidth}{4bp}%
++  \renewcommand{\@texwidth}{\dimexpr6.5in-8bp\relax}%
+ }
+ \DeclareOption{1.5in}{%
+   \renewcommand{\@lmarwidth}{.5in}%
+@@ -302,43 +302,36 @@
+ \newcommand{\flyleaf}{\thispagestyle{empty}\phantom{}\newpage}
+ 
+ % Copyright page
+-\newcommand{\copyrightpage}{
+-  \begin{singlespacing}
+-  \thispagestyle{empty}
+-  \vspace*{10\baselineskip}
+-  \begin{center}
+-    ${}^\copyright$Copyright by \@author\\
+-    \@submitdate \\
+-    All Rights Reserved
+-  \end{center}
+-  \end{singlespacing}
++\newcommand{\copyrightpage}[1][\@commencementyear]{%
++  \thispagestyle{empty}%
++  \vspace*{2.17in}%
++  \begin{center}\normalfont\normalsize\textcopyright~#1\ \@author\end{center}%
+   \clearpage
+ }
+ 
+ % Title page
+-\renewcommand{\titlepage}{
+-    \thispagestyle{empty}
+-    \begin{center}
+-      
+-      \@title \\
+-      \setlength{\baselineskip}{14.5pt}
+-      \vfill
+-      \emptyline by\\ \emptyline
+-      \@author\\
+-      \vfill
+-      A \MakeLowercase{\@doctype} submitted in partial fulfillment of the\\
+-      requirements for the degree of\\
+-      \vfill
+-      \@graddegree \\
+-      in\\
+-      \@department
+-      \vfill
+-      \@doctype~Committee:\\
+-      \@committeemembers\\
+-      \vfill
+-      \@university\\
+-      \@commencementyear\\
+-    \end{center}
++\renewcommand{\titlepage}{%
++  \thispagestyle{empty}%
++  \begingroup
++  \centering\normalfont\normalsize
++  \setlength{\baselineskip}{13.85pt}%
++  \setlength{\parskip}{0pt}%
++  \setlength{\topskip}{11.25pt}%
++  {\setlength{\baselineskip}{27.7pt}\@title\par}%
++  \vspace{5\baselineskip}%
++  by\par
++  \vspace{\baselineskip}%
++  \@author\par
++  \vspace{6\baselineskip}%
++  A \MakeLowercase{\@doctype} submitted in partial fulfillment of the\\
++  requirements for the degree of\par
++  \vspace{5\baselineskip}%
++  \@graddegree\\in\\\@major\par
++  \vspace{5\baselineskip}%
++  \@doctype~Committee:\\\@committeemembers\par
++  \vspace{6\baselineskip}%
++  \@university\\\@commencementyear\par
++  \endgroup
+   \clearpage
+ }
+ 
+@@ -363,7 +356,7 @@
+   
+   % Mandatory pages
+   \titlepage         % D. Title page
+-  \pagenumbering{roman}
++  \pagenumbering{gobble}
+ %  \flyleaf           % A. Flyleaf
+ %  \abspage           % B. Abstract
+ %  \copyrightpage     % C. Copyright page
+--- author_export/chapters/01-copyright.tex
++++ local_revision/chapters/01-copyright.tex
+@@ -1,4 +1 @@
+-% Copyright page. Uses the psutex class \copyrightpage macro, which prints
+-% "©Copyright by <author>, <submitdate>, All Rights Reserved" from the
+-% \author{} and \submitdate{} declarations in main.tex.
+-\copyrightpage
++\copyrightpage[2026]

@@ -53,9 +53,9 @@
 \newcommand{\@texwidth}{}
 
 \DeclareOption{1in}{%
-  \renewcommand{\@lmarwidth}{0in}%
-  \renewcommand{\@smarwidth}{0in}%
-  \renewcommand{\@texwidth}{6.5in}%
+  \renewcommand{\@lmarwidth}{4bp}%
+  \renewcommand{\@smarwidth}{4bp}%
+  \renewcommand{\@texwidth}{\dimexpr6.5in-8bp\relax}%
 }
 \DeclareOption{1.5in}{%
   \renewcommand{\@lmarwidth}{.5in}%
@@ -302,43 +302,36 @@
 \newcommand{\flyleaf}{\thispagestyle{empty}\phantom{}\newpage}
 
 % Copyright page
-\newcommand{\copyrightpage}{
-  \begin{singlespacing}
-  \thispagestyle{empty}
-  \vspace*{10\baselineskip}
-  \begin{center}
-    ${}^\copyright$Copyright by \@author\\
-    \@submitdate \\
-    All Rights Reserved
-  \end{center}
-  \end{singlespacing}
+\newcommand{\copyrightpage}[1][\@commencementyear]{%
+  \thispagestyle{empty}%
+  \vspace*{2.17in}%
+  \begin{center}\normalfont\normalsize\textcopyright~#1\ \@author\end{center}%
   \clearpage
 }
 
 % Title page
-\renewcommand{\titlepage}{
-    \thispagestyle{empty}
-    \begin{center}
-      
-      \@title \\
-      \setlength{\baselineskip}{14.5pt}
-      \vfill
-      \emptyline by\\ \emptyline
-      \@author\\
-      \vfill
-      A \MakeLowercase{\@doctype} submitted in partial fulfillment of the\\
-      requirements for the degree of\\
-      \vfill
-      \@graddegree \\
-      in\\
-      \@department
-      \vfill
-      \@doctype~Committee:\\
-      \@committeemembers\\
-      \vfill
-      \@university\\
-      \@commencementyear\\
-    \end{center}
+\renewcommand{\titlepage}{%
+  \thispagestyle{empty}%
+  \begingroup
+  \centering\normalfont\normalsize
+  \setlength{\baselineskip}{13.85pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\topskip}{11.25pt}%
+  {\setlength{\baselineskip}{27.7pt}\@title\par}%
+  \vspace{5\baselineskip}%
+  by\par
+  \vspace{\baselineskip}%
+  \@author\par
+  \vspace{6\baselineskip}%
+  A \MakeLowercase{\@doctype} submitted in partial fulfillment of the\\
+  requirements for the degree of\par
+  \vspace{5\baselineskip}%
+  \@graddegree\\in\\\@major\par
+  \vspace{5\baselineskip}%
+  \@doctype~Committee:\\\@committeemembers\par
+  \vspace{6\baselineskip}%
+  \@university\\\@commencementyear\par
+  \endgroup
   \clearpage
 }
 
@@ -363,7 +356,7 @@
   
   % Mandatory pages
   \titlepage         % D. Title page
-  \pagenumbering{roman}
+  \pagenumbering{gobble}
 %  \flyleaf           % A. Flyleaf
 %  \abspage           % B. Abstract
 %  \copyrightpage     % C. Copyright page

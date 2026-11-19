@@ -24,6 +24,8 @@ To verify an existing review, add the following argument to the command. It chec
 
 ## How to interpret a score
 
+Ben’s November 19 toolchain corrections reopen the names and uses of the bipedal controllers, wording for suspended stepping, the joint-design heading, and slide-to-manuscript figure choices. Check the actual user action in each interface and the configuration used in each experiment. The five author examples travel with each new historical review. [Latest passage judgments and evidence](../toolchain_sadb_20261119/PASSAGE_REVIEW.json)
+
 | Evidence | Accounting |
 |---|---|
 | Attributable advisor tracked change | −1 against the original wording for each distinct insertion, deletion, or replacement. |
@@ -37,6 +39,8 @@ The records preserve authors, event dates, exact wording when available, and qua
 For subsequent captures, preserve a stable event identity and link the source before extending the ledger. The checker reads dated `advisor_scoring_*/CLASSIFIER_RESULTS.json` captures, ignores repeated records with the same identity, and flags incompatible recaptures. New issue categories need their editorial tags in the capture or the scorer. The `--before YYYY-MM-DD` option restricts evidence to earlier event dates when testing whether an older record anticipates later feedback.
 
 ## Figures, tables, and conclusions
+
+The November 19 Overleaf review added six Chapter 6 comments and five tracked edits from the advisor (−15), and one Introduction comment and three tracked edits (−5). Across the November 17–19 captures, 56 distinct advisor events total −62. Three November 19 edits by Ben are recorded separately. The reviewer now returns the first-person phrases in each passage and distinguishes ownership, narration, and tool capability for contextual reading. The two filler comments and the correction from “our” to “my” belong to different editorial judgments. [Dated review table](../ch6_advisor_20261119/REVIEW_TABLE.html) · [New advisor events](../advisor_scoring_20261119/CLASSIFIER_RESULTS.json)
 
 Ben’s November 18 readback added four author examples to the teaching ledger. For a stimulus and response, compare their time coordinates in the printed figure. For a model table, check row order against first introduction. At the end of a chapter, name the experiment a future researcher can run. For Chapter 6, start with the AnimatLab hand-tuning problem and identify the specific timed implementation when discussing the gain in speed. The model retrieves these examples on every pass. [Author feedback and independent reread](../ch6_sequence_20261118/REVIEW_TABLE.html)
 

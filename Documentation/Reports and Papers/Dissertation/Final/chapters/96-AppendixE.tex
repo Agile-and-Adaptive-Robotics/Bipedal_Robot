@@ -1,7 +1,7 @@
 \chapter{Appendix E: Supporting SADb Records}\label{app:sadb_records}
 \graphicspath{{../Figures/96-AppendixE/}{figs/96-AppendixE/}}
 
-This appendix describes the records in the SADb Explorer export and the experimental evidence behind selected pathway labels used in Chapter~\ref{ch:database}.
+Chapter~\ref{ch:database} follows a researcher from one pathway search to a candidate rule. This appendix explains which records each view counts, why two labels can apply to the same paper, and which sources support the named pathways.
 
 \section{Record Sets and Coverage}
 
@@ -9,28 +9,26 @@ The SADb Explorer export contains 1,393 records across five tables. These compri
 
 Coverage of the application's Papers category is reported in Chapter~\ref{ch:database}. The following counts describe the retained maintenance subset and use a different denominator.
 
-Of the 561 retained Papers, 523 have curation notes, 426 have preparation tags, 240 have an animal-study assessment, and 118 link to at least one named feedback pathway. Afferent classes are recorded for 86 Papers, robot or simulation translation notes for 258, and a DOI for 550. A paper can contribute to several of these counts.
+Of the 561 retained Papers, 523 have curation notes, 426 have an animal or human study tag, 240 have an animal-study assessment, and 118 link to at least one named feedback pathway. Afferent classes are recorded for 86 Papers, robot or simulation translation notes for 258, and a DOI for 550. A paper can contribute to several of these counts.
 
-Chapter~\ref{ch:database} gives the citation-graph counts. Figure~\ref{fig:sadb_clusters} uses citation proximity to locate related papers, and Figure~\ref{fig:sadb_explorer} shows the evidence recorded for a selected paper.
-
-
+For a single paper, use Table to check the record type and archive status. For a group of papers, start in Pivot and open a cell to read the underlying records. Tagged groups overlap. For example, a Paper tagged with both Ia and Ib can appear in both afferent rows for the same animal. Adding those rows would count that Paper twice. The citation neighborhood in Figure~\ref{fig:sadb_clusters} answers a separate question about which papers cite one another.
 
 \section{Afferent Classes and Linked Pathways}
 
-Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input. Table~\ref{tab:sadb_pathways} gives the pathway names as they appear in the database. In the Table view, the \emph{Ib disynaptic excitation} pathway filter returns six Papers. The record for \citet{mccrea_disynaptic_1995} carries both Ia and Ib tags and links to both \emph{Ib disynaptic excitation} and \emph{Ib disynaptic inhibition}. Chapter~\ref{ch:overall} compares the experimental conditions behind those two links.
+Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input, and Table~\ref{tab:sadb_pathways} gives the searchable pathway names. The two pathway links in the McCrea record illustrate why the preparation belongs alongside the label (Section~\ref{sec:sadb_worked_rule}). In the acute spinal preparation treated with clonidine, the inhibition seen at rest diminished during fictive locomotion, but the short-latency excitation seen in the midbrain-evoked preparation did not appear \citep{mccrea_disynaptic_1995}. A model of the spinal preparation would therefore need a different test from the one drawn in Figure~\ref{fig:sadb_group_i_rule}. The Ib pathway label is a way to retrieve this paper. Its Ia and Ib afferent tags preserve the broader identity of the stimulated group~I fibers.
 
 \begin{table}[htbp]
-\caption{Afferent classes, encoded signals, and pathway roles represented in the Sensory Afferent Database. References link to corpus records; Ia, II, and Ib signal summaries follow \citet{prochazka_ensemble_1998}.}
+\caption{Afferent classes, encoded signals, and pathway roles represented in the Sensory Afferent Database. The cited studies give examples of these pathways. Ia, II, and Ib signal summaries follow \citet{prochazka_ensemble_1998}.}
 \label{tab:sadb_afferents}
 \small
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}p{0.16\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{Class} & \textbf{Receptor} & \textbf{Signal carried} & \textbf{Recorded pathway roles (anchors)} \\
+\textbf{Class} & \textbf{Receptor} & \textbf{Signal carried} & \textbf{Examples of pathway roles} \\
 \midrule
 Ia & muscle spindle primary & muscle length and velocity & homonymous stretch excitation \citep{eccles_integrative_1958}; reciprocal inhibition of the antagonist pool \citep{jankowska_effect_1967} \\
 II & muscle spindle secondary & static muscle length & midlumbar relay to motor nuclei in the cat \citep{edgley_interneuronal_1987} and evidence for a contribution to soleus activity during human stance \citep{mazzaro_afferent_2006} \\
 Ib & Golgi tendon organ & whole-muscle force & extensor load feedback contributes to support during stance and to the timing of swing onset \citep{dietz_significance_2000, dominguez_candidate_2020} \\
-III/IV & free nerve endings & metabolic and nociceptive signals, converging with cutaneous and group II--III afferents as flexor-reflex afferents & phase-dependent resetting of the locomotor rhythm \citep{schomburg_flexor_1998} \\
+III/IV & free nerve endings & metabolic and nociceptive signals & convergence with cutaneous and group II--III flexor-reflex afferents and phase-dependent resetting of the locomotor rhythm \citep{schomburg_flexor_1998} \\
 Cutaneous & skin and foot-pad receptors & contact and perturbation events & flexor excitation and phase-modulated stance correction \citep{sherrington_flexion_1910, forssberg_stumbling_1979} \\
 \bottomrule
 \end{tabularx}

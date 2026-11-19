@@ -16,6 +16,16 @@ class HistoryReviewTests(unittest.TestCase):
         ids = {e["id"] for e in captured["advisor_signals"]}
         November = [r for r in rows if r["id"] in ids]
         self.assertEqual((len(November),sum(r["score"] for r in November)),(41,-42))
+        newest = [r for r in rows if r["id"].startswith("NOV19-")]
+        self.assertEqual((len(newest),sum(r["score"] for r in newest)),(15,-20))
+        self.assertTrue(all(r["author"] == "ajh26" for r in newest))
+
+    def test_first_person_is_read_in_context(self):
+        words = review.ownership_cues("I show how I built the editor. The new system can simulate a reflex.")
+        self.assertIn("roadmap_or_intention", words)
+        self.assertIn("I built", words["attributed_contribution"])
+        self.assertIn("The new system can", words["named_capability"])
+        self.assertNotIn("roadmap_or_intention", review.ownership_cues("I built the editor with Morrow."))
 
     def test_moved_changed_and_recurring_passage(self):
         body = "The recorded joint torque increased across the measured range of knee flexion."

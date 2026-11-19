@@ -1,0 +1,380 @@
+{
+  "as_of_date": "2026-11-19",
+  "method": "A human-readable contextual judgment and the standing fixed deductions are applied to each attributable event. Explicit phrase cues and historical word similarity locate passages for rereading. A similarity or cue receives zero advisor points.",
+  "model_identity": "OpenAI Codex, GPT-6 family",
+  "rubric": {
+    "advisor_tracked_edit": -1,
+    "wording_or_clarification": -1,
+    "substantive_revision": -2,
+    "factual_or_interpretive_error": -3,
+    "pure_praise": 0,
+    "mixed_comment": "negative class of requested change",
+    "unmarked": "unlabeled; model inspection priority -1/-2/-3, or null for no new issue"
+  },
+  "prompt": "Read each advisor message with its original anchor and each tracked replacement in context. Identify the reader’s question, credit the actual author, distinguish writing narration from contributions, and separate current capabilities from proposed experiments. Use the earlier fixed weights on the original prose. Record author edits without advisor points.",
+  "project": "https://www.overleaf.com/project/644dc82bcd6a5481e3c3a8bb",
+  "source": "../ch6_advisor_20261119/LIVE_REVIEW.json",
+  "historical_ledger": "../advisor_scoring_20261118/CLASSIFIER_RESULTS.json",
+  "advisor_signals": [
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:34 am",
+      "offset": 475,
+      "anchor": "Our first simulated walker",
+      "text": "It isn't clear what this is referring to. Who is 'our'. Are you jumping in to describing your results or talking about work before the dissertation?",
+      "issue": "identify_course_project",
+      "id": "NOV19-C-6aff4f28baa8572e9e2fa601",
+      "comment_id": "6aff4f28baa8572e9e2fa601",
+      "kind": "comment",
+      "category": "advisor_comment",
+      "original_score": -2,
+      "reason": "Introduce the previous course project once, credit Bolen for the model, and identify Morrow’s collaboration on coupling and tuning.",
+      "date": "2026-11-19",
+      "tags": [
+        "contribution_and_credit",
+        "reader_context",
+        "ownership_and_narration"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:36 am",
+      "offset": 589,
+      "anchor": "show how I",
+      "text": "you can get rid of fillers like this.",
+      "issue": "narration",
+      "id": "NOV19-C-6aff4fcf369865f771e5cf49",
+      "comment_id": "6aff4fcf369865f771e5cf49",
+      "kind": "comment",
+      "category": "advisor_comment",
+      "original_score": -1,
+      "reason": "Remove the announcement of writing. Retain first person when it identifies who contributed the work.",
+      "date": "2026-11-19",
+      "tags": [
+        "ownership_and_narration",
+        "concision_and_repetition"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:36 am",
+      "offset": 743,
+      "anchor": "describe how I",
+      "text": "and this",
+      "issue": "narration",
+      "id": "NOV19-C-6aff4fd9baa8572e9e2fa625",
+      "comment_id": "6aff4fd9baa8572e9e2fa625",
+      "kind": "comment",
+      "category": "advisor_comment",
+      "original_score": -1,
+      "reason": "Remove the announcement of writing. Retain first person when it identifies who contributed the work.",
+      "date": "2026-11-19",
+      "tags": [
+        "ownership_and_narration",
+        "concision_and_repetition"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:39 am",
+      "offset": 940,
+      "anchor": "I describe the graphical tools I built to edit large neural circuits and use a simulated knee reflex to verify that a sensory pulse recruits the extensor motor neuron, increases muscle force, and extends the knee.",
+      "text": "I don't think these 2 ideas are super connected. I think you built graphical tools. then 'Finally, you use a simulated knee reflex to verify that all the tools work together.",
+      "issue": "construction_then_validation",
+      "id": "NOV19-C-6aff5056736cf275aa67b719",
+      "comment_id": "6aff5056736cf275aa67b719",
+      "kind": "comment",
+      "category": "advisor_comment",
+      "original_score": -2,
+      "reason": "Give the graphical implementation and the subsequent test of neural–mechanical signal exchange distinct sentences.",
+      "date": "2026-11-19",
+      "tags": [
+        "narrative_structure",
+        "evidence_and_validation"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:41 am",
+      "offset": 1827,
+      "anchor": "I wanted",
+      "text": "non seq",
+      "issue": "connect_problem_to_method",
+      "id": "NOV19-C-6aff50fe5b170c4a5c4ef252",
+      "comment_id": "6aff50fe5b170c4a5c4ef252",
+      "kind": "comment",
+      "category": "advisor_comment",
+      "original_score": -2,
+      "reason": "Connect manual trial cost and the fall on release to the experiment needed to diagnose the cause.",
+      "date": "2026-11-19",
+      "tags": [
+        "gap_and_motivation",
+        "narrative_structure",
+        "concision_and_repetition"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:44 am",
+      "offset": 1946,
+      "anchor": "For a course project in neuromechanical modeling",
+      "text": "It is like you are starting the previous paragraph all over again. These should be combined into a single paragraph. I don't think all these details on the neural model are helpful as it introduces a large stream of terms the reader doesn't know anything about at this time.",
+      "issue": "identify_course_project",
+      "id": "NOV19-C-6aff519117aa70f0837af37c",
+      "comment_id": "6aff519117aa70f0837af37c",
+      "kind": "comment",
+      "category": "advisor_comment",
+      "original_score": -2,
+      "reason": "Introduce the previous course project once, credit Bolen for the model, and identify Morrow’s collaboration on coupling and tuning.",
+      "date": "2026-11-19",
+      "tags": [
+        "contribution_and_credit",
+        "reader_context",
+        "ownership_and_narration"
+      ]
+    },
+    {
+      "file": "10-introduction.tex",
+      "author": "ajh26",
+      "time": "11:30 am",
+      "offset": 7187,
+      "anchor": "Published neural architectures and simulation software provide a foundation for this work \\citep{rybak_modelling_2006, mccrea_organization_2008, markin_afferent_2010, nourse_sns_2023}. A circuit that coordinates the legs of a human model will produce a different movement when artificial muscles pull on a robot. Our first simulated walker ran slowly, and we tuned its controller by hand. I wanted to change either the controller or the mechanical model, hold the other fixed, and repeat the same experiment.",
+      "text": "Overall, this paragraph is significantly better. However, the highlighted section here jumps around a lot. See if you can connect the ideas together better and/or get rid of the ideas that are not needed for the story.",
+      "issue": "intro_flow",
+      "id": "NOV19-C-6aff4e655b170c4a5c4ef1bd",
+      "comment_id": "6aff4e655b170c4a5c4ef1bd",
+      "kind": "comment",
+      "category": "advisor_comment",
+      "original_score": -2,
+      "reason": "Connect human and robot mechanics to feedback, the need for controlled comparisons, and the practical limit of the earlier model.",
+      "date": "2026-11-19",
+      "tags": [
+        "gap_and_motivation",
+        "narrative_structure",
+        "mechanism"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:39 am",
+      "offset": 1278,
+      "original": "Morrow and ",
+      "proposed": "",
+      "issue": "identify_course_project",
+      "kind": "delete",
+      "id": "NOV19-T1",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": "Morrow and ",
+      "reason": "Credit Bolen with building his first model and explicitly credit the work he and Morrow did together.",
+      "date": "2026-11-19",
+      "tags": [
+        "contribution_and_credit",
+        "reader_context",
+        "ownership_and_narration"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:39 am",
+      "offset": 1286,
+      "original": "our",
+      "proposed": "my",
+      "issue": "identify_course_project",
+      "kind": "replace",
+      "id": "NOV19-T2",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": "my",
+      "reason": "Use the singular possessive for Bolen’s own first model.",
+      "date": "2026-11-19",
+      "tags": [
+        "contribution_and_credit",
+        "reader_context",
+        "ownership_and_narration"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:39 am",
+      "offset": 1443,
+      "original": "we",
+      "proposed": "myself and my colleague, Morrow,",
+      "issue": "identify_course_project",
+      "kind": "replace",
+      "id": "NOV19-T3",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": "myself and my colleague, Morrow,",
+      "reason": "Identify both collaborators for the shared course-project work.",
+      "date": "2026-11-19",
+      "tags": [
+        "contribution_and_credit",
+        "reader_context",
+        "ownership_and_narration"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:40 am",
+      "offset": 1755,
+      "original": "with the older solver ",
+      "proposed": "",
+      "issue": "connect_problem_to_method",
+      "kind": "delete",
+      "id": "NOV19-T4",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": "with the older solver ",
+      "reason": "The manual trial cost already establishes the limitation; remove the unsupported comparison of solvers here.",
+      "date": "2026-11-19",
+      "tags": [
+        "gap_and_motivation",
+        "narrative_structure",
+        "concision_and_repetition"
+      ]
+    },
+    {
+      "file": "60-sns.tex",
+      "author": "ajh26",
+      "time": "11:41 am",
+      "offset": 1764,
+      "original": " enough to make ",
+      "proposed": ", making ",
+      "issue": "connect_problem_to_method",
+      "kind": "replace",
+      "id": "NOV19-T5",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": ", making ",
+      "reason": "Link the slow runs and hand tuning directly to the resulting difficulty of repeating comparisons.",
+      "date": "2026-11-19",
+      "tags": [
+        "gap_and_motivation",
+        "narrative_structure",
+        "concision_and_repetition"
+      ]
+    },
+    {
+      "file": "10-introduction.tex",
+      "author": "ajh26",
+      "time": "11:31 am",
+      "offset": 7444,
+      "original": "I can ",
+      "proposed": "the new system can ",
+      "issue": "tool_as_subject",
+      "kind": "replace",
+      "id": "NOV19-T6",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": "the new system can ",
+      "reason": "Make the system the subject of the capability statement.",
+      "date": "2026-11-19",
+      "tags": [
+        "ownership_and_narration",
+        "reader_use"
+      ]
+    },
+    {
+      "file": "10-introduction.tex",
+      "author": "ajh26",
+      "time": "11:31 am",
+      "offset": 7548,
+      "original": "will ",
+      "proposed": "",
+      "issue": "tool_as_subject",
+      "kind": "delete",
+      "id": "NOV19-T7",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": "will ",
+      "reason": "Use present tense for the effect of a change within the simulation.",
+      "date": "2026-11-19",
+      "tags": [
+        "ownership_and_narration",
+        "reader_use"
+      ]
+    },
+    {
+      "file": "10-introduction.tex",
+      "author": "ajh26",
+      "time": "11:31 am",
+      "offset": 7554,
+      "original": "",
+      "proposed": "s",
+      "issue": "tool_as_subject",
+      "kind": "insert",
+      "id": "NOV19-T8",
+      "category": "advisor_tracked_edit",
+      "original_score": -1,
+      "anchor": "s",
+      "reason": "Complete the subject–verb agreement in “affects” after the preceding deletion.",
+      "date": "2026-11-19",
+      "tags": [
+        "ownership_and_narration",
+        "reader_use"
+      ]
+    }
+  ],
+  "other_authors": [
+    {
+      "file": "60-sns.tex",
+      "author": "bbolen83",
+      "time": "12:31 pm",
+      "offset": 12972,
+      "original": "I need",
+      "proposed": "it is necessary",
+      "issue": "narration",
+      "kind": "replace",
+      "date": "2026-11-19",
+      "advisor_points": 0
+    },
+    {
+      "file": "10-introduction.tex",
+      "author": "bbolen83",
+      "time": "12:25 pm",
+      "offset": 6305,
+      "original": "to",
+      "proposed": "with",
+      "issue": "intro_flow",
+      "kind": "replace",
+      "date": "2026-11-19",
+      "advisor_points": 0
+    },
+    {
+      "file": "10-introduction.tex",
+      "author": "bbolen83",
+      "time": "12:11 pm",
+      "offset": 6524,
+      "original": "Published neural architectures and simulation software provide a foundation for this work \\citep{rybak_modelling_2006, mccrea_organization_2008, markin_afferent_2010, nourse_sns_2023}. A circuit that coordinates the legs of a human model will produce a different movement when artificial muscles pull on a robot. Our first simulated walker ran slowly, and we tuned its controller by hand. I wanted to change either the controller or the mechanical model, hold the other fixed, and repeat the same experiment.",
+      "proposed": "The robot’s artificial muscles differ from human muscles in how much force they produce and where they pull on the skeleton. A circuit that coordinates the legs of the human model will therefore produce a different movement in the robot model, and that movement will change the sensory feedback the circuit receives. To measure the effect of the mechanics, I wanted to repeat the same experiment on both models with the controller held fixed. I also wanted to test changes to the controller while keeping the mechanical model fixed. Our first neuromechanical model ran slowly, and we tuned its controller by hand, making a series of these comparisons impractical.",
+      "issue": "intro_flow",
+      "kind": "replace",
+      "date": "2026-11-19",
+      "advisor_points": 0
+    }
+  ],
+  "observed_score_this_capture": -20,
+  "observed_events_this_capture": 15,
+  "november_cumulative_events": 56,
+  "observed_total": -62,
+  "observed_score_by_file": {
+    "60-sns.tex": -21,
+    "10-introduction.tex": -41
+  },
+  "observed_score_by_date": {
+    "2026-11-17": -6,
+    "2026-11-18": -36,
+    "2026-11-19": -20
+  }
+}

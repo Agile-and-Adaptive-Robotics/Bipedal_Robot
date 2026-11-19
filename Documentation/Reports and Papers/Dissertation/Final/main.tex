@@ -13,6 +13,7 @@
 %\usepackage{indentfirst}
 %\usepackage{fancyhdr}
 \usepackage{graphicx,epstopdf}
+\usepackage[pass]{geometry}
 \usepackage{lastpage}
 \usepackage{float}
 \usepackage{amsmath, bm}
@@ -38,7 +39,7 @@
 \usepackage{tabularx}
 \usepackage{pbox} % For biography environment
 \usepackage{ragged2e} % For command \justifying
-\usepackage[subfigure]{tocloft} % For dots in TOC. If subfigure package is loaded, the subfigure option needs to be added here to avoid clash: \usepackage[subfigure]{tocloft}
+\usepackage[titles,subfigure]{tocloft} % For dots in TOC. If subfigure package is loaded, the subfigure option needs to be added here to avoid clash: \usepackage[subfigure]{tocloft}
 \usepackage{marginnote} % For left column
 \reversemarginpar % To have the left column on the left side
 \usepackage{marginfix} % For command \clearmargin for manually moving the left column to the next page
@@ -130,13 +131,33 @@ David Turcic}
 % ---------------------- Begin Document ---------------------------------
 
 \setlength{\emergencystretch}{1.5em}
+\makeatletter
+\ifdefined\pdfrunninglinkoff
+  \ifdefined\pdfannot@link@off@@
+    \let\pdfannot@link@off@@\pdfrunninglinkoff
+    \let\pdfannot@link@on@@\pdfrunninglinkon
+    \AddToHook{shipout/before}{\setbox\ShipoutBox=\vbox{\pdfrunninglinkoff\box\ShipoutBox}}
+  \fi
+\fi
+\makeatother
 \begin{document}
 
+\hypersetup{pageanchor=false}
+\newgeometry{margin=1in,left=\dimexpr1in+4bp\relax,right=\dimexpr1in+4bp\relax,headheight=0pt,headsep=0pt,footskip=0pt}
 \maketitle
 
 %-------------------------Pretext Pages----------------------------
 % Copyright
 \include{chapters/01-copyright}
+
+\newgeometry{margin=1in,left=\dimexpr1in+4bp\relax,right=\dimexpr1in+4bp\relax,includehead,headheight=.5in,headsep=.05in}
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\begingroup
+\microtypesetup{protrusion=false}
+\makeatletter
+\renewcommand{\@makeschapterhead}[1]{\noindent{\centering\normalfont\bfseries\normalsize #1\par}\nobreak\vspace{\baselineskip}}
+\makeatother
 
 % Abstract
 \include{chapters/02-abstract}
@@ -168,6 +189,9 @@ David Turcic}
 % Isometric Force Characterization of BPAs, Isometric Knee Torque,
 % Sensory Afferent Database, Synthetic Nervous System Simulation,
 % Discussion, Conclusion, Bibliography
+\clearpage
+\endgroup
+\restoregeometry
 \mainmatter
 
 \include{chapters/10-introduction}

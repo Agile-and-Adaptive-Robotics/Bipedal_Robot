@@ -1,0 +1,139 @@
+{
+  "reference": "OpenSim static-optimization estimate at each pose",
+  "poses": 121,
+  "intervals_s": [
+    0.5,
+    2.5
+  ],
+  "muscles": {
+    "soleus_r": {
+      "reference_mean_N": 422.52572412173043,
+      "converted_mean_N": 386.879192265336,
+      "mean_ratio": 0.9156346470253617,
+      "force_R2": 0.7423303481194259,
+      "signed_Pearson_r": 0.8942687783140715,
+      "shape_r2": 0.7997166478673419,
+      "squared_error_relative_to_reference_mean": 0.25766965188057406
+    },
+    "med_gas_r": {
+      "reference_mean_N": 357.7241745616994,
+      "converted_mean_N": 325.3851035772495,
+      "mean_ratio": 0.9095977479741947,
+      "force_R2": 0.88813198330489,
+      "signed_Pearson_r": 0.9455669242185893,
+      "shape_r2": 0.8940968081762035,
+      "squared_error_relative_to_reference_mean": 0.1118680166951101
+    },
+    "lat_gas_r": {
+      "reference_mean_N": 85.90753596381198,
+      "converted_mean_N": 79.65628644038603,
+      "mean_ratio": 0.9272328154533584,
+      "force_R2": 0.8836081344161723,
+      "signed_Pearson_r": 0.9418707755504594,
+      "shape_r2": 0.8871205578360238,
+      "squared_error_relative_to_reference_mean": 0.11639186558382772
+    },
+    "tib_ant_r": {
+      "reference_mean_N": 124.23538096887397,
+      "converted_mean_N": 125.02584110041668,
+      "mean_ratio": 1.006362600777477,
+      "force_R2": 0.9449255928509205,
+      "signed_Pearson_r": 0.9721948215220918,
+      "shape_r2": 0.945162770994372,
+      "squared_error_relative_to_reference_mean": 0.05507440714907951
+    },
+    "vas_lat_r": {
+      "reference_mean_N": 93.20811169336781,
+      "converted_mean_N": 86.35820199645325,
+      "mean_ratio": 0.9265095111094074,
+      "force_R2": 0.9406639033582346,
+      "signed_Pearson_r": 0.972341683502324,
+      "shape_r2": 0.9454483494761335,
+      "squared_error_relative_to_reference_mean": 0.05933609664176546
+    },
+    "rect_fem_r": {
+      "reference_mean_N": 47.61505293520145,
+      "converted_mean_N": 51.799172730003455,
+      "mean_ratio": 1.0878738872872011,
+      "force_R2": -1.1502919378901044,
+      "signed_Pearson_r": 0.6192920282976245,
+      "shape_r2": 0.3835226163129858,
+      "squared_error_relative_to_reference_mean": 2.1502919378901044
+    },
+    "semimem_r": {
+      "reference_mean_N": 76.44355771770662,
+      "converted_mean_N": 59.290709463456785,
+      "mean_ratio": 0.7756142078369447,
+      "force_R2": 0.5650806119443788,
+      "signed_Pearson_r": 0.7878306733880757,
+      "shape_r2": 0.6206771699311088,
+      "squared_error_relative_to_reference_mean": 0.4349193880556212
+    },
+    "bifemsh_r": {
+      "reference_mean_N": 112.80152357022727,
+      "converted_mean_N": 208.265269210328,
+      "mean_ratio": 1.8462983709671927,
+      "force_R2": -0.26069144364808494,
+      "signed_Pearson_r": 0.931424541288606,
+      "shape_r2": 0.8675516761146901,
+      "squared_error_relative_to_reference_mean": 1.260691443648085
+    },
+    "psoas_r": {
+      "reference_mean_N": 205.01418250135848,
+      "converted_mean_N": 193.9832399850379,
+      "mean_ratio": 0.9461942467504779,
+      "force_R2": 0.9268307214806719,
+      "signed_Pearson_r": 0.9663949120947782,
+      "shape_r2": 0.9339191261226741,
+      "squared_error_relative_to_reference_mean": 0.07316927851932813
+    },
+    "glut_max2_r": {
+      "reference_mean_N": 34.1691624611777,
+      "converted_mean_N": 31.4792381049042,
+      "mean_ratio": 0.9212762572296077,
+      "force_R2": 0.9259562830346617,
+      "signed_Pearson_r": 0.9711267179521074,
+      "shape_r2": 0.9430871023204319,
+      "squared_error_relative_to_reference_mean": 0.07404371696533825
+    },
+    "tfl_r": {
+      "reference_mean_N": 24.9888331309969,
+      "converted_mean_N": 25.439790546696244,
+      "mean_ratio": 1.0180463574803724,
+      "force_R2": 0.9330872419437616,
+      "signed_Pearson_r": 0.966866643234202,
+      "shape_r2": 0.9348311057989737,
+      "squared_error_relative_to_reference_mean": 0.06691275805623842
+    },
+    "per_brev_r": {
+      "reference_mean_N": 12.241613321596073,
+      "converted_mean_N": 11.225282554365029,
+      "mean_ratio": 0.9169773835742645,
+      "force_R2": 0.9769681745236161,
+      "signed_Pearson_r": 0.994732974350202,
+      "shape_r2": 0.9894936902595997,
+      "squared_error_relative_to_reference_mean": 0.023031825476383983
+    }
+  },
+  "close_agreement": [
+    "med_gas_r",
+    "lat_gas_r",
+    "tib_ant_r",
+    "vas_lat_r",
+    "psoas_r",
+    "glut_max2_r",
+    "tfl_r",
+    "per_brev_r"
+  ],
+  "source_sha256": {
+    "Documentation/Reports and Papers/Dissertation/Figures/95-AppendixD/Components/force_comparison/force_arrays.npz": "09388690b2e8fa75e62be9dbdd28b5145248f3cd77eb1f141f7cd6f5b4f91993",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/ResultsBSolve/zz_bsolve_StaticOptimization_force.sto": "dd10eea5716bff9164648a05e236ec2be8b845f163c245b86cb661f8bf296cb7",
+    "Code/MuJoCo_SNS/spinal/muscle_force_compare.csv": "c4f3f519b8a386cdad82ba9772b70dbd906805c9f2d39c11c1b48396a4625eb3",
+    "Code/MuJoCo_SNS/spinal/_muscle_force_compare.py": "b029ef5dcf613fc8e904d0949bded63fe5bc3c8b23eebb74b6b8956636bf0740"
+  },
+  "rectus_example": {
+    "time_s": 1.55,
+    "OpenSim_N": 96.375403165,
+    "MuJoCo_N": 415.5724614725719
+  }
+}

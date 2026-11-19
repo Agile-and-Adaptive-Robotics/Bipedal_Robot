@@ -30,7 +30,8 @@ QUESTIONS = {
     "evidence_and_validation": "What was changed, what was held fixed, what was measured, and what comparison answers the question?",
     "result_first": "What happened in the test, and what design decision follows?",
     "contribution_and_credit": "Who measured, built, or adapted it? What was already available?",
-    "reader_use": "What would a colleague select, run, or measure, and what should they see?",
+    "reader_use": "What can a researcher select, run, or measure with the existing tools? Which experiments would extend the present evidence?",
+    "ownership_and_narration": "Does first person identify the author of a contribution or measurement? Can a tool or experiment state its own capability or result? Does the paragraph merely announce what the writer will describe?",
     "definitions_and_terminology": "At its first appearance in the printed chapter, can the reader say what a named model, controller, program, or signal is and what it does? For a variant, what changes, and which body does it control?",
     "narrative_structure": "Why does this paragraph follow the previous one?",
     "concision_and_repetition": "Does a repeated statement supply a new comparison or interpretation?",
@@ -46,6 +47,17 @@ def read_json(path):
 
 def digest(text):
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def ownership_cues(passage):
+    """Locate phrases for a reader to inspect. A first-person pronoun alone carries no score."""
+    patterns = {
+        "roadmap_or_intention": r"\b(?:I (?:begin|show|describe|next describe|wanted|needed|would)|(?:show|describe|explain) how I)\b",
+        "attributed_contribution": r"\b(?:I|we) (?:developed|built|adapted|implemented|connected|measured|verified|compared|tested|timed|added|assembled)\b",
+        "named_capability": r"\b(?:the (?:new )?(?:system|editor|interface|script|tools?)|a researcher|researchers) can\b",
+    }
+    return {kind: found for kind, pattern in patterns.items()
+            if (found := re.findall(pattern, passage, flags=re.IGNORECASE))}
 
 
 def dated_signal(row, batch):
@@ -252,6 +264,8 @@ def make_review(paths, rows, decisions=None):
             output = {"file": path.name, "start": start, "end": end, "kind": kind, "source": content,
                       "sha256": sha, "historical_examples": index.nearest(content),
                       "status": "unlabeled", "local_judgment": None}
+            if cues := ownership_cues(content):
+                output["ownership_phrases_for_contextual_reading"] = cues
             if case:
                 found.add(case["id"])
                 output.update(status="locally reviewed", local_judgment=case["id"])
