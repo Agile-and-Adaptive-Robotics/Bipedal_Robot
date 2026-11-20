@@ -998,8 +998,8 @@
       "author": "Ben and archive",
       "question": "Where is the original FEA illustration?",
       "before": "\\caption[End deformation and proposed BPA experiments]{Proposed investigation of the end effect. (A) The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. (B) An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}",
-      "after": "\\caption[]{\\textit{Continued.} (C) Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}",
-      "after_sha256": "5a671c76e7883bbc909f1899c5a2cd4d0756082c6998ca3992276730b4bb893d",
+      "after": "\\caption[]{\\textit{Continued.} \\textbf{(C)} Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}",
+      "after_sha256": "2b1df464f74ee88473828097181540f4b2a07037eaaab2eb15c9b5f8eabf2efe",
       "judgment": "Restored the original exploded view as Figure 7.2C. Panels A and B retain the axial profile and experimental load cases. The section describes a proposed finite-element investigation.",
       "tags": [
         "reader_context"
@@ -1354,6 +1354,112 @@
         }
       ],
       "local_readiness": 3
+    },
+    {
+      "id": "TOOL-SADB-21",
+      "file": "60-sns.tex",
+      "line": 4,
+      "author": "Ben, advisor comment, and independent reader",
+      "question": "What questions required new tools and a robot-specific model?",
+      "before": "I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I developed Simulink blocks and a graphical interface for building nonspiking circuits. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.",
+      "after": "This chapter presents the tools I developed to test neural controllers on a human musculoskeletal model and on models of our bipedal robot. The lab's existing software made it impractical to search systematically for controller settings. The human model provided a reference for movement, but testing the robot required a model that represented where its artificial muscles pulled on the joints and how the resulting motion fed back to the controller. I built tools to construct circuits graphically, connect controllers to these mechanical models, and automate tuning. Researchers can now change a sensory connection or move an artificial muscle attachment in simulation, repeat the trial under the same conditions, and trace the effect on muscle force and leg motion.",
+      "after_sha256": "76376d2175f2ca6b7378cce0ceae8ab604c3942e4709a2a6822118321e39b21d",
+      "judgment": "The lab needed systematic controller tuning and models that could return feedback from the motion produced by the robot's own muscle paths and joints. Changing one connection or attachment and repeating the trial reveals its effect on muscle force and leg motion.",
+      "tags": [
+        "gap_and_motivation"
+      ],
+      "historical_examples": [
+        {
+          "id": "AD-T2",
+          "date": "2026-11-17",
+          "issue": "interface",
+          "tags": [
+            "mechanism",
+            "definitions_and_terminology"
+          ],
+          "cosine": 0.1683
+        },
+        {
+          "id": "AD-T1",
+          "date": "2026-11-17",
+          "issue": "context",
+          "tags": [
+            "reader_context",
+            "gap_and_motivation"
+          ],
+          "cosine": 0.1561
+        },
+        {
+          "id": "INTRO-T17",
+          "date": "2026-11-18",
+          "issue": "intro_route_design",
+          "tags": [
+            "result_first",
+            "evidence_and_validation"
+          ],
+          "cosine": 0.1228
+        }
+      ],
+      "local_readiness": 3,
+      "previous_local_judgment": "NOV19-READ-02",
+      "previous_local_readiness": 3,
+      "disposition_of_previous_judgment": "Reopened. The earlier review scored the paragraphs separately and missed that the first section restarted the overview.",
+      "advisor_comment": "It is like you are starting the previous paragraph all over again. These should be combined into a single paragraph. I don't think all these details on the neural model are helpful as it introduces a large stream of terms the reader doesn't know anything about at this time.",
+      "advisor_anchor": "For a course project in neuromechanical modeling",
+      "advisor_thread_id": "6aff519117aa70f0837af37c",
+      "original_advisor_score": -2
+    },
+    {
+      "id": "TOOL-SADB-22",
+      "file": "60-sns.tex",
+      "line": 8,
+      "author": "Ben, advisor comment, and independent reader",
+      "question": "Which earlier experiment exposed the limitation?",
+      "before": "I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \\citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \\citet{deng_neuromechanical_2019} to the sagittal-plane biped of \\citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.",
+      "after": "In a course project, Connor Morrow and I tested whether the neural circuit of \\citet{deng_neuromechanical_2019} could coordinate the legs of the sagittal-plane biped of \\citet{li_bipedal_2017}. We connected the circuit and body in AnimatLab, a graphical program for linking neurons, muscles, and sensory feedback \\citep{cofer_animatlab_2010}, and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run.",
+      "after_sha256": "27140bdd89ad87c8182eb6aa0e80dc9350bad2aa9cd8e1eda44b5c72573cf40d",
+      "judgment": "Morrow and Bolen tested the published Deng circuit on the Li biped. The legs made stepping-like movements in suspension, the model fell when support was removed, and each parameter change cost another slow run. This is the reader's first account of the course project.",
+      "tags": [
+        "contribution_and_credit"
+      ],
+      "historical_examples": [
+        {
+          "id": "OCT-C-6adb9e48e5979f005bd4c876",
+          "date": "2026-10-23",
+          "issue": "OCT-I-6adb9e48e5979f005bd4c876",
+          "tags": [
+            "contribution_and_credit"
+          ],
+          "cosine": 0.3723
+        },
+        {
+          "id": "OCT-C-6adb9e886de7708b7b6c3530",
+          "date": "2026-10-23",
+          "issue": "OCT-I-6adb9e886de7708b7b6c3530",
+          "tags": [
+            "concision_and_repetition"
+          ],
+          "cosine": 0.3504
+        },
+        {
+          "id": "OCT-T-371e671eb4ba34ac",
+          "date": "2026-10-23",
+          "issue": "OCT-I-371e671eb4ba34ac",
+          "tags": [
+            "contribution_and_credit",
+            "reader_context"
+          ],
+          "cosine": 0.1677
+        }
+      ],
+      "local_readiness": 3,
+      "previous_local_judgment": "NOV19-READ-01",
+      "previous_local_readiness": 3,
+      "disposition_of_previous_judgment": "Reopened. The earlier review scored the paragraphs separately and missed that the first section restarted the overview.",
+      "advisor_comment": "It is like you are starting the previous paragraph all over again. These should be combined into a single paragraph. I don't think all these details on the neural model are helpful as it introduces a large stream of terms the reader doesn't know anything about at this time.",
+      "advisor_anchor": "For a course project in neuromechanical modeling",
+      "advisor_thread_id": "6aff519117aa70f0837af37c",
+      "original_advisor_score": -2
     }
   ]
 }

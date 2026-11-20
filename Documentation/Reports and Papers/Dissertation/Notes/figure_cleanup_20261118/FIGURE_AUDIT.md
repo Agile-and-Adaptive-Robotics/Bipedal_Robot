@@ -2,7 +2,7 @@
 
 The working manuscript uses 30 graphic files for 27 numbered figures in Chapters 6 and 7 and Appendices A–E. Figure 6.1 and Figure 7.2 each use two source files. Appendix D places the neural and mechanical panels of Figure D3 on consecutive pages. The chapter-folder roots contain the exact graphic inputs and their available accessibility descriptions.
 
-The [figure transfer ZIP](Revised_chapter_figures.zip) contains the 30 graphics and 25 descriptions under Overleaf’s existing `figs/` paths. Its source is the local revised TeX. Compared with the existing project export, 26 graphics match byte for byte and four PDFs have newer artwork under the same names.
+The [figure transfer ZIP](https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/d84308c3889c8a53674a8ba5df414d402bce1a34/Documentation/Reports%20and%20Papers/Dissertation/Notes/figure_cleanup_20261118/Revised_chapter_figures.zip) contains the 30 graphics and 25 descriptions under Overleaf’s existing `figs/` paths. Its source is the local revised TeX. Compared with the existing project export, 26 graphics match byte for byte and four PDFs have newer artwork under the same names.
 
 | Figure | PDFs to replace |
 |---|---|

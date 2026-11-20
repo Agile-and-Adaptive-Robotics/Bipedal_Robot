@@ -84,16 +84,6 @@ def proof_files(build,render_dir,labels):
         final_phrase=next(n for n in range(conclusion,last+1) if 'future researcher' in doc[n-1].get_text().lower())
         assert final_phrase==conclusion==last
         assert 'change in force and motion.' in ' '.join(doc[conclusion-1].get_text().split())
-        brief=pdf.open()
-        bookmarks=[]
-        for title,num in key:
-            brief.insert_pdf(doc,from_page=num-1,to_page=num-1,links=False)
-            bookmarks.append([1,title,len(brief)])
-        brief.set_toc(bookmarks)
-        brief.set_metadata({'title':'Chapter 6 reading pages','author':'Benjamin Bolen',
-                            'subject':'The revised chapter opening, workflows, model table, knee experiment, and conclusion'})
-        brief.save(HERE/'Chapter_6_reading_pages.pdf',garbage=4,deflate=True,no_new_id=True)
-        brief.close()
         appendix_page=next(i+1 for i,p in enumerate(doc) if i+1>last and
                            '0.88 and 0.98' in ' '.join(p.get_text().split()))
         to_render=list(range(first,last+2))+[appendix_page]
@@ -168,8 +158,6 @@ def main():
     layout=proof_files(assembled,renders,labels)
     with pdf.open(local/'main.pdf') as doc:
         working_pages=len(doc)
-    with pdf.open(HERE/'Chapter_6_reading_pages.pdf') as doc:
-        assert len(doc)==len(layout['reading_pages'])
     out={'builds':builds,'working_proof_pages':working_pages,'delivered_layout':layout,
          'table_6_1_and_narrative_order':model_rows,'conclusion_complete_on_one_page':True,
          'revised_chapter_labels':sorted(new_labels-old_labels),'old_chapter_label_count':len(old_labels),

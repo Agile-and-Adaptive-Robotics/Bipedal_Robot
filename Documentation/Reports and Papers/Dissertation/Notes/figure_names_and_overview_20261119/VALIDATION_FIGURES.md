@@ -1,0 +1,24 @@
+# Figures 4.13 and 4.14
+
+The accepted cam-extensor PDF now has the short name `Figures/30-torque/extensor_validation.pdf`. Its PDF bytes are identical. The two-BPA flexor in `Figures/30-torque/flexor_validation.pdf` uses the same 422 × 338 PDF-point canvas, 372 × 293.25 point plot area, −125° to +15° horizontal limits, labeled ticks, inward ticks, sans-serif typography, and line weights. The flexor retains its signed −105 to +5 N·m vertical limits. Its boxed key sits below the data and clears both axes. Each root PDF has a matching `.alt.txt`.
+
+## Data and source checks
+
+- **Extensor.** The saved cam model supplies the 100-point optimized torque curve and the 100-point vastus medialis reference. The nine recorded trials supply all nine measured points and nine predictions at the joint angles and pressures recorded for each test. Both sets of marker areas scale with pressure. Measured extension exceeds the human reference by 0.2359–3.5160 N·m at 256–488 kPa. The source generator is `tmp/paper_bridge/figscripts/gen_Ext20mm_cam_20261026.m`, SHA-256 `6f7934e802dde764e2b3a178508d78043a104d6daa44d434f157f7ee164c93af`. A byte-identical copy of its campaign's higher-precision, nine-row audit is [extensor_trials.csv](validation_figures/extensor_trials.csv). The original generator predates the published legend wording. The approved PDF preserves the final legend.
+- **Flexor.** [read_flexor.m](validation_figures/read_flexor.m) traverses the saved MATLAB graphic, including finite descendants of the copied plotting group. Its direct children also include three one-NaN legend keys. The 100 corrected torques, 100 human-reference torques, 15 measurements, and 15 pressure-specific predictions in [flexor_data.json](validation_figures/flexor_data.json) came directly from `Figures/30-torque/Components/figure_polish_20261030/Redesigned_flexor_pressure_publication.fig`, SHA-256 `5c802e2aa5927b1a22fd027b138e5cf8e9967aca98a05262d78794402d0eef1c`. [draw_flexor.py](validation_figures/draw_flexor.py) uses those arrays without smoothing or interpolation. It retains the marker areas of 60 and 55 square points for measurements and predictions respectively, 75% opacity, and measured markers drawn last. The horizontal range now matches the extensor.
+- **Coordinate verification.** [verify.py](validation_figures/verify.py) reads the actual vector paths from the old and new PDFs. It checks both flexor curves and both sets of points against the native MATLAB data, and both extensor curves and their trial points against the saved cam MAT and CSV. In the new flexor, the maximum absolute coordinate difference after PDF serialization was 0.000022° or 0.000023 N·m. The OpenSim reference also independently reproduces the measured flexor magnitude margins of 0.415038 N·m at −105° and 17.004549 N·m at −14°. The saved flexor model uses 561.4854023 mm resting length. Installed lengths are 561 and 560 mm in Appendix C. Neither active plot labels a 562 mm length. [Full checks and SHA-256 hashes](validation_figures/verification.json)
+
+## Migration
+
+| Former root file in `Figures/30-torque` | Current file | Preservation |
+| --- | --- | --- |
+| `Ext20mm_physical_publication.pdf` | `extensor_validation.pdf` | Identical copy in `Deprecated/physical_validation_20261119` |
+| `Redesigned_flexor_pressure_publication.pdf` | `flexor_validation.pdf` | Original in the same `Deprecated` folder |
+| `Redesigned_flexor_pressure_publication.alt.txt` | `flexor_validation.alt.txt` | Original in the same `Deprecated` folder |
+| `FlxGrp_2x2_publication.fig` | `Components/flexor_comparison.fig` | Moved byte-for-byte, SHA-256 `2f5bc4ea2e6df965338db82762b148660c31d9afc949a0d4bad3f0c9cdb5fb96` |
+
+The extensor had no root alt file before this change. The chapter-root scan found a single editable MATLAB figure before the move and zero afterward. Full file hashes include the three archived files, both final PDFs and alts, the MATLAB figure, both numerical model files, the source data, and the plotting scripts. [Verification record](validation_figures/verification.json)
+
+## Printed proof
+
+The 325-page combined PDF places Figures 4.13 and 4.14 on printed pages 117 and 118 (PDF pages 137 and 138). Each plot area is 393.35 × 310.08 PDF points on the page. The smallest text measures 10.31 points in both figures. The original extensor’s four fonts and both newly embedded flexor fonts passed Poppler’s font inventory. The 144 dpi Poppler render of each complete page shows all four legend keys, both axes, both curves, and the measured and modeled points. The flexor legend clears the negative torque trace, every marker, and both sets of inward ticks. Both captions agree with the sampled tests. The combined PDF SHA-256 was `d7e1a9002e415f1e23216465f8ff3445d00772e3f9829792975393f220df0030`. [Measured placements and caption text](validation_figures/verification.json)

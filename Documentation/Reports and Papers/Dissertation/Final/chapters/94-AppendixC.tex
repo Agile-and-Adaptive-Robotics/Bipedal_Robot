@@ -148,7 +148,7 @@ Extensor 2 & 826 & 85 \\
 
 \FloatBarrier
 
-The prediction inputs are distinct from the per-actuator measurements in Table~\ref{tab:final_test_dimensions}. The flexor predictions use a shared resting length of \qty{561.49}{\mm}, with the nominal \qty{562}{\mm} label retained on the physical-test plot. The saved route tendon parameter and the effective prediction input are related by
+The prediction inputs are distinct from the per-actuator measurements in Table~\ref{tab:final_test_dimensions}. The flexor predictions use a shared resting length of \qty{561.49}{\mm}. The saved route tendon parameter and the effective prediction input are related by
 \begin{equation}
 \begin{aligned}
 l_{\mathrm{ten,model}} &= l_{\mathrm{ten,design}}-\qty{20}{\mm}=\qty{5}{\mm},\\
@@ -322,16 +322,16 @@ Figure~\ref{fig:app_bone_mesh} first locates the optimized route on the OpenSim 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=\textwidth]{bone_context_extensor20mm_20261030.png}
-% ALT TEXT: see bone_context_extensor20mm_20261030.alt.txt beside the figure file.
+\includegraphics[width=\textwidth]{bone_context_extensor20mm.png}
+% ALT TEXT: see bone_context_extensor20mm.alt.txt beside the figure file.
 \caption[Optimized extensor route on the bone meshes]{Optimized extensor route at \ang{0}: \textbf{(A)} lower-body context and \textbf{(B)} knee close-up. Black shows the BPA--tendon route; gray patterned paths show human vastus references.}
 \label{fig:app_bone_mesh}
 \end{figure}
 
 \begin{sidewaysfigure}[p]
 \centering
-\includegraphics[width=\textheight]{direct_route_contact_detail_20261030.pdf}
-% ALT TEXT: see direct_route_contact_detail_20261030.alt.txt beside the figure file.
+\includegraphics[width=\textheight]{direct_route_contact_detail.pdf}
+% ALT TEXT: see direct_route_contact_detail.alt.txt beside the figure file.
 \caption[Extensor route at contact-release poses]{Saved extensor route at eight contact-release poses, enlarged in the femur frame. Titles identify the next released contact. The proximal origin lies outside this close-up; Figure~\ref{fig:app_bone_mesh} supplies anatomical context.}
 \label{fig:app_route_geometry}
 \end{sidewaysfigure}
@@ -404,8 +404,8 @@ Figure~\ref{fig:PulleySurfaces} compares predicted insertion-torque magnitudes a
 
 \begin{sidewaysfigure}[p]
 \centering
-\includegraphics[width=\textheight]{pulley_torque_isobars_20261030.pdf}
-\caption{Predicted torque at five saved pressure levels for two BPAs through a two-part tackle, with sizes re-solved. Black dashed curves show the maximum-isometric human reference.}
+\includegraphics[width=\textheight]{pulley_torque_isobars.pdf}
+\caption{Predicted torque at five saved pressure levels for two BPAs through a two-part tackle, with sizes re-solved. The human reference gives maximum isometric torque.}
 \label{fig:PulleySurfaces}
 \end{sidewaysfigure}
 
@@ -415,14 +415,14 @@ Figure~\ref{fig:PulleySurfaces} compares predicted insertion-torque magnitudes a
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{extensor_cam_AF_bones.pdf}
-\caption{Cam-extensor poses A--F, spanning \ang{-120} to \ang{-27}. Blue lines show the route; colored outlines show the clearance envelopes. Gray silhouettes show the registered OpenSim anatomical reference; no foot is drawn. The remaining poses and legend are in Figure~\ref{fig:app_cam_GH}.}
+\caption{Cam-extensor poses \textbf{(A)}--\textbf{(F)} (\ang{-120} to \ang{-27}) registered to the OpenSim femur and tibia. Figure~\ref{fig:app_cam_GH} continues the sequence with the same legend.}
 \label{fig:app_cam_AF}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{extensor_cam_GH_bones.pdf}
-\caption{Cam-extensor poses G and H at \ang{-8} and \ang{10}, with the legend, \qty{96.9}{\mm} cam-drum radius, and contact-release schedule. Panel letters continue Figure~\ref{fig:app_cam_AF}.}
+\caption{Cam-extensor poses \textbf{(G)} at \ang{-8} and \textbf{(H)} at \ang{10} complete the knee-extension sequence in Figure~\ref{fig:app_cam_AF}. The cam-drum radius is \qty{96.9}{\mm}. The release angles identify when each contact drops out of the cable path.}
 \label{fig:app_cam_GH}
 \end{figure}
 \clearpage

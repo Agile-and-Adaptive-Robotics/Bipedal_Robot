@@ -1,8 +1,25 @@
+\begingroup
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{%
+  \vspace*{10pt}%
+  {\centering\chapterheading Chapter~\thechapter\par\nobreak
+   #1\par}%
+  \vspace{20pt}}
+\makeatother
 \chapter{Isometric Force Characterization of Braided Pneumatic Actuators}\label{ch:muscles}\label{ch:methods}\label{ch:discussion}
+\endgroup
 \graphicspath{{../Figures/20-muscles/}{figs/20-muscles/}}
 
 {\doublespacing\normalsize\upshape
-\noindent Publication note: Sections~\ref{sec:force_model}--\ref{sec:force_experiment}, Section~\ref{sec:results_force}, and Sections~\ref{sec:disc_effects}--\ref{sec:disc_bio}, with their associated figures and tables, appeared in \citet{bolen_2026} (Bolen, Elzein, Pang, and Hunt, \emph{Actuators}, 2026). For that work, B.B.\ performed the conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, and original draft preparation; M.E.\ and L.P.\ contributed methodology, software, investigation, and data curation; and A.H.\ supervised the work, administered the project, and acquired funding. All co-authors contributed to writing, review, and editing.\par}
+\noindent Sections~\ref{sec:force_model}--\ref{sec:force_experiment}, Section~\ref{sec:results_force}, and Sections~\ref{sec:disc_effects}--\ref{sec:disc_bio}, with their associated figures and tables, appeared in the following article.\par
+\medskip
+\noindent Ben Bolen, Mohammad Elzein, Lawrence Pang, and Alexander Hunt. ``Isometric Force Characterization of Braided Pneumatic Actuators.'' \emph{Actuators}, 15(5), article~230, pp.~1--16 (2026).\nocite{bolen_2026}\par
+\medskip
+\noindent\textbf{Author contributions.} Conceptualization, B.B. and A.H.; Methodology, B.B., A.H., M.E. and L.P.; Software, B.B., M.E. and L.P.; Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., M.E. and L.P.; Resources, B.B. and A.H.; Data Curation, B.B. and L.P.; Writing---Original Draft Preparation, B.B.; Writing---Review and Editing, B.B., M.E., L.P. and A.H.; Visualization, B.B. and A.H.; Supervision, B.B. and A.H.; Project Administration, B.B. and A.H.; Funding Acquisition, A.H. All authors have read and agreed to the published version of the manuscript.\par
+\medskip
+\noindent DOI \url{https://doi.org/10.3390/act15050230}\par
+\noindent PDXScholar \url{https://pdxscholar.library.pdx.edu/mengin_fac/553/}\par}
+\clearpage
 
 This chapter develops and validates the actuator force models on which the rest of the dissertation builds, and it reads as one self-contained study, from methods through results to discussion. Sections~\ref{sec:force_model} and~\ref{sec:force_experiment} present the methods: the force equations used throughout this work, and the test jig and measurement procedure used to characterize Festo BPAs with \qtylist{10;20}{\mm} uninflated diameters over a wide range of resting lengths, contractions, and pressures. Section~\ref{sec:results_force} reports the resulting maximum-force and normalized force--strain--pressure models and compares them with the manufacturer's tool. The remaining sections discuss the effects of resting length, the nondimensionalized force prediction, the comparison with other published BPA models, the implications for real-time control and simulation, and the analogy between these artificial muscles and biological muscle. The validated force model is the one used for the knee-torque predictions of Chapter~\ref{ch:torque} and for the BPA actuation of the neuromechanical simulations in Chapter~\ref{ch:sns}.
 
@@ -75,7 +92,7 @@ Force data was collected using a CALT DYLY-103 100 kg S-shaped load cell for the
 
 Pressure and load cell amplifier data were sent to MATLAB 2021b via an Arduino Uno style Sparkfun BlackBoard C microcontroller. The computers that used MATLAB were running either Windows 10 or Windows 11. During phases when the Arduino was collecting force and pressure data to send to MATLAB, the Arduino would also trigger (via MATLAB) an Onsemi 2N4401 NPN transistor to make the valve manifold open or close the valve. For other data collection, the valve was manually opened and closed. 
 
-The inner distance between the hose clamps on each BPA was measured with a FANUC tape measure to determine the muscle's length $l$ and resting length ($l_0$). This is how \citet{festo_2026} defines $l_0$, although in \citet{hunt_modeling_2017} it was measured to also include end cap length. We then inflated each BPA to $P_{620}=\qty{620}{kPa}$, with one end allowed to move freely in the axial Degree of Freedom (DoF), and measured the length $l_{620}$ to calculate maximum contraction at \qty{620}{\kPa} using Equation~(\ref{eq:max_strain}). The distance between the crossmembers was then controlled to obtain different amounts of contraction, the muscles were inflated to various pressures, and the contractile force was recorded at the pressure--contraction pairs. This was done for $\diameter$\qty{10}{\mm} BPA resting lengths ($l_0$) of \SIrange[range-phrase=--]{112}{518}{\mm}. For $\diameter$\qty{20}{\mm} BPAs, resting lengths ($l_0$) of \SIrange[range-phrase=--]{300}{509}{\mm} were used.
+The inner distance between the hose clamps on each BPA was measured with a FANUC tape measure to determine the muscle's length $l$ and resting length ($l_0$). This is how \citet{festo_2026} defines $l_0$, although in \citet{hunt_modeling_2017} it was measured to also include end cap length. We then inflated each BPA to $P_{620}=\qty{620}{kPa}$, with one end allowed to move freely in the axial Degree of Freedom (DoF), and measured the length $l_{620}$ to calculate maximum contraction at \qty{620}{\kPa} using Equation~(\ref{eq:max_strain}). The distance between the crossmembers was then controlled to obtain different amounts of contraction, the muscles were inflated to various pressures, and the contractile force was recorded at the pressure--contraction pairs. We used 80\% of the force measurements to fit the normalized surface and reserved 20\% for validation. This was done for $\diameter$\qty{10}{\mm} BPA resting lengths ($l_0$) of \SIrange[range-phrase=--]{112}{518}{\mm}. For $\diameter$\qty{20}{\mm} BPAs, resting lengths ($l_0$) of \SIrange[range-phrase=--]{300}{509}{\mm} were used.
 
 \begin{figure}[htbp]
    \begin{center}
@@ -104,6 +121,7 @@ The length is offset by \qty{0.0075}{\m} and \qty{0.013}{\m} because solid model
 
 
 \begin{figure}[p]
+\renewcommand{\thesubfigure}{\normalfont\textbf{(\alph{subfigure})}}
 \centering
 %\begin{adjustwidth}{-\extralength}{0cm}
 %\centering
@@ -111,12 +129,12 @@ The length is offset by \qty{0.0075}{\m} and \qty{0.013}{\m} because solid model
 \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02b_MaxForce20.eps}}
 %\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02_Fmax_fit.eps}
 %\end{adjustwidth}
-\caption{Results for finding the relationship between $F_{620}$ and $l_0$. (\textbf{a}) $F_{620_{10}}$ as a function of $l_0$, at $P_{620}$. Dashed line is the $F_{620_{10}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax10}). (\textbf{b}) $F_{620_{20}}$ as a function of $l_0$ at $P_{620}$. Dashed line is $F_{620_{20}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax20}).}\label{fig:Fmax_fit}
+\caption{Results for finding the relationship between $F_{620}$ and $l_0$. \textbf{(a)} $F_{620_{10}}$ as a function of $l_0$ at $P_{620}$, with the fit from Equation~(\ref{eq:Fmax10}). \textbf{(b)} $F_{620_{20}}$ as a function of $l_0$ at $P_{620}$, with the fit from Equation~(\ref{eq:Fmax20}).}\label{fig:Fmax_fit}
 \end{figure}
 
 \subsubsection{Force as a Function of Pressure and Resting Length}
 
-Data from BPA characterization tests of the \qty{10}{\mm} muscles resulted in force--pressure pairings for different muscle resting lengths ($l_0$) (Figure~\ref{fig:F-P_contraction}a). Similar to the maximum force data, these data show a force response resembling an $\arctan$ curve along the $l_0$ dimension  with a more linear response to changes in pressure. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force given a resting length and pressure as described by the model form given in Section~\ref{sec:force_model},
+Data from BPA characterization tests of the \qty{10}{\mm} muscles resulted in force--pressure pairings for different muscle resting lengths ($l_0$) (Figure~\ref{fig:F-P_contraction}\textbf{(a)}). Similar to the maximum force data, these data show a force response resembling an $\arctan$ curve along the $l_0$ dimension  with a more linear response to changes in pressure. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force given a resting length and pressure as described by the model form given in Section~\ref{sec:force_model},
 where $a_1 = \qty{0.4895}{\N\per\kPa}$  and $a_2=\qty{0.03068}{\per\kPa\per\m}$ for the \qty{10}{\mm} actuator, and \mbox{$a_1 = \qty{1.49}{\N\per\kPa}$,} $a_2=\qty{0.0248}{\per\kPa\per\m}$ for the \qty{20}{\mm} actuator. Goodness-of-fit measures are given in Table~\ref{tab:Fmax}; throughout this dissertation, goodness of fit is reported as the root-mean-square error (RMSE), the adjusted fraction of variance unexplained (FVU, for which $R^{2} = 1 - \mathrm{FVU}$), and the maximum absolute residual, as defined alongside the reference implementation in Appendix~\ref{app:muscle_calcs}. 
 
 
@@ -256,7 +274,7 @@ where $a_1 = \qty{0.4895}{\N\per\kPa}$  and $a_2=\qty{0.03068}{\per\kPa\per\m}$ 
 
 \subsubsection{Maximum Contraction at \qty{620}{\kPa}}
 
-Figure~\ref{fig:F-P_contraction}(b) shows an attempt at a linear fit for maximum contraction at \qty{620}{\kPa} ($\epsilon_{620}$) as a function of resting length ($l_0$). Error bars have been included to show the effect of $\pm$\qty{1}{\mm} accuracy with measurements of $l_0$ and $l_{620}$. There was a large amount of variance in the data, with the linear fit giving an adjusted $\text{R}^2=0.4124$ and an $\text{RMSE}=0.0083$. Since there is no direct, predicable relationship between maximum contraction and $l_0$, this value should be recorded in each muscle used on a robot to best predict the force it may produce at different pressures and contraction. 
+Figure~\ref{fig:F-P_contraction}\textbf{(b)} shows an attempt at a linear fit for maximum contraction at \qty{620}{\kPa} ($\epsilon_{620}$) as a function of resting length ($l_0$). Error bars have been included to show the effect of $\pm$\qty{1}{\mm} accuracy with measurements of $l_0$ and $l_{620}$. There was a large amount of variance in the data, with the linear fit giving an adjusted $\text{R}^2=0.4124$ and an $\text{RMSE}=0.0083$. Since there is no direct, predicable relationship between maximum contraction and $l_0$, this value should be recorded in each muscle used on a robot to best predict the force it may produce at different pressures and contraction.
 
 
 \subsubsection{Force as a Function of Pressure and Contraction}
@@ -270,13 +288,14 @@ To build this model, the collected data of force, pressure, and contraction are 
 
 
 \begin{figure}[p]
+\renewcommand{\thesubfigure}{\normalfont\textbf{(\alph{subfigure})}}
 \centering
 %\begin{adjustwidth}{-\extralength}{0cm}
 %\centering
 \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03a_MaxForce10_all.eps}}\\
 \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03b_kmax10.eps}}
 %\end{adjustwidth}
-\caption{Results for finding the relationship between $F_{620}$, $l_0$, $P_{620}$, and $\epsilon_{620_{10}}$. (\textbf{a}) Isoclines of the surface fit for $F_{620_{10}}(l_0,P_{620})$. (\textbf{b}) $\epsilon_{620_{10}}$ versus $l_0$ at $P_{620}$. Although there is a general trend of longer resting lengths producing more contraction, no conclusive relationship between $\epsilon_{620}$ and $l_0$ could be deduced from this experiment. The error bars show the effect of being $\pm$\qty{1}{\mm} in measuring $l_0$ and $l_{620}$.}\label{fig:F-P_contraction}
+\caption{Results for finding the relationship between $F_{620}$, $l_0$, $P_{620}$, and $\epsilon_{620_{10}}$. \textbf{(a)} Isoclines of the surface fit for $F_{620_{10}}(l_0,P_{620})$. \textbf{(b)} $\epsilon_{620_{10}}$ versus $l_0$ at $P_{620}$. Although there is a general trend of longer resting lengths producing more contraction, no conclusive relationship between $\epsilon_{620}$ and $l_0$ could be deduced from this experiment. The error bars show the effect of being $\pm$\qty{1}{\mm} in measuring $l_0$ and $l_{620}$.}\label{fig:F-P_contraction}
 \end{figure}
 
 
@@ -284,18 +303,19 @@ To build this model, the collected data of force, pressure, and contraction are 
 
 
 \begin{figure}[p]
+\renewcommand{\thesubfigure}{\normalfont\textbf{(\alph{subfigure})}}
 \centering
 %\begin{adjustwidth}{-\extralength}{0cm}
 %\centering
 \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04a_FStar10.eps}}\\
 \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04b_FStar20.eps}}
 %\end{adjustwidth}
-\caption{Surface fit for $F^*(\epsilon^*,P^*)$. Solid lines are from our model. Dashed lines from Festo supplied data. In total, 537 data points were collected and used to fit the 3D surfaces (321 data points for $\diameter$\qty{10}{\mm} BPAs and 216 data points for $\diameter$\qty{20}{\mm} BPAs). In total, 80\% of these data were used for training, and 20\% were used for validation. For figure clarity, not all data is included and plotted circles represent collected data at $\pm\qty{10}{\kPa}$ of the stated pressure. (\textbf{a}) Fit data for $\diameter$\qty{10}{\mm} Festo BPAs. (\textbf{b}) Fit data for $\diameter$\qty{20}{\mm} Festo BPAs.}\label{fig:GenForceFit}
+\caption{Surface fit for $F^*(\epsilon^*,P^*)$. Circles show measurements within \qty{10}{\kPa} of the stated pressure. \textbf{(a)} Fit data for $\diameter$\qty{10}{\mm} Festo BPAs. \textbf{(b)} Fit data for $\diameter$\qty{20}{\mm} Festo BPAs.}\label{fig:GenForceFit}
 \end{figure}
 
 We therefore derived our own equation for isometric force in the BPA as a function of pressure and contraction. Visual analysis of the experimental data shows an exponential relationship between $\epsilon^*$ and $F^*$, and a linear relationship between $P^*$ and $F$. We fit a surface to the data using Nonlinear Least Squares and a Least Absolute Residual robustness such that it is described by 
 Equation~\eqref{eq:Fstar}.
-For the $\diameter$\qty{10}{\mm} BPAs, the result of the improved fit can be seen in Figure \ref{fig:GenForceFit}a. The adjusted $\text{R}^2=0.9998$, a $\text{RMSE}=0.004537$, and a maximum absolute residual of $10.6\%$. Solving (\ref{eq:Fstar}) for the $\diameter$\qty{20}{\mm} BPA, yields different coefficients, and results are seen in \mbox{Figure~\ref{fig:GenForceFit}b.} Coefficient values and goodness-of-fit statistics are found in Table \ref{tab:Fstar}. 
+For the $\diameter$\qty{10}{\mm} BPAs, the result of the improved fit can be seen in Figure \ref{fig:GenForceFit}\textbf{(a)}. The adjusted $\text{R}^2=0.9998$, a $\text{RMSE}=0.004537$, and a maximum absolute residual of $10.6\%$. Solving (\ref{eq:Fstar}) for the $\diameter$\qty{20}{\mm} BPA, yields different coefficients, and results are seen in \mbox{Figure~\ref{fig:GenForceFit}\textbf{(b)}.} Coefficient values and goodness-of-fit statistics are found in Table \ref{tab:Fstar}.
 
 
 
@@ -310,7 +330,7 @@ For the $\diameter$\qty{10}{\mm} BPAs, the result of the improved fit can be see
 \section{Discussion}
 
 \subsection{Effects of Resting Length}\label{sec:disc_effects}
-We have developed new $F_{620}$ equations for \qtylist{10;20}{\mm} diameter Festo BPAs that capture the change in maximum force produced by the actuators at  \qty{620}{\kPa} as a function of their resting length. When examining Equation~(\ref{eq:Fmax10}) and measured data in Figure~\ref{fig:Fmax_fit}b, it can be seen that as $l_0$ goes to infinity, $F_{620_{10}}$ goes to \qty{470}{\N}. When the Festo tool \citep{lang_robert_musclesim_2005} was queried at $l_0=\qty{1}{m}$ as an approximation of infinity, it predicts the $\diameter$\qty{10}{\mm} BPA can produce $F=\qty{490}{\N}$ at $P_{620}$. This is within the 10\% variability that Festo states may occur in manufacturing tolerances. Similarly, the Festo data predict a $\diameter$\qty{20}{\mm} BPA will produce $F=\qty{1570}{\N}$. Our results for Equation~(\ref{eq:Fmax20}) show that  $F_{620_{20}}$ goes to \qty{1460}{\N} as $l_0$ approaches infinity. Although the difference is much larger, it is also within the \mbox{10\% manufacturing tolerance. }
+We have developed new $F_{620}$ equations for \qtylist{10;20}{\mm} diameter Festo BPAs that capture the change in maximum force produced by the actuators at  \qty{620}{\kPa} as a function of their resting length. When examining Equation~(\ref{eq:Fmax10}) and measured data in Figure~\ref{fig:Fmax_fit}\textbf{(a)}, it can be seen that as $l_0$ goes to infinity, $F_{620_{10}}$ goes to \qty{470}{\N}. When the Festo tool \citep{lang_robert_musclesim_2005} was queried at $l_0=\qty{1}{m}$ as an approximation of infinity, it predicts the $\diameter$\qty{10}{\mm} BPA can produce $F=\qty{490}{\N}$ at $P_{620}$. This is within the 10\% variability that Festo states may occur in manufacturing tolerances. Similarly, the Festo data predict a $\diameter$\qty{20}{\mm} BPA will produce $F=\qty{1570}{\N}$. Our results for Equation~(\ref{eq:Fmax20}) show that  $F_{620_{20}}$ goes to \qty{1460}{\N} as $l_0$ approaches infinity. Although the difference is much larger, it is also within the \mbox{10\% manufacturing tolerance. }
 
 Our measured data differ significantly from the Festo model as $l_0$ goes to zero. For the measured data, as the length gets smaller, the force does as well, whereas the Festo tool predicts exponential force increase (see Figure~\ref{fig:Fmax_fit}). As a specific example, when specifying $l_0=\qty{112}{\mm}$ for the \qty{10}{\mm} diameter BPAs, the Festo predicted $F_{620}$ is \qty{498.6}{\N}. However, using Equation~(\ref{eq:Fmax10}), $F_{620}$ is calculated to be \qty{335.3}{\N}. Actual force in the $l_0=\qty{112}{\mm}$ was measured at \qty{350.9}{\N}. Therefore, the error in predicted $F_{620}$ for the $\diameter$\qty{10}{\mm} BPA is $4.5\%$ for our model and $42.1\%$ using the Festo tool. Researchers using BPA resting lengths under \qty{300}{\mm} should take note of these results.
 
@@ -375,7 +395,7 @@ The \citet{martens_modeling_2017} model  is derived from a geometric and materia
     \includegraphics[width=.99\textwidth]{05_Comparison.eps}
 %\end{center}
 %\end{adjustwidth}
-\caption{Comparison between measured and predicted BPA force at varying amounts of contraction and pressure. A $y=x$ perfect fit line is added for reference. The BPAs compared are: (\textbf{a}) $\diameter$\qty{10}{\mm}, $l_0=\qty{257}{\mm}$, (\textbf{b}) $\diameter$\qty{10}{\mm}, $l_0=\qty{233}{\mm}$, (\textbf{c}) $\diameter$\qty{20}{\mm}, $l_0=\qty{300}{\mm}$, and (\textbf{d}) $\diameter$\qty{20}{\mm}, $l_0=\qty{450}{\mm}$.}\label{fig:ModelCompare}
+\caption{Comparison between measured and predicted BPA force at varying amounts of contraction and pressure. The BPAs compared are: \textbf{(a)} $\diameter$\qty{10}{\mm}, $l_0=\qty{257}{\mm}$, \textbf{(b)} $\diameter$\qty{10}{\mm}, $l_0=\qty{233}{\mm}$, \textbf{(c)} $\diameter$\qty{20}{\mm}, $l_0=\qty{300}{\mm}$, and \textbf{(d)} $\diameter$\qty{20}{\mm}, $l_0=\qty{450}{\mm}$.}\label{fig:ModelCompare}
 \end{figure}
 
 The Martens and Boblan model was first evaluated at the same pressure–contraction points as in their experimental data \citep{martens_modeling_2017} (Tables A1 and  A2), indicating that it reproduces the general published force map shape but is sensitive to the assumed initial geometry. Examining their $\diameter$\qty{20}{\mm} BPA, for example, using the explicitly stated $l_0=\qty{300}{\mm}$ and initial diameter $D_{0}=\qty{20}{\mm}$ significantly under-predicted the results compared to using the implied $l_0=\qty{296}{\mm}$ (\citep{martens_modeling_2017} (Table A1)) and $D_{0}+H_{0}=\qty{21.8}{\mm}$, where $H_{0}=\qty{1.8}{\mm}$ is the material thickness. The diameter adjustment can be inferred \mbox{from \citep{chou_measurement_1996}.} This adjusted diameter was also included for the $\diameter$\qty{10}{\mm} BPA to give a better fit. As can be seen in Figure~\ref{fig:ModelCompare} and Table~\ref{tab:model_compare}, the highest accuracy is observed when $\diameter$\qty{20}{\mm} and $l_0=\qty{300}{\mm}$, which is at or very near their experimental measurements. For the $\diameter$\qty{10}{\mm} BPAs the accuracy decreases even though their experimentally measured $l_0=\qty{250}{\mm}$ is close to our $l_0=\qty{257}{\mm}$ and $l_0=\qty{233}{\mm}$. The largest error occurs at $\diameter$\qty{20}{\mm} and $l_0=\qty{450}{\mm}$ and the model starts to predict negative force. We have calculated that the $F_{PE}\cdot\frac{dD}{DL}$ term becomes very large compared to the others \citep{martens_modeling_2017} (p.~5). This suggests that the model is sensitive to geometric parameter selection and interpretation, particularly with respect to initial length and diameter definitions.

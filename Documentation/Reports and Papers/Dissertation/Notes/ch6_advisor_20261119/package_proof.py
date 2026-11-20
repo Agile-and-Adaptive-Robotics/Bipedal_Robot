@@ -1,4 +1,4 @@
-"""Verify the complete proof, extract Chapter 6, and package the four edited live sources."""
+"""Verify the complete proof and package the four edited live sources."""
 import argparse
 import hashlib
 import json
@@ -32,28 +32,12 @@ def safe_copy(src, dest):
     tmp.replace(dest)
 
 full = output/"Bolen_Dissertation_20261119.pdf"
-chapter = output/"Bolen_Dissertation_Chapter_6.pdf"
 book = fitz.open(build / "main.pdf")
 toc = book.get_toc()
 first = next(p for level,title,p in toc if level==1 and "Tools for Constructing" in title)
 following = next(p for level,title,p in toc if level==1 and p>first)
 rows = [entry for entry in toc if first <= entry[2] < following]
-clip = fitz.open()
-clip.insert_pdf(book,from_page=first-1,to_page=following-2)
-clip.set_toc([[level,title,p-first+1] for level,title,p in rows])
-# The extract retains the dissertation's printed folios and matching viewer labels.
 chapter_start = int(re.search(r"\}\{(\d+)\}\{chapter\.6", (build/"main.toc").read_text()).group(1))
-clip.set_page_labels([dict(startpage=0, style="D", prefix="", firstpagenum=chapter_start)])
-clip.set_metadata(dict(title="Chapter 6. Tools for Constructing and Testing Neuromechanical Models",
-                       author=book.metadata.get("author") or "Ben Bolen"))
-tmp = build/"chapter6.pdf"
-clip.save(tmp,garbage=4,deflate=True)
-clip.close()
-with fitz.open(tmp) as extracted:
-    assert len(extracted) == following-first and len(extracted.get_toc()) == len(rows)
-    assert all(extracted[i].get_text() == book[first+i-1].get_text() for i in range(len(extracted)))
-    assert extracted[0].get_label()==str(chapter_start)
-safe_copy(tmp,chapter)
 safe_copy(build/"main.pdf",full)
 assert digest(full)==digest(build/"main.pdf")
 
@@ -140,7 +124,7 @@ for i in range(first,len(book)+1):
         terminology[str(i+prefix)]=[line.strip()[:140] for line in value.splitlines() if re.search(r"\bgraded\b",line,re.I)]
 results = dict(full_pages=len(book), chapter_pages=following-first, physical_start=first, physical_end=following-1,
     printed_start=chapter_start, printed_end=following-1+prefix, captured_figure_pages={k:p+prefix for k,p in special.items()},
-    chapter_bookmarks=rows, sha256={p.relative_to(root).as_posix():digest(p) for p in (full,chapter,package)},
+    chapter_bookmarks=rows, sha256={p.relative_to(root).as_posix():digest(p) for p in (full,package)},
     figures=assets, source_sha256={name:digest(diss/"Final/chapters"/name) for name in [*names,"10-introduction.tex","30-torque.tex"]},
     wording_in_embedded_art_or_other_chapters=terminology, TeX_overfull_boxes=0, undefined_references=0, undefined_citations=0,
     BibTeX_warnings=0, pdfTeX_warnings=len(re.findall(r"pdfTeX warning",full_log)),

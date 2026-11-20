@@ -18,6 +18,9 @@ rulings=[
 ("BOLEN-NOV19-FACTORS","I wanted you to remove \"Isometric\" because we talk about dynamic factors in future work.","Use Joint Design Factors for the section spanning fixed-knee experiments and proposed dynamic power measurements.","scope_and_uncertainty"),
 ("BOLEN-NOV19-WORKFLOW","the substance would be changed because figures made for slides aren't always what figures in manuscripts should be","Rebuild the workflow for a reader choosing an experiment. Include the intervention, fixed conditions, signals, and decision. Measure arrows and labels at print size.","evidence_and_validation")]
 path=history/"EDITORIAL_EXAMPLES.json"
+rulings.append(("BOLEN-NOV19-CH6-OPENING","The overview needs to be high-level.",
+                "Read the overview and the first section together. State the modeling gaps and the author's contribution before the section. Introduce the people, prior experiment, software, and observed outcome when the case begins.",
+                "gap_and_motivation"))
 content=path.read_text(encoding="utf-8")
 rows=json.loads(content)["examples"]
 new=[]
@@ -54,6 +57,19 @@ findings=[
 ("Ben and independent reader","96-AppendixE","Of the 561 retained Papers",12,"What does Appendix E add?","Distinguishes 957 maintained from 436 archived, and overlapping classifications from unique records. The 426 records have animal or human tags, not preparation tags. Tables E1 and E2 give receptors, possible inputs, and eight named pathways.","evidence_and_validation"),
 ("Primary experiment and independent reader","96-AppendixE","In the acute spinal preparation",20,"What alternative condition matters to a specialist?","In the clonidine-treated acute spinal preparation, inhibition diminished and the short-latency excitation was absent. A model of that preparation requires a different test.","scope_and_uncertainty")]
 
+findings.extend([
+    ("Ben, advisor comment, and independent reader","60-sns","This chapter presents the tools I developed",7,
+     "What questions required new tools and a robot-specific model?",
+     "The lab needed systematic controller tuning and models that could return feedback from the motion produced by the robot's own muscle paths and joints. Changing one connection or attachment and repeating the trial reveals its effect on muscle force and leg motion.",
+     "gap_and_motivation"),
+    ("Ben, advisor comment, and independent reader","60-sns","In a course project, Connor Morrow and I",11,
+     "Which earlier experiment exposed the limitation?",
+     "Morrow and Bolen tested the published Deng circuit on the Li biped. The legs made stepping-like movements in suspension, the model fell when support was removed, and each parameter change cost another slow run. This is the reader's first account of the course project.",
+     "contribution_and_credit")])
+opening_dir=here.parent/"figure_names_and_overview_20261119"
+prior_opening=json.loads((opening_dir/"OPENING_BEFORE.json").read_text(encoding="utf8"))
+advisor_capture=json.loads((here.parent/"ch6_advisor_20261119/LIVE_REVIEW.json").read_text(encoding="utf8"))
+opening_comment=next(c for c in advisor_capture["comments"] if c["id"]=="6aff519117aa70f0837af37c")
 observed=review.signals()
 index=review.EvidenceIndex(observed)
 chapters=[chap/(c+".tex") for c in sorted({f[1] for f in findings})]
@@ -66,6 +82,15 @@ for i,(who,c,needle,n,question,answer,tag) in enumerate(findings,1):
     earlier=base.read(c+".tex").decode().splitlines()
     old=earlier[n-1] if n else "No equivalent Chapter 7 figure in the captured manuscript."
     cases.append(dict(id=f"TOOL-SADB-{i:02d}",file=c+".tex",line=line,author=who,question=question,before=old,after=source,after_sha256=review.digest(source),judgment=answer,tags=[tag],historical_examples=index.nearest(source),local_readiness=3))
+    if c=="60-sns" and needle in {"In a course project, Connor Morrow and I","This chapter presents the tools I developed"}:
+        overview=needle.startswith("This chapter presents")
+        cases[-1].update(
+            before=prior_opening["overview" if overview else "first_section"],
+            previous_local_judgment="NOV19-READ-02" if overview else "NOV19-READ-01",
+            previous_local_readiness=3,
+            disposition_of_previous_judgment="Reopened. The earlier review scored the paragraphs separately and missed that the first section restarted the overview.",
+            advisor_comment=opening_comment["text"], advisor_anchor=opening_comment["anchor"],
+            advisor_thread_id=opening_comment["id"], original_advisor_score=opening_comment["score"])
 record=dict(advisor_event_ids_at_review=[r["id"] for r in observed],rubric="GPT-6 Codex editorial review. Read historical comments and current contexts, identify the mechanism, actor, intervention, and warranted inference, then check against primary source and rendered page. Local readiness 3 means source and context checked. 4 requires author or advisor confirmation. Unmarked passages are unlabeled.",passages=cases)
 for name,data in [("PASSAGE_REVIEW.json",record)]:
     (here/name).write_text(json.dumps(data,ensure_ascii=False,indent=2)+"\n",encoding="utf8")
@@ -76,6 +101,12 @@ E=html.escape
 tab=[]
 def row(*fields):
     tab.append("<tr>"+"".join("<td>"+s+"</td>" for s in fields)+"</tr>")
+row("Advisor and Ben","Chapter 6 opening and §6.1",E(opening_comment["text"]),
+    "Ben reported that the preceding revision still repeated the course project. The previous local 3/4 judgments (NOV19-READ-01 and NOV19-READ-02) are withdrawn for this issue. The new overview gives the modeling purpose and gaps. The first section introduces the people, the transfer experiment, and the outcome.",
+    "Reopened and revised locally. The original advisor deduction of −2 is counted once. Advisor review is pending.")
+row("Ben","Final manuscript graphics and source folders","Eleven previously included graphics carried a run date in their filenames.","All 78 directly included graphics and 72 figure environments were checked. The 186 files in the reconstructed native figure tree have undated basenames, including all 44 archived files. The 49 renamed local archive files are preserved with their original hashes.","Applied and verified locally")
+row("Ben","Dissertation proof and reading packets","The delivery and older scripts produced standalone copies of Chapter 6.",
+    "Seventeen whole-chapter PDFs, reading packets, and draft proofs were deleted on the two workstations. The delivery now publishes the full dissertation.","Applied and verified")
 for c in cases:
     row(E(c["author"]),E(c["file"])+" · "+str(c["line"]),E(c["before"]),E(c["question"])+"<p>"+E(c["judgment"])+"</p><details><summary>Current source</summary>"+E(c["after"])+"</details>","Applied locally · 3/4")
 row("Ben","Chapter 7 · §7.2.2","Isometric Joint Design Factors","<b>Joint Design Factors</b> covers the isometric experiments and the proposed dynamic joint-power measurements.","Applied locally")
@@ -84,13 +115,15 @@ row("Independent reader","Figure 5.1 and Figure 5.3","An earlier screenshot and 
 row("Ben and PSU print review","Chapters 5–6 · paragraph breaking","A chapter-wide widow and club override and two timing paragraphs locked against breaks were present in the earlier source.","Removed the numeric overrides from the revised chapters. Widow and club penalties control where a paragraph may split across pages. The actual margins, printed folios, font sizes, and line spacing are verified on the built pages.","Applied locally")
 row("PSU front-matter review","Title page and copyright","The early title used a different placement grid, and the copyright notice used a month and an additional rights statement.","Checked the title against PSU’s filled dissertation template. The copyright page now reads © 2026 Ben Bolen.","Applied locally with author approval")
 row("PSU front-matter review","Abstract and front lists","The Abstract was ii. The contents heading read Contents, and the two lists began below other material and were absent from the printed contents.","The Abstract is i. The Table of Contents, List of Tables, and List of Figures start on their own pages, with 12-point headings. The contents lists the two front lists and their Roman folios.","Applied locally with author approval")
-row("Ben and PDF font audit","Chapters 1, 2, 4, 5, and 6, and Appendix C","Twelve active graphics contained 18 unembedded Helvetica or Helvetica-Bold resources.","Embedded the fonts while retaining the original drawing streams, word positions, and all seven SADb figure callouts. The twelve source figures rendered identically at three resolutions in MuPDF.","Applied locally with author approval")
+row("Ben and PDF font audit","Included PDF graphics and the full dissertation","Twelve earlier graphics contained 18 unembedded Helvetica resources.","The historical report retains all 12 repairs. Nine repaired files remain active under their original names. The current audit verifies those nine, all four replacement Chapter 4 figure paths, all 68 PDF figure inputs, and every compiled font resource.","Applied and verified locally")
 row("Later author edit in the local Overleaf export","Chapter 6 §6.1 · passive toe and suspended motion","The earlier editor capture said ‘I added a passive toe joint.’ The later export changed this to ‘There is a passive toe joint.’","Preserved the later toe-joint wording. Described stepping-like leg movements in air and the fall when support was removed, as Ben requested.","Applied locally")
 row("Ben and independent print review","Dissertation · one-inch margins and citation boxes","The original one-point link frames remained visible. Across a page break the PDF also drew extra boxes over an unrelated page header and at the paper edge. Some text extended into the side margins.","Reserved four more PDF points on each side for optical punctuation and citation borders. The page output routine keeps the actual citation boxes, including citations that wrap, and excludes the header from the preceding page’s active link. Both PDFs preserve the visible link borders.","Applied locally at Ben’s direction")
 row("Independent final page review","Appendix D · Figure D7 and §D.5.2","At the revised text width, the figure and caption exceeded the available float height by 1.805 TeX points. The shorter caption fit, but the full-page figure split the next subsection’s opening sentence.","Condensed the caption while retaining the 10–12.5 s trial window, support condition, controller identities, line-style definitions, and filtered spiking readouts. Placed Figure D7 before the next subsection. The artwork keeps its legible size.","Applied locally")
-row("Independent PSU review","Published Chapter 3 · opening page, source line 5","The coauthored publication is introduced on a page shared with the chapter text. Several contribution assignments differ from the published statement, including data curation.","PSU calls for a separate chapter heading page with a full citation and the published contribution statement. The article credits Bolen and Pang with data curation and credits Bolen and Hunt jointly with several roles.","Open · protected published chapter")
+row("Independent PSU review and Ben","Chapter 3 · heading p. 42 and overview p. 43","The coauthored publication note shared a page with chapter prose and assigned data curation to an additional author.","The separate heading page now gives all four authors in publication order, the full citation, both persistent links, and the 14 published contributor roles. The paper credits Bolen and Pang with data curation. The scientific prose and measured quantities are preserved.","Closed · verified in both full builds")
 earlier=here.parent/"ch6_advisor_20261119/REVIEW_TABLE.html"
-row("Independent figure rendering review","Chapter 4 · Figures 4.9 and 4.12, printed pp. 104 and 113","The incoming PDFs contain two line-dash instructions missing their phase. Poppler stops drawing part of each legend.","Poppler omits the unoptimized and optimized swatches in 4.9 and the six entries from Bend radius through Reference bones in 4.12. Adding the missing zero phase in memory restores both portions. The archive contains the pre-embedding originals.","Open · original Chapter 4 artwork, outside the font and margin changes")
+row("Independent figure rendering review and Ben","Chapter 4 · Fig. 4.9, p. 105 and Fig. 4.12, p. 114","Incomplete PDF dash instructions hid the optimized and unoptimized swatches and six cam-routing key entries in Poppler.","The six final pinned-extensor panels show all 113 measurements and 113 predictions at their measured states. Their signed axes retain the near-zero torque and three formerly clipped angles. All 1,083 finite curve samples are drawn. The cam figure shows the source geometry, original hardware photograph, and 11 key entries. Both replacement PDFs have embedded fonts.","Closed · source and page verification")
+row("Ben and the independent data reviewer","Chapter 4 · Fig. 4.13, p. 117 and Fig. 4.14, p. 118","The paired physical-validation figures used inconsistent presentation and the flexor comparison had an uninformative filename.","The extensor plot retains the exact prior PDF bytes. The flexor figure uses matching layout and signed torque axes. All 230 native flexor plotted points were checked. The editable MATLAB comparison and prior panels are preserved.","Closed · source and page verification")
+row("Ben and the source reviewer","Chapter 3 · Figs. 3.2–3.5 and Appendix C · cam route","Panel references had inconsistent weight, the 10 mm discussion pointed to Fig. 3.2b, and the 562 mm label attributed to a route plot was absent.","The text points to the 10 mm data in Fig. 3.2(a). All Chapter 3 panel callouts are bold. Only duplicated plot-key descriptions were trimmed. Appendix C retains the optimized 561.49 mm length and removes the erroneous attribution to an artwork label.","Closed · author-approved corrections")
 soup=BeautifulSoup(earlier.read_text(encoding="utf8"),"html.parser")
 for t in soup.find_all("table"):
     heading=t.find_previous(["summary","h2","h3"])

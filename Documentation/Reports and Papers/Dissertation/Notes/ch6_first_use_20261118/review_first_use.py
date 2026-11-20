@@ -113,7 +113,7 @@ def main():
     table = (PRIOR/'REVIEW_TABLE.html').read_text(encoding='utf-8')
     old_count = table.count('<tr data-group=')
     headline = ('<h1>Dissertation feedback and revisions</h1><p>The first rows show where Chapter 6 now explains each model and program, how the fixed-ground and moving-belt tests differ, and what each controller timing test measured. Earlier rows retain their dated wording and dispositions. Ben’s first-use observation adds one −2 against the previous assistant draft. The five author marks now total −10. The 429 attributed advisor signals total −551, including the November subtotal of −42.</p>'
-                '<p><a href="Chapter_6_terms_reading_pages.pdf">Seven reading pages</a> · <a href="FIRST_USE_REVIEW.md">Changes and evidence</a> · <a href="PASSAGE_REVIEW.json">Passage decisions</a> · <a href="../advisor_feedback_history/README.md">Historical scoring rules</a></p>')
+                '<p><a href="Bolen_Dissertation_revised.pdf#page=154">Chapter 6 in the complete dissertation</a> · <a href="FIRST_USE_REVIEW.md">Changes and evidence</a> · <a href="PASSAGE_REVIEW.json">Passage decisions</a> · <a href="../advisor_feedback_history/README.md">Historical scoring rules</a></p>')
     table = re.sub(r'<h1>.*?</p>\s*<p>.*?</p>(?=\s*<nav>)',lambda _:headline,table,count=1,flags=re.S)
     table = table.replace('<option>Chapter 6 sequence','<option>First-use review</option><option>Chapter 6 sequence',1)
     rendered = []

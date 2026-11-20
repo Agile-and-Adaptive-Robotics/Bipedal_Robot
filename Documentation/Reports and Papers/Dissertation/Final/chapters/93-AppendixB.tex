@@ -152,7 +152,7 @@ Defaults gate & PASS & $(410,\,376,\,1186)$ populations, inputs, and connections
 Nonspiking bit-identity & PASS & complete numerical baseline outputs identical before and after the edit for all three tested configurations. \\
 Topology mirror & PASS & directed connections and their signs matched with conditional pathways off, with those pathways enabled, and with joint-level PF enabled ($1{,}186$ / $7{,}908$ / $7{,}762$). Inputs and motor-neuron maps matched. The spiking network added 12 / 12 / 16 readout taps. \\
 Constant-drive rhythm & SPLIT & sustained bilateral antiphase (E \qty{4.9}{\hertz}, F \qty{3.2}{\hertz} per leg; swing \qty{5.13}{\mV} in every window) = PASS; period \qty{0.621}{\second} versus analog \qty{0.399}{\second} ($+55.6\,\% > 20\,\%$) = FAIL. \\
-Perturbation basin & PASS & 12/12 trials under \qty{1}{\percent} jitter on every scalar; final swing minimum \qty{4.58}{\mV} (margin $0.89\times$); zero explosions. \\
+Perturbation basin & PASS & Oscillation persisted in every trial when each parameter was varied by \qty{1}{\percent}. The minimum final swing was \qty{4.58}{\mV} (margin $0.89\times$). \\
 Air-regime smoke & FAIL (cadence) & finite, 53 envelope rises, knee range \ang{106.0} of twin's \ang{117.9}, hip \ang{50.4} of \ang{71.1}; period \qty{0.215}{\second} versus \qty{2.108}{\second}. \\
 Untuned ground evaluation & ran & score $-236.35$ and 8 right / 9 left cycles over $2\leq t<16$\,s. Cycle knee minimum \ang{-79.8}. The single supported run remained finite and upright. \\
 Simulink regression & PASS & all committed demonstrations and units tests reproduce exactly with the spiking blocks in the library (two-neuron test \qty{6.07e-04}{\mV}). \\
@@ -193,7 +193,7 @@ Figure~\ref{fig:spike_animatlab} compares the nonspiking baseline (A1), full spi
 \centering
 \includegraphics[width=\textwidth]{animatlab_spiking_conversion.pdf}
 % ALT TEXT: see animatlab_spiking_conversion_alt.txt beside the figure file.
-\caption{AnimatLab left hip (left column) and knee (right) angles over \qtyrange{0.5}{5}{\second}: nonspiking baseline (row A1), full spiking conversion (row B1), and spiking thresholds with voltage-dependent synapses retained (row C1).}
+\caption{AnimatLab left hip (left column) and knee (right) angles over \qtyrange{0.5}{5}{\second}: nonspiking baseline (row \textbf{A1}), full spiking conversion (row \textbf{B1}), and spiking thresholds with voltage-dependent synapses retained (row \textbf{C1}).}
 \label{fig:spike_animatlab}
 \end{figure}
 

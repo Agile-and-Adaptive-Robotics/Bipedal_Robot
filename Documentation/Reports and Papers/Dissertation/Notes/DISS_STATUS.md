@@ -1,3 +1,9 @@
+## Current manuscript
+
+The working manuscript is [Final/main.tex](../Final/main.tex). The [full dissertation PDF](../Bolen_Dissertation.pdf) and [Overleaf source ZIP](../Bolen_Dissertation.zip) include the revised cam figures on printed pages 114, 251, and 252. The full dissertation has 324 pages. Earlier revision reports link to their archived proofs where available.
+
+`ProofFinal` preserves the 23 LaTeX source and support files from the [dissertation submission draft](../Bolen_Dissertation-Draft_Submission.zip). That ZIP contains the original figures for reproducing the draft.
+
 <!-- BEGIN AUTHORITATIVE CH6 20261116 -->
 ## Authoritative Chapter 6 and Appendix D completion - 16 November 2026
 

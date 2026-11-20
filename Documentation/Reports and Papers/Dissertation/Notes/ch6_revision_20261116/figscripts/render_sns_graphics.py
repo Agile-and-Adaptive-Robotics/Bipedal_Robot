@@ -81,7 +81,7 @@ def library():
         glyph(ax, icons[name])
         fig.text(cx + .1545, top - .155, labels[k], ha="center", va="center", weight="bold", fontsize=10.5)
         fig.text(cx + .1545, top - .201, subs[k], ha="center", va="center", fontsize=10, linespacing=1.12)
-    save(fig, "sns_library_20261116", "Twelve current SNS-Simscape block glyphs matching the selection in defense slide 69, rendered from the actual mask drawing primitives and corrected shared side-view actuator geometry. Graded and spiking neurons have different voltage waveforms; sensory capsules, activation pentagon, synapse summation, pennate biological muscle, simple force element, and 10, 20, and 40 mm BPA models are identified.")
+    save(fig, "sns_library", "Twelve current SNS-Simscape block glyphs matching the selection in defense slide 69, rendered from the actual mask drawing primitives and corrected shared side-view actuator geometry. Graded and spiking neurons have different voltage waveforms; sensory capsules, activation pentagon, synapse summation, pennate biological muscle, simple force element, and 10, 20, and 40 mm BPA models are identified.")
 
 def edge(ax, pts, exc, color="black", lw=1.2):
     pts = np.array(pts, float)

@@ -177,25 +177,8 @@ def check_proof(build, labels, found, renders):
             assert tail.index(name) < tail.index(later), name
         conclusion = next(n for _, title, n in toc if first <= n <= last and re.search(r'\bConclusion$',title))
         assert conclusion == last and 'A future researcher' in texts[conclusion] and 'force and motion.' in texts[conclusion], (conclusion,last)
-        wanted = [('The AnimatLab and Li–Deng walker','AnimatLab'),('MuJoCo, SNS-Toolbox, and Walker Two-Layer','W2L'),
-                  ('OpenSim, Gait2392, and the CAD workflow','Gait2392'),('W2Lvar on the human model','W2Lvar'),
-                  ('BiW2Lvar+ and its suspended experiment','BiW2Lvar+'),('The s3k and syn6 controller comparison','syn6'),
-                  ('W2L108 on the moving treadmill','W2L108')]
-        with pymupdf.open() as brief:
-            bookmarks = []
-            selected = []
-            for title, name in wanted:
-                n = found[name]['first_pdf_page']
-                if n not in selected:
-                    brief.insert_pdf(doc,from_page=n-1,to_page=n-1,links=False)
-                    selected.append(n)
-                bookmarks.append([1,title,selected.index(n)+1])
-            brief.set_toc(bookmarks)
-            brief.set_metadata({'title':'Chapter 6 • model and software introductions','author':'Benjamin Bolen'})
-            brief.save(HERE/'Chapter_6_terms_reading_pages.pdf',deflate=True,garbage=4,no_new_id=True)
-        with pymupdf.open(HERE/'Chapter_6_terms_reading_pages.pdf') as brief:
-            assert len(brief) == len(selected)
-            assert all(plain(brief[i].get_text()) == plain(doc[n-1].get_text()) for i,n in enumerate(selected))
+        reading_terms = ('AnimatLab', 'W2L', 'Gait2392', 'W2Lvar', 'BiW2Lvar+', 'syn6', 'W2L108')
+        selected = list(dict.fromkeys(found[name]['first_pdf_page'] for name in reading_terms))
         visual_pages(doc,list(range(first,last+2)),renders)
         return {'pages':len(doc),'chapter_pdf_pages':[first,last], 'chapter_printed_pages':[first-offset,last-offset],
                 'key_reading_printed_pages':[n-offset for n in selected], 'conclusion_printed_page':conclusion-offset,

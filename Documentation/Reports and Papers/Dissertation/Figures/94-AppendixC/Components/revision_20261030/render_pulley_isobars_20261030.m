@@ -23,6 +23,6 @@ for k=1:5
  fprintf('%s: saved pressure indices %s; kPa %s\n',names{k},mat2str(ix),mat2str(p(ix)'));
 end
 lg=legend(legendHandles,[pressureLabels,{'Human reference'}],'FontName','Arial','FontSize',10.5,'Box','off','NumColumns',1);lg.Layout.Tile=6;
-exportgraphics(fig,fullfile(F,'pulley_torque_isobars_20261030.pdf'),'ContentType','vector');
-exportgraphics(fig,fullfile(F,'pulley_torque_isobars_20261030.png'),'Resolution',220);close(fig);
+exportgraphics(fig,fullfile(F,'pulley_torque_isobars.pdf'),'ContentType','vector');
+exportgraphics(fig,fullfile(F,'pulley_torque_isobars.png'),'Resolution',220);close(fig);
 end

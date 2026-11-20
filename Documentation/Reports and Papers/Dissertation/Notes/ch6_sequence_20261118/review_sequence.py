@@ -103,7 +103,7 @@ def main():
                 (f' Prior assistant draft, {mark} from Ben’s feedback.' if mark else ''))
         rendered.append('<tr data-group="Chapter 6 sequence">'+''.join('<td>'+html.escape(x)+'</td>' for x in fields)+'</tr>')
     headline=('<h1>Dissertation feedback and revisions</h1><p>Chapter 6 now follows the route from hand tuning to repeatable parameter trials. The first rows contain the author’s new directions and the two independent readers’ findings. The four new deductions total −8 against the previous assistant draft. The 429 recovered advisor signals retain their −551 total, including −42 from November.</p>'
-              '<p><a href="Chapter_6_reading_pages.pdf">Bookmarked reading pages</a> · <a href="REVISION_REVIEW.md">Changes and evidence</a> · <a href="PASSAGE_REVIEW.json">Passage scores</a> · <a href="../chapters_6_7_20261118/SCORE_SUMMARY.json">Historical scores</a> · <a href="../advisor_feedback_history/README.md">Scoring rules</a></p>')
+              '<p><a href="Bolen_Dissertation_revised.pdf#page=154">Chapter 6 in the complete dissertation</a> · <a href="REVISION_REVIEW.md">Changes and evidence</a> · <a href="PASSAGE_REVIEW.json">Passage scores</a> · <a href="../chapters_6_7_20261118/SCORE_SUMMARY.json">Historical scores</a> · <a href="../advisor_feedback_history/README.md">Scoring rules</a></p>')
     table=re.sub(r'<h1>.*?</p>\s*<p>.*?</p>(?=\s*<nav>)',lambda _:headline,table,count=1,flags=re.S)
     table=table.replace('<option>Chapter reread','<option>Chapter 6 sequence</option><option>Chapter reread',1)
     count=table.count('<tr data-group=')

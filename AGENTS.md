@@ -68,8 +68,8 @@ machine, NOT staleness.
 **Ben's prose rules:** Oxford comma, always. Call the simulated bodies **models**
 (human model, W2L robot model) — never "plants". Minimal em-dashes.
 
-1. **Dissertation first.** Deadline: **2026-10-28 9:00 am Pacific, advisor/committee review copy** (Ben's correction). Defense scheduled 2026-11-06. The supplied current ZIP has been reconciled into ProofFinal; root Bolen_Dissertation.pdf/.zip are the revised delivery. Current review and remaining checks: `Notes\committee_revision_20261027\REVIEW_REPORT.md` and `EASTEREGG2_HANDOFF.md`. Keep ONE working source in ProofFinal (main.tex, bib/bst/cls, chapters/*.tex); figures stay in sibling Figures. Superseded Notes sources, staging folders, and builds are preserved in Dissertation/Archive. Never restore an archived tree over the working copy without reconciling it.
-   LaTeX source in `Documentation\Reports and Papers\Dissertation\ProofFinal\`
+1. **Dissertation first.** Deadline: **2026-10-28 9:00 am Pacific, advisor/committee review copy** (Ben's correction). Defense scheduled 2026-11-06. Edit and build `Dissertation/Final/main.tex` and its chapter and support files. `Dissertation/ProofFinal` preserves the LaTeX sources for Ben’s submission draft. Reproduce that draft from `Bolen_Dissertation-Draft_Submission.zip`, which includes its original figures. Revisions use the sibling `Figures` tree and the root `Bolen_Dissertation.pdf` and `Bolen_Dissertation.zip` deliveries. The October committee review is recorded in `Notes\committee_revision_20261027\REVIEW_REPORT.md` and `EASTEREGG2_HANDOFF.md`. Superseded Notes sources, staging folders, and builds are preserved in Dissertation/Archive. Never restore an archived tree over the working copy without reconciling it.
+   Current LaTeX source in `Documentation\Reports and Papers\Dissertation\Final\`
    (+ sibling `Figures\<chapter>\` trees). Each chapter, including 95-AppendixD and 96-AppendixE, owns its figures. Chapter figure-folder roots contain active figures only; ingredients go in Components and superseded assets in Deprecated. Every directly included panel also belongs at the chapter root; no active includegraphics may use Components. Live Overleaf was repaired and verified at Errors 0 / Warnings 0 (301 pages); local proof is 300 pages. See the current review report for bounded audit coverage and remaining provenance checks. Do not reintroduce the rejected graphical abstract or split the combined extensor Figure 4.10. Ben rejected the added measurement-uncertainty task. **Published Chapter 20-muscles is protected:** retain its supplied-ZIP prose, captions, and five figures unless Ben explicitly requests a specific change. All eight active graphic files belong directly in Figures/20-muscles; do not move these active panels into Components. Chapter 50 uses the cropped, annotated sadb_bubble.pdf; preserve its six callouts and app-functionality explanation. Chapter 70's active bpa_construction.pdf and bpa_exploded_cutaway.pdf also belong at the chapter-folder root. Topic-chapter structure per the advisor's
    C12 directive: 10-introduction, 15-background, 20-muscles (Ben's Actuators 15(5):230
    paper), 30-torque (WIP manuscript bolen_isometric_2025), 50-database, 60-sns
@@ -337,6 +337,10 @@ machine, NOT staleness.
   MuJoCo bridge proven on the laptop).
 
 ## Standing conventions
+
+- Build and inspect manuscript PDFs locally for revision checks. Access Overleaf only when Ben requests live work. Download a PDF or source ZIP only when he requests a local copy, save it once under the existing filename, and stop on a blocked download. Reuse a local build folder for verification and clear temporary proofs afterward.
+
+- Use undated filenames for dissertation figures and their alt text. Keep run and export dates out of the artwork and captions. Build and deliver only the full dissertation. Ben has retired the standalone Chapter 6 PDFs and reading packets.
 
 - For dissertation prose revisions, use the historical feedback in
   `Documentation/Reports and Papers/Dissertation/Notes/advisor_feedback_history/README.md`

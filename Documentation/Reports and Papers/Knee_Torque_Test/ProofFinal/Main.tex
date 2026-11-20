@@ -46,7 +46,7 @@
 
 \def\firstAuthorLast{Bolen {et~al.}} %use et al only if is more than 1 author
 
-\def\Authors{Ben Bolen\,$^{1,*}$, Lindie Burgess\,$^{1}$, Connor Morrow\,$^{1}$, and Alex Hunt\,$^{1}$}
+\def\Authors{Ben Bolen\,$^{1,*}$, Lindie Burgess\,$^{1}$, Connor Morrow\,$^{1}$, Mohammad Elzein\,$^{1}$, and~Alex~Hunt\,$^{1}$}
 % Affiliations should be keyed to the author's name with superscript numbers and be listed as follows: Laboratory, Institute, Department, Organization, City, State abbreviation (USA, Canada, Australia), and Country (without detailed address information such as city zip codes or street names).
 % If one of the authors has a change of address, list the new address below the correspondence details using a superscript symbol and use the same symbol to indicate the author in the author list.
 
@@ -159,7 +159,7 @@ Two knee joints were tested: a pure revolute joint, and a biomimetic joint whose
 
 \begin{figure}[htbp]
     \begin{center}
-    \includegraphics[width=0.8\textwidth]{Figures/KneeICR.eps}
+    \includegraphics[width=0.8\textwidth]{Figures/knee_icr.pdf}
     \end{center}
     \caption{ICR for the biomimetic robot knee as a function of knee angle, measured from $\theta_{1}$ on the tibia. The plot is overlaid on a model of the knee at $\theta_{\mathbf{k}}=\ang{0}$ (solid line) and $\ang{-60}$ and $\ang{-120}$ (dotted dash lines). White circles represent measured points in $\ang{-15}$ increments from $\ang{-150}$ to $\ang{-15}$, in $\ang{-5}$ increments from $\ang{-15}$ to $\ang{0}$, and then at $\ang{2}$, $\ang{5}$, and $\ang{10}$.}\label{fig:ICR}
 \end{figure}
@@ -348,7 +348,7 @@ so the wrapping loss vanishes at full contraction and grows quadratically toward
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{Figures/bpa_knee_wrapping_review.pdf}
-\caption[BPA crossing a flexed knee]{Sagittal schematic of an extensor BPA crossing a flexed robot knee, with its braided body following an anterior contact arc between the proximal attachment and distal tendon. Dashed radii bound the contact arc; $R$ is the BPA-path wrapping radius, and $\alpha=\abs{\theta_{\mathrm{wrap}}-\theta_{\mathbf{k}}}$ is the bend angle after contact begins, expressed in radians in Equation~\eqref{eq:deltaL}. The drawing illustrates the local circular-wrap approximation, not the full multi-contact route. The fitted usable-length loss $\Delta l$ is not an arc-minus-chord length.}
+\caption[BPA crossing a flexed knee]{Sagittal schematic (not to scale) of an extensor BPA crossing a flexed robot knee, with its braided body following an anterior contact arc between the proximal attachment and distal tendon. Dashed radii bound the contact arc; $R$ is the BPA-path wrapping radius, and $\alpha=\abs{\theta_{\mathrm{wrap}}-\theta_{\mathbf{k}}}$ is the bend angle after contact begins, expressed in radians in Equation~\eqref{eq:deltaL}. The drawing illustrates the local circular-wrap approximation, not the full multi-contact route. The fitted usable-length loss $\Delta l$ is not an arc-minus-chord length.}
 \label{fig:bpaWrapping}
 \end{figure}
 
@@ -409,22 +409,20 @@ Measured torque was compared with predictions from the improved BPA force model 
 
 Figure~\ref{fig:FlxPin} compares the measured pinned-knee flexor torque with the pre-correction predictions. Both force models overpredict torque magnitude. On the common domain where both are defined, the improved force characterization gives smaller errors than the Hunt-equation prediction. Near full extension the Hunt prediction is undefined, while the improved force model remains defined but has large torque residuals. The hybrid calculation uses measured muscle length and moment arm; its closer agreement identifies an important contribution from the predicted geometry.
 
-The flexor identification of record is the two-bracket fit of Section~\ref{sec:identification} on the four cross-validation tests: the $l_{0}=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} tests in training and the $l_{0}=\qty{45.7}{\cm}$ and \qty{40.6}{\cm}-tendon tests held out. Its adopted design parameters are a length offset $\chi_{0} = \qty{+3.94}{\mm}$ and attachment stiffness parameters $\chi_{1} = \qty{39.98}{\kilo\newton\per\meter}$ and $\chi_{2} = \qty{14.73}{\kilo\newton\per\meter}$. Figure~\ref{fig:FlxPin_optimized} shows that, at these terms, the optimized model follows the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction does not produce. The training-set RMSE is \qty{2.165}{\newton\meter} for the $l_{0}=\qty{48.5}{\cm}$ test and \qty{1.084}{\newton\meter} for the $l_{0}=\qty{41.0}{\cm}$ test, and the held-out validation tests give \qty{1.368}{\newton\meter} at \qty{45.7}{\cm} and \qty{1.611}{\newton\meter} at \qty{40.6}{\cm} with tendon (Table~\ref{tab:FlxPinGof}).
-
-The pre-correction model comparison uses the common defined domain of the two predictions: 75 of 90, 17 of 20, 14 of 19, and 15 of 22 measured points in A--D, respectively. The hybrid calculation uses all measured points. Table~\ref{tab:FlxPinGof} reports the full-test errors after correction.
+The two-bracket flexor fit (Section~\ref{sec:identification}) yielded a length offset $\chi_{0} = \qty{+3.94}{\mm}$ and attachment stiffness parameters $\chi_{1} = \qty{39.98}{\kilo\newton\per\meter}$ and $\chi_{2} = \qty{14.73}{\kilo\newton\per\meter}$ (Table~\ref{tab:AdoptedXi}). Figure~\ref{fig:FlxPin_optimized} shows that, at these terms, the optimized model follows the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction does not produce. The training-set RMSE is \qty{2.165}{\newton\meter} for the $l_{0}=\qty{48.5}{\cm}$ test and \qty{1.084}{\newton\meter} for the $l_{0}=\qty{41.0}{\cm}$ test, and the held-out validation tests give \qty{1.368}{\newton\meter} at \qty{45.7}{\cm} and \qty{1.611}{\newton\meter} at \qty{40.6}{\cm} with tendon (Table~\ref{tab:FlxPinGof}).
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{Figures/FlxPin_preopt_publication.pdf}
+\includegraphics[width=\linewidth]{Figures/FlxPin_preopt_publication.pdf}
 \end{center}
 \caption{Pinned-knee flexor torque before design-parameter optimization: \textbf{(A)} $l_0=\qty{48.5}{\cm}$, \textbf{(B)} $l_0=\qty{41.0}{\cm}$, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, and \textbf{(D)} $l_0=\qty{40.6}{\cm}$ with a \qty{35}{\mm} tendon. Panels \textbf{(A)} and \textbf{(B)} are training tests; \textbf{(C)} and \textbf{(D)} are validation tests. The legend distinguishes measurements, the Hunt model, the improved BPA model, and the hybrid calculation.}\label{fig:FlxPin}\label{fig:FlxPin_preopt}
 \end{figure}
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{Figures/FlxPin_optimized_publication.pdf}
+\includegraphics[width=\linewidth]{Figures/FlxPin_optimized_publication.pdf}
 \end{center}
-\caption{Optimized pinned-knee flexor torque: \textbf{(A)} $l_0=\qty{48.5}{\cm}$, \textbf{(B)} $l_0=\qty{41.0}{\cm}$, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, and \textbf{(D)} $l_0=\qty{40.6}{\cm}$ with a \qty{35}{\mm} tendon. Panels \textbf{(A)} and \textbf{(B)} are training tests; \textbf{(C)} and \textbf{(D)} are validation tests. Circles show measurements, dashed curves the improved BPA model, and solid magenta curves the optimized model.}\label{fig:FlxPin_optimized}
+\caption{Optimized pinned-knee flexor torque: \textbf{(A)} $l_0=\qty{48.5}{\cm}$, \textbf{(B)} $l_0=\qty{41.0}{\cm}$, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, and \textbf{(D)} $l_0=\qty{40.6}{\cm}$ with a \qty{35}{\mm} tendon. Panels \textbf{(A)} and \textbf{(B)} are training tests; \textbf{(C)} and \textbf{(D)} are validation tests.}\label{fig:FlxPin_optimized}
 \end{figure}
 
 
@@ -435,13 +433,13 @@ The pre-correction model comparison uses the common defined domain of the two pr
 
 Two features of the pinned-extensor measurements shaped the extensor identification. First, the measured torque crossed zero at a more extended angle than the prediction, indicating a length offset opposite in sign to the flexor offset. Second, on the $l_{0}=\qty{45.7}{\cm}$ test the hybrid calculation tracked the original prediction closely while the measured torque diverged from both, and the divergence grew with torque as the actuator wrapped over the joint.
 
-The extensor identification of record locks the stiffness pair at the flexor-identified values and solves the two extensor-specific terms: $\chi_{0} = \qty{-6.38}{\mm}$ and $\chi_{3} = 0.158$, so the extensor length offset is close to the flexor offset in magnitude and opposite in sign. The refit used the six-test identification pool of Section~\ref{sec:identification}, with the \qty{43.6}{\cm}, \qty{43.2}{\cm}-tendon, and \qty{45.7}{\cm} tests in training and the \qty{40.0}{\cm} plain, \qty{40.0}{\cm}-tendon, and \qty{46.5}{\cm} tests held out for validation; Figure~\ref{fig:ExtPin_group} shows the six pool tests at the adopted terms.
+The extensor identification of record locks the stiffness pair at the flexor-identified values and solves the two extensor-specific terms: $\chi_{0} = \qty{-6.38}{\mm}$ and $\chi_{3} = 0.158$, so the extensor length offset is close to the flexor offset in magnitude and opposite in sign (Table~\ref{tab:AdoptedXi}). Figure~\ref{fig:ExtPin_group} compares the fitted predictions with measurements from the training and held-out extensor tests.
 
 \begin{figure}[htbp]
 \begin{center}
-\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{Figures/ExtPin_complete_publication.pdf}
+\includegraphics[width=\linewidth]{Figures/ExtPin_complete_publication.pdf}
 \end{center}
-\caption{Optimized pinned-knee extensor torque: \textbf{(A)} $l_0=\qty{43.6}{\cm}$, \textbf{(B)} $l_0=\qty{43.2}{\cm}$ with a \qty{22}{\mm} tendon, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, \textbf{(D)} $l_0=\qty{40.0}{\cm}$, \textbf{(E)} $l_0=\qty{40.0}{\cm}$ with a \qty{40}{\mm} tendon, and \textbf{(F)} $l_0=\qty{46.5}{\cm}$. Panels \textbf{(A)}--\textbf{(C)} are training tests; \textbf{(D)}--\textbf{(F)} are validation tests. The legend applies to all panels.}\label{fig:ExtPin_group}
+\caption{Measured and predicted pinned-knee extensor torque. The training tests used BPA resting lengths of \textbf{(A)} \qty{43.6}{\cm}, \textbf{(B)} \qty{43.2}{\cm} with a \qty{22}{\mm} tendon, and \textbf{(C)} \qty{45.7}{\cm}. The held-out validation tests used \textbf{(D)} \qty{40.0}{\cm}, \textbf{(E)} \qty{40.0}{\cm} with a \qty{40}{\mm} tendon, and \textbf{(F)} \qty{46.5}{\cm}.}\label{fig:ExtPin_group}
 \end{figure}
 
 \begin{table}[p]
@@ -602,20 +600,19 @@ The cam-assisted route is the current extensor design. Allowing the tibial route
 
 Both redesigned routes met or exceeded their selected human-muscle torque references at the measured angles: vastus medialis for the extensor and biceps femoris short head for the flexor (Figure~\ref{fig:redesign_validation}). Both tests span \ang{-119} to \ang{5}. Extensor torque margins range from \qty{0.24}{\newton\meter} to \qty{3.52}{\newton\meter}; flexor margins range from \qty{0.42}{\newton\meter} at \ang{-105} to \qty{17.0}{\newton\meter} at \ang{-14}.
 
-The cam-assisted extensor route was tested at pressures of \qtyrange{256}{488}{\kPa}. Measured torque exceeds the pressure-specific prediction at eight angles, by up to \qty{13.75}{\newton\meter}; at \ang{-86.5}, it exceeds the human reference and is \qty{2.06}{\newton\meter} below the pressure-specific prediction.
+The cam-assisted extensor route was tested at pressures of \qtyrange{256}{488}{\kPa}. Measured torque was up to \qty{13.75}{\newton\meter} above the pressure-specific prediction. At \ang{-86.5}, it was \qty{2.06}{\newton\meter} below that prediction and still exceeded the human reference.
 
-The redesigned flexor used two \qty{20}{\mm} BPAs at nominal $l_0=\qty{56.2}{\cm}$. Its original rigid-body prediction at \qty{620}{\kPa} reaches a peak torque magnitude of \qty{190.3}{\newton\meter}, compared with \qty{91.9}{\newton\meter} for the optimized model carrying the identified length, compliance, and wrapping terms. The measurements used hung loads of \qtyrange{11.1}{106}{\newton} and gauge pressures of \qtyrange{226.5}{638}{\kPa}; the measured wrench was carried to the moving knee center by the same adjoint transform as the identification data. These discrete tests establish capacity at the measured configurations, rather than a continuous measured full-pressure envelope or prediction agreement throughout the RoM.
+The redesigned flexor used two \qty{20}{\mm} BPAs. Its original rigid-body prediction at \qty{620}{\kPa} reaches a peak torque magnitude of \qty{190.3}{\newton\meter}, compared with \qty{91.9}{\newton\meter} for the optimized model carrying the identified length, compliance, and wrapping terms. The measurements used hung loads of \qtyrange{11.1}{106}{\newton} and gauge pressures of \qtyrange{226.5}{638}{\kPa}; the measured wrench was carried to the moving knee center by the same adjoint transform as the identification data. The continuous \qty{620}{\kPa} curves in Figure~\ref{fig:redesign_validation} are model predictions.
 
-The installed flexor BPAs had measured resting lengths of \qtylist{561;560}{\mm} and tendon lengths of \qtylist{28;30}{\mm}, respectively; the extensors had resting lengths of \qtylist{828;826}{\mm} and tendon lengths of \qtylist{92;85}{\mm}. These measurements are distinct from the shared prediction inputs: flexor resting length \qty{561.49}{\mm} with an effective \qty{5.00}{\mm} tendon parameter after the \qty{20}{\mm} adjustment to the saved \qty{25}{\mm} route parameter (Supplementary Equation~\eqref{eq:flexor_tendon_inputs}), and extensor resting length \qty{827.74}{\mm} with the approximate \qty{92.49}{\mm} tendon parameter. The plotted predictions retain those design inputs, and the flexor plot retains its nominal \qty{562}{\mm} label.
+The installed flexor BPAs had measured resting lengths of \qtylist{561;560}{\mm} and tendon lengths of \qtylist{28;30}{\mm}, respectively; the extensors had resting lengths of \qtylist{828;826}{\mm} and tendon lengths of \qtylist{92;85}{\mm}. These measurements are distinct from the shared prediction inputs: flexor resting length \qty{561.49}{\mm} with an effective \qty{5.00}{\mm} tendon parameter after the \qty{20}{\mm} adjustment to the saved \qty{25}{\mm} route parameter (Supplementary Equation~\eqref{eq:flexor_tendon_inputs}), and extensor resting length \qty{827.74}{\mm} with the approximate \qty{92.49}{\mm} tendon parameter.
 
 \begin{figure}[htbp]
 \centering
-\makebox[\linewidth][l]{\textbf{(A)}}\par
-\includegraphics[scale=0.85]{Figures/Ext20_current_publication.pdf}
-\par\medskip
-\makebox[\linewidth][l]{\textbf{(B)}}\par
-\includegraphics[scale=0.85]{Figures/Redesigned_flexor_pressure_publication.pdf}
-\caption{Physical validation of redesigned two-BPA knee routes. \textbf{(A)} Cam-assisted extensor route: nine measurements, pressure-specific predictions, the optimized \qty{620}{\kPa} curve, and the vastus medialis reference; marker area scales with pressure. \textbf{(B)} Flexor (nominal \qty{562}{\mm} plot label): fifteen measurements, pressure-specific predictions, the optimized \qty{620}{\kPa} curve, and the biceps femoris short-head reference. Both configurations use \qty{20}{\mm} BPAs.}
+\makebox[0pt][r]{\raisebox{-1.2em}{\textbf{(A)}\quad}}%
+\raisebox{-\height}{\includegraphics[width=425bp]{Figures/Ext20_current_publication.pdf}}\\[3pt]
+\makebox[0pt][r]{\raisebox{-1.2em}{\textbf{(B)}\quad}}%
+\raisebox{-\height}{\includegraphics[width=425bp]{Figures/Redesigned_flexor_pressure_publication.pdf}}\par
+\caption{Physical validation of knee routes using two \qty{20}{\mm} BPAs per route. \textbf{(A)} Measured cam-extensor torque exceeded the vastus medialis reference at the measured knee angles. Marker area scales with measured pressure (\qtyrange{256}{488}{\kPa}). \textbf{(B)} Measured flexor torque magnitude exceeded the biceps femoris short-head reference at the measured knee angles.}
 \label{fig:Ext20mm}\label{fig:redesign_validation}
 \end{figure}
 
@@ -649,7 +646,7 @@ The capability survey grades each actuator against the same-named single muscle 
 
 The BPA force model is evaluated at \qty{620}{\kPa} \citep{bolen_2026}. The comparison includes all 27 actuator sites (Supplementary Table~\ref{tab:survey_dofs_sizes}). The baseline uses the master's-era attachment routing at unity transmission; its eight nominal \qty{40}{\mm} sites are evaluated with four parallel \qty{20}{\mm} BPAs, while the other sites use the survey's base configuration. The updated side uses the saved configuration with the most included cells meeting the human torque requirement, with ties resolved by the search criteria in Supplementary Section~\ref{app:transmission_selection}. Actuator and tendon lengths were re-solved at each visited configuration. It retains the same underlying attachment routing and the original diameter specification, including \qty{40}{\mm} actuators at those eight sites. The comparison therefore combines transmission, actuator sizing, and the baseline diameter substitution; it does not isolate an effect of attachment placement or compare two all-\qty{20}{\mm} assemblies.
 
-Active-force coverage is the fraction of included grid cells with positive insertion tension, excluding slack or infeasible configurations. It does not require the torque to match the human reference. Both coverage measures are calculated for each actuator and then averaged equally across the 27 sites. Table~\ref{tab:CapabilitySurvey} reports the resulting means.
+Active-force coverage is the fraction of included grid cells with positive insertion tension, excluding slack or infeasible configurations. It does not require the torque to match the human reference. Both coverage measures are calculated for each actuator and then averaged equally across the 27 sites. Table~\ref{tab:CapabilitySurvey} reports the resulting means. Supplementary Figure~\ref{fig:survey_routes} shows the inherited routes and selected transmissions. Supplementary Table~\ref{tab:survey_configurations} gives the actuator count, tackle ratio, and sizing changes at each site.
 
 The mean fraction meeting the human torque requirement increases from \qty{37.28}{\percent} for the baseline to \qty{65.19}{\percent} for the saved transmission configurations, improving at 23 sites and tying at four. Mean active-force coverage increases from \qty{92.44}{\percent} to \qty{98.81}{\percent}. The higher active-force coverage shows that the transmission configurations maintain tension over more of the graded domain, while the lower torque coverage shows that positive tension alone is insufficient to meet the human torque requirement.
 
@@ -704,7 +701,7 @@ Route redesign under the optimized model produces configurations with two $\diam
 The authors declare no conflicts of interest. The funders had no role in the design of the study; in the collection, analysis, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results.
 
 \section*{Author Contributions}
-Conceptualization, B.B. and C.M.; Methodology, B.B., C.M., and A.H.; Software, B.B., C.M., and L.B.; Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., C.M., and L.B.; Resources, B.B., L.B., and A.H.; Data Curation, B.B.; Writing -- Original Draft Preparation, B.B.; Writing -- Review \& Editing, B.B., C.M., L.B., and A.H.; Visualization, B.B. and A.H.; Supervision, B.B. and A.H.; Project Administration, B.B. and A.H.; Funding Acquisition, A.H.
+Conceptualization, B.B. and C.M.; Methodology, B.B., C.M., M.E., and A.H.; Software, B.B., C.M., L.B., and M.E.; Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., C.M., L.B., and M.E.; Resources, B.B., L.B., and A.H.; Data Curation, B.B. and M.E.; Writing -- Original Draft Preparation, B.B.; Writing -- Review \& Editing, B.B., C.M., L.B., M.E., and A.H.; Visualization, B.B. and A.H.; Supervision, B.B. and A.H.; Project Administration, B.B. and A.H.; Funding Acquisition, A.H.
 
 \section*{Funding}
 Research for this article was funded by the Department of Mechanical and Materials Engineering at Portland State University, the National Science Foundation (NSF) grant for NeuroNex: Communication, Coordination, and Control in Systems (C3NS) 2015317 and NSF grant 1943483. 

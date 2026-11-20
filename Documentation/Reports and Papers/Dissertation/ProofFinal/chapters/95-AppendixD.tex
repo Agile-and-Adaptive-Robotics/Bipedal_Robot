@@ -1,5 +1,5 @@
 \chapter{Appendix D: Supplementary Neuromechanical Verification}\label{app:simulation_verification}
-\graphicspath{{../Figures/95-AppendixD/}{figs/95-AppendixD/}}
+\graphicspath{{../Figures/95-AppendixD/}{figs/95-AppendixD/}{../Figures/60-sns/}{figs/60-sns/}}
 
 This appendix supplies supporting model records and evaluation sets for Chapter~\ref{ch:sns}. It separates implementation checks, gait comparisons, pathway-removal tests, and spiking conversions because they test different claims. Neuron equations and calibration tables are provided in Appendix~\ref{app:neuron_equations}.
 
@@ -42,6 +42,22 @@ Figure~\ref{fig:mujoco_model_views} contrasts the converted Gait2392 robot geome
 \end{minipage}
 \caption[Mechanical model representations]{Converted Gait2392 robot (A) and the antagonist-BPA knee illustration used in the current SNS-Simscape demonstration (B). The two panels represent different models; scales differ.}
 \label{fig:mujoco_model_views}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{sns_w2l_traces_short_20261031.png}
+\caption[W2L rhythm-core traces across engines]{W2L rhythm-generator voltages under matched inputs in NumPy and Simulink. Burst periods and counts agree; full-trace correlation is at least 0.99996. Extensor and flexor traces are paired by leg over a common three-second interval; voltages are relative to the resting reference. The residual \qty{2}{\milli\second} lag is one discrete solver step. The comparison checks the driven rhythm core.}
+\label{fig:w2l_crossengine}
+\end{figure}
+
+The suspended AnimatLab recording provides the neural and mechanical context for the motivating ground test in Section~\ref{sec:prior_walker}. Alternating activity propagates through RG, PF, and MN layers over the same short interval as the joint motion.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.77\textheight,keepaspectratio]{animatlab_short_neural_mechanical.png}
+\caption[Short-window AnimatLab neural and mechanical responses]{Recorded graded activity in the rhythm generator, hip pattern-formation subsystem, and hip motor neurons, followed by left hip, knee, and ankle angles from the same suspended AnimatLab trial. Extensor and flexor pathways are blue solid and orange dashed, respectively. The \qtyrange{1}{2.5}{\second} interval shows approximately three cycles. Joint angles retain the original AnimatLab conventions, including positive knee flexion. The neural traces are graded membrane voltages.}
+\label{fig:animatlab_short_response}
 \end{figure}
 
 \section{Controller Ports and Reference Checks}\label{sec:sns_ports}\label{sec:crossengine_methods}
@@ -117,7 +133,15 @@ Headless reruns tested whether archived models reproduced their reference behavi
 
 A separate MuJoCo translation of the Li controller and body did not reproduce that original-simulator walking result. In a \qty{20}{\second} ground test, mean forward speed was \qty{0.040}{\meter\per\second}, with eleven detected right-foot stance episodes and none on the left. The right-side period of \qty{1.294}{\second} alone therefore did not establish bilateral stepping. This failure distinguishes reproduction of the source model from successful transfer to another simulator.
 
-\section{Tuning and Supported Evaluations}\label{sec:sns_tuning_methods}\label{sec:sns_curriculum}
+\paragraph{Additional execution checks.}
+Repeated controller searches benefit from reducing neural and mechanical computation separately. I accelerated the neural equations with compiled kernels and checked their outputs against the reference implementations. In a 980-neuron timing test, the sparse kernel was 11.23 times faster than the preceding preallocated neural backend, with identical voltages. A complete \qty{16}{\second} moving-leg simulation decreased from \qty{69.51}{\second} to \qty{15.86}{\second} of wall time while preserving every saved trajectory array. A separate afferented simulation decreased from \qty{113.74}{\second} to \qty{34.59}{\second} under concurrent machine load. These measurements distinguish neural-kernel acceleration from the runtime of the coupled model.
+
+\section{Tuning and Supported Evaluations}
+
+The Gait2392-based evaluations use the same reference-library and pathway-removal procedures to compare alternative neural organizations. The full graded, pruned, six-synergy, and W2L-layout configurations show different responses to feedback removal and different agreement with the tuning and library references. Removing Ia feedback eliminated detected cycles in the tested production configuration, whereas other removals and other network organizations had different effects. The library comparisons also exposed asymmetric activity and limited transfer beyond the tuning reference (Appendix~\ref{sec:gait_library_results}). These tests distinguish how each controller uses feedback and how its motion changes when the reference is changed.
+
+A replay of the saved human-model controller produced ten detected cycles per leg. Figure~\ref{fig:gait2392_ik_overlay} compares the joint trajectories directly with the Gait2392 inverse-kinematics reference and its associated ground-reaction forces. The model's mean stance fractions were 0.71 and 0.65 on the right and left, compared with 0.61 in the reference. Substantial hip and knee timing differences remain visible despite the detected cycles. The overlay therefore complements the scalar gait score by showing which parts of the movement disagree. Appendix~\ref{sec:app_ik_overlay} reports the angle errors and alignment method.
+\label{sec:sns_tuning_methods}\label{sec:sns_curriculum}
 
 Free network gains were searched with a tree-structured Parzen estimator, with each candidate evaluated through simulation. The staged procedure separates suspended rhythm generation, sensory feedback, standing, and ground evaluations (Table~\ref{tab:sns_curriculum}). Finalists were checked under \qty{1}{\percent} multiplicative parameter perturbations and changes in drive. Such checks probe the neighborhood of a selected configuration; they do not establish robustness to untested loads or removal of the harness.
 
@@ -148,6 +172,13 @@ W2L organization     & $-144.5$ & $-5808$ & Subject 8 running trial ($-5896$) \\
 \end{table}
 
 A later matched human-model comparison also varied controller organization and feedback gains. The full graded baseline generated nine detected right-leg cycles and no left-leg cycles, while the W2L organization generated five and seven, respectively. Halving the Ia, II, and Ib gains into its central pathways reduced these to three and four. These are separate configurations from the reference-library sweep above; their value is the controlled comparison of controller dependence, not a replacement ranking of the earlier scores.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.75\textheight,keepaspectratio]{gait2392_ik_overlay.pdf}
+\caption[Gait2392 model motion compared with inverse kinematics]{Supported human-model joint motion compared with the Gait2392 inverse-kinematics reference. Model curves show the mean and one standard deviation across ten cycles per leg. Each leg is aligned to its own foot-loading onset; no angle offset, amplitude adjustment, or fitted phase shift is applied. Bottom strips compare model contact probability across cycles with reference stance and swing from ground-reaction forces, using a \qty{50}{\newton} threshold. Legs are aligned independently; bilateral phase is evaluated separately.}
+\label{fig:gait2392_ik_overlay}
+\end{figure}
 
 \subsection{Direct Kinematics Overlay}\label{sec:app_ik_overlay}
 

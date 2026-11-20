@@ -109,7 +109,7 @@ I mapped the shared rhythm pathways of the 95-neuron NumPy W2L network into a 26
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{w2l_crossengine_20261116.png}
+\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{w2l_crossengine.png}
 \caption[Matched-input W2L rhythm-core comparison]{Corresponding rhythm signals in the full NumPy W2L network and its Simulink core under a common drive and prescribed heel inputs. Best-lag correlation aligns the signals by \qty{2}{\milli\second}. Each implementation received the same external input sequence.}
 \label{fig:w2l_crossengine}
 \end{figure}
@@ -188,7 +188,7 @@ The earlier instrumented AnimatLab configuration provides a different recording,
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{animatlab_short_response_20261116.png}
+\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{animatlab_short_response.png}
 \caption[Archived AnimatLab neural and mechanical recording]{Aligned RG, PF, and MN activity and hip, knee, and ankle motion from the same suspended AnimatLab trial over \qtyrange{1}{2.5}{\second}. Extensor and flexor pathways are blue solid and orange dashed. The traces show continuously varying membrane voltages, and the original joint conventions, including positive knee flexion, are retained. This is the earlier instrumented configuration.}
 \label{fig:animatlab_short_response}
 \end{figure}
@@ -209,7 +209,7 @@ In that adapter, group Ia receives signed path velocity divided by \qty{0.6}{\me
 
 \begin{table}[htbp]
 \centering\small
-\caption[Fixed-controller air-stage evaluations]{BiW2Lvar+ with unchanged learned weights. Principal knee-flexion peaks, median interpeak period, and distance from bilateral antiphase are measured over $5\leq t<14$\,s of each \qty{16}{\second} trial. Four and seven peaks yield three and six complete interpeak intervals per side, respectively. The last column gives the maximum whole-trial native angle. Negative values indicate flexion.}
+\caption[Fixed-controller air-stage evaluations]{BiW2Lvar+ with unchanged learned weights. Principal knee-flexion peaks, median interpeak period, and distance from bilateral antiphase are measured over $5\leq t<14$\,s of each \qty{16}{\second} trial. The last column gives the maximum whole-trial native angle. Negative values indicate flexion.}
 \label{tab:app_air_stages}
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xrrrr@{}}
 \toprule
@@ -255,7 +255,7 @@ None of the twelve syn6 channels met all four requirements. Three components per
 \begin{figure}[p]
 \centering
 \includegraphics[width=14cm]{PF_timing_authoritative.pdf}
-\caption[Implemented syn6 PF transmission versus intended primitives]{Raw right-side syn6 S1, S2, and S5 transmission over two calibration cycles, \qtyrange{2.466}{4.932}{\second}. Solid blue curves show actual transmission; dashed black curves show the intended primitive, and dotted lines mark the 0.2 activity threshold. All stored samples are retained, without channel-specific phase shifts. S1 and S2 have displaced timing, while S5 remains active. The zero-of-twelve verdict comes from the separate full nine-cycle averaged audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}
+\caption[Implemented syn6 PF transmission versus intended primitives]{Raw right-side syn6 S1, S2, and S5 transmission over two calibration cycles, \qtyrange{2.466}{4.932}{\second}. The dotted lines mark the 0.2 activity threshold. All stored samples are retained, without channel-specific phase shifts. S1 and S2 have displaced timing, while S5 remains active. The zero-of-twelve verdict comes from the separate full nine-cycle averaged audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}
 \label{fig:app_pf_timing}
 \end{figure}
 
@@ -318,7 +318,7 @@ Ankle & 8.71 & 7.38 \\
 \begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth]{gait2392_ik_overlay.pdf}
-\caption[Direct joint-angle and stance overlay]{Supported Gait2392 human-model motion compared with the inverse-kinematics reference. Columns show the right and left legs. Blue curves and bands show the model mean and one standard deviation across ten cycles per leg; black dashed curves show the reference. Each leg is aligned to its own foot-loading onset, without an angle offset, amplitude adjustment, or fitted phase shift. The bottom row compares model stance fraction across cycles with reference stance and swing, using a \qty{50}{\newton} loading threshold. Absolute-angle errors are reported in Table~\ref{tab:ik_absolute_rmse}.}
+\caption[Direct joint-angle and stance overlay]{Supported Gait2392 human-model motion compared with the inverse-kinematics reference. Columns show the right and left legs. The model curves summarize ten cycles per leg. Shading spans one standard deviation about the mean. Each leg is aligned to its own foot-loading onset, without an angle offset, amplitude adjustment, or fitted phase shift. The bottom row compares model stance fraction across cycles with reference stance and swing, using a \qty{50}{\newton} loading threshold. Absolute-angle errors are reported in Table~\ref{tab:ik_absolute_rmse}.}
 \label{fig:app_gait2392_ik_overlay}\label{fig:gait2392_ik_overlay}
 \end{figure}
 
@@ -326,7 +326,7 @@ The broader reference set contains 43 cycles from participants walking or runnin
 
 \section{Supported Evaluations and Controlled Pathway Changes}\label{sec:sns_controller_comparison}
 
-Support is part of the experimental apparatus. A suspension spring can isolate air-stage limb motion, and rails or a harness can permit ground contact while constraining the torso. I report the force definition, denominator, and scored interval for each ground result. For example, one supported Gait2392 recording averaged \qty{48.848}{\percent} net superior force relative to a \qty{768.756726}{\newton} moving-model weight, and \qty{115.561}{\newton} RMS horizontal restraint over \qtyrange{5}{13}{\second} (4,001 samples). The two measurements describe different actions of the same apparatus.
+Support is part of the experimental apparatus. A suspension spring can isolate air-stage limb motion, and rails or a harness can permit ground contact while constraining the torso. I report the force definition, denominator, and scored interval for each ground result. For example, one supported Gait2392 recording averaged \qty{48.848}{\percent} net superior force relative to a \qty{768.756726}{\newton} moving-model weight, and \qty{115.561}{\newton} RMS horizontal restraint over \qtyrange{5}{13}{\second}. The two measurements describe different actions of the same apparatus.
 
 In the historical BPA-interface experiment, the nominal support setting was \qty{70}{\percent} of a \qty{411}{\newton} model weight and peak commanded pressure was \qty{372}{\kPa}. It exercised the quasi-static BPA command-to-force interface. Suspended motion of the converted robot with Hill-type muscles and supported CAD motion with ideal reference tensions are separate demonstrations.
 
@@ -346,7 +346,7 @@ The input vector has four heel/toe contact ports, twelve Ib ports, two brief ini
 
 The combined sensory deletion set 35 nonzero fitted parameters to zero, including the contact and pooled-Ib input amplitudes, heel-cascade and crossed-heel connections, and Ia-, II-, and Ib-labeled projections to rhythm, pattern, and segmental pathways. All sixteen external contact and Ib input currents then remained zero. In the separate Ib-only deletion the twelve Ib inputs went to zero and the contact currents remained. The comparison tests the contribution of the specified set of sensory inputs and connections to bilateral coordination.
 
-I counted primary heel strikes over $4.5\leq t<30$\,s from rising crossings above \qty{20}{\newton}, accepting successive strikes on the same side only when they were more than \qty{0.45}{\second} apart. Median phase locates a left strike between two successive right strikes. The historical criterion required a finite trial without a fall, at least six strikes per side, phase in $[0.35,0.65]$, and forward displacement greater than \qty{0.05}{\meter}. The intact condition yielded 34 left and 22 right strikes, phase 0.498, and \qty{2.239}{\meter} progression. The combined deletion yielded 20 left and 31 right strikes and \qty{1.996}{\meter} progression, but its phase of 0.223 failed alternation. Ib-only deletion yielded 19 left and 20 right strikes, phase 0.494, and \qty{2.302}{\meter}. Fresh replays reproduced all 15 numerical trajectory arrays for each condition.
+I counted primary heel strikes over $4.5\leq t<30$\,s from rising crossings above \qty{20}{\newton}, accepting successive strikes on the same side only when they were more than \qty{0.45}{\second} apart. Median phase locates a left strike between two successive right strikes. The historical criterion required a finite trial without a fall, at least six strikes per side, phase in $[0.35,0.65]$, and forward displacement greater than \qty{0.05}{\meter}. The intact condition yielded 34 left and 22 right strikes, phase 0.498, and \qty{2.239}{\meter} progression. The combined deletion yielded 20 left and 31 right strikes and \qty{1.996}{\meter} progression, but its phase of 0.223 failed alternation. Ib-only deletion yielded 19 left and 20 right strikes, phase 0.494, and \qty{2.302}{\meter}. Repeat simulations reproduced the trajectories in each condition.
 
 Mild and strong drive reductions, reversal to a \qty{40}{\newton} backward push, and individual Ia, Ib, Renshaw, crossed-heel, and heel-cascade deletions retained the historical supported-stepping criterion. Renshaw deletion reduced forward displacement to \qty{0.081}{\meter}, and commissural deletion failed bilateral stepping. Heel-strike phase, progression, and continuing joint flexion and extension thus distinguished interventions that a count of moving limbs alone would group together.
 
@@ -358,8 +358,8 @@ The model completed \qty{28}{\second}. During $16\leq t<28$\,s, mean vertical ha
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=14cm]{CAD_supported_traces_20261116.pdf}
-\caption[Quantitative supported CAD stepping]{CAD signals during $16\leq t<28$\,s: RG flexor-minus-extensor voltage (A), native flexion-negative knees (B), foot normal loads (C), and whole-foot mesh heights (D). Right is solid blue; left is dashed orange. All 1,200 samples per series are retained. Reference lines mark the \ang{-1} guard, \qtylist{7.36;15}{\newton} load criteria, and \qty{5}{\milli\meter} clearance. Negative heights indicate soft-contact penetration. Ideal reference tensions and engineering allocation operate with \qty{77.5}{\percent} vertical assistance.}
+\includegraphics[width=14cm]{CAD_supported_traces.pdf}
+\caption[Quantitative supported CAD stepping]{CAD signals during $16\leq t<28$\,s: RG flexor-minus-extensor voltage \textbf{(A)}, native flexion-negative knees \textbf{(B)}, foot normal loads \textbf{(C)}, and whole-foot mesh heights \textbf{(D)}. Reference lines mark the \ang{-1} guard, \qtylist{7.36;15}{\newton} load criteria, and \qty{5}{\milli\meter} clearance. Negative heights indicate soft-contact penetration. Ideal reference tensions and engineering allocation operate with \qty{77.5}{\percent} vertical assistance.}
 \label{fig:app_cad_supported_traces}
 \end{figure}
 
@@ -403,7 +403,7 @@ Fell                            & no                  & no \\
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short.pdf}
 \caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Both controllers used the same parameters and support. Columns show nonspiking (left) and untuned spiking (right) responses during the \qtyrange{10}{12.5}{\second} ground-trial window. Solid orange and dashed blue distinguish extensors and flexors in the right-side RG, PF, and muscle traces (vastus lateralis and semimembranosus). For hip, knee, and ankle angles they distinguish right and left. Spiking readouts are filtered. Muscle activation is the actuator state.}
 \label{fig:spike_rhythm}\label{fig:spike_ground}
 \end{figure}
@@ -481,7 +481,7 @@ For the recorded Gait2392 body trial, the recorder writes input and neural-updat
 \path{demos/sns_build_demo.m} and \path{demos/sns_build_beer_demo.m} (S) & Build the coupled knee and loaded-cup mechanisms. For the settled knee, use \path{run_transient.m} and the two saved model files named in Section~\ref{sec:app_knee_transient}. \\
 \path{sns_build_from_json.m}; \path{sns_verify_from_json.m} (S) & Circuit-specification import and matched-input implementation comparison. \\
 \path{mujoco_bridge/matlab/laptop_build_bridge.m} (S) & Build and check the MuJoCo--Simulink runtime bridge; command/measurement exchange, not mechanism conversion. \\
-\path{mujoco_bridge/matlab/run_bridge_tests.m}, \path{e1_sns_reflex_loop.m}, and \path{e2_cpg_open_loop.m} (S) & With the patched blockset installed, call \path{run_bridge_tests} from its MATLAB directory. Test b gives 81 samples at \qty{5}{\milli\second}, and test c gives zero maximum difference for all five sensors. E1 and E2 exercise closed- and open-loop commands. \\
+\path{mujoco_bridge/matlab/run_bridge_tests.m}, \path{e1_sns_reflex_loop.m}, and \path{e2_cpg_open_loop.m} (S) & With the patched blockset installed, call \path{run_bridge_tests} from its MATLAB directory. Test b verifies the \qty{5}{\milli\second} sampling interval, and test c gives zero maximum difference for all five sensors. E1 and E2 exercise closed- and open-loop commands. \\
 \path{_muscle_force_compare.py} (P) & Assign matched OpenSim poses/activations and compute force-comparison statistics. \\
 \path{controller_profiles_20261104/train.py}; \path{fit_waveform_edges.py} (P) & Search bounded rhythm and timing parameters, or fit bilateral pattern-formation weights to motor recruitment by least squares. \\
 \path{hunt_training/verification_capture.py}; \path{verification_figures.py} (P) & Record signals and sampling times, plot selected intervals, and replay saved body positions with the corresponding model. \\

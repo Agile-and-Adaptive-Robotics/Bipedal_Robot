@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 from zipfile import ZipFile
+from manuscript_captions import revise_captions
 
 here = Path(__file__).resolve().parent
 diss = here.parents[1]
@@ -126,7 +127,11 @@ put(appendix,4,r"""Chapter~\ref{ch:database} follows a researcher from one pathw
 put(appendix,14,r"""For a single paper, use Table to check the record type and archive status. For a group of papers, start in Pivot and open a cell to read the underlying records. Tagged groups overlap. For example, a Paper tagged with both Ia and Ib can appear in both afferent rows for the same animal. Adding those rows would count that Paper twice. The citation neighborhood in Figure~\ref{fig:sadb_clusters} answers a separate question about which papers cite one another.""")
 put(appendix,20,r"""Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input, and Table~\ref{tab:sadb_pathways} gives the searchable pathway names. The two pathway links in the McCrea record illustrate why the preparation belongs alongside the label (Section~\ref{sec:sadb_worked_rule}). In the acute spinal preparation treated with clonidine, the inhibition seen at rest diminished during fictive locomotion, but the short-latency excitation seen in the midbrain-evoked preparation did not appear \citep{mccrea_disynaptic_1995}. A model of the spinal preparation would therefore need a different test from the one drawn in Figure~\ref{fig:sadb_group_i_rule}. The Ib pathway label is a way to retrieve this paper. Its Ia and Ib afferent tags preserve the broader identity of the stimulated group~I fibers.""")
 
-replace(six,7,"I built a graphical editor to construct neural circuits for these experiments.","I developed Simulink blocks and a graphical interface for building nonspiking circuits.")
+put(six,7,"This chapter presents the tools I developed to test neural controllers on a human musculoskeletal model and on models of our bipedal robot. The lab's existing software made it impractical to search systematically for controller settings. The human model provided a reference for movement, but testing the robot required a model that represented where its artificial muscles pulled on the joints and how the resulting motion fed back to the controller. I built tools to construct circuits graphically, connect controllers to these mechanical models, and automate tuning. Researchers can now change a sensory connection or move an artificial muscle attachment in simulation, repeat the trial under the same conditions, and trace the effect on muscle force and leg motion.")
+replace(six,11,
+        r"I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand.",
+        r"In a course project, Connor Morrow and I tested whether the neural circuit of \citet{deng_neuromechanical_2019} could coordinate the legs of the sagittal-plane biped of \citet{li_bipedal_2017}. We connected the circuit and body in AnimatLab, a graphical program for linking neurons, muscles, and sensory feedback \citep{cofer_animatlab_2010}, and adjusted neural currents, synaptic weights, and muscle parameters by hand.")
+replace(six,11,"Each parameter change required another slow run, making a systematic search impractical.","Each parameter change required another slow run.")
 replace(six,89,"A diagram helps locate a pathway. An editable diagram also lets the researcher change the connection where it is drawn. I built a graphical circuit editor and a library of Simulink blocks to make selected pathways in a connectome, the map of connections among neurons, accessible in this way.","To change one connection in a large network, a researcher first has to locate the two neurons and identify the synapse between them. I developed a graphical interface and a library of Simulink blocks so that a researcher can wire a nonspiking circuit on screen and build the corresponding Simulink model.")
 put(six,108,r"\subsection{Building a Nonspiking Circuit in Simulink}")
 put(six,112,r"""In the SNS-Simscape interface, \texttt{SNSGui}, a researcher can place nonspiking neurons, connect them with synapses, inspect a synapse's strength and reversal potential, and save the circuit. Choosing \emph{Build} generates the neural portion of a Simulink model. Appendix~\ref{sec:app_signal_contracts} gives the command and build script. Separate builders connect the knee and arm circuits to their actuators, sensory inputs, and mechanical models.
@@ -239,6 +244,8 @@ for i,paragraph in enumerate(five):
         five[i]=""
 previous=json.loads((here/"SOURCE_HASHES.json").read_text(encoding="utf-8")) if (here/"SOURCE_HASHES.json").is_file() else {}
 new_hash={}
+rename_manifest=here.parent/"figure_names_and_overview_20261119/FIGURE_RENAMES.json"
+figure_renames=json.loads(rename_manifest.read_text())
 diff=[]
 for name,lines in files.items():
     source=baseline[name]
@@ -250,6 +257,10 @@ for name,lines in files.items():
         new=new.replace("\n\n\n","\n\n")
     if name=="60-sns.tex":
         new=new.rstrip("\n")+"\n"
+    for figure in figure_renames:
+        if figure["chapter"]==Path(name).stem:
+            new=new.replace(figure["old"],figure["new"])
+    new=revise_captions(Path(name).stem,new)
     local=before.decode("utf-8").replace("\r\n","\n")
     matching=(local==source or hashlib.sha256(before).hexdigest()==previous.get(name) or local==new)
     if name=="70-overall.tex":

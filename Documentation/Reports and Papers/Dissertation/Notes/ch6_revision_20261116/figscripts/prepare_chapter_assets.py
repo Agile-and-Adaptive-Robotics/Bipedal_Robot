@@ -90,7 +90,7 @@ items = [
      'neural and mechanical panels, suspension active, ground disabled and foot '
      'forces zero. Compatibility selector hunt does not attribute the architecture.'),
     (HANDOFF / 'media/CAD_reference_tension_77p5pctBW.png',
-     OUT / 'cad_supported_20261116.png',
+     OUT / 'cad_supported.png',
      'Sagittal and oblique recorded views of the guided CAD reference-tension '
      'model at 22.9 seconds in the selected 28-second run. Final 16–28 seconds use '
      '77.5 percent body-weight vertical assistance, with lateral and angular '

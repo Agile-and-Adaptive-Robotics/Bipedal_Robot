@@ -1,6 +1,6 @@
 %minimizeExtX3.m
 %% Optimize predicted torque for extensors.
-function [f_all, bpa_all] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, idx_val, transMode)
+function [f_all, bpa_all] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, idx_val, transMode, ke)
 if nargin < 6 || isempty(transMode)
     transMode = getenv("EXTX3_TRANS");
     if isempty(transMode), transMode = "2trans"; end
@@ -29,7 +29,10 @@ end
 %'_f' suffix means fictive, as in fictive strain and length considering
 %loss of useful length from X3 term.
 
-load ExtPinBPASet.mat ke %This loads the following, which was ran and saved:
+% A caller evaluating the same model at additional angles may supply the geometry.
+if nargin < 7
+    load ExtPinBPASet.mat ke
+end
 
 % % 40cm length, no tendon
 %     load KneeExtPin_10mm_all.mat phiD

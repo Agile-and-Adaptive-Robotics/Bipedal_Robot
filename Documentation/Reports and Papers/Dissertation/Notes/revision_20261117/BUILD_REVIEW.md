@@ -1,6 +1,6 @@
 # Build and publication-size review
 
-The build from `D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Final\main.tex` produced **313 pages**, 18,324,175 bytes, with SHA-256 `10126c24720774c651db780ab91a6b88d6a18e4d5262bb3723b9e73b54255409`. The verified delivery is [Bolen_Dissertation_revised.pdf](Bolen_Dissertation_revised.pdf). [Machine-readable proof audit](FINAL_PROOF_CHECKS.json)
+The build from `D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Final\main.tex` produced **313 pages**, 18,324,175 bytes, with SHA-256 `10126c24720774c651db780ab91a6b88d6a18e4d5262bb3723b9e73b54255409`. The verified delivery is [Bolen_Dissertation_revised.pdf](https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/d84308c3889c8a53674a8ba5df414d402bce1a34/Documentation/Reports%20and%20Papers/Dissertation/Notes/revision_20261117/Bolen_Dissertation_revised.pdf). [Machine-readable proof audit](FINAL_PROOF_CHECKS.json)
 
 ## Compilation
 
@@ -8,7 +8,7 @@ The build directory was created fresh at `D:\GitHub\Bipedal_Robot\tmp\dissertati
 
 The engine issued 20 notices about the version headers of included PDFs and one duplicate `page.1` destination when `Final/main.tex:171` restarts the main matter. The class sets page 1 in `psutex.cls:168–169`. The engine emits the notice while shipping the first Introduction page at `10-introduction.tex:9`. There were 14 underfull horizontal boxes and no underfull vertical boxes. The notices, raw log path, and individual graphic paths are retained in the proof audit. [Exact notices](FINAL_PROOF_CHECKS.json)
 
-I extracted the **111-file** source bundle to an independent directory and compiled its own `Final/main.tex` with the bibliography and four pdfLaTeX passes. All 313 pages had identical extracted text and a pixel-for-pixel match at 100 dpi. Each member of the source ZIP was checked byte-for-byte against its working source. Archive paths retain the `Final` and sibling `Figures` layout. The bundle includes both new Chapter 7 graphic panels and their alternative text. [Source bundle](Bolen_Dissertation_revised_sources.zip) · [Independent package build](PACKAGE_VERIFICATION.json) · [Delivery hashes](DELIVERY_HASHES.json)
+I extracted the **111-file** source bundle to an independent directory and compiled its own `Final/main.tex` with the bibliography and four pdfLaTeX passes. All 313 pages had identical extracted text and a pixel-for-pixel match at 100 dpi. Each member of the source ZIP was checked byte-for-byte against its working source. Archive paths retain the `Final` and sibling `Figures` layout. The bundle includes both new Chapter 7 graphic panels and their alternative text. [Source bundle](https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/d84308c3889c8a53674a8ba5df414d402bce1a34/Documentation/Reports%20and%20Papers/Dissertation/Notes/revision_20261117/Bolen_Dissertation_revised_sources.zip) · [Independent package build](PACKAGE_VERIFICATION.json) · [Delivery hashes](DELIVERY_HASHES.json)
 
 ## Rendered review
 

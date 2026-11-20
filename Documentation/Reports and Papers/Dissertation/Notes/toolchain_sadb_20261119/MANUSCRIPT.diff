@@ -20,7 +20,7 @@
  \centering
  \includegraphics[width=\linewidth]{sadb_bubble.pdf}
 -\caption[SADb Explorer citation-map functions]{SADb Explorer with Grillner (1985) selected. Callouts identify the four main tabs (A), map controls (B), selected record (C), curation and translation notes (D), citation neighborhood (E), connected papers (F), and the topic-cluster color key (G).}
-+\caption[SADb Explorer citation-map functions]{Citation map of the 943 Papers in an earlier Explorer snapshot, with Grillner (1985) selected. Callouts identify the four main tabs (A), map controls (B), selected record (C), curation and translation notes (D), citation neighborhood (E), connected papers (F), and the topic-cluster color key (G).}
++\caption[SADb Explorer citation-map functions]{Citation map of the 943 Papers in an earlier Explorer snapshot, with Grillner (1985) selected. Callouts identify the four main tabs \textbf{(A)}, map controls \textbf{(B)}, selected record \textbf{(C)}, curation and translation notes \textbf{(D)}, citation neighborhood \textbf{(E)}, connected papers \textbf{(F)}, and the topic-cluster color key \textbf{(G)}.}
  \label{fig:sadb_clusters}
  \end{sidewaysfigure}
  
@@ -75,7 +75,7 @@
 -\caption{SADb Table view after a text search (top) and the selected record's detail view (bottom), showing its source information, linked records, and curation note.}
 +\includegraphics[width=\textwidth]{sadb_table_record_guide.pdf}
 +
-+\caption[Finding the experimental evidence for a pathway]{The SADb Explorer pathway filter (A) returns six Papers. Selecting the McCrea row in the results (B) opens the record (C), which gives the source DOI, the afferent classes, and the two pathway labels. The DOI opens the experiment that supports the classifications.}
++\caption[Finding the experimental evidence for a pathway]{The SADb Explorer pathway filter \textbf{(A)} returns six Papers. Selecting the McCrea row in the results \textbf{(B)} opens the record \textbf{(C)}, which gives the source DOI, the afferent classes, and the two pathway labels. The DOI opens the experiment that supports the classifications.}
  \label{fig:sadb_explorer}
  \end{figure}
  
@@ -101,7 +101,7 @@
 +\begin{figure}[H]
 +\centering
 +\includegraphics[width=\textwidth]{sadb_pivot_guide.pdf}
-+\caption[The SADb Explorer pivot view]{With afferent type and animal selected (A), the Ib row and Cat column intersect at 21 (B). Selecting the cell opens the 21 matching Papers in Table. The return control restores the pivot (C).}
++\caption[The SADb Explorer pivot view]{With afferent type and animal selected \textbf{(A)}, the Ib row and Cat column intersect at 21 \textbf{(B)}. Selecting the cell opens the 21 matching Papers in Table. The return control restores the pivot \textbf{(C)}.}
 +\label{fig:sadb_pivot}
 +\end{figure}
 +
@@ -164,12 +164,12 @@
 -
 -I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I built a graphical editor to construct neural circuits for these experiments. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.
 +
-+I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I developed Simulink blocks and a graphical interface for building nonspiking circuits. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.
++This chapter presents the tools I developed to test neural controllers on a human musculoskeletal model and on models of our bipedal robot. The lab's existing software made it impractical to search systematically for controller settings. The human model provided a reference for movement, but testing the robot required a model that represented where its artificial muscles pulled on the joints and how the resulting motion fed back to the controller. I built tools to construct circuits graphically, connect controllers to these mechanical models, and automate tuning. Researchers can now change a sensory connection or move an artificial muscle attachment in simulation, repeat the trial under the same conditions, and trace the effect on muscle force and leg motion.
  
  \section{The Limits of Hand Tuning in AnimatLab}\label{sec:prior_walker}\label{sec:animatlab_results}\label{sec:sns_gaps}
  
 -I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. I added a passive toe joint. The legs cycled in suspension, but the model tipped when released toward the ground (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.
-+I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.
++In a course project, Connor Morrow and I tested whether the neural circuit of \citet{deng_neuromechanical_2019} could coordinate the legs of the sagittal-plane biped of \citet{li_bipedal_2017}. We connected the circuit and body in AnimatLab, a graphical program for linking neurons, muscles, and sensory feedback \citep{cofer_animatlab_2010}, and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run.
  
  \begin{figure}[htbp]
  \centering
@@ -178,7 +178,7 @@
  \includegraphics[width=\linewidth,height=0.19\textheight,keepaspectratio]{LI_DENG_FALL_FRAME.png}
  \end{minipage}
 -\caption[Original controller-transfer experiment]{The Li--Deng model cycled its legs in suspension (A) and tipped when released for the ground test (B).}
-+\caption[Original controller-transfer experiment]{The legs of the Li--Deng model made stepping-like movements while the model was suspended in air (A). The model fell over when it was lowered to the ground and its support was removed (B).}
++\caption[Original controller-transfer experiment]{The legs of the Li--Deng model made stepping-like movements while the model was suspended in air \textbf{(A)}. The model fell over when it was lowered to the ground and its support was removed \textbf{(B)}.}
  \label{fig:animatlab_model_architecture}
  \end{figure}
  
@@ -218,7 +218,7 @@
  
  \begin{table}[!htbp]
  \centering\small
-@@ -105,11 +102,11 @@
+@@ -105,15 +102,15 @@
  \end{tabularx}
  \end{table}
  
@@ -228,10 +228,45 @@
  I implemented SNS-Simscape as Simulink blocks for neural activity, synapses, sensory signals, muscle activation, and actuator force (Figure~\ref{fig:simulink_sns_implementation}). The library includes both nonspiking equations based on SNS-Toolbox \citep{nourse_sns_2023} and a leaky integrate-and-fire (LIF) block. Sensory blocks represent group Ia fibers, which respond to muscle stretch, and group Ib fibers, which respond to tension.
  
 -In the graphical editor, a researcher can place nonspiking neurons, draw synapses between them, inspect a synapse's strength and reversal potential, and save the circuit. The Build action generates a Simulink circuit from that saved description. Appendix~\ref{sec:app_signal_contracts} gives the editor command and build script. The knee and arm examples use separate builders to add their actuator, sensory, and mechanical blocks.
+-
+-\begin{figure}[!htbp]
+-\centering
+-\includegraphics[width=14cm]{sns_library_20261116.pdf}
 +In the SNS-Simscape interface, \texttt{SNSGui}, a researcher can place nonspiking neurons, connect them with synapses, inspect a synapse's strength and reversal potential, and save the circuit. Choosing \emph{Build} generates the neural portion of a Simulink model. Appendix~\ref{sec:app_signal_contracts} gives the command and build script. Separate builders connect the knee and arm circuits to their actuators, sensory inputs, and mechanical models.
- 
++
++\begin{figure}[!htbp]
++\centering
++\includegraphics[width=14cm]{sns_library.pdf}
+ \caption[Editable SNS-Simscape blocks]{The twelve SNS-Simscape library elements for constructing neural pathways, encoding sensory measurements, and calculating activation and actuator force. The Thelen-style biological-muscle block represents muscle force with a Hill-type model and a rigid tendon.}
+ \label{fig:simulink_sns_implementation}
+ \end{figure}
+@@ -129,7 +126,7 @@
  \begin{figure}[!htbp]
  \centering
+ \includegraphics[width=14cm]{sns_knee_reflex_authoritative.pdf}
+-\caption[Transient knee feedback response]{The knee circuit (A) receives a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} extensor Ia pulse (B). Stimulated and control knee angles (C) and motor-neuron activity (D) share the dashed onset line. The left column shows recovery in seconds and the right enlarges onset in milliseconds. Flexion is negative.}
++\caption[Transient knee feedback response]{The knee circuit \textbf{(A)} receives a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} extensor Ia pulse \textbf{(B)}. Stimulated and control knee angles \textbf{(C)} and motor-neuron activity \textbf{(D)} share the dashed onset line. The left column shows recovery in seconds and the right enlarges onset in milliseconds. Flexion is negative.}
+ \label{fig:sns_reflex_current}\label{fig:simulink_reflex_topology}
+ \end{figure}
+ 
+@@ -138,7 +135,7 @@
+ \begin{figure}[!htbp]
+ \centering
+ \includegraphics[width=14cm]{sns_cup_reflex_authoritative.pdf}
+-\caption[Loaded-cup feedback comparison]{Feedback circuit (A), arm geometry (B), load ramp (C), elevation response (D), and normalized pressure command (E). The BPA20 block supplies actuator force. The \qty{10}{\second} endpoint compares responses during increasing load, rather than equilibrium sag.}
++\caption[Loaded-cup feedback comparison]{Feedback circuit \textbf{(A)}, arm geometry \textbf{(B)}, load ramp \textbf{(C)}, elevation response \textbf{(D)}, and normalized pressure command \textbf{(E)}. The BPA20 block supplies actuator force. The \qty{10}{\second} endpoint compares responses during increasing load, rather than equilibrium sag.}
+ \label{fig:sns_beverage_current}
+ \end{figure}
+ \FloatBarrier
+@@ -158,7 +155,7 @@
+ \begin{figure}[!htbp]
+ \centering
+ \includegraphics[width=\linewidth]{controller_retest_and_optimization.pdf}
+-\caption[Controller retesting and staged parameter optimization]{(A) Two left-leg pathways in the W2L Simulink circuit provide an example of what the graphical editor exposes. The CAD sequence at right shows how to repeat a controller test with revised geometry. (B) For each neural function or physical task, I specify the target, run bounded trials, and retest the selected settings.}
++\caption[Controller retesting and staged parameter optimization]{\textbf{(A)} Two left-leg pathways in the W2L Simulink circuit provide an example of what the graphical editor exposes. The CAD sequence at right shows how to repeat a controller test with revised geometry. \textbf{(B)} For each neural function or physical task, I specify the target, run bounded trials, and retest the selected settings.}
+ \label{fig:sns_design_fit_workflow}
+ \end{figure}
+ 
 @@ -172,7 +169,7 @@
  
  I adapted the four-stage training method of \citet{hunt_development_2017} to the human model. The first stage sets the intrinsic period to approximately twice the target locomotor period. The second tunes the circuit to synchronize with the sensory input. The third fits feedforward motor recruitment, and the fourth refines it with sensory feedback. The recruitment targets came from inverse mechanics applied to reference motion. Agreement with those targets measures how closely the circuit reproduces the estimated muscle activation.
@@ -241,7 +276,7 @@
  
  The physical tasks change the loads and sensory information available to a saved controller (Table~\ref{tab:sns_curriculum}). During suspension, \emph{deafferented} means that sensory feedback to the controller is disabled and \emph{afferented} means that it is enabled. Suspension permits a test of recruitment and timing before the feet meet the ground. Standing and supported stepping then test whether the legs bear load and transfer it between the feet.
  
-@@ -193,19 +190,19 @@
+@@ -193,24 +190,24 @@
  \end{tabularx}
  \end{table}
  
@@ -266,16 +301,41 @@
  
  \begin{figure}[!htbp]
  \centering
-@@ -237,7 +234,7 @@
+ \includegraphics[width=14cm]{biw2lvar_air_aligned_authoritative.pdf}
+-\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \qtyrange{7}{11}{\second}: bilateral flexor RG voltage (A), right knee-extensor and knee-flexor MN voltages (B), native flexion-negative knee angles (C), and superior suspension and explicit-support forces (D). Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}
++\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \qtyrange{7}{11}{\second}: bilateral flexor RG voltage \textbf{(A)}, right knee-extensor and knee-flexor MN voltages \textbf{(B)}, native flexion-negative knee angles \textbf{(C)}, and superior suspension and explicit-support forces \textbf{(D)}. Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}
+ \label{fig:sns_biw2l_air}
+ \end{figure}
+ 
+@@ -225,7 +222,7 @@
  \begin{figure}[!htbp]
  \centering
- \includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short_20261031.pdf}
+ \includegraphics[width=\textwidth]{syn6_suspended_kinematics.pdf}
+-\caption[Joint motion of the suspended six-synergy model]{Hip, knee, and ankle angles for seven suspended syn6 cycles (light blue) and their mean (solid blue). The reference curves are recorded walking kinematics from the OpenSim Subject01 example (dashed) and walking at \qty{1.25}{\meter\per\second} simulated by \citet{ong_predicting_2019} (dotted). The legs share phase zero at maximum right-knee flexion. Dark bars below each leg mark stance in each reference, and gray bars mark swing. The suspended model had no foot contact. Knee flexion is negative.}
++\caption[Joint motion of the suspended six-synergy model]{Hip, knee, and ankle angles for seven suspended syn6 cycles and their mean. The reference curves are recorded walking kinematics from the OpenSim Subject01 example and walking at \qty{1.25}{\meter\per\second} simulated by \citet{ong_predicting_2019}. The legs share phase zero at maximum right-knee flexion. The bars below each leg mark stance and swing in the walking references. The suspended model had no foot contact. Knee flexion is negative.}
+ \label{fig:sns_syn6_overlay}
+ \end{figure}
+ \FloatBarrier
+@@ -236,8 +233,8 @@
+ 
+ \begin{figure}[!htbp]
+ \centering
+-\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short_20261031.pdf}
 -\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. Solid lines show the left leg and dashed lines the right. Joint cycling continued in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
-+\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. Solid lines show the left leg and dashed lines the right. The joints continued to flex and extend in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
++\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short.pdf}
++\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. The joints continued to flex and extend in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
  \label{fig:sns_ablation_pair}
  \end{figure}
  
-@@ -254,13 +251,13 @@
+@@ -247,20 +244,20 @@
+ 
+ \begin{figure}[!htbp]
+ \centering
+-\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{cad_supported_20261116.png}
++\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{cad_supported.png}
+ \caption[CAD robot under supported hybrid control]{Views of the selected CAD robot at \qty{22.9}{\second}. The model uses 54 reference-tension actuators, SNS timing, and engineering force allocation. During \qtyrange{16}{28}{\second}, measured vertical assistance is \qty{77.5}{\percent} of body weight; lateral and attitude guidance remain active.}
+ \label{fig:ah001_supported_control}
+ \end{figure}
  
  \subsection{Execution Time for Repeated Controller Trials}\label{sec:sns_execution}
  
@@ -330,7 +390,7 @@
 -\includegraphics[width=14cm]{bpa_exploded_cutaway.pdf}
 -\caption[End deformation and proposed BPA experiments]{Proposed investigation of the end effect. (A) The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. (B) An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
 +\includegraphics[width=14cm]{bpa_loading_conditions.pdf}
-+\caption[BPA end deformation, proposed tests, and exploded wall model]{Proposed investigation of the end effect. (A) The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. (B) An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
++\caption[BPA end deformation, proposed tests, and exploded wall model]{Proposed investigation of the end effect. \textbf{(A)} The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. \textbf{(B)} An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
  \label{fig:bpa_construction}
  \end{figure}
  
@@ -341,7 +401,7 @@
 +\ContinuedFloat
 +\centering
 +\includegraphics[trim=0 0 0 20bp,clip,width=\textwidth]{bpa_exploded_cutaway.pdf}
-+\caption[]{\textit{Continued.} (C) Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}
++\caption[]{\textit{Continued.} \textbf{(C)} Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}
 +\label{fig:bpa_exploded_wall}
 +\end{figure}
 +
@@ -403,7 +463,16 @@
  
  The MathWorks MuJoCo--Simulink C++ S-function exchanges command and measurement arrays with an existing MuJoCo mechanism. I adapted the build for MuJoCo 2.3.7 and Windows MinGW, selected keyframe 0 on reset when present, and added five right-side readbacks to an MJCF copy. They report knee angle and angular speed and vastus medialis path length, velocity, and force. The runtime interface preserves the mechanism supplied to it. Preparing that mechanism from OpenSim requires the corresponding geometry paths and MyoConverter patches.
  
-@@ -182,7 +182,7 @@
+@@ -109,7 +109,7 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{w2l_crossengine_20261116.png}
++\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{w2l_crossengine.png}
+ \caption[Matched-input W2L rhythm-core comparison]{Corresponding rhythm signals in the full NumPy W2L network and its Simulink core under a common drive and prescribed heel inputs. Best-lag correlation aligns the signals by \qty{2}{\milli\second}. Each implementation received the same external input sequence.}
+ \label{fig:w2l_crossengine}
+ \end{figure}
+@@ -182,13 +182,13 @@
  
  When I transferred Li's controller and body to MuJoCo, mean forward speed fell to \qty{0.040}{\meter\per\second} in a \qty{20}{\second} ground test. The right foot had eleven stance episodes with a period of \qty{1.294}{\second}. The left foot had none. Right-side cadence alone would have missed the transfer failure.
  
@@ -412,6 +481,13 @@
  
  The earlier instrumented AnimatLab configuration provides a different recording, with joint, neural, sensory, and body-motion channels over \qty{10}{\second} at \qty{0.2}{\milli\second} intervals (Figure~\ref{fig:animatlab_short_response}). Contact-sensory channels record membrane voltage. The trial starts with an external horizontal force and has no recorded timed vertical release, so the aligned window supports analysis of the suspended circuit response. A reorganized bilateral project also ran to completion, although its networks did not sustain alternation.
  
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{animatlab_short_response_20261116.png}
++\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{animatlab_short_response.png}
+ \caption[Archived AnimatLab neural and mechanical recording]{Aligned RG, PF, and MN activity and hip, knee, and ankle motion from the same suspended AnimatLab trial over \qtyrange{1}{2.5}{\second}. Extensor and flexor pathways are blue solid and orange dashed. The traces show continuously varying membrane voltages, and the original joint conventions, including positive knee flexion, are retained. This is the earlier instrumented configuration.}
+ \label{fig:animatlab_short_response}
+ \end{figure}
 @@ -201,7 +201,7 @@
  
  \subsection{BiW2Lvar+ Air Stages}\label{sec:app_biw2l_air}
@@ -420,6 +496,24 @@
 +The revised nonspiking BiW2Lvar+ controller completed two \qty{16}{\second} air trials on the repaired Gait2392 human model with native MuJoCo biological muscles. The trials share learned weights and a PF-to-MN expression scale of 0.1. The four training stages follow \citet{hunt_development_2017}. Table~\ref{tab:app_air_stages} gives the principal knee-flexion peaks and the intervals from which the periods were measured.
  
  The retained adapter and fitted command settings specify zero sustained flexor and extensor command in stage 1 and normalized command 0.15 to all four channels in stage 2. The same startup signal adds 0.4 to right extensor and left flexor commands for the first 50 neural updates (\qty{100}{\milli\second}). The adapter suppresses postural, balance, and functional commands and sets the direct tonic RG and legacy shared-drive inputs to zero. Sensory return is disabled in stage 1 and enabled in stage 2. Both sustained command and sensory return therefore change together. The original launch adapter and the complete consumed command stream are unavailable. These settings describe the compatible retained implementation.
+ 
+@@ -255,7 +255,7 @@
+ \begin{figure}[p]
+ \centering
+ \includegraphics[width=14cm]{PF_timing_authoritative.pdf}
+-\caption[Implemented syn6 PF transmission versus intended primitives]{Raw right-side syn6 S1, S2, and S5 transmission over two calibration cycles, \qtyrange{2.466}{4.932}{\second}. Solid blue curves show actual transmission; dashed black curves show the intended primitive, and dotted lines mark the 0.2 activity threshold. All stored samples are retained, without channel-specific phase shifts. S1 and S2 have displaced timing, while S5 remains active. The zero-of-twelve verdict comes from the separate full nine-cycle averaged audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}
++\caption[Implemented syn6 PF transmission versus intended primitives]{Raw right-side syn6 S1, S2, and S5 transmission over two calibration cycles, \qtyrange{2.466}{4.932}{\second}. The dotted lines mark the 0.2 activity threshold. All stored samples are retained, without channel-specific phase shifts. S1 and S2 have displaced timing, while S5 remains active. The zero-of-twelve verdict comes from the separate full nine-cycle averaged audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}
+ \label{fig:app_pf_timing}
+ \end{figure}
+ 
+@@ -318,7 +318,7 @@
+ \begin{figure}[p]
+ \centering
+ \includegraphics[width=\textwidth]{gait2392_ik_overlay.pdf}
+-\caption[Direct joint-angle and stance overlay]{Supported Gait2392 human-model motion compared with the inverse-kinematics reference. Columns show the right and left legs. Blue curves and bands show the model mean and one standard deviation across ten cycles per leg; black dashed curves show the reference. Each leg is aligned to its own foot-loading onset, without an angle offset, amplitude adjustment, or fitted phase shift. The bottom row compares model stance fraction across cycles with reference stance and swing, using a \qty{50}{\newton} loading threshold. Absolute-angle errors are reported in Table~\ref{tab:ik_absolute_rmse}.}
++\caption[Direct joint-angle and stance overlay]{Supported Gait2392 human-model motion compared with the inverse-kinematics reference. Columns show the right and left legs. The model curves summarize ten cycles per leg. Shading spans one standard deviation about the mean. Each leg is aligned to its own foot-loading onset, without an angle offset, amplitude adjustment, or fitted phase shift. The bottom row compares model stance fraction across cycles with reference stance and swing, using a \qty{50}{\newton} loading threshold. Absolute-angle errors are reported in Table~\ref{tab:ik_absolute_rmse}.}
+ \label{fig:app_gait2392_ik_overlay}\label{fig:gait2392_ik_overlay}
+ \end{figure}
  
 @@ -348,7 +348,7 @@
  
@@ -430,6 +524,17 @@
  
  \subsection{CAD Robot: Contact Handover and Supported Clearance}\label{sec:app_cad_supported_stance}
  
+@@ -358,8 +358,8 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=14cm]{CAD_supported_traces_20261116.pdf}
+-\caption[Quantitative supported CAD stepping]{CAD signals during $16\leq t<28$\,s: RG flexor-minus-extensor voltage (A), native flexion-negative knees (B), foot normal loads (C), and whole-foot mesh heights (D). Right is solid blue; left is dashed orange. All 1,200 samples per series are retained. Reference lines mark the \ang{-1} guard, \qtylist{7.36;15}{\newton} load criteria, and \qty{5}{\milli\meter} clearance. Negative heights indicate soft-contact penetration. Ideal reference tensions and engineering allocation operate with \qty{77.5}{\percent} vertical assistance.}
++\includegraphics[width=14cm]{CAD_supported_traces.pdf}
++\caption[Quantitative supported CAD stepping]{CAD signals during $16\leq t<28$\,s: RG flexor-minus-extensor voltage \textbf{(A)}, native flexion-negative knees \textbf{(B)}, foot normal loads \textbf{(C)}, and whole-foot mesh heights \textbf{(D)}. All 1,200 samples per series are retained. Reference lines mark the \ang{-1} guard, \qtylist{7.36;15}{\newton} load criteria, and \qty{5}{\milli\meter} clearance. Negative heights indicate soft-contact penetration. Ideal reference tensions and engineering allocation operate with \qty{77.5}{\percent} vertical assistance.}
+ \label{fig:app_cad_supported_traces}
+ \end{figure}
+ 
 @@ -381,7 +381,7 @@
  
  \subsection{MuJoCo Network and Ground Evaluation}
@@ -439,11 +544,13 @@
  
  \begin{table}[htbp]
  \caption{Supported ground trial with the same selected parameters for \qty{16}{\second} and no spiking retuning. The kinematic score, detected cycles, and contact fractions use $2\leq t<16$\,s. Less-negative scores indicate closer kinematic agreement. The signed knee minimum is the minimum of the right leg's mean detected cycle, with flexion negative. Contact fraction counts samples with normal force above \qty{20}{\newton} independently of cycle detection. The nonspiking left leg therefore remains loaded for a fraction of 0.985 while completing no detected cycles.}
-@@ -404,10 +404,11 @@
+@@ -403,11 +403,12 @@
+ 
  \begin{figure}[p]
  \centering
- \includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
+-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
 -\caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Matched \qtyrange{10}{12.5}{\second} ground-trial window: nonspiking controller (left) and untuned spiking controller (right), at the same selected parameters and support settings. Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural rows pair extensor (orange solid) and flexor (blue dashed) outputs; joint rows pair right (orange solid) and left (blue dashed) legs. Spiking signals are filtered readouts, and muscle activation is the actuator state.}
++\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short.pdf}
 +\caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Both controllers used the same parameters and support. Columns show nonspiking (left) and untuned spiking (right) responses during the \qtyrange{10}{12.5}{\second} ground-trial window. Solid orange and dashed blue distinguish extensors and flexors in the right-side RG, PF, and muscle traces (vastus lateralis and semimembranosus). For hip, knee, and ankle angles they distinguish right and left. Spiking readouts are filtered. Muscle activation is the actuator state.}
  \label{fig:spike_rhythm}\label{fig:spike_ground}
  \end{figure}

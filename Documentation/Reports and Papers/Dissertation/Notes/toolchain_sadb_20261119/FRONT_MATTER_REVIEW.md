@@ -1,5 +1,9 @@
 # Front-matter verification
 
+**Current 325-page proof.** The Chapter 3 heading-page issue recorded below has been closed. The publication citation, complete contribution statement, and DOI and PDXScholar links occupy printed p. 42. The chapter opens on p. 43. Both full builds preserve the front matter, all 74 front-list destinations, and all 760 visible citation boxes. [Current verification](FINAL_VERIFICATION.json) · [Chapter 3 review](CHAPTER3_PUBLICATION_VERIFICATION.md)
+
+## Earlier proof observations
+
 **The revised front matter passes the checks below. One separate requirement remains open for the coauthored publication in Chapter 3.** I checked the 323-page PDF rendered on 19 November 2026, SHA-256 `d3f6f27dfd7d651dc7540e7ef48ff7cde3e26e112b50c9d69e406eb0e55d745e`. [Reviewed PDF](../../../../../tmp/toolchain_sadb_20261119/proof_7/main.pdf) · [Printed page views](../../../../../tmp/toolchain_sadb_20261119/independent_print/front_proof7_contact.jpg) · [PSU formatting requirements](https://www.pdx.edu/gradschool/etd-formatting-requirements)
 
 | Check | Verified in the PDF |

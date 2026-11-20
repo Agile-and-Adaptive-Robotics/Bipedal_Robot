@@ -78,8 +78,8 @@ for k=1:12
     textBox(f,[cx+.006 top-.171 .293 .034],labels{k},10.5,'bold');
     textBox(f,[cx+.005 top-.207 .295 .033],sub{k},10,'normal');
 end
-saveFigure(f,out,'sns_library_20261116');
-altwrite(out,'sns_library_20261116', ...
+saveFigure(f,out,'sns_library');
+altwrite(out,'sns_library', ...
     'Twelve SNS-Simscape library glyphs matching the block selection in defense slide 69. Circles distinguish graded and spiking waveforms; a compact synapse has an open excitatory terminal; spindle and tendon-force encoders have distinct capsules; activation is a pentagon; biological muscle is pennate; BPAs have braided sleeves and clamp fittings. The simple force element is distinguished from diameter-specific pressure-length models.');
 end
 

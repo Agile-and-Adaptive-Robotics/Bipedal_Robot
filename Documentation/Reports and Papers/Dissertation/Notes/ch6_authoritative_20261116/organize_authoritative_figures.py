@@ -45,7 +45,7 @@ spec = [
     ('60-sns',HERE,'BUILD_workflow_20261116','simulation_workflow_authoritative'),
     ('60-sns',HERE/'CAD_sns_compact','sns_knee_reflex_authoritative','sns_knee_reflex_authoritative'),
     ('60-sns',HERE/'CAD_sns_compact','sns_cup_reflex_authoritative','sns_cup_reflex_authoritative'),
-    ('95-AppendixD',HERE,'CAD_supported_traces_20261116','CAD_supported_traces_20261116'),
+    ('95-AppendixD',HERE,'CAD_supported_traces_20261116','CAD_supported_traces'),
     ('95-AppendixD',HERE,'PF_timing_authoritative','PF_timing_authoritative'),
     ('95-AppendixD',HERE,'AIR_stimulus_neural','AIR_stimulus_neural'),
     ('95-AppendixD',HERE,'AIR_stimulus_mechanics','AIR_stimulus_mechanics')]

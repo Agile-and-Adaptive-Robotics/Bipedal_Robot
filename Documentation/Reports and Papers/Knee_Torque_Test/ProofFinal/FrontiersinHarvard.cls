@@ -139,12 +139,12 @@
 %
 % Set page layout dimensions
 %
-\setlength\headheight{16\p@}        % height of running head
+\setlength\headheight{19.5\p@}        % height of running head
 \setlength\topmargin{1.3pc}         % head margin
 \addtolength\topmargin{-1in}        % subtract out the 1 inch driver margin
 
 \setlength\topskip{10\p@}           % height of first line of text
-\setlength\headsep{19\p@}        %   space below running head --
+\setlength\headsep{15.5\p@}        %   space below running head --
 
 \setlength\footskip{34\p@}          % space above footer line
 \setlength\maxdepth{1\topskip}     % pages can be short or deep by half a line?
@@ -212,22 +212,27 @@
 % Space left at top, bottom and inbetween floats on a float page.
 \setlength\@fptop{0\p@}         % no space above float page figures
 \setlength\@fpsep{12\p@ \@plus 1fil}
-\setlength\@fpbot{0\p@}
+\setlength\@fpbot{0\p@ plus 1fil}
 
 % The same for double column
 \setlength\@dblfptop{0\p@}
 \setlength\@dblfpsep{12\p@ \@plus 1fil}
-\setlength\@dblfpbot{0\p@}
+\setlength\@dblfpbot{0\p@ plus 1fil}
 
 % Override settings in mathtime back to TeX defaults
 \DeclareMathSizes{5}     {5}   {5}  {5}
 \DeclareMathSizes{6}     {6}   {5}  {5}
 \DeclareMathSizes{7}     {7}   {5}  {5}
 \DeclareMathSizes{8}     {8}   {6}  {5}
-\DeclareMathSizes{9}     {9}   {6.5}  {5}
-\DeclareMathSizes{10}   {10}   {7.5}  {5}
+\DeclareMathSizes{9}     {9}   {6}  {5}
+\DeclareMathSizes{10}   {10}   {7}  {5}
+\DeclareMathSizes{11}   {11}   {8}  {5}
 \DeclareMathSizes{12}   {12}   {9}  {7}
 
+% Permit a line break within a long registry identifier.
+\AtBeginDocument{%
+  \NewCommandCopy\frontiers@underscore\_%
+  \RenewDocumentCommand\_{}{\frontiers@underscore\ifmmode\else\allowbreak\fi}}
 % Page styles
 \def\ps@headings
   {%
@@ -486,9 +491,9 @@
     \flushleft  \includegraphics[width=12pc,angle=0]{./logo1.eps}
 
 
-}}
+}\hfil}
 
- \rule{\textwidth}{1\p@}\par%
+ \noindent\rule{\textwidth}{1\p@}\par%
   \helvetica
   \hbox to \textwidth{%
   \parbox[t]{36.5pc}{%
@@ -503,7 +508,7 @@
         \vspace{4\p@}
     {\helvetica\fontsize{12}{12}\selectfont\raggedright\@extraAuth \par}%
     \vspace{8\p@}
-    }%
+    }\hfil%
   }
   \vspace{14.5\p@}%
   }

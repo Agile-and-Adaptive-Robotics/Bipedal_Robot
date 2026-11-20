@@ -14,7 +14,7 @@ The paragraph uses the dissertation's existing Windhorst reference for muscle fe
 
 ## Chapter 6 against the Introduction
 
-Source lines below refer to the [November 18 Overleaf export](../../Bolen_Dissertation.zip). Page numbers are the printed numbers in the [dissertation](../../Bolen_Dissertation.pdf) and [standalone Chapter 6](../../output/pdf/Bolen_Dissertation_Chapter_6.pdf).
+Source lines below refer to the [November 18 Overleaf export](../../Bolen_Dissertation.zip). Page numbers are the printed numbers in the [complete dissertation](../../Bolen_Dissertation.pdf).
 
 | Passage | What Chapter 6 demonstrates | Editorial finding |
 | --- | --- | --- |

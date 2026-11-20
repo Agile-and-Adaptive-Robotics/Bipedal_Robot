@@ -11,14 +11,14 @@ DISS=ROOT/'Documentation/Reports and Papers/Dissertation'
 NOTES=DISS/'Notes/ch6_revision_20261116'
 ACTIVE={
  '60-sns': {'OurWalker','LI_DENG_FALL_FRAME','simulation_workflow_20261116',
-            'sns_library_20261116','sns_knee_reflex_20261116','sns_cup_reflex_20261116',
-            'biw2lvar_air_stage2_20261116','w2l_feedback_short_20261031','cad_supported_20261116'},
- '95-AppendixD': {'muscle_force_compare_current','w2l_crossengine_20261116',
+            'sns_library','sns_knee_reflex_20261116','sns_cup_reflex_20261116',
+            'biw2lvar_air_stage2_20261116','w2l_feedback_short','cad_supported'},
+ '95-AppendixD': {'muscle_force_compare_current','w2l_crossengine',
                  'knee_transient_response','animatlab_shared_rg_original_20261116',
-                 'animatlab_short_response_20261116','biw2l_stimulus_neural_20261116',
+                 'animatlab_short_response','biw2l_stimulus_neural_20261116',
                  'biw2l_stimulus_mechanics_20261116','syn6_pf_timing_selected_20261116',
                  'gait2392_ik_overlay','w2l_perturbation_verified',
-                 'spiking_ground_neuromechanics_short_20261031'}
+                 'spiking_ground_neuromechanics_short'}
 }
 
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()

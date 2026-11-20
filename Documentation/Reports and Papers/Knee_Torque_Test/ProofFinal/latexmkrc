@@ -32,6 +32,19 @@
 #       rdb_add_generated. 
 
 
+# The standalone supplement can contain a bibliography command with no
+# citations or style. Skip BibTeX for that document until it uses references.
+if (my ($supplement) = grep { m{(?:^|[/\\])frontiers_SupplementaryMaterial(?:\.tex)?$} } @ARGV) {
+    $supplement .= '.tex' unless $supplement =~ /\.tex$/;
+    if (open my $tex, '<', $supplement) {
+        my $needs_bibtex = grep {
+            s/(?<!\\)%.*//;
+            /\\(?:[a-zA-Z]*cite[a-zA-Z]*|bibliographystyle|addbibresource|input|include)\b/
+        } <$tex>;
+        $bibtex_use = 0 unless $needs_bibtex;
+    }
+}
+
 #--------------------
 # Configurable choices for compilation of external documents
 

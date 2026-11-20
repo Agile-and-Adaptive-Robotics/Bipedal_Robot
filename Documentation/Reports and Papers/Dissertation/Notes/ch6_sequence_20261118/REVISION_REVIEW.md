@@ -1,6 +1,6 @@
 # Chapter 6 from hand tuning to repeatable controller tests
 
-The revised Chapter 6 starts with Morrow and Bolen changing an AnimatLab walker by hand and ends with a future researcher fitting and replaying a saved controller. The seven bookmarked pages contain the opening, both workflow figures, the model table, the reason for the graphical editor, the knee time series, and the complete conclusion. [Seven reading pages](Chapter_6_reading_pages.pdf) · [315-page dissertation](Bolen_Dissertation_revised.pdf) · [Two TeX files and three figures for Overleaf](Chapter_6_and_Appendix_D_Overleaf.zip)
+The revised Chapter 6 starts with Morrow and Bolen changing an AnimatLab walker by hand and ends with a future researcher fitting and replaying a saved controller. The reviewed pages contain the opening, both workflow figures, the model table, the reason for the graphical editor, the knee time series, and the complete conclusion. [Chapter 6 in the 315-page dissertation](https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/d84308c3889c8a53674a8ba5df414d402bce1a34/Documentation/Reports%20and%20Papers/Dissertation/Notes/ch6_sequence_20261118/Bolen_Dissertation_revised.pdf#page=154) · [Two TeX files and three figures for Overleaf](https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/d84308c3889c8a53674a8ba5df414d402bce1a34/Documentation/Reports%20and%20Papers/Dissertation/Notes/ch6_sequence_20261118/Chapter_6_and_Appendix_D_Overleaf.zip)
 
 ## Manuscript changes
 

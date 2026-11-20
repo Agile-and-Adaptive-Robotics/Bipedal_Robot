@@ -30,7 +30,7 @@ PRINT_SCALE = {
     "30-torque/FlxPin_optimized_publication.pdf": 0.65814,
     "30-torque/ExtPin_complete_publication.pdf": 0.58502,
     "30-torque/cam_current_legend.pdf": 0.84142,
-    "30-torque/Ext20mm_physical_20261026_publication.pdf": 1.07578,
+    "30-torque/Ext20mm_physical_publication.pdf": 1.07578,
     "50-database/sadb_bubble.pdf": 0.4968,
     "60-sns/controller_retest_and_optimization.pdf": 1.00435,
     "60-sns/sns_knee_reflex_authoritative.pdf": 1.00006,
@@ -66,7 +66,8 @@ def poppler_render(path, prefix, dpi, executable):
 
 def audit(relative, scale, scratch, pdftoppm, pdffonts):
     current = FIGURES / relative
-    original = current.parent / "Deprecated/20261119_font_embedding" / current.name
+    original_name = "Ext20mm_physical_20261026_publication.pdf" if current.name == "Ext20mm_physical_publication.pdf" else current.name
+    original = current.parent / "Deprecated/20261119_font_embedding" / original_name
     repeated = scratch / current.name
     embed_figure(original, repeated)
     old_data, new_data = original.read_bytes(), current.read_bytes()
@@ -131,15 +132,30 @@ def audit(relative, scale, scratch, pdftoppm, pdffonts):
         }
 
 
-def audit_dissertation(proof, pdffonts):
+def audit_current_figure(relative, expected, pdffonts):
+    path = FIGURES / relative
+    assert sha(path.read_bytes()) == expected, relative
+    with pdf.open(path) as document:
+        assert len(document) == 1, relative
+        fonts = font_resources(document)
+        assert fonts and all(f["program_sha256"] for f in fonts.values()), relative
+        bounds = tuple(document[0].rect)
+    table = run([pdffonts, str(path)])[0].splitlines()
+    assert table[2:] and all(row.split()[-5] == "yes" for row in table[2:] if row.strip()), relative
+    return {"figure": relative, "sha256": expected, "page_box": bounds,
+            "fonts_by_xref": fonts, "pdffonts": table}
+
+
+def audit_dissertation(proof, pdffonts, expected_inputs):
     inputs = set()
     for line in proof.with_suffix(".fls").read_text(encoding="utf-8", errors="replace").splitlines():
         if line.startswith("INPUT "):
             match = re.search(r"(?:^|/)(?:Figures|figs)/(.+\.pdf)$", line[6:].replace("\\", "/"), re.I)
             if match:
                 inputs.add(match.group(1))
-    if not set(PRINT_SCALE).issubset(inputs):
-        raise ValueError("The recorder file does not contain all twelve repaired figures")
+    missing = set(expected_inputs) - inputs
+    if missing:
+        raise ValueError(f"Current figures absent from the full-dissertation recorder: {sorted(missing)}")
     for name in inputs:
         with pdf.open(FIGURES / name) as source:
             assert all(font["program_sha256"] for font in font_resources(source).values()), name
@@ -162,16 +178,22 @@ if __name__ == "__main__":
     parser.add_argument("--pdftoppm", default="pdftoppm")
     parser.add_argument("--pdffonts", default="pdffonts")
     parser.add_argument("--proof", type=Path, help="Optionally verify a combined proof and its sibling .fls")
-    parser.add_argument("--output", type=Path, default=HERE / "FIGURE_FONTS.json")
+    parser.add_argument("--output", type=Path, default=HERE / "ACTIVE_FIGURE_FONT_AUDIT.json")
     args = parser.parse_args()
+    active = json.loads((HERE / "ACTIVE_FIGURE_FONTS.json").read_text(encoding="utf-8"))
+    repairs = active["retained_incremental_repairs"]
+    current = active["current_chapter4_artwork"]
     with TemporaryDirectory() as tmp:
         result = {
             "pymupdf": pdf.__version__, "fontTools": fontTools.__version__,
             "poppler_render": "".join(run([args.pdftoppm, "-v"])).splitlines()[0],
             "poppler_resource_check": "".join(run([args.pdffonts, "-v"])).splitlines()[0],
-            "figures": [audit(name, scale, Path(tmp), args.pdftoppm, args.pdffonts)
-                        for name, scale in PRINT_SCALE.items()],
+            "historical_audit": "FIGURE_FONTS.json",
+            "retained_incremental_repairs": [audit(name, PRINT_SCALE[name], Path(tmp), args.pdftoppm, args.pdffonts)
+                                             for name in repairs],
+            "current_chapter4_artwork": [audit_current_figure(name, expected, args.pdffonts)
+                                         for name, expected in current.items()],
         }
     if args.proof:
-        result["combined_dissertation"] = audit_dissertation(args.proof, args.pdffonts)
+        result["combined_dissertation"] = audit_dissertation(args.proof, args.pdffonts, set(repairs) | set(current))
     args.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

@@ -1,5 +1,9 @@
 # Embedded fonts in the dissertation figures
 
+**Current 325-page proof.** Nine earlier embedding repairs are directly included under their original names. Three earlier artwork paths have been superseded. The current audit also checks the four final Chapter 4 figure files, including the renamed extensor validation figure. Its font-repaired bytes match the preceding version. All 68 PDF figure inputs and 182 compiled fonts passed. [Active paths and hashes](ACTIVE_FIGURE_FONTS.json) · [Current audit](ACTIVE_FIGURE_FONT_AUDIT.json)
+
+## Earlier twelve-figure embedding audit
+
 Twelve included PDFs contained 18 unembedded Helvetica resources. Nine used regular Helvetica with WinAnsi encoding, seven used bold Helvetica with WinAnsi encoding, and two used bold Helvetica with Adobe StandardEncoding. The repair embeds the regular and bold Nimbus Sans font programs that MuPDF uses to display Helvetica. Each edited PDF begins with every byte of its original. An incremental update replaces the affected font dictionaries and appends their font programs, descriptors, and character widths. The existing graphics, figures’ page boxes, word positions, and previously embedded font programs compare exactly. [Twelve source and output hashes](FONT_EMBEDDING_FILES.json) · [Object and rendering audit](FIGURE_FONTS.json)
 
 | Figure-folder root | PDFs | Font dictionaries |
@@ -28,4 +32,4 @@ $check = Join-Path ([System.IO.Path]::GetTempPath()) 'sadb_bubble_font_check.pdf
 Get-FileHash -Algorithm SHA256 -LiteralPath $check
 ```
 
-The expected SHA-256 is `6ada03600eb535f377a86bc8eada4f91a266b938ccf36a5e7cabdec5cf0d3d25`. Running `audit_figure_fonts.py` repeats the checks for all twelve, including a second byte-identical build. Its optional `--proof` argument checks the combined dissertation and the figure inputs listed by its LaTeX recorder. The transfer manifest keys are relative to the active `Figures` directory. Each `after_sha256` applies to the corresponding Overleaf `figs/` entry. [Transfer manifest](FONT_EMBEDDING_FILES.json)
+The expected SHA-256 is `6ada03600eb535f377a86bc8eada4f91a266b938ccf36a5e7cabdec5cf0d3d25`. The archived object and rendering report preserves the original 12-figure check. The current audit repeats the byte-identical embedding checks for the nine retained paths and verifies the four current Chapter 4 inputs and combined dissertation. [Historical manifest](FONT_EMBEDDING_FILES.json) · [Current audit](ACTIVE_FIGURE_FONT_AUDIT.json)

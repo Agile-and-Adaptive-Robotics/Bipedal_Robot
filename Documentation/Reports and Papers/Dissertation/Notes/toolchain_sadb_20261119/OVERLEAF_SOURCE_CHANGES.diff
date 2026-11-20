@@ -1,3 +1,278 @@
+--- author_export/chapters/01-copyright.tex
++++ local_revision/chapters/01-copyright.tex
+@@ -1,4 +1 @@
+-% Copyright page. Uses the psutex class \copyrightpage macro, which prints
+-% "©Copyright by <author>, <submitdate>, All Rights Reserved" from the
+-% \author{} and \submitdate{} declarations in main.tex.
+-\copyrightpage
++\copyrightpage[2026]
+--- author_export/chapters/10-introduction.tex
++++ local_revision/chapters/10-introduction.tex
+@@ -63,7 +63,7 @@
+ \begin{figure}[htbp]
+ \centering
+ \includegraphics[width=\textwidth]{roadmap.pdf}
+-\caption[Dissertation roadmap]{Dissertation roadmap. The solid arrows show relationships among the chapters. Dashed connections indicate future integration in the physical robot and the intended return of biological insight.
++\caption[Dissertation roadmap]{Relationships among the dissertation studies and their proposed integration in the physical robot.
+ }
+ \label{fig:roadmap}
+ \end{figure}
+--- author_export/chapters/15-background.tex
++++ local_revision/chapters/15-background.tex
+@@ -36,7 +36,7 @@
+ % ALT TEXT: Four schematic panels compare an electric torque motor, a braided
+ % pneumatic actuator, a hydraulic cylinder, and a dielectric elastomer actuator.
+ % Arrows show each device's characteristic motion or applied pressure or voltage.
+-\caption[Representative robotic actuator technologies]{Representative actuator mechanisms: electric motor (A), braided pneumatic actuator (B), hydraulic cylinder (C), and dielectric elastomer (D) \citep{suzumori_trends_2018, liang_comparative_2020}.}
++\caption[Representative robotic actuator technologies]{Representative actuator mechanisms: electric motor \textbf{(A)}, braided pneumatic actuator \textbf{(B)}, hydraulic cylinder \textbf{(C)}, and dielectric elastomer \textbf{(D)} \citep{suzumori_trends_2018, liang_comparative_2020}.}
+ \label{fig:actuator_technology_comparison}
+ \end{figure}
+ 
+--- author_export/chapters/20-muscles.tex
++++ local_revision/chapters/20-muscles.tex
+@@ -1,8 +1,25 @@
++\begingroup
++\makeatletter
++\renewcommand{\@makechapterhead}[1]{%
++  \vspace*{10pt}%
++  {\centering\chapterheading Chapter~\thechapter\par\nobreak
++   #1\par}%
++  \vspace{20pt}}
++\makeatother
+ \chapter{Isometric Force Characterization of Braided Pneumatic Actuators}\label{ch:muscles}\label{ch:methods}\label{ch:discussion}
++\endgroup
+ \graphicspath{{../Figures/20-muscles/}{figs/20-muscles/}}
+ 
+ {\doublespacing\normalsize\upshape
+-\noindent Publication note: Sections~\ref{sec:force_model}--\ref{sec:force_experiment}, Section~\ref{sec:results_force}, and Sections~\ref{sec:disc_effects}--\ref{sec:disc_bio}, with their associated figures and tables, appeared in \citet{bolen_2026} (Bolen, Elzein, Pang, and Hunt, \emph{Actuators}, 2026). For that work, B.B.\ performed the conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, and original draft preparation; M.E.\ and L.P.\ contributed methodology, software, investigation, and data curation; and A.H.\ supervised the work, administered the project, and acquired funding. All co-authors contributed to writing, review, and editing.\par}
++\noindent Sections~\ref{sec:force_model}--\ref{sec:force_experiment}, Section~\ref{sec:results_force}, and Sections~\ref{sec:disc_effects}--\ref{sec:disc_bio}, with their associated figures and tables, appeared in the following article.\par
++\medskip
++\noindent Ben Bolen, Mohammad Elzein, Lawrence Pang, and Alexander Hunt. ``Isometric Force Characterization of Braided Pneumatic Actuators.'' \emph{Actuators}, 15(5), article~230, pp.~1--16 (2026).\nocite{bolen_2026}\par
++\medskip
++\noindent\textbf{Author contributions.} Conceptualization, B.B. and A.H.; Methodology, B.B., A.H., M.E. and L.P.; Software, B.B., M.E. and L.P.; Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., M.E. and L.P.; Resources, B.B. and A.H.; Data Curation, B.B. and L.P.; Writing---Original Draft Preparation, B.B.; Writing---Review and Editing, B.B., M.E., L.P. and A.H.; Visualization, B.B. and A.H.; Supervision, B.B. and A.H.; Project Administration, B.B. and A.H.; Funding Acquisition, A.H. All authors have read and agreed to the published version of the manuscript.\par
++\medskip
++\noindent DOI \url{https://doi.org/10.3390/act15050230}\par
++\noindent PDXScholar \url{https://pdxscholar.library.pdx.edu/mengin_fac/553/}\par}
++\clearpage
+ 
+ This chapter develops and validates the actuator force models on which the rest of the dissertation builds, and it reads as one self-contained study, from methods through results to discussion. Sections~\ref{sec:force_model} and~\ref{sec:force_experiment} present the methods: the force equations used throughout this work, and the test jig and measurement procedure used to characterize Festo BPAs with \qtylist{10;20}{\mm} uninflated diameters over a wide range of resting lengths, contractions, and pressures. Section~\ref{sec:results_force} reports the resulting maximum-force and normalized force--strain--pressure models and compares them with the manufacturer's tool. The remaining sections discuss the effects of resting length, the nondimensionalized force prediction, the comparison with other published BPA models, the implications for real-time control and simulation, and the analogy between these artificial muscles and biological muscle. The validated force model is the one used for the knee-torque predictions of Chapter~\ref{ch:torque} and for the BPA actuation of the neuromechanical simulations in Chapter~\ref{ch:sns}.
+ 
+@@ -104,6 +121,7 @@
+ 
+ 
+ \begin{figure}[p]
++\renewcommand{\thesubfigure}{\normalfont\textbf{(\alph{subfigure})}}
+ \centering
+ %\begin{adjustwidth}{-\extralength}{0cm}
+ %\centering
+@@ -111,12 +129,12 @@
+ \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02b_MaxForce20.eps}}
+ %\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02_Fmax_fit.eps}
+ %\end{adjustwidth}
+-\caption{Results for finding the relationship between $F_{620}$ and $l_0$. (\textbf{a}) $F_{620_{10}}$ as a function of $l_0$, at $P_{620}$. Dashed line is the $F_{620_{10}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax10}). (\textbf{b}) $F_{620_{20}}$ as a function of $l_0$ at $P_{620}$. Dashed line is $F_{620_{20}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax20}).}\label{fig:Fmax_fit}
++\caption{Results for finding the relationship between $F_{620}$ and $l_0$. \textbf{(a)} $F_{620_{10}}$ as a function of $l_0$ at $P_{620}$, with the fit from Equation~(\ref{eq:Fmax10}). \textbf{(b)} $F_{620_{20}}$ as a function of $l_0$ at $P_{620}$, with the fit from Equation~(\ref{eq:Fmax20}).}\label{fig:Fmax_fit}
+ \end{figure}
+ 
+ \subsubsection{Force as a Function of Pressure and Resting Length}
+ 
+-Data from BPA characterization tests of the \qty{10}{\mm} muscles resulted in force--pressure pairings for different muscle resting lengths ($l_0$) (Figure~\ref{fig:F-P_contraction}a). Similar to the maximum force data, these data show a force response resembling an $\arctan$ curve along the $l_0$ dimension  with a more linear response to changes in pressure. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force given a resting length and pressure as described by the model form given in Section~\ref{sec:force_model},
++Data from BPA characterization tests of the \qty{10}{\mm} muscles resulted in force--pressure pairings for different muscle resting lengths ($l_0$) (Figure~\ref{fig:F-P_contraction}\textbf{(a)}). Similar to the maximum force data, these data show a force response resembling an $\arctan$ curve along the $l_0$ dimension  with a more linear response to changes in pressure. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force given a resting length and pressure as described by the model form given in Section~\ref{sec:force_model},
+ where $a_1 = \qty{0.4895}{\N\per\kPa}$  and $a_2=\qty{0.03068}{\per\kPa\per\m}$ for the \qty{10}{\mm} actuator, and \mbox{$a_1 = \qty{1.49}{\N\per\kPa}$,} $a_2=\qty{0.0248}{\per\kPa\per\m}$ for the \qty{20}{\mm} actuator. Goodness-of-fit measures are given in Table~\ref{tab:Fmax}; throughout this dissertation, goodness of fit is reported as the root-mean-square error (RMSE), the adjusted fraction of variance unexplained (FVU, for which $R^{2} = 1 - \mathrm{FVU}$), and the maximum absolute residual, as defined alongside the reference implementation in Appendix~\ref{app:muscle_calcs}. 
+ 
+ 
+@@ -256,7 +274,7 @@
+ 
+ \subsubsection{Maximum Contraction at \qty{620}{\kPa}}
+ 
+-Figure~\ref{fig:F-P_contraction}(b) shows an attempt at a linear fit for maximum contraction at \qty{620}{\kPa} ($\epsilon_{620}$) as a function of resting length ($l_0$). Error bars have been included to show the effect of $\pm$\qty{1}{\mm} accuracy with measurements of $l_0$ and $l_{620}$. There was a large amount of variance in the data, with the linear fit giving an adjusted $\text{R}^2=0.4124$ and an $\text{RMSE}=0.0083$. Since there is no direct, predicable relationship between maximum contraction and $l_0$, this value should be recorded in each muscle used on a robot to best predict the force it may produce at different pressures and contraction. 
++Figure~\ref{fig:F-P_contraction}\textbf{(b)} shows an attempt at a linear fit for maximum contraction at \qty{620}{\kPa} ($\epsilon_{620}$) as a function of resting length ($l_0$). Error bars have been included to show the effect of $\pm$\qty{1}{\mm} accuracy with measurements of $l_0$ and $l_{620}$. There was a large amount of variance in the data, with the linear fit giving an adjusted $\text{R}^2=0.4124$ and an $\text{RMSE}=0.0083$. Since there is no direct, predicable relationship between maximum contraction and $l_0$, this value should be recorded in each muscle used on a robot to best predict the force it may produce at different pressures and contraction.
+ 
+ 
+ \subsubsection{Force as a Function of Pressure and Contraction}
+@@ -270,13 +288,14 @@
+ 
+ 
+ \begin{figure}[p]
++\renewcommand{\thesubfigure}{\normalfont\textbf{(\alph{subfigure})}}
+ \centering
+ %\begin{adjustwidth}{-\extralength}{0cm}
+ %\centering
+ \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03a_MaxForce10_all.eps}}\\
+ \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03b_kmax10.eps}}
+ %\end{adjustwidth}
+-\caption{Results for finding the relationship between $F_{620}$, $l_0$, $P_{620}$, and $\epsilon_{620_{10}}$. (\textbf{a}) Isoclines of the surface fit for $F_{620_{10}}(l_0,P_{620})$. (\textbf{b}) $\epsilon_{620_{10}}$ versus $l_0$ at $P_{620}$. Although there is a general trend of longer resting lengths producing more contraction, no conclusive relationship between $\epsilon_{620}$ and $l_0$ could be deduced from this experiment. The error bars show the effect of being $\pm$\qty{1}{\mm} in measuring $l_0$ and $l_{620}$.}\label{fig:F-P_contraction}
++\caption{Results for finding the relationship between $F_{620}$, $l_0$, $P_{620}$, and $\epsilon_{620_{10}}$. \textbf{(a)} Isoclines of the surface fit for $F_{620_{10}}(l_0,P_{620})$. \textbf{(b)} $\epsilon_{620_{10}}$ versus $l_0$ at $P_{620}$. Although there is a general trend of longer resting lengths producing more contraction, no conclusive relationship between $\epsilon_{620}$ and $l_0$ could be deduced from this experiment. The error bars show the effect of being $\pm$\qty{1}{\mm} in measuring $l_0$ and $l_{620}$.}\label{fig:F-P_contraction}
+ \end{figure}
+ 
+ 
+@@ -284,18 +303,19 @@
+ 
+ 
+ \begin{figure}[p]
++\renewcommand{\thesubfigure}{\normalfont\textbf{(\alph{subfigure})}}
+ \centering
+ %\begin{adjustwidth}{-\extralength}{0cm}
+ %\centering
+ \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04a_FStar10.eps}}\\
+ \subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04b_FStar20.eps}}
+ %\end{adjustwidth}
+-\caption{Surface fit for $F^*(\epsilon^*,P^*)$. Solid lines are from our model. Dashed lines from Festo supplied data. In total, 537 data points were collected and used to fit the 3D surfaces (321 data points for $\diameter$\qty{10}{\mm} BPAs and 216 data points for $\diameter$\qty{20}{\mm} BPAs). In total, 80\% of these data were used for training, and 20\% were used for validation. For figure clarity, not all data is included and plotted circles represent collected data at $\pm\qty{10}{\kPa}$ of the stated pressure. (\textbf{a}) Fit data for $\diameter$\qty{10}{\mm} Festo BPAs. (\textbf{b}) Fit data for $\diameter$\qty{20}{\mm} Festo BPAs.}\label{fig:GenForceFit}
++\caption{Surface fit for $F^*(\epsilon^*,P^*)$. In total, 537 data points were collected and used to fit the 3D surfaces (321 data points for $\diameter$\qty{10}{\mm} BPAs and 216 data points for $\diameter$\qty{20}{\mm} BPAs). In total, 80\% of these data were used for training, and 20\% were used for validation. For figure clarity, not all data is included and plotted circles represent collected data at $\pm\qty{10}{\kPa}$ of the stated pressure. \textbf{(a)} Fit data for $\diameter$\qty{10}{\mm} Festo BPAs. \textbf{(b)} Fit data for $\diameter$\qty{20}{\mm} Festo BPAs.}\label{fig:GenForceFit}
+ \end{figure}
+ 
+ We therefore derived our own equation for isometric force in the BPA as a function of pressure and contraction. Visual analysis of the experimental data shows an exponential relationship between $\epsilon^*$ and $F^*$, and a linear relationship between $P^*$ and $F$. We fit a surface to the data using Nonlinear Least Squares and a Least Absolute Residual robustness such that it is described by 
+ Equation~\eqref{eq:Fstar}.
+-For the $\diameter$\qty{10}{\mm} BPAs, the result of the improved fit can be seen in Figure \ref{fig:GenForceFit}a. The adjusted $\text{R}^2=0.9998$, a $\text{RMSE}=0.004537$, and a maximum absolute residual of $10.6\%$. Solving (\ref{eq:Fstar}) for the $\diameter$\qty{20}{\mm} BPA, yields different coefficients, and results are seen in \mbox{Figure~\ref{fig:GenForceFit}b.} Coefficient values and goodness-of-fit statistics are found in Table \ref{tab:Fstar}. 
++For the $\diameter$\qty{10}{\mm} BPAs, the result of the improved fit can be seen in Figure \ref{fig:GenForceFit}\textbf{(a)}. The adjusted $\text{R}^2=0.9998$, a $\text{RMSE}=0.004537$, and a maximum absolute residual of $10.6\%$. Solving (\ref{eq:Fstar}) for the $\diameter$\qty{20}{\mm} BPA, yields different coefficients, and results are seen in \mbox{Figure~\ref{fig:GenForceFit}\textbf{(b)}.} Coefficient values and goodness-of-fit statistics are found in Table \ref{tab:Fstar}.
+ 
+ 
+ 
+@@ -310,7 +330,7 @@
+ \section{Discussion}
+ 
+ \subsection{Effects of Resting Length}\label{sec:disc_effects}
+-We have developed new $F_{620}$ equations for \qtylist{10;20}{\mm} diameter Festo BPAs that capture the change in maximum force produced by the actuators at  \qty{620}{\kPa} as a function of their resting length. When examining Equation~(\ref{eq:Fmax10}) and measured data in Figure~\ref{fig:Fmax_fit}b, it can be seen that as $l_0$ goes to infinity, $F_{620_{10}}$ goes to \qty{470}{\N}. When the Festo tool \citep{lang_robert_musclesim_2005} was queried at $l_0=\qty{1}{m}$ as an approximation of infinity, it predicts the $\diameter$\qty{10}{\mm} BPA can produce $F=\qty{490}{\N}$ at $P_{620}$. This is within the 10\% variability that Festo states may occur in manufacturing tolerances. Similarly, the Festo data predict a $\diameter$\qty{20}{\mm} BPA will produce $F=\qty{1570}{\N}$. Our results for Equation~(\ref{eq:Fmax20}) show that  $F_{620_{20}}$ goes to \qty{1460}{\N} as $l_0$ approaches infinity. Although the difference is much larger, it is also within the \mbox{10\% manufacturing tolerance. }
++We have developed new $F_{620}$ equations for \qtylist{10;20}{\mm} diameter Festo BPAs that capture the change in maximum force produced by the actuators at  \qty{620}{\kPa} as a function of their resting length. When examining Equation~(\ref{eq:Fmax10}) and measured data in Figure~\ref{fig:Fmax_fit}\textbf{(a)}, it can be seen that as $l_0$ goes to infinity, $F_{620_{10}}$ goes to \qty{470}{\N}. When the Festo tool \citep{lang_robert_musclesim_2005} was queried at $l_0=\qty{1}{m}$ as an approximation of infinity, it predicts the $\diameter$\qty{10}{\mm} BPA can produce $F=\qty{490}{\N}$ at $P_{620}$. This is within the 10\% variability that Festo states may occur in manufacturing tolerances. Similarly, the Festo data predict a $\diameter$\qty{20}{\mm} BPA will produce $F=\qty{1570}{\N}$. Our results for Equation~(\ref{eq:Fmax20}) show that  $F_{620_{20}}$ goes to \qty{1460}{\N} as $l_0$ approaches infinity. Although the difference is much larger, it is also within the \mbox{10\% manufacturing tolerance. }
+ 
+ Our measured data differ significantly from the Festo model as $l_0$ goes to zero. For the measured data, as the length gets smaller, the force does as well, whereas the Festo tool predicts exponential force increase (see Figure~\ref{fig:Fmax_fit}). As a specific example, when specifying $l_0=\qty{112}{\mm}$ for the \qty{10}{\mm} diameter BPAs, the Festo predicted $F_{620}$ is \qty{498.6}{\N}. However, using Equation~(\ref{eq:Fmax10}), $F_{620}$ is calculated to be \qty{335.3}{\N}. Actual force in the $l_0=\qty{112}{\mm}$ was measured at \qty{350.9}{\N}. Therefore, the error in predicted $F_{620}$ for the $\diameter$\qty{10}{\mm} BPA is $4.5\%$ for our model and $42.1\%$ using the Festo tool. Researchers using BPA resting lengths under \qty{300}{\mm} should take note of these results.
+ 
+@@ -375,7 +395,7 @@
+     \includegraphics[width=.99\textwidth]{05_Comparison.eps}
+ %\end{center}
+ %\end{adjustwidth}
+-\caption{Comparison between measured and predicted BPA force at varying amounts of contraction and pressure. A $y=x$ perfect fit line is added for reference. The BPAs compared are: (\textbf{a}) $\diameter$\qty{10}{\mm}, $l_0=\qty{257}{\mm}$, (\textbf{b}) $\diameter$\qty{10}{\mm}, $l_0=\qty{233}{\mm}$, (\textbf{c}) $\diameter$\qty{20}{\mm}, $l_0=\qty{300}{\mm}$, and (\textbf{d}) $\diameter$\qty{20}{\mm}, $l_0=\qty{450}{\mm}$.}\label{fig:ModelCompare}
++\caption{Comparison between measured and predicted BPA force at varying amounts of contraction and pressure. The BPAs compared are: \textbf{(a)} $\diameter$\qty{10}{\mm}, $l_0=\qty{257}{\mm}$, \textbf{(b)} $\diameter$\qty{10}{\mm}, $l_0=\qty{233}{\mm}$, \textbf{(c)} $\diameter$\qty{20}{\mm}, $l_0=\qty{300}{\mm}$, and \textbf{(d)} $\diameter$\qty{20}{\mm}, $l_0=\qty{450}{\mm}$.}\label{fig:ModelCompare}
+ \end{figure}
+ 
+ The Martens and Boblan model was first evaluated at the same pressure–contraction points as in their experimental data \citep{martens_modeling_2017} (Tables A1 and  A2), indicating that it reproduces the general published force map shape but is sensitive to the assumed initial geometry. Examining their $\diameter$\qty{20}{\mm} BPA, for example, using the explicitly stated $l_0=\qty{300}{\mm}$ and initial diameter $D_{0}=\qty{20}{\mm}$ significantly under-predicted the results compared to using the implied $l_0=\qty{296}{\mm}$ (\citep{martens_modeling_2017} (Table A1)) and $D_{0}+H_{0}=\qty{21.8}{\mm}$, where $H_{0}=\qty{1.8}{\mm}$ is the material thickness. The diameter adjustment can be inferred \mbox{from \citep{chou_measurement_1996}.} This adjusted diameter was also included for the $\diameter$\qty{10}{\mm} BPA to give a better fit. As can be seen in Figure~\ref{fig:ModelCompare} and Table~\ref{tab:model_compare}, the highest accuracy is observed when $\diameter$\qty{20}{\mm} and $l_0=\qty{300}{\mm}$, which is at or very near their experimental measurements. For the $\diameter$\qty{10}{\mm} BPAs the accuracy decreases even though their experimentally measured $l_0=\qty{250}{\mm}$ is close to our $l_0=\qty{257}{\mm}$ and $l_0=\qty{233}{\mm}$. The largest error occurs at $\diameter$\qty{20}{\mm} and $l_0=\qty{450}{\mm}$ and the model starts to predict negative force. We have calculated that the $F_{PE}\cdot\frac{dD}{DL}$ term becomes very large compared to the others \citep{martens_modeling_2017} (p.~5). This suggests that the model is sensitive to geometric parameter selection and interpretation, particularly with respect to initial length and diameter definitions.
+--- author_export/chapters/30-torque.tex
++++ local_revision/chapters/30-torque.tex
+@@ -20,7 +20,7 @@
+     \begin{center}
+     \includegraphics[width=0.73\textwidth]{testJigs_reviewed.pdf}
+     \end{center}
+-    \caption{Pinned-knee test apparatus: CAD assembly (A), labeled mechanism at \ang{-30} (B), and extensor isometric test at \ang{-120} (C).}\label{fig:testJigs}
++    \caption{Pinned-knee test apparatus: CAD assembly \textbf{(A)}, labeled mechanism at \ang{-30} \textbf{(B)}, and extensor isometric test at \ang{-120} \textbf{(C)}.}\label{fig:testJigs}
+ \end{figure}
+ 
+ The leg assembly geometry and dimensions are based on bone scans of a $6 \, \text{ft}$  (\qty{1.83}{\metre}) tall person \citep{bolen_determination_2019,seth_opensim_2018,delp_interactive_1990,delp_opensim_2007}. Two knee joints were tested, one pure rotational joint, and one biomimetic joint with rotation and translation. Each joint is driven by two antagonistic Festo actuators. Both robot joints have the same center of rotation in the femur frame at $\theta_{\mathbf{k}}=0 \deg$.
+@@ -129,7 +129,7 @@
+ \begin{figure}[htbp]
+ \centering
+ \includegraphics[height=0.72\textheight]{xiFrameTransform.pdf}
+-\caption{Bracket-frame construction from attachment point $\mathbf{p}_A$ or $\mathbf{p}_B$: yaw about fixed $\hat{\mathbf z}_s$ aligns the sagittal projection (A); pitch about current $\hat{\mathbf y}_{br}$ aligns the full point vector (B).}
++\caption{Bracket-frame construction from attachment point $\mathbf{p}_A$ or $\mathbf{p}_B$: yaw about fixed $\hat{\mathbf z}_s$ aligns the sagittal projection \textbf{(A)}; pitch about current $\hat{\mathbf y}_{br}$ aligns the full point vector \textbf{(B)}.}
+ \label{fig:xiFrameTransform}
+ \end{figure}
+ 
+@@ -483,7 +483,7 @@
+ \begin{center}
+ \includegraphics[width=0.9\textwidth]{FlxPin_preopt_publication.pdf}
+ \end{center}
+-\caption{Pinned-knee flexor torque before design-parameter optimization: \textbf{(A)} $l_0=\qty{48.5}{\cm}$, \textbf{(B)} $l_0=\qty{41.0}{\cm}$, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, and \textbf{(D)} $l_0=\qty{40.6}{\cm}$ with a \qty{35}{\mm} tendon. Panels \textbf{(A)} and \textbf{(B)} are training tests; \textbf{(C)} and \textbf{(D)} are validation tests. The legend distinguishes measurements, the Hunt model, the improved BPA model, and the hybrid calculation.}\label{fig:FlxPin_preopt}
++\caption{Pinned-knee flexor torque before design-parameter optimization: \textbf{(A)} $l_0=\qty{48.5}{\cm}$, \textbf{(B)} $l_0=\qty{41.0}{\cm}$, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, and \textbf{(D)} $l_0=\qty{40.6}{\cm}$ with a \qty{35}{\mm} tendon. Panels \textbf{(A)} and \textbf{(B)} are training tests; \textbf{(C)} and \textbf{(D)} are validation tests.}\label{fig:FlxPin_preopt}
+ \end{figure}
+ 
+ \begin{table}[H]
+@@ -515,7 +515,7 @@
+ \begin{center}
+ \includegraphics[width=0.9\textwidth]{FlxPin_optimized_publication.pdf}
+ \end{center}
+-\caption{Optimized pinned-knee flexor torque: \textbf{(A)} $l_0=\qty{48.5}{\cm}$, \textbf{(B)} $l_0=\qty{41.0}{\cm}$, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, and \textbf{(D)} $l_0=\qty{40.6}{\cm}$ with a \qty{35}{\mm} tendon. Panels \textbf{(A)} and \textbf{(B)} are training tests; \textbf{(C)} and \textbf{(D)} are validation tests. Circles show measurements, dashed curves the improved BPA model, and solid magenta curves the optimized model.}\label{fig:FlxPin_optimized}
++\caption{Optimized pinned-knee flexor torque: \textbf{(A)} $l_0=\qty{48.5}{\cm}$, \textbf{(B)} $l_0=\qty{41.0}{\cm}$, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, and \textbf{(D)} $l_0=\qty{40.6}{\cm}$ with a \qty{35}{\mm} tendon. Panels \textbf{(A)} and \textbf{(B)} are training tests; \textbf{(C)} and \textbf{(D)} are validation tests.}\label{fig:FlxPin_optimized}
+ \end{figure}
+ 
+ \begin{table}[H]
+@@ -550,13 +550,13 @@
+ 
+ \subsection{Extensor on Pin Joint}
+ 
+-The correction terms reduce mean pinned-knee extensor torque-prediction error in both the training and validation tests (Table~\ref{tab:ExtPinGof}). Figure~\ref{fig:ExtPin_group} compares the measured and predicted torque across knee angle. By inspection, the zero point of the measured torque was shifted to the right of the original model, consistent with an offset opposite in sign to the $\chi_{0}$ term in the previous section. The BPA in Figure~\ref{fig:ExtPin_group}\textbf{(C)} illustrates the pattern: the hybrid-method calculated torque correlates well with the originally predicted torque, while the actual measured torque diverges. The fitted wrapping term $\chi_{3}$ enters the usable-length correction in Equation~\eqref{eq:deltaL}. Table~\ref{tab:ExtPinGof} reports the improvement of the fit. Extensor-specific terms $(\chi_{0}, \chi_{3})$ were specified while stiffness terms $(\chi_{1}, \chi_{2})$ were kept the same as the previous section (see Table~\ref{tab:AdoptedXi}).
++The correction terms reduce mean pinned-knee extensor torque-prediction error in both the training and validation tests (Table~\ref{tab:ExtPinGof}). Figure~\ref{fig:pinned_extensor} compares the measured and predicted torque across knee angle. By inspection, the zero point of the measured torque was shifted to the right of the original model, consistent with an offset opposite in sign to the $\chi_{0}$ term in the previous section. The BPA in Figure~\ref{fig:pinned_extensor}\textbf{(C)} illustrates the pattern: the hybrid-method calculated torque correlates well with the originally predicted torque, while the actual measured torque diverges. The fitted wrapping term $\chi_{3}$ enters the usable-length correction in Equation~\eqref{eq:deltaL}. Table~\ref{tab:ExtPinGof} reports the improvement of the fit. Extensor-specific terms $(\chi_{0}, \chi_{3})$ were specified while stiffness terms $(\chi_{1}, \chi_{2})$ were kept the same as the previous section (see Table~\ref{tab:AdoptedXi}).
+ 
+ \begin{figure}[htbp]
+ \begin{center}
+-\includegraphics[width=\linewidth,height=0.73\textheight,keepaspectratio]{ExtPin_complete_publication.pdf}
++\includegraphics[width=\linewidth,height=0.73\textheight,keepaspectratio]{pinned_extensor_torque.pdf}
+ \end{center}
+-\caption{Optimized pinned-knee extensor torque: \textbf{(A)} $l_0=\qty{43.6}{\cm}$, \textbf{(B)} $l_0=\qty{43.2}{\cm}$ with a \qty{22}{\mm} tendon, \textbf{(C)} $l_0=\qty{45.7}{\cm}$, \textbf{(D)} $l_0=\qty{40.0}{\cm}$, \textbf{(E)} $l_0=\qty{40.0}{\cm}$ with a \qty{40}{\mm} tendon, and \textbf{(F)} $l_0=\qty{46.5}{\cm}$. Panels \textbf{(A)}--\textbf{(C)} are training tests; \textbf{(D)}--\textbf{(F)} are validation tests. The legend applies to all panels.}\label{fig:ExtPin_group}
++\caption[Training and validation of pinned-knee extensor torque]{Measured and predicted pinned-knee extensor torque. Training tests used resting lengths of \textbf{(A)} \qty{43.6}{\cm}, \textbf{(B)} \qty{43.2}{\cm} with a \qty{22}{\mm} tendon, and \textbf{(C)} \qty{45.7}{\cm}. Validation tests used \textbf{(D)} \qty{40.0}{\cm}, \textbf{(E)} \qty{40.0}{\cm} with a \qty{40}{\mm} tendon, and \textbf{(F)} \qty{46.5}{\cm}.}\label{fig:pinned_extensor}
+ \end{figure}
+ 
+ \begin{table}[H]
+@@ -615,7 +615,7 @@
+ \begin{center}
+ \includegraphics[width=\textwidth,height=0.70\textheight,keepaspectratio]{FlxGrp.pdf}
+ \end{center}
+-\caption{Biomimetic-knee flexor torque: \textbf{(A)} a single \qty{10}{\mm} BPA; \textbf{(B)} a single \qty{20}{\mm} BPA. The legend in \textbf{(B)} identifies the measurements, predictions, and human reference.}\label{fig:FlxGrp}
++\caption{Biomimetic-knee flexor torque: \textbf{(A)} a single \qty{10}{\mm} BPA; \textbf{(B)} a single \qty{20}{\mm} BPA.}\label{fig:FlxGrp}
+ \end{figure}
+ 
+ \begin{table}[htbp]
+@@ -688,7 +688,7 @@
+ \end{tabularx}
+ \end{table}
+ 
+-The cam-assisted extensor allows the tibial route points to trace a profile rather than remain fixed (Figure~\ref{fig:ExtensorRoute_redesigned}). Table~\ref{tab:cam_route_summary} summarizes the resulting capacity and geometry. The flexor uses two separately evaluated BPA paths and the wrapping factor identified on the extensor. Each route family minimizes its own weighted penalty sum; objective values are not directly comparable. These are mechanical design predictions; incorporation into the converted neuromechanical models remains future work.
++The cam-assisted extensor allows the tibial route points to trace a profile rather than remain fixed (Figure~\ref{fig:cam_route}\textbf{(A, B)}). Figure~\ref{fig:cam_route}\textbf{(C)} shows the assembly used for the extensor tests. Table~\ref{tab:cam_route_summary} summarizes the resulting capacity and geometry. The flexor uses two separately evaluated BPA paths and the wrapping factor identified on the extensor. Each route family minimizes its own weighted penalty sum; objective values are not directly comparable. These are mechanical design predictions; incorporation into the converted neuromechanical models remains future work.
+ 
+ The cam summaries use two different normalizations. For the evaluated knee-angle grid $\Theta$, let $M_h(\theta)$ be the human-reference torque, $M_{h,\max}$ its peak magnitude, and $M_{\mathbf{k}}(\theta)$ the predicted knee-axis torque. The minimum surplus above the required envelope and the minimum relative margin above the human reference are
+ \begin{equation}
+@@ -701,19 +701,9 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\begin{minipage}[t]{0.32\textwidth}\vspace{0pt}\centering
+-\includegraphics[width=\linewidth]{cam_pose_A.pdf}
+-\end{minipage}\hfill
+-\begin{minipage}[t]{0.32\textwidth}\vspace{0pt}\centering
+-\includegraphics[width=\linewidth]{cam_pose_H.pdf}
+-\end{minipage}\hfill
+-\begin{minipage}[t]{0.32\textwidth}\vspace{0pt}\centering
+-\includegraphics[width=\linewidth]{cam_current_legend.pdf}
+-\end{minipage}
+-\par\medskip
+-\includegraphics[width=0.46\textwidth,height=0.31\textheight,keepaspectratio]{cam_extensor_hardware.jpg}
+-\caption{Cam-extensor geometry at \ang{-120} (A) and \ang{10} (H), with the assembled two-BPA hardware below. Panel letters match the complete sequence in Figures~\ref{fig:app_cam_AF} and~\ref{fig:app_cam_GH}.}
+-\label{fig:ExtensorRoute_redesigned}
++\includegraphics[width=\linewidth]{cam_extensor_route.pdf}
++\caption[Cam-extensor route and test assembly]{Cam-assisted extensor route in the femur frame at \textbf{(A)} \ang{-120} and \textbf{(B)} \ang{10}. Numbered points mark the active route at each angle. \textbf{(C)} The assembled two-BPA extensor in the isometric knee test stand. Figures~\ref{fig:app_cam_AF} and~\ref{fig:app_cam_GH} show the intermediate poses.}
++\label{fig:cam_route}
+ \end{figure}
+ 
+ 
+@@ -741,7 +731,7 @@
+ 
+ \subsection{Exceeding Human Torque Magnitude}\label{sec:redesign_physical}
+ 
+-Both redesigned routes met or exceeded their selected human-muscle reference torques at the measured knee angles. The cam-assisted extensor was tested at nine isometric configurations and the two-BPA flexor at fifteen, spanning \ang{-119} to \ang{5}. The analysis transforms the measured load-cell wrench to the moving knee center and evaluates the model at each measured angle and pressure. Table~\ref{tab:final_test_dimensions} in Appendix~\ref{app:model_geometry} records the measured per-actuator dimensions and distinguishes them from the shared prediction inputs. Figures~\ref{fig:extensor_physical_final} and~\ref{fig:flexor_physical_final} compare these results with the selected human-muscle targets and the optimized \qty{620}{\kPa} predictions.
++Both redesigned routes met or exceeded their selected human-muscle reference torques at the measured knee angles. The cam-assisted extensor was tested at nine isometric configurations and the two-BPA flexor at fifteen, spanning \ang{-119} to \ang{5}. The analysis transforms the measured load-cell wrench to the moving knee center and evaluates the model at each measured angle and pressure. Table~\ref{tab:final_test_dimensions} in Appendix~\ref{app:model_geometry} records the measured per-actuator dimensions and distinguishes them from the shared prediction inputs. Figures~\ref{fig:extensor_test} and~\ref{fig:flexor_test} compare these results with the selected human-muscle targets and the optimized \qty{620}{\kPa} predictions.
+ 
+ The extensor measurements meet or exceed the vastus medialis reference torque at the measured angles. Measured extension torque ranges from \qty{29.02}{\newton\meter} to \qty{51.17}{\newton\meter}, with margins of \qtyrange{0.24}{3.52}{\newton\meter}, at pressures of \qtyrange{256}{488}{\kPa}. The measured torque exceeds the pressure-specific prediction at eight angles, by up to \qty{13.75}{\newton\meter}; at \ang{-86.5}, the measurement exceeds the human reference and is \qty{2.06}{\newton\meter} below the pressure-specific prediction. This prediction uses the recorded angle and pressure with the modeled route. It is not the hybrid calculation, which additionally requires measured muscle length and moment arm.
+ 
+@@ -749,16 +739,16 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=0.97\textwidth]{Ext20mm_physical_20261026_publication.pdf}
+-\caption{Cam-extensor measurements, pressure-specific predictions, the optimized \qty{620}{\kPa} curve, and the vastus medialis reference. Marker area scales with pressure. Series follow the plot legend.}
+-\label{fig:extensor_physical_final}
++\includegraphics[width=0.97\textwidth]{extensor_validation.pdf}
++\caption[Cam-extensor torque measurements]{Measured cam-extensor torque exceeded the vastus medialis reference at all nine test angles. Marker area scales with the measured pressure (\qtyrange{256}{488}{\kPa}).}
++\label{fig:extensor_test}
+ \end{figure}
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=0.97\textwidth]{Redesigned_flexor_pressure_publication.pdf}
+-\caption[Physical tests of the redesigned flexor route]{Two-BPA flexor tests (nominal \qty{562}{\mm} plot label); the installed resting lengths were \qtylist{561;560}{\mm}. Blue points are measured torques; gold points are model predictions at the measured angles and pressures. The solid magenta curve is the optimized \qty{620}{\kPa} prediction, and the black dotted curve is the human biceps femoris short-head target.}
+-\label{fig:flexor_physical_final}
++\includegraphics[width=0.97\textwidth]{flexor_validation.pdf}
++\caption[Redesigned flexor torque measurements]{The two-BPA flexor exceeded the biceps femoris short-head reference torque magnitude at all 15 test angles. The installed actuator resting lengths were \qtylist{561;560}{\mm}.}
++\label{fig:flexor_test}
+ \end{figure}
+ 
+ \subsection{Tendon Reeving and Parallel BPAs}\label{sec:disc_pulley}
 --- author_export/chapters/50-database.tex
 +++ local_revision/chapters/50-database.tex
 @@ -1,22 +1,24 @@
@@ -20,7 +295,7 @@
  \centering
  \includegraphics[width=\linewidth]{sadb_bubble.pdf}
 -\caption[SADb Explorer citation-map functions]{SADb Explorer with Grillner (1985) selected. Callouts identify the four main tabs (A), map controls (B), selected record (C), curation and translation notes (D), citation neighborhood (E), connected papers (F), and the topic-cluster color key (G).}
-+\caption[SADb Explorer citation-map functions]{Citation map of the 943 Papers in an earlier Explorer snapshot, with Grillner (1985) selected. Callouts identify the four main tabs (A), map controls (B), selected record (C), curation and translation notes (D), citation neighborhood (E), connected papers (F), and the topic-cluster color key (G).}
++\caption[SADb Explorer citation-map functions]{Citation map of the 943 Papers in an earlier Explorer snapshot, with Grillner (1985) selected. Callouts identify the four main tabs \textbf{(A)}, map controls \textbf{(B)}, selected record \textbf{(C)}, curation and translation notes \textbf{(D)}, citation neighborhood \textbf{(E)}, connected papers \textbf{(F)}, and the topic-cluster color key \textbf{(G)}.}
  \label{fig:sadb_clusters}
  \end{sidewaysfigure}
  
@@ -75,7 +350,7 @@
 -\caption{SADb Table view after a text search (top) and the selected record's detail view (bottom), showing its source information, linked records, and curation note.}
 +\includegraphics[width=\textwidth]{sadb_table_record_guide.pdf}
 +
-+\caption[Finding the experimental evidence for a pathway]{The SADb Explorer pathway filter (A) returns six Papers. Selecting the McCrea row in the results (B) opens the record (C), which gives the source DOI, the afferent classes, and the two pathway labels. The DOI opens the experiment that supports the classifications.}
++\caption[Finding the experimental evidence for a pathway]{The SADb Explorer pathway filter \textbf{(A)} returns six Papers. Selecting the McCrea row in the results \textbf{(B)} opens the record \textbf{(C)}, which gives the source DOI, the afferent classes, and the two pathway labels. The DOI opens the experiment that supports the classifications.}
  \label{fig:sadb_explorer}
  \end{figure}
  
@@ -101,7 +376,7 @@
 +\begin{figure}[H]
 +\centering
 +\includegraphics[width=\textwidth]{sadb_pivot_guide.pdf}
-+\caption[The SADb Explorer pivot view]{With afferent type and animal selected (A), the Ib row and Cat column intersect at 21 (B). Selecting the cell opens the 21 matching Papers in Table. The return control restores the pivot (C).}
++\caption[The SADb Explorer pivot view]{With afferent type and animal selected \textbf{(A)}, the Ib row and Cat column intersect at 21 \textbf{(B)}. Selecting the cell opens the 21 matching Papers in Table. The return control restores the pivot \textbf{(C)}.}
 +\label{fig:sadb_pivot}
 +\end{figure}
 +
@@ -164,12 +439,12 @@
 -
 -I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I built a graphical editor to construct neural circuits for these experiments. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.
 +
-+I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I developed Simulink blocks and a graphical interface for building nonspiking circuits. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.
++This chapter presents the tools I developed to test neural controllers on a human musculoskeletal model and on models of our bipedal robot. The lab's existing software made it impractical to search systematically for controller settings. The human model provided a reference for movement, but testing the robot required a model that represented where its artificial muscles pulled on the joints and how the resulting motion fed back to the controller. I built tools to construct circuits graphically, connect controllers to these mechanical models, and automate tuning. Researchers can now change a sensory connection or move an artificial muscle attachment in simulation, repeat the trial under the same conditions, and trace the effect on muscle force and leg motion.
  
  \section{The Limits of Hand Tuning in AnimatLab}\label{sec:prior_walker}\label{sec:animatlab_results}\label{sec:sns_gaps}
  
 -I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs cycled in a stepping-like motion while in air, but the model fell when active support was removed (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.
-+I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.
++In a course project, Connor Morrow and I tested whether the neural circuit of \citet{deng_neuromechanical_2019} could coordinate the legs of the sagittal-plane biped of \citet{li_bipedal_2017}. We connected the circuit and body in AnimatLab, a graphical program for linking neurons, muscles, and sensory feedback \citep{cofer_animatlab_2010}, and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run.
  
  \begin{figure}[htbp]
  \centering
@@ -178,7 +453,7 @@
  \includegraphics[width=\linewidth,height=0.19\textheight,keepaspectratio]{LI_DENG_FALL_FRAME.png}
  \end{minipage}
 -\caption[Original controller-transfer experiment]{The Li--Deng model cycled its legs in suspension (A) and tipped when released for the ground test (B).}
-+\caption[Original controller-transfer experiment]{The legs of the Li--Deng model made stepping-like movements while the model was suspended in air (A). The model fell over when it was lowered to the ground and its support was removed (B).}
++\caption[Original controller-transfer experiment]{The legs of the Li--Deng model made stepping-like movements while the model was suspended in air \textbf{(A)}. The model fell over when it was lowered to the ground and its support was removed \textbf{(B)}.}
  \label{fig:animatlab_model_architecture}
  \end{figure}
  
@@ -218,7 +493,7 @@
  
  \begin{table}[!htbp]
  \centering\small
-@@ -105,11 +102,11 @@
+@@ -105,15 +102,15 @@
  \end{tabularx}
  \end{table}
  
@@ -228,10 +503,45 @@
  I implemented SNS-Simscape as Simulink blocks for neural activity, synapses, sensory signals, muscle activation, and actuator force (Figure~\ref{fig:simulink_sns_implementation}). The library includes both nonspiking equations based on SNS-Toolbox \citep{nourse_sns_2023} and a leaky integrate-and-fire (LIF) block. Sensory blocks represent group Ia fibers, which respond to muscle stretch, and group Ib fibers, which respond to tension.
  
 -In the graphical editor, a researcher can place nonspiking neurons, draw synapses between them, inspect a synapse's strength and reversal potential, and save the circuit. The Build action generates a Simulink circuit from that saved description. Appendix~\ref{sec:app_signal_contracts} gives the editor command and build script. The knee and arm examples use separate builders to add their actuator, sensory, and mechanical blocks.
+-
+-\begin{figure}[!htbp]
+-\centering
+-\includegraphics[width=14cm]{sns_library_20261116.pdf}
 +In the SNS-Simscape interface, \texttt{SNSGui}, a researcher can place nonspiking neurons, connect them with synapses, inspect a synapse's strength and reversal potential, and save the circuit. Choosing \emph{Build} generates the neural portion of a Simulink model. Appendix~\ref{sec:app_signal_contracts} gives the command and build script. Separate builders connect the knee and arm circuits to their actuators, sensory inputs, and mechanical models.
- 
++
++\begin{figure}[!htbp]
++\centering
++\includegraphics[width=14cm]{sns_library.pdf}
+ \caption[Editable SNS-Simscape blocks]{The twelve SNS-Simscape library elements for constructing neural pathways, encoding sensory measurements, and calculating activation and actuator force. The Thelen-style biological-muscle block represents muscle force with a Hill-type model and a rigid tendon.}
+ \label{fig:simulink_sns_implementation}
+ \end{figure}
+@@ -129,7 +126,7 @@
  \begin{figure}[!htbp]
  \centering
+ \includegraphics[width=14cm]{sns_knee_reflex_authoritative.pdf}
+-\caption[Transient knee feedback response]{The knee circuit (A) receives a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} extensor Ia pulse (B). Stimulated and control knee angles (C) and motor-neuron activity (D) share the dashed onset line. The left column shows recovery in seconds and the right enlarges onset in milliseconds. Flexion is negative.}
++\caption[Transient knee feedback response]{The knee circuit \textbf{(A)} receives a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} extensor Ia pulse \textbf{(B)}. Stimulated and control knee angles \textbf{(C)} and motor-neuron activity \textbf{(D)} share the dashed onset line. The left column shows recovery in seconds and the right enlarges onset in milliseconds. Flexion is negative.}
+ \label{fig:sns_reflex_current}\label{fig:simulink_reflex_topology}
+ \end{figure}
+ 
+@@ -138,7 +135,7 @@
+ \begin{figure}[!htbp]
+ \centering
+ \includegraphics[width=14cm]{sns_cup_reflex_authoritative.pdf}
+-\caption[Loaded-cup feedback comparison]{Feedback circuit (A), arm geometry (B), load ramp (C), elevation response (D), and normalized pressure command (E). The BPA20 block supplies actuator force. The \qty{10}{\second} endpoint compares responses during increasing load, rather than equilibrium sag.}
++\caption[Loaded-cup feedback comparison]{Feedback circuit \textbf{(A)}, arm geometry \textbf{(B)}, load ramp \textbf{(C)}, elevation response \textbf{(D)}, and normalized pressure command \textbf{(E)}. The BPA20 block supplies actuator force. The \qty{10}{\second} endpoint compares responses during increasing load, rather than equilibrium sag.}
+ \label{fig:sns_beverage_current}
+ \end{figure}
+ \FloatBarrier
+@@ -158,7 +155,7 @@
+ \begin{figure}[!htbp]
+ \centering
+ \includegraphics[width=\linewidth]{controller_retest_and_optimization.pdf}
+-\caption[Controller retesting and staged parameter optimization]{(A) Two left-leg pathways in the W2L Simulink circuit provide an example of what the graphical editor exposes. The CAD sequence at right shows how to repeat a controller test with revised geometry. (B) For each neural function or physical task, I specify the target, run bounded trials, and retest the selected settings.}
++\caption[Controller retesting and staged parameter optimization]{\textbf{(A)} Two left-leg pathways in the W2L Simulink circuit provide an example of what the graphical editor exposes. The CAD sequence at right shows how to repeat a controller test with revised geometry. \textbf{(B)} For each neural function or physical task, I specify the target, run bounded trials, and retest the selected settings.}
+ \label{fig:sns_design_fit_workflow}
+ \end{figure}
+ 
 @@ -172,7 +169,7 @@
  
  I adapted the four-stage training method of \citet{hunt_development_2017} to the human model. The first stage sets the intrinsic period to approximately twice the target locomotor period. The second tunes the circuit to synchronize with the sensory input. The third fits feedforward motor recruitment, and the fourth refines it with sensory feedback. The recruitment targets came from inverse mechanics applied to reference motion. Agreement with those targets measures how closely the circuit reproduces the estimated muscle activation.
@@ -241,7 +551,7 @@
  
  The physical tasks change the loads and sensory information available to a saved controller (Table~\ref{tab:sns_curriculum}). During suspension, \emph{deafferented} means that sensory feedback to the controller is disabled and \emph{afferented} means that it is enabled. Suspension permits a test of recruitment and timing before the feet meet the ground. Standing and supported stepping then test whether the legs bear load and transfer it between the feet.
  
-@@ -193,19 +190,19 @@
+@@ -193,24 +190,24 @@
  \end{tabularx}
  \end{table}
  
@@ -266,16 +576,41 @@
  
  \begin{figure}[!htbp]
  \centering
-@@ -237,7 +234,7 @@
+ \includegraphics[width=14cm]{biw2lvar_air_aligned_authoritative.pdf}
+-\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \qtyrange{7}{11}{\second}: bilateral flexor RG voltage (A), right knee-extensor and knee-flexor MN voltages (B), native flexion-negative knee angles (C), and superior suspension and explicit-support forces (D). Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}
++\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \qtyrange{7}{11}{\second}: bilateral flexor RG voltage \textbf{(A)}, right knee-extensor and knee-flexor MN voltages \textbf{(B)}, native flexion-negative knee angles \textbf{(C)}, and superior suspension and explicit-support forces \textbf{(D)}. Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}
+ \label{fig:sns_biw2l_air}
+ \end{figure}
+ 
+@@ -225,7 +222,7 @@
  \begin{figure}[!htbp]
  \centering
- \includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short_20261031.pdf}
+ \includegraphics[width=\textwidth]{syn6_suspended_kinematics.pdf}
+-\caption[Joint motion of the suspended six-synergy model]{Hip, knee, and ankle angles for seven suspended syn6 cycles (light blue) and their mean (solid blue). The reference curves are recorded walking kinematics from the OpenSim Subject01 example (dashed) and walking at \qty{1.25}{\meter\per\second} simulated by \citet{ong_predicting_2019} (dotted). The legs share phase zero at maximum right-knee flexion. Dark bars below each leg mark stance in each reference, and gray bars mark swing. The suspended model had no foot contact. Knee flexion is negative.}
++\caption[Joint motion of the suspended six-synergy model]{Hip, knee, and ankle angles for seven suspended syn6 cycles and their mean. The reference curves are recorded walking kinematics from the OpenSim Subject01 example and walking at \qty{1.25}{\meter\per\second} simulated by \citet{ong_predicting_2019}. The legs share phase zero at maximum right-knee flexion. The bars below each leg mark stance and swing in the walking references. The suspended model had no foot contact. Knee flexion is negative.}
+ \label{fig:sns_syn6_overlay}
+ \end{figure}
+ \FloatBarrier
+@@ -236,8 +233,8 @@
+ 
+ \begin{figure}[!htbp]
+ \centering
+-\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short_20261031.pdf}
 -\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. Solid lines show the left leg and dashed lines the right. Joint cycling continued in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
-+\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. Solid lines show the left leg and dashed lines the right. The joints continued to flex and extend in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
++\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short.pdf}
++\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. The joints continued to flex and extend in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
  \label{fig:sns_ablation_pair}
  \end{figure}
  
-@@ -254,13 +251,13 @@
+@@ -247,20 +244,20 @@
+ 
+ \begin{figure}[!htbp]
+ \centering
+-\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{cad_supported_20261116.png}
++\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{cad_supported.png}
+ \caption[CAD robot under supported hybrid control]{Views of the selected CAD robot at \qty{22.9}{\second}. The model uses 54 reference-tension actuators, SNS timing, and engineering force allocation. During \qtyrange{16}{28}{\second}, measured vertical assistance is \qty{77.5}{\percent} of body weight; lateral and attitude guidance remain active.}
+ \label{fig:ah001_supported_control}
+ \end{figure}
  
  \subsection{Execution Time for Repeated Controller Trials}\label{sec:sns_execution}
  
@@ -330,7 +665,7 @@
 -\includegraphics[width=14cm]{bpa_exploded_cutaway.pdf}
 -\caption[End deformation and proposed BPA experiments]{Proposed investigation of the end effect. (A) The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. (B) An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
 +\includegraphics[width=14cm]{bpa_loading_conditions.pdf}
-+\caption[BPA end deformation, proposed tests, and exploded wall model]{Proposed investigation of the end effect. (A) The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. (B) An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
++\caption[BPA end deformation, proposed tests, and exploded wall model]{Proposed investigation of the end effect. \textbf{(A)} The fittings constrain the local diameter while the central span expands. The profiles show the geometric hypothesis. \textbf{(B)} An axial guide permits free or loaded shortening, while locking the guide gives an isometric force test. Diameter and fitting separation distinguish wall deformation from fitting motion.}
  \label{fig:bpa_construction}
  \end{figure}
  
@@ -341,7 +676,7 @@
 +\ContinuedFloat
 +\centering
 +\includegraphics[trim=0 0 0 20bp,clip,width=\textwidth]{bpa_exploded_cutaway.pdf}
-+\caption[]{\textit{Continued.} (C) Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}
++\caption[]{\textit{Continued.} \textbf{(C)} Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}
 +\label{fig:bpa_exploded_wall}
 +\end{figure}
 +
@@ -392,6 +727,77 @@
 +\caption[Comparing controller and mechanical changes in simulation]{Each repeat changes one sensory pathway or one actuator route. Aligning the responses at the stimulus or foot contact reveals which signal diverges first. Appendix~\ref{sec:app_execution_provenance} identifies the tools used to prepare, run, and inspect each trial.}
 +\label{fig:discussion_neuromechanical_workflow}
 +\end{figure}
+--- author_export/chapters/93-AppendixB.tex
++++ local_revision/chapters/93-AppendixB.tex
+@@ -193,7 +193,7 @@
+ \centering
+ \includegraphics[width=\textwidth]{animatlab_spiking_conversion.pdf}
+ % ALT TEXT: see animatlab_spiking_conversion_alt.txt beside the figure file.
+-\caption{AnimatLab left hip (left column) and knee (right) angles over \qtyrange{0.5}{5}{\second}: nonspiking baseline (row A1), full spiking conversion (row B1), and spiking thresholds with voltage-dependent synapses retained (row C1).}
++\caption{AnimatLab left hip (left column) and knee (right) angles over \qtyrange{0.5}{5}{\second}: nonspiking baseline (row \textbf{A1}), full spiking conversion (row \textbf{B1}), and spiking thresholds with voltage-dependent synapses retained (row \textbf{C1}).}
+ \label{fig:spike_animatlab}
+ \end{figure}
+ 
+--- author_export/chapters/94-AppendixC.tex
++++ local_revision/chapters/94-AppendixC.tex
+@@ -148,7 +148,7 @@
+ 
+ \FloatBarrier
+ 
+-The prediction inputs are distinct from the per-actuator measurements in Table~\ref{tab:final_test_dimensions}. The flexor predictions use a shared resting length of \qty{561.49}{\mm}, with the nominal \qty{562}{\mm} label retained on the physical-test plot. The saved route tendon parameter and the effective prediction input are related by
++The prediction inputs are distinct from the per-actuator measurements in Table~\ref{tab:final_test_dimensions}. The flexor predictions use a shared resting length of \qty{561.49}{\mm}. The saved route tendon parameter and the effective prediction input are related by
+ \begin{equation}
+ \begin{aligned}
+ l_{\mathrm{ten,model}} &= l_{\mathrm{ten,design}}-\qty{20}{\mm}=\qty{5}{\mm},\\
+@@ -322,16 +322,16 @@
+ 
+ \begin{figure}[htbp]
+ \centering
+-\includegraphics[width=\textwidth]{bone_context_extensor20mm_20261030.png}
+-% ALT TEXT: see bone_context_extensor20mm_20261030.alt.txt beside the figure file.
++\includegraphics[width=\textwidth]{bone_context_extensor20mm.png}
++% ALT TEXT: see bone_context_extensor20mm.alt.txt beside the figure file.
+ \caption[Optimized extensor route on the bone meshes]{Optimized extensor route at \ang{0}: \textbf{(A)} lower-body context and \textbf{(B)} knee close-up. Black shows the BPA--tendon route; gray patterned paths show human vastus references.}
+ \label{fig:app_bone_mesh}
+ \end{figure}
+ 
+ \begin{sidewaysfigure}[p]
+ \centering
+-\includegraphics[width=\textheight]{direct_route_contact_detail_20261030.pdf}
+-% ALT TEXT: see direct_route_contact_detail_20261030.alt.txt beside the figure file.
++\includegraphics[width=\textheight]{direct_route_contact_detail.pdf}
++% ALT TEXT: see direct_route_contact_detail.alt.txt beside the figure file.
+ \caption[Extensor route at contact-release poses]{Saved extensor route at eight contact-release poses, enlarged in the femur frame. Titles identify the next released contact. The proximal origin lies outside this close-up; Figure~\ref{fig:app_bone_mesh} supplies anatomical context.}
+ \label{fig:app_route_geometry}
+ \end{sidewaysfigure}
+@@ -404,8 +404,8 @@
+ 
+ \begin{sidewaysfigure}[p]
+ \centering
+-\includegraphics[width=\textheight]{pulley_torque_isobars_20261030.pdf}
+-\caption{Predicted torque at five saved pressure levels for two BPAs through a two-part tackle, with sizes re-solved. Black dashed curves show the maximum-isometric human reference.}
++\includegraphics[width=\textheight]{pulley_torque_isobars.pdf}
++\caption{Predicted torque at five saved pressure levels for two BPAs through a two-part tackle, with sizes re-solved. The human reference gives maximum isometric torque.}
+ \label{fig:PulleySurfaces}
+ \end{sidewaysfigure}
+ 
+@@ -415,14 +415,14 @@
+ \begin{figure}[htbp]
+ \centering
+ \includegraphics[width=\textwidth]{extensor_cam_AF_bones.pdf}
+-\caption{Cam-extensor poses A--F, spanning \ang{-120} to \ang{-27}. Blue lines show the route; colored outlines show the clearance envelopes. Gray silhouettes show the registered OpenSim anatomical reference; no foot is drawn. The remaining poses and legend are in Figure~\ref{fig:app_cam_GH}.}
++\caption{Cam-extensor poses \textbf{A--F}, spanning \ang{-120} to \ang{-27}. The route and clearance envelopes are registered to the OpenSim femur and tibia. The remaining poses and legend are in Figure~\ref{fig:app_cam_GH}.}
+ \label{fig:app_cam_AF}
+ \end{figure}
+ 
+ \begin{figure}[htbp]
+ \centering
+ \includegraphics[width=\textwidth]{extensor_cam_GH_bones.pdf}
+-\caption{Cam-extensor poses G and H at \ang{-8} and \ang{10}, with the legend, \qty{96.9}{\mm} cam-drum radius, and contact-release schedule. Panel letters continue Figure~\ref{fig:app_cam_AF}.}
++\caption{Cam-extensor poses \textbf{G} and \textbf{H} at \ang{-8} and \ang{10}, with the legend, \qty{96.9}{\mm} cam-drum radius, and contact-release schedule. Panel letters continue Figure~\ref{fig:app_cam_AF}.}
+ \label{fig:app_cam_GH}
+ \end{figure}
+ \clearpage
 --- author_export/chapters/95-AppendixD.tex
 +++ local_revision/chapters/95-AppendixD.tex
 @@ -93,7 +93,7 @@
@@ -403,7 +809,16 @@
  
  The MathWorks MuJoCo--Simulink C++ S-function exchanges command and measurement arrays with an existing MuJoCo mechanism. I adapted the build for MuJoCo 2.3.7 and Windows MinGW, selected keyframe 0 on reset when present, and added five right-side readbacks to an MJCF copy. They report knee angle and angular speed and vastus medialis path length, velocity, and force. The runtime interface preserves the mechanism supplied to it. Preparing that mechanism from OpenSim requires the corresponding geometry paths and MyoConverter patches.
  
-@@ -182,7 +182,7 @@
+@@ -109,7 +109,7 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{w2l_crossengine_20261116.png}
++\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{w2l_crossengine.png}
+ \caption[Matched-input W2L rhythm-core comparison]{Corresponding rhythm signals in the full NumPy W2L network and its Simulink core under a common drive and prescribed heel inputs. Best-lag correlation aligns the signals by \qty{2}{\milli\second}. Each implementation received the same external input sequence.}
+ \label{fig:w2l_crossengine}
+ \end{figure}
+@@ -182,13 +182,13 @@
  
  When I transferred Li's controller and body to MuJoCo, mean forward speed fell to \qty{0.040}{\meter\per\second} in a \qty{20}{\second} ground test. The right foot had eleven stance episodes with a period of \qty{1.294}{\second}. The left foot had none. Right-side cadence alone would have missed the transfer failure.
  
@@ -412,6 +827,13 @@
  
  The earlier instrumented AnimatLab configuration provides a different recording, with joint, neural, sensory, and body-motion channels over \qty{10}{\second} at \qty{0.2}{\milli\second} intervals (Figure~\ref{fig:animatlab_short_response}). Contact-sensory channels record membrane voltage. The trial starts with an external horizontal force and has no recorded timed vertical release, so the aligned window supports analysis of the suspended circuit response. A reorganized bilateral project also ran to completion, although its networks did not sustain alternation.
  
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{animatlab_short_response_20261116.png}
++\includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{animatlab_short_response.png}
+ \caption[Archived AnimatLab neural and mechanical recording]{Aligned RG, PF, and MN activity and hip, knee, and ankle motion from the same suspended AnimatLab trial over \qtyrange{1}{2.5}{\second}. Extensor and flexor pathways are blue solid and orange dashed. The traces show continuously varying membrane voltages, and the original joint conventions, including positive knee flexion, are retained. This is the earlier instrumented configuration.}
+ \label{fig:animatlab_short_response}
+ \end{figure}
 @@ -201,7 +201,7 @@
  
  \subsection{BiW2Lvar+ Air Stages}\label{sec:app_biw2l_air}
@@ -420,6 +842,24 @@
 +The revised nonspiking BiW2Lvar+ controller completed two \qty{16}{\second} air trials on the repaired Gait2392 human model with native MuJoCo biological muscles. The trials share learned weights and a PF-to-MN expression scale of 0.1. The four training stages follow \citet{hunt_development_2017}. Table~\ref{tab:app_air_stages} gives the principal knee-flexion peaks and the intervals from which the periods were measured.
  
  The retained adapter and fitted command settings specify zero sustained flexor and extensor command in stage 1 and normalized command 0.15 to all four channels in stage 2. The same startup signal adds 0.4 to right extensor and left flexor commands for the first 50 neural updates (\qty{100}{\milli\second}). The adapter suppresses postural, balance, and functional commands and sets the direct tonic RG and legacy shared-drive inputs to zero. Sensory return is disabled in stage 1 and enabled in stage 2. Both sustained command and sensory return therefore change together. The original launch adapter and the complete consumed command stream are unavailable. These settings describe the compatible retained implementation.
+ 
+@@ -255,7 +255,7 @@
+ \begin{figure}[p]
+ \centering
+ \includegraphics[width=14cm]{PF_timing_authoritative.pdf}
+-\caption[Implemented syn6 PF transmission versus intended primitives]{Raw right-side syn6 S1, S2, and S5 transmission over two calibration cycles, \qtyrange{2.466}{4.932}{\second}. Solid blue curves show actual transmission; dashed black curves show the intended primitive, and dotted lines mark the 0.2 activity threshold. All stored samples are retained, without channel-specific phase shifts. S1 and S2 have displaced timing, while S5 remains active. The zero-of-twelve verdict comes from the separate full nine-cycle averaged audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}
++\caption[Implemented syn6 PF transmission versus intended primitives]{Raw right-side syn6 S1, S2, and S5 transmission over two calibration cycles, \qtyrange{2.466}{4.932}{\second}. The dotted lines mark the 0.2 activity threshold. All stored samples are retained, without channel-specific phase shifts. S1 and S2 have displaced timing, while S5 remains active. The zero-of-twelve verdict comes from the separate full nine-cycle averaged audit. This offline diagnostic is separate from the older-readout syn6 air candidate.}
+ \label{fig:app_pf_timing}
+ \end{figure}
+ 
+@@ -318,7 +318,7 @@
+ \begin{figure}[p]
+ \centering
+ \includegraphics[width=\textwidth]{gait2392_ik_overlay.pdf}
+-\caption[Direct joint-angle and stance overlay]{Supported Gait2392 human-model motion compared with the inverse-kinematics reference. Columns show the right and left legs. Blue curves and bands show the model mean and one standard deviation across ten cycles per leg; black dashed curves show the reference. Each leg is aligned to its own foot-loading onset, without an angle offset, amplitude adjustment, or fitted phase shift. The bottom row compares model stance fraction across cycles with reference stance and swing, using a \qty{50}{\newton} loading threshold. Absolute-angle errors are reported in Table~\ref{tab:ik_absolute_rmse}.}
++\caption[Direct joint-angle and stance overlay]{Supported Gait2392 human-model motion compared with the inverse-kinematics reference. Columns show the right and left legs. The model curves summarize ten cycles per leg. Shading spans one standard deviation about the mean. Each leg is aligned to its own foot-loading onset, without an angle offset, amplitude adjustment, or fitted phase shift. The bottom row compares model stance fraction across cycles with reference stance and swing, using a \qty{50}{\newton} loading threshold. Absolute-angle errors are reported in Table~\ref{tab:ik_absolute_rmse}.}
+ \label{fig:app_gait2392_ik_overlay}\label{fig:gait2392_ik_overlay}
+ \end{figure}
  
 @@ -348,7 +348,7 @@
  
@@ -430,6 +870,17 @@
  
  \subsection{CAD Robot: Contact Handover and Supported Clearance}\label{sec:app_cad_supported_stance}
  
+@@ -358,8 +358,8 @@
+ 
+ \begin{figure}[p]
+ \centering
+-\includegraphics[width=14cm]{CAD_supported_traces_20261116.pdf}
+-\caption[Quantitative supported CAD stepping]{CAD signals during $16\leq t<28$\,s: RG flexor-minus-extensor voltage (A), native flexion-negative knees (B), foot normal loads (C), and whole-foot mesh heights (D). Right is solid blue; left is dashed orange. All 1,200 samples per series are retained. Reference lines mark the \ang{-1} guard, \qtylist{7.36;15}{\newton} load criteria, and \qty{5}{\milli\meter} clearance. Negative heights indicate soft-contact penetration. Ideal reference tensions and engineering allocation operate with \qty{77.5}{\percent} vertical assistance.}
++\includegraphics[width=14cm]{CAD_supported_traces.pdf}
++\caption[Quantitative supported CAD stepping]{CAD signals during $16\leq t<28$\,s: RG flexor-minus-extensor voltage \textbf{(A)}, native flexion-negative knees \textbf{(B)}, foot normal loads \textbf{(C)}, and whole-foot mesh heights \textbf{(D)}. All 1,200 samples per series are retained. Reference lines mark the \ang{-1} guard, \qtylist{7.36;15}{\newton} load criteria, and \qty{5}{\milli\meter} clearance. Negative heights indicate soft-contact penetration. Ideal reference tensions and engineering allocation operate with \qty{77.5}{\percent} vertical assistance.}
+ \label{fig:app_cad_supported_traces}
+ \end{figure}
+ 
 @@ -381,7 +381,7 @@
  
  \subsection{MuJoCo Network and Ground Evaluation}
@@ -439,11 +890,13 @@
  
  \begin{table}[htbp]
  \caption{Supported ground trial with the same selected parameters for \qty{16}{\second} and no spiking retuning. The kinematic score, detected cycles, and contact fractions use $2\leq t<16$\,s. Less-negative scores indicate closer kinematic agreement. The signed knee minimum is the minimum of the right leg's mean detected cycle, with flexion negative. Contact fraction counts samples with normal force above \qty{20}{\newton} independently of cycle detection. The nonspiking left leg therefore remains loaded for a fraction of 0.985 while completing no detected cycles.}
-@@ -404,10 +404,11 @@
+@@ -403,11 +403,12 @@
+ 
  \begin{figure}[p]
  \centering
- \includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
+-\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short_20261031.pdf}
 -\caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Matched \qtyrange{10}{12.5}{\second} ground-trial window: nonspiking controller (left) and untuned spiking controller (right), at the same selected parameters and support settings. Rows show right-side RG and PF readouts, vastus-lateralis and semimembranosus activation, and bilateral hip, knee, and ankle angles. Neural rows pair extensor (orange solid) and flexor (blue dashed) outputs; joint rows pair right (orange solid) and left (blue dashed) legs. Spiking signals are filtered readouts, and muscle activation is the actuator state.}
++\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]{spiking_ground_neuromechanics_short.pdf}
 +\caption[Matched neural and mechanical responses with nonspiking and spiking controllers]{Both controllers used the same parameters and support. Columns show nonspiking (left) and untuned spiking (right) responses during the \qtyrange{10}{12.5}{\second} ground-trial window. Solid orange and dashed blue distinguish extensors and flexors in the right-side RG, PF, and muscle traces (vastus lateralis and semimembranosus). For hip, knee, and ankle angles they distinguish right and left. Spiking readouts are filtered. Muscle activation is the actuator state.}
  \label{fig:spike_rhythm}\label{fig:spike_ground}
  \end{figure}
@@ -695,11 +1148,3 @@
  %  \flyleaf           % A. Flyleaf
  %  \abspage           % B. Abstract
  %  \copyrightpage     % C. Copyright page
---- author_export/chapters/01-copyright.tex
-+++ local_revision/chapters/01-copyright.tex
-@@ -1,4 +1 @@
--% Copyright page. Uses the psutex class \copyrightpage macro, which prints
--% "©Copyright by <author>, <submitdate>, All Rights Reserved" from the
--% \author{} and \submitdate{} declarations in main.tex.
--\copyrightpage
-+\copyrightpage[2026]

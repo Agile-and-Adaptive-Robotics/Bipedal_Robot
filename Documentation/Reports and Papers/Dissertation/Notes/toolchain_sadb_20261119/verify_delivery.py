@@ -1,4 +1,4 @@
-"""Compare independent builds, publish both PDFs, and check Chapter 6's destinations."""
+"""Compare independent builds, verify the source package, and publish the full dissertation."""
 import argparse
 import hashlib
 import json
@@ -9,12 +9,13 @@ from zipfile import ZipFile
 
 import pymupdf as pdf
 
+from check_print_margins import inspect_links
+
 here=Path(__file__).resolve().parent
 diss=here.parents[1]
 repo=diss.parents[2]
 output=diss/"output/pdf"
 full=output/"Bolen_Dissertation_Toolchain_SADb_20261119.pdf"
-chapter=output/"Bolen_Chapter_6_Toolchain_20261119.pdf"
 
 
 def sha(path):
@@ -40,62 +41,6 @@ def check_build(build):
     return {"pages":page_count,"embedded_font_resources":len(fonts),
             "errors":0,"undefined_citations_or_references":0,"overfull_boxes":0,
             "oversized_floats":0,"bibtex_warnings":0,"pdftex_notices":log.count("pdfTeX warning")}
-
-
-def extract(book, first, following, path):
-    """Keep each border, its destination, the folios, and the subsection bookmarks."""
-    dests=book.resolve_names()
-    with pdf.open() as part:
-        part.insert_pdf(book,from_page=first,to_page=following-1,links=False)
-        links={"inside_chapter":0,"in_full_dissertation":0,"web":0}
-        for page in book.pages(first,following):
-            annots=[]
-            for link in page.get_links():
-                xref=link["xref"]
-                obj=book.xref_object(xref)
-                assert not re.search(r"\b\d+ \d+ R\b",obj),obj
-                ref=part.get_new_xref()
-                part.update_object(ref,obj)
-                if link["kind"]==pdf.LINK_URI:
-                    links["web"]+=1
-                else:
-                    key=link["nameddest"]
-                    dest=dests[key]
-                    if first<=dest["page"]<following:
-                        x,y=dest["to"]
-                        target=part.page_xref(dest["page"]-first)
-                        action=f"<</S/GoTo /D [{target} 0 R /XYZ {x} {y} null]>>"
-                        links["inside_chapter"]+=1
-                    else:
-                        action=f"<</S/GoToR /F {pdf.get_pdf_str(full.name)} /D {pdf.get_pdf_str(key)}>>"
-                        links["in_full_dissertation"]+=1
-                    part.xref_set_key(ref,"A",action)
-                annots.append(f"{ref} 0 R")
-            if annots:
-                part.xref_set_key(part.page_xref(page.number-first),"Annots","["+" ".join(annots)+"]")
-        outline=[]
-        for level,title,num,dest in book.get_toc(simple=False):
-            if first<num<=following:
-                location=dests[dest["nameddest"]]
-                x,y=location["to"]
-                outline.append([level,title,num-first,{"kind":pdf.LINK_GOTO,"page":num-first-1,
-                                                        "to":pdf.Point(x,792-y),"zoom":0}])
-        part.set_toc(outline)
-        part.set_page_labels([dict(startpage=0,style="D",prefix="",firstpagenum=int(book[first].get_label()))])
-        part.set_metadata(dict(author="Ben Bolen",title="Chapter 6. Tools for Constructing and Testing Neuromechanical Models"))
-        part.save(path,garbage=4,deflate=True)
-    with pdf.open(path) as part:
-        assert len(part)==following-first and len(part.get_toc())==len(outline)
-        for i,p in enumerate(part):
-            src=book[first+i]
-            assert p.get_label()==src.get_label() and p.get_text()==src.get_text()
-            assert p.get_pixmap().digest==src.get_pixmap().digest,p.number
-            original,clipped=src.get_links(),p.get_links()
-            assert len(clipped)==len(original),(i,len(original),len(clipped))
-            for old,new in zip(original,clipped):
-                for key in ("Rect","C","Border","H"):
-                    assert book.xref_get_key(old["xref"],key)==part.xref_get_key(new["xref"],key),(i,key)
-    return links
 
 
 def publish(source,target):
@@ -124,51 +69,197 @@ def printed_workflow_sizes(build):
     return sizes
 
 
-if __name__=="__main__":
-    args=argparse.ArgumentParser()
-    args.add_argument("local",type=Path)
-    args.add_argument("transfer",type=Path)
-    args=args.parse_args()
-    local,other=args.local.resolve(),args.transfer.resolve()
-    evidence={"local_build":check_build(local),"transfer_build":check_build(other)}
-    evidence["printed_workflow_sizes"]=printed_workflow_sizes(local)
-    with pdf.open(local/"main.pdf") as a, pdf.open(other/"main.pdf") as b:
-        assert len(a)==len(b) and a.get_toc()==b.get_toc()
-        for ap,bp in zip(a,b):
-            assert ap.get_text()==bp.get_text(),ap.number
-            assert ap.get_pixmap().digest==bp.get_pixmap().digest,ap.number
-        evidence["full_page_text_and_72dpi_RGB_renders_matched"]=len(a)
-        toc=a.get_toc()
-        first=next(num-1 for lv,t,num in toc if lv==1 and "Tools for Constructing" in t)
-        following=next(num-1 for lv,t,num in toc if lv==1 and num-1>first)
-        evidence["chapter_6"]={"printed_pages":[a[first].get_label(),a[following-1].get_label()],
-                               "page_count":following-first,"links":extract(a,first,following,local/"chapter6_checked.pdf")}
-        intro=next(num-1 for lv,t,num in toc if lv==1 and t=="Introduction")
-        assert a[2].get_text().splitlines()[:2]==["i","Abstract"] and a[intro].get_label()=="1"
-        assert a[1].get_text().strip()=="© 2026 Ben Bolen"
-        evidence["front_openings"]={t:a[num-1].get_label() for lv,t,num in toc if lv==1 and num<=intro+1}
-        figure_labels=["fig:sadb_clusters","fig:sns_reflex_current","fig:sns_syn6_overlay","fig:bpa_exploded_wall","fig:sensorium_hierarchy","fig:discussion_neuromechanical_workflow"]
-        aux="".join(p.read_text(errors="replace") for p in (local/"chapters").glob("*.aux"))
-        evidence["figure_number_and_folio"]={}
-        for lab in figure_labels:
-            number,folio=re.search(r"\\newlabel\{"+lab+r"\}\{\{([^}]+)\}\{(\d+)\}",aux).groups()
-            evidence["figure_number_and_folio"][lab]=[number,folio]
-        assert evidence["figure_number_and_folio"]["fig:discussion_neuromechanical_workflow"][0]=="7.5"
-        evidence["visible_link_boxes_in_full_pdf"]=sum(a.xref_get_key(link["xref"],"Border")[1].replace(" ","")=="[001]" for p in a for link in p.get_links())
-        assert evidence["visible_link_boxes_in_full_pdf"]>1000
-    transfer=json.loads((here/"TRANSFER.json").read_text())
-    with ZipFile(diss/"Bolen_Dissertation.zip") as z:
-        evidence["chapter_sources_matching_author_export"]=[]
-        for file in sorted((diss/"Final/chapters").glob("*.tex")):
-            key="chapters/"+file.name
-            if key not in z.namelist() or key in transfer["members"]:
+def verify_front_and_figures(book, local):
+    toc = book.get_toc()
+    intro = next(num - 1 for level, title, num in toc if level == 1 and title == "Introduction")
+    assert book[2].get_text().splitlines()[:2] == ["i", "Abstract"] and book[intro].get_label() == "1"
+    assert book[1].get_text().strip() == "© 2026 Ben Bolen"
+    heading = next(num for level, title, num in toc if level == 1 and title == "Isometric Force Characterization of Braided Pneumatic Actuators")
+    first, second = book[heading - 1], book[heading]
+    heading_text = " ".join(first.get_text().split())
+    assert "Author contributions." in heading_text and "Funding Acquisition, A.H." in heading_text
+    assert "This chapter develops and validates" not in heading_text
+    assert "This chapter develops and validates" in " ".join(second.get_text().split())
+    assert {link["uri"] for link in first.get_links() if link.get("uri")} == {
+        "https://doi.org/10.3390/act15050230", "https://pdxscholar.library.pdx.edu/mengin_fac/553/"}
+    first_sns = next(num - 1 for level, title, num in toc if level == 1 and "Tools for Constructing" in title)
+    after_sns = next(num - 1 for level, title, num in toc if level == 1 and num - 1 > first_sns)
+    aux = "".join(path.read_text(encoding="utf-8", errors="replace") for path in (local / "chapters").glob("*.aux"))
+    figures = {}
+    for label in ["fig:pinned_extensor", "fig:cam_route", "fig:extensor_test", "fig:flexor_test",
+                  "fig:sadb_clusters", "fig:sns_reflex_current", "fig:sns_syn6_overlay", "fig:bpa_exploded_wall",
+                  "fig:sensorium_hierarchy", "fig:discussion_neuromechanical_workflow"]:
+        figures[label] = list(re.search(r"\\newlabel\{" + label + r"\}\{\{([^}]+)\}\{(\d+)\}", aux).groups())
+    expected = {"fig:pinned_extensor":"4.9", "fig:cam_route":"4.12", "fig:extensor_test":"4.13",
+                "fig:flexor_test":"4.14", "fig:discussion_neuromechanical_workflow":"7.5"}
+    assert all(figures[key][0] == number for key, number in expected.items())
+    toc_pattern = re.compile(r"\\contentsline \{(chapter|section|subsection)\}\{\\numberline \{([^}]+)\}(.+)\}\{([^{}]+)\}\{[^{}]+\}%")
+    headings = [dict(level=m[1], number=m[2], title=m[3], printed_page=m[4])
+                for line in (local / "main.toc").read_text(encoding="utf-8").splitlines()
+                if (m := toc_pattern.fullmatch(line))]
+    numbers = {row["title"]:row["number"] for row in headings}
+    assert numbers["Tracing a Timing Error in the Six-Synergy Controller"] == "6.5.3"
+    assert numbers["SNS Tools and Neuromechanical Experiments"] == "7.2.4"
+    named = book.resolve_names()
+    front_lists = {}
+    for category, extension in (("figure", "lof"), ("table", "lot")):
+        pattern = re.compile(r"^\\contentsline \{" + category + r"\}\{\\numberline \{([^}]+)\}.*\}\{([^{}]+)\}\{([^{}]+)\}%")
+        entries = []
+        for line in (local / ("main." + extension)).read_text(encoding="utf-8").splitlines():
+            if not line.startswith(r"\contentsline {" + category + "}"):
                 continue
-            assert file.read_bytes().replace(b"\r\n",b"\n")==z.read(key).replace(b"\r\n",b"\n"),key
-            evidence["chapter_sources_matching_author_export"].append(key)
-    output.mkdir(parents=True,exist_ok=True)
-    publish(local/"main.pdf",full)
-    publish(local/"chapter6_checked.pdf",chapter)
-    evidence["sha256"]={x.relative_to(diss).as_posix():sha(x) for x in (full,chapter,here/"Dissertation_Overleaf_updates.zip")}
-    evidence["build_directories"]=[p.relative_to(repo).as_posix() for p in (local,other)]
-    (here/"FINAL_VERIFICATION.json").write_text(json.dumps(evidence,indent=2)+"\n",encoding="utf8")
-    print(json.dumps(evidence,indent=2))
+            number, folio, target = pattern.fullmatch(line).groups()
+            assert book[named[target]["page"]].get_label() == folio, (number, folio, target)
+            entries.append(number)
+        front_lists[category] = len(entries)
+    return {
+        "front_list_entries_with_matching_folios": front_lists,
+        "front_openings": {title:book[num - 1].get_label() for level, title, num in toc if level == 1 and num <= intro + 1},
+        "chapter_3": {"publication_heading_printed_page":first.get_label(), "prose_start_printed_page":second.get_label()},
+        "chapter_6": {"printed_pages":[book[first_sns].get_label(), book[after_sns - 1].get_label()],
+                      "page_count":after_sns - first_sns},
+        "figure_number_and_folio": figures, "numbered_chapters_and_sections": headings,
+    }
+
+
+def verify_package():
+    update = json.loads((here / "TRANSFER.json").read_text(encoding="utf-8"))
+    assert Path(update["simulated_update"]["stage"]).is_dir()
+    package = here / "Dissertation_Overleaf_updates.zip"
+    with ZipFile(package) as archive:
+        assert set(archive.namelist()) == set(update["members"])
+        assert all(hashlib.sha256(archive.read(name)).hexdigest() == digest for name, digest in update["members"].items())
+    same_chapters = []
+    from_export = diss / "Bolen_Dissertation.zip"
+    assert sha(from_export) == update["native_snapshots"]["root"]
+    with ZipFile(from_export) as archive:
+        for file in sorted((diss / "Final/chapters").glob("*.tex")):
+            key = "chapters/" + file.name
+            if key in update["members"]:
+                continue
+            assert file.read_bytes().replace(b"\r\n", b"\n") == archive.read(key).replace(b"\r\n", b"\n"), key
+            same_chapters.append(key)
+    return {"package_simulation":update["simulated_update"], "native_exports":update["native_snapshots"],
+            "chapter_sources_matching_author_export":same_chapters,
+            "source_files_in_update":sorted(n for n in update["members"] if n.endswith((".tex", ".cls")))}
+
+
+def verify_axis_revision(old_build, local, old_manifest):
+    import ast
+    import numpy as np
+    from scipy.io import loadmat
+
+    former = json.loads(old_manifest.read_text(encoding="utf-8"))["members"]
+    current = json.loads((here / "TRANSFER.json").read_text(encoding="utf-8"))["members"]
+    assert set(former) == set(current)
+    changed_files = sorted(name for name in current if current[name] != former[name])
+    pair = "figs/30-torque/pinned_extensor_torque"
+    assert changed_files == ["ASSET_OPERATIONS.json", pair + ".alt.txt", pair + ".pdf"]
+    folder = diss / "Figures/30-torque/Components/extensor_figures"
+    builder = (folder / "draw_extensor_figures.py").read_text(encoding="utf-8")
+    settings = re.search(r"ax\.set\(xlim=(\([^()]+\)), ylim=(\([^()]+\)),", builder)
+    xlim, ylim = (ast.literal_eval(x) for x in settings.groups())
+    assert xlim == (-135, 50) and ylim == (-2, 25)
+    data = loadmat(folder / "extensor_data.mat", simplify_cells=True)["tests"]
+    assert len(data) == 6
+    series = {}
+    for key in ("measured", "hybrid"):
+        x = np.concatenate([np.asarray(row[key + "_angle"]).ravel() for row in data])
+        y = np.concatenate([np.asarray(row[key]).ravel() for row in data])
+        assert len(x) == len(y) == 113 and np.isfinite(x).all() and np.isfinite(y).all()
+        assert xlim[0] < x.min() <= x.max() < xlim[1] and ylim[0] < y.min() <= y.max() < ylim[1]
+        series[key] = {"points":len(x), "angle_range_deg":[float(x.min()), float(x.max())],
+                       "torque_range_Nm":[float(y.min()), float(y.max())],
+                       "angles_below_former_minimum":int((x < -120).sum()),
+                       "torques_below_former_minimum":int((y < 0).sum())}
+    drawing = json.loads((folder / "verification.json").read_text(encoding="utf-8"))
+    assert drawing["graphics"]["pinned_extensor_torque"]["pdf_sha256"] == current[pair + ".pdf"]
+    vectors = drawing["pinned_final_artwork"]
+    assert tuple(vectors["common_angle_limits_deg"]) == xlim and tuple(vectors["common_torque_limits_Nm"]) == ylim
+    panels = vectors["panels"]
+    assert len(panels) == len(data)
+    for key in ("measured", "hybrid"):
+        assert sum(p["series"][key]["printed_markers"] for p in panels) == series[key]["points"]
+    finite = sum(p["series"][key]["printed_finite_model_samples"] for p in panels for key in ("optimized", "unoptimized"))
+    supplied = sum(np.isfinite(row[key]).sum() for row in data for key in ("optimized", "unoptimized"))
+    assert finite == supplied
+    outer_clearance = min(p["series"][key]["minimum_ink_clearance_pt"] for p in panels for key in ("hybrid", "measured"))
+    assert outer_clearance > 0.0
+    with pdf.open(old_build / "main.pdf") as before, pdf.open(local / "main.pdf") as final_doc:
+        page_count = len(final_doc)
+        assert len(before) == page_count and before.get_toc() == final_doc.get_toc()
+        text_changes, raster_changes = [], []
+        for old_page, page in zip(before, final_doc):
+            if old_page.get_text() != page.get_text():
+                text_changes.append(page.number + 1)
+            if old_page.get_pixmap().digest != page.get_pixmap().digest:
+                raster_changes.append(page.number + 1)
+        found = [p.number + 1 for p in final_doc if p.get_label() == "105"]
+        assert len(found) == 1 and raster_changes == found and set(text_changes) <= set(found)
+        pix = final_doc[found[0] - 1].get_pixmap(matrix=pdf.Matrix(1.5, 1.5))
+        pix.save(local / "figure_4_9_printed_page.png")
+    return {"updated_package_members":changed_files, "former_final_page_count":page_count,
+            "printed_page":105, "physical_page":found[0], "text_changed_physical_pages":text_changes,
+            "raster_changed_physical_pages":raster_changes, "source_x_limits_deg":xlim,
+            "source_y_limits_Nm":ylim, "plotted_series":series,
+            "finite_model_vertices_verified":finite, "minimum_native_marker_ink_clearance_pt":outer_clearance,
+            "previous_figure_sha256":former[pair + ".pdf"], "current_figure_sha256":current[pair + ".pdf"]}
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("local", type=Path)
+    parser.add_argument("transfer", type=Path)
+    parser.add_argument("--margins", required=True, type=Path,
+                        help="Annotated Poppler margins report for the exact local PDF")
+    parser.add_argument("--before-axis-proof", type=Path)
+    parser.add_argument("--before-axis-package", type=Path)
+    args = parser.parse_args()
+    if bool(args.before_axis_proof) != bool(args.before_axis_package):
+        parser.error("Supply both the preceding proof and its transfer manifest.")
+    local, other = args.local.resolve(), args.transfer.resolve()
+    evidence = {"local_build":check_build(local), "transfer_build":check_build(other),
+                "printed_workflow_sizes":printed_workflow_sizes(local)}
+    local_pdf = local / "main.pdf"
+    margins = json.loads(args.margins.read_text(encoding="utf-8"))
+    assert margins["pass"] and margins["sha256"] == sha(local_pdf)
+    assert margins["links"]["annotation_rectangles_inside_one_inch"]
+    assert all(not row["pages_outside_one_inch"] for row in margins["renders"])
+    assert {144, 288, 300} <= {row["dpi"] for row in margins["renders"]}
+    evidence["physical_margins"] = {row["dpi"]:row["minimum_pt"] for row in margins["renders"]}
+    fonts = json.loads((here / "ACTIVE_FIGURE_FONT_AUDIT.json").read_text(encoding="utf-8"))
+    assert fonts["combined_dissertation"]["pdf_sha256"] == sha(local_pdf)
+    assert fonts["combined_dissertation"]["unembedded_resources"] == 0
+    evidence["active_figure_fonts"] = {"retained_embedding_repairs":len(fonts["retained_incremental_repairs"]),
+        "current_chapter4_artwork":len(fonts["current_chapter4_artwork"]),
+        "compiled_input_pdfs":fonts["combined_dissertation"]["input_pdf_count"]}
+    with pdf.open(local_pdf) as first, pdf.open(other / "main.pdf") as replay:
+        assert len(first) == len(replay) and first.get_toc() == replay.get_toc()
+        assert (local / "main.toc").read_bytes() == (other / "main.toc").read_bytes()
+        for left, right in zip(first, replay):
+            assert left.get_text() == right.get_text(), left.number + 1
+            assert left.get_pixmap().digest == right.get_pixmap().digest, left.number + 1
+        evidence["full_page_text_and_72dpi_RGB_renders_matched"] = len(first)
+        evidence.update(verify_front_and_figures(first, local))
+        links = margins["links"]
+        assert links == inspect_links(replay) and links["all_citation_borders_visible"]
+        assert not links["unresolved_named_internal_links"]
+        evidence["visible_link_boxes_in_full_pdf"] = links["visible_border_annotations"]
+        evidence["citation_boxes"] = {"all":links["citation_annotations"], "visible":links["visible_citation_borders"]}
+    evidence.update(verify_package())
+    if args.before_axis_proof:
+        evidence["final_figure_4_9_revision"] = verify_axis_revision(args.before_axis_proof, local, args.before_axis_package)
+    output.mkdir(parents=True, exist_ok=True)
+    publish(local_pdf, full)
+    if args.margins.resolve() != (here / "FINAL_PRINT_MARGINS.json").resolve():
+        (here / "FINAL_PRINT_MARGINS.json").write_bytes(args.margins.read_bytes())
+    evidence["sha256"] = {path.relative_to(diss).as_posix():sha(path)
+                          for path in (full, here / "Dissertation_Overleaf_updates.zip")}
+    evidence["build_directories"] = [path.relative_to(repo).as_posix() for path in (local, other)]
+    (here / "FINAL_VERIFICATION.json").write_text(json.dumps(evidence, indent=2) + "\n", encoding="utf-8")
+    print("Verified full-dissertation native-export replay:", evidence["full_page_text_and_72dpi_RGB_renders_matched"],
+          "pages, every caption, all numbered sections, and", evidence["citation_boxes"]["visible"], "visible citation boxes.")
+
+
+if __name__ == "__main__":
+    main()

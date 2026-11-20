@@ -17,19 +17,19 @@ figures = diss/"Figures"
 staging = diss.parents[2]/"tmp/ch6_advisor_20261119/labels"
 staging.mkdir(exist_ok=True, parents=True)
 changes = {
-    "60-sns/sns_library_20261116.pdf": {"Graded synapse":"Nonspiking synapse"},
+    "60-sns/sns_library.pdf": {"Graded synapse":"Nonspiking synapse"},
     "93-AppendixB/animatlab_spiking_conversion.pdf": {
         "(A1) Graded baseline (oscillates)":"(A1) Nonspiking baseline (oscillates)",
         "Graded baseline (oscillates)":"Nonspiking baseline (oscillates)",
         "(C1) Thresholds only, graded synapses (oscillates)":"(C1) Spiking thresholds only (oscillates)",
         "Thresholds only, graded synapses (oscillates)":"Spiking thresholds only (oscillates)"},
-    "95-AppendixD/spiking_ground_neuromechanics_short_20261031.pdf":{"Graded":"Nonspiking"},
+    "95-AppendixD/spiking_ground_neuromechanics_short.pdf":{"Graded":"Nonspiking"},
 }
 descriptions = {
-    "60-sns/sns_library_20261116.alt.txt":{"Graded and spiking neurons":"Nonspiking and spiking neurons"},
+    "60-sns/sns_library.alt.txt":{"Graded and spiking neurons":"Nonspiking and spiking neurons"},
     "93-AppendixB/animatlab_spiking_conversion_alt.txt":{"graded non-spiking baseline":"nonspiking baseline","graded synapses":"voltage-dependent synapses"},
-    "95-AppendixD/spiking_ground_neuromechanics_short_20261031_alt.txt":{"saved graded and untuned spiking":"saved nonspiking and untuned spiking"},
-    "95-AppendixD/animatlab_short_response_20261116.alt.txt":{"graded membrane voltages":"membrane voltages of nonspiking neurons"},
+    "95-AppendixD/spiking_ground_neuromechanics_short_alt.txt":{"saved graded and untuned spiking":"saved nonspiking and untuned spiking"},
+    "95-AppendixD/animatlab_short_response.alt.txt":{"graded membrane voltages":"membrane voltages of nonspiking neurons"},
 }
 
 def sha(p):
@@ -86,9 +86,11 @@ def update_labels(base, out, replacements):
 
 audit=[]
 portable_archive=here/"PRIOR_FIGURE_LABELS.zip"
+rename_log=diss/"Notes/figure_names_and_overview_20261119/FIGURE_RENAMES.json"
+original_names={(r["chapter"],r["new"]):r["old"] for r in json.loads(rename_log.read_text())}
 for name,pairs in {**changes,**descriptions}.items():
     active=figures/name
-    archive=active.parent/"Deprecated/20261119_terminology"/active.name
+    archive=active.parent/"Deprecated/20261119_terminology"/original_names.get((active.parent.name,active.name),active.name)
     archive.parent.mkdir(exist_ok=True,parents=True)
     if not archive.exists():
         if portable_archive.exists():

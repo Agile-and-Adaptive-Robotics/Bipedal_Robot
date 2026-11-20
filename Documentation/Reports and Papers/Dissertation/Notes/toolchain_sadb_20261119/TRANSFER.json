@@ -1,6 +1,59 @@
 {
   "source_export_sha256": "9983386f9ddd7054c6d8fa5544dd2fcc11393e4d7d57db400150e3c34974c401",
+  "native_snapshots": {
+    "root": "9983386f9ddd7054c6d8fa5544dd2fcc11393e4d7d57db400150e3c34974c401",
+    "live": "4989ee461e0195823a199654a3467d984c41bc78c9250ae21f0406d6b005dc5b",
+    "identical_member_contents": 162
+  },
+  "total_graphics_audited": 78,
   "active_images_by_chapter": {
+    "10-introduction": [
+      "roadmap.pdf"
+    ],
+    "15-background": [
+      "aarl_bpa_biped.png",
+      "actuator_technology_comparison.pdf",
+      "decerebrate_cat_colorized.png",
+      "deng_cpg_connectome.pdf",
+      "dirusso_spinal_network.pdf",
+      "festo_bpas_inflated_deflated.jpg",
+      "human_gait2392_paths.pdf",
+      "kengoro_humanoid_comparison.png",
+      "masters_torque_comparison.pdf",
+      "moment_arm_methods.pdf",
+      "robot_pam_routes.pdf",
+      "rybak_cpg_circuit.pdf",
+      "shevtsova_spinal_circuit.pdf",
+      "shinohara_connectome.pdf",
+      "steeleknee.pdf"
+    ],
+    "20-muscles": [
+      "01_testJigs1.pdf",
+      "02a_MaxForce10.eps",
+      "02b_MaxForce20.eps",
+      "03a_MaxForce10_all.eps",
+      "03b_kmax10.eps",
+      "04a_FStar10.eps",
+      "04b_FStar20.eps",
+      "05_Comparison.eps"
+    ],
+    "30-torque": [
+      "Ext10mm_52cm_current_publication.pdf",
+      "FlxGrp.pdf",
+      "FlxPin_optimized_publication.pdf",
+      "FlxPin_preopt_publication.pdf",
+      "KneeICR.eps",
+      "bktFrame.pdf",
+      "bpa_knee_wrapping_review.pdf",
+      "cam_extensor_route.pdf",
+      "extensor_validation.pdf",
+      "flexor_validation.pdf",
+      "pinned_extensor_torque.pdf",
+      "reverse_pulley_biomimetic.pdf",
+      "testJigs_reviewed.pdf",
+      "xiFrameTransform.pdf",
+      "xiProjection.pdf"
+    ],
     "50-database": [
       "sadb_bubble.pdf",
       "sadb_group_i_rule.pdf",
@@ -11,14 +64,14 @@
       "LI_DENG_FALL_FRAME.png",
       "OurWalker.png",
       "biw2lvar_air_aligned_authoritative.pdf",
-      "cad_supported_20261116.png",
+      "cad_supported.png",
       "controller_retest_and_optimization.pdf",
       "simulation_workflow_authoritative.pdf",
       "sns_cup_reflex_authoritative.pdf",
       "sns_knee_reflex_authoritative.pdf",
-      "sns_library_20261116.pdf",
+      "sns_library.pdf",
       "syn6_suspended_kinematics.pdf",
-      "w2l_feedback_short_20261031.pdf"
+      "w2l_feedback_short.pdf"
     ],
     "70-overall": [
       "bpa_construction.pdf",
@@ -29,43 +82,73 @@
       "pipeline.pdf",
       "sensorium_hierarchy.pdf"
     ],
-    "95-AppendixD": [
-      "AIR_stimulus_mechanics.pdf",
-      "AIR_stimulus_neural.pdf",
-      "CAD_supported_traces_20261116.pdf",
-      "PF_timing_authoritative.pdf",
-      "animatlab_short_response_20261116.png",
-      "gait2392_ik_overlay.pdf",
-      "research_toolchain_workflow.pdf",
-      "spiking_ground_neuromechanics_short_20261031.pdf",
-      "w2l_crossengine_20261116.png"
-    ],
-    "96-AppendixE": [],
-    "92-AppendixA": [],
     "93-AppendixB": [
       "animatlab_spiking_conversion.pdf",
       "w2l_conductances_current.pdf",
       "w2l_connectome_current.pdf"
     ],
     "94-AppendixC": [
-      "bone_context_extensor20mm_20261030.png",
-      "direct_route_contact_detail_20261030.pdf",
+      "bone_context_extensor20mm.png",
+      "direct_route_contact_detail.pdf",
       "extensor_cam_AF_bones.pdf",
       "extensor_cam_GH_bones.pdf",
-      "pulley_torque_isobars_20261030.pdf"
+      "pulley_torque_isobars.pdf"
+    ],
+    "95-AppendixD": [
+      "AIR_stimulus_mechanics.pdf",
+      "AIR_stimulus_neural.pdf",
+      "CAD_supported_traces.pdf",
+      "PF_timing_authoritative.pdf",
+      "animatlab_short_response.png",
+      "gait2392_ik_overlay.pdf",
+      "research_toolchain_workflow.pdf",
+      "spiking_ground_neuromechanics_short.pdf",
+      "w2l_crossengine.png"
     ]
   },
-  "total_graphics_audited": 39,
   "members": {
-    "chapters/50-database.tex": "c1c616a5792a60d0a72cc436631d7d5932b4debd14f2d41ccdba15654b766329",
-    "chapters/60-sns.tex": "8f67e6ea673b5c59eaaff2e027ab8d5425777270d1a7f6b7ad8a0e309c3c3522",
-    "chapters/70-overall.tex": "ed99af5ff2fc70a15c42d1e2622f9fccd9dfbfd10f95300433e64a30143b00ab",
-    "chapters/95-AppendixD.tex": "0dd08f97811abb1e7dd79d0214dc41cafcb15945643ce4a0915f8822a399dd05",
-    "chapters/96-AppendixE.tex": "a57317112f0682c892f9cb296f6148feecf31429c00e9ea509b05c106e1482ab",
-    "main.tex": "7d7efe546bbfde86e9d532a16048953a3a198c3863c0e86d8d6e552292ac874f",
-    "psutex.cls": "056bf8d170f2c0d74df9e7e38603c8acce8edd34d1f84ff2e90c98b58528d84f",
-    "chapters/01-copyright.tex": "c29239df17af9c3022202414a173d4bb2c3103a3017a95b6e0e3e474e56132e5",
+    "ASSET_OPERATIONS.json": "7b5cd11f84699a7eeb39b54c4a4465989b3949189836f80704278b1bd9f26d1c",
     "Chomsky_2023.bib": "13c5502d7382fc5d4556b2238506f4c05b10e9273e6ba76a861d7475129991c3",
+    "READ_ME_FIRST.txt": "bed515b44269046b83475ece4183433d6d372ef916382d3ab372565ea211ead4",
+    "chapters/01-copyright.tex": "c29239df17af9c3022202414a173d4bb2c3103a3017a95b6e0e3e474e56132e5",
+    "chapters/10-introduction.tex": "c94d7616aa825bd00b255b511989a98afedcefdfa00aaa370880af0d78aa84bb",
+    "chapters/15-background.tex": "99a97cf5a1dc9db53d281526b7c6d00f46f1f3a91df467775fe1c4885bbfd552",
+    "chapters/20-muscles.tex": "a8c4b53bde8bca4451a4cc89f48097e7cf43ef276c3de18272a187344ab0ea75",
+    "chapters/30-torque.tex": "ece9ffd2508cde1977f947b50c886bb847539082c9b2ddafa54b3ea208c94709",
+    "chapters/50-database.tex": "254426eaa70ef18c11281c9223ca8345eb43aa1c9093ee5ef6968965ee166e75",
+    "chapters/60-sns.tex": "d2deca347f6f69ae680ffdba978e551297fe0eb0c367f01aa2751853615e6ed0",
+    "chapters/70-overall.tex": "5a6a1839c2eccb2bfaadd10e589169c392003e3916f7206336bfffe15834aa1a",
+    "chapters/93-AppendixB.tex": "854837be2cfc7d7797ace447b4ea88ed63a9fd1eaa3d846a85584af98acfe2d4",
+    "chapters/94-AppendixC.tex": "f8edb61c59287dfc1e686cda24a972c91d5f877b88718a42e7b307bb988925fd",
+    "chapters/95-AppendixD.tex": "6a96e413ab9ff107b000b571d771b00f2857ea9ff7487754b319578d6507e7fa",
+    "chapters/96-AppendixE.tex": "a57317112f0682c892f9cb296f6148feecf31429c00e9ea509b05c106e1482ab",
+    "figs/10-introduction/roadmap.pdf": "1e1db805703a38d1296719db8a1b0c0a2b893ee333655fe4ea381e0e1d7e8550",
+    "figs/15-background/steeleknee.pdf": "a87a15b0b6673cc0f35a0f06d3bc4ef26e2825b72e76d71a5f8392128672e5a6",
+    "figs/30-torque/Components/flexor_comparison.fig": "2f5bc4ea2e6df965338db82762b148660c31d9afc949a0d4bad3f0c9cdb5fb96",
+    "figs/30-torque/Deprecated/physical_validation_20261119/Ext20mm_physical_publication.pdf": "0b243ee358431da125093f6380766aac368fd3ef19a0394b43dca2384d1fd7ec",
+    "figs/30-torque/Deprecated/physical_validation_20261119/Redesigned_flexor_pressure_publication.alt.txt": "ff8145a2bb31f8fadf775f1ac07efda5c861d0ba0afad9ad975d554b9cf3cd8b",
+    "figs/30-torque/Deprecated/physical_validation_20261119/Redesigned_flexor_pressure_publication.pdf": "54959e36bcea1e4b717f070e7c27079e89de43081b9dab68f2cb4e62472915a1",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/ExtPin_complete_publication.pdf": "8ee0a600203cc0738d6d61c57beaae796a408f2440fe78c2f8524213eb96b9f4",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_current_legend.alt.txt": "911991d339e7ee71bcc649e7e0bea6a8939d0e2302dacb08ae39a3ac67ae0984",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_current_legend.pdf": "849e669c2f392612defac00c6d7d38b9e4e21f92f131d6991e653a84d7d791b2",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_extensor_hardware.jpg": "b1e4bb8912594d57133b5d7629f98a9e28718a3f37a14a5036944950a41fb75c",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_A.alt.txt": "94d502ac30e673371859cc61de9937d9e82508c88deb917b7b7786efa72ec380",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_A.pdf": "3535ac247805953eb3d35b07e2d8f858ad0682a12202671674ef760ecea15b40",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_H.alt.txt": "4c4a3c03e98b26713e020549eacd8e3919d459bde8d507303e3253bccd96caf0",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_H.pdf": "ec455fb3e20cb1b0852f1adfb2017b7ff7a33b60342c01f3894bb62f29000460",
+    "figs/30-torque/Ext10mm_52cm_current_publication.alt.txt": "e7be456f930937614b496be8a9daaadee2a605cc0cf439fadd76e5077f2133e2",
+    "figs/30-torque/FlxGrp.alt.txt": "712761a88d710facc63fcc48765ef96f2b5ba0abca6ec0bea25c6147cdedbcf2",
+    "figs/30-torque/FlxPin_optimized_publication.pdf": "f087099dd344609e19ff3111fe1935d53e46775ba4452be29413ab1fb0497447",
+    "figs/30-torque/FlxPin_preopt_publication.pdf": "b98d7734859023258f9ee34735631301c38ec67da24960f2c4ca73e2d2bd9c0d",
+    "figs/30-torque/cam_extensor_route.alt.txt": "ff7a586dce7254beb6635cf3ae54345e61f3b199770c7db921edfdfa3d1ac14f",
+    "figs/30-torque/cam_extensor_route.pdf": "c28d7d382181ee7392234a5799b9e05cbf1f098b17dcd925da5b3d368e0e7f46",
+    "figs/30-torque/extensor_validation.alt.txt": "8efb4c360dce0ec7cf1115f3f4d94e2857751763b0f3b0d2bc020ceba5c16c1c",
+    "figs/30-torque/extensor_validation.pdf": "0b243ee358431da125093f6380766aac368fd3ef19a0394b43dca2384d1fd7ec",
+    "figs/30-torque/flexor_validation.alt.txt": "3c7e4384f3654d5860bd7a7ae4c97af0a574856c9188dad2a47c58c76865583a",
+    "figs/30-torque/flexor_validation.pdf": "8c4e6777477f4b07e3bde205e0648d5a7bee573de26d112ffc8b15bb4bb2f636",
+    "figs/30-torque/pinned_extensor_torque.alt.txt": "a4673c40940e9b31433ec9ed4ec4763e0bf8777c7c6e8ceab1735c751ef4c426",
+    "figs/30-torque/pinned_extensor_torque.pdf": "ca05e1d3dc0cd1680728f4d0dd16e7e2684e120fa2c8e7f775caea8745a52257",
+    "figs/30-torque/reverse_pulley_biomimetic.alt.txt": "708ddc6c52925109ed11561e5713dfbf5dd67203764947100e363793f7ef1f27",
     "figs/50-database/sadb_bubble.pdf": "6ada03600eb535f377a86bc8eada4f91a266b938ccf36a5e7cabdec5cf0d3d25",
     "figs/50-database/sadb_group_i_rule.alt.txt": "632df45a32282f30f94d11cc360fad68e5d1cb3667a6b62578c7f8c28f4255cd",
     "figs/50-database/sadb_group_i_rule.pdf": "d87fa92b844642508b461474ec8bd239512a1d4ce7b4a2dd0c08742196ff43cb",
@@ -73,14 +156,23 @@
     "figs/50-database/sadb_pivot_guide.pdf": "9ea94fb5d0e4b3b0039d8c2403c774ac36064c9dfba45ab40d0811efe9e6a852",
     "figs/50-database/sadb_table_record_guide.alt.txt": "960f0ae2f64c77db0d322805ff709ca344186452e77e42936ee111d11ac7ef76",
     "figs/50-database/sadb_table_record_guide.pdf": "a7e6b57bfdcea31f3df7da0e49d1c983c4000f4ed74f3e82206d9c1a68c3c20e",
+    "figs/60-sns/LI_DENG_FALL_FRAME.alt.txt": "37c039026d7d001ed6e6b3d8b9fcd63e9dde4a53bc2a65c20c3d4210caa86bd4",
+    "figs/60-sns/biw2lvar_air_aligned_authoritative.alt.txt": "9c12f0ff3dac7bcea3d88da1ea5a07df5fca33694788b6082fe6939b99ab31ff",
+    "figs/60-sns/cad_supported.alt.txt": "cc26ded47191190ee8a5a3d14bdcbe97cde95bfa87583b6a0f9c46b5062a1d86",
+    "figs/60-sns/cad_supported.png": "b9a22c77535094d4edf7f6466ee3cba0efafdbb929d6249bd1654dbac115b6d0",
     "figs/60-sns/controller_retest_and_optimization.alt.txt": "841e84d12fb530eb2b71accf3c3d1ea27d5dffbe5c68bfcb9bd94ceea0a7b77c",
     "figs/60-sns/controller_retest_and_optimization.pdf": "417b0d62c4fb9e43873c15fbc36bcb397a4a8ac2e4e19fbef301d9dec69b52c5",
     "figs/60-sns/simulation_workflow_authoritative.alt.txt": "461f689ef3634a1cd2279a90bc97f030ad6a1ecf2f0b50b52c5a538c1ce8eac5",
     "figs/60-sns/simulation_workflow_authoritative.pdf": "62bc2aef39171258c98331f3f03472ab601a2255cad30135bccab906c1c401d3",
+    "figs/60-sns/sns_cup_reflex_authoritative.alt.txt": "31a24459b0c6e9263c5cad2b78d9d02cb5700121aa05ad68ed7aeb67901646a5",
     "figs/60-sns/sns_knee_reflex_authoritative.alt.txt": "863579994ed75161c85e29420d870fae7f9491bdaf91d2f2c79f13ca2a832212",
     "figs/60-sns/sns_knee_reflex_authoritative.pdf": "c42d713f707999972d3e86934fbc4585db058fce0a69b21761b53db248c7b315",
-    "figs/60-sns/sns_library_20261116.alt.txt": "ca712a2981618badbdb1859c4ff5d57001322eafd191d520c72fc1d24360b5f4",
+    "figs/60-sns/sns_library.alt.txt": "ca712a2981618badbdb1859c4ff5d57001322eafd191d520c72fc1d24360b5f4",
+    "figs/60-sns/sns_library.pdf": "36d975aa8cee57c540e61ef69ffb41993128a65399d33449dff0273f5aa079d4",
     "figs/60-sns/syn6_suspended_kinematics.alt.txt": "92f1804d503a3324a1b3f2d2e911ba2a3f45526137b73bc2af43fffc843b2347",
+    "figs/60-sns/w2l_feedback_short.pdf": "127f13d6e8d7572929b64fca3956cfebb0da830200940237f06e20052c746738",
+    "figs/60-sns/w2l_feedback_short_alt.txt": "89db10872afde74a9292d197a763c534b5cbbb3549fe794b6dcc4abf691972f5",
+    "figs/70-overall/bpa_construction.alt.txt": "294f760d1579864b1c1e5c380f1b5f0b3a0e49d539adc47e88816863ced9090e",
     "figs/70-overall/bpa_exploded_cutaway.alt.txt": "044e6a60860217f5bf3133b4eb1377a19d9137e825f5569fb042fc534f67f673",
     "figs/70-overall/bpa_exploded_cutaway.pdf": "f7075e81d7f3c4fdb62959a7743718d669b3afe8d7eb7c029f41e62fc16b7da0",
     "figs/70-overall/bpa_loading_conditions.alt.txt": "c3ce42045c40397edadbc19b39c924ef825eb46073c27b9826be6756ebeab56b",
@@ -93,116 +185,844 @@
     "figs/70-overall/pipeline.pdf": "151588fba381ad7e79ff565dbeae8b94f911e71b36628fa4a02d7e0d3a5d6849",
     "figs/70-overall/sensorium_hierarchy.alt.txt": "42c2c02ff15c7deb6c0ff2d564f3d38127625e9ef044467a13e99e94b0326339",
     "figs/70-overall/sensorium_hierarchy.pdf": "dbed5cfe321009822629d312af7a5e631bddaedd66f3fe787c330f6a16259471",
-    "figs/95-AppendixD/animatlab_short_response_20261116.alt.txt": "d872882efb2bbdff108063aca701c93a84005ade5bedee658ff402b0f2d59699",
-    "figs/95-AppendixD/research_toolchain_workflow.alt.txt": "4bbe9cd417dfd23da40c24edfdb6c59f20ceb72b9436b1c230effadb59e014a6",
-    "figs/95-AppendixD/research_toolchain_workflow.pdf": "f59e8cc9e5013dd1fbb831b09207f0dffdf78ab051413aaa5be10c49ce386530",
     "figs/93-AppendixB/animatlab_spiking_conversion_alt.txt": "c013c8139416ff248a20c07052d0853178cc0d902cd8120678e7e78a8539ecf5",
+    "figs/94-AppendixC/bone_context_extensor20mm.alt.txt": "8ed7a615191a65fb231db9e6b1fa8c18d11d6cc8d60d48ec027939d13960ed04",
+    "figs/94-AppendixC/bone_context_extensor20mm.png": "abd06a2fcab5a05ae39ad22ac8a8cd17eaa4eb963c703d122f5210cee38cc901",
+    "figs/94-AppendixC/direct_route_contact_detail.alt.txt": "2bd608b9573425388d1d465c0e8065cd273f7c85b37c4c385476392e8931c96b",
+    "figs/94-AppendixC/direct_route_contact_detail.pdf": "4fd5525b98fe2ae562ffca50842ecc510a973603277fd213c9c8b2699992e1aa",
     "figs/94-AppendixC/extensor_cam_AF_bones.pdf": "25a6a03bc1f426c0bd893b0ceb1e3749775ee5c61dbbdea01afa0e7bcc830f1f",
     "figs/94-AppendixC/extensor_cam_GH_bones.pdf": "848dbb09d2f99af6cc079107ad2f1a6ddcc15cd13c681c6404ec81c1cd176e41",
-    "figs/10-introduction/roadmap.pdf": "1e1db805703a38d1296719db8a1b0c0a2b893ee333655fe4ea381e0e1d7e8550",
-    "figs/15-background/steeleknee.pdf": "a87a15b0b6673cc0f35a0f06d3bc4ef26e2825b72e76d71a5f8392128672e5a6",
-    "figs/30-torque/FlxPin_preopt_publication.pdf": "b98d7734859023258f9ee34735631301c38ec67da24960f2c4ca73e2d2bd9c0d",
-    "figs/30-torque/FlxPin_optimized_publication.pdf": "f087099dd344609e19ff3111fe1935d53e46775ba4452be29413ab1fb0497447",
-    "figs/30-torque/ExtPin_complete_publication.pdf": "8ee0a600203cc0738d6d61c57beaae796a408f2440fe78c2f8524213eb96b9f4",
-    "figs/30-torque/cam_current_legend.pdf": "849e669c2f392612defac00c6d7d38b9e4e21f92f131d6991e653a84d7d791b2",
-    "figs/30-torque/Ext20mm_physical_20261026_publication.pdf": "0b243ee358431da125093f6380766aac368fd3ef19a0394b43dca2384d1fd7ec",
-    "READ_ME_FIRST.txt": "826989bb0715232a52748cb4b04dda8638268e037a1f9746bf8e7d9949cfa940"
+    "figs/94-AppendixC/pulley_torque_isobars.alt.txt": "1c4e5d3e6dbe6ef67a68b8bf990fd7e2d8f113fd9efdf59fa1af5ebbc97468f7",
+    "figs/94-AppendixC/pulley_torque_isobars.pdf": "7fd58bd59250547fabff95d0790d1ee0bb14bb2c1fc732926eca2d21e43bf318",
+    "figs/95-AppendixD/AIR_stimulus_mechanics.alt.txt": "ad1a28adbd8e49f1ea51ec090bdbc58ce97453b0d27afd0c04c797923201adca",
+    "figs/95-AppendixD/AIR_stimulus_neural.alt.txt": "37e74b255df51b2f29f5c2bdcd46cf2e749c06cf5aef1c06ff098b28900289b5",
+    "figs/95-AppendixD/CAD_supported_traces.alt.txt": "6cbcc03d93c29ffb76ff3c240ac840b0a705649df04fff4a2d2018410b958be7",
+    "figs/95-AppendixD/CAD_supported_traces.pdf": "aa2ea259eb3e9b7c5849c38ad6838104e6089f39fe01d76764860000daf710d0",
+    "figs/95-AppendixD/PF_timing_authoritative.alt.txt": "9d4459428da8fcafbb8c7f04e8fc3721429a16a129afbd6f3eba55a7d29758f1",
+    "figs/95-AppendixD/animatlab_short_response.alt.txt": "d872882efb2bbdff108063aca701c93a84005ade5bedee658ff402b0f2d59699",
+    "figs/95-AppendixD/animatlab_short_response.png": "3912844267dabdd8fcd8859e060703efc6d8c0260027687bb3d57cd7699c1f8c",
+    "figs/95-AppendixD/research_toolchain_workflow.alt.txt": "4bbe9cd417dfd23da40c24edfdb6c59f20ceb72b9436b1c230effadb59e014a6",
+    "figs/95-AppendixD/research_toolchain_workflow.pdf": "f59e8cc9e5013dd1fbb831b09207f0dffdf78ab051413aaa5be10c49ce386530",
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf": "8e3f86ba33195bea67a4a082affa85059e80ea3004463ab3adc2586de21cbe79",
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt": "cfaba0c2b8876d76ea32757480f54ecfe36f6b79ea3320f4fa5f0af4ab65dc76",
+    "figs/95-AppendixD/w2l_crossengine.alt.txt": "040ed9b93d20486b8794776d5af87cb0133fa38926a974ed417d43b95d118cc3",
+    "figs/95-AppendixD/w2l_crossengine.png": "077b429fccb1e3e590a2be69c37af689089690d1da17ea2f1a0badab76f0c4e9",
+    "main.tex": "7d7efe546bbfde86e9d532a16048953a3a198c3863c0e86d8d6e552292ac874f",
+    "psutex.cls": "056bf8d170f2c0d74df9e7e38603c8acce8edd34d1f84ff2e90c98b58528d84f"
   },
   "graphic_changes": {
-    "figs/50-database/sadb_bubble.pdf": "font embedding verified against archived artwork",
-    "figs/50-database/sadb_group_i_rule.alt.txt": "updated or new in this pass",
-    "figs/50-database/sadb_group_i_rule.pdf": "updated or new in this pass",
-    "figs/50-database/sadb_pivot_guide.alt.txt": "updated or new in this pass",
-    "figs/50-database/sadb_pivot_guide.pdf": "updated or new in this pass",
-    "figs/50-database/sadb_table_record_guide.alt.txt": "updated or new in this pass",
-    "figs/50-database/sadb_table_record_guide.pdf": "updated or new in this pass",
-    "figs/60-sns/controller_retest_and_optimization.alt.txt": "updated or new in this pass",
-    "figs/60-sns/controller_retest_and_optimization.pdf": "font embedding verified against archived artwork",
-    "figs/60-sns/simulation_workflow_authoritative.alt.txt": "updated or new in this pass",
-    "figs/60-sns/simulation_workflow_authoritative.pdf": "updated or new in this pass",
-    "figs/60-sns/sns_knee_reflex_authoritative.alt.txt": "updated or new in this pass",
-    "figs/60-sns/sns_knee_reflex_authoritative.pdf": "font embedding verified against archived artwork",
-    "figs/60-sns/sns_library_20261116.alt.txt": "already in the preceding transfer",
-    "figs/60-sns/syn6_suspended_kinematics.alt.txt": "already in the preceding transfer",
-    "figs/70-overall/bpa_exploded_cutaway.alt.txt": "updated or new in this pass",
-    "figs/70-overall/bpa_exploded_cutaway.pdf": "updated or new in this pass",
-    "figs/70-overall/bpa_loading_conditions.alt.txt": "updated or new in this pass",
-    "figs/70-overall/bpa_loading_conditions.pdf": "updated or new in this pass",
-    "figs/70-overall/design_workflow.alt.txt": "updated or new in this pass",
-    "figs/70-overall/design_workflow.pdf": "updated or new in this pass",
-    "figs/70-overall/neuromechanical_experiment_workflow.alt.txt": "updated or new in this pass",
-    "figs/70-overall/neuromechanical_experiment_workflow.pdf": "updated or new in this pass",
-    "figs/70-overall/pipeline.alt.txt": "updated or new in this pass",
-    "figs/70-overall/pipeline.pdf": "updated or new in this pass",
-    "figs/70-overall/sensorium_hierarchy.alt.txt": "updated or new in this pass",
-    "figs/70-overall/sensorium_hierarchy.pdf": "updated or new in this pass",
-    "figs/95-AppendixD/animatlab_short_response_20261116.alt.txt": "already in the preceding transfer",
-    "figs/95-AppendixD/research_toolchain_workflow.alt.txt": "already in the preceding transfer",
-    "figs/95-AppendixD/research_toolchain_workflow.pdf": "updated or new in this pass",
-    "figs/93-AppendixB/animatlab_spiking_conversion_alt.txt": "already in the preceding transfer",
-    "figs/94-AppendixC/extensor_cam_AF_bones.pdf": "font embedding verified against archived artwork",
-    "figs/94-AppendixC/extensor_cam_GH_bones.pdf": "font embedding verified against archived artwork",
-    "figs/10-introduction/roadmap.pdf": "font embedding verified against archived artwork",
-    "figs/15-background/steeleknee.pdf": "font embedding verified against archived artwork",
-    "figs/30-torque/FlxPin_preopt_publication.pdf": "font embedding verified against archived artwork",
-    "figs/30-torque/FlxPin_optimized_publication.pdf": "font embedding verified against archived artwork",
-    "figs/30-torque/ExtPin_complete_publication.pdf": "font embedding verified against archived artwork",
-    "figs/30-torque/cam_current_legend.pdf": "font embedding verified against archived artwork",
-    "figs/30-torque/Ext20mm_physical_20261026_publication.pdf": "font embedding verified against archived artwork"
+    "figs/10-introduction/roadmap.pdf": "active artwork",
+    "figs/15-background/steeleknee.pdf": "active artwork",
+    "figs/30-torque/Components/flexor_comparison.fig": "editable flexor comparison",
+    "figs/30-torque/Deprecated/physical_validation_20261119/Ext20mm_physical_publication.pdf": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/physical_validation_20261119/Redesigned_flexor_pressure_publication.alt.txt": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/physical_validation_20261119/Redesigned_flexor_pressure_publication.pdf": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/ExtPin_complete_publication.pdf": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_current_legend.alt.txt": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_current_legend.pdf": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_extensor_hardware.jpg": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_A.alt.txt": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_A.pdf": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_H.alt.txt": "former Chapter 4 panel source",
+    "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_H.pdf": "former Chapter 4 panel source",
+    "figs/30-torque/Ext10mm_52cm_current_publication.alt.txt": "active alternative text",
+    "figs/30-torque/FlxGrp.alt.txt": "active alternative text",
+    "figs/30-torque/FlxPin_optimized_publication.pdf": "active artwork",
+    "figs/30-torque/FlxPin_preopt_publication.pdf": "active artwork",
+    "figs/30-torque/cam_extensor_route.alt.txt": "active alternative text",
+    "figs/30-torque/cam_extensor_route.pdf": "active artwork",
+    "figs/30-torque/extensor_validation.alt.txt": "active alternative text",
+    "figs/30-torque/extensor_validation.pdf": "active artwork",
+    "figs/30-torque/flexor_validation.alt.txt": "active alternative text",
+    "figs/30-torque/flexor_validation.pdf": "active artwork",
+    "figs/30-torque/pinned_extensor_torque.alt.txt": "active alternative text",
+    "figs/30-torque/pinned_extensor_torque.pdf": "active artwork",
+    "figs/30-torque/reverse_pulley_biomimetic.alt.txt": "active alternative text",
+    "figs/50-database/sadb_bubble.pdf": "active artwork",
+    "figs/50-database/sadb_group_i_rule.alt.txt": "active alternative text",
+    "figs/50-database/sadb_group_i_rule.pdf": "active artwork",
+    "figs/50-database/sadb_pivot_guide.alt.txt": "active alternative text",
+    "figs/50-database/sadb_pivot_guide.pdf": "active artwork",
+    "figs/50-database/sadb_table_record_guide.alt.txt": "active alternative text",
+    "figs/50-database/sadb_table_record_guide.pdf": "active artwork",
+    "figs/60-sns/LI_DENG_FALL_FRAME.alt.txt": "active alternative text",
+    "figs/60-sns/biw2lvar_air_aligned_authoritative.alt.txt": "active alternative text",
+    "figs/60-sns/cad_supported.alt.txt": "active alternative text",
+    "figs/60-sns/cad_supported.png": "active artwork",
+    "figs/60-sns/controller_retest_and_optimization.alt.txt": "active alternative text",
+    "figs/60-sns/controller_retest_and_optimization.pdf": "active artwork",
+    "figs/60-sns/simulation_workflow_authoritative.alt.txt": "active alternative text",
+    "figs/60-sns/simulation_workflow_authoritative.pdf": "active artwork",
+    "figs/60-sns/sns_cup_reflex_authoritative.alt.txt": "active alternative text",
+    "figs/60-sns/sns_knee_reflex_authoritative.alt.txt": "active alternative text",
+    "figs/60-sns/sns_knee_reflex_authoritative.pdf": "active artwork",
+    "figs/60-sns/sns_library.alt.txt": "active alternative text",
+    "figs/60-sns/sns_library.pdf": "active artwork",
+    "figs/60-sns/syn6_suspended_kinematics.alt.txt": "active alternative text",
+    "figs/60-sns/w2l_feedback_short.pdf": "active artwork",
+    "figs/60-sns/w2l_feedback_short_alt.txt": "active alternative text",
+    "figs/70-overall/bpa_construction.alt.txt": "active alternative text",
+    "figs/70-overall/bpa_exploded_cutaway.alt.txt": "active alternative text",
+    "figs/70-overall/bpa_exploded_cutaway.pdf": "active artwork",
+    "figs/70-overall/bpa_loading_conditions.alt.txt": "active alternative text",
+    "figs/70-overall/bpa_loading_conditions.pdf": "active artwork",
+    "figs/70-overall/design_workflow.alt.txt": "active alternative text",
+    "figs/70-overall/design_workflow.pdf": "active artwork",
+    "figs/70-overall/neuromechanical_experiment_workflow.alt.txt": "active alternative text",
+    "figs/70-overall/neuromechanical_experiment_workflow.pdf": "active artwork",
+    "figs/70-overall/pipeline.alt.txt": "active alternative text",
+    "figs/70-overall/pipeline.pdf": "active artwork",
+    "figs/70-overall/sensorium_hierarchy.alt.txt": "active alternative text",
+    "figs/70-overall/sensorium_hierarchy.pdf": "active artwork",
+    "figs/93-AppendixB/animatlab_spiking_conversion_alt.txt": "active alternative text",
+    "figs/94-AppendixC/bone_context_extensor20mm.alt.txt": "active alternative text",
+    "figs/94-AppendixC/bone_context_extensor20mm.png": "active artwork",
+    "figs/94-AppendixC/direct_route_contact_detail.alt.txt": "active alternative text",
+    "figs/94-AppendixC/direct_route_contact_detail.pdf": "active artwork",
+    "figs/94-AppendixC/extensor_cam_AF_bones.pdf": "active artwork",
+    "figs/94-AppendixC/extensor_cam_GH_bones.pdf": "active artwork",
+    "figs/94-AppendixC/pulley_torque_isobars.alt.txt": "active alternative text",
+    "figs/94-AppendixC/pulley_torque_isobars.pdf": "active artwork",
+    "figs/95-AppendixD/AIR_stimulus_mechanics.alt.txt": "active alternative text",
+    "figs/95-AppendixD/AIR_stimulus_neural.alt.txt": "active alternative text",
+    "figs/95-AppendixD/CAD_supported_traces.alt.txt": "active alternative text",
+    "figs/95-AppendixD/CAD_supported_traces.pdf": "active artwork",
+    "figs/95-AppendixD/PF_timing_authoritative.alt.txt": "active alternative text",
+    "figs/95-AppendixD/animatlab_short_response.alt.txt": "active alternative text",
+    "figs/95-AppendixD/animatlab_short_response.png": "active artwork",
+    "figs/95-AppendixD/research_toolchain_workflow.alt.txt": "active alternative text",
+    "figs/95-AppendixD/research_toolchain_workflow.pdf": "active artwork",
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf": "active artwork",
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt": "active alternative text",
+    "figs/95-AppendixD/w2l_crossengine.alt.txt": "active alternative text",
+    "figs/95-AppendixD/w2l_crossengine.png": "active artwork"
   },
+  "retire_or_rehome": [
+    {
+      "from": "figs/10-introduction/roadmap.pdf",
+      "to": "figs/10-introduction/Deprecated/20261119_font_embedding/roadmap.pdf",
+      "source_sha256": "7001d46b61c047931d5a0680bce6d1495a79efa5bf2edf34783bfd409470f584",
+      "operation": "move before uploading",
+      "new_active_path": "figs/10-introduction/roadmap.pdf"
+    },
+    {
+      "from": "figs/15-background/steeleknee.pdf",
+      "to": "figs/15-background/Deprecated/20261119_font_embedding/steeleknee.pdf",
+      "source_sha256": "0108bde2732e74638fef1201512ef57a270397c3c832e407b288401786bc49d5",
+      "operation": "move before uploading",
+      "new_active_path": "figs/15-background/steeleknee.pdf"
+    },
+    {
+      "from": "figs/30-torque/Ext20mm_physical_20261026_publication.pdf",
+      "to": "figs/30-torque/Deprecated/20261119_font_embedding/Ext20mm_physical_publication.pdf",
+      "source_sha256": "8eec04376ced61f31c1e262025c9e18865e4865d082dfdb6bb26457d0d855b86",
+      "operation": "move before uploading",
+      "new_active_path": "figs/30-torque/extensor_validation.pdf"
+    },
+    {
+      "from": "figs/30-torque/ExtPin_complete_publication.pdf",
+      "to": "figs/30-torque/Deprecated/20261119_font_embedding/ExtPin_complete_publication.pdf",
+      "source_sha256": "287e05794967b9ce625fd46d9a1547ff62485d25418f9ef947e5b5cfdc4dc8eb",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/30-torque/FlxGrp_2x2_20261026_publication.fig",
+      "to": "figs/30-torque/Components/flexor_comparison.fig",
+      "source_sha256": "2f5bc4ea2e6df965338db82762b148660c31d9afc949a0d4bad3f0c9cdb5fb96",
+      "operation": "move before uploading",
+      "new_active_path": "figs/30-torque/Components/flexor_comparison.fig"
+    },
+    {
+      "from": "figs/30-torque/FlxPin_optimized_publication.pdf",
+      "to": "figs/30-torque/Deprecated/20261119_font_embedding/FlxPin_optimized_publication.pdf",
+      "source_sha256": "1aa9c08e969b31bb10d7839f82fcbc65157a5c7b08076f3fd263d585a7d80b19",
+      "operation": "move before uploading",
+      "new_active_path": "figs/30-torque/FlxPin_optimized_publication.pdf"
+    },
+    {
+      "from": "figs/30-torque/FlxPin_preopt_publication.pdf",
+      "to": "figs/30-torque/Deprecated/20261119_font_embedding/FlxPin_preopt_publication.pdf",
+      "source_sha256": "fd550d2ced3ccd1cc6544def032efcbff3db477ea06287e66260662310414d4a",
+      "operation": "move before uploading",
+      "new_active_path": "figs/30-torque/FlxPin_preopt_publication.pdf"
+    },
+    {
+      "from": "figs/30-torque/Redesigned_flexor_pressure_publication.alt.txt",
+      "to": "figs/30-torque/Deprecated/preceding_live_export/Redesigned_flexor_pressure_publication.alt.txt",
+      "source_sha256": "a060b70cd2be838a1da7764682d36ad31f9a9400ce1da8b9948b4b0445a53239",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/30-torque/Redesigned_flexor_pressure_publication.pdf",
+      "to": "figs/30-torque/Deprecated/physical_validation_20261119/Redesigned_flexor_pressure_publication.pdf",
+      "source_sha256": "54959e36bcea1e4b717f070e7c27079e89de43081b9dab68f2cb4e62472915a1",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/30-torque/cam_current_legend.pdf",
+      "to": "figs/30-torque/Deprecated/20261119_font_embedding/cam_current_legend.pdf",
+      "source_sha256": "0527016e02b3d3e063ac992b14a4a2095abe5860e18786a1f2e6915f90fbc4b5",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/30-torque/cam_extensor_hardware.jpg",
+      "to": "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_extensor_hardware.jpg",
+      "source_sha256": "b1e4bb8912594d57133b5d7629f98a9e28718a3f37a14a5036944950a41fb75c",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/30-torque/cam_pose_A.pdf",
+      "to": "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_A.pdf",
+      "source_sha256": "3535ac247805953eb3d35b07e2d8f858ad0682a12202671674ef760ecea15b40",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/30-torque/cam_pose_H.pdf",
+      "to": "figs/30-torque/Deprecated/pinned_extensor_and_cam/cam_pose_H.pdf",
+      "source_sha256": "ec455fb3e20cb1b0852f1adfb2017b7ff7a33b60342c01f3894bb62f29000460",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/50-database/sadb_bubble.pdf",
+      "to": "figs/50-database/Deprecated/20261119_font_embedding/sadb_bubble.pdf",
+      "source_sha256": "556ab54fd7d70d9a6d54e62c39b86fb4296a50889b7b86b104d5b5e763a2732d",
+      "operation": "move before uploading",
+      "new_active_path": "figs/50-database/sadb_bubble.pdf"
+    },
+    {
+      "from": "figs/50-database/sadb_clusters_app.png",
+      "to": "figs/50-database/Deprecated/sadb_clusters_app.png",
+      "source_sha256": "0f209503192cc8370d896d1d54fa94da0abc4917da15702dce9d75b2440c050d",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/50-database/sadb_pivot_app.png",
+      "to": "figs/50-database/Deprecated/20261119_toolchain_sadb/sadb_pivot_app.png",
+      "source_sha256": "c97189e3f3d78d7193f2745927c45a45e6eab6e4768e7eae568a2414a0e0653d",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/50-database/sadb_table_detail.jpg",
+      "to": "figs/50-database/Deprecated/20261119_toolchain_sadb/sadb_table_detail.jpg",
+      "source_sha256": "2de9948385caebd056ef9c6045987d11ba85fab8c081bb4e64ce926c09d34cae",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/50-database/sadb_table_record.jpg",
+      "to": "figs/50-database/Deprecated/20261119_toolchain_sadb/sadb_table_record.jpg",
+      "source_sha256": "b484ad8bc7e7b90a2de9b3998815f822dc46155b1f3339dd0f19bc9f73152534",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/60-sns/cad_supported_20261116.alt.txt",
+      "to": "figs/60-sns/cad_supported.alt.txt",
+      "source_sha256": "cc26ded47191190ee8a5a3d14bdcbe97cde95bfa87583b6a0f9c46b5062a1d86",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/cad_supported.alt.txt"
+    },
+    {
+      "from": "figs/60-sns/cad_supported_20261116.png",
+      "to": "figs/60-sns/cad_supported.png",
+      "source_sha256": "b9a22c77535094d4edf7f6466ee3cba0efafdbb929d6249bd1654dbac115b6d0",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/cad_supported.png"
+    },
+    {
+      "from": "figs/60-sns/controller_retest_and_optimization.pdf",
+      "to": "figs/60-sns/Deprecated/20261119_toolchain/active_before/controller_retest_and_optimization.pdf",
+      "source_sha256": "43c2e6ca0fccde5a846dbfcacafe1ff33e13efefde9cf176c9b07245992ae983",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/controller_retest_and_optimization.pdf"
+    },
+    {
+      "from": "figs/60-sns/simulation_workflow_authoritative.pdf",
+      "to": "figs/60-sns/Deprecated/20261119_toolchain/active_before/simulation_workflow_authoritative.pdf",
+      "source_sha256": "4a4a34693459d117c4aa11ba0c475527f75564bc7ee0e26c9312d4f9798e3e18",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/simulation_workflow_authoritative.pdf"
+    },
+    {
+      "from": "figs/60-sns/sns_knee_reflex_authoritative.pdf",
+      "to": "figs/60-sns/Deprecated/20261119_font_embedding/sns_knee_reflex_authoritative.pdf",
+      "source_sha256": "80e845185f25adfbf3a69b39f3939982bff086e3fe3b4fb1d53d165fef6a256b",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/sns_knee_reflex_authoritative.pdf"
+    },
+    {
+      "from": "figs/60-sns/sns_library_20261116.alt.txt",
+      "to": "figs/60-sns/Deprecated/preceding_live_export/sns_library.alt.txt",
+      "source_sha256": "16d9de5fc3f7d91107b3ebd102b70fa801a85b6cf9e689bbb48cad37d1974057",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/sns_library.alt.txt"
+    },
+    {
+      "from": "figs/60-sns/sns_library_20261116.pdf",
+      "to": "figs/60-sns/sns_library.pdf",
+      "source_sha256": "36d975aa8cee57c540e61ef69ffb41993128a65399d33449dff0273f5aa079d4",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/sns_library.pdf"
+    },
+    {
+      "from": "figs/60-sns/w2l_feedback_short_20261031.pdf",
+      "to": "figs/60-sns/w2l_feedback_short.pdf",
+      "source_sha256": "127f13d6e8d7572929b64fca3956cfebb0da830200940237f06e20052c746738",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/w2l_feedback_short.pdf"
+    },
+    {
+      "from": "figs/60-sns/w2l_feedback_short_20261031_alt.txt",
+      "to": "figs/60-sns/w2l_feedback_short_alt.txt",
+      "source_sha256": "89db10872afde74a9292d197a763c534b5cbbb3549fe794b6dcc4abf691972f5",
+      "operation": "move before uploading",
+      "new_active_path": "figs/60-sns/w2l_feedback_short_alt.txt"
+    },
+    {
+      "from": "figs/70-overall/bpa_exploded_cutaway.alt.txt",
+      "to": "figs/70-overall/Deprecated/preceding_live_export/bpa_exploded_cutaway.alt.txt",
+      "source_sha256": "7527045303e1c599b987ed6cae9eeeba459f27bbf7616a054539fe53f2b6a72a",
+      "operation": "move before uploading",
+      "new_active_path": "figs/70-overall/bpa_exploded_cutaway.alt.txt"
+    },
+    {
+      "from": "figs/70-overall/bpa_exploded_cutaway.pdf",
+      "to": "figs/70-overall/Deprecated/20261119_toolchain/active_before/bpa_exploded_cutaway.pdf",
+      "source_sha256": "e57febf3d8f789c10549377e64d7d44346c5f0ced24d94db35df142733443145",
+      "operation": "move before uploading",
+      "new_active_path": "figs/70-overall/bpa_exploded_cutaway.pdf"
+    },
+    {
+      "from": "figs/70-overall/design_workflow.pdf",
+      "to": "figs/70-overall/Deprecated/20261119_toolchain/active_before/design_workflow.pdf",
+      "source_sha256": "237200e5318491188b4a5456c32f1cb558e281d4e78f375351e101455c8df79f",
+      "operation": "move before uploading",
+      "new_active_path": "figs/70-overall/design_workflow.pdf"
+    },
+    {
+      "from": "figs/70-overall/pipeline.pdf",
+      "to": "figs/70-overall/Deprecated/20261119_toolchain/active_before/pipeline.pdf",
+      "source_sha256": "7c51ecf41c4a86b04d2d37dac914d2c92c1926bbbcfc4596117bd32b85b028f8",
+      "operation": "move before uploading",
+      "new_active_path": "figs/70-overall/pipeline.pdf"
+    },
+    {
+      "from": "figs/70-overall/sensorium_hierarchy.pdf",
+      "to": "figs/70-overall/Deprecated/20261119_toolchain/active_before/sensorium_hierarchy.pdf",
+      "source_sha256": "7056e8c12fc3b53a59808552ef31fabaae2b5e0cb81074163a7f80741203ebee",
+      "operation": "move before uploading",
+      "new_active_path": "figs/70-overall/sensorium_hierarchy.pdf"
+    },
+    {
+      "from": "figs/94-AppendixC/bone_context_extensor20mm_20261030.alt.txt",
+      "to": "figs/94-AppendixC/Deprecated/preceding_live_export/bone_context_extensor20mm.alt.txt",
+      "source_sha256": "473969a2afba944b884ccdb078b6ca653583f7a14d9b42b3e2e6c5da034bdd46",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/bone_context_extensor20mm.alt.txt"
+    },
+    {
+      "from": "figs/94-AppendixC/bone_context_extensor20mm_20261030.png",
+      "to": "figs/94-AppendixC/bone_context_extensor20mm.png",
+      "source_sha256": "abd06a2fcab5a05ae39ad22ac8a8cd17eaa4eb963c703d122f5210cee38cc901",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/bone_context_extensor20mm.png"
+    },
+    {
+      "from": "figs/94-AppendixC/direct_route_contact_detail_20261030.alt.txt",
+      "to": "figs/94-AppendixC/Deprecated/preceding_live_export/direct_route_contact_detail.alt.txt",
+      "source_sha256": "763207bd4fb02d0ede8afc0601228be7ce10913a9fea4d6b7610efd1f3662971",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/direct_route_contact_detail.alt.txt"
+    },
+    {
+      "from": "figs/94-AppendixC/direct_route_contact_detail_20261030.pdf",
+      "to": "figs/94-AppendixC/direct_route_contact_detail.pdf",
+      "source_sha256": "4fd5525b98fe2ae562ffca50842ecc510a973603277fd213c9c8b2699992e1aa",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/direct_route_contact_detail.pdf"
+    },
+    {
+      "from": "figs/94-AppendixC/direct_route_contact_detail_20261030.png",
+      "to": "figs/94-AppendixC/Deprecated/20261118/direct_route_contact_detail.png",
+      "source_sha256": "726a4ca0030404bac6a2be08d03cb1430b718d06257f22ac5012ededf866e7c5",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/94-AppendixC/extensor_cam_AF_bones.pdf",
+      "to": "figs/94-AppendixC/Deprecated/20261119_font_embedding/extensor_cam_AF_bones.pdf",
+      "source_sha256": "18aa0b081a4f75270d9bf6f07d9ccbea510fd429b94f588f219b6433bd768f30",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/extensor_cam_AF_bones.pdf"
+    },
+    {
+      "from": "figs/94-AppendixC/extensor_cam_GH_bones.pdf",
+      "to": "figs/94-AppendixC/Deprecated/20261119_font_embedding/extensor_cam_GH_bones.pdf",
+      "source_sha256": "20379eb28766cfdc27644f263a3bbd50f5ef36d029eb8e1dd4d73167858ed5fd",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/extensor_cam_GH_bones.pdf"
+    },
+    {
+      "from": "figs/94-AppendixC/pulley_torque_isobars_20261030.alt.txt",
+      "to": "figs/94-AppendixC/Deprecated/preceding_live_export/pulley_torque_isobars.alt.txt",
+      "source_sha256": "50980c4ac797025cae3977069afc206fc9043230fa4608286c1490d39f676348",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/pulley_torque_isobars.alt.txt"
+    },
+    {
+      "from": "figs/94-AppendixC/pulley_torque_isobars_20261030.pdf",
+      "to": "figs/94-AppendixC/pulley_torque_isobars.pdf",
+      "source_sha256": "7fd58bd59250547fabff95d0790d1ee0bb14bb2c1fc732926eca2d21e43bf318",
+      "operation": "move before uploading",
+      "new_active_path": "figs/94-AppendixC/pulley_torque_isobars.pdf"
+    },
+    {
+      "from": "figs/94-AppendixC/pulley_torque_isobars_20261030.png",
+      "to": "figs/94-AppendixC/Deprecated/20261118/pulley_torque_isobars.png",
+      "source_sha256": "dadf564091ba1b59dbb52144a883a82eca4ac3151556ee2427f8fc80bed83afe",
+      "operation": "move before uploading",
+      "new_active_path": null
+    },
+    {
+      "from": "figs/95-AppendixD/CAD_supported_traces_20261116.alt.txt",
+      "to": "figs/95-AppendixD/CAD_supported_traces.alt.txt",
+      "source_sha256": "6cbcc03d93c29ffb76ff3c240ac840b0a705649df04fff4a2d2018410b958be7",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/CAD_supported_traces.alt.txt"
+    },
+    {
+      "from": "figs/95-AppendixD/CAD_supported_traces_20261116.pdf",
+      "to": "figs/95-AppendixD/CAD_supported_traces.pdf",
+      "source_sha256": "aa2ea259eb3e9b7c5849c38ad6838104e6089f39fe01d76764860000daf710d0",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/CAD_supported_traces.pdf"
+    },
+    {
+      "from": "figs/95-AppendixD/animatlab_short_response_20261116.alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/preceding_live_export/animatlab_short_response.alt.txt",
+      "source_sha256": "65270f9c379ae1a96d9a1567391cd3e65767921c5b9ccd960f695131d054ae72",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/animatlab_short_response.alt.txt"
+    },
+    {
+      "from": "figs/95-AppendixD/animatlab_short_response_20261116.png",
+      "to": "figs/95-AppendixD/animatlab_short_response.png",
+      "source_sha256": "3912844267dabdd8fcd8859e060703efc6d8c0260027687bb3d57cd7699c1f8c",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/animatlab_short_response.png"
+    },
+    {
+      "from": "figs/95-AppendixD/research_toolchain_workflow.pdf",
+      "to": "figs/95-AppendixD/Deprecated/20261119_toolchain/active_before/research_toolchain_workflow.pdf",
+      "source_sha256": "66d6726a69d96e6f840afd505d46e47260ea4530415d7e47ce6efe74047ae3fe",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/research_toolchain_workflow.pdf"
+    },
+    {
+      "from": "figs/95-AppendixD/spiking_ground_neuromechanics_short_20261031.pdf",
+      "to": "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf",
+      "source_sha256": "8e3f86ba33195bea67a4a082affa85059e80ea3004463ab3adc2586de21cbe79",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf"
+    },
+    {
+      "from": "figs/95-AppendixD/spiking_ground_neuromechanics_short_20261031_alt.txt",
+      "to": "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt",
+      "source_sha256": "cfaba0c2b8876d76ea32757480f54ecfe36f6b79ea3320f4fa5f0af4ab65dc76",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt"
+    },
+    {
+      "from": "figs/95-AppendixD/w2l_crossengine_20261116.alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/preceding_live_export/w2l_crossengine.alt.txt",
+      "source_sha256": "ef8327363363b2fc40b584eb17d4bea7a01094ecd815582c62917c4d6006a4fc",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/w2l_crossengine.alt.txt"
+    },
+    {
+      "from": "figs/95-AppendixD/w2l_crossengine_20261116.png",
+      "to": "figs/95-AppendixD/w2l_crossengine.png",
+      "source_sha256": "077b429fccb1e3e590a2be69c37af689089690d1da17ea2f1a0badab76f0c4e9",
+      "operation": "move before uploading",
+      "new_active_path": "figs/95-AppendixD/w2l_crossengine.png"
+    },
+    {
+      "from": "figs/96-AppendixE/sadb_explorer.png",
+      "to": "figs/96-AppendixE/Deprecated/20261118/sadb_explorer.png",
+      "source_sha256": "213e28ca28014dc68ed1916336b2a5722d16db1630c48b411726969a1dc37a5a",
+      "operation": "move before uploading",
+      "new_active_path": null
+    }
+  ],
+  "local_archive_history": [
+    {
+      "from": "figs/30-torque/Deprecated/Ext20mm_cam_20261026.eps",
+      "to": "figs/30-torque/Deprecated/Ext20mm_cam.eps",
+      "sha256": "aaea5c60c94b95400bfd0bd66e667a15f62aa6fc2354721e753dc005d1c569b0",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/Ext20mm_physical_20261026.png",
+      "to": "figs/30-torque/Deprecated/Ext20mm_physical.png",
+      "sha256": "74c631be43f8b65975cc31f98fa59414c1ed20a1fed1d64f5a01ab8c7bd466dd",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/paired_coefficient_tables_2026-09-29.jpg",
+      "to": "figs/30-torque/Deprecated/paired_coefficient_tables.jpg",
+      "sha256": "704c2048bfca8cbaa29d0292dd85f245293570752733d2ae867be11e8dcb7b22",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/PulleyMarginSurfaces_20261020-eps-converted-to.pdf",
+      "to": "figs/30-torque/Deprecated/PulleyMarginSurfaces-eps-converted-to.pdf",
+      "sha256": "9c7e098b0edecc313b9a24203cae3005d4d4cb76da16cb8b0f57e1d939aadc1d",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/PulleyMarginSurfaces_20261020.eps",
+      "to": "figs/30-torque/Deprecated/PulleyMarginSurfaces.eps",
+      "sha256": "2e00af5254250dd83a3fd5571a932efcac99f8948affef752bc045f9c94fd99e",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/PulleyTorqueSurfaces_20261020-eps-converted-to.pdf",
+      "to": "figs/30-torque/Deprecated/PulleyTorqueSurfaces-eps-converted-to.pdf",
+      "sha256": "2356c0a56a0329e2d0cd22ab6d5cba8313a5f68b709843b1ce0f6a0e6e4c3b37",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/PulleyTorqueSurfaces_20261020.eps",
+      "to": "figs/30-torque/Deprecated/PulleyTorqueSurfaces.eps",
+      "sha256": "b87dd5c631d0aaf1738ed9e063b868c0f241de9eced6339a4a44cb300d4eb84f",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/20261119_font_embedding/Ext20mm_physical_20261026_publication.pdf",
+      "to": "figs/30-torque/Deprecated/20261119_font_embedding/Ext20mm_physical_publication.pdf",
+      "sha256": "8eec04376ced61f31c1e262025c9e18865e4865d082dfdb6bb26457d0d855b86",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/Components/fig_Ext10mm_52cm/Ext10mm_52cm_20261023.alt.txt",
+      "to": "figs/30-torque/Deprecated/Components/fig_Ext10mm_52cm/Ext10mm_52cm.alt.txt",
+      "sha256": "7bf35b5aa4500d398dd9fc207871cc0be89e2950dee21e849fb3eac855c224a5",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/Components/fig_extensor_physical_final/Ext20mm_physical_20261026.alt.txt",
+      "to": "figs/30-torque/Deprecated/Components/fig_extensor_physical_final/Ext20mm_physical.alt.txt",
+      "sha256": "88979166e58793791a9e79c97608b67e8813d746c71dd54a1d2f0b821b416342",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/Components/fig_FlxGrp/FlxGrp_2x2_20261026.alt.txt",
+      "to": "figs/30-torque/Deprecated/Components/fig_FlxGrp/FlxGrp_2x2.alt.txt",
+      "sha256": "868e0ceb7b57ff4eb0ae9d2fa292464ac9bebad9d695bce51259afbe0c9b66a5",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/30-torque/Deprecated/reconciliation_20261028/FlxGrp_2x2_20261026.pdf",
+      "to": "figs/30-torque/Deprecated/reconciliation_20261028/FlxGrp_2x2.pdf",
+      "sha256": "cfbe00ff0bd251a95692fde6b21444457ac25f46497588f49986cbf7260d5a49",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/biw2lvar_air_stage2_20261116.alt.txt",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/biw2lvar_air_stage2.alt.txt",
+      "sha256": "425e707b99e1fb996f0ce5323bf748d74ecc210df81c573728e54d7bcc840f33",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/biw2lvar_air_stage2_20261116.pdf",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/biw2lvar_air_stage2.pdf",
+      "sha256": "c4d359f3a81292f2e5be92436c776225364b502e38b855ff605aade3d8c372b8",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/simulation_workflow_20261116.alt.txt",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/simulation_workflow.alt.txt",
+      "sha256": "addd17022873c978c56ec7288a320f78faeabdc513389fc35b17ab1f172beab9",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/simulation_workflow_20261116.pdf",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/simulation_workflow.pdf",
+      "sha256": "d2bdbc6e12461473ad43b75cf5995d91689c70d01423d68153a12a2f8f0fd9aa",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/simulation_workflow_20261116.png",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/simulation_workflow.png",
+      "sha256": "d02809dac8cb192e513ff149711c0af96f8c1c8a6292d92b898c6730f3573354",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/sns_cup_reflex_20261116.alt.txt",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/sns_cup_reflex.alt.txt",
+      "sha256": "31a24459b0c6e9263c5cad2b78d9d02cb5700121aa05ad68ed7aeb67901646a5",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/sns_cup_reflex_20261116.pdf",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/sns_cup_reflex.pdf",
+      "sha256": "729b757b22d7a9a37f1f1ea6f1a849ab3e4f85341b4f01c7ed4d3218ebd5a65c",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/sns_cup_reflex_20261116.png",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/sns_cup_reflex.png",
+      "sha256": "62c9f6c0b8a91a87316da3f0389e9cff0cddff77d554275a2debd63f0a90253c",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/sns_knee_reflex_20261116.alt.txt",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/sns_knee_reflex.alt.txt",
+      "sha256": "25ade8f298cbd15b806cb6ebfa2603ab19ef019e530edecd37b2e92fb80764bf",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/sns_knee_reflex_20261116.pdf",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/sns_knee_reflex.pdf",
+      "sha256": "25bfd9af884d10e975d2ad581a6913f72746210333a5f227ac6ac3d61b6b7d18",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261116_authoritative/sns_knee_reflex_20261116.png",
+      "to": "figs/60-sns/Deprecated/20261116_authoritative/sns_knee_reflex.png",
+      "sha256": "4d6fd16734328ece2ec414850b2caeab1da6c8afa50d2ed67f264c2ba26c9c1c",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261118/sns_library_20261116.png",
+      "to": "figs/60-sns/Deprecated/20261118/sns_library.png",
+      "sha256": "8ff93850235e45a53d3181cbb7f04c67eb3e1ee2f46098a53e5c0c19c9c3f37a",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261118/incoming/sns_w2l_traces_short_20261031.png",
+      "to": "figs/60-sns/Deprecated/20261118/incoming/sns_w2l_traces_short.png",
+      "sha256": "077b429fccb1e3e590a2be69c37af689089690d1da17ea2f1a0badab76f0c4e9",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261118/incoming/sns_w2l_traces_short_20261031_alt.txt",
+      "to": "figs/60-sns/Deprecated/20261118/incoming/sns_w2l_traces_short_alt.txt",
+      "sha256": "63e0a0107fc810cfd5c3562f769f8337aa5d94bfe62a5bc59805e89ff8c4af1d",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261119_terminology/sns_library_20261116.alt.txt",
+      "to": "figs/60-sns/Deprecated/20261119_terminology/sns_library.alt.txt",
+      "sha256": "242b153a08807d94c1e1b153f9049e6dd0851d4b47c8d5b6a94bdb18565d579d",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/60-sns/Deprecated/20261119_terminology/sns_library_20261116.pdf",
+      "to": "figs/60-sns/Deprecated/20261119_terminology/sns_library.pdf",
+      "sha256": "ef97dcfa3211dd30d9609ba475475a17843d44c91db74e6ff310707761448242",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/94-AppendixC/Deprecated/route_geometry_ext20mm_20260925.png",
+      "to": "figs/94-AppendixC/Deprecated/route_geometry_ext20mm.png",
+      "sha256": "e5d8b56fee4b05a774e5fae3099e6dd8d0c529adbcd35a7eefe4c0e127ed5d33",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/94-AppendixC/Deprecated/20261118/direct_route_contact_detail_20261030.png",
+      "to": "figs/94-AppendixC/Deprecated/20261118/direct_route_contact_detail.png",
+      "sha256": "726a4ca0030404bac6a2be08d03cb1430b718d06257f22ac5012ededf866e7c5",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/94-AppendixC/Deprecated/20261118/pulley_torque_isobars_20261030.png",
+      "to": "figs/94-AppendixC/Deprecated/20261118/pulley_torque_isobars.png",
+      "sha256": "dadf564091ba1b59dbb52144a883a82eca4ac3151556ee2427f8fc80bed83afe",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/94-AppendixC/Deprecated/Components/fig_app_route_geometry/route_geometry_ext20mm_20260925.alt.txt",
+      "to": "figs/94-AppendixC/Deprecated/Components/fig_app_route_geometry/route_geometry_ext20mm.alt.txt",
+      "sha256": "3698dfbeefe85655b03089e5f450acd0781be37054e3ab2a8b54aeda96191ff8",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/94-AppendixC/Deprecated/Components/fig_app_route_geometry/route_geometry_ext20mm_20260925.eps",
+      "to": "figs/94-AppendixC/Deprecated/Components/fig_app_route_geometry/route_geometry_ext20mm.eps",
+      "sha256": "a3e5f951226a10644ee171ce2f74a041216c2ce4587873d479122e04e9890c66",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/animatlab_shared_rg_original_20261116.alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/animatlab_shared_rg_original.alt.txt",
+      "sha256": "848c71dc033aed50b2acbb610e116dd5d6d13bc7af6736e668c236e5ee5bbd5a",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/animatlab_shared_rg_original_20261116.png",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/animatlab_shared_rg_original.png",
+      "sha256": "26d9a52877a13cf48787dea89088367a3a55a8d53c75c150168c1a115f9ff0a0",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_mechanics_20261116.alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_mechanics.alt.txt",
+      "sha256": "80dc3fc5e0329225a8842f9a669a56e0f3033d52f93dc32db12d92bf5a4bfd31",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_mechanics_20261116.pdf",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_mechanics.pdf",
+      "sha256": "00c135750cdebb119995c0d885f15e764f58d648efa2c38c951a926696f5bebc",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_neural_20261116.alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_neural.alt.txt",
+      "sha256": "e47d2d9ae421a008299b7caca01cfa72c73e29f1af8a95fd9d87da5dc118dba0",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_neural_20261116.pdf",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/biw2l_stimulus_neural.pdf",
+      "sha256": "cce485c1c5850becff4bc3b032abe3e5cf98e9a8014c86257b3dc832d09291e8",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/syn6_pf_timing_selected_20261116.alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/syn6_pf_timing_selected.alt.txt",
+      "sha256": "b6486ccfa77c8e3ec08def0488ddfdb0860b690ca36f78856e3e82c0870cb0cc",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261116_authoritative/syn6_pf_timing_selected_20261116.pdf",
+      "to": "figs/95-AppendixD/Deprecated/20261116_authoritative/syn6_pf_timing_selected.pdf",
+      "sha256": "89b237d0990d207d8dced16eabe89daed4c0059d5b5f26be1c5c02538e6d4e69",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261118/CAD_supported_traces_20261116.png",
+      "to": "figs/95-AppendixD/Deprecated/20261118/CAD_supported_traces.png",
+      "sha256": "2ca17657e3e417df527ca0f446864df731895d2884648764974d659e6bfc7c1b",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261118/CAD_supported_traces_20261116.svg",
+      "to": "figs/95-AppendixD/Deprecated/20261118/CAD_supported_traces.svg",
+      "sha256": "a098739a67617453bca5b60ccd82b25de134650266935cc04f38e4d6a5b4a482",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261118/Components/W2L_Newer_RG_PF_20261031.svg",
+      "to": "figs/95-AppendixD/Deprecated/20261118/Components/W2L_Newer_RG_PF.svg",
+      "sha256": "7432ba5e49035a639c0def15a5e87016bff32607fce408ebee6a7224fb6975d4",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261118/incoming/spiking_mirror_rhythm_short_20261031.pdf",
+      "to": "figs/95-AppendixD/Deprecated/20261118/incoming/spiking_mirror_rhythm_short.pdf",
+      "sha256": "a8726a340893997cb46811da1e175c107d85ec15298d530ea1ea91f87b6c7eb5",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261118/incoming/spiking_mirror_rhythm_short_20261031_alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/20261118/incoming/spiking_mirror_rhythm_short_alt.txt",
+      "sha256": "4c1f5ef944d7e33cddd782b94cb373f30a7d5ad806b03ba079703c72ed6fed6b",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261119_terminology/animatlab_short_response_20261116.alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/20261119_terminology/animatlab_short_response.alt.txt",
+      "sha256": "c29a0cadda2f6eba455de1d8ce2dab750d3e6440ac879e21dfdde1f953fe75fc",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261119_terminology/spiking_ground_neuromechanics_short_20261031.pdf",
+      "to": "figs/95-AppendixD/Deprecated/20261119_terminology/spiking_ground_neuromechanics_short.pdf",
+      "sha256": "0a480db57a142c7173dc0789dc2048e45383e05803123855a8198eac6ffb43ad",
+      "old_path_in_native_export": false
+    },
+    {
+      "from": "figs/95-AppendixD/Deprecated/20261119_terminology/spiking_ground_neuromechanics_short_20261031_alt.txt",
+      "to": "figs/95-AppendixD/Deprecated/20261119_terminology/spiking_ground_neuromechanics_short_alt.txt",
+      "sha256": "44cfeaccd9b02affbe19e50d9262e4e30eea9f3539f19215841a5a327ff705d7",
+      "old_path_in_native_export": false
+    }
+  ],
   "font_repairs": {
-    "10-introduction/roadmap.pdf": {
-      "before_sha256": "7001d46b61c047931d5a0680bce6d1495a79efa5bf2edf34783bfd409470f584",
-      "after_sha256": "1e1db805703a38d1296719db8a1b0c0a2b893ee333655fe4ea381e0e1d7e8550"
+    "retained_incremental_repairs": {
+      "10-introduction/roadmap.pdf": {
+        "before_sha256": "7001d46b61c047931d5a0680bce6d1495a79efa5bf2edf34783bfd409470f584",
+        "after_sha256": "1e1db805703a38d1296719db8a1b0c0a2b893ee333655fe4ea381e0e1d7e8550"
+      },
+      "15-background/steeleknee.pdf": {
+        "before_sha256": "0108bde2732e74638fef1201512ef57a270397c3c832e407b288401786bc49d5",
+        "after_sha256": "a87a15b0b6673cc0f35a0f06d3bc4ef26e2825b72e76d71a5f8392128672e5a6"
+      },
+      "30-torque/FlxPin_preopt_publication.pdf": {
+        "before_sha256": "fd550d2ced3ccd1cc6544def032efcbff3db477ea06287e66260662310414d4a",
+        "after_sha256": "b98d7734859023258f9ee34735631301c38ec67da24960f2c4ca73e2d2bd9c0d"
+      },
+      "30-torque/FlxPin_optimized_publication.pdf": {
+        "before_sha256": "1aa9c08e969b31bb10d7839f82fcbc65157a5c7b08076f3fd263d585a7d80b19",
+        "after_sha256": "f087099dd344609e19ff3111fe1935d53e46775ba4452be29413ab1fb0497447"
+      },
+      "50-database/sadb_bubble.pdf": {
+        "before_sha256": "556ab54fd7d70d9a6d54e62c39b86fb4296a50889b7b86b104d5b5e763a2732d",
+        "after_sha256": "6ada03600eb535f377a86bc8eada4f91a266b938ccf36a5e7cabdec5cf0d3d25"
+      },
+      "60-sns/controller_retest_and_optimization.pdf": {
+        "before_sha256": "996950cc22e00984c972cb9b02b858c56996160cc10003bb19224c9e968eca43",
+        "after_sha256": "417b0d62c4fb9e43873c15fbc36bcb397a4a8ac2e4e19fbef301d9dec69b52c5"
+      },
+      "60-sns/sns_knee_reflex_authoritative.pdf": {
+        "before_sha256": "80e845185f25adfbf3a69b39f3939982bff086e3fe3b4fb1d53d165fef6a256b",
+        "after_sha256": "c42d713f707999972d3e86934fbc4585db058fce0a69b21761b53db248c7b315"
+      },
+      "94-AppendixC/extensor_cam_AF_bones.pdf": {
+        "before_sha256": "18aa0b081a4f75270d9bf6f07d9ccbea510fd429b94f588f219b6433bd768f30",
+        "after_sha256": "25a6a03bc1f426c0bd893b0ceb1e3749775ee5c61dbbdea01afa0e7bcc830f1f"
+      },
+      "94-AppendixC/extensor_cam_GH_bones.pdf": {
+        "before_sha256": "20379eb28766cfdc27644f263a3bbd50f5ef36d029eb8e1dd4d73167858ed5fd",
+        "after_sha256": "848dbb09d2f99af6cc079107ad2f1a6ddcc15cd13c681c6404ec81c1cd176e41"
+      }
     },
-    "15-background/steeleknee.pdf": {
-      "before_sha256": "0108bde2732e74638fef1201512ef57a270397c3c832e407b288401786bc49d5",
-      "after_sha256": "a87a15b0b6673cc0f35a0f06d3bc4ef26e2825b72e76d71a5f8392128672e5a6"
+    "superseded_historical_names": {
+      "30-torque/ExtPin_complete_publication.pdf": "30-torque/pinned_extensor_torque.pdf",
+      "30-torque/cam_current_legend.pdf": "30-torque/cam_extensor_route.pdf",
+      "30-torque/Ext20mm_physical_publication.pdf": "30-torque/extensor_validation.pdf"
     },
-    "30-torque/FlxPin_preopt_publication.pdf": {
-      "before_sha256": "fd550d2ced3ccd1cc6544def032efcbff3db477ea06287e66260662310414d4a",
-      "after_sha256": "b98d7734859023258f9ee34735631301c38ec67da24960f2c4ca73e2d2bd9c0d"
-    },
-    "30-torque/FlxPin_optimized_publication.pdf": {
-      "before_sha256": "1aa9c08e969b31bb10d7839f82fcbc65157a5c7b08076f3fd263d585a7d80b19",
-      "after_sha256": "f087099dd344609e19ff3111fe1935d53e46775ba4452be29413ab1fb0497447"
-    },
-    "30-torque/ExtPin_complete_publication.pdf": {
-      "before_sha256": "287e05794967b9ce625fd46d9a1547ff62485d25418f9ef947e5b5cfdc4dc8eb",
-      "after_sha256": "8ee0a600203cc0738d6d61c57beaae796a408f2440fe78c2f8524213eb96b9f4"
-    },
-    "30-torque/cam_current_legend.pdf": {
-      "before_sha256": "0527016e02b3d3e063ac992b14a4a2095abe5860e18786a1f2e6915f90fbc4b5",
-      "after_sha256": "849e669c2f392612defac00c6d7d38b9e4e21f92f131d6991e653a84d7d791b2"
-    },
-    "30-torque/Ext20mm_physical_20261026_publication.pdf": {
-      "before_sha256": "8eec04376ced61f31c1e262025c9e18865e4865d082dfdb6bb26457d0d855b86",
-      "after_sha256": "0b243ee358431da125093f6380766aac368fd3ef19a0394b43dca2384d1fd7ec"
-    },
-    "50-database/sadb_bubble.pdf": {
-      "before_sha256": "556ab54fd7d70d9a6d54e62c39b86fb4296a50889b7b86b104d5b5e763a2732d",
-      "after_sha256": "6ada03600eb535f377a86bc8eada4f91a266b938ccf36a5e7cabdec5cf0d3d25"
-    },
-    "60-sns/controller_retest_and_optimization.pdf": {
-      "before_sha256": "996950cc22e00984c972cb9b02b858c56996160cc10003bb19224c9e968eca43",
-      "after_sha256": "417b0d62c4fb9e43873c15fbc36bcb397a4a8ac2e4e19fbef301d9dec69b52c5"
-    },
-    "60-sns/sns_knee_reflex_authoritative.pdf": {
-      "before_sha256": "80e845185f25adfbf3a69b39f3939982bff086e3fe3b4fb1d53d165fef6a256b",
-      "after_sha256": "c42d713f707999972d3e86934fbc4585db058fce0a69b21761b53db248c7b315"
-    },
-    "94-AppendixC/extensor_cam_AF_bones.pdf": {
-      "before_sha256": "18aa0b081a4f75270d9bf6f07d9ccbea510fd429b94f588f219b6433bd768f30",
-      "after_sha256": "25a6a03bc1f426c0bd893b0ceb1e3749775ee5c61dbbdea01afa0e7bcc830f1f"
-    },
-    "94-AppendixC/extensor_cam_GH_bones.pdf": {
-      "before_sha256": "20379eb28766cfdc27644f263a3bbd50f5ef36d029eb8e1dd4d73167858ed5fd",
-      "after_sha256": "848dbb09d2f99af6cc079107ad2f1a6ddcc15cd13c681c6404ec81c1cd176e41"
+    "current_chapter4_artwork": {
+      "30-torque/pinned_extensor_torque.pdf": "ca05e1d3dc0cd1680728f4d0dd16e7e2684e120fa2c8e7f775caea8745a52257",
+      "30-torque/cam_extensor_route.pdf": "c28d7d382181ee7392234a5799b9e05cbf1f098b17dcd925da5b3d368e0e7f46",
+      "30-torque/extensor_validation.pdf": "0b243ee358431da125093f6380766aac368fd3ef19a0394b43dca2384d1fd7ec",
+      "30-torque/flexor_validation.pdf": "8c4e6777477f4b07e3bde205e0648d5a7bee573de26d112ffc8b15bb4bb2f636"
     }
   },
-  "current_live_bib_fingerprint": [
-    149968,
-    "244191ac"
-  ],
-  "local_bib_preserves_previous_bytes": true
+  "native_bibliography_is_additive": true,
+  "simulated_update": {
+    "stage": "D:\\GitHub\\Bipedal_Robot\\tmp\\figure_names_overview\\package_release_source",
+    "source_files": 18,
+    "verified_graphic_and_source_files": 141,
+    "verified_preserved_moves": 52,
+    "native_bibliography_bytes_retained": 150145,
+    "complete_figure_tree": {
+      "path": "D:\\GitHub\\Bipedal_Robot\\tmp\\figure_names_overview\\package_release_source\\figs",
+      "files": 186,
+      "total_bytes": 31063789,
+      "archived_files": 44,
+      "dated_basenames": []
+    }
+  }
 }

@@ -1,11 +1,11 @@
 \chapter{Tools for Constructing and Testing Neuromechanical Models}\label{ch:sns}
 \graphicspath{{../Figures/60-sns/}{figs/60-sns/}}
 
-I developed the tools in this chapter to couple neural controllers to Gait2392, a human musculoskeletal model, and to mechanical models based on the computer-aided design (CAD) of our bipedal robot. Slow simulation and hand tuning in an earlier course project with Connor Morrow made it difficult to repeat the same experiment after changing the controller or the mechanical model. A scripted version of the walker in the MuJoCo physics engine made automatic tuning possible. The subsequent experiments use the human model, a robot counterpart with relocated muscle paths, and a model built from the lab robot's own geometry. I developed Simulink blocks and a graphical interface for building nonspiking circuits. A simulated knee reflex tests whether a sensory signal passes through a motor neuron and muscle to produce joint motion. The final experiments use scripts to tune controllers, test whether the feet alternate under load, and measure how much a faster neural calculation saves over a complete trial.
+This chapter presents the tools I developed to test neural controllers on a human musculoskeletal model and on models of our bipedal robot. The lab's existing software made it impractical to search systematically for controller settings. The human model provided a reference for movement, but testing the robot required a model that represented where its artificial muscles pulled on the joints and how the resulting motion fed back to the controller. I built tools to construct circuits graphically, connect controllers to these mechanical models, and automate tuning. Researchers can now change a sensory connection or move an artificial muscle attachment in simulation, repeat the trial under the same conditions, and trace the effect on muscle force and leg motion.
 
 \section{The Limits of Hand Tuning in AnimatLab}\label{sec:prior_walker}\label{sec:animatlab_results}\label{sec:sns_gaps}
 
-I built my first neuromechanical model in AnimatLab, a graphical program in which a neural circuit can activate muscles and receive sensory signals from the moving body \citep{cofer_animatlab_2010}. For the course project, Morrow and I connected the circuit of \citet{deng_neuromechanical_2019} to the sagittal-plane biped of \citet{li_bipedal_2017} and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run, making a systematic search impractical.
+In a course project, Connor Morrow and I tested whether the neural circuit of \citet{deng_neuromechanical_2019} could coordinate the legs of the sagittal-plane biped of \citet{li_bipedal_2017}. We connected the circuit and body in AnimatLab, a graphical program for linking neurons, muscles, and sensory feedback \citep{cofer_animatlab_2010}, and adjusted neural currents, synaptic weights, and muscle parameters by hand. The circuit supplied a common rhythm to both legs, and opposing muscles pulled on each limb. There is a passive toe joint. The legs made stepping-like movements while the model was suspended in air. When we lowered it to the ground and removed the support, the model fell over (Figure~\ref{fig:animatlab_model_architecture}). Hunt and I reported the suspended model in a poster for the NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. Each parameter change required another slow run.
 
 \begin{figure}[htbp]
 \centering
@@ -17,7 +17,7 @@ I built my first neuromechanical model in AnimatLab, a graphical program in whic
 \textbf{(B)}\\[2pt]
 \includegraphics[width=\linewidth,height=0.19\textheight,keepaspectratio]{LI_DENG_FALL_FRAME.png}
 \end{minipage}
-\caption[Original controller-transfer experiment]{The legs of the Li--Deng model made stepping-like movements while the model was suspended in air (A). The model fell over when it was lowered to the ground and its support was removed (B).}
+\caption[Original controller-transfer experiment]{The legs of the Li--Deng model made stepping-like movements while the model was suspended in air \textbf{(A)}. The model fell over when it was lowered to the ground and its support was removed \textbf{(B)}.}
 \label{fig:animatlab_model_architecture}
 \end{figure}
 
@@ -110,7 +110,7 @@ In the SNS-Simscape interface, \texttt{SNSGui}, a researcher can place nonspikin
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=14cm]{sns_library_20261116.pdf}
+\includegraphics[width=14cm]{sns_library.pdf}
 \caption[Editable SNS-Simscape blocks]{The twelve SNS-Simscape library elements for constructing neural pathways, encoding sensory measurements, and calculating activation and actuator force. The Thelen-style biological-muscle block represents muscle force with a Hill-type model and a rigid tendon.}
 \label{fig:simulink_sns_implementation}
 \end{figure}
@@ -126,7 +126,7 @@ In the simulated knee, a brief pulse to the extensor Ia sensory input recruited 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=14cm]{sns_knee_reflex_authoritative.pdf}
-\caption[Transient knee feedback response]{The knee circuit (A) receives a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} extensor Ia pulse (B). Stimulated and control knee angles (C) and motor-neuron activity (D) share the dashed onset line. The left column shows recovery in seconds and the right enlarges onset in milliseconds. Flexion is negative.}
+\caption[Transient knee feedback response]{The knee circuit \textbf{(A)} receives a \qty{2}{\nano\ampere}, \qty{30}{\milli\second} extensor Ia pulse \textbf{(B)}. Stimulated and control knee angles \textbf{(C)} and motor-neuron activity \textbf{(D)} share the dashed onset line. The left column shows recovery in seconds and the right enlarges onset in milliseconds. Flexion is negative.}
 \label{fig:sns_reflex_current}\label{fig:simulink_reflex_topology}
 \end{figure}
 
@@ -135,7 +135,7 @@ As the simulated cup filled, the arm descended and stretched the biceps. With fe
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=14cm]{sns_cup_reflex_authoritative.pdf}
-\caption[Loaded-cup feedback comparison]{Feedback circuit (A), arm geometry (B), load ramp (C), elevation response (D), and normalized pressure command (E). The BPA20 block supplies actuator force. The \qty{10}{\second} endpoint compares responses during increasing load, rather than equilibrium sag.}
+\caption[Loaded-cup feedback comparison]{Feedback circuit \textbf{(A)}, arm geometry \textbf{(B)}, load ramp \textbf{(C)}, elevation response \textbf{(D)}, and normalized pressure command \textbf{(E)}. The BPA20 block supplies actuator force. The \qty{10}{\second} endpoint compares responses during increasing load, rather than equilibrium sag.}
 \label{fig:sns_beverage_current}
 \end{figure}
 \FloatBarrier
@@ -155,7 +155,7 @@ To test the W2L rhythm generator across programs, I compared four RG signals in 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{controller_retest_and_optimization.pdf}
-\caption[Controller retesting and staged parameter optimization]{(A) Two left-leg pathways in the W2L Simulink circuit provide an example of what the graphical editor exposes. The CAD sequence at right shows how to repeat a controller test with revised geometry. (B) For each neural function or physical task, I specify the target, run bounded trials, and retest the selected settings.}
+\caption[Controller retesting and staged parameter optimization]{\textbf{(A)} Two left-leg pathways in the W2L Simulink circuit provide an example of what the graphical editor exposes. The CAD sequence at right shows how to repeat a controller test with revised geometry. \textbf{(B)} For each neural function or physical task, I specify the target, run bounded trials, and retest the selected settings.}
 \label{fig:sns_design_fit_workflow}
 \end{figure}
 
@@ -207,7 +207,7 @@ With the same fitted weights, both legs of the suspended Gait2392 model made rep
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=14cm]{biw2lvar_air_aligned_authoritative.pdf}
-\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \qtyrange{7}{11}{\second}: bilateral flexor RG voltage (A), right knee-extensor and knee-flexor MN voltages (B), native flexion-negative knee angles (C), and superior suspension and explicit-support forces (D). Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}
+\caption[BiW2Lvar+ afferented air-stage recording]{Aligned stage-2 signals over \qtyrange{7}{11}{\second}: bilateral flexor RG voltage \textbf{(A)}, right knee-extensor and knee-flexor MN voltages \textbf{(B)}, native flexion-negative knee angles \textbf{(C)}, and superior suspension and explicit-support forces \textbf{(D)}. Voltages are rest-relative. All saved samples are retained. Ground contact is disabled, measured foot forces are zero, and suspension and frontal guidance remain active.}
 \label{fig:sns_biw2l_air}
 \end{figure}
 
@@ -222,7 +222,7 @@ I changed how the channels started and stopped their bursts. The revised circuit
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{syn6_suspended_kinematics.pdf}
-\caption[Joint motion of the suspended six-synergy model]{Hip, knee, and ankle angles for seven suspended syn6 cycles (light blue) and their mean (solid blue). The reference curves are recorded walking kinematics from the OpenSim Subject01 example (dashed) and walking at \qty{1.25}{\meter\per\second} simulated by \citet{ong_predicting_2019} (dotted). The legs share phase zero at maximum right-knee flexion. Dark bars below each leg mark stance in each reference, and gray bars mark swing. The suspended model had no foot contact. Knee flexion is negative.}
+\caption[Joint motion of the suspended six-synergy model]{Hip, knee, and ankle angles for seven suspended syn6 cycles and their mean. The reference curves are recorded walking kinematics from the OpenSim Subject01 example and walking at \qty{1.25}{\meter\per\second} simulated by \citet{ong_predicting_2019}. The legs share phase zero at maximum right-knee flexion. The bars below each leg mark stance and swing in the walking references. The suspended model had no foot contact. Knee flexion is negative.}
 \label{fig:sns_syn6_overlay}
 \end{figure}
 \FloatBarrier
@@ -233,8 +233,8 @@ On supported level ground, the W2L experiment asked whether the feet still alter
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short_20261031.pdf}
-\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. Solid lines show the left leg and dashed lines the right. The joints continued to flex and extend in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
+\includegraphics[width=\textwidth,height=0.74\textheight,keepaspectratio]{w2l_feedback_short.pdf}
+\caption[W2L sensory-pathway removal]{RG voltages, joint angles, and heel normal forces over \qtyrange{12}{15}{\second} with sensory pathways intact (left column) and after their specified combined removal (right), at matched drive, support, and perturbation. The joints continued to flex and extend in both conditions. Bilateral contact phase was calculated over $4.5\leq t<30$\,s.}
 \label{fig:sns_ablation_pair}
 \end{figure}
 
@@ -244,7 +244,7 @@ On the separate CAD robot, the neural circuit supplied timing and an engineering
 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{cad_supported_20261116.png}
+\includegraphics[width=\textwidth,height=0.48\textheight,keepaspectratio]{cad_supported.png}
 \caption[CAD robot under supported hybrid control]{Views of the selected CAD robot at \qty{22.9}{\second}. The model uses 54 reference-tension actuators, SNS timing, and engineering force allocation. During \qtyrange{16}{28}{\second}, measured vertical assistance is \qty{77.5}{\percent} of body weight; lateral and attitude guidance remain active.}
 \label{fig:ah001_supported_control}
 \end{figure}

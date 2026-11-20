@@ -86,7 +86,7 @@ status_path.write_bytes(new)
 figs=[('60-sns',s) for s in ['simulation_workflow_authoritative','sns_knee_reflex_authoritative',
     'sns_cup_reflex_authoritative','biw2lvar_air_aligned_authoritative']]
 figs += [('95-AppendixD',s) for s in ['AIR_stimulus_neural','AIR_stimulus_mechanics',
-    'PF_timing_authoritative','CAD_supported_traces_20261116']]
+    'PF_timing_authoritative','CAD_supported_traces']]
 paths=[DISS/'Final/chapters/60-sns.tex',DISS/'Final/chapters/95-AppendixD.tex',pdf]
 paths += [DISS/'Figures'/chapter/(stem+'.pdf') for chapter,stem in figs]
 paths += [HERE/n for n in ['REVISION_REPORT.md','NUMERICAL_CHANGE_LEDGER.md','BUILD_RESULT.json',

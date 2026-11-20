@@ -146,7 +146,7 @@ lg=legend(ax,legHandles,legLabels,'NumColumns',3,'FontName','Arial','FontSize',1
 F=fullfile(root,'Documentation/Reports and Papers/Dissertation/Figures/94-AppendixC');
 % Point-cloud image is exported as a high-resolution raster; route arrays are unchanged.
 set(fig,'PaperUnits','inches','PaperPosition',[0 0 6.5 6.1],'PaperSize',[6.5 6.1]);
-print(fig,fullfile(F,'bone_context_extensor20mm_20261030.png'),'-dpng','-r300');
+print(fig,fullfile(F,'bone_context_extensor20mm.png'),'-dpng','-r300');
 
 close(fig);
 end
