@@ -53,7 +53,7 @@ end
 Name = 'Vastus Intermedius Normal';
 Location = zeros(5,3,positions);
 
-% Origin Location from Ben
+% Origin coordinates supplied by B. Bolen
 for i = 1:positions
     if phiD(i) >= -74.01 && phiD(i) < -19.6
      Location(:,:,i) = [0.030, -0.050, 0;     %Origin

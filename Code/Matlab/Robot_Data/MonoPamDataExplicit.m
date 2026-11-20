@@ -101,7 +101,7 @@ classdef MonoPamDataExplicit < handle
             
             % Calculate which muscle segment is the longest on average.
             % This will be where the Pam resides.
-            avgSegL = zeros(size(L, 1, 1) - 1);
+            avgSegL = zeros(size(L, 1) - 1);
             for i = 1:size(segLengths, 2)
                 avgSegL(i) = mean(segLengths(:, i));
             end
@@ -126,7 +126,7 @@ classdef MonoPamDataExplicit < handle
             segLengths = obj.SegmentLengths;
             
             for ii = 1:size(mL, 1)                          %Repeat for each orientation
-                for i = 1:size(L, 1, 1)-1                      %Repeat for all muscle segments
+                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
                     mL(ii, 1) = mL(ii, 1) + segLengths(ii, i);
                 end
             end
@@ -294,11 +294,11 @@ classdef MonoPamDataExplicit < handle
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-        function tor = get.Torque(obj)
+        function Mz = get.Torque(obj)
             mA = obj.MomentArm;
             F = obj.Force;
             strain = obj.Contraction;
-            tor = cross(mA,F,2);
+            % tor = cross(mA,F,2);
             
             N = size(F, 1);
             Mz = zeros(N, 3);

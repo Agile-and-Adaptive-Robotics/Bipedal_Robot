@@ -65,7 +65,7 @@ FestMax20 = B(:,2);           %Maximum force, 20 mm
 
 %% Save
 
-save Fmax_Festo.mat FestLrest10 FestMax10 FestLrest20 FestMax20
+% save Fmax_Festo.mat FestLrest10 FestMax10 FestLrest20 FestMax20
 
 %% Plot
 

@@ -1,4 +1,4 @@
-% clear; clc; close all;
+clear; clc; close all;
 load data20mm.mat
 
 % Assuming x, y, z are column vectors of the same length
@@ -21,6 +21,6 @@ xVal20 = Ax(valIdx);
 yVal20 = Ay(valIdx);
 zVal20 = Az(valIdx);
 
-save data20mm_sorted.mat Ax Ay Az...
-                        xTrain20 yTrain20 zTrain20...
-                        xVal20 yVal20 zVal20
+% save data20mm_sorted.mat Ax Ay Az...
+%                         xTrain20 yTrain20 zTrain20...
+%                         xVal20 yVal20 zVal20

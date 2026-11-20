@@ -36,7 +36,7 @@ if isequal(ChooseJoint, 'Back')
         %Back y rotation
         Raxis = [0; 1; 0];
         MaxTheta = 0;
-        MinTheta =0;               %Ben's script lists the min and max, however only 0 is used. Why?
+        MinTheta =0;               %The lower angular bound is zero.
         Home = [-0.1007; 0.0815; 0];
         Joint1b = JointData('BackY', Raxis, MaxTheta, MinTheta, Home, divisions);
 
@@ -102,7 +102,7 @@ if isequal(ChooseJoint, 'Back')
         Torque1M(:, i, :) = Torque1(:, ((i-1)*divisions)+1:i*divisions, :);
     end
     
-    %Transposing to match Ben's results
+    %Transpose to match the reference array dimensions
     for i = 1:size(Torque1M, 3)
         Torque1M(:, :, i) = Torque1M(:, :, i)';
     end
@@ -340,7 +340,7 @@ elseif isequal(ChooseJoint, 'Calves')
 
         Raxis = [0.7871796; 0.60474746; -0.12094949];
         MaxTheta = 0;
-        MinTheta = 0;               %Ben's script lists the min and max, however only 0 is used. Why?
+        MinTheta = 0;               %The lower angular bound is zero.
         Home = [-0.04877; -0.04195; 0.00792];   %Home position from the Talus
         Joint2 = JointData('Subtalar', Raxis, MaxTheta, MinTheta, Home, divisions);
 
@@ -584,7 +584,7 @@ elseif isequal(ChooseJoint, 'Toe')
 
         Raxis = [0.7871796; 0.60474746; -0.12094949];
         MaxTheta = 0;
-        MinTheta = 0;               %Ben's script lists the min and max, however only 0 is used. Why?
+        MinTheta = 0;               %The lower angular bound is zero.
         Home = [-0.04877; -0.04195; 0.00792];   %Home position from the Talus
         Joint2 = JointData('Subtalar', Raxis, MaxTheta, MinTheta, Home, divisions);
 

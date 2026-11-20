@@ -8,6 +8,7 @@ close all;
 load KneeExtPin_10mm_all.mat
 %Specify values for this BPA
 restingLength = 0.457;      %resting length, m
+rest = restingLength;
 kmax = 0.3815;               %Length at maximum contraction, m
 tendon = 0;             %Tendon, measured
 fitting = 0.0254;
@@ -52,11 +53,10 @@ strainz = cell(length(Angle),1);
 rel = cell(length(Angle),1);
 F = cell(length(Angle),1);
 TorqueHand = cell(length(Angle),1);
-
 korr = 0;           % correction factor
 r = 0.085;          %radius of curvature
 wR = 15;           % Angle (deg) that wrapping starts to occur
-G = sqrt(Vas_Pam_46cm. MomentArm(:,1).^2+Vas_Pam_46cm. MomentArm(:,2).^2); %Moment Arm
+G = hypot(Vas_Pam_46cm.MomentArm(:,1),Vas_Pam_46cm.MomentArm(:,2)); %Moment Arm
 for i = 1:length(Angle)
     strainz{i} = ((restingLength-InflatedLength{i})./restingLength);
     MAr = interp1(phiD,G,Angle{i});
@@ -104,7 +104,7 @@ TorqueHand = TorqueHand{1};
 
 %% Plot expected versus measured moment arm
 Ma = Vas_Pam_46cm.MomentArm;                 %Calculated moment arm
-G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
 
 fig_MA = figure;
 ax1 = gca;

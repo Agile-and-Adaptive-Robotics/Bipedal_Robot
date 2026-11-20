@@ -8,8 +8,8 @@ clear all
 close all
 
 addpath('Open_Sim_Bone_Geometry')
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'Functions'));
+addpath(fullfile(fileparts(mfilename('fullpath')), '..'));
 
 %% Retrieve the datasets
 Spine = xlsread('Spine_Mesh_Points.xlsx');

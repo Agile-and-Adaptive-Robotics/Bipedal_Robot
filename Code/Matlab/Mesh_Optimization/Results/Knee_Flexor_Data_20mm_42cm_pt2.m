@@ -96,7 +96,7 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 
 Location = zeros(2,3,positions);
-%Origin and Insertion from Ben
+%Origin and insertion coordinates supplied by B. Bolen
 p1 = [-0.050, 0.035, 0.050];       %Origin
 p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);

@@ -190,7 +190,7 @@ Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 %% PAM calculation
 Name = 'Vastus Intermedius, Proximal Ring';
 Location = zeros(7,3,positions);
-% Origin Location from Ben
+% Origin coordinates supplied by B. Bolen
 for i=1:positions
     if phiD(i) < -80
      Location(:,:,i) = [0.040, 0.035, 0;

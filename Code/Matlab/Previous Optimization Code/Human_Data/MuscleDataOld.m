@@ -87,7 +87,7 @@ classdef MuscleDataOld
                         end
                     end
 
-                    %Connor Note: The following algorithm matches Ben's, however, I
+                    %The following implementation follows the earlier algorithm. I
                     %believe that it might be incorrect, depending on where the
                     %transformation matrices are measured from.
 
@@ -112,7 +112,7 @@ classdef MuscleDataOld
                 for i = 1:length(obj.ViaPoints)
                     t1 = T(:, :, i);
 
-                    %This is a mess to conform to how Ben's code works. Will need
+                    %This ordering matches the existing implementation. The alternative would be
                     %to review to make sure that it is accurate. It currently
                     %is set up to emulate the Extensor Digitorum Longus and how
                     %the transformation matrices transform the vectors. 
@@ -137,7 +137,7 @@ classdef MuscleDataOld
                     unitDirection = direction/norm(direction);                                          %Calculate the unit direction of the direciton vector
                     
                     if length(obj.Axis) > length(wrap)                      %Check if the number of axes to investigate are greater than the number of wrapping points. In some of 
-                                                                            %Ben's code, there might only be one wrapping point, but multiple axes for the moment arm. In order parts
+                                                                            %the code, there might only be one wrapping point, but multiple axes for the moment arm. In order parts
                                                                             %of the code, there are multiple wrapping points, but only one axis
                         for j = 1:length(obj.Axis)
                             mA(j, ii) = CrossProd(VecTrans(t2, L(:, wrap(i))), unitDirection, obj.Axis(j), T(1:3, 1:3, i));

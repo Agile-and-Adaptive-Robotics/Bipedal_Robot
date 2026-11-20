@@ -1,0 +1,57 @@
+component NonSpikingNeuron
+% SNS NonSpiking Neuron
+% literal RC membrane circuit in the Simscape electrical domain.
+%
+%   Cm dV/dt = Gm (Vrest - V) + sum(Isyn)
+%
+% Physical model: membrane capacitance Cm in parallel with conductance Gm
+% that pulls toward Vrest through an internal voltage source.
+%   tau_m = Cm/Gm   (e.g. 5 nF / 0.1 uS = 50 ms)
+%
+% Ports:
+%   m : membrane node — connect synapses' post side and stimulus current here
+%   r : reference node (tie every block's r to one Electrical Reference)
+% Output:
+%   S : normalized drive, S = clip((V - Thr)/Slope, 0, 1), dimensionless [0..1]
+%
+% Parameter conventions follow Animatlab / sns_toolbox:
+%   Vrest = -52 mV, Thr = -45 mV (above rest so S is off at rest), Slope 1/mV.
+% NOTE parameters are in SI (V, S, F): -52 mV -> -0.052, 0.1 uS -> 1e-7,
+%      5 nF -> 5e-9, Thr -45 mV -> -0.045, Slope 1/mV -> 1000 '1/V'.
+
+nodes
+    m = foundation.electrical.electrical; % membrane
+    r = foundation.electrical.electrical; % reference
+end
+
+parameters
+    Vrest = {-0.052, 'V'};     % resting potential (-52 mV)
+    Gm    = {1e-7,  'S'};      % membrane conductance (0.1 uS)
+    Cm    = {5e-9,  'F'};      % membrane capacitance (5 nF)
+    Thr   = {-0.045, 'V'};     % drive saturation threshold (-45 mV)
+    Slope = {1000,  '1/V'};    % drive saturation slope (1/mV)
+end
+
+outputs
+    S = {0, '1'};              % normalized drive [0..1]
+end
+
+components(ExternalAccess=observe)
+    memC  = foundation.electrical.elements.capacitor(c = Cm);   % membrane cap
+    memR  = foundation.electrical.elements.resistor(R = 1/Gm);              % membrane leak
+    vrest = foundation.electrical.sources.dc_voltage(v0 = Vrest);       % rest source
+end
+
+equations
+    S == max(0, min(1, (m.v - Thr)*Slope));
+end
+
+connections
+    connect(m, memC.p);
+    connect(memC.n, r);
+    connect(m, memR.p);
+    connect(memR.n, vrest.p);
+    connect(vrest.n, r);
+end
+
+end

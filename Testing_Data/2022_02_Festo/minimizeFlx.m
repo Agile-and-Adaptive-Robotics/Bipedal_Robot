@@ -2,20 +2,21 @@
 function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
 
 %% load
-%kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
+%kf = knee flexor, kf(1) = specific resting length, 
 %ke = knee extensor, same as above
-%kf.L := lengths = [42 42] cm   where 1st length is for 10mm diameter,
-%2nd length is for 20mm diameter.
-%example: kf(2).L(1).Mz z-axis torque for biomimetic knee, flexor, 42cm length
+%example: kf(1).Mz z-axis torque for biomimetic knee, flexor, 42cm length,
+%10 mm diameter BPA.
 %'exp' suffix means experimental
 %'_h' suffix means hybrid
 %'_p' suffix means prime, as in the new prediction values
+%'_f' suffix means fictive, as in fictive strain and length considering
+%loss of useful length from X3 term.
 
 % load FlxBioBPASet.mat kf %This loads the following, which was ran and saved:
 
     load KneeFlx_10mm_42cm.mat Bifemsh_Pam phiD
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
     load Plot_KneeFlx_10mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle', Torque', InflatedLength', ICRtoMuscle', TorqueHand']);
     kf(1) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
@@ -25,14 +26,14 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
     % 42cm length, 20mm diameter, 620 pressure.
     load KneeFlx_20mm_42cm.mat Bifemsh_Pam3 phiD
     Bifemsh_Pam = Bifemsh_Pam3;
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
     load Plot_KneeFlx_20mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle', Torque, InflatedLength', ICRtoMuscle', TorqueHand']);
     kf(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
@@ -42,14 +43,14 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A([1:10, 12],1),'Mexp',A([1:10, 12],2),...
                   'A_h',A([1:10, 12],1),'Lm_h',A([1:10, 12],3),'mA_h',A([1:10, 12],4),'M_h',A([1:10, 12],5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Bifemsh_Pam3 Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
     
     % 42cm length, 20mm diameter, 325 pressure.
     load KneeFlx_20mm_42cm.mat Bifemsh_Pam2 phiD
     Bifemsh_Pam = Bifemsh_Pam2;
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
     load Plot_KneeFlx_20mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle', Torque, InflatedLength', ICRtoMuscle', TorqueHand']);
     kf(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
@@ -59,7 +60,7 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A([17, 20:22],1),'Mexp',A([17, 20:22],2),...
                   'A_h',A([17, 20:22],1),'Lm_h',A([17, 20:22],3),'mA_h',A([17, 20:22],4),'M_h',A([17, 20:22],5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Bifemsh_Pam2 phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 
@@ -225,11 +226,11 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
     FF (FF < 0) = 0;
     F = FF.*Funit;  % N×3, already in hip frame
     
-    pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
+    pA = L(1,:,(klass.Ak==0));                                  %Distance from hip origin to muscle insertion
             switch klass.dBPA
                 case 20
 %                   Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
-                    Pbr = [9.48  -36.2   30.76]/1000;       %from hip origin to bracket bolt pattern centroid
+                    Pbr = [9.48  -33.38   33.9]/1000;       %from hip origin to bracket bolt pattern centroid
                 case 10
                     Pbr = [-19 22 27.6]/1000;       %from hip origin centroid of bracket cantilever 
 %                     Pbr = [-21.33  -79   6.94]/1000;       %from centroid of bracket bolts.
@@ -249,7 +250,7 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
                   0            1  0;
                  -sin(thetaY) 0   cos(thetaY)];
             Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-            Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
+            Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
             
             Fbrh = zeros(N,3);
             pAnew = zeros(N,3);     %New point A, in the hip frame
@@ -264,8 +265,8 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
                 [epsilon, delta, beta, gema] = fortz(klass,Fbrh,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
             end
             deflection = [epsilon, delta, beta];    %bracket movement
-%             pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
-            pbrAnew = [norm(pbrhA(1:2)),0,pbrhA(3)]+deflection; %New point A, represented in the bracket frame
+            pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
+            % pbrAnew = [norm(pbrhA(1:2)),0,pbrhA(3)]+deflection; %New point A, represented in the bracket frame
             LOC = L;
             for ii = 1:N                          %Repeat for each orientation 
                 pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
@@ -285,8 +286,11 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     N = size(Fbr,1);
     % Initialize outputs
     [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));
-    
-    
+        
+    if isinf(X1) && isinf(X2) && isinf(kSpr)
+        return
+    end
+
     D = klass.dBPA;         %BPA diameter
     if isempty(X0)
         X0 = 0;
@@ -307,12 +311,16 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    K = [X1, X2, X2]; %bracket stiffness
+    K_bracket = diag(K);       %project bracket stiffness onto force direction
+    C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]);       %project bracket compliance onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
-    K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
-    k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
-    k_b = reshape(k_b, [N, 1]);
-    k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
+    C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
+    c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+    c_b = reshape(c_b, [N, 1]);
+    cSpr = 1/kSpr;
+    c_eff = c_b + cSpr;     % effective compliance along u
+    k_eff = 1 ./ c_eff;  % effective stiffness along u
 
 %     ub = rest*KMAX/2;         %upper bound of fzero
     
@@ -327,17 +335,13 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
         unit_vec = u_hat_all(i, :);
         Lm = mL(i);
         
-%         r = 0.0001;     %initial guess
-
         % Solve for r (deflection) using fzero
         % First, compute contraction from Xi0 if deflection is zero 
         contraction0    = ( rest - Lm ) / rest;
         relstrain0      = contraction0 / KMAX;  %relative strain
         if relstrain0 >= 1
             r = 0;
-
         else
-
             relfun = @(r) ...
                 festo4( D, ...
                     (rest - (Lm -  r)) / rest / KMAX, ...
@@ -345,7 +349,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
                 ) * mif - keff * r;
 
             try
-                r = fzero(relfun, [0, .5]);
+                r = fzero(relfun, [0, Lm-kmax]);
             catch
                 r = 0;
             end
@@ -373,9 +377,19 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
             e_axial(i) = e_bkt(1);
             e_bendY(i) = e_bkt(2);
             e_bendZ(i) = e_bkt(3);
+
             % Cable elongation
-%             r_bracket = unit_vec * e_bkt;
-            e_cable(i) = F_mag/kSpr;
+                if tendon > 0
+                    r_bracket = unit_vec * e_bkt;
+                    r_cable = r-r_bracket;
+                    e_cable(i) = F_mag/kSpr;
+    
+                    if abs(r_cable - e_cable(i)) > 1e-6
+                        warning('fortz:LengthBalanceMismatch', ...
+                            'Frame %d: e_cable = %.9g, r_cable = %.9g, diff = %.9g', ...
+                            i, e_cable(i), r_cable, r_cable - e_cable(i));
+                    end
+                end
         end
 
     end

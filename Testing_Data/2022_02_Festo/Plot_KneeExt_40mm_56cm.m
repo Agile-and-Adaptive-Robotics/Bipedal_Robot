@@ -10,7 +10,7 @@ qt = addpath(genpath(f));
 restingLength = 0.557; %resting length, m
 kmax = 0.399; %Length at maximum contraction, m
 
-load 'KneeExt40_OldCalcMethod.mat' theta_K vas_int_tqZ vas_lat_tqZ vas_med_tqZ %Human values, Ben's old method
+load 'KneeExt40_OldCalcMethod.mat' theta_K vas_int_tqZ vas_lat_tqZ vas_med_tqZ %Human values, previous calculation
 vas_int_H = vas_int_tqZ(:,1); 
 vas_lat_H = vas_lat_tqZ(:,1); 
 vas_med_H = vas_med_tqZ(:,1);

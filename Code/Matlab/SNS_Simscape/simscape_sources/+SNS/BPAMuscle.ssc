@@ -1,0 +1,136 @@
+component BPAMuscle
+% SNS BPA Muscle
+% Braided pneumatic actuator model ported from the project's own MATLAB code
+% (festo4.m / maxBPAforce.m / MonoPamDataExplicit_balanceX3.m, as captured in
+% Code/MuJoCo_SNS/bpa_muscle.py):
+%
+%   Force surface (festo4):  Fn(rel,p) = a0*(exp(-a1*rel) - 1) + p*exp(-a3*rel^2)
+%       rel = contraction / KMAX, p = P/620 kPa, clamped to [0, inf) and 0 for rel>1
+%   Max force (maxBPAforce): 10/20 mm: Fmax = 620*a1*atan(a2*(rest-0.0075)*620)
+%                             40 mm:    Fmax = 6398.4 N
+%   Series tendon (Spr):     k_eff = bpa_count*mult*wraps*A*E/tendon_len
+%                             A = 1.51e-6 m^2, E = 193 GPa, mult: 10mm->2, 20mm->6, 40mm->2
+%   Xi corrections:          Xi0 constant length offset; Xi3 bend loss
+%                             dL = xi3*bend*max(1-rel0,0)^2
+%   Equilibrium (fortz):     k_eff*r = mif*Fn(rel(r)) solved algebraically by the
+%                           DAE solver (quasi-static series balance, replaces brentq)
+%
+% Braid kinematics (visualization signal): constant braid length
+%   b = rest/cos(theta0),  piN = rest*tan(theta0)/D0
+%   D(Lm) = sqrt(b^2 - Lm^2)/piN   -> diameter GROWS as the sleeve CONTRACTS.
+%
+% Ports: C = origin/case end, R = insertion/rod end (positive x = separation).
+% Inputs: u = activation [0..1] -> pressure u*Pmax (drive from SNS neuron S);
+%         bend = Xi3 bend measure R*alpha [m] (0 = disabled).
+% Outputs: F = tension [N], D = braid diameter [m], L = musculotendon length [m].
+% The Simscape Multibody hookup uses a Transform Sensor + External Force pair
+% (or prismatic + Translational Multibody Interface for straight routes).
+
+nodes
+    C = foundation.mechanical.translational.translational; % :origin-side end
+    R = foundation.mechanical.translational.translational; % :insertion-side end
+end
+
+inputs
+    u = {0.0, '1'};       % neural activation 0..1 -> pressure
+    bend = {0.0, 'm'};    % Xi3 bend measure R*alpha; 0 disables Xi3 term
+end
+
+outputs
+    F = {0.0, 'N'};       % tensile force pulling C and R together
+    D = {0.0, 'm'};       % current braid diameter
+    L = {0.0, 'm'};       % musculotendon length (R.x - C.x)
+end
+
+parameters
+    dia = {20, 'mm'};         % nominal braid diameter: 10, 20 or 40 mm only
+    rest = {0.20, 'm'};       % BPA sleeve resting length
+    kmax_len = {0.155, 'm'};  % fully contracted sleeve length (rest*KMAX)
+    tendon_len = {0.10, 'm'}; % tendon/cable length (series compliance; 0 = rigid)
+    fitting_len = {0.0, 'm'}; % one end fitting length
+    bpa_count = {1, '1'};     % BPAs in parallel
+    wraps = {1, '1'};         % cable wrap multiplier for k_eff
+    Pmax = {620, 'kPa'};      % supply pressure at u = 1
+    xi0 = {0.0, 'm'};         % Xi0 constant length offset
+    xi3 = {0.0, '1'};         % Xi3 bend-loss scale
+    theta0 = {22, 'deg'};     % braid wind angle at rest
+    damping = {0.0, 'N*s/m'}; % optional series damping (engineering addition)
+end
+
+variables(Access=protected)
+    lmt = { 0.3, 'm' };   % musculotendon length state
+    r = {0.0, 'm'};         % series tendon stretch (algebraic equilibrium)
+    a0 = {0.2578, '1'};     % festo4 coefficients (selected by dia)
+    a1 = {6.4766, '1'};
+    a3 = {1.3209, '1'};
+    Fmax = {1.0, '1'};      % max force of one BPA at 620 kPa (numeric N)
+    keff = {1.0, 'N/m'};    % series stiffness
+end
+
+branches
+    ten : R.f -> C.f;   % branch: positive = tension pulling the ends together
+end
+
+
+intermediates
+    KMAX = (rest - kmax_len)/rest;            % max contraction fraction
+    th   = theta0/{1,'rad'};                  % braid angle, rad
+    brd  = rest/cos(th);                      % constant braid length
+    piN  = rest*tan(th)/dia;                  % braid helix constant pi*N
+    vrel = R.v - C.v;                         % separation velocity
+    Pkpa = max(u, 0)*Pmax/{1,'kPa'};          % pressure, kPa
+    p    = Pkpa/620;                          % normalized pressure
+    l0   = lmt - tendon_len - 2*fitting_len - xi0;   % sleeve length, no Xi3
+    rel0 = (rest - l0)/(rest*KMAX);           % first-pass relative strain
+    dl   = xi3*bend*max(1 - rel0, 0)^2;       % Xi3 bend loss
+    lm   = l0 - dl;                           % sleeve length after Xi3
+    relf = (rest - (lm - r))/(rest*KMAX);     % final relative strain
+    lmD  = min(max(lm, kmax_len), rest);      % sleeve length for diameter
+end
+
+equations
+    % --- festo4 coefficients / Fmax / k_eff by diameter (compile-time select)
+    if dia == 10
+        a0 == 0.568207874671;
+        a1 == 4.25442545542;
+        a3 == 0.55972777762;
+        Fmax == 620*0.4895*atan(0.03068*620*((rest - {0.0075, 'm'})/{1, 'm'}));
+    elseif dia == 20
+        a0 == 0.257852586017;
+        a1 == 6.4766142989;
+        a3 == 1.32087718059;
+        Fmax == 620*1.4877*atan(0.0248*620*((rest - {0.0075, 'm'})/{1, 'm'}));
+    else
+        a0 == 0.122366088343;
+        a1 == 10.4714342293;
+        a3 == 2.02328814095;
+        Fmax == 6398.4;
+    end
+
+    if tendon_len == 0
+        keff == {1, 'N/m'};   % placeholder; rigid branch below forces r = 0
+        r == 0;
+    else
+        if dia == 10
+            keff == bpa_count*2*wraps*{1.51e-6, 'm^2'}*{193e9, 'Pa'}/tendon_len;
+        elseif dia == 20
+            keff == bpa_count*6*wraps*{1.51e-6, 'm^2'}*{193e9, 'Pa'}/tendon_len;
+        else
+            keff == bpa_count*2*wraps*{1.51e-6, 'm^2'}*{193e9, 'Pa'}/tendon_len;
+        end
+        % quasi-static series equilibrium: muscle force vs tendon spring
+        keff*r == ((relf <= 1)*bpa_count*Fmax*max(a0*(exp(-a1*relf) - 1) + p*exp(-a3*relf^2), 0))*{1, 'N'};
+    end
+
+    % --- musculotendon length state
+    der(lmt) == vrel;
+
+    % --- outputs and mechanical branch
+    F == max((relf <= 1)*bpa_count*Fmax*max(a0*(exp(-a1*relf) - 1) + p*exp(-a3*relf^2), 0), 0)*{1, 'N'} ...
+         + damping*vrel;
+    D == sqrt(max(brd^2 - lmD^2, 0))/piN;
+    L == lmt;
+    ten == -F;  % tension acts to reduce separation (R pulled toward C)
+end
+
+end

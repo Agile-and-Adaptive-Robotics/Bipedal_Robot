@@ -1,0 +1,944 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="AH001 delivered CAD articulated feet 20261102">
+  <compiler angle="radian" inertiafromgeom="auto" meshdir="meshes" />
+  <option timestep="0.002" integrator="implicitfast" gravity="0 -9.81 0" solver="Newton" iterations="100" jacobian="dense" />
+  <visual>
+    <global offwidth="1200" offheight="1000" />
+    <headlight ambient=".6 .6 .6" diffuse=".6 .6 .6" />
+  </visual>
+  <asset>
+    <mesh name="leg_02_01_PE_001___Default" file="leg_0.stl" scale=".001 .001 .001" />
+    <mesh name="leg_03_01_FB_R_001___Default" file="leg_1.stl" scale=".001 .001 .001" />
+    <mesh name="leg_03_02_FH_R_001___Default" file="leg_2.stl" scale=".001 .001 .001" />
+    <mesh name="leg_03_03_FB_L_001___Default" file="leg_3.stl" scale=".001 .001 .001" />
+    <mesh name="leg_03_04_FH_L_001___Default" file="leg_4.stl" scale=".001 .001 .001" />
+    <mesh name="leg_04_01_KT_R_001___Default" file="leg_5.stl" scale=".001 .001 .001" />
+    <mesh name="leg_04_02_KB_R_001___Default" file="leg_6.stl" scale=".001 .001 .001" />
+    <mesh name="leg_04_03_KT_L_001___Default" file="leg_7.stl" scale=".001 .001 .001" />
+    <mesh name="leg_04_04_KB_L_001___Default" file="leg_8.stl" scale=".001 .001 .001" />
+    <mesh name="leg_04_05_BL_001___Default" file="leg_9.stl" scale=".001 .001 .001" />
+    <mesh name="leg_04_06_FL_001___Default" file="leg_10.stl" scale=".001 .001 .001" />
+    <mesh name="leg_05_01_TI_R_001___Default" file="leg_11.stl" scale=".001 .001 .001" />
+    <mesh name="leg_05_02_TI_001___Default" file="leg_12.stl" scale=".001 .001 .001" />
+    <mesh name="leg_6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB___6630T31" file="leg_13.stl" scale=".001 .001 .001" />
+    <mesh name="leg_90695A038_CLASS_04_STEEL_THIN_HEX_NUT_-_DIN_439B___90695A038" file="leg_14.stl" scale=".001 .001 .001" />
+    <mesh name="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" file="leg_15.stl" scale=".001 .001 .001" />
+    <mesh name="leg_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN___91595A476" file="leg_16.stl" scale=".001 .001 .001" />
+    <mesh name="leg_92997A108_CORROSION-RESISTANT_SETUP_STUD___92997A108" file="leg_17.stl" scale=".001 .001 .001" />
+    <mesh name="leg_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS___94510A255" file="leg_18.stl" scale=".001 .001 .001" />
+    <mesh name="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" file="leg_19.stl" scale=".001 .001 .001" />
+    <mesh name="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" file="leg_20.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Ankle_Bottom_Joint___Default" file="foot_0.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Ankle_Exterior___Default" file="foot_1.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Ankle_Interior_Joint___Default" file="foot_2.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Ankle_Lock_1___Default" file="foot_3.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Ankle_Middle_Joint_Shell___Default" file="foot_4.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Foot_T_Lock___Default" file="foot_5.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Left_mid_foot___Default" file="foot_6.stl" scale=".001 .001 .001" />
+    <mesh name="foot_New_Front_foot___Default" file="foot_7.stl" scale=".001 .001 .001" />
+    <mesh name="foot_New_foot_-_Copy_-_Copy___Default" file="foot_8.stl" scale=".001 .001 .001" />
+    <mesh name="foot_Toe___Default" file="foot_9.stl" scale=".001 .001 .001" />
+    <mesh name="foot_foot_axle___Default" file="foot_10.stl" scale=".001 .001 .001" />
+    <mesh name="foot_large_axle_lock___Default" file="foot_11.stl" scale=".001 .001 .001" />
+    <mesh name="foot_small_axle_-_Copy___Default" file="foot_12.stl" scale=".001 .001 .001" />
+    <mesh name="foot_small_axle_lock___Default" file="foot_13.stl" scale=".001 .001 .001" />
+    <mesh name="foot_small_axle___Default" file="foot_14.stl" scale=".001 .001 .001" />
+  </asset>
+  <worldbody>
+    <light pos="0 3 2" dir="0 -1 0" />
+    <geom name="ground" type="plane" quat=".7071067811865476 -.7071067811865476 0 0" size="3 3 .1" contype="2" conaffinity="1" rgba=".85 .85 .85 1" />
+    <body name="pelvis" pos="0 0.94534783374846199 0" quat="0.9999988880958478 -4.9990077046383109e-05 -7.4505560212359588e-08 -0.0014904053323797862">
+      <freejoint name="root" />
+      <body name="thigh_r" pos="-0.061043984572223972 -0.049509447059738795 0.064999999999999988">
+        <joint name="thigh_r_joint" type="ball" damping="1" armature="0" />
+        <body name="back_r" pos="0.035131884574180566 -0.45563682494473146 0.05675832161499747">
+          <joint name="back_r_joint" type="hinge" damping="0.14999999999999999" armature="0" axis="0 -1.1102230246251565e-16 -1" />
+          <body name="shank_r" pos="-0.04056196844092276 -0.023244122186043548 -0.031000000000000319">
+            <joint name="shank_r_joint" type="hinge" damping="0.14999999999999999" armature="0" axis="2.0539125955565396e-15 1.6653345369377348e-16 -1" />
+            <site name="semimem_r_01" pos="0.060258241611561604 -0.085441907599095729 -0.0093021393620625198" size=".0015" group="4" />
+            <site name="semimem_r_02" pos="0.033528927644371626 -0.032662981639077437 -0.035795015564876735" size=".0015" group="4" />
+            <site name="semimem_r_03" pos="-0.011989605018602828 -0.0061021810392017928 0.023962901582125343" size=".0015" group="4" />
+            <site name="semimem_r_04" pos="0.042271328356006665 -0.087490497712519599 -0.0093021393620625198" size=".0015" group="4" />
+            <site name="bifemlh_r_01" pos="-0.011989605018602828 -0.0061140806513224621 0.024392736898533121" size=".0015" group="4" />
+            <site name="bifemlh_r_02" pos="-0.010716016779170195 -0.023706470657133383 0.028777572929242351" size=".0015" group="4" />
+            <site name="bifemlh_r_03" pos="-0.063007742527902894 -0.27688201286997638 0.022468899241321269" size=".0015" group="4" />
+            <site name="bifemsh_r_01" pos="-0.011989605018602828 -0.0061140806513224621 0.024392736898533121" size=".0015" group="4" />
+            <site name="bifemsh_r_02" pos="-0.010716016779170195 -0.023706470657133383 0.028777572929242351" size=".0015" group="4" />
+            <site name="sar_r_04" pos="0.033528927644371626 -0.032662981639077437 -0.035795015564876735" size=".0015" group="4" />
+            <site name="sar_r_05" pos="0.042271328356006665 -0.087490497712519599 -0.0093021393620625198" size=".0015" group="4" />
+            <site name="sar_r_06" pos="-0.032603924073160123 -0.2890196966281805 -0.016882063983670606" size=".0015" group="4" />
+            <site name="tfl_r_03" pos="0.015844361232907778 -0.037456030229070181 0.041101794257856872" size=".0015" group="4" />
+            <site name="tfl_r_04" pos="-0.062798449193354117 -0.27694987595102039 0.022467020511698771" size=".0015" group="4" />
+            <site name="grac_r_03" pos="0.033528920188657219 -0.032662989087384214 -0.035795015564876735" size=".0015" group="4" />
+            <site name="grac_r_04" pos="0.042271328356006665 -0.087490497712519599 -0.0093021393620625198" size=".0015" group="4" />
+            <site name="grac_r_05" pos="-0.032603924073160123 -0.28924108476065713 -0.0088851278644560272" size=".0015" group="4" />
+            <site name="rect_fem_r_04" pos="0.089338873463510299 0.009651943666515117 -0.0032115337907484692" size=".0015" group="4" />
+            <site name="vas_med_r_04" pos="0.084021926611384939 0.012496908750073144 -0.019138903547667285" size=".0015" group="4" />
+            <site name="soleus_r_00" pos="0.0021842015969195661 -0.051093118224592948 -0.0042929774437087398" size=".0015" group="4" />
+            <site name="tib_post_r_00" pos="-0.014557081457399673 -0.045664779805964506 -0.0041426986760612072" size=".0015" group="4" />
+            <site name="tib_post_r_01" pos="-0.088141943526749061 -0.28988418776856484 -0.035813237851041901" size=".0015" group="4" />
+            <site name="flex_dig_r_00" pos="-0.014557081457399673 -0.045664779805964506 -0.0041426986760612072" size=".0015" group="4" />
+            <site name="flex_dig_r_01" pos="-0.089093152791199032 -0.28966708205397118 -0.032505963135522273" size=".0015" group="4" />
+            <site name="flex_hal_r_00" pos="-0.014557081457399673 -0.045664779805964506 -0.0041426986760612072" size=".0015" group="4" />
+            <site name="flex_hal_r_01" pos="-0.092827283527913002 -0.29086816462720322 -0.030338371158575933" size=".0015" group="4" />
+            <site name="tib_ant_r_00" pos="0.015844361232907778 -0.037456030229070181 0.041101794257856872" size=".0015" group="4" />
+            <site name="tib_ant_r_01" pos="-0.040413353138172431 -0.29686756998950925 -0.0060951109948433752" size=".0015" group="4" />
+            <site name="per_brev_r_00" pos="0.015844361232907778 -0.037456030229070181 0.041101794257856872" size=".0015" group="4" />
+            <site name="per_brev_r_01" pos="-0.096557213734530717 -0.29973132126480639 0.014833654342064476" size=".0015" group="4" />
+            <site name="per_brev_r_02" pos="-0.094157075886594638 -0.30985445577785831 0.015453749098533809" size=".0015" group="4" />
+            <site name="per_long_r_00" pos="0.015844361232907778 -0.037456030229070181 0.041101794257856872" size=".0015" group="4" />
+            <site name="per_long_r_01" pos="-0.097930997890391253 -0.301065718481203 0.015396942609611913" size=".0015" group="4" />
+            <site name="per_long_r_02" pos="-0.096460904925868091 -0.31112257462468562 0.015418642345263259" size=".0015" group="4" />
+            <site name="per_tert_r_00" pos="0.015844361232907778 -0.037456030229070181 0.041101794257856872" size=".0015" group="4" />
+            <site name="per_tert_r_01" pos="-0.05310557723521328 -0.30382976388483274 0.0026155566730153151" size=".0015" group="4" />
+            <site name="ext_dig_r_00" pos="0.015844361232907778 -0.037456030229070181 0.041101794257856872" size=".0015" group="4" />
+            <site name="ext_dig_r_01" pos="-0.045774765450304483 -0.3007602516660256 -0.0060027998318798459" size=".0015" group="4" />
+            <site name="ext_hal_r_00" pos="0.015844361232907778 -0.037456030229070181 0.041101794257856872" size=".0015" group="4" />
+            <site name="ext_hal_r_01" pos="-0.041684803189613234 -0.29939875511444269 -0.021170931602949333" size=".0015" group="4" />
+            <geom name="cad_05_01_TI_R_001-1" type="mesh" mesh="leg_05_01_TI_R_001___Default" pos="0.0095670049013656666 -0.022712661512226173 -0.0060000000000027948" quat="0.98875367550101778 -5.5222111377930404e-16 9.2408413430256735e-16 -0.14955323193842332" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+            <geom name="cad_04_02_KB_R_001-1" type="mesh" mesh="leg_04_02_KB_R_001___Default" pos="0.012524431056609255 -0.013159984895890653 -0.006000000000002767" quat="0.98875367550101778 -4.9156267812231576e-16 7.9154919385337358e-16 -0.14955323193842332" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+            <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-36" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="0.0041072671769308358 -0.040964428619553295 -0.019000000000002695" quat="-0.69915442886989321 0.69915442886989398 -0.10575010445201945 0.1057501044520182" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+            <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-32" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="0.0041072671769308497 -0.040964428619553295 0.011299999999997243" quat="0.42711329229396655 7.8751195940445882e-16 8.0520560848514313e-16 0.90419811741996492" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+            <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-10" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="1.0547118733938987e-15 7.7715611723760958e-15 0.0017999999999972621" quat="-8.7122012180251607e-16 -0.052608082595171864 0.99861523603721347 -3.39022220115717e-16" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+            <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-9" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="0.038341896574051675 -0.010540849629250948 0.0017999999999977895" quat="-3.9943039598151655e-15 0.026976693434243776 0.99963606278052752 -6.3014192222280421e-16" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+            <inertial mass="0.29415090742693795" pos="-0.018212850478042143 -0.11474020271911788 -0.0063602229492134097" fullinertia="0.0030369371606985265 0.00038192553312327917 0.0033461387670907245 -0.00093181366115141007 -8.6383570436461789e-06 -2.652742179016962e-05" />
+            <body name="foot_housing_r" pos="-0.10947668612327507 -0.36476537116872787 0.017541268382635131" quat="0.9999988880958478 4.9990077046383109e-05 7.4505560212359588e-08 0.0014904053323797862">
+              <body name="foot_spider_r" pos="0.029209999999999854 0.00050800000000045947 -0.051324000000000133">
+                <body name="foot_r" pos="-0.014342999999997122 -0.0025400000000010987 0.020447000000000111">
+                  <body name="foot_fore_r" pos="0.17135820616677372 -0.034544302798055836 0.032101957840306991">
+                    <joint name="mtp_r" type="hinge" pos="-0.0013942349915577745 -0.0061950471175247421 -0.026549899039741847" axis="0 0 1" damping="0.012" armature="0" limited="true" range="-0.26179938779914941 1.0471975511965976" springref="0" stiffness="2" />
+                    <geom name="foot_r_Toe-1" type="mesh" mesh="foot_Toe___Default" pos="-0.0013942349915548324 -0.0061950471174991098 -0.016763999999957261" quat="0.70504063520435378 0.054015763539549726 0.70504063520419957 -0.054015763539356117" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_r_Toe-2" type="mesh" mesh="foot_Toe___Default" pos="-0.0013942349915573304 -0.0061950471175239163 -0.045546747599366208" quat="0.70504063520427318 0.054015763539498857 0.70504063520427318 -0.054015763539498662" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_r_Toe-3" type="mesh" mesh="foot_Toe___Default" pos="-0.001394234991560106 -0.0061950471175436783 -0.0017779999999992767" quat="0.70504063520427052 0.054015763539530935 0.70504063520427085 -0.054015763539530422" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_r_Toe-4" type="mesh" mesh="foot_Toe___Default" pos="-0.001394234991559995 -0.0061950471175430746 0.012700000000000714" quat="0.70504063520427041 0.054015763539530838 0.70504063520427085 -0.054015763539530338" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_r_Toe-5" type="mesh" mesh="foot_Toe___Default" pos="-0.0013942349915573304 -0.0061950471175240482 -0.060024747599366213" quat="0.70504063520427296 0.054015763539499127 0.7050406352042734 -0.054015763539497441" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <site name="flex_dig_r_05" pos="0.015660980188327761 -0.013532423286099632 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="flex_dig_r_06" pos="0.015660980188327761 -0.013532423286099632 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="flex_dig_r_07" pos="0.015660980188327761 -0.013532423286099632 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="flex_hal_r_05" pos="0.015660980188334617 -0.013532423286053266 -0.020828000129653811" size=".0015" group="4" />
+                    <site name="flex_hal_r_06" pos="0.015660980188334617 -0.013532423286053266 -0.020828000129653811" size=".0015" group="4" />
+                    <site name="ext_dig_r_04" pos="0.015660980188327761 0.00099536760993984563 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="ext_dig_r_05" pos="0.015660980188327761 0.00099536760993984563 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="ext_hal_r_05" pos="0.015660980188334617 0.00099536760998477497 -0.020828000129653811" size=".0015" group="4" />
+                    <site name="ext_hal_r_06" pos="0.015660980188334617 0.00099536760998477497 -0.020828000129653811" size=".0015" group="4" />
+                    <inertial mass="0.018957472373763613" pos="0.017282751855019016 -0.0087739116556282103 -0.026345442561522207" fullinertia="1.4212800703183995e-05 1.675032465586457e-05 3.149930679363733e-06 3.6746259972718799e-07 3.0690468377935524e-10 -4.0152577096968528e-11" />
+                  </body>
+                  <joint name="subtalar_r" type="hinge" pos="0.030852999999997154 1.2264494975156026e-15 -1.3183898417423734e-16" axis="-1.0000000000000002 -7.4499366424407699e-15 8.6714157939645666e-16" damping="0.0050000000000000001" armature="0" limited="false" />
+                  <geom name="foot_r_Ankle_Bottom_Joint-1" type="mesh" mesh="foot_Ankle_Bottom_Joint___Default" pos="0 0 0" quat="0.70710678118654746 0 0.70710678118654746 0" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_New_foot_-_Copy_-_Copy-1" type="mesh" mesh="foot_New_foot_-_Copy_-_Copy___Default" pos="-0.020821067835598304 -0.00074244484653788155 -0.014604734467385194" quat="1 1.0755285551056212e-15 9.6747081407496156e-17 -7.6671346762805022e-17" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_Left_mid_foot-1" type="mesh" mesh="foot_Left_mid_foot___Default" pos="0.17247359416002039 -0.029588265104040536 -0.033256789759059248" quat="0.70277983239121289 -0.078105743605568559 -0.70277983239121267 -0.078105743605570072" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_small_axle_lock-1" type="mesh" mesh="foot_small_axle_lock___Default" pos="0.16856973618365811 -0.046934397033099561 0.053183957840307002" quat="0.99388077032994349 3.8521593591660107e-16 1.9816173464174987e-16 -0.11045820190623208" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_small_axle-1" type="mesh" mesh="foot_small_axle___Default" pos="0.16996397117521572 -0.040739349915578892 0.0041619578403069984" quat="0.58504371924016341 0.58504371924016418 0.39714461670484258 0.39714461670484269" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_large_axle_lock-1" type="mesh" mesh="foot_large_axle_lock___Default" pos="0.10606157101181646 -0.035470065964530041 0.038307645966002474" quat="0.70277983239121278 0.078105743605569711 0.70277983239121278 -0.078105743605569197" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_Foot_T_Lock-1" type="mesh" mesh="foot_Foot_T_Lock___Default" pos="0.01168400000000009 -0.019557999999999437 -0.00056414054297812544" quat="0.49999999999999689 -0.50000000000000233 0.49999999999999689 0.500000000000004" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_small_axle_-_Copy-2" type="mesh" mesh="foot_small_axle_-_Copy___Default" pos="0.16996397117521583 -0.040739349915577282 -0.03935278975905921" quat="0.53520618547013088 0.53520618547013088 0.46211939911078403 0.4621193991107837" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_foot_axle-2" type="mesh" mesh="foot_foot_axle___Default" pos="0.10801349999999785 -0.026797000000002 -0.0070947897590592571" quat="-0.15248263338668103 0.15248263338668058 0.69047016337816092 -0.69047016337815936" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_large_axle_lock-2" type="mesh" mesh="foot_large_axle_lock___Default" pos="0.10585947676262328 -0.035740818696362094 -0.039606789759071663" quat="0.60492223860044758 0.087642107201739414 0.78858612140860385 -0.06723001869400809" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_small_axle_lock-2" type="mesh" mesh="foot_small_axle_lock___Default" pos="0.16845399171647935 -0.047448687975528987 -0.045702789759049935" quat="0.96313027690685515 0.027263798567438151 0.24531419717775568 -0.10704064487862495" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <site name="med_gas_r_02" pos="-0.034591673950822764 0.041881996721165389 0.0023819986079295016" size=".0015" group="4" />
+                  <site name="lat_gas_r_02" pos="-0.034591673950822764 0.041881996721165389 0.0023819986079295016" size=".0015" group="4" />
+                  <site name="soleus_r_01" pos="-0.034591673950822764 0.041881996721165389 0.0023819986079295016" size=".0015" group="4" />
+                  <site name="tib_post_r_02" pos="0.0071083260491772229 0.044281996721165347 -0.0209180013920705" size=".0015" group="4" />
+                  <site name="tib_post_r_03" pos="0.042608326049177227 0.026781996721165387 -0.020418001392070499" size=".0015" group="4" />
+                  <site name="flex_dig_r_02" pos="0.009008326049177208 0.042381996721165334 -0.020318001392070496" size=".0015" group="4" />
+                  <site name="flex_dig_r_03" pos="0.03620832604917721 0.028481996721165311 -0.018618001392070503" size=".0015" group="4" />
+                  <site name="flex_dig_r_04" pos="0.1312083260491772 0.0027819967211653637 0.0192819986079295" size=".0015" group="4" />
+                  <site name="flex_hal_r_02" pos="0.0028083260491772247 0.038481996721165319 -0.016418001392070496" size=".0015" group="4" />
+                  <site name="flex_hal_r_03" pos="0.069208326049177232 0.017881996721165368 -0.017918001392070497" size=".0015" group="4" />
+                  <site name="flex_hal_r_04" pos="0.13800832604917723 0.0055819967211653884 -0.019218001392070506" size=".0015" group="4" />
+                  <site name="tib_ant_r_02" pos="0.08200832604917721 0.024881996721165374 -0.028318001392070496" size=".0015" group="4" />
+                  <site name="per_brev_r_03" pos="0.012508326049177211 0.037881996721165385 0.030981998607929502" size=".0015" group="4" />
+                  <site name="per_brev_r_04" pos="0.044408326049177223 0.032781996721165392 0.041681998607929503" size=".0015" group="4" />
+                  <site name="per_long_r_03" pos="0.0092083260491772415 0.033881996721165382 0.029781998607929509" size=".0015" group="4" />
+                  <site name="per_long_r_04" pos="0.03350832604917723 0.021481996721165415 0.035681998607929498" size=".0015" group="4" />
+                  <site name="per_long_r_05" pos="0.05060832604917722 0.017781996721165379 0.019481998607929506" size=".0015" group="4" />
+                  <site name="per_long_r_06" pos="0.082408326049177222 0.024881996721165374 -0.028318001392070496" size=".0015" group="4" />
+                  <site name="per_tert_r_02" pos="0.044408326049177223 0.032881996721165381 0.041681998607929503" size=".0015" group="4" />
+                  <site name="ext_dig_r_02" pos="0.057608326049177226 0.049681996721165418 0.0075819986079294979" size=".0015" group="4" />
+                  <site name="ext_dig_r_03" pos="0.12700832604917722 0.016881996721165367 0.020681998607929498" size=".0015" group="4" />
+                  <site name="ext_hal_r_02" pos="0.062408326049177225 0.049781996721165407 -0.013418001392070507" size=".0015" group="4" />
+                  <site name="ext_hal_r_03" pos="0.094708326049177227 0.0417819967211654 -0.0180180013920705" size=".0015" group="4" />
+                  <site name="ext_hal_r_04" pos="0.1388083260491772 0.024781996721165385 -0.020318001392070496" size=".0015" group="4" />
+                  <site name="flex_dig_r_mtp_engineering_guide" pos="0.16996397117521594 -0.060739349915580582 0.0055520588005651406" size=".002" group="4" />
+                  <site name="flex_hal_r_mtp_engineering_guide" pos="0.16996397117521594 -0.060739349915580582 0.0055520588005651406" size=".002" group="4" />
+                  <site name="ext_dig_r_mtp_engineering_guide" pos="0.16996397117521594 -0.020739349915580577 0.0055520588005651406" size=".002" group="4" />
+                  <site name="ext_hal_r_mtp_engineering_guide" pos="0.16996397117521594 -0.020739349915580577 0.0055520588005651406" size=".002" group="4" />
+                  <geom name="foot_r_New_Front_foot-1" type="mesh" mesh="foot_New_Front_foot___Default" pos="0.17135820616677372 -0.034544302798055836 0.032101957840306991" quat="0.078105743605569683 -0.70277983239121256 0.078105743605569183 0.70277983239121289" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_r_foot_axle-1" type="mesh" mesh="foot_foot_axle___Default" pos="0.10801349999999783 -0.026797000000002087 0.0059399578403070107" quat="-0.26148435484723986 -0.26148435484723975 0.65698244433936182 0.65698244433936204" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <inertial mass="0.2036632345081418" pos="0.071759512616531199 -0.029928229815548588 0.0003375586049567531" fullinertia="0.00010718248058108947 0.0010321644336506988 0.00096714757265515313 3.3637486099197959e-05 -1.6282047979224276e-05 1.319326642654905e-06" />
+                </body>
+                <joint name="ankle_sagittal_r" type="hinge" pos="0 0 0.00025400000000000422" axis="-1.1102230246251565e-15 -4.4408920985006262e-16 -1" damping="0.0050000000000000001" armature="0" limited="false" />
+                <geom name="foot_r_Ankle_Interior_Joint-1" type="mesh" mesh="foot_Ankle_Interior_Joint___Default" pos="0 0 0" quat="-9.8668617086586028e-17 0.70710678118654791 3.7235912051940679e-16 0.70710678118654724" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                <inertial mass="0.01794923410936473" pos="0.00039320983744524981 0.008818413360858238 0.02147252165262839" fullinertia="4.0848439359062889e-06 5.7524786786135512e-06 3.0954580307057964e-06 1.0005593302652535e-07 -6.8640919071392716e-09 9.1171382743860204e-08" />
+              </body>
+              <geom name="foot_r_Ankle_Exterior-1" type="mesh" mesh="foot_Ankle_Exterior___Default" pos="0 0 0" quat="0.70710678118654746 0 0.70710678118654746 0" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+              <geom name="foot_r_Ankle_Middle_Joint_Shell-1" type="mesh" mesh="foot_Ankle_Middle_Joint_Shell___Default" pos="0.029209999999999854 0.00050800000000045947 -0.051070000000000129" quat="-7.2942925751789212e-17 0.70710678118654768 3.9808481185420358e-16 0.70710678118654735" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+              <geom name="foot_r_Ankle_Lock_1-1" type="mesh" mesh="foot_Ankle_Lock_1___Default" pos="0.027812999999999893 -0.0020319999999995307 -0.030250166689282432" quat="1 -5.6474092585929673e-16 1.3433519834157886e-16 4.068793912903601e-15" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+              <inertial mass="0.13514696166604614" pos="0.029061564757716273 0.025242719084192646 -0.031125406180854891" fullinertia="6.5822827157480769e-05 9.5538908102345307e-05 7.3291735933011742e-05 -2.1556772730920901e-07 5.0476993952528047e-10 -1.0125625703981151e-07" />
+            </body>
+          </body>
+          <geom name="cad_04_05_BL_001-1" type="mesh" mesh="leg_04_05_BL_001___Default" pos="-0.020280984220474543 -0.011622061093021552 -0.036900000000000183" quat="0.96634250878643646 -1.7207227913359534e-16 -9.2717858092894827e-16 0.2572589273715028" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+          <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-6" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="-9.9555780286308959e-14 2.453592884421596e-14 -0.01410000000000014" quat="1.8230661785478333e-16 0.98165336634152189 0.1906742466888427 9.0487998799942037e-16" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+          <inertial mass="0.0060235628020216224" pos="-0.017614425775510385 -0.010094049754014744 -0.032413798370210772" fullinertia="7.0324728476017967e-07 1.5733334896144759e-06 1.9488251250874272e-06 -7.4239221597295404e-07 -1.6301428211340492e-07 -9.3414075790385858e-08" />
+        </body>
+        <body name="front_r" pos="0.01735188457418059 -0.44039682494473148 -0.017241703385002513">
+          <joint name="front_r_joint" type="hinge" damping="0.14999999999999999" armature="0" axis="0 0 1" />
+          <geom name="cad_04_06_FL_001-1" type="mesh" mesh="leg_04_06_FL_001___Default" pos="0.0077799640660726616 -0.024512485907614956 0.031000024999998529" quat="0.80700568263202344 -2.5465952545185092e-16 -1.9440802342436829e-15 -0.59054367171244992" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+          <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-4" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="-5.3252541265536024e-13 5.8286708792820718e-14 0.01410002499999842" quat="0.99837299069936769 -1.5098300773756309e-15 -1.3317115588410744e-15 0.057020798328332234" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+          <inertial mass="0.0064658268020216254" pos="0.0068272281923894883 -0.021510154960075835 0.032518899905414907" fullinertia="2.2654408276168199e-06 4.8851789171371595e-07 2.4216925698451641e-06 6.2711495346715829e-07 -6.3152174137340282e-08 1.9904362035676749e-07" />
+        </body>
+        <site name="bifemsh_r_00" pos="-0.0010508522964322586 -0.11191670650011801 0.037131760279293671" size=".0015" group="4" />
+        <site name="sar_r_01" pos="0.097353434389951088 -0.11673320468360765 0.043357407729804634" size=".0015" group="4" />
+        <site name="sar_r_02" pos="0.11492007283656855 -0.32008882237607061 -0.0024353989921155478" size=".0015" group="4" />
+        <site name="sar_r_03" pos="0.061685202494612457 -0.4706749844496122 -0.022603174093008563" size=".0015" group="4" />
+        <site name="add_mag3_r_02" pos="-0.052227691091924169 -0.13178040009618949 -0.024027617579766722" size=".0015" group="4" />
+        <site name="add_mag3_r_03" pos="0.038111141596930312 -0.44044676793397486 -0.0049605695818081275" size=".0015" group="4" />
+        <site name="tfl_r_01" pos="0.039231156155596608 -0.038235782196007942 0.072815540537949683" size=".0015" group="4" />
+        <site name="tfl_r_02" pos="0.030437450543992495 -0.47407451199476769 0.068646080507711857" size=".0015" group="4" />
+        <site name="grac_r_01" pos="0.015257619441905776 -0.18470872997692678 -0.027596250320410048" size=".0015" group="4" />
+        <site name="grac_r_02" pos="0.042776603745753559 -0.47332822949549735 -0.031491635563359544" size=".0015" group="4" />
+        <site name="glut_max3_r_02" pos="-0.066294691379263651 -0.050253682417648937 0.069358889310930386" size=".0015" group="4" />
+        <site name="glut_max3_r_03" pos="-0.038753055746414355 -0.13636963323715842 0.066274799065274156" size=".0015" group="4" />
+        <site name="glut_max3_r_04" pos="0.025961704495567395 -0.39767865423333759 0.040139797819458325" size=".0015" group="4" />
+        <site name="iliacus_r_02" pos="0.038111141596930312 -0.44044676793397486 -0.0049605695818081275" size=".0015" group="4" />
+        <site name="psoas_r_02" pos="0.038111141596930312 -0.44044676793397486 -0.0049605695818081275" size=".0015" group="4" />
+        <site name="rect_fem_r_01" pos="0.079125268739269922 -0.13296920119461358 0.021073213292134643" size=".0015" group="4" />
+        <site name="rect_fem_r_02" pos="0.074548574455719482 -0.17971544198100547 0.013192452223376297" size=".0015" group="4" />
+        <site name="rect_fem_r_03" pos="0.078260701685745143 -0.38407190229783444 0.014493987929860522" size=".0015" group="4" />
+        <site name="vas_med_r_00" pos="0.026961983445896093 -0.24538441840713854 0.029998435815668648" size=".0015" group="4" />
+        <site name="vas_med_r_01" pos="0.05267279844292392 -0.32383690434123635 0.015653917177589252" size=".0015" group="4" />
+        <site name="vas_med_r_02" pos="0.061982115504053983 -0.47489043065875669 0.0091215392865937467" size=".0015" group="4" />
+        <site name="vas_med_r_03" pos="0.053677484306052917 -0.49981804981297773 0.0096565403608627198" size=".0015" group="4" />
+        <site name="med_gas_r_00" pos="0.038111141596930312 -0.44044676793397486 -0.0049605695818081275" size=".0015" group="4" />
+        <site name="med_gas_r_01" pos="-0.0050868746818269472 -0.47597134994195411 -0.0043432193119937318" size=".0015" group="4" />
+        <site name="lat_gas_r_00" pos="0.032367901260287213 -0.44312464339522062 0.047215359024442391" size=".0015" group="4" />
+        <site name="lat_gas_r_01" pos="0.0024676843054188824 -0.46487204622383793 0.048206101819938327" size=".0015" group="4" />
+        <geom name="cad_6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB-1" type="mesh" mesh="leg_6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB___6630T31" pos="0.0023729395506901299 -0.0092974097302028144 0.0074936164858321469" quat="-0.43621941773075151 0.84391919642167301 0.30911204060325864 0.044303000572546776" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_92997A108_CORROSION-RESISTANT_SETUP_STUD-1" type="mesh" mesh="leg_92997A108_CORROSION-RESISTANT_SETUP_STUD___92997A108" pos="0.0059786828544509535 -0.023425065391510486 0.018880361444023927" quat="0.61092024943279954 0.36831467584746619 -0.2378958507844614 0.65918609858512578" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_03_02_FH_R_001-1" type="mesh" mesh="leg_03_02_FH_R_001___Default" pos="0.01570446669197996 -0.072057287890018917 0.041122983390037324" quat="0.99904822158185769 0.04361938736533668 -2.8385951334365681e-13 -1.1646699694676308e-14" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_03_01_FB_R_001-1" type="mesh" mesh="leg_03_01_FB_R_001___Default" pos="0.016938226161695456 -0.37634921215412781 0.022007797492118439" quat="0.99904822158185769 0.043619387365336555 -5.7660851685660777e-13 -2.5311840247267376e-14" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_04_01_KT_R_001-1" type="mesh" mesh="leg_04_01_KT_R_001___Default" pos="0.025411884574174176 -0.45500682494472688 0.019758321614997465" quat="1 2.2530034482919382e-17 -1.1358209543645787e-15 -1.1368156965909395e-16" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-39" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="0.037411884574189688 -0.35853667835662556 0.036983841871962977" quat="0.33779510380783018 0.36863866840506065 0.58507828234316483 0.63850090331210407" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-20" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="0.0091946160713429342 -0.036025406927306186 0.02903610694730345" quat="0.19790118001935919 0.7471864858723084 0.28108111206598696 0.56880654595080382" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-26" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="0.019242498904998927 -0.090694129450734406 0.035568819857271172" quat="0.71215522076252336 -0.65257002952395937 0.19082141628892529 -0.17485561241569866" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-22" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="0.019242498904998871 -0.093394738882901063 0.066436926916266389" quat="0.9803382299236939 0.042802491487730923 0.0084022423536817166 -0.19244298894984815" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-28" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="0.037411884574189765 -0.35590553064839864 0.0069096859506378588" quat="0.021603382538569357 -0.49479880871643789 0.8679121429837624 0.037893862524418197" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_90695A038_CLASS_04_STEEL_THIN_HEX_NUT_-_DIN_439B-1" type="mesh" mesh="leg_90695A038_CLASS_04_STEEL_THIN_HEX_NUT_-_DIN_439B___90695A038" pos="0.0077133377411492468 -0.030221613250228471 0.024358309018532823" quat="0.93905725671371765 -0.32772215062998444 -1.0234059731931065e-15 0.10377697528722166" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS-1" type="mesh" mesh="leg_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS___94510A255" pos="0.035131884574190059 -0.45563682494472824 0.055753721614995894" quat="0.70710678118654613 0.70710678118654879 -8.577851556283476e-16 7.0513352198948663e-16" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <geom name="cad_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS-4" type="mesh" mesh="leg_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS___94510A255" pos="0.017351884574189763 -0.44039682494472782 -0.016237078385002428" quat="-0.40557978767264125 0.40557978767264236 0.57922796533956777 -0.57922796533956677" contype="4" conaffinity="8" rgba=".3 .35 .4 1" />
+        <inertial mass="0.52458877071429733" pos="0.028028121607845589 -0.27531341632109885 0.029141325278506231" fullinertia="0.013243028103527881 0.00033643904873406145 0.013150307901185477 0.00055462515738352515 7.9307281462169469e-08 -0.0005521794100126075" />
+      </body>
+      <body name="thigh_l" pos="-0.061043984572223965 -0.049509447059738795 -0.065000000000000016">
+        <joint name="thigh_l_joint" type="ball" damping="1" armature="0" />
+        <body name="back_l" pos="0.035131884574171886 -0.45563682494472801 -0.056758321614996318">
+          <joint name="back_l_joint" type="hinge" damping="0.14999999999999999" armature="0" axis="0 0 1" />
+          <body name="shank_l" pos="-0.042647033370564219 -0.019151841809324277 0.036900000000001709">
+            <joint name="shank_l_joint" type="hinge" damping="0.14999999999999999" armature="0" axis="-1.7208456881689926e-15 -2.55351295663786e-15 -1" />
+            <site name="semimem_l_01" pos="0.047217269428146615 -0.090115861639398859 0.0055446214478518108" size=".0015" group="4" />
+            <site name="semimem_l_02" pos="0.027827742836964903 -0.036902896309242705 0.032479042868426872" size=".0015" group="4" />
+            <site name="semimem_l_03" pos="-0.013486546941441857 -0.0039886094464457456 -0.0271698321317103" size=".0015" group="4" />
+            <site name="semimem_l_04" pos="0.029230356172591676 -0.092164451752822729 0.0055446214478518108" size=".0015" group="4" />
+            <site name="bifemlh_l_01" pos="-0.013486546941441857 -0.0039969402399063769 -0.027599751423997024" size=".0015" group="4" />
+            <site name="bifemlh_l_02" pos="-0.014569298142347198 -0.02155540206241302 -0.032130425241191446" size=".0015" group="4" />
+            <site name="bifemlh_l_03" pos="-0.10038140871476231 -0.26528942296892366 -0.028107582306407725" size=".0015" group="4" />
+            <site name="bifemsh_l_01" pos="-0.013486546941441857 -0.0039969402399063769 -0.027599751423997024" size=".0015" group="4" />
+            <site name="bifemsh_l_02" pos="-0.014569298142347198 -0.02155540206241302 -0.032130425241191446" size=".0015" group="4" />
+            <site name="sar_l_04" pos="0.027827742836964903 -0.036902896309242705 0.032479042868426872" size=".0015" group="4" />
+            <site name="sar_l_05" pos="0.029230356172591676 -0.092164451752822729 0.0055446214478518108" size=".0015" group="4" />
+            <site name="sar_l_06" pos="-0.072031697286662866 -0.28172056441403759 0.0112181347503328" size=".0015" group="4" />
+            <site name="tfl_l_03" pos="0.0099479119134871785 -0.038649992568347336 -0.0445015576667952" size=".0015" group="4" />
+            <site name="tfl_l_04" pos="-0.10018315032876957 -0.26538483167733917 -0.028105733516975803" size=".0015" group="4" />
+            <site name="grac_l_03" pos="0.027827735381250492 -0.036902903757549482 0.032479042868426872" size=".0015" group="4" />
+            <site name="grac_l_04" pos="0.029230356172591676 -0.092164451752822729 0.0055446214478518108" size=".0015" group="4" />
+            <site name="grac_l_05" pos="-0.072031697286662866 -0.28187555592028202 0.0032196362891844799" size=".0015" group="4" />
+            <site name="rect_fem_l_04" pos="0.088925378005662609 -0.0022519568954452174 0.00040169703423220682" size=".0015" group="4" />
+            <site name="vas_med_l_04" pos="0.083979848784529021 0.0011535807701216205 0.016338709613133273" size=".0015" group="4" />
+            <site name="soleus_l_00" pos="-0.0055856818539449238 -0.050680152852636939 0.00074000541164188915" size=".0015" group="4" />
+            <site name="tib_post_l_00" pos="-0.021444284159422955 -0.043048451647844987 0.00059212154685357732" size=".0015" group="4" />
+            <site name="tib_post_l_01" pos="-0.12724642601515679 -0.27524906360744683 0.029996280807606794" size=".0015" group="4" />
+            <site name="flex_dig_l_00" pos="-0.021444284159422955 -0.043048451647844987 0.00059212154685357732" size=".0015" group="4" />
+            <site name="flex_dig_l_01" pos="-0.12814748296433165 -0.27487937821713671 0.02668849770006558" size=".0015" group="4" />
+            <site name="flex_hal_l_00" pos="-0.021444284159422955 -0.043048451647844987 0.00059212154685357732" size=".0015" group="4" />
+            <site name="flex_hal_l_01" pos="-0.13200048272796155 -0.27554851853946827 0.024501051016348779" size=".0015" group="4" />
+            <site name="tib_ant_l_00" pos="0.0099479119134871785 -0.038649992568347336 -0.0445015576667952" size=".0015" group="4" />
+            <site name="tib_ant_l_01" pos="-0.080782591411470261 -0.28835407470049257 0.00034461109192751582" size=".0015" group="4" />
+            <site name="per_brev_l_00" pos="0.0099479119134871785 -0.038649992568347336 -0.0445015576667952" size=".0015" group="4" />
+            <site name="per_brev_l_01" pos="-0.136717816790485 -0.28346062593100274 -0.020754154359517593" size=".0015" group="4" />
+            <site name="per_brev_l_02" pos="-0.1356959501726549 -0.29380407381271001 -0.021453892374126149" size=".0015" group="4" />
+            <site name="per_long_l_00" pos="0.0099479119134871785 -0.038649992568347336 -0.0445015576667952" size=".0015" group="4" />
+            <site name="per_long_l_01" pos="-0.1382559811894451 -0.28459256761751084 -0.021332332710803217" size=".0015" group="4" />
+            <site name="per_long_l_02" pos="-0.13814895341797284 -0.29474993008420791 -0.021435563972999075" size=".0015" group="4" />
+            <site name="per_tert_l_00" pos="0.0099479119134871785 -0.038649992568347336 -0.0445015576667952" size=".0015" group="4" />
+            <site name="per_tert_l_01" pos="-0.094260327363535734 -0.2934695539098332 -0.0084579341000451808" size=".0015" group="4" />
+            <site name="ext_dig_l_00" pos="0.0099479119134871785 -0.038649992568347336 -0.0445015576667952" size=".0015" group="4" />
+            <site name="ext_dig_l_01" pos="-0.08661686973682764 -0.29148628672271204 0.00020526822073574369" size=".0015" group="4" />
+            <site name="ext_hal_l_00" pos="0.0099479119134871785 -0.038649992568347336 -0.0445015576667952" size=".0015" group="4" />
+            <site name="ext_hal_l_01" pos="-0.082438076390894566 -0.29081066508936415 0.015395029771049687" size=".0015" group="4" />
+            <geom name="cad_04_04_KB_L_001-1" type="mesh" mesh="leg_04_04_KB_L_001___Default" pos="0.010599988221044021 -0.014754213820638462 1.2906342661267445e-15" quat="0.97612630125056765 -1.7789528526558731e-15 -1.0520756471146386e-15 -0.21720369243382165" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+            <geom name="cad_05_02_TI_001-1" type="mesh" mesh="leg_05_02_TI_001___Default" pos="0.0063596234827762443 -0.023810664940500548 1.3739009929736312e-15" quat="0.97612630125056765 -1.445091263342194e-15 -1.0838316518863774e-15 -0.21720369243382159" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+            <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-41" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.0015531591503105541 -0.041140512301666488 0.013000000000001413" quat="0.69022552690882044 0.69022552690881767 -0.15358620381871319 -0.15358620381871166" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+            <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-30" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.0015531591503104153 -0.041140512301666265 -0.017299999999998525" quat="9.5705511693044017e-16 0.032761258358887428 0.99946320590141891 -1.7815608531358735e-15" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+            <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-14" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="-8.3821838359199319e-15 8.8817841970012523e-16 -0.0077999999999987524" quat="0.52263956804258827 -1.6790794290252821e-15 1.3208736410768674e-15 0.8525537413654678" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+            <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-12" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="0.036532623602291821 -0.015702800913671711 -0.0077999999999986552" quat="0.48229286280745992 -1.5297046495012988e-15 1.374045002814903e-15 0.87601004245669734" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+            <inertial mass="0.29415081857575481" pos="-0.033786367936412876 -0.11115529275004839 0.00036021279171301611" fullinertia="0.0027336081847626958 0.00068525222417774583 0.003346136482842074 -0.0012576183838121111 1.2197064236707621e-05 2.509113389352326e-05" />
+            <body name="foot_housing_l" pos="-0.1517876388271171 -0.35073740700008738 0.038678570797087128" quat="0.9999988880958478 4.9990077046383109e-05 7.4505560212359588e-08 0.0014904053323797862">
+              <body name="foot_spider_l" pos="0.029209999999999854 0.00050800000000045947 -0.051324000000000133">
+                <body name="foot_l" pos="-0.014342999999997122 -0.0025400000000010987 0.020447000000000111">
+                  <body name="foot_fore_l" pos="0.17135820616677372 -0.034544302798055836 0.032101957840306991">
+                    <joint name="mtp_l" type="hinge" pos="-0.0013942349915577745 -0.0061950471175247421 -0.026549899039741847" axis="0 0 1" damping="0.012" armature="0" limited="true" range="-0.26179938779914941 1.0471975511965976" springref="0" stiffness="2" />
+                    <geom name="foot_l_Toe-1" type="mesh" mesh="foot_Toe___Default" pos="-0.0013942349915548324 -0.0061950471174991098 -0.016763999999957261" quat="0.70504063520435378 0.054015763539549726 0.70504063520419957 -0.054015763539356117" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_l_Toe-2" type="mesh" mesh="foot_Toe___Default" pos="-0.0013942349915573304 -0.0061950471175239163 -0.045546747599366208" quat="0.70504063520427318 0.054015763539498857 0.70504063520427318 -0.054015763539498662" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_l_Toe-3" type="mesh" mesh="foot_Toe___Default" pos="-0.001394234991560106 -0.0061950471175436783 -0.0017779999999992767" quat="0.70504063520427052 0.054015763539530935 0.70504063520427085 -0.054015763539530422" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_l_Toe-4" type="mesh" mesh="foot_Toe___Default" pos="-0.001394234991559995 -0.0061950471175430746 0.012700000000000714" quat="0.70504063520427041 0.054015763539530838 0.70504063520427085 -0.054015763539530338" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <geom name="foot_l_Toe-5" type="mesh" mesh="foot_Toe___Default" pos="-0.0013942349915573304 -0.0061950471175240482 -0.060024747599366213" quat="0.70504063520427296 0.054015763539499127 0.7050406352042734 -0.054015763539497441" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                    <site name="flex_dig_l_05" pos="0.015660980188327761 -0.013532423286099632 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="flex_dig_l_06" pos="0.015660980188327761 -0.013532423286099632 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="flex_dig_l_07" pos="0.015660980188327761 -0.013532423286099632 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="flex_hal_l_05" pos="0.015660980188334617 -0.013532423286053266 -0.020828000129653811" size=".0015" group="4" />
+                    <site name="flex_hal_l_06" pos="0.015660980188334617 -0.013532423286053266 -0.020828000129653811" size=".0015" group="4" />
+                    <site name="ext_dig_l_04" pos="0.015660980188327761 0.00099536760993984563 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="ext_dig_l_05" pos="0.015660980188327761 0.00099536760993984563 -0.0058420001296989902" size=".0015" group="4" />
+                    <site name="ext_hal_l_05" pos="0.015660980188334617 0.00099536760998477497 -0.020828000129653811" size=".0015" group="4" />
+                    <site name="ext_hal_l_06" pos="0.015660980188334617 0.00099536760998477497 -0.020828000129653811" size=".0015" group="4" />
+                    <inertial mass="0.018957472373763613" pos="0.017282751855019016 -0.0087739116556282103 -0.026345442561522207" fullinertia="1.4212800703183995e-05 1.675032465586457e-05 3.149930679363733e-06 3.6746259972718799e-07 3.0690468377935524e-10 -4.0152577096968528e-11" />
+                  </body>
+                  <joint name="subtalar_l" type="hinge" pos="0.030852999999997154 1.2264494975156026e-15 -1.3183898417423734e-16" axis="-1.0000000000000002 -7.4499366424407699e-15 8.6714157939645666e-16" damping="0.0050000000000000001" armature="0" limited="false" />
+                  <geom name="foot_l_Ankle_Bottom_Joint-1" type="mesh" mesh="foot_Ankle_Bottom_Joint___Default" pos="0 0 0" quat="0.70710678118654746 0 0.70710678118654746 0" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_New_foot_-_Copy_-_Copy-1" type="mesh" mesh="foot_New_foot_-_Copy_-_Copy___Default" pos="-0.020821067835598304 -0.00074244484653788155 -0.014604734467385194" quat="1 1.0755285551056212e-15 9.6747081407496156e-17 -7.6671346762805022e-17" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_Left_mid_foot-1" type="mesh" mesh="foot_Left_mid_foot___Default" pos="0.17247359416002039 -0.029588265104040536 -0.033256789759059248" quat="0.70277983239121289 -0.078105743605568559 -0.70277983239121267 -0.078105743605570072" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_small_axle_lock-1" type="mesh" mesh="foot_small_axle_lock___Default" pos="0.16856973618365811 -0.046934397033099561 0.053183957840307002" quat="0.99388077032994349 3.8521593591660107e-16 1.9816173464174987e-16 -0.11045820190623208" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_small_axle-1" type="mesh" mesh="foot_small_axle___Default" pos="0.16996397117521572 -0.040739349915578892 0.0041619578403069984" quat="0.58504371924016341 0.58504371924016418 0.39714461670484258 0.39714461670484269" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_large_axle_lock-1" type="mesh" mesh="foot_large_axle_lock___Default" pos="0.10606157101181646 -0.035470065964530041 0.038307645966002474" quat="0.70277983239121278 0.078105743605569711 0.70277983239121278 -0.078105743605569197" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_Foot_T_Lock-1" type="mesh" mesh="foot_Foot_T_Lock___Default" pos="0.01168400000000009 -0.019557999999999437 -0.00056414054297812544" quat="0.49999999999999689 -0.50000000000000233 0.49999999999999689 0.500000000000004" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_small_axle_-_Copy-2" type="mesh" mesh="foot_small_axle_-_Copy___Default" pos="0.16996397117521583 -0.040739349915577282 -0.03935278975905921" quat="0.53520618547013088 0.53520618547013088 0.46211939911078403 0.4621193991107837" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_foot_axle-2" type="mesh" mesh="foot_foot_axle___Default" pos="0.10801349999999785 -0.026797000000002 -0.0070947897590592571" quat="-0.15248263338668103 0.15248263338668058 0.69047016337816092 -0.69047016337815936" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_large_axle_lock-2" type="mesh" mesh="foot_large_axle_lock___Default" pos="0.10585947676262328 -0.035740818696362094 -0.039606789759071663" quat="0.60492223860044758 0.087642107201739414 0.78858612140860385 -0.06723001869400809" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_small_axle_lock-2" type="mesh" mesh="foot_small_axle_lock___Default" pos="0.16845399171647935 -0.047448687975528987 -0.045702789759049935" quat="0.96313027690685515 0.027263798567438151 0.24531419717775568 -0.10704064487862495" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <site name="med_gas_l_02" pos="-0.034591673950822764 0.041881996721165389 0.0023819986079295016" size=".0015" group="4" />
+                  <site name="lat_gas_l_02" pos="-0.034591673950822764 0.041881996721165389 0.0023819986079295016" size=".0015" group="4" />
+                  <site name="soleus_l_01" pos="-0.034591673950822764 0.041881996721165389 0.0023819986079295016" size=".0015" group="4" />
+                  <site name="tib_post_l_02" pos="0.0071083260491772229 0.044281996721165347 -0.0209180013920705" size=".0015" group="4" />
+                  <site name="tib_post_l_03" pos="0.042608326049177227 0.026781996721165387 -0.020418001392070499" size=".0015" group="4" />
+                  <site name="flex_dig_l_02" pos="0.009008326049177208 0.042381996721165334 -0.020318001392070496" size=".0015" group="4" />
+                  <site name="flex_dig_l_03" pos="0.03620832604917721 0.028481996721165311 -0.018618001392070503" size=".0015" group="4" />
+                  <site name="flex_dig_l_04" pos="0.1312083260491772 0.0027819967211653637 0.0192819986079295" size=".0015" group="4" />
+                  <site name="flex_hal_l_02" pos="0.0028083260491772247 0.038481996721165319 -0.016418001392070496" size=".0015" group="4" />
+                  <site name="flex_hal_l_03" pos="0.069208326049177232 0.017881996721165368 -0.017918001392070497" size=".0015" group="4" />
+                  <site name="flex_hal_l_04" pos="0.13800832604917723 0.0055819967211653884 -0.019218001392070506" size=".0015" group="4" />
+                  <site name="tib_ant_l_02" pos="0.08200832604917721 0.024881996721165374 -0.028318001392070496" size=".0015" group="4" />
+                  <site name="per_brev_l_03" pos="0.012508326049177211 0.037881996721165385 0.030981998607929502" size=".0015" group="4" />
+                  <site name="per_brev_l_04" pos="0.044408326049177223 0.032781996721165392 0.041681998607929503" size=".0015" group="4" />
+                  <site name="per_long_l_03" pos="0.0092083260491772415 0.033881996721165382 0.029781998607929509" size=".0015" group="4" />
+                  <site name="per_long_l_04" pos="0.03350832604917723 0.021481996721165415 0.035681998607929498" size=".0015" group="4" />
+                  <site name="per_long_l_05" pos="0.050608326049177234 0.017781996721165379 0.019481998607929506" size=".0015" group="4" />
+                  <site name="per_long_l_06" pos="0.082408326049177222 0.024881996721165374 -0.028318001392070496" size=".0015" group="4" />
+                  <site name="per_tert_l_02" pos="0.044408326049177223 0.032881996721165381 0.041681998607929503" size=".0015" group="4" />
+                  <site name="ext_dig_l_02" pos="0.05760832604917724 0.049681996721165418 0.0075819986079294979" size=".0015" group="4" />
+                  <site name="ext_dig_l_03" pos="0.12700832604917722 0.016881996721165367 0.020681998607929498" size=".0015" group="4" />
+                  <site name="ext_hal_l_02" pos="0.062408326049177211 0.049781996721165407 -0.013418001392070507" size=".0015" group="4" />
+                  <site name="ext_hal_l_03" pos="0.094708326049177227 0.0417819967211654 -0.0180180013920705" size=".0015" group="4" />
+                  <site name="ext_hal_l_04" pos="0.1388083260491772 0.024781996721165385 -0.020318001392070496" size=".0015" group="4" />
+                  <site name="flex_dig_l_mtp_engineering_guide" pos="0.16996397117521594 -0.060739349915580582 0.0055520588005651406" size=".002" group="4" />
+                  <site name="flex_hal_l_mtp_engineering_guide" pos="0.16996397117521594 -0.060739349915580582 0.0055520588005651406" size=".002" group="4" />
+                  <site name="ext_dig_l_mtp_engineering_guide" pos="0.16996397117521594 -0.020739349915580577 0.0055520588005651406" size=".002" group="4" />
+                  <site name="ext_hal_l_mtp_engineering_guide" pos="0.16996397117521594 -0.020739349915580577 0.0055520588005651406" size=".002" group="4" />
+                  <geom name="foot_l_New_Front_foot-1" type="mesh" mesh="foot_New_Front_foot___Default" pos="0.17135820616677372 -0.034544302798055836 0.032101957840306991" quat="0.078105743605569683 -0.70277983239121256 0.078105743605569183 0.70277983239121289" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <geom name="foot_l_foot_axle-1" type="mesh" mesh="foot_foot_axle___Default" pos="0.10801349999999783 -0.026797000000002087 0.0059399578403070107" quat="-0.26148435484723986 -0.26148435484723975 0.65698244433936182 0.65698244433936204" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                  <inertial mass="0.2036632345081418" pos="0.071759512616531199 -0.029928229815548588 0.0003375586049567531" fullinertia="0.00010718248058108947 0.0010321644336506988 0.00096714757265515313 3.3637486099197959e-05 -1.6282047979224276e-05 1.319326642654905e-06" />
+                </body>
+                <joint name="ankle_sagittal_l" type="hinge" pos="0 0 0.00025400000000000422" axis="-1.1102230246251565e-15 -4.4408920985006262e-16 -1" damping="0.0050000000000000001" armature="0" limited="false" />
+                <geom name="foot_l_Ankle_Interior_Joint-1" type="mesh" mesh="foot_Ankle_Interior_Joint___Default" pos="0 0 0" quat="-9.8668617086586028e-17 0.70710678118654791 3.7235912051940679e-16 0.70710678118654724" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+                <inertial mass="0.01794923410936473" pos="0.00039320983744524981 0.008818413360858238 0.02147252165262839" fullinertia="4.0848439359062889e-06 5.7524786786135512e-06 3.0954580307057964e-06 1.0005593302652535e-07 -6.8640919071392716e-09 9.1171382743860204e-08" />
+              </body>
+              <geom name="foot_l_Ankle_Exterior-1" type="mesh" mesh="foot_Ankle_Exterior___Default" pos="0 0 0" quat="0.70710678118654746 0 0.70710678118654746 0" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+              <geom name="foot_l_Ankle_Middle_Joint_Shell-1" type="mesh" mesh="foot_Ankle_Middle_Joint_Shell___Default" pos="0.029209999999999854 0.00050800000000045947 -0.051070000000000129" quat="-7.2942925751789212e-17 0.70710678118654768 3.9808481185420358e-16 0.70710678118654735" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+              <geom name="foot_l_Ankle_Lock_1-1" type="mesh" mesh="foot_Ankle_Lock_1___Default" pos="0.027812999999999893 -0.0020319999999995307 -0.030250166689282432" quat="1 -5.6474092585929673e-16 1.3433519834157886e-16 4.068793912903601e-15" contype="1" conaffinity="2" friction=".9 .005 .0001" rgba=".3 .35 .4 1" condim="3" />
+              <inertial mass="0.13514696166604614" pos="0.029061564757716273 0.025242719084192646 -0.031125406180854891" fullinertia="6.5822827157480769e-05 9.5538908102345307e-05 7.3291735933011742e-05 -2.1556772730920901e-07 5.0476993952528047e-10 -1.0125625703981151e-07" />
+            </body>
+          </body>
+          <geom name="cad_04_05_BL_001-2" type="mesh" mesh="leg_04_05_BL_001___Default" pos="-0.021323516685279389 -0.0095759209046606397 0.031000000000001623" quat="0.97781286755867325 -9.8792472848236476e-16 1.11290840951461e-15 0.20948029987730246" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+          <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-1" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="-1.6583956430338276e-15 4.2188474935755949e-15 0.014100000000001597" quat="0.93137729368228817 -8.5540107882926914e-16 1.4387471130373088e-15 0.36405540349383209" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+          <inertial mass="0.0060235628020216224" pos="-0.018519962471153027 -0.0083168123893617493 0.032413798370212216" fullinertia="5.6663908045399007e-07 1.70993842664113e-06 1.9488218578078906e-06 -6.4313727437718243e-07 1.7139044942806177e-07 7.6973521950581489e-08" />
+        </body>
+        <body name="front_l" pos="0.017351884574171882 -0.44039682494472793 0.017241703385003623">
+          <joint name="front_l_joint" type="hinge" damping="0.14999999999999999" armature="0" axis="0 -1.1102230246251565e-16 -1" />
+          <geom name="cad_04_06_FL_001-2" type="mesh" mesh="leg_04_06_FL_001___Default" pos="0.0058327951158483049 -0.02504732136147575 -0.036900024999999115" quat="0.62177062858777787 1.3401783126702894e-15 1.1869100105080996e-16 0.78319939059319976" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+          <geom name="cad_97493A126__METRIC_PARTIALLY_THREADED_STUDS-2" type="mesh" mesh="leg_97493A126__METRIC_PARTIALLY_THREADED_STUDS___97493A126" pos="-9.3536289824669439e-15 2.3148150063434514e-14 -0.014100024999999038" quat="-4.4318131354474361e-16 0.96652282751785057 -0.25658063817618704 -1.2692063507117525e-15" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+          <inertial mass="0.0064658268020216254" pos="0.0051185160495143996 -0.021979638939514656 -0.032518899905415496" fullinertia="2.3525572364954893e-06 4.0136318408749008e-07 2.4216542710976047e-06 4.8040150831096449e-07 4.7343172589173014e-08 -2.0337621738256238e-07" />
+        </body>
+        <site name="bifemsh_l_00" pos="-0.0014144194072847893 -0.11191490732665405 -0.036421962820536113" size=".0015" group="4" />
+        <site name="sar_l_01" pos="0.096972728646453371 -0.11705865630234208 -0.042628696526246693" size=".0015" group="4" />
+        <site name="sar_l_02" pos="0.11389510724510371 -0.31977212591168125 0.004448885078092199" size=".0015" group="4" />
+        <site name="sar_l_03" pos="0.060181704712744956 -0.46976640218774657 0.02557626246698555" size=".0015" group="4" />
+        <site name="add_mag3_l_02" pos="-0.052645485625564058 -0.13120600182139985 0.024867906137131086" size=".0015" group="4" />
+        <site name="add_mag3_l_03" pos="0.036702005417194733 -0.4396367894980801 0.007745430823107316" size=".0015" group="4" />
+        <site name="tfl_l_01" pos="0.039097850081787275 -0.038725886237350862 -0.072576370456214942" size=".0015" group="4" />
+        <site name="tfl_l_02" pos="0.028910029257525158 -0.4736265137603799 -0.065645621723765299" size=".0015" group="4" />
+        <site name="grac_l_01" pos="0.014668604958448316 -0.18418837999302234 0.028768074133609642" size=".0015" group="4" />
+        <site name="grac_l_02" pos="0.041266067778129217 -0.4723020885002176 0.034483577004574731" size=".0015" group="4" />
+        <site name="glut_max3_l_02" pos="-0.066465077807250639 -0.050377773784516203 -0.069031100751571497" size=".0015" group="4" />
+        <site name="glut_max3_l_03" pos="-0.039198814385207635 -0.13638330580237512 -0.0654049605288438" size=".0015" group="4" />
+        <site name="glut_max3_l_04" pos="0.024682962804543143 -0.39719665067454807 -0.037623310262735979" size=".0015" group="4" />
+        <site name="iliacus_l_02" pos="0.036702005417194733 -0.4396367894980801 0.007745430823107316" size=".0015" group="4" />
+        <site name="psoas_l_02" pos="0.036702005417194733 -0.4396367894980801 0.007745430823107316" size=".0015" group="4" />
+        <site name="rect_fem_l_01" pos="0.078696003849165128 -0.13306900340681321 -0.020240015517035637" size=".0015" group="4" />
+        <site name="rect_fem_l_02" pos="0.073970896524622548 -0.17965778873924293 -0.01206282901491107" size=".0015" group="4" />
+        <site name="rect_fem_l_03" pos="0.077028809917843943 -0.38361824094242553 -0.012070508139680927" size=".0015" group="4" />
+        <site name="vas_med_l_00" pos="0.026172092743445272 -0.24515244783727813 -0.028446841195233843" size=".0015" group="4" />
+        <site name="vas_med_l_01" pos="0.051633717486975941 -0.32343513819064534 -0.013608850758876981" size=".0015" group="4" />
+        <site name="vas_med_l_02" pos="0.06046049948472456 -0.47416969024381894 -0.0061210534805563738" size=".0015" group="4" />
+        <site name="vas_med_l_03" pos="0.05207608443459831 -0.49902474229668636 -0.0064971754649086472" size=".0015" group="4" />
+        <site name="med_gas_l_00" pos="0.036702005417194733 -0.4396367894980801 0.007745430823107316" size=".0015" group="4" />
+        <site name="med_gas_l_01" pos="-0.0066094300476089649 -0.47496186963742293 0.0073582374595867611" size=".0015" group="4" />
+        <site name="lat_gas_l_00" pos="0.03094263595366422 -0.44261333172113465 -0.04441164439649635" size=".0015" group="4" />
+        <site name="lat_gas_l_01" pos="0.00097292549682768958 -0.4642318928551763 -0.045261063713717783" size=".0015" group="4" />
+        <geom name="cad_03_03_FB_L_001-1" type="mesh" mesh="leg_03_03_FB_L_001___Default" pos="0.016938226161693784 -0.37634921215412859 -0.022007797492116205" quat="0.9990482215818578 -0.043619387365334862 5.750476468465263e-13 -2.4602350566773343e-14" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_92997A108_CORROSION-RESISTANT_SETUP_STUD-2" type="mesh" mesh="leg_92997A108_CORROSION-RESISTANT_SETUP_STUD___92997A108" pos="0.0059786828544489204 -0.023425065391511041 -0.018880361444020471" quat="-0.45845396448622022 0.12345087966927447 0.42072558345549671 0.77302640716975635" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB-2" type="mesh" mesh="leg_6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB___6630T31" pos="0.0023729395506881176 -0.009297409730203425 -0.0074936164858285942" quat="0.8977111607656596 -0.41914424661518435 -0.12871766310213725 -0.043180268314201097" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_04_03_KT_L_001-1" type="mesh" mesh="leg_04_03_KT_L_001___Default" pos="0.02541188457417274 -0.45500682494472755 -0.019758321614995508" quat="1 1.2490831546315566e-15 -4.0327062308486949e-16 6.4893293536732198e-16" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_03_04_FH_L_001-1" type="mesh" mesh="leg_03_04_FH_L_001___Default" pos="0.01570446669197794 -0.072057287890019431 -0.041122983390034049" quat="0.9990482215818578 -0.043619387365334814 2.8306396275864588e-13 -1.1750614783455624e-14" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-22" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="0.0091946160713408526 -0.036025406927306686 -0.029036106947300078" quat="-0.19790118001936061 0.74718648587230863 0.28108111206598824 -0.56880654595080249" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-28" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="0.019242498904996866 -0.090694129450734878 -0.035568819857267966" quat="0.71215522076252202 0.65257002952396093 -0.19082141628892557 -0.17485561241569839" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-30" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="0.037411884574188051 -0.35853667835662606 -0.036983841871960618" quat="-0.67559020761566124 0.7372773368101232 6.7053472338413362e-16 -1.2696196338670632e-16" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-24" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="0.01924249890499688 -0.093394738882901451 -0.066436926916263281" quat="-0.0088967196294966275 -0.20376838054413232 0.9780469294140719 -0.042702451146992275" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-26" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="0.037411884574188023 -0.35590553064839919 -0.0069096859506354996" quat="0.9802261434229893 -0.042797597685420762 -0.0084271339424498454 -0.19301310006309411" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_90695A038_CLASS_04_STEEL_THIN_HEX_NUT_-_DIN_439B-2" type="mesh" mesh="leg_90695A038_CLASS_04_STEEL_THIN_HEX_NUT_-_DIN_439B___90695A038" pos="0.0077133377411472276 -0.030221613250228999 -0.024358309018529339" quat="0.89173932016151036 0.3437354763018271 -0.29432892529375987 -0.0041702451803028191" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS-2" type="mesh" mesh="leg_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS___94510A255" pos="0.035131884574188178 -0.45563682494472824 -0.055753721614995491" quat="0.70227786620141508 -0.70227786620141364 -0.082497264461243905 0.082497264461243128" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <geom name="cad_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS-6" type="mesh" mesh="leg_94510A255_BRASS_SCREW-TO-EXPAND_INSERTS___94510A255" pos="0.017351884574188112 -0.44039682494472848 0.016237078385004558" quat="-0.46633307871189661 -0.46633307871189816 0.53153876594194227 0.53153876594194327" contype="8" conaffinity="4" rgba=".3 .35 .4 1" />
+        <inertial mass="0.52457838246960631" pos="0.028035547959417647 -0.27531096713112413 -0.029140284254316154" fullinertia="0.013240700602353226 0.00033648386730320614 0.013147750215327577 0.00055508024980257078 -1.3048087817923696e-07 0.00055253392579274402" />
+      </body>
+      <body name="lumbar_torso" pos="-0.16 0.10000000000000001 0">
+        <joint name="lumbar_ball" type="ball" limited="false" damping="2" stiffness="0" armature="0" frictionloss="0" />
+        <geom name="spine_bar" type="box" pos="0 0.125 0" size="0.01 0.125 0.01" mass="0.12000000000000001" contype="0" conaffinity="0" rgba="0.25 0.25 0.25 1" />
+        <geom name="torso_payload" type="sphere" pos="0.10000000000000001 0.074999999999999997 0" size="0.1" mass="35.378210084584396" contype="0" conaffinity="0" rgba="0.65 0.65 0.7 0.65" />
+        <site name="spine_top" pos="0 0.25 0" size="0.005" />
+        <site name="psoas_r_00" pos="0.0032727272727272605 0.0098868368034977921 0.0026272727272727272" size=".0015" group="4" />
+        <site name="ercspn_r_02" pos="-0.0065755753672557538 0.23591290712387525 0.002853510602208024" size=".0015" group="4" />
+        <site name="ercspn_r_03" pos="-0.0035314414284446094 0.24534646393516035 0.0026717324825739634" size=".0015" group="4" />
+        <site name="ercspn_r_04" pos="0.00046693407405504206 0.037130197366151946 0.0042438108270818542" size=".0015" group="4" />
+        <site name="ercspn_r_05" pos="-0.0029528350206248499 0.037043869948159919 0.0043721705374091899" size=".0015" group="4" />
+        <site name="ercspn_r_06" pos="-0.0065085084967419771 0.24030354229439288 0.0043445979273878639" size=".0015" group="4" />
+        <site name="ercspn_r_07" pos="-0.0036478010479218947 0.24999999999999989 0.0040806919453570253" size=".0015" group="4" />
+        <site name="ercspn_r_08" pos="-0.0017029063107490416 0.065969624140334943 0.0053810200927138273" size=".0015" group="4" />
+        <site name="intobl_r_01" pos="0.0063636363636363491 0.21970748452217215 0.0013636363636363635" size=".0015" group="4" />
+        <site name="extobl_r_01" pos="0.0059090909090908916 0.15104889560899326 0.01" size=".0015" group="4" />
+        <site name="psoas_l_00" pos="0.0032727272727272605 0.0098868368034977921 -0.0026272727272727272" size=".0015" group="4" />
+        <site name="ercspn_l_02" pos="-0.0065755753672557538 0.23591290712387525 -0.002853510602208024" size=".0015" group="4" />
+        <site name="ercspn_l_03" pos="-0.0035314414284446094 0.24534646393516035 -0.0026717324825739634" size=".0015" group="4" />
+        <site name="ercspn_l_04" pos="0.00046693407405504206 0.037130197366151946 -0.0042438108270818542" size=".0015" group="4" />
+        <site name="ercspn_l_05" pos="-0.0029528350206248499 0.037043869948159919 -0.0043721705374091899" size=".0015" group="4" />
+        <site name="ercspn_l_06" pos="-0.0065085084967419771 0.24030354229439288 -0.0043445979273878639" size=".0015" group="4" />
+        <site name="ercspn_l_07" pos="-0.0036478010479218947 0.24999999999999989 -0.0040806919453570253" size=".0015" group="4" />
+        <site name="ercspn_l_08" pos="-0.0017029063107490416 0.065969624140334943 -0.0053810200927138273" size=".0015" group="4" />
+        <site name="intobl_l_01" pos="0.0063636363636363491 0.21970748452217215 -0.0013636363636363635" size=".0015" group="4" />
+        <site name="extobl_l_01" pos="0.0059090909090908916 0.15104889560899326 -0.01" size=".0015" group="4" />
+      </body>
+      <body name="ilium_payload" pos="-0.16 0.10000000000000001 0">
+        <geom name="ilium_payload_mass" type="sphere" pos="0.10000000000000001 0 0" size="0.1" mass="35.378210084584396" contype="0" conaffinity="0" rgba=".5 .65 .7 .4" />
+      </body>
+      <site name="semimem_r_00" pos="-0.079903299672186345 -0.10039036947955508 0.053712574850299365" size=".0015" group="4" />
+      <site name="bifemlh_r_00" pos="-0.084662598448514675 -0.10044746225165174 0.054055089820359239" size=".0015" group="4" />
+      <site name="sar_r_00" pos="-0.06231427658125227 0.033603504228327488 0.10742514970059877" size=".0015" group="4" />
+      <site name="add_mag3_r_00" pos="-0.15915940594523656 -0.013924947994926613 0.0038922155688622634" size=".0015" group="4" />
+      <site name="add_mag3_r_01" pos="-0.09710870569597399 -0.092388599335925886 0.04600598802395206" size=".0015" group="4" />
+      <site name="tfl_r_00" pos="-0.06231427658125227 0.033603504228327488 0.10742514970059877" size=".0015" group="4" />
+      <site name="grac_r_00" pos="-0.057441878479811227 -0.10775297936731511 0.021749700598802366" size=".0015" group="4" />
+      <site name="glut_max3_r_00" pos="-0.1856630982428511 0.042389728571211281 0.017904191616766454" size=".0015" group="4" />
+      <site name="glut_max3_r_01" pos="-0.1573054847279611 -0.037548046589442788 0.078622754491017938" size=".0015" group="4" />
+      <site name="iliacus_r_00" pos="-0.1298366454953459 0.12025995912760404 0.066167664670658682" size=".0015" group="4" />
+      <site name="iliacus_r_01" pos="-0.02990782243158539 -0.029449496179499934 0.059161676646706546" size=".0015" group="4" />
+      <site name="psoas_r_01" pos="-0.029754424200169161 -0.029404831634495823 0.059161676646706546" size=".0015" group="4" />
+      <site name="rect_fem_r_00" pos="-0.16036989587251155 0.15244660545504601 0.061497005988023934" size=".0015" group="4" />
+      <site name="ercspn_r_00" pos="-0.10837711115331482 -0.044683752618570396 0.06071856287425146" size=".0015" group="4" />
+      <site name="ercspn_r_01" pos="-0.18921756865844214 0.05771607957471199 0.032248750970567813" size=".0015" group="4" />
+      <site name="intobl_r_00" pos="-0.10752641299670193 0.10138492395265904 0.090065868263473015" size=".0015" group="4" />
+      <site name="extobl_r_00" pos="-0.031113797472166842 -0.037774393573989096 0.0077844311377245354" size=".0015" group="4" />
+      <site name="semimem_l_00" pos="-0.079903299672186345 -0.10039036947955508 -0.053712574850299406" size=".0015" group="4" />
+      <site name="bifemlh_l_00" pos="-0.084662598448514675 -0.10044746225165174 -0.054055089820359281" size=".0015" group="4" />
+      <site name="sar_l_00" pos="-0.06231427658125227 0.033603504228327502 -0.10742514970059877" size=".0015" group="4" />
+      <site name="add_mag3_l_00" pos="-0.15915940594523656 -0.013924947994926613 -0.0038922155688622851" size=".0015" group="4" />
+      <site name="add_mag3_l_01" pos="-0.09710870569597399 -0.092388599335925886 -0.046005988023952102" size=".0015" group="4" />
+      <site name="tfl_l_00" pos="-0.06231427658125227 0.033603504228327502 -0.10742514970059877" size=".0015" group="4" />
+      <site name="grac_l_00" pos="-0.057441878479811227 -0.10775297936731511 -0.021749700598802407" size=".0015" group="4" />
+      <site name="glut_max3_l_00" pos="-0.1856630982428511 0.042389728571211281 -0.017904191616766468" size=".0015" group="4" />
+      <site name="glut_max3_l_01" pos="-0.1573054847279611 -0.03754804658944276 -0.078622754491017938" size=".0015" group="4" />
+      <site name="iliacus_l_00" pos="-0.1298366454953459 0.12025995912760404 -0.066167664670658655" size=".0015" group="4" />
+      <site name="iliacus_l_01" pos="-0.02990782243158539 -0.029449496179499934 -0.059161676646706574" size=".0015" group="4" />
+      <site name="psoas_l_01" pos="-0.029754424200169161 -0.029404831634495823 -0.059161676646706574" size=".0015" group="4" />
+      <site name="rect_fem_l_00" pos="-0.16036989587251155 0.15244660545504601 -0.06149700598802392" size=".0015" group="4" />
+      <site name="ercspn_l_00" pos="-0.10837711115331482 -0.044683752618570396 -0.060718562874251487" size=".0015" group="4" />
+      <site name="ercspn_l_01" pos="-0.18921756865844214 0.057716079574712004 -0.032248750970567827" size=".0015" group="4" />
+      <site name="intobl_l_00" pos="-0.10752641299670193 0.10138492395265906 -0.090065868263473015" size=".0015" group="4" />
+      <site name="extobl_l_00" pos="-0.031113797472166842 -0.037774393573989096 -0.0077844311377245614" size=".0015" group="4" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-1" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.047543984572212317 0.052827511729414502 0.11084792585206603" quat="0.70710678118655135 -6.3175664522894116e-18 -6.9253603592427407e-18 -0.7071067811865438" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-6" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.047543984572208486 0.052827511729414904 -0.11084792585206604" quat="-6.9253603592428463e-18 0.70710678118654757 0.70710678118654746 -3.2934745014804937e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-8" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.047543984572208486 -0.021013591402167797 -0.084854120796132138" quat="-5.3472944847998629e-17 0.70710678118654746 0.70710678118654768 -4.5569877919383822e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_02_01_PE_001-1" type="mesh" mesh="leg_02_01_PE_001___Default" pos="0 0 0" quat="1 0 0 0" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-2" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.047543984572208486 -0.021013591402167797 0.084854120796132138" quat="-0.70710678118654746 -5.5382955786157415e-17 -8.5429983293431571e-17 0.70710678118654746" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-4" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.074543984572208496 -0.0754385730567049 0.054732290990477085" quat="0.70710678118654746 -8.5429983293431645e-17 8.4822189386478213e-17 0.70710678118654757" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-10" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.074543984572208483 -0.0754385730567049 -0.054732290990477085" quat="0.70710678118654746 -6.925360359242854e-18 -1.1143936794899365e-16 0.70710678118654757" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-12" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.10431455739266166 0.069675156364652338 0.036500000000000039" quat="0.49999999999999956 -0.49999999999999967 -0.50000000000000044 0.50000000000000033" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-14" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.12188402158986944 0.056631202336605221 0.036500000000000032" quat="0.49999999999999978 -0.5 -0.50000000000000022 0.50000000000000022" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-1" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.12188402158986943 0.056631202336605221 0.06680000000000004" quat="1 0 0 0" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-16" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.12188402158986943 0.056631202336605221 -0.030500000000000041" quat="0.49999999999999989 -0.5 -0.50000000000000011 0.5" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-18" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.10431455739266164 0.069675156364652338 -0.030500000000000041" quat="0.50000000000000011 -0.49999999999999994 -0.50000000000000011 0.49999999999999989" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT-24" type="mesh" mesh="leg_94645A205_HIGH-STRENGTH_STEEL_NYLON-INSERT_LOCKNUT___94645A205" pos="-0.030211466088322248 -0.092301221447391515 -0.013499999999999984" quat="-0.68301270189221919 0.68301270189221941 -0.18301270189221946 0.18301270189221949" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-4" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.10431455739266164 0.069675156364652338 0.06680000000000004" quat="0.98972843258412979 9.2489367556970132e-17 -2.8175554353919395e-17 0.14296023829919174" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-6" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.10431455739266164 0.069675156364652352 -0.06680000000000004" quat="5.0992155871947456e-17 0.49999999999999972 0.86602540378443871 -7.6669117003245384e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-2" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.07784398457220848 0.052827511729414897 0.11084792585206604" quat="-0.70710678118654757 2.1116843943340406e-17 0.70710678118654746 -2.1724637850293813e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-10" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.07784398457220848 0.052827511729414897 -0.11084792585206604" quat="-0.70710678118654757 2.1116843943340406e-17 0.70710678118654746 -6.0976949317388195e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-12" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.07784398457220848 -0.021013591402167797 -0.084854120796132138" quat="-0.70710678118654757 -9.6640090457942716e-17 0.70710678118654746 -2.1724637850293813e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-14" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.07784398457220848 -0.021013591402167797 0.084854120796132138" quat="-0.70710678118654757 -3.7761623257301138e-17 0.70710678118654746 3.7153829350347743e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-8" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.12188402158986943 0.056631202336605214 -0.06680000000000004" quat="-3.3163011608797358e-17 0.422618261740699 0.90630778703665016 -7.9338053526507106e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN-1" type="mesh" mesh="leg_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN___91595A476" pos="-0.059681672790336024 0.024941658524695421 0.10016764740061035" quat="0.99994779946199863 -0.010217551130600386 3.1050306284456832e-19 -9.2516061049929785e-20" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN-6" type="mesh" mesh="leg_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN___91595A476" pos="-0.059681672790336024 -0.093168242556622746 -0.040028314051528457" quat="0.90154041366616178 0.43269490698024859 -3.9887675485573475e-17 4.2382698136944173e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN-4" type="mesh" mesh="leg_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN___91595A476" pos="-0.059681672790336031 -0.093168242556622746 0.040028314051528457" quat="0.99113747177193856 0.13284017483250249 -3.8574717373886517e-18 1.7832917962059958e-18" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-16" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.044243984572208496 -0.0754385730567049 -0.054732290990477085" quat="0.70449671391468016 0.060699094584823365 0.70449671391468005 0.060699094584823386" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-18" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.044243984572208496 -0.0754385730567049 0.054732290990477085" quat="0.70710678118654757 -1.2127004276908386e-15 0.70710678118654746 -1.2133082215977925e-15" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW-20" type="mesh" mesh="leg_91239A330_CLASS_10.9_STL_BUTTON-HEAD_SOCKET_CAP_SCREW___91239A330" pos="-0.030211466088322248 -0.092301221447391502 0.016799999999999982" quat="0.9964178690020935 6.0735916881488502e-17 -1.0355233420281853e-19 -0.084566129941762117" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN-2" type="mesh" mesh="leg_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN___91595A476" pos="-0.059681672790336024 -0.0030833725444488671 0.090056853809006368" quat="0.99759315967219642 0.069338934050385007 -2.055388689272278e-18 7.953002610425385e-19" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN-8" type="mesh" mesh="leg_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN___91595A476" pos="-0.062656296354080945 -0.0030833725444488641 -0.090056853809006368" quat="-3.7218010675626577e-17 -1.7956007371424105e-16 0.90194235358451103 0.43185644699417503" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <geom name="cad_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN-10" type="mesh" mesh="leg_91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN___91595A476" pos="-0.059681672790336024 0.024941658524695421 -0.10016764740061035" quat="0.81270730694938675 0.58267214900926512 -1.3739319787062768e-17 1.8111286477166333e-17" contype="0" conaffinity="0" rgba=".3 .35 .4 1" />
+      <inertial mass="1.7096983671218831" pos="-0.079314024550313764 0.0015418445937156998 -5.0011049131880572e-06" fullinertia="0.015047193190900357 0.012266294708763295 0.0074808017997911322 0.00073460456591584275 2.5877357992885203e-08 -7.0430557783043659e-07" />
+    </body>
+    <camera name="isb_preview" pos="1.25 1.25 1.6499999999999999" xyaxes="0.78317883037059155 0 -0.62179652593059098 -0.17293145235904669 0.96054754654093921 -0.21781442472704349" />
+  </worldbody>
+  <equality>
+    <connect name="knee_loop_r" body1="front_r" body2="shank_r" anchor="0.015559928132625134 -0.04902497181527371 0.036900024999998615" solref=".004 1" solimp=".999 .9999 .0001" />
+    <connect name="knee_loop_l" body1="front_l" body2="shank_l" anchor="0.011665590231712056 -0.050094642722977867 -0.031000024999999168" solref=".004 1" solimp=".999 .9999 .0001" />
+  </equality>
+  <tendon>
+    <spatial name="semimem_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="semimem_r_00" />
+      <site site="semimem_r_01" />
+      <site site="semimem_r_02" />
+      <site site="semimem_r_03" />
+      <site site="semimem_r_04" />
+    </spatial>
+    <spatial name="bifemlh_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="bifemlh_r_00" />
+      <site site="bifemlh_r_01" />
+      <site site="bifemlh_r_02" />
+      <site site="bifemlh_r_03" />
+    </spatial>
+    <spatial name="bifemsh_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="bifemsh_r_00" />
+      <site site="bifemsh_r_01" />
+      <site site="bifemsh_r_02" />
+    </spatial>
+    <spatial name="sar_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="sar_r_00" />
+      <site site="sar_r_01" />
+      <site site="sar_r_02" />
+      <site site="sar_r_03" />
+      <site site="sar_r_04" />
+      <site site="sar_r_05" />
+      <site site="sar_r_06" />
+    </spatial>
+    <spatial name="add_mag3_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="add_mag3_r_00" />
+      <site site="add_mag3_r_01" />
+      <site site="add_mag3_r_02" />
+      <site site="add_mag3_r_03" />
+    </spatial>
+    <spatial name="tfl_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="tfl_r_00" />
+      <site site="tfl_r_01" />
+      <site site="tfl_r_02" />
+      <site site="tfl_r_03" />
+      <site site="tfl_r_04" />
+    </spatial>
+    <spatial name="grac_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="grac_r_00" />
+      <site site="grac_r_01" />
+      <site site="grac_r_02" />
+      <site site="grac_r_03" />
+      <site site="grac_r_04" />
+      <site site="grac_r_05" />
+    </spatial>
+    <spatial name="glut_max3_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="glut_max3_r_00" />
+      <site site="glut_max3_r_01" />
+      <site site="glut_max3_r_02" />
+      <site site="glut_max3_r_03" />
+      <site site="glut_max3_r_04" />
+    </spatial>
+    <spatial name="iliacus_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="iliacus_r_00" />
+      <site site="iliacus_r_01" />
+      <site site="iliacus_r_02" />
+    </spatial>
+    <spatial name="psoas_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="psoas_r_00" />
+      <site site="psoas_r_01" />
+      <site site="psoas_r_02" />
+    </spatial>
+    <spatial name="rect_fem_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="rect_fem_r_00" />
+      <site site="rect_fem_r_01" />
+      <site site="rect_fem_r_02" />
+      <site site="rect_fem_r_03" />
+      <site site="rect_fem_r_04" />
+    </spatial>
+    <spatial name="vas_med_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="vas_med_r_00" />
+      <site site="vas_med_r_01" />
+      <site site="vas_med_r_02" />
+      <site site="vas_med_r_03" />
+      <site site="vas_med_r_04" />
+    </spatial>
+    <spatial name="med_gas_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="med_gas_r_00" />
+      <site site="med_gas_r_01" />
+      <site site="med_gas_r_02" />
+    </spatial>
+    <spatial name="lat_gas_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="lat_gas_r_00" />
+      <site site="lat_gas_r_01" />
+      <site site="lat_gas_r_02" />
+    </spatial>
+    <spatial name="soleus_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="soleus_r_00" />
+      <site site="soleus_r_01" />
+    </spatial>
+    <spatial name="tib_post_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="tib_post_r_00" />
+      <site site="tib_post_r_01" />
+      <site site="tib_post_r_02" />
+      <site site="tib_post_r_03" />
+    </spatial>
+    <spatial name="flex_dig_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="flex_dig_r_00" />
+      <site site="flex_dig_r_01" />
+      <site site="flex_dig_r_02" />
+      <site site="flex_dig_r_03" />
+      <site site="flex_dig_r_04" />
+      <site site="flex_dig_r_mtp_engineering_guide" />
+      <site site="flex_dig_r_05" />
+      <site site="flex_dig_r_06" />
+      <site site="flex_dig_r_07" />
+    </spatial>
+    <spatial name="flex_hal_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="flex_hal_r_00" />
+      <site site="flex_hal_r_01" />
+      <site site="flex_hal_r_02" />
+      <site site="flex_hal_r_03" />
+      <site site="flex_hal_r_04" />
+      <site site="flex_hal_r_mtp_engineering_guide" />
+      <site site="flex_hal_r_05" />
+      <site site="flex_hal_r_06" />
+    </spatial>
+    <spatial name="tib_ant_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="tib_ant_r_00" />
+      <site site="tib_ant_r_01" />
+      <site site="tib_ant_r_02" />
+    </spatial>
+    <spatial name="per_brev_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="per_brev_r_00" />
+      <site site="per_brev_r_01" />
+      <site site="per_brev_r_02" />
+      <site site="per_brev_r_03" />
+      <site site="per_brev_r_04" />
+    </spatial>
+    <spatial name="per_long_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="per_long_r_00" />
+      <site site="per_long_r_01" />
+      <site site="per_long_r_02" />
+      <site site="per_long_r_03" />
+      <site site="per_long_r_04" />
+      <site site="per_long_r_05" />
+      <site site="per_long_r_06" />
+    </spatial>
+    <spatial name="per_tert_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="per_tert_r_00" />
+      <site site="per_tert_r_01" />
+      <site site="per_tert_r_02" />
+    </spatial>
+    <spatial name="ext_dig_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="ext_dig_r_00" />
+      <site site="ext_dig_r_01" />
+      <site site="ext_dig_r_02" />
+      <site site="ext_dig_r_03" />
+      <site site="ext_dig_r_mtp_engineering_guide" />
+      <site site="ext_dig_r_04" />
+      <site site="ext_dig_r_05" />
+    </spatial>
+    <spatial name="ext_hal_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="ext_hal_r_00" />
+      <site site="ext_hal_r_01" />
+      <site site="ext_hal_r_02" />
+      <site site="ext_hal_r_03" />
+      <site site="ext_hal_r_04" />
+      <site site="ext_hal_r_mtp_engineering_guide" />
+      <site site="ext_hal_r_05" />
+      <site site="ext_hal_r_06" />
+    </spatial>
+    <spatial name="ercspn_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="ercspn_r_00" />
+      <site site="ercspn_r_01" />
+      <site site="ercspn_r_02" />
+      <site site="ercspn_r_03" />
+      <site site="ercspn_r_04" />
+      <site site="ercspn_r_05" />
+      <site site="ercspn_r_06" />
+      <site site="ercspn_r_07" />
+      <site site="ercspn_r_08" />
+    </spatial>
+    <spatial name="intobl_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="intobl_r_00" />
+      <site site="intobl_r_01" />
+    </spatial>
+    <spatial name="extobl_r" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="extobl_r_00" />
+      <site site="extobl_r_01" />
+    </spatial>
+    <spatial name="semimem_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="semimem_l_00" />
+      <site site="semimem_l_01" />
+      <site site="semimem_l_02" />
+      <site site="semimem_l_03" />
+      <site site="semimem_l_04" />
+    </spatial>
+    <spatial name="bifemlh_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="bifemlh_l_00" />
+      <site site="bifemlh_l_01" />
+      <site site="bifemlh_l_02" />
+      <site site="bifemlh_l_03" />
+    </spatial>
+    <spatial name="bifemsh_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="bifemsh_l_00" />
+      <site site="bifemsh_l_01" />
+      <site site="bifemsh_l_02" />
+    </spatial>
+    <spatial name="sar_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="sar_l_00" />
+      <site site="sar_l_01" />
+      <site site="sar_l_02" />
+      <site site="sar_l_03" />
+      <site site="sar_l_04" />
+      <site site="sar_l_05" />
+      <site site="sar_l_06" />
+    </spatial>
+    <spatial name="add_mag3_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="add_mag3_l_00" />
+      <site site="add_mag3_l_01" />
+      <site site="add_mag3_l_02" />
+      <site site="add_mag3_l_03" />
+    </spatial>
+    <spatial name="tfl_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="tfl_l_00" />
+      <site site="tfl_l_01" />
+      <site site="tfl_l_02" />
+      <site site="tfl_l_03" />
+      <site site="tfl_l_04" />
+    </spatial>
+    <spatial name="grac_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="grac_l_00" />
+      <site site="grac_l_01" />
+      <site site="grac_l_02" />
+      <site site="grac_l_03" />
+      <site site="grac_l_04" />
+      <site site="grac_l_05" />
+    </spatial>
+    <spatial name="glut_max3_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="glut_max3_l_00" />
+      <site site="glut_max3_l_01" />
+      <site site="glut_max3_l_02" />
+      <site site="glut_max3_l_03" />
+      <site site="glut_max3_l_04" />
+    </spatial>
+    <spatial name="iliacus_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="iliacus_l_00" />
+      <site site="iliacus_l_01" />
+      <site site="iliacus_l_02" />
+    </spatial>
+    <spatial name="psoas_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="psoas_l_00" />
+      <site site="psoas_l_01" />
+      <site site="psoas_l_02" />
+    </spatial>
+    <spatial name="rect_fem_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="rect_fem_l_00" />
+      <site site="rect_fem_l_01" />
+      <site site="rect_fem_l_02" />
+      <site site="rect_fem_l_03" />
+      <site site="rect_fem_l_04" />
+    </spatial>
+    <spatial name="vas_med_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="vas_med_l_00" />
+      <site site="vas_med_l_01" />
+      <site site="vas_med_l_02" />
+      <site site="vas_med_l_03" />
+      <site site="vas_med_l_04" />
+    </spatial>
+    <spatial name="med_gas_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="med_gas_l_00" />
+      <site site="med_gas_l_01" />
+      <site site="med_gas_l_02" />
+    </spatial>
+    <spatial name="lat_gas_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="lat_gas_l_00" />
+      <site site="lat_gas_l_01" />
+      <site site="lat_gas_l_02" />
+    </spatial>
+    <spatial name="soleus_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="soleus_l_00" />
+      <site site="soleus_l_01" />
+    </spatial>
+    <spatial name="tib_post_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="tib_post_l_00" />
+      <site site="tib_post_l_01" />
+      <site site="tib_post_l_02" />
+      <site site="tib_post_l_03" />
+    </spatial>
+    <spatial name="flex_dig_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="flex_dig_l_00" />
+      <site site="flex_dig_l_01" />
+      <site site="flex_dig_l_02" />
+      <site site="flex_dig_l_03" />
+      <site site="flex_dig_l_04" />
+      <site site="flex_dig_l_mtp_engineering_guide" />
+      <site site="flex_dig_l_05" />
+      <site site="flex_dig_l_06" />
+      <site site="flex_dig_l_07" />
+    </spatial>
+    <spatial name="flex_hal_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="flex_hal_l_00" />
+      <site site="flex_hal_l_01" />
+      <site site="flex_hal_l_02" />
+      <site site="flex_hal_l_03" />
+      <site site="flex_hal_l_04" />
+      <site site="flex_hal_l_mtp_engineering_guide" />
+      <site site="flex_hal_l_05" />
+      <site site="flex_hal_l_06" />
+    </spatial>
+    <spatial name="tib_ant_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="tib_ant_l_00" />
+      <site site="tib_ant_l_01" />
+      <site site="tib_ant_l_02" />
+    </spatial>
+    <spatial name="per_brev_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="per_brev_l_00" />
+      <site site="per_brev_l_01" />
+      <site site="per_brev_l_02" />
+      <site site="per_brev_l_03" />
+      <site site="per_brev_l_04" />
+    </spatial>
+    <spatial name="per_long_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="per_long_l_00" />
+      <site site="per_long_l_01" />
+      <site site="per_long_l_02" />
+      <site site="per_long_l_03" />
+      <site site="per_long_l_04" />
+      <site site="per_long_l_05" />
+      <site site="per_long_l_06" />
+    </spatial>
+    <spatial name="per_tert_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="per_tert_l_00" />
+      <site site="per_tert_l_01" />
+      <site site="per_tert_l_02" />
+    </spatial>
+    <spatial name="ext_dig_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="ext_dig_l_00" />
+      <site site="ext_dig_l_01" />
+      <site site="ext_dig_l_02" />
+      <site site="ext_dig_l_03" />
+      <site site="ext_dig_l_mtp_engineering_guide" />
+      <site site="ext_dig_l_04" />
+      <site site="ext_dig_l_05" />
+    </spatial>
+    <spatial name="ext_hal_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="ext_hal_l_00" />
+      <site site="ext_hal_l_01" />
+      <site site="ext_hal_l_02" />
+      <site site="ext_hal_l_03" />
+      <site site="ext_hal_l_04" />
+      <site site="ext_hal_l_mtp_engineering_guide" />
+      <site site="ext_hal_l_05" />
+      <site site="ext_hal_l_06" />
+    </spatial>
+    <spatial name="ercspn_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="ercspn_l_00" />
+      <site site="ercspn_l_01" />
+      <site site="ercspn_l_02" />
+      <site site="ercspn_l_03" />
+      <site site="ercspn_l_04" />
+      <site site="ercspn_l_05" />
+      <site site="ercspn_l_06" />
+      <site site="ercspn_l_07" />
+      <site site="ercspn_l_08" />
+    </spatial>
+    <spatial name="intobl_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="intobl_l_00" />
+      <site site="intobl_l_01" />
+    </spatial>
+    <spatial name="extobl_l" width=".001" stiffness="0" damping="0" rgba=".7 .2 .15 .6" group="2">
+      <site site="extobl_l_00" />
+      <site site="extobl_l_01" />
+    </spatial>
+    <fixed name="relative_knee_stop_r" limited="true" range="-1.3962634015954636 -0.03490658503988659" solreflimit=".02 1" solimplimit=".9 .95 .001">
+      <joint joint="back_r_joint" coef="-1.0" />
+      <joint joint="shank_r_joint" coef="-1.0" />
+    </fixed>
+    <fixed name="relative_knee_stop_l" limited="true" range="-1.3962634015954636 -0.03490658503988659" solreflimit=".02 1" solimplimit=".9 .95 .001">
+      <joint joint="back_l_joint" coef="1.0" />
+      <joint joint="shank_l_joint" coef="-1.0" />
+    </fixed>
+  </tendon>
+  <actuator>
+    <general name="semimem_r" tendon="semimem_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1698.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1698 0" />
+    <general name="bifemlh_r" tendon="bifemlh_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-896.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-896 0" />
+    <general name="bifemsh_r" tendon="bifemsh_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-804.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-804 0" />
+    <general name="sar_r" tendon="sar_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-156.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-156 0" />
+    <general name="add_mag3_r" tendon="add_mag3_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-2268.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-2268 0" />
+    <general name="tfl_r" tendon="tfl_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-233.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-233 0" />
+    <general name="grac_r" tendon="grac_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-162.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-162 0" />
+    <general name="glut_max3_r" tendon="glut_max3_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-5047.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-5047 0" />
+    <general name="iliacus_r" tendon="iliacus_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1073.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1073 0" />
+    <general name="psoas_r" tendon="psoas_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1113.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1113 0" />
+    <general name="rect_fem_r" tendon="rect_fem_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1169.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1169 0" />
+    <general name="vas_med_r" tendon="vas_med_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-4530.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-4530 0" />
+    <general name="med_gas_r" tendon="med_gas_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1558.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1558 0" />
+    <general name="lat_gas_r" tendon="lat_gas_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-683.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-683 0" />
+    <general name="soleus_r" tendon="soleus_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-3549.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-3549 0" />
+    <general name="tib_post_r" tendon="tib_post_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-3549.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-3549 0" />
+    <general name="flex_dig_r" tendon="flex_dig_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-310.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-310 0" />
+    <general name="flex_hal_r" tendon="flex_hal_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-322.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-322 0" />
+    <general name="tib_ant_r" tendon="tib_ant_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-905.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-905 0" />
+    <general name="per_brev_r" tendon="per_brev_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-435.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-435 0" />
+    <general name="per_long_r" tendon="per_long_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-943.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-943 0" />
+    <general name="per_tert_r" tendon="per_tert_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-180.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-180 0" />
+    <general name="ext_dig_r" tendon="ext_dig_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-512.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-512 0" />
+    <general name="ext_hal_r" tendon="ext_hal_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-162.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-162 0" />
+    <general name="ercspn_r" tendon="ercspn_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-2500.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-2500 0" />
+    <general name="intobl_r" tendon="intobl_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-900.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-900 0" />
+    <general name="extobl_r" tendon="extobl_r" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-900.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-900 0" />
+    <general name="semimem_l" tendon="semimem_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1698.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1698 0" />
+    <general name="bifemlh_l" tendon="bifemlh_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-896.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-896 0" />
+    <general name="bifemsh_l" tendon="bifemsh_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-804.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-804 0" />
+    <general name="sar_l" tendon="sar_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-156.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-156 0" />
+    <general name="add_mag3_l" tendon="add_mag3_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-2268.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-2268 0" />
+    <general name="tfl_l" tendon="tfl_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-233.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-233 0" />
+    <general name="grac_l" tendon="grac_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-162.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-162 0" />
+    <general name="glut_max3_l" tendon="glut_max3_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-5047.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-5047 0" />
+    <general name="iliacus_l" tendon="iliacus_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1073.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1073 0" />
+    <general name="psoas_l" tendon="psoas_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1113.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1113 0" />
+    <general name="rect_fem_l" tendon="rect_fem_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1169.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1169 0" />
+    <general name="vas_med_l" tendon="vas_med_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-4530.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-4530 0" />
+    <general name="med_gas_l" tendon="med_gas_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-1558.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-1558 0" />
+    <general name="lat_gas_l" tendon="lat_gas_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-683.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-683 0" />
+    <general name="soleus_l" tendon="soleus_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-3549.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-3549 0" />
+    <general name="tib_post_l" tendon="tib_post_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-3549.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-3549 0" />
+    <general name="flex_dig_l" tendon="flex_dig_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-310.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-310 0" />
+    <general name="flex_hal_l" tendon="flex_hal_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-322.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-322 0" />
+    <general name="tib_ant_l" tendon="tib_ant_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-905.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-905 0" />
+    <general name="per_brev_l" tendon="per_brev_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-435.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-435 0" />
+    <general name="per_long_l" tendon="per_long_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-943.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-943 0" />
+    <general name="per_tert_l" tendon="per_tert_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-180.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-180 0" />
+    <general name="ext_dig_l" tendon="ext_dig_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-512.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-512 0" />
+    <general name="ext_hal_l" tendon="ext_hal_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-162.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-162 0" />
+    <general name="ercspn_l" tendon="ercspn_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-2500.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-2500 0" />
+    <general name="intobl_l" tendon="intobl_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-900.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-900 0" />
+    <general name="extobl_l" tendon="extobl_l" dyntype="filter" dynprm=".03" gaintype="fixed" gainprm="-900.0" biastype="none" ctrllimited="true" ctrlrange="0 1" forcelimited="true" forcerange="-900 0" />
+  </actuator>
+</mujoco>

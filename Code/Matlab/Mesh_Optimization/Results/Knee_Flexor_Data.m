@@ -10,9 +10,9 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 
 %% Joint rotation transformation matrices
 positions = 100;
@@ -93,7 +93,7 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 
 Location = zeros(2,3,positions);
-%Origin and Insertion from Ben
+%Origin and insertion coordinates supplied by B. Bolen
 p1 = [-0.050, 0.035, 0.050];       %Origin
 p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);

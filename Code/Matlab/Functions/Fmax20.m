@@ -1,5 +1,5 @@
-%% Equation for Fmax with Ben and Lawrence's recorded data for 10mm BPA.
-%Ben has five 10 mm ID BPAs with force measurements at maximum pressure and
+%% Equation for Fmax with the measurements recorded by Ben Bolen and Lawrence Pang for 10mm BPA.
+%Five 10 mm ID BPAs have force measurements at maximum pressure and
 %many relative strains. He also has many BPAs measured at zero strain and
 %various pressures. 
 %Lawrence has data on five BPAs with high resolution of pressure data but

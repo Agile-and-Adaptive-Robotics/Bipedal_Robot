@@ -1,0 +1,46 @@
+component NonSpikingSynapse
+% SNS NonSpiking Synapse
+% (Animatlab / sns_toolbox convention):
+%
+%   Isyn = gmax * Sat(Vpre) * (Esyn - Vpost)
+%   Sat(Vpre) = clip((Vpre - ThrPre)/SlopePre, 0, 1)
+%
+% The presynaptic node is sensed (no load). Current Isyn is INJECTED into the
+% postsynaptic node, so:
+%   Esyn > Vrest  -> excitatory (depolarizes post). Use Esyn = 0 V.
+%   Esyn < Vrest  -> inhibitory (hyperpolarizes post). Use Esyn = -72 mV.
+%
+% Connect: p -> presynaptic neuron membrane node m; n -> postsynaptic neuron m.
+% The driving force (Esyn - Vpost) makes this a true conductance: the postsyn
+% potential relaxes to a conductance-weighted average of Vrest and Esyn —
+% inherently stable, no positive feedback.
+%
+% NOTE parameters are SI: -45 mV -> -0.045, 0.5/mV -> 500 '1/V', 1 uS -> 1e-6 'S'.
+
+nodes
+    p = foundation.electrical.electrical; % presynaptic membrane node (sensed)
+    n = foundation.electrical.electrical; % postsynaptic membrane node (driven)
+end
+
+parameters
+    gmax    = {1e-6,  'S'};    % max synaptic conductance (1 uS)
+    Esyn    = {0,     'V'};    % reversal potential: 0 V = excitatory, -0.072 V = inhibitory
+    ThrPre  = {-0.045, 'V'};   % presynaptic saturation threshold (-45 mV)
+    SlopePre = {500,  '1/V'};  % presynaptic saturation slope (0.5 /mV)
+end
+
+variables
+    Isyn = {0, 'A'};           % synaptic current injected into post
+    idst = {0, 'A'};           % branch: current into the post node
+end
+
+branches
+    idst : * -> n.i;           % current injected into the post node (drawn from implicit reference)
+end
+
+equations
+    idst == Isyn;
+    Isyn == gmax * max(0, min(1, (p.v - ThrPre)*SlopePre)) * (Esyn - n.v);
+end
+
+end

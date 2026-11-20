@@ -3,35 +3,71 @@
 
 clear; clc; close all
 
-%% Initial Baseline Evaluation (for constraint bounds)
-[a0, bpa0] = minimizeExtX3(0, Inf, Inf, 0, 1:4);  % All for baseline
-baselineScores = a0;  % RMSE, FVU, Max Residual
-fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
-
-load minimizeFlxPin10_results sol_actual
-g = sol_actual;
-[a1, ~] = minimizeExtX3(g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
-% clear sol_actual
-baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
-fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
-baselineScores2 = a2./(a0); % RMSE, FVU, Max Residual, normalized to baselineScores
-fprintf('Normalized to baseline score \n Baseline using best guess: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores2(:,1)),mean(baselineScores2(:,2)),mean(baselineScores2(:,3)));
 %% Cross-validation setup
-allBPA = [1,3,4];           %We're going to skip 42cm l_rest with a tendon
-labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
+allBPA = [1, 2, 5, 6, 8];           %We're going to skip 42cm l_rest with a tendon
+labels = ["40cm", "40cm-tendon", "42cm", "42cm-tendon", "43cm", "43cm-tendon", "46cm", "47cm", "48cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
 
-results_cv = cell(1, numBPA);
-scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
+results_cv = cell(1, numBPA);  % Will store RMSE, FVU, Max Resid for BPA(s) optimized
+scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held-out for validation
+
+%% Initial Baseline Evaluation (for constraint bounds)
+[a0, bpa0] = minimizeExtX3(0, Inf, Inf, 0);  % All for baseline
+baselineScores = a0;  % RMSE, FVU, Max Residual
+fprintf('\nPerformance with no length offset and infinite stiffness:\n');
+disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+fprintf('Mean Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
+
+load minimizeFlxPin10_results.mat xCols filtered_results
+% pick = 1; %Pick the best solution from the sorted results (should be 1)
+sol_actual = filtered_results(pick, xCols);  %Best solution
+g = sol_actual;
+[a1, ~] = minimizeExtX3(-g(1), g(2), g(3), 0);   % Use solution from Flexor bracket, and compare results
+[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+clear sol_actual pick filtered_results xCols
+fprintf('\nBaseline using previous opt:\n');
+disp(array2table(a1, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
+fprintf('Mean normalized to baseline score: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
+fprintf('\nBaseline using best guess:\n');
+disp(array2table(a2, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+baselineScores2 = a2./(a0); % RMSE, FVU, Max Residual, normalized to baselineScores
+fprintf('Mean normalized to baseline score: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores2(:,1)),mean(baselineScores2(:,2)),mean(baselineScores2(:,3)));
+
 
 %% Problem bounds
 % lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-% ub = [-0.005 * 100, log10(5e7), log10(5e7), 3];
+% ub = [0.01 * 100, log10(5e7), log10(5e7), 3];
 
-lb = [-0.020 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [-0.005 * 100, log10(g(2)), log10(g(3)), 3];
+%% Problem bounds -- two-pass scheme:
+%  EXTX3_PASS=1: wide Xi1/Xi2 bounds from the dub_filt flexor front range (Xi0 [-2,2] cm)
+%  EXTX3_PASS=2: Xi1/Xi2 LOCKED to EXTX3_XI1/EXTX3_XI2 (the pass-1 match), Xi0 [-2,0] cm
+%  no env: legacy behavior, Xi1/Xi2 locked to the flexor pick g
+p1 = getenv('EXTX3_PASS');
+if strcmp(p1, '1')
+    Df = load('Dig_out/Dig_FlxBio_dubfilt_results.mat', 'dub_filt_results');
+    dfr = Df.dub_filt_results;
+    xi1r = [min(dfr(:,2)), max(dfr(:,2))];
+    xi2r = [min(dfr(:,3)), max(dfr(:,3))];
+    lb = [-0.02 * 100, log10(xi1r(1)), log10(xi2r(1)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+    ub = [ 2.00 * 100, log10(xi1r(2)), log10(xi2r(2)), 1];
+    fprintf('PASS 1 (wide): Xi1 [%.3g %.3g], Xi2 [%.3g %.3g], Xi0 [-2 2] cm\n', ...
+        xi1r(1), xi1r(2), xi2r(1), xi2r(2));
+elseif strcmp(p1, '2')
+    xi1lock = sscanf(getenv('EXTX3_XI1'), '%g');
+    xi2lock = sscanf(getenv('EXTX3_XI2'), '%g');
+    lb = [-0.02 * 100, log10(xi1lock), log10(xi2lock), 0];
+    ub = [ 0.005 * 100, log10(xi1lock), log10(xi2lock), 1];   % Xi0 ub +0.5 cm
+    % ub = [ 0.00 * 100, log10(xi1lock), log10(xi2lock), 1];
+    fprintf('PASS 2 (locked): Xi1=%.3g Xi2=%.3g, Xi0 [-2 0.5] cm\n', xi1lock, xi2lock);
+else
+    lb = [-0.02 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+    ub = [ 0.00 * 100, log10(g(2)), log10(g(3)), 1];
+end
 
 % A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
 %      0 0 0 0; ...
@@ -40,11 +76,30 @@ ub = [-0.005 * 100, log10(g(2)), log10(g(3)), 3];
 
 clear sol_actual
 %% Solver
-for k = 1:numel(allBPA)
-    holdoutIdx = allBPA(k);
-    fprintf('\n---- Cross-validation: Holding out BPA #%d (%s) ----\n', ...
-        holdoutIdx, labels(holdoutIdx));
-
+numHold = 3;                        %Number of BPAs held out for validation
+list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
+% EXTX3_HOLD: comma list of holdouts = ONE custom fold
+% (e.g. '1,8'); with EXTX3_ALLTESTS=1, allBPA becomes all nine tests.
+exthold = getenv('EXTX3_HOLD');
+if ~isempty(exthold)
+    holdCustom = str2double(strsplit(exthold, ','));
+    numHold = numel(holdCustom);
+    list = reshape(holdCustom, 1, []);
+    fprintf('EXTX3_HOLD: single fold, holdouts [%s]\n', exthold);
+end
+if strcmpi(getenv('EXTX3_ALLTESTS'), '1')
+    allBPA = 1:numel(labels);
+    validLabels = labels(allBPA);
+    numBPA = numel(allBPA);
+    results_cv = cell(1, numBPA);
+    fprintf('EXTX3_ALLTESTS: allBPA = all %d tests\n', numBPA);
+end
+for k = 1:size(list,1)              %fold ROWS (length() on a 1xN row list re-runs folds)
+    holdoutIdx = list(k,:);
+    for n = 1:size(holdoutIdx,2)
+        fprintf('\n---- Cross-validation: Holding out BPA #%d (%s) ----\n', ...
+            holdoutIdx(n), labels(holdoutIdx(n)));
+    end
     trainIdx = setdiff(allBPA, holdoutIdx);
     baseline_train = baselineScores(trainIdx,:);
 
@@ -54,14 +109,15 @@ for k = 1:numel(allBPA)
         'Display', 'iter', ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...    %'InitialPopulationRange',[-.015*100, log10(8e4), log10(8e3), 0.1; -0.007*100, log10(8e6), log10(8e5), 0.4], ...
         'PopulationSize', 50, ... %was 150
-        'MaxGenerations', 95, ... %was 750
+        'MaxGenerations', 150, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-3);
-    goal = [0 0 0];
-%     weight = 1./max(a0(trainIdx,:));
-    opts.HybridFcn = {@fgoalattain, goal};
+% hybridOpts = optimoptions('fgoalattain', ...
+%     'Display','iter');
+
+% opts.HybridFcn = {@fgoalattain, hybridOpts};
 %     opts.OutputFcn = {@debugPop};
 
     % Run optimization
@@ -96,23 +152,32 @@ end
 %% === Compile All Pareto Candidates from Cross-Validation ===
 all_candidates = [];  % Will collect [foldIdx, x(3), fvals(3), valF(3), dist]
 
-for i = 1:numBPA
-    fold = results_cv{i}.foldIdx;           % Nx1
-    x = results_cv{i}.optParams_all;        % Nx4
+for i = 1:size(list,1)              %fold ROWS
+    fold = results_cv{i}.foldIdx;           % NxnumHold
+    x2 = results_cv{i}.optParams_all;        % Nx4
     train = results_cv{i}.trainScores_all;  % Nx3
     val = results_cv{i}.validation_all;     % Nx3
     dist = results_cv{i}.distance_all;      % Nx1
-    rows = [fold, x, train, val, dist];     % Nx12
+    ind = (1:size(x2,1)).';                     %index by FRONT ROWS (length() breaks on a 1x4 front)
+    rows = [ind, fold, x2, train, val, dist];   % Nx(12+numHold)
     all_candidates = [all_candidates; rows];
 end
 
+%% Dynamic column indices before de-normalizing
+rankCol   = 1;
+holdCols  = numel(rankCol) + (1:numHold);
+xCols     = numel(rankCol) + numel(holdCols) + (1:4);
+trainCols = numel(rankCol) + numel(holdCols) + numel(xCols) + (1:3);
+valCols   = numel(rankCol) + numel(holdCols) + numel(xCols) + numel(trainCols) + (1:3);
+distCol   = numel(rankCol) + numel(holdCols) + numel(xCols) + numel(trainCols) + numel(valCols) + 1;
+
 %% Sort by validation distance first, then validation metrics
 results = all_candidates;  % [fold, Xi0, Xi1, Xi2, Xi3, train (3), val (3), dist]
-results_sort = sortrows(results, [12 9 10 11 6 7 8]);  % sort by distance, then val, then train
+results_sort = sortrows(results, [distCol valCols trainCols]);  % sort by distance, then val, then train
 
 %% De-normalize to get physical parameters
-x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)];
-results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
+x_actual = [results_sort(:,xCols(1))/100, 10.^results_sort(:,xCols(2)), 10.^results_sort(:,xCols(3)), results_sort(:,xCols(4))];
+results_sort_actual = [results_sort(:,rankCol), results_sort(:,holdCols), x_actual, results_sort(:,trainCols), results_sort(:,valCols), results_sort(:,distCol)];
 
 %% --- Filter Pareto candidates against baseline on BPAs 1, 3 & 4 ---
 N = size(results_sort_actual, 1);
@@ -120,23 +185,29 @@ keep = false(N,1);
 
 for ii = 1:N
     % extract decision variables
-    Xi0 = results_sort_actual(ii,2);
-    Xi1 = results_sort_actual(ii,3);
-    Xi2 = results_sort_actual(ii,4);
-    Xi3 = results_sort_actual(ii,5);
+    Xi0 = results_sort_actual(ii,xCols(1));
+    Xi1 = results_sort_actual(ii,xCols(2));
+    Xi2 = results_sort_actual(ii,xCols(3));
+    Xi3 = results_sort_actual(ii,xCols(4));
 
-    % re-evaluate on all 4 BPAs
-    f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, 1:4);   % returns 4×3 [RMSE, FVU, MaxResidual]
+    % re-evaluate on all 9 BPAs
+    f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3);   % returns 4×3 [RMSE, FVU, MaxResidual]
 
     % compare RMSE & FVU for BPAs 1, 3 & 4 to baselineScores
-    pass1 = all( f_all(1,1:2) <= baselineScores(1,1:2) );
-    pass3 = all( f_all(3,1:2) <= baselineScores(3,1:2) );
-    pass4 = all( f_all(4,1:2) <= baselineScores(4,1:2) );
+    pass1 = all( f_all(1,:) <= baselineScores(1,:) );
+    pass2 = all( f_all(2,:) <= baselineScores(2,:) );
+    pass3 = all( f_all(3,:) <= baselineScores(3,:) );
+    pass4 = all( f_all(4,:) <= baselineScores(4,:) );
+    pass5 = all( f_all(5,:) <= baselineScores(5,:) );
+    pass6 = all( f_all(6,:) <= baselineScores(6,:) );
+    pass7 = all( f_all(7,:) <= baselineScores(7,:) );
+    pass8 = all( f_all(8,:) <= baselineScores(8,:) );
+    pass9 = all( f_all(9,:) <= baselineScores(9,:) );
 
-    keep(ii) = pass1 && pass3 && pass4;
+    keep(ii) = pass1 && pass2 && pass5 && pass6 && pass8;
 end
 
-% keep only the rows that passed all three checks
+% keep only the rows that passed all desired checks
 filtered_results = results_sort_actual(keep, :);
 fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
@@ -144,17 +215,23 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 %% Pick best solution (later, flexible)
  
 pick = 32;
-sol_actual = filtered_results(pick, 2:5);
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
+sol_actual = filtered_results(pick, xCols);
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4));  % [f: 4x3], [bpa: full struct]
+
+fprintf('\nPerformance with no length offset and infinite stiffness:\n');
+disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+fprintf('Mean Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
+fprintf('Mean GoF: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(f(:,1)),mean(f(:,2)),mean(f(:,3)));
 
-
-%% Plot results
-
-%% --- Define color scheme and labels ---
+disp(array2table(sol_actual, 'VariableNames', {'X0', 'X1', 'X2','X3'}, ...
+'RowNames', {'Solution'}))
+%% Plot results (2026-09-16: two figures per metric -- one for the TRAINING tests
+% and one for the VALIDATION (held-out) tests of the fold)
 c = cell(8,1);
 c{1} = '#FFD700'; % gold → Hybrid
 c{2} = '#FFB14E'; % orange
@@ -164,29 +241,28 @@ c{5} = '#CD34B5'; % magenta → Predicted
 c{6} = '#9D02D7'; % magenta 2
 c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
-
-labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
-% tileIdxs = [1, 5, 8, 12];  % A, B, C, D
-tileIdxs = [1, 5, 10];  % A, B, C
-tileSpans = [1 3];      % Span: [rows cols]
-tileOrder = [4, 3, 1, 2];
-tileLabels = {'(A)', '(B)', '(C)', '(D)'};
-% Annotation positions [x, y] in normalized figure units
-% xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
-% yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
-xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
-yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
 sz = 60;
 
-%for plotting 
+% --- figure groups: training tests vs validation (held-out) tests ---
+holdTests = results_cv{1}.foldIdx(1,:);
+trainTests = setdiff(allBPA, holdTests);
+grpTests = {trainTests, holdTests};
+grpNames = {'Training', 'Validation'};
+tileIdxsFor = @(n) arrayfun(@(j) (ceil(j/2)-1)*7 + 1 + 4*mod(j-1,2), 1:n);
 
-%% --- Torque Figure with tiles ---
-figT = figure('Name','Torque','Color','w');
+for g = 1:2
+idxs = grpTests{g};
+el = numel(idxs);
+tileIdxs = tileIdxsFor(el);
+tileSpans = [1 3];      % Span: [rows cols]
+
+%% --- Torque ---
+figT = figure('Name', ['Torque - ' grpNames{g}], 'Color','w');
 figT.Position = [100 100 950 700];
-tT = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tT = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
-for j = 1:3
-    i = tileOrder(j);
+for j = 1:el
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -200,12 +276,10 @@ for j = 1:3
     plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, ...
         'DisplayName', 'Predicted');
 
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    ylabel('\bf Torque, N\cdotm','Interpreter','tex')
-    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
-    annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -221,21 +295,21 @@ for j = 1:3
 end
 
 %shared axes labels
-% ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
-% xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
+xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tT.Children(end-1));
+lg = legend(tT.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
-%% --- Muscle Length Figure with tiles---
-figL = figure('Name','Muscle Length','Color','w');
+%% --- Muscle Length ---
+figL = figure('Name', ['Muscle Length - ' grpNames{g}], 'Color','w');
 figL.Position = [100 100 950 700];
-tL = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tL = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
-for j = 1:3
-    i = tileOrder(j);
+for j = 1:el
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -244,16 +318,14 @@ for j = 1:3
     Lm   = bpa(i).Lmt   - 2 * bpa(i).fitn - bpa(i).ten;
 
     scatter(bpa(i).A_h, bpa(i).Lm_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{7},'DisplayName', 'Measured'); % Hybrid (gold)
-    plot(bpa(i).Ak, Lm, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
-    plot(bpa(i).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');            % Predicted
-    ylabel('\bf Length','Interpreter','tex')
-    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
+        'MarkerFaceColor', c{7},'DisplayName', 'Measured');
+    plot(bpa(i).Ak, Lm, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
+    plot(bpa(i).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');
 
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figL, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -265,25 +337,24 @@ for j = 1:3
         'YMinorTick', 'on', ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
-
 end
 
 %shared axes labels
-% ylabel(tL,'\bf Length','Interpreter','tex')
-% xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tL,'\bf Length','Interpreter','tex')
+xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tL.Children(end-1));
+lg = legend(tL.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
-%% --- Moment Arm Figure with tiles ---
-figMA = figure('Name','Moment Arm - 2x2','Color','w');
+%% --- Moment Arm ---
+figMA = figure('Name', ['Moment Arm - ' grpNames{g}], 'Color','w');
 figMA.Position = [100 100 950 700];
-tMA = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tMA = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
-for j = 1:3
-    i = tileOrder(j);
+for j = 1:el
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -291,16 +362,13 @@ for j = 1:3
 
     scatter(bpa(i).A_h, bpa(i).mA_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
         'MarkerFaceColor', c{7},'DisplayName', 'Measured');  % Hybrid
-    plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
-    plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');                   % Predicted
+    plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
+    plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');
 
-    ylabel(tL,'\bf Moment arm, m','Interpreter','tex')
-    xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
-
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figMA, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -315,36 +383,34 @@ for j = 1:3
 end
 
 %shared axes labels
-% ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
-% xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
+xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tMA.Children(end-1));
+lg = legend(tMA.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
-%% --- Strain Figure with tiles ---
-figS = figure('Name','Relative Strain','Color','w');
+%% --- Strain ---
+figS = figure('Name', ['Strain - ' grpNames{g}], 'Color','w');
 figS.Position = [100 100 950 700];
-tS = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tS = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
-for j = 1:3
-    i = tileOrder(j);
+for j = 1:el
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
-    
+
     strain_h = (bpa(i).rest - bpa(i).Lm_h)/bpa(i).rest;
     kmax = (bpa(i).rest - bpa(i).Kmax)/bpa(i).rest;
     scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7},'DisplayName', 'Measured');
     plot(bpa(i).Ak, bpa(i).strain/kmax, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
     plot(bpa(i).Ak, bpa(i).strain_p/kmax, '-', 'Color', '#CD34B5', 'LineWidth', 2.5,'DisplayName', 'Predicted');
-    ylabel(tL,'\bf \epsilon^*','Interpreter','tex')
-    xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figS, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -359,13 +425,15 @@ for j = 1:3
 end
 
 %shared axes labels
-% ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
-% xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
+xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tS.Children(end-1));
+lg = legend(tS.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
+
+end
 %% Helper functions
 function ff = min1(x, trainIdx, kompare)
     if numel(x) == 4 && size(x,1) == 1

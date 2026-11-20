@@ -339,7 +339,8 @@ function [c, ceq] = nonlinc(X, baseline, trainIdx)
         % Convert to physical parameters
         Xi0 = X(1) / 100;
         Xi1 = 10^X(2);
-        Xi2 = 10^X(3);    
+        Xi2 = 10^X(3);
+        % Xi3 = X(4);
         % Call model with current X on the training BPAs
         [f_all, ~] = minimizeExt10mm(Xi0, Xi1, Xi2, trainIdx);
         % beat the average baseline, not per-BPA

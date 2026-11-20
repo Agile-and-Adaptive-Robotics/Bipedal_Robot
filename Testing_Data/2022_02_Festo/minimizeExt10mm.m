@@ -8,11 +8,17 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeExtPin10_results_20251018_1transform.mat filtered_results
+load minimizeExtPin10_results.mat filtered_results xCols
 pick = 32;
-sol_actual = filtered_results(pick, 2:5);
+sol_actual = filtered_results(pick, xCols);
 sol_actual1 = sol_actual;
-[f, bpa] = minimizeExt(sol_actual1(1), sol_actual1(2), sol_actual1(3), sol_actual1(4), 1);   % Use solution from Flexor bracket, and compare results
+k1 = sol_actual1(1);
+% k1 = -0.01;
+k2 = sol_actual1(2);
+k3 = sol_actual1(3);
+k4 = sol_actual1(4);
+% k4 = 0.2;
+[f, bpa] = minimizeExt(k1, k2, k3, k4, 1);   % Use solution from Extensor tests on the pinned knee, and compare results
 % clear sol_actual
 baselineScores1 = f;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
@@ -36,7 +42,14 @@ labels = ["52cm", "52cm", "52cm", "52cm"];
 tileIdxs = [1, 5, 10];  % A, B, C
 tileSpans = [1 1];      % Span: [rows cols]
 tileOrder = [1, 2, 3, 4];
-tileLabels = {'(A)', '(B)', '(C)', '(D)'};
+% allBPA = allBPA;    %Plot only the train and validation BPAs
+allBPA = [1]; %Plot all tests (52 cm extensor)
+numBPA = numel(allBPA); %recalculate if allBPA has changed
+
+% Auto panel letters (A), (B), ... journal caption style; letters advance across
+% the separate single-tile figures (figL, figMA, ...). The (1,1) layouts have no
+% empty tile for the legend, so each figure keeps its legend inside at 'best'.
+tileLabels = arrayfun(@(k) sprintf('(%c)', 'A' + k - 1), 1:4, 'UniformOutput', false);
 % Annotation positions [x, y] in normalized figure units
 % xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
 % yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
@@ -144,33 +157,46 @@ for j = 1
     % Plot order: hybrid (gold), experimental (indigo), original (gray dash), predicted (magenta)
     scatter(bpa(i).A_h, bpa(i).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
         'MarkerFaceColor', c{1}, 'DisplayName', 'Hybrid');
-    scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'o', 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'MarkerEdgeColor', 'none', 'DisplayName', 'Measured');
     plot(bpa(i).Ak, bpa(i).M, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2, ...
         'DisplayName', 'Original');
     plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, ...
-        'DisplayName', 'Predicted');
+        'DisplayName', 'Optimized');
     ylabel('\bf Torque, N\cdotm','Interpreter','tex')
     xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
     % Tile-specific title and annotation label
-    title('Torque', 'Interpreter','tex');
+    title('52 cm', 'Interpreter','tex');
 %     annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-%         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+%         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor','none', 'HorizontalAlignment','center');
 
-    % Axis config
+    % Axis config (campaign precedent: XLim [-120 30], YLim ceil-to-5)
+    yTop = ceil(max([bpa(i).M_h; bpa(i).Mexp; bpa(i).M_p(:,3); bpa(i).M], [], 'omitnan')/5)*5;
     set(gca, ...
         'FontSize', 12, ...
         'FontWeight', 'bold', ...
         'FontName', 'Arial', ...
         'LineWidth', 2, ...
         'XMinorTick', 'on', ...
-        'YMinorTick', 'on', ...        'YLim', [0 15], ...
+        'YMinorTick', 'on', ...
+        'XLim', [-120 30], ...
+        'XTick', [-120 -90 -60 -30 0 30], ...
+        'YLim', [0 yTop], ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
-    
+
         lg = legend;
         lg.Location = 'best';
         lg.FontSize = 8;
+    % deliverable export (paper figure of record: Ext10mm_52cm.eps)
+    % exportgraphics(figT, ...
+    %     fullfile('D:/GitHub/Bipedal_Robot', ...
+    %     'Documentation/Reports and Papers/Knee_Torque_Test/ProofFinal/Figures', ...
+    %     'Ext10mm_52cm.eps'), 'ContentType', 'vector');
+    % exportgraphics(figT, ...
+    %     fullfile('D:/GitHub/Bipedal_Robot/tmp/paper_bridge/figscripts', ...
+    %     'QC_ExtBiomimetic10mm.png'), 'Resolution', 150);
+    % fprintf('WROTE Ext10mm_52cm.eps (minimizeExt10mm, pick 32)\n');
 end
 
 %% --- Relative Strain Figure with tile ---

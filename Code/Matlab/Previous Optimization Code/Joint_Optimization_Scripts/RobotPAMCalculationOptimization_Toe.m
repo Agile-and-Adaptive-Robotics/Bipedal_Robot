@@ -28,7 +28,7 @@ if beginOptimization == 0
 
     Raxis = [0.7871796; 0.60474746; -0.12094949];
     MaxTheta = 0;
-    MinTheta = 0;               %Ben's script lists the min and max, however only 0 is used. Why?
+    MinTheta = 0;               %The lower angular bound is zero.
     Home = [-0.04877; -0.04195; 0.00792];   %Home position from the Talus
     Joint2 = JointData('Subtalar', Raxis, MaxTheta, MinTheta, Home, divisions);
 

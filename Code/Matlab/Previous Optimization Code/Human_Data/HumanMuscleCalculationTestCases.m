@@ -6,7 +6,7 @@ clc
 close all
 
 
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'Functions'));
 
 %% ------------- Test Case ----------------
 %% Test Monoarticulate Muscle

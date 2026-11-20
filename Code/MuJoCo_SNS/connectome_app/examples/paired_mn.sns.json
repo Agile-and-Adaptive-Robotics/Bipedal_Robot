@@ -1,0 +1,3925 @@
+{
+  "schema": "sns-connectome-project/1",
+  "title": "Paired MN — editable working copy",
+  "clock": {
+    "dt_ms": 2.0
+  },
+  "presentation": {
+    "style": "schematic"
+  },
+  "nodes": [
+    {
+      "id": "w2lvar:391",
+      "type": "SN-Ia",
+      "label": "Ia",
+      "x": 530.0,
+      "y": 485.0,
+      "grp": "RF",
+      "view": {
+        "width": 160,
+        "height": 70,
+        "fill": "#D8EDF7"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 391,
+        "id": "w2lvar:391",
+        "name": "Ia_rect_fem_l",
+        "source_name": "Ia_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Afferents",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:392",
+      "type": "SN-II",
+      "label": "II",
+      "x": 530.0,
+      "y": 635.0,
+      "grp": "RF",
+      "view": {
+        "width": 160,
+        "height": 70,
+        "fill": "#D8EDF7"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 392,
+        "id": "w2lvar:392",
+        "name": "II_rect_fem_l",
+        "source_name": "II_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Afferents",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:393",
+      "type": "SN-Ib",
+      "label": "Ib",
+      "x": 530.0,
+      "y": 1485.0,
+      "grp": "RF",
+      "view": {
+        "width": 160,
+        "height": 70,
+        "fill": "#D8EDF7"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 40.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 393,
+        "id": "w2lvar:393",
+        "name": "Ib_rect_fem_l",
+        "source_name": "Ib_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Afferents",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.04,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:786",
+      "type": "IN-IaIN",
+      "label": "Ia IN",
+      "x": 800.0,
+      "y": 485.0,
+      "grp": "RF",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 786,
+        "id": "w2lvar:786",
+        "name": "IaIN_rect_fem_l",
+        "source_name": "IaIN_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:787",
+      "type": "IN-IIe",
+      "label": "II excitatory IN",
+      "x": 800.0,
+      "y": 635.0,
+      "grp": "RF",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 787,
+        "id": "w2lvar:787",
+        "name": "IIX_rect_fem_l",
+        "source_name": "IIX_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:788",
+      "type": "IN-IIi",
+      "label": "II inhibitory IN",
+      "x": 800.0,
+      "y": 785.0,
+      "grp": "RF",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 788,
+        "id": "w2lvar:788",
+        "name": "IIIN_rect_fem_l",
+        "source_name": "IIIN_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:789",
+      "type": "IN-IbIN",
+      "label": "Ib inhibitory IN",
+      "x": 800.0,
+      "y": 1485.0,
+      "grp": "RF",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 789,
+        "id": "w2lvar:789",
+        "name": "IBIN_rect_fem_l",
+        "source_name": "IBIN_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:390",
+      "type": "MN",
+      "label": "MN",
+      "x": 800.0,
+      "y": 1200.0,
+      "grp": "RF",
+      "view": {
+        "width": 200,
+        "height": 100,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 45.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 390,
+        "id": "w2lvar:390",
+        "name": "MN_rect_fem_l",
+        "source_name": "MN_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "MN",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.045,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": true
+    },
+    {
+      "id": "w2lvar:394",
+      "type": "RC",
+      "label": "Renshaw",
+      "x": 800.0,
+      "y": 1360.0,
+      "grp": "RF",
+      "view": {
+        "width": 200,
+        "height": 80,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 30.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 394,
+        "id": "w2lvar:394",
+        "name": "RC_rect_fem_l",
+        "source_name": "RC_rect_fem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.03,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "physical:muscle:rect_fem",
+      "type": "MUSCLE",
+      "label": "RF",
+      "x": 195.0,
+      "y": 1200.0,
+      "grp": "RF",
+      "view": {
+        "width": 150,
+        "height": 140,
+        "fill": "#F0C7AE"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:spindle:rect_fem",
+      "type": "SPINDLE",
+      "label": "Spindle",
+      "x": 195.0,
+      "y": 495.0,
+      "grp": "RF",
+      "view": {
+        "width": 150,
+        "height": 90,
+        "fill": "#FFF1D2"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:tendon:rect_fem",
+      "type": "TENDON",
+      "label": "Force / Ib",
+      "x": 195.0,
+      "y": 1485.0,
+      "grp": "RF",
+      "view": {
+        "width": 150,
+        "height": 70,
+        "fill": "#F8E2CF"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_Ia:rect_fem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 365.0,
+      "y": 485.0,
+      "grp": "RF",
+      "view": {
+        "width": 70,
+        "height": 70,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_II:rect_fem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 365.0,
+      "y": 635.0,
+      "grp": "RF",
+      "view": {
+        "width": 70,
+        "height": 70,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_Ib:rect_fem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 365.0,
+      "y": 1485.0,
+      "grp": "RF",
+      "view": {
+        "width": 70,
+        "height": 70,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_motor:rect_fem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 405.0,
+      "y": 1200.0,
+      "grp": "RF",
+      "view": {
+        "width": 80,
+        "height": 80,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "w2lvar:286",
+      "type": "SN-Ia",
+      "label": "Ia",
+      "x": 1870.0,
+      "y": 485.0,
+      "grp": "SM",
+      "view": {
+        "width": 160,
+        "height": 70,
+        "fill": "#D8EDF7"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 286,
+        "id": "w2lvar:286",
+        "name": "Ia_semimem_l",
+        "source_name": "Ia_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Afferents",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:287",
+      "type": "SN-II",
+      "label": "II",
+      "x": 1870.0,
+      "y": 635.0,
+      "grp": "SM",
+      "view": {
+        "width": 160,
+        "height": 70,
+        "fill": "#D8EDF7"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 287,
+        "id": "w2lvar:287",
+        "name": "II_semimem_l",
+        "source_name": "II_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Afferents",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:288",
+      "type": "SN-Ib",
+      "label": "Ib",
+      "x": 1870.0,
+      "y": 1485.0,
+      "grp": "SM",
+      "view": {
+        "width": 160,
+        "height": 70,
+        "fill": "#D8EDF7"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 40.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 288,
+        "id": "w2lvar:288",
+        "name": "Ib_semimem_l",
+        "source_name": "Ib_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Afferents",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.04,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:701",
+      "type": "IN-IaIN",
+      "label": "Ia IN",
+      "x": 1600.0,
+      "y": 485.0,
+      "grp": "SM",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 701,
+        "id": "w2lvar:701",
+        "name": "IaIN_semimem_l",
+        "source_name": "IaIN_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:702",
+      "type": "IN-IIe",
+      "label": "II excitatory IN",
+      "x": 1600.0,
+      "y": 635.0,
+      "grp": "SM",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 702,
+        "id": "w2lvar:702",
+        "name": "IIX_semimem_l",
+        "source_name": "IIX_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:703",
+      "type": "IN-IIi",
+      "label": "II inhibitory IN",
+      "x": 1600.0,
+      "y": 785.0,
+      "grp": "SM",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 703,
+        "id": "w2lvar:703",
+        "name": "IIIN_semimem_l",
+        "source_name": "IIIN_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:704",
+      "type": "IN-IbIN",
+      "label": "Ib inhibitory IN",
+      "x": 1600.0,
+      "y": 1485.0,
+      "grp": "SM",
+      "view": {
+        "width": 200,
+        "height": 70,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 20.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 704,
+        "id": "w2lvar:704",
+        "name": "IBIN_semimem_l",
+        "source_name": "IBIN_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.02,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "w2lvar:285",
+      "type": "MN",
+      "label": "MN",
+      "x": 1600.0,
+      "y": 1200.0,
+      "grp": "SM",
+      "view": {
+        "width": 200,
+        "height": 100,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 45.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 285,
+        "id": "w2lvar:285",
+        "name": "MN_semimem_l",
+        "source_name": "MN_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "MN",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.045,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": true,
+      "external_output": true
+    },
+    {
+      "id": "w2lvar:289",
+      "type": "RC",
+      "label": "Renshaw",
+      "x": 1600.0,
+      "y": 1360.0,
+      "grp": "SM",
+      "view": {
+        "width": 200,
+        "height": 80,
+        "fill": "#9AD8F1"
+      },
+      "model": {
+        "kind": "graded",
+        "capacitance_nF": 30.0,
+        "conductance_uS": 1.0,
+        "rest_mV": 0.0,
+        "bias_nA": 0.0
+      },
+      "source_record": {
+        "index": 289,
+        "id": "w2lvar:289",
+        "name": "RC_semimem_l",
+        "source_name": "RC_semimem_l",
+        "kind": "graded",
+        "population": 1,
+        "layer": "Reflex INs",
+        "source_neuron_parameters": {
+          "membrane_capacitance": 0.03,
+          "membrane_conductance": 1.0,
+          "resting_potential": 0.0,
+          "bias": 0.0,
+          "spiking": false,
+          "gated": false
+        }
+      },
+      "external_input": false,
+      "external_output": false
+    },
+    {
+      "id": "physical:muscle:semimem",
+      "type": "MUSCLE",
+      "label": "SM",
+      "x": 2205.0,
+      "y": 1200.0,
+      "grp": "SM",
+      "view": {
+        "width": 150,
+        "height": 140,
+        "fill": "#F0C7AE"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:spindle:semimem",
+      "type": "SPINDLE",
+      "label": "Spindle",
+      "x": 2205.0,
+      "y": 495.0,
+      "grp": "SM",
+      "view": {
+        "width": 150,
+        "height": 90,
+        "fill": "#FFF1D2"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:tendon:semimem",
+      "type": "TENDON",
+      "label": "Force / Ib",
+      "x": 2205.0,
+      "y": 1485.0,
+      "grp": "SM",
+      "view": {
+        "width": 150,
+        "height": 70,
+        "fill": "#F8E2CF"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_Ia:semimem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 2035.0,
+      "y": 485.0,
+      "grp": "SM",
+      "view": {
+        "width": 70,
+        "height": 70,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_II:semimem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 2035.0,
+      "y": 635.0,
+      "grp": "SM",
+      "view": {
+        "width": 70,
+        "height": 70,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_Ib:semimem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 2035.0,
+      "y": 1485.0,
+      "grp": "SM",
+      "view": {
+        "width": 70,
+        "height": 70,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    },
+    {
+      "id": "physical:AD_motor:semimem",
+      "type": "ADAPTER",
+      "label": "AD",
+      "x": 1995.0,
+      "y": 1200.0,
+      "grp": "SM",
+      "view": {
+        "width": 80,
+        "height": 80,
+        "fill": "#FA8E80"
+      },
+      "model": {
+        "kind": "physical"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "map:MN_rect_fem_l->AD_motor:rect_fem",
+      "fromId": "w2lvar:390",
+      "toId": "physical:AD_motor:rect_fem",
+      "from": "MN_rect_fem_l",
+      "to": "AD_motor:rect_fem",
+      "pts": [],
+      "source_record": {
+        "id": "map:MN_rect_fem_l->AD_motor:rect_fem",
+        "source": "MN_rect_fem_l",
+        "target": "AD_motor:rect_fem",
+        "kind": "physical_signal",
+        "policy": "clip(MN voltage / 5 mV,0,1)",
+        "units": "mV to activation"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "clip(MN voltage / 5 mV,0,1)",
+        "units": "mV to activation"
+      }
+    },
+    {
+      "id": "map:AD_motor:rect_fem->muscle:rect_fem",
+      "fromId": "physical:AD_motor:rect_fem",
+      "toId": "physical:muscle:rect_fem",
+      "from": "AD_motor:rect_fem",
+      "to": "muscle:rect_fem",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_motor:rect_fem->muscle:rect_fem",
+        "source": "AD_motor:rect_fem",
+        "target": "muscle:rect_fem",
+        "kind": "physical_signal",
+        "policy": "native activation and contraction dynamics",
+        "units": "activation"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "native activation and contraction dynamics",
+        "units": "activation"
+      }
+    },
+    {
+      "id": "map:muscle:rect_fem->spindle:rect_fem",
+      "fromId": "physical:muscle:rect_fem",
+      "toId": "physical:spindle:rect_fem",
+      "from": "muscle:rect_fem",
+      "to": "spindle:rect_fem",
+      "pts": [],
+      "source_record": {
+        "id": "map:muscle:rect_fem->spindle:rect_fem",
+        "source": "muscle:rect_fem",
+        "target": "spindle:rect_fem",
+        "kind": "physical_signal",
+        "policy": "muscle-tendon length and length rate supplied to spindle-proxy encoders",
+        "units": "m; m/s"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "muscle-tendon length and length rate supplied to spindle-proxy encoders",
+        "units": "m; m/s"
+      }
+    },
+    {
+      "id": "map:spindle:rect_fem->AD_Ia:rect_fem",
+      "fromId": "physical:spindle:rect_fem",
+      "toId": "physical:AD_Ia:rect_fem",
+      "from": "spindle:rect_fem",
+      "to": "AD_Ia:rect_fem",
+      "pts": [],
+      "source_record": {
+        "id": "map:spindle:rect_fem->AD_Ia:rect_fem",
+        "source": "spindle:rect_fem",
+        "target": "AD_Ia:rect_fem",
+        "kind": "physical_signal",
+        "policy": "Ia length-rate encoder; saved AFF/MOD/G gating",
+        "units": "m/s"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.3888888888888889
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "Ia length-rate encoder; saved AFF/MOD/G gating",
+        "units": "m/s"
+      }
+    },
+    {
+      "id": "map:AD_Ia:rect_fem->Ia_rect_fem_l",
+      "fromId": "physical:AD_Ia:rect_fem",
+      "toId": "w2lvar:391",
+      "from": "AD_Ia:rect_fem",
+      "to": "Ia_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_Ia:rect_fem->Ia_rect_fem_l",
+        "source": "AD_Ia:rect_fem",
+        "target": "Ia_rect_fem_l",
+        "kind": "physical_signal",
+        "policy": "saved Ia input injection; weight 1",
+        "units": "nA"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "saved Ia input injection; weight 1",
+        "units": "nA"
+      }
+    },
+    {
+      "id": "map:spindle:rect_fem->AD_II:rect_fem",
+      "fromId": "physical:spindle:rect_fem",
+      "toId": "physical:AD_II:rect_fem",
+      "from": "spindle:rect_fem",
+      "to": "AD_II:rect_fem",
+      "pts": [
+        {
+          "x": 300,
+          "y": 515
+        },
+        {
+          "x": 300,
+          "y": 635
+        }
+      ],
+      "source_record": {
+        "id": "map:spindle:rect_fem->AD_II:rect_fem",
+        "source": "spindle:rect_fem",
+        "target": "AD_II:rect_fem",
+        "kind": "physical_signal",
+        "policy": "II length encoder relative to initial standing length; saved gating",
+        "units": "m"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.7222222222222222
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "II length encoder relative to initial standing length; saved gating",
+        "units": "m"
+      }
+    },
+    {
+      "id": "map:AD_II:rect_fem->II_rect_fem_l",
+      "fromId": "physical:AD_II:rect_fem",
+      "toId": "w2lvar:392",
+      "from": "AD_II:rect_fem",
+      "to": "II_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_II:rect_fem->II_rect_fem_l",
+        "source": "AD_II:rect_fem",
+        "target": "II_rect_fem_l",
+        "kind": "physical_signal",
+        "policy": "saved II input injection; weight 1",
+        "units": "nA"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "saved II input injection; weight 1",
+        "units": "nA"
+      }
+    },
+    {
+      "id": "map:muscle:rect_fem->tendon:rect_fem",
+      "fromId": "physical:muscle:rect_fem",
+      "toId": "physical:tendon:rect_fem",
+      "from": "muscle:rect_fem",
+      "to": "tendon:rect_fem",
+      "pts": [],
+      "source_record": {
+        "id": "map:muscle:rect_fem->tendon:rect_fem",
+        "source": "muscle:rect_fem",
+        "target": "tendon:rect_fem",
+        "kind": "physical_signal",
+        "policy": "abs(native muscle force)",
+        "units": "N"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "abs(native muscle force)",
+        "units": "N"
+      }
+    },
+    {
+      "id": "map:tendon:rect_fem->AD_Ib:rect_fem",
+      "fromId": "physical:tendon:rect_fem",
+      "toId": "physical:AD_Ib:rect_fem",
+      "from": "tendon:rect_fem",
+      "to": "AD_Ib:rect_fem",
+      "pts": [],
+      "source_record": {
+        "id": "map:tendon:rect_fem->AD_Ib:rect_fem",
+        "source": "tendon:rect_fem",
+        "target": "AD_Ib:rect_fem",
+        "kind": "physical_signal",
+        "policy": "Ib force/Fmax encoder; saved AFF/MOD/G gating",
+        "units": "N"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "Ib force/Fmax encoder; saved AFF/MOD/G gating",
+        "units": "N"
+      }
+    },
+    {
+      "id": "map:AD_Ib:rect_fem->Ib_rect_fem_l",
+      "fromId": "physical:AD_Ib:rect_fem",
+      "toId": "w2lvar:393",
+      "from": "AD_Ib:rect_fem",
+      "to": "Ib_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_Ib:rect_fem->Ib_rect_fem_l",
+        "source": "AD_Ib:rect_fem",
+        "target": "Ib_rect_fem_l",
+        "kind": "physical_signal",
+        "policy": "saved Ib input injection; weight 1",
+        "units": "nA"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "saved Ib input injection; weight 1",
+        "units": "nA"
+      }
+    },
+    {
+      "id": "map:MN_semimem_l->AD_motor:semimem",
+      "fromId": "w2lvar:285",
+      "toId": "physical:AD_motor:semimem",
+      "from": "MN_semimem_l",
+      "to": "AD_motor:semimem",
+      "pts": [],
+      "source_record": {
+        "id": "map:MN_semimem_l->AD_motor:semimem",
+        "source": "MN_semimem_l",
+        "target": "AD_motor:semimem",
+        "kind": "physical_signal",
+        "policy": "clip(MN voltage / 5 mV,0,1)",
+        "units": "mV to activation"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "clip(MN voltage / 5 mV,0,1)",
+        "units": "mV to activation"
+      }
+    },
+    {
+      "id": "map:AD_motor:semimem->muscle:semimem",
+      "fromId": "physical:AD_motor:semimem",
+      "toId": "physical:muscle:semimem",
+      "from": "AD_motor:semimem",
+      "to": "muscle:semimem",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_motor:semimem->muscle:semimem",
+        "source": "AD_motor:semimem",
+        "target": "muscle:semimem",
+        "kind": "physical_signal",
+        "policy": "native activation and contraction dynamics",
+        "units": "activation"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "native activation and contraction dynamics",
+        "units": "activation"
+      }
+    },
+    {
+      "id": "map:muscle:semimem->spindle:semimem",
+      "fromId": "physical:muscle:semimem",
+      "toId": "physical:spindle:semimem",
+      "from": "muscle:semimem",
+      "to": "spindle:semimem",
+      "pts": [],
+      "source_record": {
+        "id": "map:muscle:semimem->spindle:semimem",
+        "source": "muscle:semimem",
+        "target": "spindle:semimem",
+        "kind": "physical_signal",
+        "policy": "muscle-tendon length and length rate supplied to spindle-proxy encoders",
+        "units": "m; m/s"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "muscle-tendon length and length rate supplied to spindle-proxy encoders",
+        "units": "m; m/s"
+      }
+    },
+    {
+      "id": "map:spindle:semimem->AD_Ia:semimem",
+      "fromId": "physical:spindle:semimem",
+      "toId": "physical:AD_Ia:semimem",
+      "from": "spindle:semimem",
+      "to": "AD_Ia:semimem",
+      "pts": [],
+      "source_record": {
+        "id": "map:spindle:semimem->AD_Ia:semimem",
+        "source": "spindle:semimem",
+        "target": "AD_Ia:semimem",
+        "kind": "physical_signal",
+        "policy": "Ia length-rate encoder; saved AFF/MOD/G gating",
+        "units": "m/s"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.3888888888888889
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "Ia length-rate encoder; saved AFF/MOD/G gating",
+        "units": "m/s"
+      }
+    },
+    {
+      "id": "map:AD_Ia:semimem->Ia_semimem_l",
+      "fromId": "physical:AD_Ia:semimem",
+      "toId": "w2lvar:286",
+      "from": "AD_Ia:semimem",
+      "to": "Ia_semimem_l",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_Ia:semimem->Ia_semimem_l",
+        "source": "AD_Ia:semimem",
+        "target": "Ia_semimem_l",
+        "kind": "physical_signal",
+        "policy": "saved Ia input injection; weight 1",
+        "units": "nA"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "saved Ia input injection; weight 1",
+        "units": "nA"
+      }
+    },
+    {
+      "id": "map:spindle:semimem->AD_II:semimem",
+      "fromId": "physical:spindle:semimem",
+      "toId": "physical:AD_II:semimem",
+      "from": "spindle:semimem",
+      "to": "AD_II:semimem",
+      "pts": [
+        {
+          "x": 2100,
+          "y": 515
+        },
+        {
+          "x": 2100,
+          "y": 635
+        }
+      ],
+      "source_record": {
+        "id": "map:spindle:semimem->AD_II:semimem",
+        "source": "spindle:semimem",
+        "target": "AD_II:semimem",
+        "kind": "physical_signal",
+        "policy": "II length encoder relative to initial standing length; saved gating",
+        "units": "m"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.7222222222222222
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "II length encoder relative to initial standing length; saved gating",
+        "units": "m"
+      }
+    },
+    {
+      "id": "map:AD_II:semimem->II_semimem_l",
+      "fromId": "physical:AD_II:semimem",
+      "toId": "w2lvar:287",
+      "from": "AD_II:semimem",
+      "to": "II_semimem_l",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_II:semimem->II_semimem_l",
+        "source": "AD_II:semimem",
+        "target": "II_semimem_l",
+        "kind": "physical_signal",
+        "policy": "saved II input injection; weight 1",
+        "units": "nA"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "saved II input injection; weight 1",
+        "units": "nA"
+      }
+    },
+    {
+      "id": "map:muscle:semimem->tendon:semimem",
+      "fromId": "physical:muscle:semimem",
+      "toId": "physical:tendon:semimem",
+      "from": "muscle:semimem",
+      "to": "tendon:semimem",
+      "pts": [],
+      "source_record": {
+        "id": "map:muscle:semimem->tendon:semimem",
+        "source": "muscle:semimem",
+        "target": "tendon:semimem",
+        "kind": "physical_signal",
+        "policy": "abs(native muscle force)",
+        "units": "N"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "abs(native muscle force)",
+        "units": "N"
+      }
+    },
+    {
+      "id": "map:tendon:semimem->AD_Ib:semimem",
+      "fromId": "physical:tendon:semimem",
+      "toId": "physical:AD_Ib:semimem",
+      "from": "tendon:semimem",
+      "to": "AD_Ib:semimem",
+      "pts": [],
+      "source_record": {
+        "id": "map:tendon:semimem->AD_Ib:semimem",
+        "source": "tendon:semimem",
+        "target": "AD_Ib:semimem",
+        "kind": "physical_signal",
+        "policy": "Ib force/Fmax encoder; saved AFF/MOD/G gating",
+        "units": "N"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "Ib force/Fmax encoder; saved AFF/MOD/G gating",
+        "units": "N"
+      }
+    },
+    {
+      "id": "map:AD_Ib:semimem->Ib_semimem_l",
+      "fromId": "physical:AD_Ib:semimem",
+      "toId": "w2lvar:288",
+      "from": "AD_Ib:semimem",
+      "to": "Ib_semimem_l",
+      "pts": [],
+      "source_record": {
+        "id": "map:AD_Ib:semimem->Ib_semimem_l",
+        "source": "AD_Ib:semimem",
+        "target": "Ib_semimem_l",
+        "kind": "physical_signal",
+        "policy": "saved Ib input injection; weight 1",
+        "units": "nA"
+      },
+      "tag": "",
+      "sign": "physical",
+      "gain": 1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "kind": "physical",
+      "map": {
+        "policy": "saved Ib input injection; weight 1",
+        "units": "nA"
+      }
+    },
+    {
+      "id": "w2lvar:edge:7250",
+      "fromId": "w2lvar:391",
+      "toId": "w2lvar:786",
+      "from": "Ia_rect_fem_l",
+      "to": "IaIN_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "index": 7250,
+        "id": "w2lvar:edge:7250",
+        "source_index": 391,
+        "target_index": 786,
+        "source": "Ia_rect_fem_l",
+        "target": "IaIN_rect_fem_l",
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T017",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.6,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.6,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 0.6,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4806",
+      "fromId": "w2lvar:391",
+      "toId": "w2lvar:390",
+      "from": "Ia_rect_fem_l",
+      "to": "MN_rect_fem_l",
+      "pts": [
+        {
+          "x": 530,
+          "y": 560
+        },
+        {
+          "x": 660,
+          "y": 560
+        },
+        {
+          "x": 660,
+          "y": 1180
+        }
+      ],
+      "source_record": {
+        "index": 4806,
+        "id": "w2lvar:edge:4806",
+        "source_index": 391,
+        "target_index": 390,
+        "source": "Ia_rect_fem_l",
+        "target": "MN_rect_fem_l",
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T017",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.6,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.6,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 0.6,
+      "fromPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.3
+      },
+      "synapse": {
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:7256",
+      "fromId": "w2lvar:392",
+      "toId": "w2lvar:787",
+      "from": "II_rect_fem_l",
+      "to": "IIX_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "index": 7256,
+        "id": "w2lvar:edge:7256",
+        "source_index": 392,
+        "target_index": 787,
+        "source": "II_rect_fem_l",
+        "target": "IIX_rect_fem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:7257",
+      "fromId": "w2lvar:392",
+      "toId": "w2lvar:788",
+      "from": "II_rect_fem_l",
+      "to": "IIIN_rect_fem_l",
+      "pts": [
+        {
+          "x": 640,
+          "y": 655
+        },
+        {
+          "x": 640,
+          "y": 785
+        }
+      ],
+      "source_record": {
+        "index": 7257,
+        "id": "w2lvar:edge:7257",
+        "source_index": 392,
+        "target_index": 788,
+        "source": "II_rect_fem_l",
+        "target": "IIIN_rect_fem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.7857142857142857
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4816",
+      "fromId": "w2lvar:787",
+      "toId": "w2lvar:390",
+      "from": "IIX_rect_fem_l",
+      "to": "MN_rect_fem_l",
+      "pts": [
+        {
+          "x": 940,
+          "y": 635
+        },
+        {
+          "x": 940,
+          "y": 1200
+        }
+      ],
+      "source_record": {
+        "index": 4816,
+        "id": "w2lvar:edge:4816",
+        "source_index": 787,
+        "target_index": 390,
+        "source": "IIX_rect_fem_l",
+        "target": "MN_rect_fem_l",
+        "gmax_uS": 0.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T019",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.4,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 0.4,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 0.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:7258",
+      "fromId": "w2lvar:393",
+      "toId": "w2lvar:789",
+      "from": "Ib_rect_fem_l",
+      "to": "IBIN_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "index": 7258,
+        "id": "w2lvar:edge:7258",
+        "source_index": 393,
+        "target_index": 789,
+        "source": "Ib_rect_fem_l",
+        "target": "IBIN_rect_fem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4817",
+      "fromId": "w2lvar:789",
+      "toId": "w2lvar:390",
+      "from": "IBIN_rect_fem_l",
+      "to": "MN_rect_fem_l",
+      "pts": [
+        {
+          "x": 800,
+          "y": 1420
+        },
+        {
+          "x": 640,
+          "y": 1420
+        },
+        {
+          "x": 640,
+          "y": 1210
+        }
+      ],
+      "source_record": {
+        "index": 4817,
+        "id": "w2lvar:edge:4817",
+        "source_index": 789,
+        "target_index": 390,
+        "source": "IBIN_rect_fem_l",
+        "target": "MN_rect_fem_l",
+        "gmax_uS": 0.35,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T020",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.35,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.35,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.35,
+      "fromPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.6
+      },
+      "synapse": {
+        "gmax_uS": 0.35,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4845",
+      "fromId": "w2lvar:390",
+      "toId": "w2lvar:394",
+      "from": "MN_rect_fem_l",
+      "to": "RC_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "index": 4845,
+        "id": "w2lvar:edge:4845",
+        "source_index": 390,
+        "target_index": 394,
+        "source": "MN_rect_fem_l",
+        "target": "RC_rect_fem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4807",
+      "fromId": "w2lvar:394",
+      "toId": "w2lvar:390",
+      "from": "RC_rect_fem_l",
+      "to": "MN_rect_fem_l",
+      "pts": [
+        {
+          "x": 650,
+          "y": 1360
+        },
+        {
+          "x": 650,
+          "y": 1230
+        }
+      ],
+      "source_record": {
+        "index": 4807,
+        "id": "w2lvar:edge:4807",
+        "source_index": 394,
+        "target_index": 390,
+        "source": "RC_rect_fem_l",
+        "target": "MN_rect_fem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.8
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:7251",
+      "fromId": "w2lvar:394",
+      "toId": "w2lvar:786",
+      "from": "RC_rect_fem_l",
+      "to": "IaIN_rect_fem_l",
+      "pts": [
+        {
+          "x": 1000,
+          "y": 1360
+        },
+        {
+          "x": 1000,
+          "y": 560
+        },
+        {
+          "x": 800,
+          "y": 560
+        }
+      ],
+      "source_record": {
+        "index": 7251,
+        "id": "w2lvar:edge:7251",
+        "source_index": 394,
+        "target_index": 786,
+        "source": "RC_rect_fem_l",
+        "target": "IaIN_rect_fem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:6900",
+      "fromId": "w2lvar:286",
+      "toId": "w2lvar:701",
+      "from": "Ia_semimem_l",
+      "to": "IaIN_semimem_l",
+      "pts": [],
+      "source_record": {
+        "index": 6900,
+        "id": "w2lvar:edge:6900",
+        "source_index": 286,
+        "target_index": 701,
+        "source": "Ia_semimem_l",
+        "target": "IaIN_semimem_l",
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T017",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.6,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.6,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 0.6,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3540",
+      "fromId": "w2lvar:286",
+      "toId": "w2lvar:285",
+      "from": "Ia_semimem_l",
+      "to": "MN_semimem_l",
+      "pts": [
+        {
+          "x": 1870,
+          "y": 560
+        },
+        {
+          "x": 1740,
+          "y": 560
+        },
+        {
+          "x": 1740,
+          "y": 1180
+        }
+      ],
+      "source_record": {
+        "index": 3540,
+        "id": "w2lvar:edge:3540",
+        "source_index": 286,
+        "target_index": 285,
+        "source": "Ia_semimem_l",
+        "target": "MN_semimem_l",
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T017",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.6,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.6,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 0.6,
+      "fromPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.3
+      },
+      "synapse": {
+        "gmax_uS": 0.6,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:6906",
+      "fromId": "w2lvar:287",
+      "toId": "w2lvar:702",
+      "from": "II_semimem_l",
+      "to": "IIX_semimem_l",
+      "pts": [],
+      "source_record": {
+        "index": 6906,
+        "id": "w2lvar:edge:6906",
+        "source_index": 287,
+        "target_index": 702,
+        "source": "II_semimem_l",
+        "target": "IIX_semimem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:6907",
+      "fromId": "w2lvar:287",
+      "toId": "w2lvar:703",
+      "from": "II_semimem_l",
+      "to": "IIIN_semimem_l",
+      "pts": [
+        {
+          "x": 1760,
+          "y": 655
+        },
+        {
+          "x": 1760,
+          "y": 785
+        }
+      ],
+      "source_record": {
+        "index": 6907,
+        "id": "w2lvar:edge:6907",
+        "source_index": 287,
+        "target_index": 703,
+        "source": "II_semimem_l",
+        "target": "IIIN_semimem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.7857142857142857
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3542",
+      "fromId": "w2lvar:702",
+      "toId": "w2lvar:285",
+      "from": "IIX_semimem_l",
+      "to": "MN_semimem_l",
+      "pts": [
+        {
+          "x": 1460,
+          "y": 635
+        },
+        {
+          "x": 1460,
+          "y": 1200
+        }
+      ],
+      "source_record": {
+        "index": 3542,
+        "id": "w2lvar:edge:3542",
+        "source_index": 702,
+        "target_index": 285,
+        "source": "IIX_semimem_l",
+        "target": "MN_semimem_l",
+        "gmax_uS": 0.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T019",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.4,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 0.4,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 0.4,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:6908",
+      "fromId": "w2lvar:288",
+      "toId": "w2lvar:704",
+      "from": "Ib_semimem_l",
+      "to": "IBIN_semimem_l",
+      "pts": [],
+      "source_record": {
+        "index": 6908,
+        "id": "w2lvar:edge:6908",
+        "source_index": 288,
+        "target_index": 704,
+        "source": "Ib_semimem_l",
+        "target": "IBIN_semimem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3543",
+      "fromId": "w2lvar:704",
+      "toId": "w2lvar:285",
+      "from": "IBIN_semimem_l",
+      "to": "MN_semimem_l",
+      "pts": [
+        {
+          "x": 1600,
+          "y": 1420
+        },
+        {
+          "x": 1760,
+          "y": 1420
+        },
+        {
+          "x": 1760,
+          "y": 1210
+        }
+      ],
+      "source_record": {
+        "index": 3543,
+        "id": "w2lvar:edge:3543",
+        "source_index": 704,
+        "target_index": 285,
+        "source": "IBIN_semimem_l",
+        "target": "MN_semimem_l",
+        "gmax_uS": 0.35,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T020",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.35,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.35,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.35,
+      "fromPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.6
+      },
+      "synapse": {
+        "gmax_uS": 0.35,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3558",
+      "fromId": "w2lvar:285",
+      "toId": "w2lvar:289",
+      "from": "MN_semimem_l",
+      "to": "RC_semimem_l",
+      "pts": [],
+      "source_record": {
+        "index": 3558,
+        "id": "w2lvar:edge:3558",
+        "source_index": 285,
+        "target_index": 289,
+        "source": "MN_semimem_l",
+        "target": "RC_semimem_l",
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T012",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 1.0,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": 8.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 1.0,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": 8.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "exc"
+      },
+      "tag": "",
+      "sign": "exc",
+      "gain": 1.0,
+      "fromPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 1.0,
+        "reversal_mV": 8.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3541",
+      "fromId": "w2lvar:289",
+      "toId": "w2lvar:285",
+      "from": "RC_semimem_l",
+      "to": "MN_semimem_l",
+      "pts": [
+        {
+          "x": 1750,
+          "y": 1360
+        },
+        {
+          "x": 1750,
+          "y": 1230
+        }
+      ],
+      "source_record": {
+        "index": 3541,
+        "id": "w2lvar:edge:3541",
+        "source_index": 289,
+        "target_index": 285,
+        "source": "RC_semimem_l",
+        "target": "MN_semimem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.8
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:6901",
+      "fromId": "w2lvar:289",
+      "toId": "w2lvar:701",
+      "from": "RC_semimem_l",
+      "to": "IaIN_semimem_l",
+      "pts": [
+        {
+          "x": 1400,
+          "y": 1360
+        },
+        {
+          "x": 1400,
+          "y": 560
+        },
+        {
+          "x": 1600,
+          "y": 560
+        }
+      ],
+      "source_record": {
+        "index": 6901,
+        "id": "w2lvar:edge:6901",
+        "source_index": 289,
+        "target_index": 701,
+        "source": "RC_semimem_l",
+        "target": "IaIN_semimem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "bottom",
+        "offset": 0.5
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3579",
+      "fromId": "w2lvar:394",
+      "toId": "w2lvar:289",
+      "from": "RC_rect_fem_l",
+      "to": "RC_semimem_l",
+      "pts": [],
+      "source_record": {
+        "index": 3579,
+        "id": "w2lvar:edge:3579",
+        "source_index": 394,
+        "target_index": 289,
+        "source": "RC_rect_fem_l",
+        "target": "RC_semimem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.25
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.25
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4824",
+      "fromId": "w2lvar:289",
+      "toId": "w2lvar:394",
+      "from": "RC_semimem_l",
+      "to": "RC_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "index": 4824,
+        "id": "w2lvar:edge:4824",
+        "source_index": 289,
+        "target_index": 394,
+        "source": "RC_semimem_l",
+        "target": "RC_rect_fem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.75
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.75
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:6902",
+      "fromId": "w2lvar:786",
+      "toId": "w2lvar:701",
+      "from": "IaIN_rect_fem_l",
+      "to": "IaIN_semimem_l",
+      "pts": [],
+      "source_record": {
+        "index": 6902,
+        "id": "w2lvar:edge:6902",
+        "source_index": 786,
+        "target_index": 701,
+        "source": "IaIN_rect_fem_l",
+        "target": "IaIN_semimem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.2857142857142857
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.2857142857142857
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:7252",
+      "fromId": "w2lvar:701",
+      "toId": "w2lvar:786",
+      "from": "IaIN_semimem_l",
+      "to": "IaIN_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "index": 7252,
+        "id": "w2lvar:edge:7252",
+        "source_index": 701,
+        "target_index": 786,
+        "source": "IaIN_semimem_l",
+        "target": "IaIN_rect_fem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.6428571428571429
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.6428571428571429
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:6909",
+      "fromId": "w2lvar:789",
+      "toId": "w2lvar:704",
+      "from": "IBIN_rect_fem_l",
+      "to": "IBIN_semimem_l",
+      "pts": [],
+      "source_record": {
+        "index": 6909,
+        "id": "w2lvar:edge:6909",
+        "source_index": 789,
+        "target_index": 704,
+        "source": "IBIN_rect_fem_l",
+        "target": "IBIN_semimem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.2857142857142857
+      },
+      "toPort": {
+        "side": "left",
+        "offset": 0.2857142857142857
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:7259",
+      "fromId": "w2lvar:704",
+      "toId": "w2lvar:789",
+      "from": "IBIN_semimem_l",
+      "to": "IBIN_rect_fem_l",
+      "pts": [],
+      "source_record": {
+        "index": 7259,
+        "id": "w2lvar:edge:7259",
+        "source_index": 704,
+        "target_index": 789,
+        "source": "IBIN_semimem_l",
+        "target": "IBIN_rect_fem_l",
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T018",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.5,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.5,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.5,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.7142857142857143
+      },
+      "toPort": {
+        "side": "right",
+        "offset": 0.7142857142857143
+      },
+      "synapse": {
+        "gmax_uS": 0.5,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3544",
+      "fromId": "w2lvar:786",
+      "toId": "w2lvar:285",
+      "from": "IaIN_rect_fem_l",
+      "to": "MN_semimem_l",
+      "pts": [
+        {
+          "x": 960,
+          "y": 505
+        },
+        {
+          "x": 1480,
+          "y": 1025
+        },
+        {
+          "x": 1580,
+          "y": 1025
+        }
+      ],
+      "source_record": {
+        "index": 3544,
+        "id": "w2lvar:edge:3544",
+        "source_index": 786,
+        "target_index": 285,
+        "source": "IaIN_rect_fem_l",
+        "target": "MN_semimem_l",
+        "gmax_uS": 0.4,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T021",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.4,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.4,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.7857142857142857
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.4
+      },
+      "synapse": {
+        "gmax_uS": 0.4,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4808",
+      "fromId": "w2lvar:701",
+      "toId": "w2lvar:390",
+      "from": "IaIN_semimem_l",
+      "to": "MN_rect_fem_l",
+      "pts": [
+        {
+          "x": 1440,
+          "y": 505
+        },
+        {
+          "x": 920,
+          "y": 1025
+        },
+        {
+          "x": 820,
+          "y": 1025
+        }
+      ],
+      "source_record": {
+        "index": 4808,
+        "id": "w2lvar:edge:4808",
+        "source_index": 701,
+        "target_index": 390,
+        "source": "IaIN_semimem_l",
+        "target": "MN_rect_fem_l",
+        "gmax_uS": 0.4,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T021",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.4,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.4,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.7857142857142857
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.6
+      },
+      "synapse": {
+        "gmax_uS": 0.4,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:3545",
+      "fromId": "w2lvar:788",
+      "toId": "w2lvar:285",
+      "from": "IIIN_rect_fem_l",
+      "to": "MN_semimem_l",
+      "pts": [
+        {
+          "x": 1050,
+          "y": 785
+        },
+        {
+          "x": 1300,
+          "y": 1035
+        },
+        {
+          "x": 1620,
+          "y": 1035
+        }
+      ],
+      "source_record": {
+        "index": 3545,
+        "id": "w2lvar:edge:3545",
+        "source_index": 788,
+        "target_index": 285,
+        "source": "IIIN_rect_fem_l",
+        "target": "MN_semimem_l",
+        "gmax_uS": 0.1,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T023",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.4,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.1,
+      "fromPort": {
+        "side": "right",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.6
+      },
+      "synapse": {
+        "gmax_uS": 0.1,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    },
+    {
+      "id": "w2lvar:edge:4809",
+      "fromId": "w2lvar:703",
+      "toId": "w2lvar:390",
+      "from": "IIIN_semimem_l",
+      "to": "MN_rect_fem_l",
+      "pts": [
+        {
+          "x": 1350,
+          "y": 785
+        },
+        {
+          "x": 1100,
+          "y": 1035
+        },
+        {
+          "x": 780,
+          "y": 1035
+        }
+      ],
+      "source_record": {
+        "index": 4809,
+        "id": "w2lvar:edge:4809",
+        "source_index": 703,
+        "target_index": 390,
+        "source": "IIIN_semimem_l",
+        "target": "MN_rect_fem_l",
+        "gmax_uS": 0.1,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0,
+        "type_key": "T023",
+        "source_type_name": "Non-Spiking Connection",
+        "source_connection_definitions": [
+          {
+            "name": "Non-Spiking Connection",
+            "type": {
+              "class_name": "NonSpikingSynapse",
+              "parameters": {
+                "spiking": false,
+                "pattern": false,
+                "matrix": false,
+                "electrical": false,
+                "max_conductance": 0.4,
+                "name": "Non-Spiking Connection",
+                "reversal_potential": -5.0,
+                "e_lo": 0.0,
+                "e_hi": 5.0
+              }
+            },
+            "parameters": {
+              "spiking": false,
+              "pattern": false,
+              "matrix": false,
+              "electrical": false,
+              "max_conductance": 0.4,
+              "name": "Non-Spiking Connection",
+              "reversal_potential": -5.0,
+              "e_lo": 0.0,
+              "e_hi": 5.0
+            }
+          }
+        ],
+        "sign_category": "inh"
+      },
+      "tag": "",
+      "sign": "inh",
+      "gain": 0.1,
+      "fromPort": {
+        "side": "left",
+        "offset": 0.5
+      },
+      "toPort": {
+        "side": "top",
+        "offset": 0.4
+      },
+      "synapse": {
+        "gmax_uS": 0.1,
+        "reversal_mV": -5.0,
+        "threshold_mV": 0.0,
+        "saturation_mV": 5.0
+      }
+    }
+  ],
+  "groups": {
+    "RF": "Rectus femoris local circuit",
+    "SM": "Semimembranosus local circuit"
+  },
+  "source": {
+    "file": "D:\\Github\\Bipedal_Robot\\Neuromechanical_Models\\Mujoco_SNS_models\\Gait2392_standing_families\\w2lvar_graph_ledger.json",
+    "sha256": "49b946c627222e030aa7bc741d7de20faeb804646d791b51548e6d3d704d4e2f",
+    "condition": "Historical w2lvar standing local MN extraction; working copy, not the later selected Hunt controller.",
+    "units": "Source C numeric on seconds clock converted to nF for SNS millisecond clock: C_nF=1000*C_numeric."
+  },
+  "interface": {
+    "inputs": "Ia/II/Ib and direct MN currents; omitted PF/RG/other-muscle boundary drives are supplied externally.",
+    "physical_maps": {
+      "length": "m",
+      "length_rate": "m/s",
+      "tension": "abs(native muscle force),N",
+      "current": "nA",
+      "Ia": "max(gIa * clip(length_rate/ia_vel_ref,âˆ’1,1),0)",
+      "II": "max(i0_ii*(0.3+0.7*RGstance)+gII*clip((lengthâˆ’initial_pose_length)/half_length_range,âˆ’1,1),0)",
+      "Ib": "max(0.5*gIb*clip(abs(force)/Fmax,0,1.5),0)",
+      "gating": "Exact gIa/gII/gIb phase/drive/gamma factors are retained in the hashed runner.py and AFF/MOD/G dictionaries. No GRF is silently substituted for source tendon Ib."
+    },
+    "actuation": {
+      "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\mjc\\gait2392_simbody\\gait2392_simbody_cvt3.xml",
+      "model_sha256": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae",
+      "actuator_entries": 92,
+      "motor_neurons": 92,
+      "biologically_force_pruned": [
+        "gem_l",
+        "gem_r",
+        "peri_l",
+        "peri_r",
+        "quad_fem_l",
+        "quad_fem_r"
+      ],
+      "biologically_active_routes": 86,
+      "policy": "All92 MNs and afferent arcs remain; runner zeros force parameters of six listed routes. This export is biological, not the86-route virtual BPA replacement.",
+      "motor_conversion": "clip(MN voltage / E_HI,0,1); E_HI=5.0 mV; native activation and contraction dynamics follow.",
+      "input_policy": "--reflex-stand: II setpoint at initial standing length; solved per-muscle POST_ bias with saved scale; supraspinal BAL surrogate inputs zero; posture_to_mn=0.",
+      "apparatus": "Existing pelvis springs; vertical stiffness0.01, damping multiplier4.2. Not harness-free.",
+      "frame": "Legacy converted Gait z-up; distinct from y-up CAD."
+    }
+  }
+}

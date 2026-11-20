@@ -86,7 +86,7 @@ Name = 'Vastus Intermedius';
 %             0.0555, 0.025, 0.0018];
 
 
-% Origin Location from Ben
+% Origin coordinates supplied by B. Bolen
 Location = [0.030, -0.050, 0;
             0.034, -0.403, 0.005;
             0.0555, 0.025, 0.0018];

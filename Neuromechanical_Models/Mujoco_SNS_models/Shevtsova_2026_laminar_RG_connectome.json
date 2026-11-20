@@ -1,0 +1,524 @@
+{
+ "nodes": [
+  {
+   "id": "n713",
+   "type": "PORT-load",
+   "label": "brainstem alpha",
+   "x": 576,
+   "y": -218
+  },
+  {
+   "id": "n714",
+   "type": "HC-RG-F",
+   "label": "RG-F_l",
+   "x": 222,
+   "y": 142
+  },
+  {
+   "id": "n715",
+   "type": "HC-RG-E",
+   "label": "RG-E_l",
+   "x": 55,
+   "y": 12
+  },
+  {
+   "id": "n716",
+   "type": "HC-RG-F",
+   "label": "RG-F_r",
+   "x": 904,
+   "y": 157
+  },
+  {
+   "id": "n717",
+   "type": "HC-RG-E",
+   "label": "RG-E_r",
+   "x": 1088,
+   "y": 3
+  },
+  {
+   "id": "n718",
+   "type": "IN-C",
+   "label": "IniF_l",
+   "x": 100,
+   "y": 144
+  },
+  {
+   "id": "n720",
+   "type": "IN-C",
+   "label": "IniF_r",
+   "x": 1042,
+   "y": 154
+  },
+  {
+   "id": "n721",
+   "type": "IN-C",
+   "label": "IniE_r",
+   "x": 971,
+   "y": 15
+  },
+  {
+   "id": "n722",
+   "type": "IN-V2a",
+   "label": "V2a_l",
+   "x": 390,
+   "y": 103
+  },
+  {
+   "id": "n723",
+   "type": "IN-V2a",
+   "label": "V2a_r",
+   "x": 752,
+   "y": 96
+  },
+  {
+   "id": "n724",
+   "type": "IN-V3",
+   "label": "V0V_l",
+   "x": 488,
+   "y": 101
+  },
+  {
+   "id": "n725",
+   "type": "IN-V3",
+   "label": "V0V_r",
+   "x": 643,
+   "y": 98
+  },
+  {
+   "id": "n726",
+   "type": "IN-V0D",
+   "label": "V0D_l",
+   "x": 500,
+   "y": 180
+  },
+  {
+   "id": "n727",
+   "type": "IN-V0D",
+   "label": "V0D_r",
+   "x": 656,
+   "y": 180
+  },
+  {
+   "id": "n730",
+   "type": "IN-V3",
+   "label": "V3-E_l",
+   "x": 479,
+   "y": -16
+  },
+  {
+   "id": "n731",
+   "type": "IN-V3",
+   "label": "V3-E_r",
+   "x": 684,
+   "y": -28
+  },
+  {
+   "id": "n732",
+   "type": "IN-C",
+   "label": "Ini_l",
+   "x": 391,
+   "y": 27
+  },
+  {
+   "id": "n733",
+   "type": "IN-C",
+   "label": "Ini_r",
+   "x": 744,
+   "y": 29
+  },
+  {
+   "id": "n734",
+   "type": "IN-C",
+   "label": "InE1_l",
+   "x": 163,
+   "y": 13
+  },
+  {
+   "id": "n772",
+   "type": "PORT-load",
+   "label": "brainstem gamma",
+   "x": 564,
+   "y": -314
+  }
+ ],
+ "edges": [
+  {
+   "from": "RG-F_l",
+   "to": "IniF_l",
+   "sign": "exc",
+   "gain": 0.4,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "RG-F_l",
+   "to": "V0D_l",
+   "sign": "exc",
+   "gain": 0.7,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "RG-F_l",
+   "to": "V2a_l",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "RG-E_l",
+   "to": "V3-E_l",
+   "sign": "exc",
+   "gain": 0.35,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 117.4,
+     "y": -14.8
+    }
+   ]
+  },
+  {
+   "from": "IniF_l",
+   "to": "RG-E_l",
+   "sign": "inh",
+   "gain": 1,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "V2a_l",
+   "to": "V0V_l",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "V0V_l",
+   "to": "Ini_r",
+   "sign": "exc",
+   "gain": 0.6,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 644.4,
+     "y": 30.4
+    }
+   ]
+  },
+  {
+   "from": "Ini_r",
+   "to": "RG-F_r",
+   "sign": "inh",
+   "gain": 0.075,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "V0D_l",
+   "to": "RG-F_r",
+   "sign": "inh",
+   "gain": 0.07,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 681.1,
+     "y": 125.1
+    }
+   ]
+  },
+  {
+   "from": "RG-F_r",
+   "to": "IniF_r",
+   "sign": "exc",
+   "gain": 0.4,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "RG-F_r",
+   "to": "V0D_r",
+   "sign": "exc",
+   "gain": 0.7,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "RG-F_r",
+   "to": "V2a_r",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "RG-E_r",
+   "to": "IniE_r",
+   "sign": "exc",
+   "gain": 0.4,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "RG-E_r",
+   "to": "V3-E_r",
+   "sign": "exc",
+   "gain": 0.35,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 1012.1,
+     "y": -27.3
+    }
+   ]
+  },
+  {
+   "from": "IniF_r",
+   "to": "RG-E_r",
+   "sign": "inh",
+   "gain": 1,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "IniE_r",
+   "to": "RG-F_r",
+   "sign": "inh",
+   "gain": 0.1,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "V2a_r",
+   "to": "V0V_r",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "V0V_r",
+   "to": "Ini_l",
+   "sign": "exc",
+   "gain": 0.6,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 535.2,
+     "y": 30.4
+    }
+   ]
+  },
+  {
+   "from": "Ini_l",
+   "to": "RG-F_l",
+   "sign": "inh",
+   "gain": 0.075,
+   "tag": "shev2026_t1",
+   "pts": []
+  },
+  {
+   "from": "V0D_r",
+   "to": "RG-F_l",
+   "sign": "inh",
+   "gain": 0.07,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 457.9,
+     "y": 131.2
+    }
+   ]
+  },
+  {
+   "from": "V3-E_r",
+   "to": "RG-E_l",
+   "sign": "exc",
+   "gain": 0.02,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 496.3,
+     "y": -90.9
+    },
+    {
+     "x": 116.1,
+     "y": -79.8
+    }
+   ]
+  },
+  {
+   "from": "V3-E_r",
+   "to": "InE1_l",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "shev2026_t1",
+   "pts": [
+    {
+     "x": 496.3,
+     "y": -61.8
+    },
+    {
+     "x": 183.8,
+     "y": -56.3
+    }
+   ]
+  },
+  {
+   "from": "V3-E_l",
+   "to": "RG-E_r",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 709.3,
+     "y": -85.3
+    },
+    {
+     "x": 1019,
+     "y": -77
+    }
+   ]
+  },
+  {
+   "from": "V3-E_l",
+   "to": "IniE_r",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 714.8,
+     "y": -60.4
+    },
+    {
+     "x": 933.3,
+     "y": -57.7
+    }
+   ]
+  },
+  {
+   "from": "RG-E_l",
+   "to": "InE1_l",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "InE1_l",
+   "to": "RG-F_l",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "brainstem gamma",
+   "to": "RG-E_l",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 72.8,
+     "y": -218.3
+    }
+   ]
+  },
+  {
+   "from": "brainstem gamma",
+   "to": "RG-E_r",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 1013.6,
+     "y": -240.6
+    }
+   ]
+  },
+  {
+   "from": "brainstem alpha",
+   "to": "RG-F_l",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 257.7,
+     "y": -107.8
+    }
+   ]
+  },
+  {
+   "from": "brainstem alpha",
+   "to": "RG-F_r",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 824.7,
+     "y": -114.7
+    }
+   ]
+  },
+  {
+   "from": "brainstem alpha",
+   "to": "V0V_l",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 523.2,
+     "y": 62.3
+    }
+   ]
+  },
+  {
+   "from": "brainstem alpha",
+   "to": "V0D_l",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 541.2,
+     "y": 131.4
+    }
+   ]
+  },
+  {
+   "from": "brainstem alpha",
+   "to": "V0D_r",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 595.1,
+     "y": 130
+    }
+   ]
+  },
+  {
+   "from": "brainstem alpha",
+   "to": "V0V_r",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": [
+    {
+     "x": 604.8,
+     "y": 34.6
+    }
+   ]
+  }
+ ]
+}

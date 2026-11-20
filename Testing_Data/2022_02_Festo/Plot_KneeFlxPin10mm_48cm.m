@@ -3,11 +3,12 @@
 clear; clc; close all;
 
 load KneeFlxPin_10mm_48cm.mat
-Theoretical = TorqueR(:,3);
+% Theoretical = TorqueR(:,3);
+rest = 0.485; %resting length, m
+kmax = 0.398; %Length at maximum contraction, m
+fitting = 0.0254;
 restingLength = rest;
-% restingLength = 0.485; %resting length, m
-% kmax = 0.398; %Length at maximum contraction, m
-% fitting = 0.0254;
+
 % tendon = 0.013;
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
 Theoretical = Bifemsh_Pam.Torque(:,3);
@@ -118,7 +119,7 @@ TorqueHand = cell2mat(TorqueHand);
 
 %% Plot expected versus measured moment arm
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
 
 fig_MA = figure;
 ax1 = gca;

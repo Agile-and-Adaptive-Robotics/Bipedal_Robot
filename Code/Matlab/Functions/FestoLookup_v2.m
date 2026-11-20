@@ -198,7 +198,7 @@ load allData.mat Xf Yf Zf
 Datmat = [Xf, Yf, Zf];
 A = sortrows(Datmat,[1 2 3],'ascend');
 D = cell(length(Yp),1);
-buff = 1;                 %buffer around P value (in kPa) to incorporate in plot
+buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
 for i = 1:length(Yp)
     D{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
@@ -208,7 +208,7 @@ load data20mm_sorted.mat Ax Ay Az
 Datmat = [Ax, Ay, Az];
 A = sortrows(Datmat,[1 2 3],'ascend');
 E = cell(length(Yp),1);
-buff = 5;                 %buffer around P value (in kPa) to incorporate in plot
+buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
 for i = 1:length(Yp)
     E{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
@@ -239,67 +239,219 @@ Emin = [E10min, E20min, E40min];
 Pmax = [P10max, Pmax, Pmax];
 Zmax = [z10max, z20max, z40max];
 
+%% 2 Figures 
+%% Figures (separate for 10 mm and 20 mm)
 
-%% Figure (for 10 mm & 20 mm)
+% Accessible colors (same mapping as before)
+c = cell(8,1);
+c{1} = '#FFD700'; % gold
+c{2} = '#FFB14E'; % orange
+c{3} = '#FA8775'; % light orange
+c{4} = '#EA5F94'; % pink
+c{5} = '#CD34B5'; % magenta
+c{6} = '#9D02D7'; % magenta 2
+c{7} = '#0000FF'; % indigo
+
+% Data order = 200,300,400,500,620 → match colors to that
+clr = {c{2}, c{3}, c{4}, c{6}, c{7}};  % 200→620
+sz = 90;        %Marker size
+lw = 3;         %Line width size
+ft = 12;        %Font size
+pLabels = [200 300 400 500 620];
+
+%Trim D and E so we don't have a bunch on no-information points near zero
+D2 = trimTail(D,1);     %Case one, don't truncate 400 kPa until relative contraction greater than 0.6
+E2 = trimTail(E,0);     %Case zero, normal truncation
+
+
+for k = 1:2
 
     figure
-    tileLabels = {'(A)', '(B)', '(C)', '(D)'};
-    % Annotation positions [x, y] in normalized figure units
-    xAnn = [0, 0];
-    yAnn = [0.94, 0.45];
-    for k = 1: 2
-    a(k) = subplot(2,1,k);
-    xlabel('Contraction, \epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
-    strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
-    title(strTit,'interpreter','tex')
+    % set(gcf, 'Units', 'centimeters', 'Position', [2 2 14.0 9.0]);
+
     hold on
-    for i = 1:length(Xc{k})
-        for j = 1: length(dstr)
-            str{i,j} = sprintf('P=%.0f kPa, %s',Ygr{k}(i)*620,dstr{j});
-        end
-        sc{i,k} = plot(Xc{k}{i}/Emax(k),Zc{k}{i}/Zmax(k),'--', 'DisplayName',str{i,1});
-        sc{i,k}.SeriesIndex = i;
-        pl{i,k} = plot(Xgr{k}(i,:),FestoLookup{k}(i,:),'DisplayName',str{i,2});
-        pl{i,k}.SeriesIndex = i;
-        if k == 1
-            if ~isempty(D{i})
-                x = D{i}(:,1);
-                z = D{i}(:,3);
-                sk{i,k} = scatter(x,z,120,'.','DisplayName',str{i,3});
-            else
-                sk{i,k} = scatter([],[],'.','DisplayName','');
-            end
-            sk{i,k}.SeriesIndex = i; 
-        elseif k==2
-            if ~isempty(E{i})
-                x = E{i}(:,1);
-                z = E{i}(:,3);
-                sk{i,k} = scatter(x,z,120,'.','DisplayName',str{i,3});
-            else
-                sk{i,k} = scatter([],[],'.','DisplayName','');
-            end
-            sk{i,k}.SeriesIndex = i; 
+
+    % Restore original titles
+    strTit = sprintf('\\phi%s mm',Dia(k));
+    title(strTit,'interpreter','tex')
+
+    % Handles
+    sc = gobjects(5,1); % festo
+    pl = gobjects(5,1); % model
+    sk = gobjects(5,1); % data
+
+    for i = 1:5
+
+        % festo
+        sc(i) = plot(Xc{k}{i}/Emax(k), Zc{k}{i}/Zmax(k), '--', ...
+            'Color', clr{i}, 'LineWidth', lw);
+
+        % model
+        pl(i) = plot(Xgr{k}(i,:), FestoLookup{k}(i,:), '-', ...
+            'Color', clr{i}, 'LineWidth', lw);
+
+        % data
+        if k == 1 && ~isempty(D2{i})
+            sk(i) = scatter(D2{i}(:,1), D2{i}(:,3), sz, hex2rgb(clr{i}),'filled');
+        elseif k == 2 && ~isempty(E2{i})
+            sk(i) = scatter(E2{i}(:,1), E2{i}(:,3), sz, hex2rgb(clr{i}),'filled');
         else
+            sk(i) = scatter([],[],sz, hex2rgb(clr{i}),'filled');
         end
-    end
-    a(k).XLim = [0 1];
-    a(k).YLim = [0 max(max(Ygr{2}))];
-    set(gca, 'FontSize', 10, 'FontWeight', 'bold', 'FontName', 'Arial', ...
-        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    lgd(k) = legend;
-    lgd(k).Location = 'northeast';
-    lgd(k).Orientation = 'horizontal';
-    lgd(k).NumColumns = 3;
-    title(lgd(k),'P value and data source')
 
+    end
+
+    xlabel('Contraction,  \epsilon^*','interpreter','tex','FontWeight','bold','FontSize',ft)
+    ylabel('Force,  F^*','interpreter','tex','FontWeight','bold','FontSize',ft)
+
+    xlim([0 1])
+    ylim([0 1])
+
+    set(gca, ...
+        'FontName','Palatino Linotype',...
+        'FontSize',ft, ...
+        'FontWeight','bold', ...
+        'LineWidth',lw, ...
+        'XMinorTick','on', ...
+        'YMinorTick','on', ...
+        'TickLength',[0.02 0.05]);
+
+    % ---- LEGEND  ----
+    % Columns: festo | model | data
+     leg = legend([ ...
+        sc(5) sc(4) sc(3) sc(2) sc(1) ...
+        pl(5) pl(4) pl(3) pl(2) pl(1) ...
+        sk(5) sk(4) sk(3) sk(2) sk(1)], ...
+        { ...
+        'P=620 kPa, Festo', ...
+        'P=500 kPa, Festo', ...
+        'P=400 kPa, Festo', ...
+        'P=300 kPa, Festo', ...
+        'P=200 kPa, Festo', ...
+        'Model', ...
+        'Model', ...
+        'Model', ...
+        'Model', ...
+        'Model', ...
+        'Data', ...
+        'Data', ...
+        'Data', ...
+        'Data', ...
+        'Data'}, ...
+        'NumColumns', 3, ...
+        'Location', 'northeast');
+
+    set(leg, ...
+        'FontWeight','bold', ...
+        'FontSize',10, ...
+        'LineWidth',1);
+    
     hold off
-    
-    end
-    
-    for j = 1:2
-    annotation(gcf, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 10, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-    end
-    
+
+end
 
 
+%% Figure (for 10 mm & 20 mm)
+% 
+%     figure
+%     tileLabels = {'(A)', '(B)', '(C)', '(D)'};
+%     % Annotation positions [x, y] in normalized figure units
+%     xAnn = [0, 0];
+%     yAnn = [0.94, 0.45];
+%     for k = 1:2
+%     a(k) = subplot(2,1,k);
+%     xlabel('Contraction, \epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
+%     strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
+%     title(strTit,'interpreter','tex')
+%     hold on
+%     for i = 1:length(Xc{k})
+%         for j = 1: length(dstr)
+%             str{i,j} = sprintf('P=%.0f kPa, %s',Ygr{k}(i)*620,dstr{j});
+%         end
+%         sc{i,k} = plot(Xc{k}{i}/Emax(k),Zc{k}{i}/Zmax(k),'--', 'DisplayName',str{i,1});
+%         sc{i,k}.SeriesIndex = i;
+%         pl{i,k} = plot(Xgr{k}(i,:),FestoLookup{k}(i,:),'DisplayName',str{i,2});
+%         pl{i,k}.SeriesIndex = i;
+%         if k == 1
+%             if ~isempty(D{i})
+%                 x = D{i}(:,1);
+%                 z = D{i}(:,3);
+%                 sk{i,k} = scatter(x,z,120,'.','DisplayName',str{i,3});
+%             else
+%                 sk{i,k} = scatter([],[],'.','DisplayName','');
+%             end
+%             sk{i,k}.SeriesIndex = i; 
+%         elseif k==2
+%             if ~isempty(E{i})
+%                 x = E{i}(:,1);
+%                 z = E{i}(:,3);
+%                 sk{i,k} = scatter(x,z,120,'.','DisplayName',str{i,3});
+%             else
+%                 sk{i,k} = scatter([],[],'.','DisplayName','');
+%             end
+%             sk{i,k}.SeriesIndex = i; 
+%         else
+%         end
+%     end
+%     a(k).XLim = [0 1];
+%     a(k).YLim = [0 max(max(Ygr{2}))];
+%     set(gca, 'FontSize', 10, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+%         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+%     lgd(k) = legend;
+%     lgd(k).Location = 'northeast';
+%     lgd(k).Orientation = 'horizontal';
+%     lgd(k).NumColumns = 3;
+%     title(lgd(k),'P value and data source')
+% 
+%     hold off
+%     
+%     end
+%     
+%     for j = 1:2
+%     annotation(gcf, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
+%         'FontSize', 10, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+%     end
+%     
+
+function C2 = trimTail(C,mode)
+    tol_x = 0.02;
+    tol_y = 0.05;
+
+    C2 = cell(size(C));
+
+    for i = 1:numel(C)
+        M = C{i};
+
+        x = M(:,1);
+        y = M(:,3);
+
+        R = size(M,1);   % default: keep all rows
+
+        for u = 3:size(M,1)
+            sameX = abs(x(u-1) - x(u-2)) < tol_x;
+            nearZero = max(abs(y(u-2:u-1))) < tol_y;
+
+            allowTruncation = true;
+
+            % Special rule: only for D{3} when mode = 1
+            if mode == 1 && i == 3
+                if x(u-1) < 0.6
+                    allowTruncation = false;
+                end
+            elseif mode == 0 && i==3
+                if y(u-1) == 0
+                    allowTruncation = true;
+                    sameX = true;
+                    nearZero = true;
+                end
+            end
+
+            if sameX && nearZero && allowTruncation
+                R = u - 1;
+                break
+            end
+        end
+
+        C2{i} = M(1:R,:);
+    end
+end

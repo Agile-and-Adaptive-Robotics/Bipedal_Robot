@@ -6,7 +6,7 @@ close all;
 
 load KneeExtPin_10mm_all.mat
 restingLength = 0.480;      %resting length, m
-kmax = 0.405;      %Length at maximum contraction, m
+kmax = 0.398;      %Length at maximum contraction, m
 Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, restingLength, kmax, tendon, fitting, pres);
 Theoretical = Vas_Pam_48cm.Torque(:,3);
 
@@ -126,7 +126,7 @@ TorqueHandX = cell2mat(TorqueHandX);
 
 %% Plot expected versus measured moment arm
 Ma = Vas_Pam_48cm.MomentArm;                 %Calculated moment arm
-G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
 
 fig_MA = figure;
 ax1 = gca;

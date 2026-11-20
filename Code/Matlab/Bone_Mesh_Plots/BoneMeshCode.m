@@ -8,9 +8,9 @@ clc
 clear 
 close all
 
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 % addpath('Open_Sim_Bone_Geometry')
 
 %Spine
@@ -22,7 +22,7 @@ figure
 hold on
 plot3(Spine(:, 1), Spine(:, 2), Spine(:, 3), '.')
 plot3(0, 0, 0, 'o', 'color', 'r')
-axis([-0.5 0.5 -0.5 0.5 -0.5 0.5])
+axis([])
 hold off
 
 %Sacrum
@@ -34,7 +34,7 @@ figure
 hold on
 plot3(Sacrum(:, 1), Sacrum(:, 2), Sacrum(:, 3), '.')
 plot3(0, 0, 0, 'o', 'color', 'r')
-axis([-0.5 0.5 -0.5 0.5 -0.5 0.5])
+axis([])
 hold off
 
 %Pelvis
@@ -46,7 +46,7 @@ figure
 hold on
 plot3(Pelvis(:, 1), Pelvis(:, 2), Pelvis(:, 3), '.', 'color', 'b')
 plot3(0, 0, 0, 'o', 'color', 'r')
-axis([-0.5 0.5 -0.5 0.5 -0.5 0.5])
+axis([])
 hold off
 
 %Tibia
@@ -58,7 +58,7 @@ figure
 hold on
 plot3(Tibia(:, 1), Tibia(:, 2), Tibia(:, 3), '.')
 plot3(0, 0, 0, 'o','color',  'r')
-axis([-0.5 0.5 -0.5 0.5 -0.5 0.5])
+axis([])
 hold off
 
 %Femur
@@ -70,7 +70,7 @@ figure
 hold on
 plot3(Femur(:, 1), Femur(:, 2), Femur(:, 3), '.')
 plot3(0, 0, 0, 'o', 'color', 'r')
-axis([-0.5 0.5 -0.5 0.5 -0.5 0.5])
+axis([])
 hold off
 
 %Talus
@@ -82,7 +82,7 @@ figure
 hold on
 plot3(Talus(:, 1), Talus(:, 2), Talus(:, 3), '.')
 plot3(0, 0, 0, 'o', 'color', 'r')
-axis([-0.5 0.5 -0.5 0.5 -0.5 0.5])
+axis([])
 hold off
 
 %Calcaneus
@@ -94,7 +94,7 @@ figure
 hold on
 plot3(Calcaneus(:, 1), Calcaneus(:, 2), Calcaneus(:, 3), '.')
 plot3(0, 0, 0, 'o', 'color', 'r')
-axis([-0.5 0.5 -0.5 0.5 -0.5 0.5])
+axis([])
 hold off
 
 %Toes
