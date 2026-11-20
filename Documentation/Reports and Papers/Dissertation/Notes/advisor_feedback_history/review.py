@@ -35,7 +35,7 @@ QUESTIONS = {
     "definitions_and_terminology": "At its first appearance in the printed chapter, can the reader say what a named model, controller, program, or signal is and what it does? For a variant, what changes, and which body does it control?",
     "narrative_structure": "Why does this paragraph follow the previous one?",
     "concision_and_repetition": "Does a repeated statement supply a new comparison or interpretation?",
-    "scope_and_uncertainty": "Do the preparation, support, condition, and measurement justify the inference?",
+    "scope_and_uncertainty": "Do the experimental conditions, support, and measurements justify the inference?",
 }
 STOP = set("a an and are as at be been by can did do does for from had has have how i in into is it its may of on one or our that the their these they this to was we were what when where which who will with would".split())
 MONTHS = {name.lower(): i for i, name in enumerate(calendar.month_abbr) if i}
@@ -152,6 +152,67 @@ def refers_to_paragraph(signal, paragraph):
     return False
 
 
+RESULTS_HEADING = re.compile(
+    r"^\s*\\(section|subsection|subsubsection)\*?(?:\[[^\]]*\])?"
+    r"\{((?:[^{}]|\{[^{}]*\})+)\}"
+)
+RESULTS_EXAMPLES = (
+    "OCT-C-6ad9065fdd1a807d276b7091", "OCT-C-6ad906ffe5979f005bd434a3",
+    "OCT-C-9a0c8baf844aafdf", "INTRO-T36",
+)
+COUNTED_ITEMS = re.compile(
+    r"\b\d[\d,]*\s+(?:records?|papers?|models?|trials?|samples?|"
+    r"measurements?|predictions?|participants?)\b", re.IGNORECASE
+)
+
+
+def review_results_openings(path, units):
+    """Attach local reading prompts to the first prose under each Results heading."""
+    headings = []
+    results_level = None
+    for n, line in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), 1):
+        match = RESULTS_HEADING.match(line)
+        if not match:
+            continue
+        level = ("section", "subsection", "subsubsection").index(match[1])
+        if results_level is not None and level <= results_level:
+            results_level = None
+        if re.search(r"\bresults?\b", match[2], re.IGNORECASE):
+            results_level = level
+        headings.append((n, match[2], results_level is not None))
+    openings = []
+    for i, (start, heading, in_results) in enumerate(headings):
+        if not in_results:
+            continue
+        end = headings[i + 1][0] if i + 1 < len(headings) else float("inf")
+        lead = next((u for u in units if start < u["start"] < end and u["kind"] == "prose"), None)
+        if not lead:
+            openings.append({"file": path.name, "heading": heading, "start": start,
+                             "source": "", "cues": ["no opening prose before the next heading"]})
+            continue
+        plain = re.sub(r"\\(?:emph|textbf|textit)\{([^{}]*)\}", r"\1", lead["source"])
+        sentences = re.split(r"(?<=[.?!])\s+", plain.strip())
+        first_statement = next((s for s in sentences if not s.endswith("?")), "")
+        count_lead = COUNTED_ITEMS.search(first_statement)
+        inventory = len(COUNTED_ITEMS.findall(" ".join(sentences[:3]))) >= 2
+        describes_inventory = re.search(r"\b(?:contain(?:s|ed)?|consist(?:s|ed)? of|"
+                                        r"compris(?:es|ed)|includ(?:es|ed)|collected|recorded)\b",
+                                        first_statement, re.IGNORECASE)
+        cues = []
+        if count_lead and inventory and describes_inventory:
+            cues.append("inventory leads the result")
+        if re.search(r"^(?:open|click|choose|select|navigate)\b|"
+                     r"\bby (?:opening|clicking|choosing|selecting)\b", first_statement,
+                     re.IGNORECASE):
+            cues.append("operating instructions lead the result")
+        if re.search(r"\bresults? (?:first |then )?(?:compare|present|describe|summarize)s?\b",
+                     first_statement, re.IGNORECASE):
+            cues.append("roadmap leads the result")
+        openings.append({"file": path.name, "heading": heading, "start": lead["start"],
+                         "source": lead["source"], "cues": cues})
+    return openings
+
+
 def recurring_questions(rows):
     """Give the semantic reviewer direct examples across dates, including distant topics."""
     result = {}
@@ -249,6 +310,20 @@ def passages(path):
             in_table = False
 
 
+def author_ethics_lines(path):
+    """Ben reserves his Chapter 2 ethical argument for his own editorial judgment."""
+    if path.name != "15-background.tex":
+        return range(0)
+    lines = path.read_text(encoding="utf-8-sig").splitlines()
+    start = next((i for i, line in enumerate(lines, 1)
+                  if r"\label{sec:bg_ethics}" in line.split("%", 1)[0]), None)
+    if start is None:
+        return range(0)
+    end = next((i for i, line in enumerate(lines[start:], start + 1)
+                if re.match(r"^\s*\\(?:chapter|section)\*?(?:\[|\{)", line)), len(lines) + 1)
+    return range(start, end)
+
+
 def make_review(paths, rows, decisions=None):
     index = EvidenceIndex(rows)
     saved = defaultdict(list)
@@ -257,13 +332,24 @@ def make_review(paths, rows, decisions=None):
     prior_ids = set((decisions or {}).get("advisor_event_ids_at_review", ()))
     unseen = [r for r in rows if prior_ids and r["id"] not in prior_ids and r["score"] < 0]
     outputs, found, reopened, newly_anchored = [], set(), [], set()
+    section_openings = []
     for path in paths:
+        chapter_start = len(outputs)
+        author_lines = author_ethics_lines(path)
         for start, end, kind, content in passages(path):
             sha = digest(content)
             case = next((c for c in saved[path.name] if sha == c["after_sha256"] and c["id"] not in found), None)
             output = {"file": path.name, "start": start, "end": end, "kind": kind, "source": content,
-                      "sha256": sha, "historical_examples": index.nearest(content),
+                      "sha256": sha, "historical_examples": [],
                       "status": "unlabeled", "local_judgment": None}
+            if start in author_lines:
+                output["status"] = "author-reserved ethical argument"
+                if case:
+                    found.add(case["id"])
+                    output["author_wording_record"] = case["id"]
+                outputs.append(output)
+                continue
+            output["historical_examples"] = index.nearest(content)
             if cues := ownership_cues(content):
                 output["ownership_phrases_for_contextual_reading"] = cues
             if case:
@@ -276,6 +362,7 @@ def make_review(paths, rows, decisions=None):
                     output.update(status="reopened by previously unseen advisor feedback",
                                   new_advisor_signals=later, local_judgment=None, prior_judgment=case["id"])
             outputs.append(output)
+        section_openings.extend(review_results_openings(path, outputs[chapter_start:]))
     assessed_files = {p.name for p in paths}
     stale = [c["id"] for c in (decisions or {}).get("passages", [])
              if c["file"] in assessed_files and c["id"] not in found]
@@ -285,6 +372,12 @@ def make_review(paths, rows, decisions=None):
     return {
         "method": "Sublinear TF-IDF with word unigrams/bigrams and cosine similarity ranks prior advisor examples. A language-model reader makes the separate semantic judgment in the dated passage record. Similarity, silence, and a local score of 3 do not establish advisor acceptance.",
         "questions_for_every_pass": QUESTIONS,
+        "results_opening_review": {
+            "reader_question": "What did the study establish or the tool make possible, and why does it matter? Read the lead and its example together. Counts and navigation can support that answer.",
+            "basis": [{"id": r["id"], "type": r["type"], "comment": r.get("comment"),
+                       "edit": r.get("edit")} for r in rows if r["id"] in RESULTS_EXAMPLES],
+            "openings": section_openings,
+        },
         "evidence_by_recurring_reader_question":recurring_questions(rows),
         "teaching_examples_from_prior_revisions":read_json(HERE/"EDITORIAL_EXAMPLES.json")["examples"],
         "advisor_signal_totals_by_event_month":
@@ -302,6 +395,8 @@ def main():
     parser.add_argument("--before", help="Use only historical signals strictly earlier than this ISO event date")
     parser.add_argument("--decisions", type=Path, help="Verify a dated semantic review against the current text")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--check-results-openings", action="store_true",
+                        help="Also return a nonzero status when a Results opening needs contextual review")
     args = parser.parse_args()
     rows = [r for r in signals() if not args.before or r["date"] < args.before]
     if not rows:
@@ -312,7 +407,12 @@ def main():
     print(f"{len(rows)} advisor signals; {len(result['passages'])} passage/caption/table units; "
           f"{len(result['saved_judgments_stale_or_absent'])} saved judgments missing or stale; "
           f"{len(result['reopened_judgments'])} reopened.")
-    if result["saved_judgments_stale_or_absent"] or result["reopened_judgments"]:
+    flagged = [p for p in result["results_opening_review"]["openings"] if p["cues"]]
+    print(f"{len(flagged)} Results openings flagged for contextual reading.")
+    for p in flagged:
+        print(f"  {p['file']}:{p['start']} ({p['heading']}): {', '.join(p['cues'])}")
+    if (result["saved_judgments_stale_or_absent"] or result["reopened_judgments"]
+            or (args.check_results_openings and flagged)):
         raise SystemExit(1)
 
 

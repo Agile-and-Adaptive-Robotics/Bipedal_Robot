@@ -90,7 +90,7 @@ def design():
     box(pg,(10,11,135,54),"Human benchmark","Torque and range\nof motion (Ch. 2)")
     box(pg,(211,11,150,54),"Select actuators","Diameter, resting length,\nand actuator count")
     box(pg,(10,105,135,54),"BPA force model","Actuator forces\n(Ch. 3)")
-    box(pg,(211,105,150,54),"Design routes","Corrected torque model\n(Ch. 4)")
+    box(pg,(211,105,150,54),"Design routes","Torque model with\ndesign factors (Ch. 4)")
     box(pg,(10,210,145,51),"Refine design","Redesign routes or\nreselect actuators")
     box(pg,(349,206,109,59),"Closed-loop\nverification","(Ch. 6)",future=True)
     box(pg,(343,290,115,27),"Commit to hardware",future=True,size=10.9)
@@ -111,7 +111,7 @@ def design():
     line(pg,[(181,125),(181,38)])
     pg.draw_circle((181,38),2.0,color=None,fill=INK)
     save(doc,"70-overall","design_workflow",
-         "Human torque and motion targets determine actuator selection. The BPA force model and actuator selection inform routing. A failed torque or motion check returns to redesign and actuator selection. Passing leads to proposed closed-loop verification and a hardware commitment. The dashed boxes identify the last two steps.")
+         "Human torque and motion targets determine actuator selection. Actuator forces and the torque model with its design factors guide route selection. A failed torque or motion check returns to redesign and actuator selection. Passing leads to proposed closed-loop verification and a hardware commitment. The dashed boxes identify the last two steps.")
 
 
 def hierarchy():

@@ -7,6 +7,46 @@ import review
 
 
 class HistoryReviewTests(unittest.TestCase):
+    def test_advisor_style_review_resumes_after_the_author_reserved_ethics_section(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "15-background.tex"
+            path.write_text(
+                "\\section{Methods}\n\nMeasure the movement.\n\n"
+                "\\section{Ethics}\\label{sec:bg_ethics}\n\nThe model replaces the animal experiment.\n\n"
+                "\\section{Next section}\n\nMeasure the force.\n", encoding="utf-8")
+            units = review.make_review([path], review.signals())["passages"]
+        self.assertEqual([unit["status"] for unit in units],
+                         ["unlabeled", "author-reserved ethical argument", "unlabeled"])
+        self.assertEqual(units[1]["historical_examples"], [])
+        self.assertIsNone(units[1]["local_judgment"])
+
+    def test_results_openings_flag_inventory_and_instructions_but_keep_quantitative_findings(self):
+        text = r"""\section{Results}
+
+The completed Explorer contains 1,393 records. Its 943 \emph{Papers} are bibliographic entries.
+
+\subsection{From a Pathway Record to a Controller Rule}
+
+Does input from one ankle extensor reinforce activity in another? A reader can repeat the lookup by opening the file.
+
+\subsection{Torque comparison}
+
+The measured torque exceeded the target at 15 configurations. The measurements give the margin for redesign.
+
+\section{Methods}
+
+Open the file and choose the pathway.
+"""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)/"chapter.tex"
+            path.write_text(text, encoding="utf-8")
+            tested = review.make_review([path], review.signals())["results_opening_review"]
+        self.assertEqual([p["cues"] for p in tested["openings"]],
+                         [["inventory leads the result"], ["operating instructions lead the result"], []])
+        self.assertEqual({r["type"] for r in tested["basis"]}, {"comment", "tracked_edit"})
+        tracked = next(r for r in tested["basis"] if r["id"] == "INTRO-T36")
+        self.assertIn("sort and understand", tracked["edit"]["proposed"])
+
     def test_historical_coverage_and_newest_dated_deductions(self):
         rows = review.signals()
         self.assertEqual(len(rows), len({r["id"] for r in rows}))

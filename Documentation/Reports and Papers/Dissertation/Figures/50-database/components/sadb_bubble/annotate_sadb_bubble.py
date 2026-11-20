@@ -35,10 +35,10 @@ def build(output):
     blue, white = (0.05, 0.24, 0.43), (1, 1, 1)
     for letter, title, rect, points in CALLOUTS:
         page.draw_rect(pymupdf.Rect(rect), color=None, fill=white, overlay=True)
-        page.insert_text((rect[0] + 3, rect[1] + 18), letter,
+        page.insert_text((rect[0] + 3, rect[1] + 18), f"({letter})",
                          fontsize=17, fontname="hebo", color=blue)
         spare = page.insert_textbox(
-            pymupdf.Rect(rect[0] + 23, rect[1] + 3, rect[2] - 3, rect[3]),
+            pymupdf.Rect(rect[0] + 34, rect[1] + 3, rect[2] - 3, rect[3]),
             title, fontsize=18, fontname="helv", color=(0, 0, 0))
         assert spare >= 0, (letter, spare)
         leader = page.new_shape()

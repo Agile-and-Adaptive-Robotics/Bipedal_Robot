@@ -1,0 +1,333 @@
+--- prior/figs/30-torque/pinned_extensor_torque.alt.txt
++++ revised/figs/30-torque/pinned_extensor_torque.alt.txt
+@@ -1 +1 @@
+-Six plots show pinned-knee extensor torque versus knee angle. All panels span −135° to +50° and −2 to 25 N·m. A horizontal line marks zero torque. The top row shows training tests with resting lengths of 43.6 cm, 43.2 cm with a 22 mm tendon, and 45.7 cm. The bottom row shows validation tests at 40.0 cm, 40.0 cm with a 40 mm tendon, and 46.5 cm. Gold triangles mark the hybrid calculation, blue circles mark measured torque, a dashed line shows the unoptimized prediction, and a solid magenta line shows the optimized prediction. In panel C, the measurements extend to −125° and include −0.0573 N·m at +2°.
++Pinned-knee extensor torque against knee angle. The axes extend to +41.5 degrees and 20 N m. In panel D the measured torque and both model curves reach zero. The hybrid calculation remains above zero there. Gold and blue circles show the hybrid calculation and measurements. The dashed salmon curve is the unoptimized model and the solid magenta curve is the optimized model. Panel C contains the legend. The upper row shows training tests and the lower row shows validation tests.
+--- prior/chapters/96-AppendixE.tex
++++ revised/chapters/96-AppendixE.tex
+@@ -6,11 +6,31 @@
+ \section{Record Sets and Coverage}
+ 
+-The SADb Explorer export contains 1,393 records across five tables. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. At the time of curation the Airtable working base had a 1,000-record limit. I retained 957 records there, comprising 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The application preserves the other 436 records as archived entries. They comprise 382 Papers and 54 records from the other tables whose paper links had been removed. The Table view includes all five record types. The Pivot and citation views use the Papers category.
++The SADb Explorer app contains 1,393 records across five tables. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. At the time of curation the Airtable working base had a 1,000-record limit. I retained 957 records there, comprising 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The app marks the other 436 records as archived. They can still be read in the app after removal from Airtable. They comprise 382 Papers and 54 records from the other tables whose paper links had been removed. The Table view includes all five record types. The Pivot and citation views use the Papers category.
+ 
+-Coverage of the application's Papers category is reported in Chapter~\ref{ch:database}. The following counts describe the retained maintenance subset and use a different denominator.
++Table~\ref{tab:sadb_field_coverage} compares the searchable fields in the full app with those retained in Airtable. One paper can contribute to several rows. An empty field means that the curator did not record that classification.
+ 
+-Of the 561 retained Papers, 523 have curation notes, 426 have an animal or human study tag, 240 have an animal-study assessment, and 118 link to at least one named feedback pathway. Afferent classes are recorded for 86 Papers, robot or simulation translation notes for 258, and a DOI for 550. A paper can contribute to several of these counts.
++\begin{table}[htbp]
++\centering
++\caption{Paper records with an entry in each field of the full SADb Explorer app and the Airtable working collection.}
++\label{tab:sadb_field_coverage}
++\begin{tabular}{@{}lrr@{}}
++\toprule
++\textbf{Field} & \textbf{Full app (943)} & \textbf{Airtable (561)} \\
++\midrule
++Curation note & 833 & 523 \\
++Animal or human study tag & 606 & 426 \\
++Assessment of a possible animal study & 316 & 240 \\
++Link to a named feedback pathway & 119 & 118 \\
++Afferent class & 95 & 86 \\
++Proposed robot or simulation application & 363 & 258 \\
++Digital object identifier & 892 & 550 \\
++PDF attachment recorded in Airtable & 318 & 231 \\
++\bottomrule
++\end{tabular}
++\end{table}
+ 
+ For a single paper, use Table to check the record type and archive status. For a group of papers, start in Pivot and open a cell to read the underlying records. Tagged groups overlap. For example, a Paper tagged with both Ia and Ib can appear in both afferent rows for the same animal. Adding those rows would count that Paper twice. The citation neighborhood in Figure~\ref{fig:sadb_clusters} answers a separate question about which papers cite one another.
++
++The \emph{Ib disynaptic excitation} pathway links six papers. The collection also links 12 papers to fictive locomotion without sensory feedback and one paper apiece to the somatosensory, vestibular, and visual contributions to postural control. In the citation map, 730 papers cite another paper in the collection. Counting the papers they cite brings the connected set to 816. The 18 named citation communities group papers by their citation links.
+ 
+ \section{Afferent Classes and Linked Pathways}
+--- prior/chapters/70-overall.tex
++++ revised/chapters/70-overall.tex
+@@ -6,5 +6,5 @@
+ Designing a robot knee for human-scale torque sets two different tests. With the joint fixed, the actuator and its route must transmit the required moment to the shank. During a step, the controller must recruit that actuator while the leg is in a position to accept or release load. A knee can meet the first requirement and still fail the second. The same distinction matters when using a robot to study biology. A change in foot loading after a sensory pathway is disabled has an interpretable cause only when the actuator, route, and external support are known.
+ 
+-I addressed these questions at four points in the design process. The actuator tests show how much tension a BPA of a given resting length can produce at a specified pressure and contraction. At the knee, that tension acts through a moment arm. The isometric tests showed how deflection under load changes the torque available from a proposed route. For controller design, I developed the Sensory Afferent Database (SADb) so a researcher can find the experiment behind a proposed feedback connection. The neuromechanical tools then let the researcher change that connection in a model and measure its effect on movement. Figure~\ref{fig:design_workflow} shows where each result enters a new design.
++I addressed these questions at four points in the design process. The actuator tests show how much tension a BPA of a given resting length can produce at a specified pressure and contraction. At the knee, that tension acts through a moment arm. The isometric tests showed how deflection under load changes the torque available from a proposed route. For controller design, I developed the Sensory Afferent Database (SADb) so a researcher can find the experiment behind a proposed feedback connection. The neuromechanical tools then let the researcher change that connection in a model and measure its effect on movement. Figure~\ref{fig:design_workflow} traces actuator sizing and route selection. Figure~\ref{fig:discussion_neuromechanical_workflow} shows how to test a change in a sensory pathway or an actuator route against the same baseline.
+ 
+ \begin{figure}[!htbp]
+@@ -25,7 +25,7 @@
+ For a new actuator, free contraction at the reference pressure, $\varepsilon_{620}$, still has to be measured. The \qty{20}{\mm} specimens came from one batch. Testing several resting lengths within each batch and repeating the series across the \qtylist{10;20;40}{\mm} sizes would distinguish a length trend from manufacturing variation.
+ 
+-One explanation for the resting-length effect concerns the shape of the pressurized tube. Near each end fitting the outer diameter remains close to its uninflated value. It increases through a transition region to the nominal inflated diameter in the central span (Figure~\ref{fig:bpa_construction}A). If the transition occupies a similar axial length at a given pressure, a shorter actuator has a smaller fraction of its wall operating as a uniform cylinder. The physical end cap raises a different question. Measuring relative displacement across Onyx and aluminum caps under matched tensile loads, with the actuator pressurized and unpressurized, would isolate the contribution of cap and attachment compliance. An axial profile of tube diameter is needed to test the transition-region explanation.
++One explanation for the resting-length effect concerns the shape of the pressurized tube. Near each end fitting the outer diameter remains close to its uninflated value. It increases through a transition region to the nominal inflated diameter in the central span (Figure~\ref{fig:bpa_construction}\textbf{(A)}). If the transition occupies a similar axial length at a given pressure, a shorter actuator has a smaller fraction of its wall operating as a uniform cylinder. The physical end cap raises a different question. Measuring relative displacement across Onyx and aluminum caps under matched tensile loads, with the actuator pressurized and unpressurized, would isolate the contribution of cap and attachment compliance. An axial profile of tube diameter is needed to test the transition-region explanation.
+ 
+-Can deformation near the fittings account for the difference in isometric force between short and long actuators? Future researchers can test this explanation with a geometrically nonlinear finite-element model. Festo describes a pressure-sealing rubber wall reinforced by aramid fabric \citep[p.~2]{festo_2026}. The exploded view in Figure~\ref{fig:bpa_exploded_wall}C illustrates how the wall, reinforcement, and end fitting can be represented in the model. The model can represent the wall as a nearly incompressible hyperelastic material and the braid as two embedded families of tension-only truss elements following the measured fiber angles. A curved membrane can represent the taut central span when bending is negligible. A thin shell adds bending where curvature varies over distances large compared with wall thickness. A thick shell can represent transverse shear in a shorter transition, while mixed displacement--pressure solids through the thickness are appropriate where the fitting compresses the rubber or produces local contact stress. A flat plate would discard the circumferential load path. Researchers can embed the fibers where they are bonded to the rubber and use measured frictional contact at a mechanically clamped interface that can slip. Sectioning a specimen and marking the wall relative to the fitting would distinguish bonded regions from sliding surfaces. Pressure would follow the deforming inner wall, with the closed-end pressure resultant included once, as the tube expands and the fiber angles change.
++Can deformation near the fittings account for the difference in isometric force between short and long actuators? Future researchers can test this explanation with a geometrically nonlinear finite-element model. Festo identifies the rubber wall as the pressure seal and the aramid fibers as the reinforcement in its DMSP actuators \citep[p.~2]{festo_2026}. A Festo patent shows two concentric layers of fibers wound in opposite directions, with flexible rubber between them \citep[Figs.~2--4]{bergemann_actuating_2002}. The exploded view in Figure~\ref{fig:bpa_exploded_wall}\textbf{(C)} illustrates how these layers can be represented in a finite-element model. The model can represent the wall as a nearly incompressible hyperelastic material and the reinforcement as two embedded families of tension-only truss elements following the measured fiber angles. A curved membrane can represent the taut central span when bending is negligible. A thin shell adds bending where curvature varies over distances large compared with wall thickness. A thick shell can represent transverse shear in a shorter transition, while mixed displacement--pressure solids through the thickness are appropriate where the fitting compresses the rubber or produces local contact stress. A flat plate would discard the circumferential load path. Researchers can embed the fibers where they are bonded to the rubber and use measured frictional contact at a mechanically clamped interface that can slip. Sectioning a specimen and marking the wall relative to the fitting would distinguish bonded regions from sliding surfaces. Pressure would follow the deforming inner wall, with the closed-end pressure resultant included once, as the tube expands and the fiber angles change.
+ 
+ \begin{figure}[H]
+@@ -43,5 +43,5 @@
+ \centering
+ \includegraphics[trim=0 0 0 20bp,clip,width=\textwidth]{bpa_exploded_cutaway.pdf}
+-\caption[]{\textit{Continued.} \textbf{(C)} Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall, two oppositely wound aramid fiber families, and the outer covering. Sectioning a specimen would establish the dimensions, fiber angles, and interfaces for a finite-element model.}
++\caption[]{\textit{Continued.} \textbf{(C)} Exploded longitudinal half-section illustrating the proposed BPA wall model. The fixed fitting constrains the end. The separated surfaces identify the rubber wall and the two oppositely wound aramid fiber families. Sectioning a test specimen would establish whether to include the separate fabric covering shown here and would provide the layer thicknesses, fiber angles, and interfaces for the finite-element model.}
+ \label{fig:bpa_exploded_wall}
+ \end{figure}
+--- prior/chapters/60-sns.tex
++++ revised/chapters/60-sns.tex
+@@ -170,5 +170,5 @@
+ I adapted the four-stage training method of \citet{hunt_development_2017} to the human model. The first stage sets the intrinsic period to approximately twice the target locomotor period. The second tunes the circuit to synchronize with the sensory input. The third fits feedforward motor recruitment, and the fourth refines it with sensory feedback. The recruitment targets came from inverse mechanics applied to reference motion. Agreement with those targets measures how closely the circuit reproduces the estimated muscle activation.
+ 
+-For rhythm and sensory timing, the search scripts use tree-structured Parzen estimation to propose new parameter sets from earlier scores. For the s3k and syn6 controllers, a separate bounded least-squares fit adjusts the connections from pattern-formation channels to motor neurons to match the reference muscle recruitment. Corresponding weights are tied across sides when the fit calls for symmetry. The physical test then loads the saved settings, records the components of its score and the reason the trial ended, and repeats a selected trial in a fresh process before an intervention.
++For rhythm and sensory timing, the search scripts use tree-structured Parzen estimation to propose new parameter sets from earlier scores. For two Gait2392 controllers, a separate bounded least-squares fit adjusts the connections from pattern-formation channels to motor neurons to match the reference muscle recruitment. Each leg has four such channels in the reference controller (s3k) and six in the synergy-based controller (syn6). Corresponding weights are tied across sides when the fit calls for symmetry. The simulation script then loads the saved settings, records the components of its score and the reason the trial ended, and repeats a selected trial in a fresh process before an intervention.
+ 
+ The physical tasks change the loads and sensory information available to a saved controller (Table~\ref{tab:sns_curriculum}). During suspension, \emph{deafferented} means that sensory feedback to the controller is disabled and \emph{afferented} means that it is enabled. Suspension permits a test of recruitment and timing before the feet meet the ground. Standing and supported stepping then test whether the legs bear load and transfer it between the feet.
+--- prior/chapters/50-database.tex
++++ revised/chapters/50-database.tex
+@@ -4,5 +4,5 @@
+ Choosing a sensory connection for a locomotor controller requires more than the name of a receptor. A researcher needs to know which nerve was stimulated, which motor neurons responded, and whether the animal was at rest or moving. Those details are scattered across studies that used different species, preparations, and tasks. I developed the Sensory Afferent Database (SADb) to keep a proposed feedback pathway linked to the experiment that supports it. The collection also links to computational models so that a researcher can compare an experimental finding with the assumptions used to represent it. This work forms part of the AARL's NeuroNex Communication, Coordination, and Control in Nervous Systems (C3NS) effort.
+ 
+-The first version of SADb used Airtable, a website for organizing records in linked tables. The Neuroscience 2023 abstract and poster introduced the collection \citep{bolen_sensory_2023}. The Neuroscience 2024 abstract and poster examined whether artificial intelligence (AI) tools could help expand it \citep{bolen_using_2024}. I later built the SADb Explorer application so researchers could search the collection and follow its sources outside Airtable. The chapter traces one experiment from its classification in the database to a feedback rule a researcher could test in a controller.
++The first version of SADb used Airtable, a website for organizing records in linked tables. The Neuroscience 2023 abstract and poster introduced the collection \citep{bolen_sensory_2023}. The Neuroscience 2024 abstract and poster examined whether artificial intelligence (AI) tools could help expand it \citep{bolen_using_2024}. I later built the SADb Explorer application so researchers could search the collection and follow its sources outside Airtable. The app lets researchers compare the evidence for a pathway across species and tasks.
+ 
+ \section{Curation Methods}\label{sec:sadb_methods}
+@@ -10,11 +10,9 @@
+ I began with papers we had collected at AARL on locomotion and postural balance. We kept the references in Zotero, a reference manager. I exported them to folders on our computers and used local scripts to match duplicate entries by title and digital object identifier (DOI). The starting collection also included records my advisor, Dr. Hunt, had already curated in Airtable. Keyword searches, references in relevant papers, and later papers citing them supplied further candidates. This approach produced a curated reading list. It was never intended as a registered systematic review or an exhaustive list of every potentially relevant publication.
+ 
+-Before building Explorer, I screened the candidate list locally to prepare the records for Airtable (Figure~\ref{fig:sadb_curation_workflow}). I retained studies that measured sensory-afferent activity, investigated feedback in locomotion or posture, or modeled a relevant neural pathway. I set aside unrelated papers and records for which I could not locate the source text, including conference posters identified through ResearchRabbit, a website for finding related publications. For each source I could classify, I recorded the species and preparation, the type of sensory fiber studied, and the pathway and response the authors described. Airtable linked those entries to their papers. Where available, a paper's record also held its PDF.
+-
+-A study I added to SADb shows why the experimental conditions matter. \citet{mccrea_disynaptic_1995} stimulated the plantaris nerve and recorded from motor neurons supplying the medial gastrocnemius, another ankle extensor. They repeated the stimulus at rest and during the extensor phase of a locomotor rhythm evoked by midbrain stimulation. The immobilized cat produced the neural pattern of stepping without moving its legs, a preparation called fictive locomotion (Section~\ref{sec:bg_sensory}). The nerve stimulus recruited group~I sensory fibers, which include muscle spindle Ia fibers and tendon organ Ib fibers. SADb lists both classes and links the paper to \emph{Ib disynaptic inhibition} and \emph{Ib disynaptic excitation}. The curation note states which response occurred in each condition. A separate field records how a researcher might test that observation in a model.
++Before building the app, I screened the candidate list locally to prepare the records for Airtable (Figure~\ref{fig:sadb_curation_workflow}). I retained studies that measured sensory-afferent activity, investigated feedback in locomotion or posture, or modeled a relevant neural pathway. I set aside unrelated papers and records for which I could not locate the source text, including conference posters identified through ResearchRabbit, a website for finding related publications. For each source I could classify, I recorded the species and preparation, the type of sensory fiber studied, and the pathway and response the authors described. Airtable linked those entries to their papers. Where available, a paper's record also held its PDF.
+ 
+ To find later publications, I implemented a monthly search of OpenAlex, an index of scholarly publications and their citations, and Crossref, a registry of publication identifiers and metadata. The search follows selected authors and terms such as ``Ia afferent,'' ``Ib afferent,'' ``muscle spindle,'' ``proprioceptive feedback,'' and ``central pattern generator.'' A local script removes duplicate versions, checks each DOI against Crossref, and saves a shortlist with any source-access limitations for manual review.
+ 
+-I also compared AI-assisted discovery, summarization, and classification with the work I could complete by hand. A set of manually curated models and literature reviews provided the benchmark. I compared summaries and proposed classifications for a broader set of papers with my own reading, judging the tools by accuracy and the time required to obtain a usable entry \citep{bolen_using_2024}.
++Manually curated models and reviews provided a benchmark for testing AI-assisted literature discovery, summarization, and classification. I checked the tools' summaries and classifications against my reading of a broader set of papers, assessing their accuracy and the time required for a usable entry \citep{bolen_using_2024}.
+ 
+ \begin{figure}[htbp]
+@@ -27,20 +25,28 @@
+ \node[curationstep] (d) at (8.2,-1.7) {\mbox{Read retained}\\sources};
+ \node[curationstep] (e) at (4.1,-1.7) {Classify and link\\records in Airtable};
+-\node[curationstep] (f) at (0,-1.7) {Export the collection\\to Explorer};
++\node[curationstep] (f) at (0,-1.7) {Export to the\\SADb Explorer app};
+ \draw[flow] (a)--(b);\draw[flow] (b)--(c);\draw[flow] (c)--(d);\draw[flow] (d)--(e);\draw[flow] (e)--(f);
+ \end{tikzpicture}
+-\caption{How a paper entered SADb. The local literature search supplied candidates. Reading the source established which feedback pathway and experimental conditions to record in Airtable. Explorer made the curated records searchable.}
++\caption{How a paper entered SADb. The local literature search supplied candidates. Reading the source established which feedback pathway and experimental conditions to record in Airtable. The SADb Explorer app made the full collection searchable outside Airtable.}
+ \label{fig:sadb_curation_workflow}
+ \end{figure}
+ 
+-\section{Results: Application and Corpus Coverage}\label{sec:sadb_corpus}
++\subsection{Classifying a Feedback Experiment}
+ 
+-The completed Explorer contains 1,393 records. Its 943 \emph{Papers} are bibliographic entries for individual publications. The 247 \emph{Models} describe published models and link them to their source papers. The 157 \emph{Review Papers} records organize reviews and the publications they cover. The 42 \emph{Feedback pathways} name sensory connections reported in the literature. The 4 \emph{Recorders} identify people who entered pathway information in Airtable. A publication can appear in the bibliography and also have a linked model or review record. These numbers count entries of each kind.
++I added the study by \citet{mccrea_disynaptic_1995} to SADb. The authors stimulated the plantaris nerve and recorded from motor neurons supplying another ankle extensor, the medial gastrocnemius. They compared the response at rest and during extension in immobilized cats. Midbrain stimulation evoked the neural rhythm of stepping without leg movement, a preparation called fictive locomotion (Section~\ref{sec:bg_sensory}). The nerve stimulus recruited group~I afferents from muscle spindles (Ia) and tendon organs (Ib).
+ 
+-The export also preserves records removed from the Airtable working collection. In Explorer, \emph{archived} means that the record remains available there after its removal from Airtable. A missing afferent tag means that the field has no recorded classification. Appendix~\ref{app:sadb_records} gives the counts for the retained and archived sets. Of the 943 paper records, 833 include curation notes, 606 identify the species or human participants, 316 assess a possible animal study, 119 link to a feedback pathway, 95 identify an afferent class, and 363 carry a proposed application to a robot or simulation. A DOI is available for 892 papers. For 318, the export records that a PDF was attached in Airtable.
++I recorded the preparation and response in the \emph{Curation note} and linked the paper to the applicable afferent and pathway records. A separate field, \emph{Robot / sim translation}, describes a test a modeler could run. For this paper, the proposed test applies the same brief input at rest and during extension, then repeats it with the controller's phase switch disabled. The comparison tests whether the switch accounts for the change in the motor pool's response.
+ 
+-\subsection{From a Pathway Record to a Controller Rule}\label{sec:sadb_worked_rule}
++To repeat the lookup, download \href{https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/KneeTestSetup_BenBo_stw/SADb_audit/app/sadb_app.html}{the SADb Explorer app} and open the HTML file in a browser. In \emph{Table}, filter by the pathway \emph{Ib disynaptic excitation}. Select the McCrea record to read both notes and follow its DOI to the experiment (Figure~\ref{fig:sadb_explorer}).
+ 
+-Does input from one ankle extensor reinforce activity in another? A researcher can follow the McCrea example in the standalone website by opening \path{SADb_audit/app/sadb_app.html} from the project repository in a browser. In \emph{Table}, choosing \emph{Ib disynaptic excitation} in the \emph{Pathway} filter retrieves six papers. Selecting the McCrea row opens its record (Figure~\ref{fig:sadb_explorer}). The DOI leads to the original experiment. Two further fields answer different questions. \emph{Curation note} describes the response that the authors measured. \emph{Robot / sim translation} proposes a controller test based on that response.
++\section{Results}\label{sec:sadb_corpus}
++
++The SADb Explorer app lets researchers trace a proposed sensory connection back to its experimental source. The full curated collection is searchable in a browser, including records that no longer fit in the Airtable working base. The \emph{Table} view brings together the experimental conditions, the response, and its source. The \emph{Pivot} table groups papers by classifications such as afferent type and species. The \emph{Bubble map} connects a paper to the studies it cites and to later papers that cite it. A researcher can follow any of these comparisons back to an individual paper.
++
++All three views work offline. The \emph{Search (online)} tab retrieves publications and available abstracts from OpenAlex, flags DOIs already in SADb, and lets a researcher save a candidate. The curator reads the source and decides which findings to record.
++
++\subsection{Evidence for a Phase-Dependent Feedback Rule}\label{sec:sadb_worked_rule}
++
++The study by \citet{mccrea_disynaptic_1995} appears under both \emph{Ib disynaptic inhibition} and \emph{Ib disynaptic excitation} in the app (Figure~\ref{fig:sadb_explorer}). Their Figure~3 shows why. The same plantaris nerve stimulus inhibited a medial gastrocnemius motor neuron at rest and excited it during extension in midbrain-evoked fictive locomotion.
+ 
+ \begin{figure}[H]
+@@ -48,11 +54,9 @@
+ \includegraphics[width=\textwidth]{sadb_table_record_guide.pdf}
+ 
+-\caption[Finding the experimental evidence for a pathway]{Finding \citet{mccrea_disynaptic_1995} in SADb Explorer. \textbf{(A)} Pathway filter. \textbf{(B)} Matching paper. \textbf{(C)} Source DOI and afferent and pathway classifications. \textbf{(D)} Summaries of the record's curation and translation notes show how a measured response informs a proposed controller test.}
++\caption[Finding the experimental evidence for a pathway]{Finding \citet{mccrea_disynaptic_1995} in the SADb Explorer app. \textbf{(A)} Pathway filter. \textbf{(B)} Matching paper. \textbf{(C)} Source DOI and afferent and pathway classifications. \textbf{(D)} Summaries of the record's curation and translation notes show how a measured response informs a proposed controller test.}
+ \label{fig:sadb_explorer}
+ \end{figure}
+ 
+-In Figure~3 of \citet{mccrea_disynaptic_1995}, the same plantaris nerve stimulus inhibited a medial gastrocnemius motor neuron at rest and excited it during extension in midbrain-evoked fictive locomotion. A tendon-stretch test showed that Ia input alone could evoke disynaptic excitation (their Figure~4). The authors included Ib input in their proposed circuit (their Figure~8), but did not stimulate Ib fibers alone.
+-
+-Figure~\ref{fig:sadb_group_i_rule} translates that observation into a controller test. Give the same brief input at rest and during extension. The medial gastrocnemius motor pool should decrease its activity in the first condition and increase it in the second. Repeating the stimulus with the phase switch disabled tests what the switch contributes. The experiment constrains the net sign and timing. A modeler must still choose the interneurons, gains, and delays in a circuit such as those in Figures~\ref{fig:rybak_cpg_circuit} and~\ref{fig:afferent_connectomes}. Appendix~\ref{app:sadb_records} compares the two spinal preparations.
++The response constrains what a controller must reproduce. The same input to the same motor pool must have opposite net effects at rest and during extension (Figure~\ref{fig:sadb_group_i_rule}). A separate tendon-stretch experiment isolated an excitatory contribution from Ia fibers (Figure~4 of \citet{mccrea_disynaptic_1995}). The authors included Ib input in their proposed circuit (their Figure~8), but did not stimulate Ib fibers alone. A modeler must still choose the interneurons, gains, and delays in a circuit such as those in Figures~\ref{fig:rybak_cpg_circuit} and~\ref{fig:afferent_connectomes}. Appendix~\ref{app:sadb_records} compares the midbrain-evoked and acute spinal preparations.
+ 
+ \begin{figure}[H]
+@@ -65,36 +69,40 @@
+ \subsection{Comparing Groups of Papers}
+ 
+-Which papers report Ib afferents in cats? With the \emph{Table} filters cleared, the \emph{Pivot} tab compares all 943 paper records. Choosing \emph{Afferent types} for the rows and \emph{Animal} for the columns gives 21 in the Ib--Cat cell (Figure~\ref{fig:sadb_pivot}). Selecting the cell opens those papers in \emph{Table}. \emph{Back to pivot} restores the comparison. The McCrea paper appears in both the Ia and Ib rows because the stimulus recruited both classes.
++The \emph{Pivot} table identifies which papers support a comparison across afferents or species. For example, the intersection of Ib afferents and cats contains 21 papers (Figure~\ref{fig:sadb_pivot}). Opening that cell displays the individual studies, including \citet{mccrea_disynaptic_1995}. That study also appears in the Ia row because its nerve stimulus recruited both classes. The shared record shows why adding the two row counts would count some studies twice.
+ 
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=\textwidth]{sadb_pivot_guide.pdf}
+-\caption[The SADb Explorer pivot view]{With afferent type and animal selected \textbf{(A)}, the Ib row and Cat column intersect at 21 \textbf{(B)}. Selecting the cell opens the matching papers in \emph{Table}. The return control restores the pivot \textbf{(C)}.}
++\caption[The SADb Explorer app pivot table]{With afferent type and animal selected \textbf{(A)}, the Ib row and Cat column intersect at 21 \textbf{(B)}. Selecting the cell opens the matching papers in \emph{Table}. The return control restores the pivot \textbf{(C)}.}
+ \label{fig:sadb_pivot}
+ \end{figure}
+ 
+-Other pathway records extend the comparison beyond the mammalian examples in Table~\ref{tab:sadb_pathways}. Paired excitation and inhibition records cover the chordotonal organs and trochanteral hair plates of insect legs. Another record covers load feedback from campaniform sensilla. Further entries cover fictive locomotion without sensory feedback (12 linked papers), group III/IV afferents and fatigue, and one paper each for somatosensory, vestibular, and visual contributions to postural control.
++The same classification extends beyond mammalian ankle extensors. Paired pathway records distinguish excitation and inhibition from the chordotonal organs and trochanteral hair plates of insect legs. Another record covers load feedback from campaniform sensilla. The collection also includes studies of group~III/IV afferents and fatigue, fictive locomotion without sensory feedback, and somatosensory, vestibular, and visual contributions to postural control.
+ 
+-\subsection{Following Citations in Bubble Map}
++\subsection{Following Citations in the Bubble Map}
+ 
+-A researcher who starts with a familiar paper may want to find the experiments it cited or later work that cited it. The \emph{Bubble map} follows those publication links (Figure~\ref{fig:sadb_clusters}). Of the 943 papers, 730 cite at least one other paper in the collection. Including the papers they cite gives 816 publications connected by 11,130 directed citation pairs. The Louvain algorithm groups publications that cite one another relatively often. The 18 named topic clusters in the color key help a reader locate related work.
++A researcher can use the citation map to trace a claim in a model paper back to the experiment it cites or to find later studies that used that experiment (Figure~\ref{fig:sadb_clusters}). In the \emph{Year $\times$ citations} layout, publication year is on the horizontal axis and citation count is on a logarithmic vertical axis. The \emph{Topic landscape} instead places papers joined by citations near one another. Its spring layout balances attraction along citation links with repulsion between papers. The Louvain algorithm groups papers that cite one another relatively often. The color key names these groups to help readers identify related work.
+ 
+-The first three tabs in Figure~\ref{fig:sadb_clusters}\textbf{(A)} work offline. The fourth, \emph{Search (online)}, queries OpenAlex for candidates to save for later curation. In \emph{Bubble map}, the \emph{Year $\times$ citations} layout places publication year on the horizontal axis and citation count on a logarithmic vertical axis. The \emph{Topic landscape} places papers joined by citations near one another. A spring-layout algorithm balances attraction along those links with repulsion between nodes. The map controls \textbf{(B)} set the layout, display style, grouping, number of citation links to follow, and action taken when a user selects a paper.
++Figure~\ref{fig:sadb_clusters} shows the map centered on Grillner (1985). The tabs \textbf{(A)} and map controls \textbf{(B)} select the view, layout, and number of links to follow. The selected paper's record \textbf{(C)} and its curation and translation notes \textbf{(D)} stay visible beside the citation neighborhood \textbf{(E)}. The connection list \textbf{(F)} separates references from papers that cite Grillner. Selecting a title brings that paper and its notes into focus. The topic key \textbf{(G)} identifies its citation community.
+ 
+-Selecting Grillner (1985) makes it the focus paper. Its bibliographic record appears at \textbf{(C)} and its curation and translation notes at \textbf{(D)}. The neighborhood selector displays publications one, two, or three citation links away. In the two-link neighborhood shown at \textbf{(E)}, 57 papers cite Grillner and Grillner cites 13 papers in the collection. Following one further link brings the display to 555 papers, including Grillner. Green triangles identify papers citing the focus paper, red circles identify its references, and gray marks identify papers reached through additional links.
+-
+-The connection list \textbf{(F)} separates references from citing papers. Selecting a title makes that paper the focus. A reader can follow a published model back to a cited experiment, open the experimental record, and read how the curator interpreted it. The topic key \textbf{(G)} helps orient the reader after changing focus. A citation establishes that one publication referred to another. Checking whether the experiment supports a particular neural connection requires reading the paper.
++In this example Grillner cites 13 papers in SADb, and 57 papers in SADb cite Grillner. Following a second link brings the neighborhood to 555 papers, including Grillner. Green triangles mark papers that cite the selected paper, red circles mark its references, and gray marks identify more distant connections. Following a reference leads the reader to the source where the experimental support for a proposed connection can be checked.
+ 
+ \begin{sidewaysfigure}[p]
+ \centering
+ \includegraphics[width=\linewidth]{sadb_bubble.pdf}
+-\caption[SADb Explorer citation-map functions]{Citation map of the 943 papers in the illustrated Explorer snapshot, with Grillner (1985) selected. \textbf{(A)} Navigation tabs. \textbf{(B)} Map controls. \textbf{(C)} Selected paper. \textbf{(D)} Curation and translation notes. \textbf{(E)} Citation neighborhood. \textbf{(F)} Citing and cited papers. \textbf{(G)} Topic-cluster color key.}
++\caption[Citation map in the SADb Explorer app]{Citation map of the 943 papers in the SADb Explorer app, with Grillner (1985) selected. \textbf{(A)} Navigation tabs. \textbf{(B)} Map controls. \textbf{(C)} Selected paper. \textbf{(D)} Curation and translation notes. \textbf{(E)} Citation neighborhood. \textbf{(F)} Citing and cited papers. \textbf{(G)} Topic-cluster color key.}
+ \label{fig:sadb_clusters}
+ \end{sidewaysfigure}
+ \FloatBarrier
+ 
++\subsection{Coverage of the Curated Collection}\label{sec:sadb_coverage}
++
++The app preserves 1,393 records across five categories. \emph{Papers} identify publications. \emph{Models} and \emph{Review Papers} link a model or review to its sources. \emph{Feedback pathways} name connections reported in those sources, and \emph{Recorders} identify the people who entered pathway information. All five categories appear in \emph{Table}. The \emph{Pivot} and \emph{Bubble map} views use the 943 paper records.
++
++Coverage differs with the question. Of the 943 papers, 833 carry a curation note and 119 link to a named feedback pathway. A pathway search therefore retrieves the explicitly classified studies. A search of the notes can also recover relevant observations from papers without that tag. The citation map connects 816 papers through 11,130 citation pairs. Appendix~\ref{app:sadb_records} gives the field counts, explains archive status, and distinguishes the full collection from the subset retained in Airtable.
++
+ \subsection{AI-Assisted Literature Triage}\label{sec:sadb_triage}
+ 
+-ResearchRabbit, Litmaps, txyz, SciSpace, and MirrorThink were evaluated for their usefulness in building SADb. The tools helped identify related publications and reduced the time needed to summarize straightforward reviews or model descriptions. Summaries of complex models and physiological findings required substantial correction \citep{bolen_using_2024}. For classification, only txyz received an adequate rating. None received a good rating. The distinction matters for records like McCrea's. A summary that identified extensor excitation but omitted the resting condition would give a curator only one of the two pathway labels. A researcher checked each source and made the final inclusion and classification decisions.
++ResearchRabbit, Litmaps, txyz, SciSpace, and MirrorThink were evaluated for their usefulness in building SADb. The tools helped identify related publications and reduced the time needed to summarize straightforward reviews or model descriptions. Summaries of complex models and physiological findings required substantial correction \citep{bolen_using_2024}. For classification, only txyz received an adequate rating. None received a good rating. The McCrea example illustrates the consequence. A summary that identified extensor excitation but omitted the resting condition would give a curator only one of the two pathway labels. A researcher checked each source and made the final inclusion and classification decisions.
+ 
+ \section{Discussion}
+@@ -112,3 +120,2 @@
+ 
+ SADb supplies the source, preparation, stimulus, and measured response behind a candidate rule. The rule can then be tested by holding the mechanical model fixed, changing the sensory connection, and repeating the same stimulus. Chapter~\ref{ch:sns} develops the tools for that comparison.
+-
+--- prior/chapters/30-torque.tex
++++ revised/chapters/30-torque.tex
+@@ -97,12 +97,12 @@
+ \subsubsection{Length Offset and System Stiffness}\label{sec:offset_stiffness}
+ 
+-Measured muscle length was consistently shorter than predicted at all joint angles, producing less muscle force, a shifted RoM, and less torque in the experimental setup. Because the discrepancy persists at $\varepsilon=1$ and $F=0$, where no compliance can act, the correction is a constant length offset: $l_\text{m}$ was recalculated as
+-
+-\begin{equation}
+-    l_\text{m} = l_{LMT} - 2\;l_{fitting} - \chi_{0} 
++Measured muscle length was consistently shorter than predicted at all joint angles, producing less muscle force, a shifted RoM, and less torque in the experimental setup. The discrepancy persisted at zero load, when the attachments were undeflected. At the free-contraction reference of \qty{620}{\kPa}, $F=0$ and $\varepsilon^{*}=1$. The BPA length corrected for this constant offset is
++
++\begin{equation}
++    l_\text{m} = l_{LMT} - l_{ten} - 2\,l_{fitting} - \chi_{0} 
+     \label{eq:Lm}
+ \end{equation}
+ 
+-where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{fitting}$ is the length of the end caps, and $\chi_{0}$ is a constant length offset. 
++where $l_{LMT}$ is the musculotendon path length from origin to insertion, $l_{ten}$ is the unloaded artificial tendon length (zero for a route without a tendon), $l_{fitting}$ is the length of each end cap, and $\chi_{0}$ is the constant length offset. 
+ 
+ Actuator force deforms the attachments, changing effective BPA length and the predicted force. I approximate this load-dependent deformation with Hooke's law along the bracket-frame principal directions. The fitted stiffnesses $\chi_1$ and $\chi_2$ represent the combined attachment system, not direct measurements of individual hardware components. Because fixtures and loading hardware contribute to that compliance, beam theory alone cannot determine the fitted values.
+@@ -300,5 +300,5 @@
+ 
+ \begin{equation}
+-    l_\text{m} = l_{LMT} - 2\;l_{fitting}  - \chi_{0} - \Delta l\label{eq:x3}
++    l_\text{m} = l_{LMT} - l_{ten} - 2\,l_{fitting} - \chi_{0} - \Delta l\label{eq:x3}
+ \end{equation}
+ 
+@@ -476,5 +476,5 @@
+ \begingroup
+ \widowpenalty=10000
+-The pinned-flexor results first compare the length-dependent actuator model of \citet{hunt_modeling_2017} with the improved BPA force model. Subsequent comparisons use the improved model before and after design-parameter optimization. Hybrid calculations substitute measured muscle length and moment arm to help distinguish force-model error from geometric error on the pinned knee.
++The corrections identified on the pinned knee reduced torque-prediction error for both flexor and extensor configurations on the biomimetic knee. On the pinned flexor, replacing the force model of \citet{hunt_modeling_2017} improved the prediction, but the rigid-attachment calculation still overestimated measured torque magnitude. The hybrid calculation used measured muscle length and moment arm to separate force-model error from geometric error. In the final physical tests, both redesigned routes met or exceeded their selected human-muscle torque magnitudes at the measured knee angles (Section~\ref{sec:redesign_physical}).
+ \par
+ \endgroup
+@@ -600,5 +600,5 @@
+ 
+ 
+-I tested the extensor configuration on the biomimetic knee with a $\diameter$\qty{10}{\mm} BPA at $l_{0}=\qty{51.8}{\cm}$. The measured torque fell well below the original prediction (Figure~\ref{fig:Ext10mm_52cm}). Applying the extensor terms identified on the pinned knee improved the prediction: at those terms, the optimized model reached an RMSE of \qty{1.1702}{\newton\meter}, an FVU of 0.6681, and a maximum absolute residual of \qty{2.2088}{\newton\meter}, against \qty{3.0322}{\newton\meter}, 4.4856, and \qty{5.5870}{\newton\meter} for the original rigid-body prediction.
++The extensor corrections identified on the pinned knee reduced the root-mean-square torque error on the biomimetic knee from \qty{3.0322}{\newton\meter} to \qty{1.1702}{\newton\meter} (Table~\ref{tab:BioTorqueGof}). The test used a $\diameter$\qty{10}{\mm} BPA at $l_{0}=\qty{51.8}{\cm}$. The rigid-body calculation overestimated the measured torque (Figure~\ref{fig:Ext10mm_52cm}).
+ 
+ \begin{figure}[htbp]
+@@ -614,5 +614,5 @@
+ 
+ 
+-The shared correction terms reduce torque-prediction error for both biomimetic-knee flexor configurations (Table~\ref{tab:BioTorqueGof}). Figure~\ref{fig:FlxGrp} compares these predictions with the measurements; the bracket frame for the $\diameter$\qty{10}{\mm} BPA is shown in Figure~\ref{fig:bktFrame}\textbf{(C)}, and for the $\diameter$\qty{20}{\mm} BPA in Figure~\ref{fig:bktFrame}\textbf{(D)}. Figure~\ref{fig:FlxGrp}\textbf{(A)} presents the $\diameter$\qty{10}{\mm} actuator at $l_{0}=\qty{41.5}{\cm}$ with a \qty{21}{\mm} artificial tendon ($\diameter$\qty{1.5}{\mm} Shimano bicycle brake cable wrapped four times), pressurized to \qty{604}{\kPa}; the optimized model reached an RMSE of \qty{2.8002}{\newton\meter}, an FVU of 0.8835, and a maximum absolute residual of \qty{4.1201}{\newton\meter}. Figure~\ref{fig:FlxGrp}\textbf{(B)} presents the $\diameter$\qty{20}{\mm} actuator at $l_{0}=\qty{41.5}{\cm}$ with a \qty{14}{\mm} artificial tendon made out of the same brake cable, wrapped three times so that six cable segments share the load, each wrap contributing two tendon lengths and cross-sectional areas. The configuration in Figure~\ref{fig:FlxGrp}\textbf{(B)} was tested at \qty{620}{\kPa}, for which the optimized model reached an RMSE of \qty{2.2070}{\newton\meter}, an FVU of 0.0748, and a maximum absolute residual of \qty{3.7320}{\newton\meter}.
++The shared correction terms improved the torque predictions for both biomimetic-knee flexors (Table~\ref{tab:BioTorqueGof}). Even so, the single $\diameter$\qty{20}{\mm} BPA fell short of the human flexion target in deep knee flexion. Panels \textbf{(C)} and \textbf{(D)} of Figure~\ref{fig:bktFrame} show the bracket frames for the $\diameter$\qty{10}{\mm} and $\diameter$\qty{20}{\mm} actuators, respectively. In Figure~\ref{fig:FlxGrp}\textbf{(A)}, the $\diameter$\qty{10}{\mm} actuator had a resting length of \qty{41.5}{\cm} and a \qty{21}{\mm} artificial tendon made from $\diameter$\qty{1.5}{\mm} Shimano bicycle brake cable wrapped four times. The test pressure was \qty{604}{\kPa}. The $\diameter$\qty{20}{\mm} actuator in Figure~\ref{fig:FlxGrp}\textbf{(B)} had the same resting length and a \qty{14}{\mm} tendon made from the same cable. Three wraps provided six cable segments to share the load. The test pressure for this configuration was \qty{620}{\kPa}.
+ 
+ The torque of the single $\diameter$\qty{20}{\mm} flexor actuator shown in Figure~\ref{fig:FlxGrp}\textbf{(B)} did not exceed the magnitude of the maximum human isometric flexion torque between \ang{60} and \ang{100} of knee flexion, and within a $\pm 20\%$ band about the human mean it still fell short of human-level torque between \ang{78} and \ang{103} of flexion. Because operating at \qty{620}{\kPa} across the full desired range of motion would load the printed femur beyond its ultimate strength, single points were also recorded at the reduced pressures \qtylist{560;421;325;281}{\kPa}, which show that the desired range of motion is achievable at reduced pressure. This shortfall in flexion torque defines the target that the attachment-route redesign of Section~\ref{sec:mesh_opt} addresses.
+--- prior/chapters/15-background.tex
++++ revised/chapters/15-background.tex
+@@ -282,5 +282,5 @@
+ \end{figure}
+ 
+-The procedures behind that record are documented in films that remain publicly available. A \qty{50}{\minute} classroom recording posted by the UTHealth Houston School of Dentistry first shows an intact cat playing with its handler, righting itself when lowered and placing its paws accurately on the edge of a table, and then documents the decerebration performed for the class \citep{utherst_decerebrate_2025}: the animal is anesthetized with open-drop ether, more than the horse in the same demonstration series received, the carotid arteries are ligated and a tracheal cannula installed, and the skull is opened with a trephine before the brainstem is transected between the superior and inferior colliculi. The treadmill preparations that established locomotor neurophysiology are likewise preserved in the historical literature: \citet{stuart_reflections_2007} reproduce the arrangement of the high-decerebrate cat treadmill experiments, with electromyographic recording from the hindlimb muscles, from the original Russian-language reports \citep{severin_1967}.
++The procedures behind that record are documented in films that remain publicly available. A \qty{50}{\minute} classroom recording posted by the UTHealth Houston School of Dentistry first shows an intact cat playing with its handler, righting itself when lowered and placing its paws accurately on the edge of a table, and then documents the decerebration performed for the class \citep{utherst_decerebrate_2025}: the animal is anesthetized with open-drop ether, more than the horse in the same demonstration series received, the carotid arteries are ligated and a tracheal cannula installed, and the skull is opened with a trephine before the brainstem is transected between the superior and inferior colliculi. The treadmill preparations that established locomotor neurophysiology are likewise preserved in the historical literature: \citet{stuart_reflections_2007} reproduces the arrangement of the high-decerebrate cat treadmill experiments, with electromyographic recording from the hindlimb muscles, from the original Russian-language reports \citep{severin_1967}.
+ 
+ The honest accounting is murkier than the Three Rs framing alone suggests, because the models a robot implements are themselves products of animal experimentation. The half-center organization, the two-level rhythm and pattern architecture, and the length, force, and load signaling of the afferents were each established in preparations like the ones described above \citep{brown_intrinsic_1911, severin_1967, rybak_modelling_2006}, and the databases of afferent properties that parameterize sensory feedback are compiled from animal recordings \citep{bolen_sensory_2023}. A synthetic nervous system therefore replaces future experiments; it does not replace, and cannot repay, the animal work on which its architecture is built. Recognizing this inheritance sharpens rather than undermines the case for robotic subjects: the knowledge purchased at that cost is precisely what makes a robotic replacement scientifically meaningful, and the robot is the instrument that keeps that knowledge productive without adding to the ledger.
+--- prior/chapters/10-introduction.tex
++++ revised/chapters/10-introduction.tex
+@@ -10,7 +10,7 @@
+ The first mechanical design consideration is to select artificial muscles that can meet the robot joints' torque requirements within the available space. The McKibben-style braided pneumatic actuators (BPAs) used here combine low mass, high force-to-weight ratio, and intrinsic compliance with a force--length curve that qualitatively resembles that of skeletal muscle \citep{liang_comparative_2020, hunt_modeling_2017}. Our initial work with Festo BPAs showed that at shorter resting (uninflated) lengths, they delivered less force and contraction than what the manufacturer specifies. Existing empirical models describe useful pressure--contraction relationships \citep{sarosi_comparative_2017, martens_modeling_2017, hunt_modeling_2017}, but did not capture this relationship between resting length and force output. Therefore, I built a jig to perform isometric force experiments with Festo BPAs and collect data to further characterize this relationship. This data enabled the development of actuator force models that account for resting length, pressure, and contraction. The work in Chapter~\ref{ch:muscles} describes this process and the developed model.
+ 
+-The next mechanical design consideration is predicting joint torque of an assembled robot. When an artificial muscles pulls on a limb segment, it creates torque about the joint. This torque is what moves the body through space, causing the limbs to interact with objects and the ground. The artificial muscle force is transmitted to the skeleton through mounting brackets and artificial tendons. Brackets and fixtures can deflect under load, tendons can stretch, and contact with the skeleton bends an actuator. All this changes the force and torque that an artificial muscle applies to the limb. This compliance and actuator bending can therefore cause rigid-body predictions of torque typically used in robotic models to differ from actual torque. Initial tests showed that joint torque and the usable range of motion (RoM) on a knee joint were lower than predicted. I therefore built an isometric knee-torque test jig to develop a model of how the artificial muscle interacts with limb, and better predict the expected joint torque. The improved model was then used to design and test artificial musculotendon routes that can meet or exceed their human-muscle torque equivalents. The details of this process are described in (Chapter~\ref{ch:torque}).
++The next mechanical design consideration is predicting joint torque of an assembled robot. When an artificial muscle pulls on a limb segment, it creates torque about the joint. This torque is what moves the body through space, causing the limbs to interact with objects and the ground. The artificial muscle force is transmitted to the skeleton through mounting brackets and artificial tendons. Brackets and fixtures can deflect under load, tendons can stretch, and contact with the skeleton bends an actuator. All this changes the force and torque that an artificial muscle applies to the limb. This compliance and actuator bending can therefore cause rigid-body predictions of torque typically used in robotic models to differ from actual torque. Initial tests showed that joint torque and the usable range of motion (RoM) on a knee joint were lower than predicted. I therefore built an isometric knee-torque test jig to develop a model of how the artificial muscle interacts with the limb and to better predict the expected joint torque. The improved model was then used to design and test artificial musculotendon routes that can meet or exceed their human-muscle torque equivalents. The details of this process are described in Chapter~\ref{ch:torque}.
+ 
+-In addition to the accurate biomechanical model of the human body, the goals of the bipedal robot project include the use of an underlying neural controller that mimics the human nervous system.  To build such a model, it is necessary to gather and curate a collection of material on how the nervous system is organized and how sensory input influences neural activity and movement. Unfortunately, there is not a complete understanding of this, no comprehensive view has been written or collected from scientific papers. Our understanding of neural control is distributed across species, preparations, and experimental protocols \citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}. Therefore, I developed the Sensory Afferent Database (SADb) to aid in organizing the literature on the subject into a searchable resource linked to its sources. Chapter~\ref{ch:database} provides an overview of how the SADb was developed, how it is organized, and features that can be used to sort and understand the underlying material.
++In addition to the accurate biomechanical model of the human body, the goals of the bipedal robot project include the use of an underlying neural controller that mimics the human nervous system. To build such a model, it is necessary to gather and curate a collection of material on how the nervous system is organized and how sensory input influences neural activity and movement. Unfortunately, there is not a complete understanding of this, and no comprehensive view has been written or collected from scientific papers. Our understanding of neural control is distributed across species, preparations, and experimental protocols \citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}. Therefore, I developed the Sensory Afferent Database (SADb) to aid in organizing the literature on the subject into a searchable resource linked to its sources. Chapter~\ref{ch:database} provides an overview of how the SADb was developed, how it is organized, and features that can be used to sort and understand the underlying material.
+ 
+ The sensory pathways documented in the database suggest how the nervous system uses feedback from the legs to coordinate movement. To simulate what those pathways contribute, it is possible to combine a neural circuit model with the mechanical model of the body it controls. The circuit activates muscles, their forces move the joints, and the resulting changes in muscle stretch and load feed back to the circuit and shape its next commands. The robot’s artificial muscles differ from human muscles in how much force they produce and where they pull on the skeleton. A circuit that coordinates the legs of the human model will therefore produce a different movement in the robot model, and that movement will change the sensory feedback the circuit receives. To measure the effect of the mechanics, I wanted to repeat the same experiment on both models with the controller held fixed. I also wanted to test changes to the controller while keeping the mechanical model fixed. Our first neuromechanical model ran slowly, and we tuned its controller by hand, making a series of these comparisons impractical. I therefore developed tools to build circuits graphically, automate their tuning, and run those comparisons on a human musculoskeletal model and on models built from our robot's mechanical design (Chapter~\ref{ch:sns}). With human movement as a reference, the new system can simulate how changing a sensory connection or moving an artificial muscle attachment affects a mechanical model's coordination.
+@@ -18,5 +18,5 @@
+ \section{The Biomimetic Humanoid Robot Project}\label{sec:project}
+ 
+-The Portland State University robot project currently focuses on a lower-body platform representing the body from the lumbar spine down, with a human-scale skeleton, artificial tendons, BPAs, and biomimetic joint mechanisms. Preserving human-like joint motion and musculotendon organization provides a mechanical basis for investigating interactions between biomechanics and neural control. These anatomical relationships matter because joint geometry and muscle routing determine how actuator forces produce movement and how movement generates sensory feedback..
++The Portland State University robot project currently focuses on a lower-body platform representing the body from the lumbar spine down, with a human-scale skeleton, artificial tendons, BPAs, and biomimetic joint mechanisms. Preserving human-like joint motion and musculotendon organization provides a mechanical basis for investigating interactions between biomechanics and neural control. These anatomical relationships matter because joint geometry and muscle routing determine how actuator forces produce movement and how movement generates sensory feedback.
+ 
+ The project uses OpenSim's Gait2392 musculoskeletal model as a benchmark for human joint motion, musculotendon geometry, and torque-generating capacity \citep{delp_opensim_2007, bolen_bipedal_2019}. Gait2392 includes 92 musculotendon actuators and 23 degrees of freedom (DoF), six of which describe the position and orientation of the pelvis in space. I developed the robot's kinematic design for my master's project. The design includes 17 internal joint DoF, with 27 musculotendon actuator units on each side \citep{bolen_bipedal_2019, bolen_determination_2019}. The associated computational tools allow the robot's muscle lengths, moment arms, and joint torques to be compared with corresponding human-model predictions. These comparisons provide a basis for assessing how design changes affect the robot's ability to reproduce selected biomechanical functions.
+--- prior/thesis.bib
++++ revised/thesis.bib
+@@ -924,11 +924,11 @@
+ 
+ @article{wu_for_1995,
+-	title = {{FOR} {STANDARDIZATION} {IN} {THE} {REPORTING} {OF} {KINEMATIC} {DATA}},
++	title = {{ISB} recommendations for standardization in the reporting of kinematic data},
+ 	volume = {28},
+-	doi = {0021-9290(95)00017-8},
++	doi = {10.1016/0021-9290(95)00017-C},
+ 	language = {en},
+ 	number = {10},
+-	journal = {Journal Biomechanics},
+-	author = {Wu, Ge and Cavanagh, PeterR},
++	journal = {Journal of Biomechanics},
++	author = {Wu, Ge and Cavanagh, Peter R.},
+ 	year = {1995},
+ 	pages = {1257--1261},
+@@ -1652,5 +1652,5 @@
+ 
+ @article{deng_neuromechanical_2019,
+-	author = {Deng, Kaiyu and Szczecinski, Nicholas S. and Arnold, David and Andrada, Emanuel and Fischer, Martin S. and Quinn, Roger D. and Hunt, Alexander J.},
++	author = {Deng, Kaiyu and Szczecinski, Nicholas S. and Arnold, Dirk and Andrada, Emanuel and Fischer, Martin S. and Quinn, Roger D. and Hunt, Alexander J.},
+ 	title = {Neuromechanical model of rat hindlimb walking with two-layer {CPGs}},
+ 	journal = {Biomimetics},
+@@ -1973,8 +1973,11 @@
+ @article{severin_1967,
+ 	author = {Severin, F. V. and Orlovsky, G. N. and Shik, M. L.},
+-	title = {[Work of the muscles during controlled locomotion]},
++	title = {[Work of muscle receptors during controlled locomotion]},
+ 	journal = {Biofizika},
++	volume = {12},
++	number = {3},
++	pages = {502--511},
+ 	year = {1967},
+-	note = {In Russian; English translation in Biophysics. Verify exact bibliographic details against Stuart (2007)},
++	note = {In Russian. English translation in \emph{Biophysics}, 12, 575--586.},
+ }
+ 
+@@ -2327,2 +2330,11 @@
+   url = {https://www.nytimes.com/2023/03/08/opinion/noam-chomsky-chatgpt-ai.html}
+ }
++
++@misc{bergemann_actuating_2002,
++  author = {Bergemann, Dieter and Lorenz, Bernd and Thallemer, Axel},
++  title = {Actuating means},
++  howpublished = {U.S. Patent No. 6,349,746 B1, assigned to Festo AG \& Co.},
++  month = feb,
++  year = {2002},
++  url = {https://patents.google.com/patent/US6349746B1/en},
++}

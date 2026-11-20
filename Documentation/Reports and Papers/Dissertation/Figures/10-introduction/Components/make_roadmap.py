@@ -16,7 +16,7 @@ ARROW_LENGTH, ARROW_HALF_WIDTH = 8, 3.5
 def build(pdf_path, svg_path):
     pdfmetrics.registerFont(TTFont('Arial',r'C:\Windows\Fonts\arial.ttf'))
     pdfmetrics.registerFont(TTFont('Arial-Bold',r'C:\Windows\Fonts\arialbd.ttf'))
-    pdf=canvas.Canvas(str(pdf_path),pagesize=(WIDTH,HEIGHT))
+    pdf=canvas.Canvas(str(pdf_path),pagesize=(WIDTH,HEIGHT),initialFontName='Arial',invariant=1)
     pdf.setTitle('Dissertation roadmap')
     pdf.setAuthor('Ben Bolen')
     svg=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{WIDTH}pt" height="{HEIGHT}pt" viewBox="0 0 {WIDTH} {HEIGHT}">',
@@ -70,7 +70,7 @@ def build(pdf_path, svg_path):
     line([(295,29),(316,29)],dashed=True);text(323,22,'Future integration',anchor='start')
     nodes=[(28,53,'Background','(Ch. 2)',False),
            (178,53,'BPA force models','Characterization\n(Ch. 3)',False),
-           (328,53,'Torque model','Corrections, routes\n(Ch. 4)',False),
+           (328,53,'Torque model','Design factors\nand routes (Ch. 4)',False),
            (28,153,'Sensory Afferent\nDatabase','Pathways (Ch. 5)',False),
            (178,153,'SNS simulation','Software tools\n(Ch. 6)',False),
            (328,153,'BPA robot','SNS control\n(future work)',True)]

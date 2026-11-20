@@ -5,17 +5,37 @@ Chapter~\ref{ch:database} follows a researcher from one pathway search to a cand
 
 \section{Record Sets and Coverage}
 
-The SADb Explorer export contains 1,393 records across five tables. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. At the time of curation the Airtable working base had a 1,000-record limit. I retained 957 records there, comprising 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The application preserves the other 436 records as archived entries. They comprise 382 Papers and 54 records from the other tables whose paper links had been removed. The Table view includes all five record types. The Pivot and citation views use the Papers category.
+The SADb Explorer app contains 1,393 records across five tables. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. At the time of curation the Airtable working base had a 1,000-record limit. I retained 957 records there, comprising 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The app marks the other 436 records as archived. They can still be read in the app after removal from Airtable. They comprise 382 Papers and 54 records from the other tables whose paper links had been removed. The Table view includes all five record types. The Pivot and citation views use the Papers category.
 
-Coverage of the application's Papers category is reported in Chapter~\ref{ch:database}. The following counts describe the retained maintenance subset and use a different denominator.
+Table~\ref{tab:sadb_field_coverage} compares the searchable fields in the full app with those retained in Airtable. One paper can contribute to several rows. An empty field means that the curator did not record that classification.
 
-Of the 561 retained Papers, 523 have curation notes, 426 have an animal or human study tag, 240 have an animal-study assessment, and 118 link to at least one named feedback pathway. Afferent classes are recorded for 86 Papers, robot or simulation translation notes for 258, and a DOI for 550. A paper can contribute to several of these counts.
+\begin{table}[htbp]
+\centering
+\caption{Paper records with an entry in each field of the full SADb Explorer app and the Airtable working collection.}
+\label{tab:sadb_field_coverage}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Field} & \textbf{Full app (943)} & \textbf{Airtable (561)} \\
+\midrule
+Curation note & 833 & 523 \\
+Animal or human study tag & 606 & 426 \\
+Assessment of a possible animal study & 316 & 240 \\
+Link to a named feedback pathway & 119 & 118 \\
+Afferent class & 95 & 86 \\
+Proposed robot or simulation application & 363 & 258 \\
+Digital object identifier & 892 & 550 \\
+PDF attachment recorded in Airtable & 318 & 231 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 For a single paper, use Table to check the record type and archive status. For a group of papers, start in Pivot and open a cell to read the underlying records. Tagged groups overlap. For example, a Paper tagged with both Ia and Ib can appear in both afferent rows for the same animal. Adding those rows would count that Paper twice. The citation neighborhood in Figure~\ref{fig:sadb_clusters} answers a separate question about which papers cite one another.
 
+The \emph{Ib disynaptic excitation} pathway links six papers. The collection also links 12 papers to fictive locomotion without sensory feedback and one paper apiece to the somatosensory, vestibular, and visual contributions to postural control. In the citation map, 730 papers cite another paper in the collection. Counting the papers they cite brings the connected set to 816. The 18 named citation communities group papers by their citation links.
+
 \section{Afferent Classes and Linked Pathways}
 
-Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input, and Table~\ref{tab:sadb_pathways} gives the searchable pathway names. The two pathway links in the McCrea record illustrate why the preparation belongs alongside the label (Section~\ref{sec:sadb_worked_rule}). In the acute spinal preparation treated with clonidine, the inhibition seen at rest diminished during fictive locomotion, but the short-latency excitation seen in the midbrain-evoked preparation did not appear \citep{mccrea_disynaptic_1995}. A model of the spinal preparation would therefore need a different test from the one drawn in Figure~\ref{fig:sadb_group_i_rule}. The Ib pathway label is a way to retrieve this paper. Its Ia and Ib afferent tags preserve the broader identity of the stimulated group~I fibers.
+Table~\ref{tab:sadb_afferents} relates each receptor to a candidate model input, and Table~\ref{tab:sadb_pathways} gives the searchable pathway names. The two pathway links in the McCrea record illustrate why the experimental conditions belong alongside the label (Section~\ref{sec:sadb_worked_rule}). In cats given clonidine after acute spinal transection, the inhibition seen at rest diminished during fictive locomotion, but the short-latency excitation seen with midbrain stimulation did not appear \citep{mccrea_disynaptic_1995}. A model of the experiment after transection would therefore need a different test from the one drawn in Figure~\ref{fig:sadb_group_i_rule}. The Ib pathway label is a way to retrieve this paper. Its Ia and Ib afferent tags preserve the broader identity of the stimulated group~I fibers.
 
 \begin{table}[htbp]
 \caption{Afferent classes, encoded signals, and pathway roles represented in the Sensory Afferent Database. The cited studies give examples of these pathways. Ia, II, and Ib signal summaries follow \citet{prochazka_ensemble_1998}.}

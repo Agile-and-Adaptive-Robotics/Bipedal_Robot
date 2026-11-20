@@ -1,6 +1,6 @@
 ## Current manuscript
 
-The working manuscript is [Final/main.tex](../Final/main.tex). The [full dissertation PDF](../Bolen_Dissertation.pdf) and [Overleaf source ZIP](../Bolen_Dissertation.zip) include the revised cam figures on printed pages 114, 251, and 252. The full dissertation has 324 pages. Earlier revision reports link to their archived proofs where available.
+The working [manuscript](../Final/main.tex) and [Overleaf project](https://www.overleaf.com/project/644dc82bcd6a5481e3c3a8bb) compile to 327 pages. Chapter 5 Results open on printed page 125. The paper record and its controller rule face each other on pages 126–127. The cam figures appear on pages 115, 253, and 254. [Full dissertation](../Bolen_Dissertation.pdf) · [Source ZIP](../Bolen_Dissertation.zip) · [November 20 edits by chapter and source line](submission_review_20261120/LINE_EDITS.md)
 
 `ProofFinal` preserves the 23 LaTeX source and support files from the [dissertation submission draft](../Bolen_Dissertation-Draft_Submission.zip). That ZIP contains the original figures for reproducing the draft.
 

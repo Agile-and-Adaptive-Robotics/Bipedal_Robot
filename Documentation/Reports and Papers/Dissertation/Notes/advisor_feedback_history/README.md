@@ -6,6 +6,8 @@ The October 23 review recorded 0/4 for three **previous attempts at revision**. 
 
 ## Use on a new chapter draft
 
+Ben reserves the ethical argument in Chapter 2, “Testing Neuromechanical Hypotheses on Robots: The Ethical Case,” for his own judgment. The advisor-style reader skips that section. Use Ben’s exact wording for his position and verify quotations, citations, and factual descriptions independently when he requests an edit.
+
 Run the following command from the repository root on easteregg2. It uses the preserved pre-November advisor signals and the dated November ledgers. Supplying chapter paths after the options selects different TeX files.
 
 ```powershell
@@ -39,6 +41,10 @@ The records preserve authors, event dates, exact wording when available, and qua
 For subsequent captures, preserve a stable event identity and link the source before extending the ledger. The checker reads dated `advisor_scoring_*/CLASSIFIER_RESULTS.json` captures, ignores repeated records with the same identity, and flags incompatible recaptures. New issue categories need their editorial tags in the capture or the scorer. The `--before YYYY-MM-DD` option restricts evidence to earlier event dates when testing whether an older record anticipates later feedback.
 
 ## Figures, tables, and conclusions
+
+The November 20 Chapter 5 review reopened the result-first judgment. The prior check retrieved examples paragraph by paragraph but missed that an entire Results section opened with inventory. The checker now extracts the first prose under a Results heading and its subheadings, alongside three attributed Chapter 5 comments and the advisor’s before-and-after Introduction edit `INTRO-T36`. Read each opening with its example and write down what a researcher can learn. The historical torque correction asks the same question about a physical design and its human reference.
+
+Add `--check-results-openings` to flag openings that lead with a record inventory, instructions, or a roadmap for contextual review. The report also lists headings without opening prose. A flag requires inspection, and an unflagged opening still needs a reader’s judgment. The regression test uses the rejected Chapter 5 lead, its procedural example, and a quantitative torque result that answers a research question. [November 20 review and readback](../submission_review_20261120/REVIEW.md)
 
 The November 19 Overleaf review added six Chapter 6 comments and five tracked edits from the advisor (−15), and one Introduction comment and three tracked edits (−5). Across the November 17–19 captures, 56 distinct advisor events total −62. Three November 19 edits by Ben are recorded separately. The reviewer now returns the first-person phrases in each passage and distinguishes ownership, narration, and tool capability for contextual reading. The two filler comments and the correction from “our” to “my” belong to different editorial judgments. [Dated review table](../ch6_advisor_20261119/REVIEW_TABLE.html) · [New advisor events](../advisor_scoring_20261119/CLASSIFIER_RESULTS.json)
 

@@ -10,11 +10,11 @@
 \noindent\textbf{Author contributions.} Conceptualization, B.B. and C.M.; Methodology, B.B., C.M., M.E., and A.H.; Software, B.B., C.M., L.B., and M.E.; Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., C.M., L.B., and M.E.; Resources, B.B., L.B., and A.H.; Data Curation, B.B. and M.E.; Writing -- Original Draft Preparation, B.B.; Writing -- Review \& Editing, B.B., C.M., L.B., M.E., and A.H.; Visualization, B.B. and A.H.; Supervision, B.B. and A.H.; Project Administration, B.B. and A.H.; Funding Acquisition, A.H.\par}
 \clearpage
 
-This chapter connects the actuator force characterization of Chapter~\ref{ch:muscles} to torque about the robot knee. The earlier torque model assumed inextensible muscle paths on rigid links. Isometric tests on pinned and biomimetic knees show where those assumptions fail. The methods develop corrections for length offsets, attachment compliance, and wrapping loss, then explain how actuator-placement searches use the improved prediction. Validation tests evaluate the correction terms, and physical tests assess whether the redesigned routes meet selected human-muscle torque targets.
+This chapter connects the actuator force characterization of Chapter~\ref{ch:muscles} to torque about the robot knee. The earlier torque model assumed inextensible muscle paths on rigid links. Isometric tests on pinned and biomimetic knees show where those assumptions fail. The methods introduce design factors for length offsets, attachment compliance, and wrapping loss, then explain how actuator-placement searches use the improved prediction. Validation tests evaluate the design factors, and physical tests assess whether the redesigned routes meet selected human-muscle torque targets.
 
 \section{Methods}
 
-I built a modular test stand to measure flexor and extensor torque with either a pinned knee or a biomimetic four-bar knee. The tests varied actuator diameter and resting length, joint contact, and tendon attachment. I first compared measured torque with predictions based on the characterized BPA force model. I then set the length, compliance, and wrapping corrections using separate training and validation tests, and used the improved model to redesign routes against human-muscle torque targets. Isometric tests evaluated the resulting hardware.
+I built a modular test stand to measure flexor and extensor torque with either a pinned knee or a biomimetic four-bar knee. The tests varied actuator diameter and resting length, joint contact, and tendon attachment. I first compared measured torque with predictions based on the characterized BPA force model. I then set the design factors for length offset, compliance, and wrapping loss using separate training and validation tests, and used the improved model to redesign routes against human-muscle torque targets. Isometric tests evaluated the resulting hardware.
 \subsection{Robot Leg Model and Knee Test Stands}\label{sec:robot_model}
 
 
@@ -90,20 +90,20 @@ where $r$ is the scalar moment arm of Eq.~\eqref{eq:momentarm_def}, here measure
 
 \subsection{Improved Torque Model}\label{sec:improved_model}
 
-The classical torque calculation treated links and attachments as rigid: the routed path depended on joint geometry but did not change under actuator load. Data collected during the first flexor experiments (Section~\ref{sec:results_torque}) showed that this assumption does not hold for a pneumatic system: measured muscle lengths were consistently shorter than predicted, and measured torque deviated from prediction in a load-dependent manner. This section describes the corrections that were developed to account for a constant length offset, series compliance in the attachment hardware and artificial tendons, and the loss of usable muscle length when a BPA wraps around the joint.
+The classical torque calculation treated links and attachments as rigid: the routed path depended on joint geometry but did not change under actuator load. Data collected during the first flexor experiments (Section~\ref{sec:results_torque}) showed that this assumption does not hold for a pneumatic system: measured muscle lengths were consistently shorter than predicted, and measured torque deviated from prediction in a load-dependent manner. This section describes the design factors developed to account for a constant length offset, series compliance in the attachment hardware and artificial tendons, and the loss of usable muscle length when a BPA wraps around the joint.
 
-The correction terms represent the combined effects of the attachment brackets, fixtures, artificial tendons, and test-stand loading path. They are identified from measured torque because the torque prediction requires their aggregate effect on actuator length, rather than a separate structural model of every component. The constant term $\chi_0$ corrects the unloaded length discrepancy, $\chi_1$ and $\chi_2$ describe effective stiffness in the local bracket frame, and $\chi_3$ scales the wrapping-length loss. The compliance calculation couples force and displacement: force deflects the attachments, and the resulting change in muscle length changes force. The multiobjective procedure of Section~\ref{sec:identification} evaluates candidate terms on fitting and validation tests.
+The design factors represent the combined effects of the attachment brackets, fixtures, artificial tendons, and test-stand loading path. They are identified from measured torque because the torque prediction requires their aggregate effect on actuator length, rather than a separate structural model of every component. The design factor $\chi_0$ represents the length offset at zero load, $\chi_1$ and $\chi_2$ describe effective stiffness in the local bracket frame, and $\chi_3$ scales the wrapping-length loss. The compliance calculation couples force and displacement: force deflects the attachments, and the resulting change in muscle length changes force. The multiobjective procedure of Section~\ref{sec:identification} evaluates candidate terms on fitting and validation tests.
 
 \subsubsection{Length Offset and System Stiffness}\label{sec:offset_stiffness}
 
-Measured muscle length was consistently shorter than predicted at all joint angles, producing less muscle force, a shifted RoM, and less torque in the experimental setup. Because the discrepancy persists at $\varepsilon=1$ and $F=0$, where no compliance can act, the correction is a constant length offset: $l_\text{m}$ was recalculated as
+Measured muscle length was consistently shorter than predicted at all joint angles, producing less muscle force, a shifted RoM, and less torque in the experimental setup. The discrepancy persisted at zero load, when the attachments were undeflected. At the free-contraction reference of \qty{620}{\kPa}, $F=0$ and $\varepsilon^{*}=1$. Subtracting this offset gives the unloaded BPA length
 
 \begin{equation}
-    l_\text{m} = l_{LMT} - 2\;l_{fitting} - \chi_{0} 
+    l_\text{m} = l_{LMT} - l_{ten} - 2\,l_{fitting} - \chi_{0} 
     \label{eq:Lm}
 \end{equation}
 
-where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{fitting}$ is the length of the end caps, and $\chi_{0}$ is a constant length offset. 
+where $l_{LMT}$ is the musculotendon path length from origin to insertion, $l_{ten}$ is the unloaded artificial tendon length (zero for a route without a tendon), $l_{fitting}$ is the length of each end cap, and $\chi_{0}$ is the constant length offset. 
 
 Actuator force deforms the attachments, changing effective BPA length and the predicted force. I approximate this load-dependent deformation with Hooke's law along the bracket-frame principal directions. The fitted stiffnesses $\chi_1$ and $\chi_2$ represent the combined attachment system, not direct measurements of individual hardware components. Because fixtures and loading hardware contribute to that compliance, beam theory alone cannot determine the fitted values.
 
@@ -242,7 +242,7 @@ The projected bracket compliance is $c_{\hat{u},br}=k_{\hat{u},br}^{-1}$, tendon
 
 The series model assumes quasi-static tensile loading, linear compliance, additive axial displacements, and a tendon without preload. Rotational compliance and force--moment coupling are neglected. Within each force-balance calculation the line of action is fixed; the attachment positions, force direction, and moment arm are then recalculated at the deflected geometry. Antagonistic loading that lengthens the actuator lies outside this treatment.
 
-Since $\delta$ is the scalar compliance displacement along the BPA line of action, then the compliance-corrected active BPA length used in the force balance is
+The axial displacement $\delta$ of the brackets and tendon shortens the active BPA length in the force balance to
 
 \begin{equation} l_m(\delta) = l_m{(0)} - \delta
 \label{eq:activelengthcorrected}
@@ -250,7 +250,7 @@ Since $\delta$ is the scalar compliance displacement along the BPA line of actio
 
 where $l_m{(0)}$ is the initial muscle length calculated from \eqref{eq:Lm}.
 
-For a specified set of correction parameters, the following calculation solves the attachment-compliance displacement at each knee angle; it is distinct from the optimization that identifies those parameters from experimental torque data (Section~\ref{sec:identification}). The corresponding relative contraction is $\varepsilon^*(\delta)$. Since the BPA force depends on contraction, and contraction depends on the compliance displacement, $\delta$ is the root of the nonlinear force-balance equation
+For specified values of the design factors, the following calculation solves the attachment-compliance displacement at each knee angle; it is distinct from the optimization that identifies those parameters from experimental torque data (Section~\ref{sec:identification}). The corresponding relative contraction is $\varepsilon^*(\delta)$. Since the BPA force depends on contraction, and contraction depends on the compliance displacement, $\delta$ is the root of the nonlinear force-balance equation
 
 \begin{equation} F_{\mathrm{max}} \cdot F_{\mathrm{BPA}}\!\left(\varepsilon^*(\delta),P^*\right) - k_{eq}\,\delta = 0
 \label{eq:complianceforcebalance}
@@ -281,7 +281,7 @@ The actuator path can carry compliant hardware at both ends: the insertion-side 
 
 \subsubsection{Actuator Bending}\label{sec:fictive_contraction}
 
-As the knee flexes, the extensor BPA contacts the anterior joint surface and bends around it (Figure~\ref{fig:bpaWrapping}). The rigid routed-length calculation does not account for the resulting change in usable contraction. I represent this effect with fictive strain: an empirical increase in the contraction seen by the force model, beyond the actuator's geometric contraction. The correction is phenomenological; it does not resolve wall stresses or the deformation of the braided actuator. A wrapping-loss term $\chi_3$ scales the associated reduction in usable length:
+As the knee flexes, the extensor BPA contacts the anterior joint surface and bends around it (Figure~\ref{fig:bpaWrapping}). The rigid routed-length calculation does not account for the resulting change in usable contraction. I represent this effect with fictive strain: an empirical increase in the contraction seen by the force model, beyond the actuator's geometric contraction. This empirical model represents the loss of usable length. Resolving wall stresses and braid deformation would require a structural model. A wrapping-loss term $\chi_3$ scales the associated reduction in usable length:
 \begin{equation}
     \Delta l = \begin{cases}
      \chi_{3}\;R\;\abs{ \theta_{\mathrm{wrap}}-\theta_{\mathbf{k}}}\;\zeta^2 & \theta_{\mathbf{k}} \leq      \theta_{\mathrm{wrap}} \\
@@ -299,7 +299,7 @@ where $\Delta l$ is the change in usable length of the BPA, $R$ is the wrapping 
 so the fitted wrapping loss grows quadratically toward resting length and vanishes at the normalized free-contraction limit. Combining \eqref{eq:comp} into \eqref{eq:deltaL}, and subtracting $\Delta l$ from  \eqref{eq:Lm} yields
 
 \begin{equation}
-    l_\text{m} = l_{LMT} - 2\;l_{fitting}  - \chi_{0} - \Delta l\label{eq:x3}
+    l_\text{m} = l_{LMT} - l_{ten} - 2\,l_{fitting} - \chi_{0} - \Delta l\label{eq:x3}
 \end{equation}
 
 Figure~\ref{fig:bpaWrapping} shows a sagittal schematic of an extensor BPA crossing a flexed robot knee, with its braided body following an anterior contact arc between the proximal attachment and distal tendon. Dashed radii bound the contact arc; $R$ is the BPA-path wrapping radius, and $\alpha=\abs{\theta_{\mathrm{wrap}}-\theta_{\mathbf{k}}}$ is the bend angle after contact begins, expressed in radians in Equation~\eqref{eq:deltaL}. The drawing illustrates the local circular-wrap approximation, not the full multi-contact route. The fitted usable-length loss $\Delta l$ is not an arc-minus-chord length.
@@ -311,15 +311,15 @@ Figure~\ref{fig:bpaWrapping} shows a sagittal schematic of an extensor BPA cross
 \label{fig:bpaWrapping}
 \end{figure}
 
-\subsubsection{Identification of the Torque-Model Correction Terms}\label{sec:identification}
+\subsubsection{Identification of the Torque-Model Design Factors}\label{sec:identification}
 
-I set the correction terms in two stages using \texttt{gamultiobj} in MATLAB. The flexor stage fits $(\chi_0,\chi_1,\chi_2)$ with compliance at both attachments. The selected training/validation split trains on the $l_0=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} tests and validates on the \qty{45.7}{\cm} and \qty{40.6}{\cm} tendon tests. The extensor stage locks $(\chi_1,\chi_2)$ to that same flexor-front member and fits only $(\chi_0,\chi_3)$. Its selected training/validation split trains on the \qty{43.6}{\cm}, \qty{43.2}{\cm}-tendon, and \qty{45.7}{\cm} tests and validates on the \qty{40.0}{\cm} plain, \qty{40.0}{\cm}-tendon, and \qty{46.5}{\cm} tests. The extensor length offset is allowed to be negative. Appendix~\ref{app:model_geometry} records the test constants, bounds, stiffness-axis assignments, and adopted values in Tables~\ref{tab:app_flxpin_tests}, \ref{tab:app_extpin_tests}, \ref{tab:app_opt_bounds}, \ref{tab:app_stiffness_arrays}, and~\ref{tab:AdoptedXi}.
+I identified the design factors in two stages using \texttt{gamultiobj} in MATLAB. The flexor stage fits $(\chi_0,\chi_1,\chi_2)$ with compliance at both attachments. The selected training/validation split trains on the $l_0=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} tests and validates on the \qty{45.7}{\cm} and \qty{40.6}{\cm} tendon tests. The extensor stage locks $(\chi_1,\chi_2)$ to that same flexor-front member and fits only $(\chi_0,\chi_3)$. Its selected training/validation split trains on the \qty{43.6}{\cm}, \qty{43.2}{\cm}-tendon, and \qty{45.7}{\cm} tests and validates on the \qty{40.0}{\cm} plain, \qty{40.0}{\cm}-tendon, and \qty{46.5}{\cm} tests. The extensor length offset is allowed to be negative. Appendix~\ref{app:model_geometry} records the test constants, bounds, stiffness-axis assignments, and adopted values in Tables~\ref{tab:app_flxpin_tests}, \ref{tab:app_extpin_tests}, \ref{tab:app_opt_bounds}, \ref{tab:app_stiffness_arrays}, and~\ref{tab:AdoptedXi}.
 
 
 
 Each candidate is evaluated using RMSE, FVU, and maximum absolute residual. These metrics jointly measure torque error; none isolates a unique source such as level offset, waveform shape, or angular misalignment.
 
-The objective vector of the identification is defined explicitly. For a candidate correction vector $\boldsymbol{\chi}$, $(\chi_{0}, \chi_{1}, \chi_{2})$ in the flexor stage and $(\chi_{0}, \chi_{3})$ on the locked stiffness pair in the extensor refit, the predicted torque curve of test $i$ is interpolated to its $n_{i}$ measured knee angles $\theta_{ij}$, giving residuals $e_{ij} = M_{ij} - \hat{M}(\theta_{ij}; \boldsymbol{\chi})$ against the measured torque $M_{ij}$, and the three goodness-of-fit components of that test are
+The objective vector of the identification is defined explicitly. For a candidate vector of design factors $\boldsymbol{\chi}$, $(\chi_{0}, \chi_{1}, \chi_{2})$ in the flexor stage and $(\chi_{0}, \chi_{3})$ on the locked stiffness pair in the extensor refit, the predicted torque curve of test $i$ is interpolated to its $n_{i}$ measured knee angles $\theta_{ij}$, giving residuals $e_{ij} = M_{ij} - \hat{M}(\theta_{ij}; \boldsymbol{\chi})$ against the measured torque $M_{ij}$, and the three goodness-of-fit components of that test are
 \begin{equation}
 \mathrm{RMSE}_{i} = \sqrt{\frac{1}{n_{i}}\sum_{j} e_{ij}^{2}}\label{eq:gof_components}
 \end{equation}
@@ -339,7 +339,7 @@ g_{3,i}(\boldsymbol{\chi})/g_{3,i}^{(0)}
 \end{bmatrix},
 \label{eq:gof_objective}
 \end{equation}
-where $g_{1,i}$, $g_{2,i}$, and $g_{3,i}$ are the RMSE, FVU, and maximum absolute residual of Equations~\eqref{eq:gof_components}--\eqref{eq:gof_max}, the superscript $(0)$ marks the zero-correction baseline value of the same component, the same kinematics and force model with every correction term disabled, and $\mathcal{T}$ is the set of tests used for training. The mean of the baseline-normalized components makes the three objectives dimensionless and the training tests commensurate. The search carried no constraints beyond the parameter bounds of each stage, and the returned Pareto fronts (the candidate parameter sets for which improving one objective requires worsening another) were filtered to members scoring at or below the zero-correction baseline on every component of every test in that stage's identification pool.
+where $g_{1,i}$, $g_{2,i}$, and $g_{3,i}$ are the RMSE, FVU, and maximum absolute residual of Equations~\eqref{eq:gof_components}--\eqref{eq:gof_max}, the superscript $(0)$ marks the value for the baseline model, which uses the same kinematics and actuator force model with the design factors disabled, and $\mathcal{T}$ is the set of tests used for training. The mean of the baseline-normalized components makes the three objectives dimensionless and the training tests commensurate. The search carried no constraints beyond the parameter bounds of each stage, and the returned Pareto fronts (the candidate parameter sets for which improving one objective requires worsening another) were filtered to members scoring at or below this baseline on every component of every test in that stage's identification pool.
 
 MATLAB \texttt{gamultiobj} uses NSGA-II to return the Pareto front \citep{deb_nsga2_2002, mathworks_optimization_2025}. Candidate predictions are checked on the training and validation tests. The search uses bounded, normalized parameters, with logarithmic stiffness coordinates. Population, mutation, crossover, and stopping settings are retained with the archived run records.
 
@@ -351,7 +351,7 @@ At each scale the search perturbs both attachments by $\pm\epsilon$ offsets alon
 
 The original cost combined the summed absolute torque mismatch over the sampled poses, actuator length, displacement of the attachments from their starting locations, and a diameter-dependent penalty. The published weights for the first three terms were $10^{-4}$, $10^{-2}$, and $1$, respectively; the penalties for \qtylist{10;20;40}{\mm} BPAs were $1$, $5$, and $15$. These were numerical weights chosen to balance differently scaled cost terms. The geometric terms discouraged impractical placements but did not impose collision avoidance: attachments could lie away from the modeled bones, and routes could intersect them. This study established the placement-search approach; it did not establish physical torque accuracy or satisfaction of the human torque requirement at every pose.
 
-A subsequent knee implementation restricted candidates to mesh points on the femur and tibia: for the biceps femoris short-head replacement, every origin--insertion pair was evaluated over 100 knee poses from approximately \ang{-120} to \ang{10} at a fixed \qty{20}{\mm} diameter, candidates outside the allowable contraction range were rejected, and the lowest-cost usable pair was retained. Like the earlier cube-perturbation search, this discrete mesh search used rigid attachment geometry without the experimentally identified compliance corrections.
+A subsequent knee implementation restricted candidates to mesh points on the femur and tibia: for the biceps femoris short-head replacement, every origin--insertion pair was evaluated over 100 knee poses from approximately \ang{-120} to \ang{10} at a fixed \qty{20}{\mm} diameter, candidates outside the allowable contraction range were rejected, and the lowest-cost usable pair was retained. Like the earlier cube-perturbation search, this discrete mesh search used rigid attachment geometry without the design factors for attachment compliance.
 
 The knee-flexor mesh search also used a different objective from the original torque-mismatch cost. It rewarded torque surplus in the human torque's direction while penalizing disagreement between the human and robot torque-vector directions:
 \begin{equation}
@@ -379,7 +379,7 @@ Direction mismatch & $10$ & Mean $1-\hat{\mathbf{M}}^H_j\cdot\hat{\mathbf{M}}^R_
 
 \subsection{Constrained Knee-Route Redesign}\label{sec:constrained_redesign}
 
-The dissertation's route redesign extends the placement search as a constrained continuous optimization over the design vector $\mathbf{x} = [\mathbf{p}_{1},\, \mathbf{p}_{\mathrm{end}},\, l_{0},\, l_{\mathrm{tendon}}]$, the BPA origin $\mathbf{p}_{1}$, insertion $\mathbf{p}_{\mathrm{end}}$, resting length, and tendon length (Appendix~\ref{app:model_geometry}), so that the flexor and extensor configurations meet or exceed human knee torque capability over the range of motion. Because the route prediction (contact activation, wrapping, and compliance correction) is expensive to evaluate and only moderately smooth, the redesign minimizes a single scalar cost assembled from weighted penalty terms. The cost has the form
+The dissertation's route redesign extends the placement search as a constrained continuous optimization over the design vector $\mathbf{x} = [\mathbf{p}_{1},\, \mathbf{p}_{\mathrm{end}},\, l_{0},\, l_{\mathrm{tendon}}]$, the BPA origin $\mathbf{p}_{1}$, insertion $\mathbf{p}_{\mathrm{end}}$, resting length, and tendon length (Appendix~\ref{app:model_geometry}), so that the flexor and extensor configurations meet or exceed human knee torque capability over the range of motion. Because the route prediction (contact activation, wrapping, and deflection under load) is expensive to evaluate and only moderately smooth, the redesign minimizes a single scalar cost assembled from weighted penalty terms. The cost has the form
 \begin{equation}
     J = w_{w}\,J_{\text{worst}} + w_{t}\,J_{\text{torque}} + \textstyle\sum_{a} J_{a} + J_{\text{geom}} + J_{\text{len}},
     \label{eq:opt_cost}
@@ -442,7 +442,7 @@ $J_{\text{anchor}}$ second-BPA anchor (FLEX) & $10$ & Keeps the second actuator'
 \begin{table}[htbp]
 \caption{Additional cam-profile penalties and rejection values.}\label{tab:mesh_cam_penalties}
 \small\singlespacing
-\begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}p{0.16\textwidth}X@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}p{0.16\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Term} & \textbf{Weight} & \textbf{Meaning} \\
 \midrule
@@ -475,7 +475,7 @@ The redesign retains the objective of obtaining adequate torque from anatomicall
 
 \begingroup
 \widowpenalty=10000
-The pinned-flexor results first compare the length-dependent actuator model of \citet{hunt_modeling_2017} with the improved BPA force model. Subsequent comparisons use the improved model before and after design-parameter optimization. Hybrid calculations substitute measured muscle length and moment arm to help distinguish force-model error from geometric error on the pinned knee.
+The design factors identified on the pinned knee reduced torque-prediction error for both flexor and extensor configurations on the biomimetic knee. On the pinned flexor, replacing the force model of \citet{hunt_modeling_2017} improved the prediction, but the rigid-attachment calculation still overestimated measured torque magnitude. The hybrid calculation used measured muscle length and moment arm to separate force-model error from geometric error. In the final physical tests, both redesigned routes met or exceeded their selected human-muscle torque magnitudes at the measured knee angles (Section~\ref{sec:redesign_physical}).
 \par
 \endgroup
 
@@ -515,7 +515,7 @@ $\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\cm}) &
 
 
 
-The optimized two-bracket flexor model (Section~\ref{sec:identification}) follows the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction does not produce (Figure~\ref{fig:FlxPin_optimized}, Tables~\ref{tab:AdoptedXi} and~\ref{tab:FlxPinGof}). Table~\ref{tab:app_gof} compares prediction errors before and after correction.
+The optimized two-bracket flexor model (Section~\ref{sec:identification}) follows the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction does not produce (Figure~\ref{fig:FlxPin_optimized}, Tables~\ref{tab:AdoptedXi} and~\ref{tab:FlxPinGof}). Table~\ref{tab:app_gof} compares prediction errors with and without the design factors.
 
 \begin{figure}[htbp]
 \begin{center}
@@ -525,7 +525,7 @@ The optimized two-bracket flexor model (Section~\ref{sec:identification}) follow
 \end{figure}
 
 \begin{table}[H]
-\caption{Lengths $l_0$ (resting BPA) and $l_{\mathrm{ten}}$ (artificial tendon) are both in cm. Pinned-knee flexor goodness of fit before and after correction, using the identified terms. RMSE and maximum absolute residual (Max.) are in $\mathrm{N\,m}$; FVU is dimensionless.}
+\caption{Lengths $l_0$ (resting BPA) and $l_{\mathrm{ten}}$ (artificial tendon) are both in cm. Pinned-knee flexor goodness of fit with and without the identified design factors. RMSE and maximum absolute residual (Max.) are in $\mathrm{N\,m}$; FVU is dimensionless.}
 \label{tab:FlxPinGof}
 \begingroup
 \renewcommand{\arraystretch}{1.4}%
@@ -550,13 +550,13 @@ $\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\cm}) &
 \endgroup
 \end{table}
 
-The improved model reduces mean torque-prediction error in both the training and validation tests, with the optimized curves tracking the measurements across the tested range (Figure~\ref{fig:FlxPin_optimized} and Table~\ref{tab:FlxPinGof}). The baseline uses the same kinematics and force model with the correction terms disabled; Figure~\ref{fig:FlxPin_preopt} separately compares the original rigid-body prediction.
+The improved model reduces mean torque-prediction error in both the training and validation tests, with the optimized curves tracking the measurements across the tested range (Figure~\ref{fig:FlxPin_optimized} and Table~\ref{tab:FlxPinGof}). The baseline uses the same kinematics and force model with the design factors disabled; Figure~\ref{fig:FlxPin_preopt} separately compares the original rigid-body prediction.
 
 
 
 \subsection{Extensor on Pin Joint}
 
-The correction terms reduce mean pinned-knee extensor torque-prediction error in both the training and validation tests (Table~\ref{tab:ExtPinGof}). Figure~\ref{fig:pinned_extensor} compares the measured and predicted torque across knee angle. By inspection, the zero point of the measured torque was shifted to the right of the original model, consistent with an offset opposite in sign to the $\chi_{0}$ term in the previous section. The BPA in Figure~\ref{fig:pinned_extensor}\textbf{(C)} illustrates the pattern: the hybrid-method calculated torque correlates well with the originally predicted torque, while the actual measured torque diverges. The fitted wrapping term $\chi_{3}$ enters the usable-length correction in Equation~\eqref{eq:deltaL}. Table~\ref{tab:ExtPinGof} reports the improvement of the fit. Extensor-specific terms $(\chi_{0}, \chi_{3})$ were specified while stiffness terms $(\chi_{1}, \chi_{2})$ were kept the same as the previous section (see Table~\ref{tab:AdoptedXi}).
+The design factors reduce mean pinned-knee extensor torque-prediction error in both the training and validation tests (Table~\ref{tab:ExtPinGof}). Figure~\ref{fig:pinned_extensor} compares the measured and predicted torque across knee angle. By inspection, the zero point of the measured torque was shifted to the right of the original model, consistent with an offset opposite in sign to the $\chi_{0}$ term in the previous section. The BPA in Figure~\ref{fig:pinned_extensor}\textbf{(C)} illustrates the pattern: the hybrid-method calculated torque correlates well with the originally predicted torque, while the actual measured torque diverges. The fitted wrapping term $\chi_{3}$ scales the loss of usable length in Equation~\eqref{eq:deltaL}. Table~\ref{tab:ExtPinGof} reports the improvement of the fit. Extensor-specific terms $(\chi_{0}, \chi_{3})$ were specified while stiffness terms $(\chi_{1}, \chi_{2})$ were kept the same as the previous section (see Table~\ref{tab:AdoptedXi}).
 
 \begin{figure}[htbp]
 \begin{center}
@@ -566,7 +566,7 @@ The correction terms reduce mean pinned-knee extensor torque-prediction error in
 \end{figure}
 
 \begin{table}[H]
-\caption{Pinned-knee extensor goodness of fit before and after correction, with stiffness shared with the flexor. RMSE and maximum absolute residual (Max.) are in $\mathrm{N\,m}$; FVU is dimensionless.}
+\caption{Pinned-knee extensor goodness of fit with and without the design factors. The fitted model uses the flexor stiffness values. RMSE and maximum absolute residual (Max.) are in $\mathrm{N\,m}$; FVU is dimensionless.}
 \label{tab:ExtPinGof}
 \begingroup
 \renewcommand{\arraystretch}{1}%
@@ -599,7 +599,7 @@ $\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\mm}) &
 
 
 
-I tested the extensor configuration on the biomimetic knee with a $\diameter$\qty{10}{\mm} BPA at $l_{0}=\qty{51.8}{\cm}$. The measured torque fell well below the original prediction (Figure~\ref{fig:Ext10mm_52cm}). Applying the extensor terms identified on the pinned knee improved the prediction: at those terms, the optimized model reached an RMSE of \qty{1.1702}{\newton\meter}, an FVU of 0.6681, and a maximum absolute residual of \qty{2.2088}{\newton\meter}, against \qty{3.0322}{\newton\meter}, 4.4856, and \qty{5.5870}{\newton\meter} for the original rigid-body prediction.
+The extensor design factors identified on the pinned knee reduced the root-mean-square torque error on the biomimetic knee from \qty{3.0322}{\newton\meter} to \qty{1.1702}{\newton\meter} (Table~\ref{tab:BioTorqueGof}). The test used a $\diameter$\qty{10}{\mm} BPA at $l_{0}=\qty{51.8}{\cm}$. The rigid-body calculation overestimated the measured torque (Figure~\ref{fig:Ext10mm_52cm}).
 
 \begin{figure}[htbp]
 \centering
@@ -613,7 +613,7 @@ I tested the extensor configuration on the biomimetic knee with a $\diameter$\qt
 \subsection{Flexor on Biomimetic Knee}
 
 
-The shared correction terms reduce torque-prediction error for both biomimetic-knee flexor configurations (Table~\ref{tab:BioTorqueGof}). Figure~\ref{fig:FlxGrp} compares these predictions with the measurements; the bracket frame for the $\diameter$\qty{10}{\mm} BPA is shown in Figure~\ref{fig:bktFrame}\textbf{(C)}, and for the $\diameter$\qty{20}{\mm} BPA in Figure~\ref{fig:bktFrame}\textbf{(D)}. Figure~\ref{fig:FlxGrp}\textbf{(A)} presents the $\diameter$\qty{10}{\mm} actuator at $l_{0}=\qty{41.5}{\cm}$ with a \qty{21}{\mm} artificial tendon ($\diameter$\qty{1.5}{\mm} Shimano bicycle brake cable wrapped four times), pressurized to \qty{604}{\kPa}; the optimized model reached an RMSE of \qty{2.8002}{\newton\meter}, an FVU of 0.8835, and a maximum absolute residual of \qty{4.1201}{\newton\meter}. Figure~\ref{fig:FlxGrp}\textbf{(B)} presents the $\diameter$\qty{20}{\mm} actuator at $l_{0}=\qty{41.5}{\cm}$ with a \qty{14}{\mm} artificial tendon made out of the same brake cable, wrapped three times so that six cable segments share the load, each wrap contributing two tendon lengths and cross-sectional areas. The configuration in Figure~\ref{fig:FlxGrp}\textbf{(B)} was tested at \qty{620}{\kPa}, for which the optimized model reached an RMSE of \qty{2.2070}{\newton\meter}, an FVU of 0.0748, and a maximum absolute residual of \qty{3.7320}{\newton\meter}.
+The shared design factors improved the torque predictions for both biomimetic-knee flexors (Table~\ref{tab:BioTorqueGof}). Even so, the single $\diameter$\qty{20}{\mm} BPA fell short of the human flexion target in deep knee flexion. Panels \textbf{(C)} and \textbf{(D)} of Figure~\ref{fig:bktFrame} show the bracket frames for the $\diameter$\qty{10}{\mm} and $\diameter$\qty{20}{\mm} actuators, respectively. In Figure~\ref{fig:FlxGrp}\textbf{(A)}, the $\diameter$\qty{10}{\mm} actuator had a resting length of \qty{41.5}{\cm} and a \qty{21}{\mm} artificial tendon made from $\diameter$\qty{1.5}{\mm} Shimano bicycle brake cable wrapped four times. The test pressure was \qty{604}{\kPa}. The $\diameter$\qty{20}{\mm} actuator in Figure~\ref{fig:FlxGrp}\textbf{(B)} had the same resting length and a \qty{14}{\mm} tendon made from the same cable. Three wraps provided six cable segments to share the load. The test pressure for this configuration was \qty{620}{\kPa}.
 
 The torque of the single $\diameter$\qty{20}{\mm} flexor actuator shown in Figure~\ref{fig:FlxGrp}\textbf{(B)} did not exceed the magnitude of the maximum human isometric flexion torque between \ang{60} and \ang{100} of knee flexion, and within a $\pm 20\%$ band about the human mean it still fell short of human-level torque between \ang{78} and \ang{103} of flexion. Because operating at \qty{620}{\kPa} across the full desired range of motion would load the printed femur beyond its ultimate strength, single points were also recorded at the reduced pressures \qtylist{560;421;325;281}{\kPa}, which show that the desired range of motion is achievable at reduced pressure. This shortfall in flexion torque defines the target that the attachment-route redesign of Section~\ref{sec:mesh_opt} addresses.
 
@@ -646,19 +646,19 @@ Flexor, $\diameter\qty{20}{\mm}$ & 14.8064 & 3.3672 & 23.7218 & 2.2070 & 0.0748 
 
 \section{Discussion}
 
-\subsection{Reasons for the Correction Terms}\label{sec:disc_error}
+\subsection{Physical Basis of the Design Factors}\label{sec:disc_error}
 
-The correction terms of Section~\ref{sec:improved_model} exist because the mechanical connection between the actuator and the joint is compliant and changes under load, and each term names one family of physical reasons. A constant length offset $\chi_{0}$ exists because of manufacturing and positioning tolerances: the printed bone segments, the machined knee links, and the end-cap fittings each carry dimensional tolerance, and the accumulated discrepancy appears as a length that is consistently shorter than the predicted path at every joint angle, including at zero load where no compliance can act. The stiffness terms $\chi_{1}$ and $\chi_{2}$ exist because loaded components displace: the isometric system is not rigid, and there is compliance in the winch cable of the test stand, the artificial tendons, and the cantilevered attachment brackets. The wrapping-loss term $\chi_{3}$ exists because a BPA that bends over the joint loses usable contraction length that no straight-line model accounts for; at high flexion the same loading was observed to stretch and compress shorter-$l_{0}$ actuators and to slip the BPA off the anterior head of the femur bolt by up to \qty{\pm 20}{\mm}, changing both the force vector and the torque.
+The design factors of Section~\ref{sec:improved_model} exist because the mechanical connection between the actuator and the joint is compliant and changes under load, and each term names one family of physical reasons. A constant length offset $\chi_{0}$ exists because of manufacturing and positioning tolerances: the printed bone segments, the machined knee links, and the end-cap fittings each carry dimensional tolerance, and the accumulated discrepancy appears as a length that is consistently shorter than the predicted path at every joint angle, including at zero load where no compliance can act. The stiffness terms $\chi_{1}$ and $\chi_{2}$ exist because loaded components displace: the isometric system is not rigid, and there is compliance in the winch cable of the test stand, the artificial tendons, and the cantilevered attachment brackets. The wrapping-loss term $\chi_{3}$ exists because a BPA that bends over the joint loses usable contraction length that no straight-line model accounts for; at high flexion the same loading was observed to stretch and compress shorter-$l_{0}$ actuators and to slip the BPA off the anterior head of the femur bolt by up to \qty{\pm 20}{\mm}, changing both the force vector and the torque.
 
 Wrapping a BPA around the knee remains an approximation with inherent error (Figure~\ref{fig:Ext_passthru}): high actuator force and a short moment arm make the torque sensitive to attachment deflection and small geometric errors \citep{young_analyzing_2019}. The pinned-knee tests therefore separate actuator-force error from attachment-compliance and routed-geometry error, and applying the identified terms to the biomimetic knee tests them where the moment arm and the instantaneous center of rotation move with knee angle. Isometric testing establishes a static capacity envelope; velocity dependence, damping, and behavior under controlled speed and load remain unidentified.
 
 \subsection{Design-Factor Optimization}\label{sec:ongoing}
 
-The results figures use the two-stage identification of Section~\ref{sec:identification}. Relative to the zero-correction baseline, the optimized model reduces mean RMSE by 81\,\% on the flexor training tests and 80\,\% on the flexor validation tests (Table~\ref{tab:FlxPinGof}), and by 60\,\% on the extensor training tests and 57\,\% on the extensor validation tests (Table~\ref{tab:ExtPinGof}); on the biomimetic extensor it reduces FVU by 85\,\% (Table~\ref{tab:BioTorqueGof}). Table~\ref{tab:AdoptedXi} records the identified terms: the stiffness pair is shared, and the wrapping factor was identified on the extensor and applied to wrapping in the redesigned flexor. The genetic multiobjective solver is retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline serves the route redesign (Section~\ref{sec:mesh_opt}); the search bounds are recorded in Appendix~\ref{app:model_geometry} (Table~\ref{tab:app_opt_bounds}).
+The results figures use the two-stage identification of Section~\ref{sec:identification}. Relative to the baseline model without the design factors, the optimized model reduces mean RMSE by 81\,\% on the flexor training tests and 80\,\% on the flexor validation tests (Table~\ref{tab:FlxPinGof}), and by 60\,\% on the extensor training tests and 57\,\% on the extensor validation tests (Table~\ref{tab:ExtPinGof}); on the biomimetic extensor it reduces FVU by 85\,\% (Table~\ref{tab:BioTorqueGof}). Table~\ref{tab:AdoptedXi} records the identified terms: the stiffness pair is shared, and the wrapping factor was identified on the extensor and applied to wrapping in the redesigned flexor. The genetic multiobjective solver is retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline serves the route redesign (Section~\ref{sec:mesh_opt}); the search bounds are recorded in Appendix~\ref{app:model_geometry} (Table~\ref{tab:app_opt_bounds}).
 
 \begin{table}[htbp]
 \centering\small
-\caption{Adopted correction terms. The effective stiffness pair is shared; $\chi_3$ was identified on the extensor and is applied to wrapping in the redesigned flexor.}
+\caption{Adopted design factors. The effective stiffness pair is shared; $\chi_3$ was identified on the extensor and is applied to wrapping in the redesigned flexor.}
 \label{tab:AdoptedXi}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
@@ -670,11 +670,11 @@ Extensor & $-0.00638$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & $0.158$\\
 \end{tabular}
 \end{table}
 
-The original placement methods selected routes by predicted torque under rigid-attachment assumptions; the isometric tests show those predictions require the compliance corrections before they can guide hardware selection, so the redesigned routes evaluate every candidate through the force balance with the identified terms. On the biomimetic knee the shared terms transfer at an FVU of 0.8835 for the \qty{10}{\mm} flexor and 0.0748 for the \qty{20}{\mm} flexor (Table~\ref{tab:BioTorqueGof}); the larger error for the smaller actuator limits transfer across configurations, and the redesigned two-BPA routes provide the further physical test of Section~\ref{sec:redesign_physical}.
+The original placement methods selected routes by predicted torque under rigid-attachment assumptions; the isometric tests show those predictions require the design factors for compliance before they can guide hardware selection, so the redesigned routes evaluate every candidate through the force balance with the identified terms. On the biomimetic knee the shared terms transfer at an FVU of 0.8835 for the \qty{10}{\mm} flexor and 0.0748 for the \qty{20}{\mm} flexor (Table~\ref{tab:BioTorqueGof}); the larger error for the smaller actuator limits transfer across configurations, and the redesigned two-BPA routes provide the further physical test of Section~\ref{sec:redesign_physical}.
 
 \subsection{Redesigned Routes for the Biomimetic Robot Model}\label{sec:route_redesign_results}
 
-The redesigned routes combine the existing biomimetic robot geometry with human-muscle torque references. The surrogate-plus-pattern-search procedure of Section~\ref{sec:constrained_redesign} uses the correction terms in Table~\ref{tab:AdoptedXi}, two \qty{20}{\mm} BPAs per route, a \qty{620}{\kPa} pressure ceiling, and a maximum usable contraction of 0.255. Both direct routes meet the required torque envelope (Table~\ref{tab:redesigned_route_capacity}).
+The redesigned routes combine the existing biomimetic robot geometry with human-muscle torque references. The surrogate-plus-pattern-search procedure of Section~\ref{sec:constrained_redesign} uses the design factors in Table~\ref{tab:AdoptedXi}, two \qty{20}{\mm} BPAs per route, a \qty{620}{\kPa} pressure ceiling, and a maximum usable contraction of 0.255. Both direct routes meet the required torque envelope (Table~\ref{tab:redesigned_route_capacity}).
 
 \begin{table}[htbp]
 \centering
