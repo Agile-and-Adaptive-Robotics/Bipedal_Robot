@@ -7,6 +7,19 @@ import review
 
 
 class HistoryReviewTests(unittest.TestCase):
+    def test_november_reader_questions_on_unrelated_prose(self):
+        for rejected in (
+                "I checked the pressure calibration. A separate check verified the direction.",
+                "The fixture can also be imported into a second simulator.",
+                "For the loading trial we applied 20 N to the fixture."):
+            self.assertTrue(review.evidence_cues(rejected), rejected)
+        for finding in (
+                "The fixture bent under load. Replacing its bracket halved the deflection.",
+                "We imported the fixture geometry into the second simulator.",
+                "We applied 20 N to measure bracket compliance.",
+                "Measured and predicted peak pressure agreed within 2 kPa."):
+            self.assertFalse(review.evidence_cues(finding), finding)
+
     def test_advisor_style_review_resumes_after_the_author_reserved_ethics_section(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "15-background.tex"
@@ -46,6 +59,16 @@ Open the file and choose the pathway.
         self.assertEqual({r["type"] for r in tested["basis"]}, {"comment", "tracked_edit"})
         tracked = next(r for r in tested["basis"] if r["id"] == "INTRO-T36")
         self.assertIn("sort and understand", tracked["edit"]["proposed"])
+
+    def test_named_experiments_and_unspecified_assistance(self):
+        prose = "Phase was 0.498 in one trial and 0.223 in the other."
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "95-AppendixD.tex"
+            path.write_text(r"\subsection{Pathway deletions}" + "\n\n" + prose, encoding="utf8")
+            openings = review.review_results_openings(path, [{"start": 3, "kind": "prose", "source": prose}])
+        self.assertTrue(openings[0]["cues"])
+        self.assertTrue(review.evidence_cues("The assisted treadmill model completed the trial."))
+        self.assertFalse(review.evidence_cues("The passive rails carried part of the treadmill model's weight."))
 
     def test_historical_coverage_and_newest_dated_deductions(self):
         rows = review.signals()

@@ -29,6 +29,7 @@ running network parameters.
 """
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -336,9 +337,10 @@ def plot_side(time, result, side):
     return phase
 
 
-def main():
-    OUT.mkdir(exist_ok=True)
-    data = np.load(HERE / "bsolve_out.npz", allow_pickle=True)
+def main(input_path=None):
+    OUT.mkdir(parents=True, exist_ok=True)
+    input_path = HERE / "bsolve_out.npz" if input_path is None else Path(input_path)
+    data = np.load(input_path, allow_pickle=True)
     time = np.asarray(data["t"], dtype=float)
     side_raw = {side: side_data(data, side) for side in ("r", "l")}
     curves, initial_rank = {}, {}
@@ -356,7 +358,7 @@ def main():
         phase_results[side] = plot_side(time, result, side)
 
     payload = {
-        "source": "bsolve_out.npz['acts'] (converted-MuJoCo ridge/NNLS)",
+        "source": f"{input_path.name}['acts'] (converted-MuJoCo ridge/NNLS)",
         "time_s": [float(time[0]), float(time[-1])],
         "frames": int(len(time)),
         "rank_selection": {"criterion": "smallest centered VAF >= 0.90",
@@ -456,4 +458,9 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Calculate conductances from a Subject01 gait activation record.")
+    parser.add_argument("--input", type=Path, default=HERE / "bsolve_out.npz")
+    parser.add_argument("--output-dir", type=Path, default=OUT)
+    args = parser.parse_args()
+    OUT = args.output_dir
+    main(args.input)

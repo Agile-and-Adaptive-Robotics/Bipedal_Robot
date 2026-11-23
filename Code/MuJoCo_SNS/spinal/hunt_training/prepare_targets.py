@@ -18,7 +18,11 @@ import bsolve_ik as B
 from motion_io import read_motion
 
 def main():
-    out=H/'runs/targets';out.mkdir(parents=True,exist_ok=True)
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, default=H/'runs/targets')
+    out = parser.parse_args().output
+    out.mkdir(parents=True,exist_ok=True)
     t,names,values,unit=read_motion(B.IK_MOT);assert unit=='yes'
     dt=float(np.median(np.diff(t)));model,data=B.build_air_model(False);arms=CoupledArms(model)
     signs={r['coordinate']:r['sign'] for r in json.loads((H/'runs/ik_audit/fk_signs.json').read_text())}

@@ -1,0 +1,1338 @@
+{
+  "recruitment": {
+    "native_targets_exactly_reproduced": true,
+    "repeat_all_arrays_bit_exact": true,
+    "nframes": 121,
+    "native_vs_revised": {
+      "torque": {
+        "maximum": 0.0,
+        "root_mean_square": 0.0
+      },
+      "activation": {
+        "maximum": 0.6815598216568182,
+        "root_mean_square": 0.043704965980915104
+      },
+      "features": {
+        "maximum": 0.10038758266743847,
+        "root_mean_square": 0.00780283529549799
+      },
+      "force": {
+        "maximum": 692.0613889545798,
+        "root_mean_square": 46.20008128330094
+      },
+      "residual": {
+        "maximum": 0.0198555908884205,
+        "root_mean_square": 0.0021670462486352623
+      }
+    },
+    "halfstep_vs_fullstep": {
+      "torque": {
+        "maximum": 0.0,
+        "root_mean_square": 0.0
+      },
+      "activation": {
+        "maximum": 0.013005214430870216,
+        "root_mean_square": 0.0005140562553921258
+      },
+      "features": {
+        "maximum": 0.0014394457932860871,
+        "root_mean_square": 9.87022653718781e-05
+      },
+      "force": {
+        "maximum": 6.918703402658593,
+        "root_mean_square": 0.3778559211098031
+      },
+      "residual": {
+        "maximum": 1.0623656151871955e-05,
+        "root_mean_square": 2.529337412217691e-06
+      }
+    },
+    "four": {
+      "mean_residual": 0.005699875451515599,
+      "p95_residual": 0.040247692378908274
+    },
+    "native": {
+      "mean_residual": 0.006003800452021564,
+      "p95_residual": 0.041226114487315856
+    },
+    "halfstep": {
+      "mean_residual": 0.005698943605690658,
+      "p95_residual": 0.04024731234650053
+    }
+  },
+  "neural_fits": {
+    "hunt": {
+      "training/A": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\hunt\\training\\A\\FINAL.json",
+        "sha256": "e6a6ae64e07e65543a806a8c45cc8da3bca1ba357de41b352f19336cb86c0ed7",
+        "accepted": true,
+        "evaluations": 16,
+        "value": 0.0263498472847723,
+        "recruitment_error": 0.17281793133173218
+      },
+      "training/B": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\hunt\\training\\B\\FINAL.json",
+        "sha256": "d9490d31ddb4766d4796d2ebdc08b9be48eef24c26aac681904fca647c8cd9df",
+        "accepted": true,
+        "evaluations": 32,
+        "value": 0.14198453943202072,
+        "recruitment_error": 0.17037207442486704
+      },
+      "training/C": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\hunt\\training\\C\\FINAL.json",
+        "sha256": "fb701576725fcce3a794186eb9f9dafd6e66ba2233234a227efb9c2fdfd0a241",
+        "accepted": true,
+        "evaluations": 24,
+        "value": 2.319013217231988,
+        "recruitment_error": 0.19333945649979695
+      },
+      "training/D": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\hunt\\training\\D\\FINAL.json",
+        "sha256": "5a3d82367e46418ad9c465c0ead607129cbd013dfcbc38184290ebf469ae157c",
+        "accepted": true,
+        "evaluations": 24,
+        "value": 2.064594915499292,
+        "recruitment_error": 0.1922610376067271
+      }
+    },
+    "s3k": {
+      "training/A": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\s3k\\training\\A\\FINAL.json",
+        "sha256": "1686365b4b1964ae833086ebb8a5605e515407c293565181c098354449568273",
+        "accepted": true,
+        "evaluations": 16,
+        "value": 0.33370745519744616,
+        "recruitment_error": 0.6228903141780631
+      },
+      "training/B": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\s3k\\training\\B\\FINAL.json",
+        "sha256": "a6e811c13bd71f42afaa514e6e820c68ad743091a7036305338c6c5e44061bcf",
+        "accepted": true,
+        "evaluations": 32,
+        "value": 0.11362319756479833,
+        "recruitment_error": 0.5819679984980578
+      },
+      "training/C": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\s3k\\training\\C\\FINAL.json",
+        "sha256": "86659a1172c867cbcd36c19ce86eccf7dae42a387dc75de915f8718036cccd6d",
+        "accepted": true,
+        "evaluations": 24,
+        "value": 1.4384128233364681,
+        "recruitment_error": 0.2296942474797641
+      },
+      "training/D": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\s3k\\training\\D\\FINAL.json",
+        "sha256": "f08f872252cda8b969e98a2956b2834d71e70031a917bbf0993698d096991582",
+        "accepted": false,
+        "evaluations": 24,
+        "value": 3.686527215962887,
+        "recruitment_error": 0.35729040183980887
+      },
+      "waveform_C": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\s3k\\waveform_C\\FINAL.json",
+        "sha256": "7e15276921c0ad8136b8a84eaf74d3b5425d121ed990cbccb0e2315c182ce858",
+        "accepted": false,
+        "evaluations": 12,
+        "value": 3.6617636191555274,
+        "recruitment_error": 0.13631712713006225
+      },
+      "feasible_waveform_C": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\s3k\\feasible_waveform_C\\FINAL.json",
+        "sha256": "b3a1cfc2c83448e3051d7fd9a0621cbaf6aab7bd01872b877277339dfe4c181d",
+        "accepted": true,
+        "evaluations": 0,
+        "value": 2.5673272846671273,
+        "recruitment_error": 0.1524229213241039
+      },
+      "waveform_D": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\s3k\\waveform_D\\FINAL.json",
+        "sha256": "4b3e867b3baace26d2e0e1eef122ce0f61adc52b52381971511003f199ba76ff",
+        "accepted": false,
+        "evaluations": 32,
+        "value": 3.318304379195768,
+        "recruitment_error": 0.32046811816309695
+      }
+    },
+    "syn6": {
+      "training/A": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\syn6\\training\\A\\FINAL.json",
+        "sha256": "c4ad31f9be94be8d45672f5ae6b38b1b830ae2791f66b7462ada7c33427afce8",
+        "accepted": true,
+        "evaluations": 16,
+        "value": 0.016220600162206722,
+        "recruitment_error": 0.5671561583803312
+      },
+      "training/B": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\syn6\\training\\B\\FINAL.json",
+        "sha256": "080282fd7cc1d7306ca34150fc4d818e95dc92164970efccb54ffa7f7db0b955",
+        "accepted": true,
+        "evaluations": 32,
+        "value": 0.14198453943201406,
+        "recruitment_error": 0.534424337603682
+      },
+      "training/C": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\syn6\\training\\C\\FINAL.json",
+        "sha256": "832b5dda93b476232ed0a1b1fbb75794c3e3732dcf2d26d9bb91cd8e73dc3342",
+        "accepted": true,
+        "evaluations": 24,
+        "value": 1.452745043894578,
+        "recruitment_error": 0.2469681921334619
+      },
+      "training/D": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\syn6\\training\\D\\FINAL.json",
+        "sha256": "6cd205ff7cda93918a887eb09099c9b6bf801f0838b01cf7e7de57f91becf56e",
+        "accepted": true,
+        "evaluations": 24,
+        "value": 2.4632457651591073,
+        "recruitment_error": 0.23212612257270931
+      },
+      "waveform_C": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\syn6\\waveform_C\\FINAL.json",
+        "sha256": "c4ae244b8f6f7275b1eb71a612419aae69170081fe0319308aaad3a8824542a7",
+        "accepted": true,
+        "evaluations": 12,
+        "value": 2.581947711219326,
+        "recruitment_error": 0.15355805448647364
+      },
+      "waveform_D": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\syn6\\waveform_D\\FINAL.json",
+        "sha256": "1b42dadd365d0a555e017f8ca6b40a986394aaedbb04231979d9286495cfe100",
+        "accepted": true,
+        "evaluations": 32,
+        "value": 1.682939880636549,
+        "recruitment_error": 0.1540955341204535
+      }
+    },
+    "w2lvar": {
+      "training/A": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\w2lvar\\training\\A\\FINAL.json",
+        "sha256": "33daefb9f68d72a0ba20b0af20447a5ad8da73cc82f1591f8552c693dcb639e7",
+        "accepted": true,
+        "evaluations": 16,
+        "value": 0.044606650446066265,
+        "recruitment_error": 0.5882373621356028
+      },
+      "training/B": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\w2lvar\\training\\B\\FINAL.json",
+        "sha256": "a9db21115194cb0b89b58fcdfd49a4d67ad087a7f51ebd3cd78c133f82e4f12c",
+        "accepted": true,
+        "evaluations": 32,
+        "value": 0.17443890048675526,
+        "recruitment_error": 0.5975426248959198
+      },
+      "training/C": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\w2lvar\\training\\C\\FINAL.json",
+        "sha256": "82d7bfc2098802fbe6e1b8e0dbd401f76751135f326c556803784844fb985db6",
+        "accepted": true,
+        "evaluations": 24,
+        "value": 1.4958333880815258,
+        "recruitment_error": 0.2767379893118929
+      },
+      "training/D": {
+        "file": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\four_muscle_refit\\w2lvar\\training\\D\\FINAL.json",
+        "sha256": "4de44d90d35418bb23431cae52d02c63b0dc8ab7594d83bef0634ccd8dafc7a0",
+        "accepted": false,
+        "evaluations": 24,
+        "value": 4.070807250605961,
+        "recruitment_error": 0.38963683501192065
+      }
+    }
+  },
+  "figures": {
+    "figs/60-sns/biw2lvar_air_aligned_authoritative.alt.txt": "c79c9cd0b5401aa768db32bf2f1a4d41a7a2fa87715e4f87a38d4bb375eddb61",
+    "figs/60-sns/biw2lvar_air_aligned_authoritative.pdf": "0d9b420d4a787adee5505d3d646bd8a41c0f11ca959e94a280c65f810928f1c8",
+    "figs/60-sns/syn6_suspended_kinematics.alt.txt": "ac5946c721a465b080376dac06fcc72d643dceb4f66dd241b44a6f007fe57687",
+    "figs/60-sns/syn6_suspended_kinematics.pdf": "a832aeb6b6f7c4d09c49ac28edcfac9d99a971ffa5a318efbed33f0325e7e2e9",
+    "figs/95-AppendixD/AIR_stimulus_mechanics.alt.txt": "e280ed3ef4e3668496bb5dfc8d783089377816c2195a6939ebcc624086c485d9",
+    "figs/95-AppendixD/AIR_stimulus_mechanics.pdf": "64e91f5c28ee73028ba456e028516ddd30285cd7228ee1a50e8117eae2cb3c1e",
+    "figs/95-AppendixD/AIR_stimulus_neural.alt.txt": "d634e56a0f0cb37a3a7374e6db41a67c76e7c463ca4823f05907f86e978bbfe6",
+    "figs/95-AppendixD/AIR_stimulus_neural.pdf": "39ab052c9c6a6b68cfc325d4e296bf1f2d9080d1c3abeb4c85b576de44ec16a4",
+    "figs/95-AppendixD/gait2392_ik_overlay.alt.txt": "700ad308b1f0612fbc61bd68840942705af367fa4c947931ea64f1489904c2af",
+    "figs/95-AppendixD/gait2392_ik_overlay.pdf": "5efaa4aa47ead47772b6f1dc943ca8e15a7e39363ffe796f1be5f7f2ca37d9d0",
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt": "ac383fa785d1ab744fa516d9b8e3891e9f08b95532eea22c7e5a2fcb20d47367",
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf": "4db8e10759c00dbdcf1f49cc5f6b6655a87cdf87aa6c6295cf4eafaad4fd4d52"
+  },
+  "human_body_files": {
+    "backend/equivalence.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\backend\\equivalence.json",
+      "sha256": "01dc18fff993e772fcc80e5b1b436fe14b1533ec89509aedada998ca68075ec0"
+    },
+    "external_ik/external_reference_scores.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\external_ik\\external_reference_scores.json",
+      "sha256": "e3dbb0dc4dbd7146378032890e294e853d7d70df1c9ff7edd05dae97a75b9d33"
+    },
+    "staged/trajectories.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\staged\\trajectories.json",
+      "sha256": "7324fb11caa06a25a54da55eac453815f054c86bcb74a3fe46c2590ce24e775c"
+    },
+    "remote_parity.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\remote_parity.json",
+      "sha256": "8cb412ba69e6be2ab4937992b1595dca283888df5cc1509f76be5929dec5123e"
+    },
+    "feedback_search/round5_best.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round5_best.json",
+      "sha256": "b9022a5d035ede205f6633e2a2038ff499a4e16ce16482207311e58b76e15531"
+    },
+    "feedback_search/round6_best.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round6_best.json",
+      "sha256": "997abbf1f10e8603eba3eefffa75547db9e95ebedc417abfcf06b969296b8429"
+    },
+    "feedback_search/round7_best.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round7_best.json",
+      "sha256": "b4498a3aa7f386d983e770ac7a437d5a58c48035f1bbd22d5c8c397fac6a9947"
+    },
+    "feedback_search/round8_best.json": {
+      "file": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round8_best.json",
+      "sha256": "1971e459666827ddea2dba14a3aac531a0103030f75b3f71f15bead43374ad65"
+    }
+  },
+  "robot_reference": {
+    "ground_search_seeds.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\ground_search_seeds.json",
+      "sha256": "ae3a881f2804c6874846b1c10c87a0df5623e06b3769fd9b65131ed64118abf0"
+    },
+    "locomotion_atlas.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\locomotion_atlas.json",
+      "sha256": "e15cee48ea31b4ffc2256a306a56a70993f9881efe7a77968b8952e669728f43"
+    },
+    "selected_ground.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\selected_ground.json",
+      "sha256": "612437778065e2dfd6ba66ff0fba8b797f63f73aa95376b09e1a6b2f08f606c0"
+    },
+    "selected_ground_evidence.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\selected_ground_evidence.json",
+      "sha256": "ac5ee41ba0cb93a74fd1b57c2f1026a8ec061b68fe116f06d6c067338105e3c9"
+    },
+    "selected_reduced_lift.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\selected_reduced_lift.json",
+      "sha256": "becef349840e4299a2ca9b7c4d50809ca89c06cb015df7cbf536115bb6636074"
+    },
+    "selected_reduced_lift_evidence.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\selected_reduced_lift_evidence.json",
+      "sha256": "9b183f229d5e47dd1e882edd54eccbe89927060a22a11dbd4a03cf1bfa52ceec"
+    },
+    "selected_reduced_lift_force_check.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\selected_reduced_lift_force_check.json",
+      "sha256": "ce11825e61f98eaf66e1bc9761c9e96e34c66877b07e823fb9d72f4c6a021d9e"
+    },
+    "study.json": {
+      "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\robotbody_curriculum_reference\\study.json",
+      "sha256": "443708b1547ec00500d475795c5677e7b18abf18e55000088c6b19a3906814e2"
+    }
+  },
+  "isolated_reflexes": {
+    "biology/confirmed/summary.json": {
+      "file": "D:\\temp\\dissertation_knee_pressure\\biology\\confirmed\\summary.json",
+      "sha256": "5d0f867b6299cb39ed57dd4496caa400bca08bcc1b590a00932451d35bda3f55"
+    },
+    "biology/arm/gui_arm_comparison.json": {
+      "file": "D:\\temp\\dissertation_knee_pressure\\biology\\arm\\gui_arm_comparison.json",
+      "sha256": "f8018b52196d4b485a05f683e35f2abb0530bed6fca24771d742ec7286882ddf"
+    },
+    "results/nonspiking_summary.json": {
+      "file": "D:\\temp\\dissertation_knee_pressure\\results\\nonspiking_summary.json",
+      "sha256": "5fa82a202e37f4c811e8077cc427afa0acb950a8b4de5b192293453a4971f8e1"
+    }
+  },
+  "verified_delivery": {
+    "pages": 352,
+    "pdf_sha256": "fadfebdd99a6cad83ecc3e7d0ac75e864d63bd7f95b3cd18fe2dcbe97cbcdfc0",
+    "zip_sha256": "a36e034a17df7fc280fc84dab4c117aef028b6c1f668b85e0e42bb713d611fe4",
+    "changed_project_files": [
+      "chapters/06-ack.tex",
+      "chapters/60-sns.tex",
+      "chapters/70-overall.tex",
+      "chapters/93-AppendixB.tex",
+      "chapters/95-AppendixD.tex",
+      "thesis.bib",
+      "chapters/50-database.tex",
+      "figs/60-sns/sns_cup_reflex_authoritative.pdf",
+      "figs/60-sns/sns_cup_reflex_authoritative.alt.txt",
+      "figs/60-sns/sns_knee_reflex_authoritative.pdf",
+      "figs/60-sns/sns_knee_reflex_authoritative.alt.txt",
+      "figs/60-sns/biw2lvar_air_aligned_authoritative.alt.txt",
+      "figs/60-sns/biw2lvar_air_aligned_authoritative.pdf",
+      "figs/60-sns/syn6_suspended_kinematics.alt.txt",
+      "figs/60-sns/syn6_suspended_kinematics.pdf",
+      "figs/95-AppendixD/AIR_stimulus_mechanics.alt.txt",
+      "figs/95-AppendixD/AIR_stimulus_mechanics.pdf",
+      "figs/95-AppendixD/AIR_stimulus_neural.alt.txt",
+      "figs/95-AppendixD/AIR_stimulus_neural.pdf",
+      "figs/95-AppendixD/gait2392_ik_overlay.alt.txt",
+      "figs/95-AppendixD/gait2392_ik_overlay.pdf",
+      "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt",
+      "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf"
+    ],
+    "all_references_resolved": true,
+    "document_font_resources_embedded": true,
+    "number_font_resources": 180,
+    "latex_warnings": [],
+    "underfull_boxes": 11,
+    "figure_checks": {
+      "sns_knee_reflex_authoritative": {
+        "panels": "ABCDEF",
+        "example_pdf_pages": [
+          170
+        ]
+      },
+      "sns_cup_reflex_authoritative": {
+        "panels": "ABCDE",
+        "example_pdf_pages": [
+          171
+        ]
+      }
+    },
+    "pdf_page_bottom_gap_inches": {
+      "172": {
+        "previous": 6.69,
+        "current": 1.07
+      },
+      "182": {
+        "previous": 8.06,
+        "current": 1.03
+      }
+    },
+    "pages_per_section": {
+      "front": 20,
+      "1": 10,
+      "2": 31,
+      "3": 26,
+      "4": 55,
+      "5": 13,
+      "6": 32,
+      "7": 16,
+      "8": 2,
+      "Bibliography": 21,
+      "Appendices": 1,
+      "A": 15,
+      "B": 15,
+      "C": 30,
+      "D": 60,
+      "E": 5
+    }
+  },
+  "before_edit_live_check": {
+    "source_zip_sha256": "a882e922a349e945e09d8c9b540c1e5a7669b71cc2581b4715e64351e6e1e728",
+    "sources_matched": {
+      "60-sns.tex": "6c984936",
+      "06-ack.tex": "baed23ae",
+      "50-database.tex": "38696fd2",
+      "70-overall.tex": "8f109116",
+      "93-AppendixB.tex": "ef09a309",
+      "95-AppendixD.tex": "655ff9a7",
+      "96-AppendixE.tex": "d33cfe2b",
+      "10-introduction.tex": "26779d7f",
+      "92-AppendixA.tex": "b2c28ce",
+      "94-AppendixC.tex": "ce9a3024",
+      "30-torque.tex": "5d699125",
+      "80-conclusion.tex": "2d4b2328",
+      "thesis.bib": "eb574e46"
+    },
+    "method": "Editor text comparison after the author cleared tracked changes. Compared content length and normalized FNV-1a/UTF-16 digest. Overleaf Editing mode explicitly selected.",
+    "selection": "Twentieth of November, after 20:38 local"
+  },
+  "figure_resources": {
+    "figs/60-sns/biw2lvar_air_aligned_authoritative.pdf": {
+      "points": [
+        396.85040283203125,
+        425.19683837890625
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ],
+        [
+          "HIQOUK+Arial-BoldMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "0d9b420d4a787adee5505d3d646bd8a41c0f11ca959e94a280c65f810928f1c8"
+    },
+    "figs/60-sns/syn6_suspended_kinematics.pdf": {
+      "points": [
+        457.20001220703125,
+        417.6000061035156
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ],
+        [
+          "HIQOUK+Arial-BoldMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "a832aeb6b6f7c4d09c49ac28edcfac9d99a971ffa5a318efbed33f0325e7e2e9"
+    },
+    "figs/95-AppendixD/AIR_stimulus_mechanics.pdf": {
+      "points": [
+        396.85040283203125,
+        354.3307189941406
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ],
+        [
+          "HIQOUK+Arial-BoldMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "64e91f5c28ee73028ba456e028516ddd30285cd7228ee1a50e8117eae2cb3c1e"
+    },
+    "figs/95-AppendixD/AIR_stimulus_neural.pdf": {
+      "points": [
+        396.85040283203125,
+        425.19683837890625
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ],
+        [
+          "HIQOUK+Arial-BoldMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "39ab052c9c6a6b68cfc325d4e296bf1f2d9080d1c3abeb4c85b576de44ec16a4"
+    },
+    "figs/95-AppendixD/gait2392_ik_overlay.pdf": {
+      "points": [
+        468.0,
+        428.3999938964844
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "5efaa4aa47ead47772b6f1dc943ca8e15a7e39363ffe796f1be5f7f2ca37d9d0"
+    },
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf": {
+      "points": [
+        518.4000244140625,
+        612.0
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ],
+        [
+          "HIQOUK+Arial-BoldMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "4db8e10759c00dbdcf1f49cc5f6b6655a87cdf87aa6c6295cf4eafaad4fd4d52"
+    },
+    "figs/60-sns/sns_cup_reflex_authoritative.pdf": {
+      "points": [
+        396.85040283203125,
+        425.19683837890625
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ],
+        [
+          "HIQOUK+Arial-BoldMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "b6fd2dcc4d05f5380ab51fac0e323eccce1d620598127fa548cd43dc8f816f68"
+    },
+    "figs/60-sns/sns_knee_reflex_authoritative.pdf": {
+      "points": [
+        396.85040283203125,
+        477.0
+      ],
+      "fonts": [
+        [
+          "HIQOUK+ArialMT",
+          true,
+          "Type0"
+        ],
+        [
+          "HIQOUK+Arial-BoldMT",
+          true,
+          "Type0"
+        ]
+      ],
+      "sha256": "5462cd51cfe812aeb958cea8ef35bcede89d722917522951d795ca9e36d0e058"
+    }
+  },
+  "permanent_experiment_sources": {
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/actuator_icon_geometry.json": "d011f38d842b18e0a52925c2f1ae4528fc3288168e2f623f22b08bc1519b6b97",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/biological_knee_circuit.json": "468a2a18af3c52ef3fb568292886e43732fa3297aeae50d16a3ebaf77ce5d443",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/biological_knee_response.json": "1a228f1d6a490e7c675e1235228ab0fbcdd91bd19a947767792b1001406c6c65",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/gui_reflex_check.json": "40b1e047b1d24686bd1c4b6306df0bf32f75cfad79db2b6aeda086b04094f23f",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/native_replay.json": "582a64b267f1b87d33564c952a937349f41f777e45b14c46242d8e248e9a94d7",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/palette_checks.json": "f3611d1504b46747246e963dc418078ff5f4a280dff9df31b70cee54a65bdd85",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/pneumatic_arm_circuit.json": "e2648627548fa00c427d76f274cff59418f93815102864e9f27e0cc4cfe5b249",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/pneumatic_arm_comparison.json": "f8018b52196d4b485a05f683e35f2abb0530bed6fca24771d742ec7286882ddf",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/pneumatic_force_checks.json": "9b0aaa3232513d9d5be75ce1bb6e7a2ec4aae48699a488b956e95c13ecbb61b2",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/pneumatic_knee_nonspiking.json": "5fa82a202e37f4c811e8077cc427afa0acb950a8b4de5b192293453a4971f8e1",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/pneumatic_knee_spiking.json": "4e348a5e84e16c406dc3bf47621dbcbda3a0569c218f8741c2c73670f51ca5f3",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/pneumatic_spiking_arm.json": "46cb9d078cd311348e60d0d4790d31da1c2772591ae4f0fd0428a48f6a1075fa",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/README.md": "77d1fd3fae04137cf762817a05efe96afe73889f68ebe630f4a9a9902ae94689",
+    "Code/Matlab/SNS_Simscape/results/reflex_validation/thelen_reference_checks.json": "ecc2a8066e733b1e4257b12434ca5ec4e4fc29ac3e1c2da0f4ec5578e8916ac6",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/ground_search_seeds.json": "ae3a881f2804c6874846b1c10c87a0df5623e06b3769fd9b65131ed64118abf0",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/locomotion_atlas.json": "e15cee48ea31b4ffc2256a306a56a70993f9881efe7a77968b8952e669728f43",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/README.md": "bad41df0c1edd0256e64b5b27dfee8c60f07496a1d12470bd106d307fdfd432d",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/selected_ground.json": "612437778065e2dfd6ba66ff0fba8b797f63f73aa95376b09e1a6b2f08f606c0",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/selected_ground_evidence.json": "ac5ee41ba0cb93a74fd1b57c2f1026a8ec061b68fe116f06d6c067338105e3c9",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/selected_reduced_lift.json": "becef349840e4299a2ca9b7c4d50809ca89c06cb015df7cbf536115bb6636074",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/selected_reduced_lift_evidence.json": "9b183f229d5e47dd1e882edd54eccbe89927060a22a11dbd4a03cf1bfa52ceec",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/selected_reduced_lift_force_check.json": "ce11825e61f98eaf66e1bc9761c9e96e34c66877b07e823fb9d72f4c6a021d9e",
+    "Code/MuJoCo_SNS/robotbody_curriculum_reference/study.json": "443708b1547ec00500d475795c5677e7b18abf18e55000088c6b19a3906814e2"
+  },
+  "additional_trials": {
+    "review": {
+      "counts": {
+        "passages": 437,
+        "reopened_judgments": 0,
+        "saved_judgments_stale_or_absent": 0
+      },
+      "results_openings": {
+        "reader_question": "What did the study establish or the tool make possible, and why does it matter? Read the lead and its example together. Counts and navigation can support that answer.",
+        "basis": [
+          {
+            "id": "OCT-C-6ad9065fdd1a807d276b7091",
+            "type": "comment",
+            "comment": "This is super confusing. We don't need all these details. The airtable base is the database...it can't 'start' with anything if you 'start from the beginning'. Also, starting from the beginning does not mean you tell a chronological story of everything that happened for the database curation. Start with the finished product, then tell us what we need to know about how it could be re-created. ",
+            "edit": null
+          },
+          {
+            "id": "OCT-C-6ad906ffe5979f005bd434a3",
+            "type": "comment",
+            "comment": "You are giving details before giving us the big picture. What does that database look like? What is in it? How is it organized?",
+            "edit": null
+          },
+          {
+            "id": "OCT-C-9a0c8baf844aafdf",
+            "type": "comment",
+            "comment": "You need to discuss why the database is important. One method is to write some declarative sentences of use like \"The database can be used to deepen a researchers knowledge of sensory feedback pathways used in locomotion and balance control\". and \"The database can be used to assist in designing neural models of control for locomotion.\" Then describe how it can be used in this way in the rest of the paragraph.",
+            "edit": null
+          },
+          {
+            "id": "INTRO-T36",
+            "type": "tracked_edit",
+            "comment": null,
+            "edit": {
+              "original": " supports the selection of feedback pathways and the definition of biologically informed interactions in neuromechanical models",
+              "proposed": " provides an overview of how the SADb was developed, how it is organized, and features that can be used to sort and understand the underlying material",
+              "operation": "replace"
+            }
+          }
+        ],
+        "openings": [
+          {
+            "file": "50-database.tex",
+            "heading": "Results",
+            "start": 46,
+            "source": "The SADb Explorer app lets researchers trace a proposed sensory connection back to its experimental source. The full curated collection is searchable in a browser, including records that no longer fit in the Airtable working base. The \\emph{Table} view brings together the experimental conditions, the response, and its source. The \\emph{Pivot} table groups papers by classifications such as afferent type and species. The \\emph{Bubble map} connects a paper to the studies it cites and to later papers that cite it. A researcher can follow any of these comparisons back to an individual paper.",
+            "cues": []
+          },
+          {
+            "file": "50-database.tex",
+            "heading": "Evidence for a Phase-Dependent Feedback Rule",
+            "start": 52,
+            "source": "The record curated in Section~\\ref{sec:sadb_classification_example} illustrates how a researcher can use an experimental observation to choose the sign of a sensory connection in a controller. The study by \\citet{mccrea_disynaptic_1995} appears under both \\emph{Ib disynaptic inhibition} and \\emph{Ib disynaptic excitation} in the app (Figure~\\ref{fig:sadb_explorer}). Their Figure~3 shows why. The same plantaris nerve stimulus inhibited a medial gastrocnemius motor neuron at rest and excited it during extension in midbrain-evoked fictive locomotion.",
+            "cues": []
+          },
+          {
+            "file": "50-database.tex",
+            "heading": "Comparing Groups of Papers",
+            "start": 73,
+            "source": "The \\emph{Pivot} table identifies which papers support a comparison across afferents or species. For example, the intersection of Ib afferents and cats contains 21 papers (Figure~\\ref{fig:sadb_pivot}). Opening that cell displays the individual studies, including \\citet{mccrea_disynaptic_1995}. That study also appears in the Ia row because its nerve stimulus recruited both classes. The shared record shows why adding the two row counts would count some studies twice.",
+            "cues": []
+          },
+          {
+            "file": "50-database.tex",
+            "heading": "Following Citations in the Bubble Map",
+            "start": 86,
+            "source": "To find evidence for how a leg controller should respond when the foot strikes an obstacle, a researcher can start with the review of vertebrate locomotion by \\citet{grillner_neurobiological_1985} and follow its references to the original experiments (Figure~\\ref{fig:sadb_clusters}). In the \\emph{Year $\\times$ citations} layout, publication year is on the horizontal axis and citation count is on a logarithmic vertical axis. The \\emph{Topic landscape} instead places papers joined by citations near one another. Its spring layout balances attraction along citation links with repulsion between papers. The Louvain algorithm groups papers that cite one another relatively often. The color key names these groups to help readers identify related work.",
+            "cues": []
+          },
+          {
+            "file": "50-database.tex",
+            "heading": "Coverage of the Curated Collection",
+            "start": 101,
+            "source": "The app preserves 1,393 records across five categories. \\emph{Papers} identify publications. \\emph{Models} and \\emph{Review Papers} link a model or review to its sources. \\emph{Feedback pathways} name connections reported in those sources, and \\emph{Recorders} identify the people who entered pathway information. All five categories appear in \\emph{Table}. The \\emph{Pivot} and \\emph{Bubble map} views use the 943 paper records.",
+            "cues": []
+          },
+          {
+            "file": "50-database.tex",
+            "heading": "AI-Assisted Literature Triage",
+            "start": 107,
+            "source": "ResearchRabbit, Litmaps, txyz, SciSpace, and MirrorThink were evaluated for their usefulness in building SADb. The tools helped identify related publications and reduced the time needed to summarize straightforward reviews or model descriptions. Summaries of complex models and physiological findings required substantial correction \\citep{bolen_using_2024}. For classification, only txyz received an adequate rating. None received a good rating. The McCrea example illustrates the consequence. A summary that identified extensor excitation but omitted the resting condition would give a curator only one of the two pathway labels. A researcher checked each source and made the final inclusion and classification decisions.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "The Limits of Hand Tuning in AnimatLab",
+            "start": 8,
+            "source": "In the ME610 Neuromechanical Modeling course, Connor Morrow and I tested whether the spinal circuit of \\citet{deng_neuromechanical_2019} could control the sagittal-plane biped of \\citet{li_bipedal_2017}. We connected them in AnimatLab, a graphical program for linking neurons, muscles, and sensory feedback \\citep{cofer_animatlab_2010}. A shared rhythm generator (RG) set the timing for both legs. The pattern-formation (PF) layer distributed that rhythm to motor neurons on each side. Opposing muscles acted at the hip, knee, and ankle, and the toe joint moved passively. We tuned neural currents, synaptic weights, and muscle parameters by hand. The legs made stepping-like movements with the feet off the ground. When we lowered the model onto its feet and released it, it fell over (Figure~\\ref{fig:animatlab_model_architecture}). Hunt and I reported this first experiment at the NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Moving the Neural and Mechanical Models into MuJoCo",
+            "start": 28,
+            "source": "MuJoCo (Multi-Joint dynamics with Contact) calculates joint motion and contact forces \\citep{todorov_mujoco_2012}. SNS-Toolbox simulates the neurons and synapses of a synthetic nervous system (SNS) in Python \\citep{nourse_sns_2023}. I connected them so a researcher could change a pathway and repeat a trial with the same body, drive, and restraints. A \\emph{virtual harness} supports the model mechanically. Simulated springs and dampers acting on the pelvis can hold the feet off the ground or steady the body while the feet bear part of its weight. Recording the forces at the pelvis and each foot separates the support supplied by the harness from the load carried by the legs.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Converting the Human Model and Comparing Muscle Force",
+            "start": 64,
+            "source": "I used MyoConverter to translate the OpenSim joints and muscle paths into MJCF, the XML format MuJoCo uses to describe a mechanical model \\citep{caggiano_myosuite_2022,wang_myosim_2022}. Figure~\\ref{fig:gait2392_human_models} shows the human model in both programs. The conversion reversed two hip actions and assigned eight muscles a maximum active force of only \\qty{1}{\\newton}. I corrected the hinge axes and restored the force scales from OpenSim. At the knee, I replaced a misplaced rectus femoris path point with one from the vastus medialis so the muscle followed the patella during extension. Restoring the muscle path matters because its moment arm determines the torque generated by a given force. The six foot--ground contact pairs remained active for loaded trials and were disabled for tests with the feet clear (Appendix~\\ref{sec:app_conversion_repairs}).",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Relocating the Actuators on the Robot Counterpart",
+            "start": 81,
+            "source": "I developed \\path{gait2392_robotbody.osim} to represent artificial muscles on the Gait2392 skeleton. I moved attachments and intermediate points to give the BPAs sufficient travel and clearance (Chapter~\\ref{ch:torque}) \\citep{bolen_bipedal_2019,morrow_optimization_2020}. My script mirrored the proposed right-leg routes onto the left leg before conversion. The rerouted muscles span different lengths at the same joint angles. At some poses the original human fiber and tendon parameters could no longer balance their forces. I modified the converter to omit poses that failed this calculation and fit the usable ones (Appendix~\\ref{sec:app_conversion_repairs}). With its feet off the ground, the model produced repeated stepping-like movements using MuJoCo's biological muscle actuators. Figure~\\ref{fig:gait2392_robot_models} shows the source geometry and the mirrored model used by a Simulink controller.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Building the Mechanical Model from Robot CAD",
+            "start": 98,
+            "source": "The robot we intend to build has four-bar knees and attachment locations defined in its SOLIDWORKS assembly. I brought that assembly into both MuJoCo and Simscape Multibody. In MuJoCo, STL surface meshes describe the shape of each rigid part, and MJCF specifies its mass, inertia, constraints, and actuator attachments. In Simscape Multibody, the CAD import produces bodies and joints as Simulink blocks (Chapters~\\ref{ch:background} and~\\ref{ch:torque}).",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "SNS-Simscape Block Programming for Neural Controllers",
+            "start": 106,
+            "source": "I adapted W2L to the Gait2392 human model. In this variant, W2Lvar, one pair of PF channels coordinates hip muscles on each side and another coordinates the knee and ankle muscles. The channels drive motor neurons (MNs), which recruit the muscles. With 888 neurons and 7,868 connected neuron pairs, even a change to one knee extensor requires locating its motor pool, tracing the inputs, and identifying each connection's sign and strength.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Designing Neural Circuits in the SNS-Simscape Graphical Interface",
+            "start": 129,
+            "source": "SNS-Simscape represents neurons, synapses, sensory signals, activation, and actuator force as Simulink blocks (Figure~\\ref{fig:simulink_sns_implementation}). The library supports both nonspiking and spiking neurons, as does SNS-Toolbox \\citep{nourse_sns_2023}. Both neuron models integrate input current, and a membrane leak draws voltage toward rest. In the nonspiking model, synaptic conductance varies continuously with the presynaptic voltage over its operating range. In the spiking model, reaching threshold triggers a spike and resets the voltage. The sensory blocks represent group Ia fibers that respond to muscle stretch and group Ib fibers that signal muscle force.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Sensory Feedback at a Single Joint",
+            "start": 144,
+            "source": "The two experiments test whether a circuit built in the graphical editor produces the expected movement. In the biological knee, exciting the extensor Ia pathway should recruit the extensor and inhibit its antagonist. In humans, a patellar tendon tap recruits the quadriceps and extends the knee, and femoral nerve stimulation can suppress hamstring activity \\citep{ghosh_spinal_2014,hamm_reciprocal_2010}. The pneumatic arm tests whether a mechanical disturbance can recruit the same type of sensory feedback. As a cup fills, the added weight should stretch the flexor and recruit the force needed to resist the load.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Retesting a Controller after a CAD Change",
+            "start": 166,
+            "source": "In the saved W2L circuit, one left-leg PF neuron excites the extensor motor pool and another excites the flexor pool (Figure~\\ref{fig:sns_design_fit_workflow}A). Moving an attachment can change its moment arm and can change the length sensed by the circuit. A researcher can update the attachment and its actuator and sensor mapping, rerun the saved controller with the same drive and load, and compare force and joint motion.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Methods for Choosing, Scoring, and Replaying Trials",
+            "start": 187,
+            "source": "With the circuit and body accessible from a script, a parameter search can run trials without hand tuning between them (Figure~\\ref{fig:sns_design_fit_workflow}B). I organized the searches by function, from producing a rhythm to recruiting the muscles that transfer weight. Each stage varies the parameters that influence its target and retests the selected settings.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Testing Bilateral Coordination with the Feet Off the Ground",
+            "start": 226,
+            "source": "I extended W2Lvar to coordinate muscles that span the hip and knee. The resulting nonspiking controller, BiW2Lvar+, used the four-stage neural training method. Holding the Gait2392 model above the ground let its joint motion reveal whether the legs alternated before either had to bear weight.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Tracing a Timing Error in the Six-Synergy Controller",
+            "start": 240,
+            "source": "The syn6 controller distributes muscle recruitment through six PF channels per leg. Each channel should excite groups of motor neurons during a particular part of the stride, as estimated from reference motion and ground forces (Appendix~\\ref{sec:app_fsa_design}). The fitting procedure could improve the combined motor output even when an individual channel was mistimed. I developed a timing test that aligns each channel's outgoing synaptic signal with the rhythm and compares its active interval with the target. The fifth channel continued to excite its motor neurons throughout the cycle on both sides, including when it should have been silent. Refitting the motor connections left this error in place.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Contact Feedback and Locomotion",
+            "start": 253,
+            "source": "On level ground with a virtual pelvic harness, W2L heel strikes occurred about halfway through the opposite foot's cycle. Removing Ib force feedback alone preserved that alternation. Removing heel and toe contact feedback together with pooled extensor-force inputs and their associated spinal connections disrupted it, although the walker still moved forward (Figure~\\ref{fig:sns_ablation_pair}). The drive, harness settings, and forward push stayed the same, isolating the effect of the removed group. Forward distance alone would have missed it. Further deletions could distinguish the individual pathways (Appendix~\\ref{sec:app_w2l_perturbations}).",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Speeding Up Repeated Controller Trials",
+            "start": 279,
+            "source": "Every candidate in a tuning study requires another simulation of the same mechanical model. Following a suggestion from Stu McNeal, I implemented a neural update that stores only connected neuron pairs and reuses its working arrays. Both implementations reproduced the same neural and mechanical trajectories.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Transferring Neural Controllers Between Mechanical Models",
+            "start": 301,
+            "source": "Reproducing a neural circuit under prescribed inputs is a first test of transfer. When the circuit drives a new body, its movement must generate the inputs that trigger the next step. The controller of \\citet{dirusso_investigating_2023} reproduced stepping with its original OpenSim model in SCONE, software for simulating and optimizing movement. The Gait2392 implementation reproduced the neural equations under prescribed inputs, yet the new body fell when it generated its own feedback. A record of foot contact exposed one important interface choice. Heel strike must be signaled when the foot first takes load. Repeating that signal while the foot remains planted restarts the step cycle (Appendix~\\ref{sec:app_dirusso_attempt}).",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Distinguishing Neural Drive from Mechanical Support",
+            "start": 307,
+            "source": "The Gait2392 model continued stepping in place when its supplementary left and right drive reached zero. Its shared descending input and pelvic harness remained active. In a separate W2L experiment, the robot model progressed with reduced supplementary drive while its harness still supported it (Appendix~\\ref{sec:sns_controller_comparison}). Lowering neural drive and reducing mechanical assistance test different requirements for stepping.",
+            "cues": []
+          },
+          {
+            "file": "60-sns.tex",
+            "heading": "Conclusion",
+            "start": 315,
+            "source": "I built tools to couple neural controllers to biomechanical models and repeat the same experiment as either the controller or the body changes. The models represent the human musculoskeletal system, its robot counterpart with rerouted muscle attachments, and the AARL robot's own mechanical design. Researchers can choose a sensory connection from the evidence in the SADb (Chapter~\\ref{ch:database}), draw its circuit, and calculate or fit its synaptic strengths. Automated tuning and faster neural updates let them test alternative controllers under the same mechanical conditions.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Mechanical-Model and Interface Verification",
+            "start": 8,
+            "source": "Conversion of the rerouted robot model stopped when OpenSim could not balance fiber and tendon forces at an extreme joint angle. I modified MyoConverter to omit individual poses where this calculation failed and to fit the force parameters from the usable poses. Where no usable force map was available, the conversion retained default actuator parameters. Those defaults provide no evidence of force agreement on the affected routes. I therefore used the human model as the reference for controller development. Its conversion required distinct repairs to hip joint action, maximum muscle force, and patella tracking, described below.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Conversion Repairs and Mechanical Checks",
+            "start": 13,
+            "source": "Single-actuator tests exposed reversed hip-flexion and hip-adduction actions. I reversed the corresponding hinge axes to recover the OpenSim actions and kept the converted knee coordinate, in which flexion is negative. At each knee angle I also applied its prescribed translations. Rotating the knee while holding those coordinates fixed changes the muscle paths and invalidates the pose comparison.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Matched-Pose Force Comparison",
+            "start": 48,
+            "source": "The converted muscle paths reproduced the OpenSim estimates of active force most closely when evaluated with the OpenSim force equations. OpenSim static optimization assumes an inextensible tendon and scales active force capacity at the current muscle length and shortening speed by activation \\citep{opensim_static_optimization_docs,opensim_static_optimization_source}. I replayed the 126 positions, speeds, and estimated activations from the subject01 walk (\\qtyrange{0.492}{2.492}{\\second}) on the generic converted model. Both calculations used its muscle parameters and paths. The reference forces came from the subject-scaled OpenSim model.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Neural and Actuator Signal Contracts",
+            "start": 87,
+            "source": "Each postsynaptic neuron combines the conductances from all its incoming pathways. Membrane voltage, current, and conductance are represented in millivolts, nanoamperes, and microsiemens in both the graphical and programmatic implementations. The one-input SNS-Simscape synapse passes the pair $[g_k,\\,g_kE_k]^{\\mathsf T}$ to the postsynaptic neuron, which calculates",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Calculating Synaptic Conductances for a Connectome",
+            "start": 111,
+            "source": "A connectome specifies which neurons are connected. To choose the strength of a connection, the designer must also specify what a given input should do to the receiving neuron. The nonspiking design script applies the functional subnetwork approach \\citep{szczecinski_functional_2017} to sensory pathways in the Gait2392 reference controller (s3k), a W2L-derived controller (w2lvar), and the six-synergy controller (syn6). For example, the right rectus femoris Ia pathway in s3k excites the motor neuron of the same muscle. With other synaptic inputs held inactive, the design target was to raise that neuron's steady voltage from \\qty{2.5}{\\milli\\volt} to \\qty{3.0}{\\milli\\volt} when the sensory neuron received \\qty{1}{\\nano\\ampere}.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Pressure-Driven Robot Counterpart",
+            "start": 120,
+            "source": "To test how a pneumatic muscle moves the robot counterpart, I transferred the baseline and selected actuator designs from the 27-site survey to both legs of the Gait2392 model (Tables~\\ref{tab:survey_dofs_sizes} and~\\ref{tab:capability_by_site}). The two configurations retain the survey's sleeve dimensions, parallel actuator counts, transmissions, and series compliance. For example, the baseline short head of biceps femoris used one \\qty{20}{\\milli\\meter} BPA. The selected design used three parallel \\qty{20}{\\milli\\meter} BPAs and a tackle that doubled output travel and halved the force delivered by the bundle. The force calculation uses the fitted models from Chapter~\\ref{ch:muscles} for \\qtylist{10;20}{\\milli\\meter} BPAs and a manufacturer-derived curve for the selected \\qty{40}{\\milli\\meter} BPAs. Some survey sleeves have resting lengths outside the range measured in Chapter~\\ref{ch:muscles}, so their calculated forces require extrapolation. Installing the documented sleeves and cables directly on the new paths would also put some sleeves outside their working range of contraction. I therefore modeled fixed mounting offsets and cable extensions to put each sleeve within its operating range. These are mounting assumptions for the simulation. With the pelvis fixed and both feet clear of the ground, 17 joint coordinates remained free within their passive limits. The 38 remaining biological actuators supplied zero force.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Implementation and Circuit-Response Checks",
+            "start": 138,
+            "source": "A common input produced the same driven rhythm in two implementations of the W2L circuit. Applying current separately to rhythm, pattern, and motor neurons then showed which interventions changed the clock and which changed its output. The coupled experiments follow that output through the mechanical model.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Matched Rhythm-Core Implementations",
+            "start": 142,
+            "source": "In W2L, reciprocally connected flexor and extensor rhythm-generator (RG) populations set the phase of a leg's movement. Pattern-formation (PF) populations distribute that rhythm to motor neurons (MNs) controlling opposing muscles. A change in PF activity can therefore change which muscles are recruited while the RG keeps time. The two-layer organization and the source Deng circuit are illustrated in Figures~\\ref{fig:rybak_cpg_circuit} and~\\ref{fig:deng_connectome}.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Biological Knee Reflex and Mechanical Stretch",
+            "start": 157,
+            "source": "I used two OpenSim Gait2392 muscles to test the circuit in Figure~\\ref{fig:sns_reflex_current}. The vastus medialis extends the knee, and the short head of biceps femoris flexes it. I sampled their lengths and signed knee moment arms from the right leg at one-degree intervals with the other joints at their default positions. The Simulink muscle blocks use the corresponding Gait2392 fiber and tendon parameters, compliant tendons, and Thelen's active and passive fiber equations (Appendix~\\ref{sec:app_opensim_curves}) \\citep{thelen_adjustment_2003,delp_opensim_2007}. At matched fiber lengths, activations, and joint angles, the blocks reproduced OpenSim's muscle force and fiber velocity for both stationary and moving fibers.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "A Published Neural Mechanism as a Verification Target",
+            "start": 181,
+            "source": "In the reduced two-level circuit of \\citet{rybak_modelling_2006}, either of two stimuli could suppress a flexor motor burst. Their effects on the next burst distinguished the populations' roles. After stimulation of the extensor PF population, the RG kept time and flexor motor output resumed at the expected phase. After stimulation of the extensor RG population, the subsequent rhythm shifted. The Python implementation passed all 13 tests of drive dependence, repeatability, and phase after a motor deletion.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Layer-Specific Controls in the Reduced Deng Circuit",
+            "start": 185,
+            "source": "In the reduced Deng circuit, suppressing flexor output for two cycles by stimulating the extensor RG shifted the timing of both rhythm and motor activity. Stimulating the hip PF or inhibiting the hip-flexor MN suppressed the same two expected bursts, but the subsequent bursts resumed on schedule (Table~\\ref{tab:layer_stimulus}). The fourteen-neuron implementation follows the circuit used in SNS-Toolbox demonstrations \\citep{deng_neuromechanical_2019,nourse_sns_2023}. A \\qty{0.1}{\\milli\\second} Euler step reproduced the existing neural integrator's complete \\qty{24}{\\second} baseline voltage trace exactly in the tested process. The baseline period was \\qty{1.938}{\\second}. Neural output drove the unilateral W2L mechanical model, held above the ground with sensory return disabled. Hip commands came from the MN outputs; knee and ankle commands used the existing PF-to-activation mapping. This configuration tests transmitted circuit effects, not the original rat mechanics or bilateral walking.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Li's Walker and the Li--Deng Adaptation in AnimatLab",
+            "start": 209,
+            "source": "The original biped of \\citet{li_bipedal_2017} walked forward in the archived AnimatLab replay at \\qty{0.637}{\\meter\\per\\second}, with step periods near \\qty{1.3}{\\second}. Its sensory-entrained controller and sagittal-plane body provide a reference for the subsequent transfer. Across the archived walker models, eleven rhythm and gait metrics fell within their acceptance bands. The bilateral contact-driven model's rhythm generators had periods of \\qtylist{0.450;0.467}{\\second}, and the modern W2L model showed joint oscillations at \\qty{2.25}{\\hertz}.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Staged Calibration and Coupled-Model Experiments",
+            "start": 226,
+            "source": "A circuit can move the legs rhythmically while the feet are clear and still fail to transfer weight when they touch the ground. To separate these capabilities, I first calibrated intrinsic rhythm, timing with expected afferent signals, feedforward muscle recruitment, and local feedback. After replacing the four thigh-muscle equations, I solved again for the 92 muscle activations that reproduced the joint torques over the reference motion. Repeating all four neural training stages with these targets gave BiW2Lvar+ and syn6 solutions that met the final neural-fit criterion. The Gait2392 reference circuit and its W2L-derived variant missed that criterion. Tests with the body then progressed from air motion with and without sensory return to standing, foot loading with a virtual pelvic harness or guide rails, and refinement of the foot--ground contact model.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "BiW2Lvar+ Coordination with the Feet Off the Ground",
+            "start": 232,
+            "source": "The nonspiking BiW2Lvar+ controller produced alternating knee flexion with sensory return both disabled and enabled. The knees flexed more frequently in the second condition, which also received an increase in sustained central drive. With gravity active, a vertical spring at the pelvis carried the body and ground contact was disabled. Both \\qty{16}{\\second} trials used the repaired Gait2392 human model and its native MuJoCo biological muscles. The trials share learned weights and a PF-to-MN expression scale of 0.1. The four training stages follow \\citet{hunt_development_2017}. Table~\\ref{tab:app_air_stages} gives the principal knee-flexion peaks and the intervals from which the periods were measured.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Fixed-Weight Neural Noise and Phase-Specific Stimuli",
+            "start": 258,
+            "source": "With the same pelvic spring, the knees continued to alternate when small, independent fluctuations were added to the current in the four RG cells. This tests whether the established rhythm persists when the drive varies from one moment to the next. The imposed fluctuations had a \\qty{20}{\\milli\\second} correlation time. Three seeds at each stationary standard deviation, \\qtylist{0.01;0.025}{\\nano\\ampere}, gave six trials. All six met the principal-motion, knee, and frontal-separation criteria. The zero-noise control and a repeat of one noisy seed also passed, with identical joint states, neural voltages, and applied current in the repeated seed. Learned weights and air-stage mechanics were fixed throughout.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Locating and Testing a Timing Error in syn6",
+            "start": 278,
+            "source": "The syn6 controller fitted muscle activation without reproducing the timing of the six intended PF bursts on either side. The distinction matters because a downstream motor fit can conceal a burst that starts too early or persists throughout the cycle. I compared syn6 with s3k, the Gait2392 reference controller with four PF cells per leg. To test the intermediate PF computation, I measured outgoing transmission, $\\operatorname{clip}(V/\\qty{5}{\\milli\\volt},0,1)$, where $V$ is rest-relative membrane voltage. I averaged nine cycles on the original \\qty{1.233}{\\second} calibration clock, from \\qty{2.466}{\\second} through \\qty{13.556835}{\\second}, without shifting individual channels. Transmission above 0.2 defined a burst. Each channel had to match the target burst count, have absolute fundamental lag of at most \\ang{30} and duty error of at most 0.15, and span at least 0.2 transmission. These thresholds define the engineering timing test.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Testing a Self-Supported Waddle on the W2L108 Guide Rails",
+            "start": 318,
+            "source": "The goal was a self-supported waddle in which the walker took short, slow steps and transferred its weight from one foot to the other. The 108-cell, 216-connection Li--Deng-derived W2L controller produced alternating unloaded foot clearance in its twelve-muscle walker, with assistance from the rails and guides. In the selected \\qty{10}{\\second} treadmill trial, eight left and seven right swings cleared the whole foot, and the qualified transitions alternated. All 32 saved numerical arrays agreed in an independent repeat. Over $1\\leq t<10$\\,s, minimum anatomical knee flexion was \\ang{2.087} right and \\ang{1.946} left. These angles incorporate the walker's initial-pose offsets and report flexion as positive.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Gait2392 Motion with a Pelvic Harness Compared with Human Joint Angles",
+            "start": 326,
+            "source": "Changing the force equations for rectus femoris and the short head of biceps femoris altered the two legs differently under the same pelvic harness and controller settings. The right leg cycled faster than the human reference and spent longer in stance. The left leg more closely matched the reference period but also remained loaded longer. Two machines reproduced the composite kinematic score of $-171.91$ over $2\\leq t<16$\\,s. Figure~\\ref{fig:app_gait2392_ik_overlay} compares 12 right and 11 left cycles with the Gait2392 inverse-kinematics recording. For both the model and the reference, stance began when vertical foot load crossed \\qty{50}{\\newton}. Each model cycle lasted between \\qty{0.35}{\\second} and \\qty{2.5}{\\second}. The comparison preserves the measured joint-angle offsets and aligns each leg to its own loading onset.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Balance on Fixed-Base Inverted Pendulums",
+            "start": 360,
+            "source": "The inverted pendulums isolated whether delayed sensory feedback could restore an upright posture after a known disturbance. A single-link ankle model with opposing tensile actuators recovered in all 18 held-out combinations of initial tilt, push, sensory delay, and noise. The longest settling time was \\qty{2.365}{\\second}. To test coordination between joints, I used two- and three-link pendulums with two perpendicular hinge axes per link. Antagonistic motor pathways drove two opposing, filtered torque actuators at each axis. The controller used delayed motion and the history of its own commands to estimate the current state.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Pelvic Harnesses, Applied Loads, and Pathway Interventions",
+            "start": 366,
+            "source": "A virtual pelvic harness can carry body weight and restrain horizontal motion independently. In matched \\qty{16}{\\second} human-model stepping trials, replacing the four thigh-muscle force equations increased mean upward harness force from \\qty{48.85}{\\percent} to \\qty{50.00}{\\percent} of body weight. Root-mean-square horizontal force decreased from \\qty{115.6}{\\newton} to \\qty{113.7}{\\newton} over the same \\qtyrange{5}{13}{\\second} interval.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Effect of Muscle Mechanics on Foot Clearance",
+            "start": 371,
+            "source": "Both muscle groups contributed to left-foot clearance. I repeated the same \\qty{16}{\\second} Gait2392 trial with a virtual pelvic harness. Each run began in the same posture with the same controller. I substituted the compliant-tendon Thelen equations for rectus femoris on both legs, the short head of biceps femoris on both legs, or both pairs. The remaining muscles retained their native equations. All four trials produced five right and four left ground-contact cycles in the scored interval. The lowest point on the left foot was at the toes. Its peak height fell from \\qty{30.5}{\\milli\\meter} with native muscles to \\qty{19.0}{\\milli\\meter} with rectus femoris changed, \\qty{17.1}{\\milli\\meter} with the short head changed, and \\qty{6.7}{\\milli\\meter} with both changed. The number of unloaded left swings meeting the \\qty{10}{\\milli\\meter} clearance criterion fell from four to two with either substitution and to zero with both.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "W2L Heel Strikes and Load Carried by the Pelvic Harness",
+            "start": 377,
+            "source": "The W2L walker advanced with heel strikes roughly half a cycle apart under the virtual pelvic harness. After I corrected how the evaluator delivered the saved pathway gains, four independent \\qty{30}{\\second} replays produced identical trajectories. This W2L configuration has 96 neurons. The connection matrix in Figure~\\ref{fig:app_circuit_full} and the conductances in Figure~\\ref{fig:app_circuit_core} identify the pathways changed in the interventions below. For example, heel input reaches the opposite flexor RG, and commissural interneurons connect the left and right rhythm generators. During $4.5\\leq t<30$\\,s, 28 left and 21 right primary heel strikes gave a median left-strike phase of 0.496 between successive right strikes, and forward displacement was \\qty{2.246}{\\meter}. A separate speed fit used $8\\leq t<30$\\,s and gave \\qty{0.0918}{\\meter\\per\\second}. All twelve independent \\qty{1}{\\percent} parameter perturbations passed the heel-strike and progression criteria with the harness in place.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Pathway Deletions and Pushes during W2L Stepping with a Pelvic Harness",
+            "start": 383,
+            "source": "With the virtual pelvic harness in place, the W2L walker retained alternating heel strikes when I removed pooled extensor-force feedback through group Ib. When I also removed contact feedback and the other tested sensory projections, the legs continued moving and the walker advanced, but the heel strikes lost their half-cycle spacing. This experiment shows that the tools can switch a chosen set of connections off and distinguish a change in left--right coordination from a change in forward travel. Only the combined deletion disrupted the timing in these three conditions. Its effect cannot be assigned to one pathway. The intact and deletion runs had the same drive, constant upward harness force set to \\qty{25}{\\percent} of body weight, and remaining fitted parameters. The evaluator applies a common \\qty{40}{\\newton} forward push at $8\\leq t<8.15$\\,s, including in the intact condition. The separately named forward-push file reproduces all of the control's saved arrays and thus supplies no unforced comparison. Each new neural input is held for \\qty{2}{\\milli\\second}, spanning two \\qty{1}{\\milli\\second} physics steps.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "CAD Robot Foot Clearance with a Virtual Pelvic Harness",
+            "start": 395,
+            "source": "The CAD robot lifted each foot while the opposite foot bore load and a virtual pelvic harness carried \\qty{77.5}{\\percent} of body weight. The rhythm generator in a 262-cell nonspiking network with 230 inputs set swing onset. An engineering controller distributed the required joint torques among 54 ideal actuators on the model's four-bar knees, spherical hips, and other joints. The anatomical axes were $x$ anterior, $y$ superior, and $z$ right.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Partial Transfer of the Di Russo Controller to Gait2392",
+            "start": 422,
+            "source": "The controller of \\citet{dirusso_investigating_2023} walked on its original mechanical model in a local replay. SCONE is open-source software for simulating musculoskeletal motion and optimizing its control \\citep{geijtenbeek_scone_2019}. I built the authors' version of SCONE, which included their spinal controller, and ran their saved parameters on their planar OpenSim model with nine degrees of freedom and 18 muscles. The model took 16 steps and advanced \\qty{11.57}{\\meter} in \\qty{10}{\\second}. A second run in a fresh process reproduced the trajectory. In the authors' controller, the leg's first loading after swing can reset its oscillator to the start of stance. The implementation detects a rising crossing of \\qty{10}{\\percent} of body weight in the magnitude of the resultant foot--ground contact force after a \\qty{50}{\\milli\\second} sensory delay. The original configuration disables resetting at toe-off. The saved neural, force, and joint-motion signals therefore supply a reference for what each event should do.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Spiking-Neuron Comparisons",
+            "start": 430,
+            "source": "Converting afferent, rhythm-generator, and interneuron populations to spiking changed the rhythm period and the movement of the coupled legs. Mean-conductance calibration preserved a common continuous activation interface at the nonspiking MNs. This made it possible to compare neural timing and mechanical output with the same neural drive and virtual pelvic harness. Appendix~\\ref{app:neuron_equations} gives the conversion tables.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "MuJoCo Neural Timing and Gait2392 Behavior with a Pelvic Harness",
+            "start": 436,
+            "source": "The spiking controller slowed the rhythm and moved both legs, although its joint motion agreed less closely with the reference. Under constant drive, rhythm period increased from \\qty{0.399}{\\second} in the nonspiking network to \\qty{0.621}{\\second} in the spiking network, a \\qty{55.6}{\\percent} increase. At the same selected parameters, the untuned spiking version produced repeated movements in both legs with foot contact and the virtual pelvic harness, while movement in the nonspiking winner occurred predominantly on the right (Table~\\ref{tab:spike_ground} and Figure~\\ref{fig:spike_ground}). The spiking circuit restored movement in the left leg under these conditions, but its joint trajectories departed further from the walking reference.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Simulink Demonstrations",
+            "start": 465,
+            "source": "The biological knee in Section~\\ref{sec:app_knee_transient} used nonspiking neurons. The separate spiking knee model, \\path{KneeReflexDemo_Spiking.slx}, drove two pressure-actuated BPAs with four spiking sensory neurons and two nonspiking motor neurons. The pneumatic knee oscillated before the pulse, so its response depends on the phase at which the stimulus is applied. It cannot provide a resting human reflex latency.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Sensitivity of the AnimatLab Rhythm to Spiking Synapse Parameters",
+            "start": 471,
+            "source": "In the AnimatLab conversions, changing neuron thresholds while retaining voltage-dependent synapses preserved near-baseline oscillations. Converting synaptic amplitudes and decay changed or eliminated alternation (Table~\\ref{tab:spike_animatlab}). The retained threshold-only case isolates the effect of changing the neurons. The full spiking conversion did not preserve the source rhythm and cannot be used to transfer this walker controller with its original timing.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Execution, Provenance, and Reproduction Tools",
+            "start": 494,
+            "source": "Figure~\\ref{fig:app_research_toolchain} follows a saved experiment from model preparation to inspection. The SNS-Simscape interface supports graphical wiring of a Simulink neural circuit, and each experiment can be run from its corresponding script.",
+            "cues": []
+          },
+          {
+            "file": "95-AppendixD.tex",
+            "heading": "Hardware Interface Boundary",
+            "start": 558,
+            "source": "The \\nolinkurl{Code/Hardware/walker_io/} modules separate sensor readings, afferent encoding, valve commands, communications, and operator supervision. Connecting the device readers and the neural update is necessary to measure the sensor-to-valve delay on hardware.",
+            "cues": []
+          }
+        ]
+      }
+    },
+    "human": {
+      "results_ledger.json": {
+        "path": "D:\\temp\\dissertation_human_curriculum\\results_ledger.json",
+        "bytes": 167000,
+        "sha256": "2a01b8fffce558f77d0a74e73769d8d706eaa4a6da27c6e67c6b83b57bc7a1b3"
+      },
+      "supplement_repeat_checks.json": {
+        "path": "D:\\temp\\dissertation_human_curriculum\\supplement_repeat_checks.json",
+        "bytes": 7170,
+        "sha256": "0cad74718278c6061c66ec039850716afa53fb79ff7396909e9a79035e2027d3"
+      },
+      "earlier_dirusso/summary.json": {
+        "path": "D:\\temp\\dissertation_human_curriculum\\earlier_dirusso\\summary.json",
+        "bytes": 802,
+        "sha256": "0993343357e36991980657827255eab13e864a8b9e3089a4e024272287454a89"
+      },
+      "pathway_deletions/combined.json": {
+        "path": "D:\\temp\\dissertation_human_curriculum\\pathway_deletions\\combined.json",
+        "bytes": 9047,
+        "sha256": "318c79292be8007c2dbd1a2a3c936b35c536a540afff64b1d1a0399df3cbfb08"
+      },
+      "external_ik/external_reference_scores.json": {
+        "path": "D:\\temp\\dissertation_human_curriculum\\external_ik\\external_reference_scores.json",
+        "bytes": 55903,
+        "sha256": "e3dbb0dc4dbd7146378032890e294e853d7d70df1c9ff7edd05dae97a75b9d33"
+      },
+      "old_finalist_basin/summary.json": {
+        "path": "D:\\temp\\dissertation_human_curriculum\\old_finalist_basin\\summary.json",
+        "bytes": 35659,
+        "sha256": "3e85f791c2b5db0393b748251ba11c87ab8f7570ed4b7798b94064bc77a3f325"
+      },
+      "finalists/summary.json": {
+        "path": "D:\\temp\\dissertation_human_curriculum\\finalists\\summary.json",
+        "bytes": 8320,
+        "sha256": "d05a159ee26e7ecedfd52673df2e68655c1db26551517c075b4ce13c74ac594b"
+      }
+    },
+    "feedback_rounds": {
+      "5": {
+        "evaluations": 88,
+        "logs": [
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round5_w0.jsonl",
+            "bytes": 71692,
+            "sha256": "c2d053068c2fcdf30efff856560654c35ba7867240d2f46fc41373c76598eccb"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round5_w1.jsonl",
+            "bytes": 73745,
+            "sha256": "83d838b96ce3ab0941fb6d44c1b7e00a1da48d46c8d5e8bb58c26a8734731907"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round5_w2.jsonl",
+            "bytes": 79354,
+            "sha256": "d3ff1f17c5d8e9bfde6372649460fe973a2ab3e74623148f7d4017c60da5708b"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round5_w3.jsonl",
+            "bytes": 73259,
+            "sha256": "cfd2042d5ec3ae330497ad9b02cf76b99d2aa626db82ec6b180505e46cedfdca"
+          }
+        ]
+      },
+      "6": {
+        "evaluations": 80,
+        "logs": [
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round6_w0.jsonl",
+            "bytes": 72389,
+            "sha256": "129ca777517bfa1e7f925538fb5acb24d8eea3a3dea2736773c446df22a1f583"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round6_w1.jsonl",
+            "bytes": 64626,
+            "sha256": "5202b79a815b3e649b71e0f953646e5c39e0c5322fdd1cf9488092c3517aef10"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round6_w2.jsonl",
+            "bytes": 69456,
+            "sha256": "b1035ee0d883f80c3cda000912c9365738216c6cc79cc05ed168e7e4fb2898e6"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round6_w3.jsonl",
+            "bytes": 63142,
+            "sha256": "6111f61fa210b1101d65ef5cc5e18d124618d8601451c81d8355a49842a40aab"
+          }
+        ]
+      },
+      "7": {
+        "evaluations": 64,
+        "logs": [
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round7_w0.jsonl",
+            "bytes": 43070,
+            "sha256": "04189fc4b65292e9b2186ed7621d9c68670ea860e750bc15c99aaa1b1080dc3c"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round7_w1.jsonl",
+            "bytes": 46593,
+            "sha256": "519180a4a43b4d6affd0c4f1af9ca87daa1f75f58771e565fac6056242cba6b4"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round7_w2.jsonl",
+            "bytes": 44846,
+            "sha256": "551dbcd8410082d2a3b6ef9db78b5fa2eedb5a5dc25710aecd07719fdd5d24fa"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round7_w3.jsonl",
+            "bytes": 48974,
+            "sha256": "3c4e38a379588b60313f522fa46f4130d9cb978dbe24b2f0cf03962c82c52602"
+          }
+        ]
+      },
+      "8": {
+        "evaluations": 48,
+        "logs": [
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round8_w0.jsonl",
+            "bytes": 40706,
+            "sha256": "8877d6f54e86109a0aa452b78b85cf6158c9bfe1c41bf78e1259e540a4baef81"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round8_w1.jsonl",
+            "bytes": 42284,
+            "sha256": "f5d646f8a3f41dcfa17f8f1842f3ba152bfc02ad87b0235aa8b7918ceee62bdd"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round8_w2.jsonl",
+            "bytes": 41655,
+            "sha256": "c134e1e38ca833c0d5a07a46b037b67eefb4aeed0bce5567ee215d0e9e458a4e"
+          },
+          {
+            "path": "D:\\temp\\dissertation_human_curriculum\\feedback_search\\round8_w3.jsonl",
+            "bytes": 37693,
+            "sha256": "ee69c3d12892bfa817e87e0400ce7a4543ea33a00f57bc5d02bfe7bcd661b06e"
+          }
+        ]
+      }
+    },
+    "human_engineering_reference": {
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_feedback/angle_comparison.json": {
+        "bytes": 2887,
+        "sha256": "9a863f7621261f75647b6c06a1b95ebaa6d5e30b046bd4933150c25b37432b59"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_feedback/four_at_selected_scale.npz": {
+        "bytes": 1745018,
+        "sha256": "bb8df43bd1b713e611e88cae56e02fc59a06212446fe3f76103514ca207e6dd6"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_feedback/native_at_selected_scale.npz": {
+        "bytes": 1724750,
+        "sha256": "24c16d911fb1bf8d4ac05a87b4bbf6d6fe65b8234f1ae854f24cf8d175e0546f"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_feedback/selected.json": {
+        "bytes": 2361,
+        "sha256": "1971e459666827ddea2dba14a3aac531a0103030f75b3f71f15bead43374ad65"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_feedback/study.json": {
+        "bytes": 77725,
+        "sha256": "198062c86fab969c7c5e9f06540fbfd081be7d30e3617eedf687ca08c18579eb"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_feedback/trials.csv": {
+        "bytes": 123034,
+        "sha256": "d676fc4b0ea84a8e6d7ef08fbf44eb6f6dbf1dd60938445e5e25d18a9e8c1cfb"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/COUPLED_STUDIES.md": {
+        "bytes": 6397,
+        "sha256": "275a6ebd6d31db60b144853b3515b0ea203e47670ab563121c0e2065812f0174"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/coupled_controller_checks.json": {
+        "bytes": 197784,
+        "sha256": "171fcf4f00176be49c26b3314944cdc4f3ef45cb712d934deb4ac37dd9515dcb"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/verify_reference_feedback.py": {
+        "bytes": 4860,
+        "sha256": "db43aee7bf0ab700082305b243cbe9e3640026854e34697fb67730f1735116f4"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/replay_feedback_trial.py": {
+        "bytes": 2306,
+        "sha256": "192d96c14bf34e87f715250be4a3cd9098b67940d553278a958f2a91530c98cb"
+      },
+      "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_angle_errors.py": {
+        "bytes": 2173,
+        "sha256": "62254063cd3e46ed70c0178ea5f3466e44b0fe50488284d137528e0478c9b7c7"
+      }
+    },
+    "final_checks": {
+      "D:\\temp\\dissertation_human_curriculum\\strict_candidates\\summary.json": {
+        "bytes": 4168,
+        "sha256": "ca0b6dc6b1a4a8f671018c4c06a5e55ed75bca5a868c29c97ee7273e5d117526"
+      },
+      "D:\\temp\\dissertation_human_curriculum\\new_finalist_basin\\summary.json": {
+        "bytes": 37927,
+        "sha256": "54013d1ed63a42f1a62d5847f31eca29bc89b41d65d17a1365d0e1fa3291788b"
+      },
+      "D:\\temp\\dissertation_human_curriculum\\retuned_drive_ladder\\summary.json": {
+        "bytes": 6965,
+        "sha256": "fb2dfa20c9746c2f297eec98f05843870036004a76e1691ab69fb27c6de3fd9e"
+      },
+      "D:\\temp\\dissertation_knee_pressure\\biology\\print_14cm\\proof_check.json": {
+        "bytes": 519,
+        "sha256": "3bb75d9840b5c663cffe917d4fa965c8f66335b193dd841608926cf83850d625"
+      }
+    }
+  },
+  "overleaf_verification": {
+    "url": "https://www.overleaf.com/project/644dc82bcd6a5481e3c3a8bb",
+    "editor_mode": "Editing",
+    "live_errors": 0,
+    "live_warnings": 0,
+    "live_info_messages": 8,
+    "source_downloads": 0,
+    "project_pdf_downloads": 0,
+    "project_files": {
+      "chapters/06-ack.tex": {
+        "bytes": 1690,
+        "sha256": "bd8f03a3c0c5c768cf26374df36587fa7ed3e2acb6ebf6407d50be51a8854d12"
+      },
+      "chapters/60-sns.tex": {
+        "bytes": 46778,
+        "sha256": "40e06256895baf5d9b3ed49a77ef299e3e78390548e5cf820394c7feb4d03ed5"
+      },
+      "chapters/70-overall.tex": {
+        "bytes": 22654,
+        "sha256": "125e8dec6307eac42b5b2f3ef5d6716aa6c5e54775cffa1b78602a51b110f62a"
+      },
+      "chapters/93-AppendixB.tex": {
+        "bytes": 23241,
+        "sha256": "0272558e3eb5a4e2e875411260edf799243f60f26f8976e9b7f2af1a4fcc49ae"
+      },
+      "chapters/95-AppendixD.tex": {
+        "bytes": 99850,
+        "sha256": "0686ae5e5c1235c2666b7f3b845f02be5259d995b8e24a8129d6428e2620b363"
+      },
+      "thesis.bib": {
+        "bytes": 158444,
+        "sha256": "46c29611c614b47e6819948c5b5ccb78484aa6b6d79f36aca87caea54539b5b8"
+      },
+      "chapters/50-database.tex": {
+        "bytes": 18173,
+        "sha256": "76b5028736a43d9a150c1c2ed507b56a5b16dc543edeece1b2ce818de7045434"
+      },
+      "figs/60-sns/sns_cup_reflex_authoritative.pdf": {
+        "bytes": 129147,
+        "sha256": "b6fd2dcc4d05f5380ab51fac0e323eccce1d620598127fa548cd43dc8f816f68"
+      },
+      "figs/60-sns/sns_cup_reflex_authoritative.alt.txt": {
+        "bytes": 379,
+        "sha256": "3aa549f9f295eb7d839df1a1d7aca02df12a11a2812aad41080cb95499972d52"
+      },
+      "figs/60-sns/sns_knee_reflex_authoritative.pdf": {
+        "bytes": 1138042,
+        "sha256": "5462cd51cfe812aeb958cea8ef35bcede89d722917522951d795ca9e36d0e058"
+      },
+      "figs/60-sns/sns_knee_reflex_authoritative.alt.txt": {
+        "bytes": 626,
+        "sha256": "fdfb321c343c0478e6fb890cbb52e1cd81263800f21c4c8976edc03670693f2b"
+      },
+      "figs/60-sns/biw2lvar_air_aligned_authoritative.alt.txt": {
+        "bytes": 488,
+        "sha256": "c79c9cd0b5401aa768db32bf2f1a4d41a7a2fa87715e4f87a38d4bb375eddb61"
+      },
+      "figs/60-sns/biw2lvar_air_aligned_authoritative.pdf": {
+        "bytes": 180189,
+        "sha256": "0d9b420d4a787adee5505d3d646bd8a41c0f11ca959e94a280c65f810928f1c8"
+      },
+      "figs/60-sns/syn6_suspended_kinematics.alt.txt": {
+        "bytes": 471,
+        "sha256": "ac5946c721a465b080376dac06fcc72d643dceb4f66dd241b44a6f007fe57687"
+      },
+      "figs/60-sns/syn6_suspended_kinematics.pdf": {
+        "bytes": 139739,
+        "sha256": "a832aeb6b6f7c4d09c49ac28edcfac9d99a971ffa5a318efbed33f0325e7e2e9"
+      },
+      "figs/95-AppendixD/AIR_stimulus_mechanics.alt.txt": {
+        "bytes": 360,
+        "sha256": "e280ed3ef4e3668496bb5dfc8d783089377816c2195a6939ebcc624086c485d9"
+      },
+      "figs/95-AppendixD/AIR_stimulus_mechanics.pdf": {
+        "bytes": 55630,
+        "sha256": "64e91f5c28ee73028ba456e028516ddd30285cd7228ee1a50e8117eae2cb3c1e"
+      },
+      "figs/95-AppendixD/AIR_stimulus_neural.alt.txt": {
+        "bytes": 397,
+        "sha256": "d634e56a0f0cb37a3a7374e6db41a67c76e7c463ca4823f05907f86e978bbfe6"
+      },
+      "figs/95-AppendixD/AIR_stimulus_neural.pdf": {
+        "bytes": 51306,
+        "sha256": "39ab052c9c6a6b68cfc325d4e296bf1f2d9080d1c3abeb4c85b576de44ec16a4"
+      },
+      "figs/95-AppendixD/gait2392_ik_overlay.alt.txt": {
+        "bytes": 490,
+        "sha256": "700ad308b1f0612fbc61bd68840942705af367fa4c947931ea64f1489904c2af"
+      },
+      "figs/95-AppendixD/gait2392_ik_overlay.pdf": {
+        "bytes": 48889,
+        "sha256": "5efaa4aa47ead47772b6f1dc943ca8e15a7e39363ffe796f1be5f7f2ca37d9d0"
+      },
+      "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt": {
+        "bytes": 326,
+        "sha256": "ac383fa785d1ab744fa516d9b8e3891e9f08b95532eea22c7e5a2fcb20d47367"
+      },
+      "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf": {
+        "bytes": 296649,
+        "sha256": "4db8e10759c00dbdcf1f49cc5f6b6655a87cdf87aa6c6295cf4eafaad4fd4d52"
+      }
+    },
+    "proof": "D:\\temp\\dissertation_revision_next\\overleaf.jpg",
+    "summary": "All 23 revised project files were uploaded directly to the dissertation in Overleaf with Editing selected. The live compile completed with zero errors, zero warnings, and eight informational messages. The local source ZIP and PDF were built from the reconciled project."
+  }
+}

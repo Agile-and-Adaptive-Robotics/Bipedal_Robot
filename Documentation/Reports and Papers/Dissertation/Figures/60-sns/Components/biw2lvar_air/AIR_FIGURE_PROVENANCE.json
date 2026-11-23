@@ -1,0 +1,67 @@
+{
+  "source_files": {
+    "D:\\temp\\dissertation_human_curriculum\\replays\\four\\biw_air2\\sim\\capture\\aligned_trace.npz": "461ffe473c90052be7d6b438582e8bd804068f255f4db9c6eb5695ca66f88704",
+    "D:\\temp\\dissertation_human_curriculum\\replays\\four\\biw_air2\\sim\\capture\\ALIGNED_TRACE_METADATA.json": "5fac014f95f823603da4fe57b207ec6842eaab95514b82cef46755a52ec80c43",
+    "D:\\temp\\dissertation_human_curriculum\\replays\\four\\biw_air2\\sim\\capture\\model.mjb": "33f525098f2e79769d1b40139bf87e2f81651a95cf4ace7c8181841ab1b46d17",
+    "D:\\temp\\dissertation_human_curriculum\\replays\\four\\biw_air2\\sim\\body.json": "372124e2411f2d4cfd856c815a6e721d697c38b3dedf3c96a2a3ac11005d9283"
+  },
+  "plotted_window_s": [
+    7,
+    11
+  ],
+  "sample_selector": "7 <= t_state <= 11",
+  "number_plotted": 2000,
+  "saved_samples_total": 7700,
+  "first_last_plotted_s": [
+    7.0,
+    10.998000000000001
+  ],
+  "native_joint_sign": "Flexion negative; no sign reversal",
+  "transformations": [
+    "qpos radians to degrees using numpy.rad2deg",
+    "anatomical superior force column 1; already transformed by recording capture"
+  ],
+  "resampling": false,
+  "smoothing": false,
+  "decimation": false,
+  "phase_shift": false,
+  "amplitude_scaling": false,
+  "force_normalization": "None; raw newtons",
+  "legend_and_channel_map": {
+    "A": [
+      "RG_F_r",
+      "RG_F_l"
+    ],
+    "B": [
+      "MN_vas_int_r",
+      "MN_bifemsh_r"
+    ],
+    "C": [
+      "knee_angle_r",
+      "knee_angle_l"
+    ],
+    "D": [
+      "harness_wrench_anatomical[:,1]",
+      "explicit_support_anatomical_N[:,1]"
+    ]
+  },
+  "coordinate_addresses": {
+    "hip_flexion_r": 6,
+    "knee_angle_r": 11,
+    "ankle_angle_r": 12,
+    "hip_flexion_l": 49,
+    "knee_angle_l": 54,
+    "ankle_angle_l": 55
+  },
+  "minimum_font_pt": 10,
+  "width_cm": 14,
+  "scoring_window_note": "Display only. Adopted support statistic uses legacy result arrays after 5 s; see AIR_EVIDENCE.md.",
+  "compiled_model_sha256_matches_metadata": true,
+  "output_hashes": {
+    "AIR_FIGURE_PROVENANCE.json": "31cf2a19b775caba3a8a9ee5ff324ed99524e0bb4b5768f4e90dd08f1629d210",
+    "biw2lvar_air_aligned_authoritative.alt.txt": "9c12f0ff3dac7bcea3d88da1ea5a07df5fca33694788b6082fe6939b99ab31ff",
+    "biw2lvar_air_aligned_authoritative.pdf": "0d9b420d4a787adee5505d3d646bd8a41c0f11ca959e94a280c65f810928f1c8",
+    "biw2lvar_air_aligned_authoritative.png": "66fc50f6774946153d00740e9781529f28ec9b3f80b67bec4a8ce2eb112e5078",
+    "plot_data.npz": "ee3fcb9c85b49047801939457132fc0e2d2373c9e89abb250398ee283e6a24b8"
+  }
+}

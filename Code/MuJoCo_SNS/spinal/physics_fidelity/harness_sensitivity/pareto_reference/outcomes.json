@@ -1,0 +1,271 @@
+{
+  "studies": {
+    "historical_general": {
+      "evaluations": 200,
+      "convention": "historical_stored_50",
+      "eligible": 155,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 23,
+      "both_stance_within_two_pp": 13
+    },
+    "historical_premotor": {
+      "evaluations": 112,
+      "convention": "historical_stored_50",
+      "eligible": 70,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 22,
+      "both_stance_within_two_pp": 11
+    },
+    "historical_regional_pilot": {
+      "evaluations": 9,
+      "convention": "historical_stored_50",
+      "eligible": 8,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 1,
+      "both_stance_within_two_pp": 0
+    },
+    "physical_general": {
+      "evaluations": 160,
+      "convention": "physical_50_N",
+      "eligible": 120,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 12,
+      "both_stance_within_two_pp": 3
+    },
+    "physical_regional": {
+      "evaluations": 120,
+      "convention": "physical_50_N",
+      "eligible": 81,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 0,
+      "both_stance_within_two_pp": 0
+    },
+    "physical_swing": {
+      "evaluations": 112,
+      "convention": "physical_50_N",
+      "eligible": 103,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 1,
+      "both_stance_within_two_pp": 0
+    },
+    "physical_group_recruitment": {
+      "evaluations": 96,
+      "convention": "physical_50_N",
+      "eligible": 81,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 10,
+      "both_stance_within_two_pp": 7
+    },
+    "physical_hip_drive_bracket": {
+      "evaluations": 43,
+      "convention": "physical_50_N",
+      "eligible": 43,
+      "angle_and_three_pp": 0,
+      "both_stance_within_three_pp": 4,
+      "both_stance_within_two_pp": 3
+    }
+  },
+  "physical_evaluations": 531,
+  "physical_eligible": 428,
+  "non_dominated_unique_objective_vectors": 24,
+  "physical_target_hits": [],
+  "selection": "Rank completed physical 16 s evaluations only. Prioritize the lowest angle within the two-point stance interval when there is a combined hit. The balanced example minimizes normalized shortfall using 3 degrees and 7 percentage points. Longer schedules are reserved for verification.",
+  "selected": {
+    "minimum_angle": {
+      "study": "physical_group_recruitment",
+      "trial": 38,
+      "convention": "physical_50_N",
+      "eligible": true,
+      "objectives": [
+        16.977981226961404,
+        0.19814285714285718,
+        0.01671428571428568
+      ],
+      "stance": [
+        0.8081428571428572,
+        0.6267142857142857
+      ],
+      "cycles": [
+        11,
+        6
+      ],
+      "joint_RMSE_deg": {
+        "r": {
+          "hip": 17.751518733895242,
+          "knee": 20.029522374442212,
+          "ankle": 11.178747691381448
+        },
+        "l": {
+          "hip": 19.022554536669144,
+          "knee": 24.942775681483663,
+          "ankle": 8.942768343896724
+        }
+      },
+      "period_s": [
+        0.8125454545454545,
+        1.3419999999999999
+      ],
+      "three_pp": false,
+      "two_pp": false,
+      "target": false,
+      "target_two_pp": false,
+      "physical": {
+        "finite": true,
+        "end_s": 15.998000000000001,
+        "minimum_COM_m": 0.8475512158621475,
+        "maximum_absolute_pelvis_tilt_deg": 13.58169236872735,
+        "active_steps": 7700,
+        "half_stored_minus_upward_max_N": 0.0,
+        "normal_minus_upward_max_N": 0.0
+      },
+      "parameter_hash": "2f32e6277d36b0b8750dbe018b925d7b89fbaff6cf89b3efbc3746aaeb2499e0"
+    },
+    "balanced": {
+      "study": "physical_group_recruitment",
+      "trial": 17,
+      "convention": "physical_50_N",
+      "eligible": true,
+      "objectives": [
+        18.15987439682608,
+        0.03300000000000003,
+        0.02657142857142858
+      ],
+      "stance": [
+        0.643,
+        0.6365714285714286
+      ],
+      "cycles": [
+        8,
+        11
+      ],
+      "joint_RMSE_deg": {
+        "r": {
+          "hip": 20.564688576998673,
+          "knee": 22.867772891470004,
+          "ankle": 12.800670913281095
+        },
+        "l": {
+          "hip": 19.073463383525368,
+          "knee": 24.130730495358474,
+          "ankle": 9.52192012032288
+        }
+      },
+      "period_s": [
+        1.0412499999999998,
+        1.126363636363636
+      ],
+      "three_pp": false,
+      "two_pp": false,
+      "target": false,
+      "target_two_pp": false,
+      "physical": {
+        "finite": true,
+        "end_s": 15.998000000000001,
+        "minimum_COM_m": 0.8475657982255889,
+        "maximum_absolute_pelvis_tilt_deg": 13.582719704242548,
+        "active_steps": 7700,
+        "half_stored_minus_upward_max_N": 0.0,
+        "normal_minus_upward_max_N": 0.0
+      },
+      "parameter_hash": "06e494557e76b149dc281f65a237b3621b73d8875a01c8c059c05467c594640c"
+    },
+    "best_angle_at_three_pp": {
+      "study": "physical_hip_drive_bracket",
+      "trial": 26,
+      "convention": "physical_50_N",
+      "eligible": true,
+      "objectives": [
+        18.47773033466493,
+        0.013000000000000012,
+        0.004428571428571448
+      ],
+      "stance": [
+        0.623,
+        0.6144285714285714
+      ],
+      "cycles": [
+        10,
+        10
+      ],
+      "joint_RMSE_deg": {
+        "r": {
+          "hip": 18.511715876411042,
+          "knee": 20.838800198449743,
+          "ankle": 11.89550227141048
+        },
+        "l": {
+          "hip": 19.250091600224742,
+          "knee": 30.97155376470111,
+          "ankle": 9.39871829679246
+        }
+      },
+      "period_s": [
+        0.873,
+        1.1600000000000001
+      ],
+      "three_pp": true,
+      "two_pp": true,
+      "target": false,
+      "target_two_pp": false,
+      "physical": {
+        "finite": true,
+        "end_s": 15.998000000000001,
+        "minimum_COM_m": 0.8475655888771507,
+        "maximum_absolute_pelvis_tilt_deg": 13.583278869474084,
+        "active_steps": 7700,
+        "half_stored_minus_upward_max_N": 0.0,
+        "normal_minus_upward_max_N": 0.0
+      },
+      "parameter_hash": "e291139f2c908644369508949d5757de870980c8725eb40e2d28542f28643ae2"
+    },
+    "best_angle_at_two_pp": {
+      "study": "physical_hip_drive_bracket",
+      "trial": 26,
+      "convention": "physical_50_N",
+      "eligible": true,
+      "objectives": [
+        18.47773033466493,
+        0.013000000000000012,
+        0.004428571428571448
+      ],
+      "stance": [
+        0.623,
+        0.6144285714285714
+      ],
+      "cycles": [
+        10,
+        10
+      ],
+      "joint_RMSE_deg": {
+        "r": {
+          "hip": 18.511715876411042,
+          "knee": 20.838800198449743,
+          "ankle": 11.89550227141048
+        },
+        "l": {
+          "hip": 19.250091600224742,
+          "knee": 30.97155376470111,
+          "ankle": 9.39871829679246
+        }
+      },
+      "period_s": [
+        0.873,
+        1.1600000000000001
+      ],
+      "three_pp": true,
+      "two_pp": true,
+      "target": false,
+      "target_two_pp": false,
+      "physical": {
+        "finite": true,
+        "end_s": 15.998000000000001,
+        "minimum_COM_m": 0.8475655888771507,
+        "maximum_absolute_pelvis_tilt_deg": 13.583278869474084,
+        "active_steps": 7700,
+        "half_stored_minus_upward_max_N": 0.0,
+        "normal_minus_upward_max_N": 0.0
+      },
+      "parameter_hash": "e291139f2c908644369508949d5757de870980c8725eb40e2d28542f28643ae2"
+    }
+  }
+}

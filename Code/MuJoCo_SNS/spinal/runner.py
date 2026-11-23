@@ -37,6 +37,7 @@ from pathlib import Path
 import numpy as np
 
 import build_network as bn
+from joint_projection import project_joint_followers as _project_followers
 from muscle_map import EXTENSOR_STANCE_GROUPS, classify
 from params import AFF, BAL, DT, E_HI, G, MOD, PHASE_RESET, SCHEDULE
 
@@ -48,6 +49,7 @@ HERE = Path(__file__).parent
 # Optional read-only verification observer. Runs once after an accepted outer
 # physics interval (including adaptive stepping), never inside trial substeps.
 VERIFICATION_POST_PHYSICS = None
+PREMOTOR_GROUP_GAINS = None
 # AARL_MODEL env override (2026-09-18): point the whole chain at a new
 # converted model (e.g. the scaled subject01 MJCF once it lands) without
 # editing code. Unset = the proven default.
@@ -650,23 +652,6 @@ START_POSE_DEG_SYMMETRIC = {
     "lumbar_bending": 0.470,
     "lumbar_rotation": -2.430,
 }
-
-
-def _project_followers(model, data):
-    """Re-project equality-coupled pathpoint dofs onto their driver polycoefs
-    (copy of bsolve_ik.apply_eq_followers; kept local to avoid a circular
-    import - bsolve_ik imports runner)."""
-    for i in range(model.neq):
-        if model.eq_type[i] != mujoco.mjtEq.mjEQ_JOINT:
-            continue
-        j_dep = int(model.eq_obj1id[i])
-        j_ind = int(model.eq_obj2id[i])
-        adr_d = model.jnt_qposadr[j_ind]
-        adr_p = model.jnt_qposadr[j_dep]
-        x = data.qpos[adr_d] - float(model.qpos0[adr_d])
-        c = model.eq_data[i][:4]
-        data.qpos[adr_p] = float(model.qpos0[adr_p]) + c[0] + c[1] * x \
-            + c[2] * x * x + c[3] * x * x * x
 
 
 def apply_start_pose(model, data) -> None:
@@ -1344,12 +1329,19 @@ def main(argv):
                    *_pf_watch,
                    "BAL_TRK_FLX", "BAL_TRK_EXT", "BAL_LAT_R", "BAL_LAT_L")
     log_neuro = np.zeros((nsteps, len(NEURO_NAMES)))
-    # 2026-09-20: per-side ground-truth contact (heel+toe normal force, N)
-    # and foot height (min body-origin z of calcn/toes, m), logged EVERY
-    # step in ground mode. Ben's critique: the eval objective and the
-    # figures must see real contact - the old duty was neural and the
-    # s3b "winner" never loaded its left foot (0% contact frames).
+    # Historical controller/output channel: each original foot contact is
+    # copied into both regional sensors, so their sum counts it twice.
+    # AARL_FOOT_FORCE_NPZ records single-counted physical ground reactions.
     log_contact = np.zeros((nsteps, 2))
+    foot_force_path = _os.environ.get('AARL_FOOT_FORCE_NPZ')
+    foot_input_mode = _os.environ.get('AARL_FOOT_SENSOR_MODE', 'historical')
+    if foot_input_mode not in ('historical', 'anatomical'):
+        raise ValueError('AARL_FOOT_SENSOR_MODE must be historical or anatomical')
+    anatomical_foot_inputs = foot_input_mode == 'anatomical'
+    physical_foot_loads = None
+    if foot_force_path or anatomical_foot_inputs:
+        from foot_loading import FootGroundLoads
+        physical_foot_loads = FootGroundLoads(model, nsteps)
     log_footz = np.zeros((nsteps, 2))
     foot_body = {"r": [], "l": []}
     bal_neurons = ("BAL_PF", "BAL_DF")
@@ -1601,7 +1593,15 @@ def main(argv):
                     reg = bodyid_region.get(b)
                     if reg:
                         mujoco.mj_contactForce(model, data, ci, con_force)
-                        if reg.endswith("_r"):
+                        region = None
+                        if physical_foot_loads is not None:
+                            region = physical_foot_loads.add(k, c.geom1, c.geom2, c.frame, con_force)
+                        if anatomical_foot_inputs:
+                            if region is not None:
+                                segment, side = region
+                                sensors = heel_n if segment == 'heel' else toe_n
+                                sensors[side] += max(con_force[0], 0.0)
+                        elif reg.endswith("_r"):
                             heel_n["r"] += max(con_force[0], 0.0)
                             toe_n["r"] += max(con_force[0], 0.0)
                         else:
@@ -1611,6 +1611,10 @@ def main(argv):
             if not no_ground:
                 log_contact[k, 0] = heel_n["r"] + toe_n["r"]
                 log_contact[k, 1] = heel_n["l"] + toe_n["l"]
+                if anatomical_foot_inputs:
+                    # Keep the archived NPZ channel scale while the two neural
+                    # sensor inputs now report separate physical regions.
+                    log_contact[k] *= 2.0
                 for si, s in enumerate(("r", "l")):
                     if foot_body[s]:
                         log_footz[k, si] = min(
@@ -1771,6 +1775,12 @@ def main(argv):
                 w = _pm_window(pm_phase[a[-1]])
                 if w > 0.0:
                     g0 = muscles[a].groups[0]
+                    if PREMOTOR_GROUP_GAINS:
+                        # Scale the existing swing-phase command independently
+                        # for each functional group, leaving sensory gating intact.
+                        w *= PREMOTOR_GROUP_GAINS.get(g0, 1.0)
+                        if g0 in ("knee_ext", "ankle_pf"):
+                            w = min(w, 1.0 / G["pm_gain"])
                     if g0 in ("knee_ext", "ankle_pf"):
                         c *= (1.0 - G["pm_gain"] * w)
                     elif g0 in ("knee_flex", "ankle_df", "hip_flex"):
@@ -1920,6 +1930,8 @@ def main(argv):
     # spinal_run.npz) - external locks (Spyder indexer/AV) on the default
     # name killed WinError-5 loops; point batch scripts at a side name.
     _npz_name = _os.environ.get("AARL_NPZ", "spinal_run.npz")
+    if foot_force_path:
+        physical_foot_loads.save(foot_force_path, log_t)
     _tmp = HERE / f"{_npz_name}.{_os.getpid()}.tmp.npz"
     with open(_tmp, "wb") as _fh:
         np.savez_compressed(_fh, t=log_t, act=log_act, ctrl=log_ctrl,

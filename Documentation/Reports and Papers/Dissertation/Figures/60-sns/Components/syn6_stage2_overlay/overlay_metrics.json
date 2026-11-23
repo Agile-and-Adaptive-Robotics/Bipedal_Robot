@@ -1,0 +1,1160 @@
+{
+  "run": "D:\\temp\\dissertation_human_curriculum\\replays\\four\\syn6_air\\sim",
+  "plotted_window_s": [
+    8.040000000000001,
+    11.598
+  ],
+  "cycle_window_s": [
+    7.122,
+    13.362
+  ],
+  "right_knee_cycles": 7,
+  "simulated_median_period_s": [
+    0.7680000000000007,
+    0.6840000000000002
+  ],
+  "pf_onset_counts_by_rg_cycle": {
+    "S2_r": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "S3_r": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "S2_l": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "S3_l": [
+      3,
+      3,
+      3,
+      3,
+      4
+    ]
+  },
+  "peak_vertical_foot_load_bw": [
+    0.0,
+    0.0
+  ],
+  "benchmarks": [
+    {
+      "identity": "subject01_walk1: existing calibration IK/GRF reference",
+      "period_s": [
+        1.2334,
+        1.2133000000000003
+      ],
+      "joints": [
+        {
+          "joint": "hip_flexion_r",
+          "reference_ROM_deg": 43.28089307662569,
+          "reference_minimum_deg": -21.226779831778238,
+          "reference_maximum_deg": 22.054113244847454,
+          "simulation_ROM_deg": 22.89049169655916,
+          "ROM_gain": 0.5288821479730836,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 97.845168538967,
+            "SD": 16.715343666454775,
+            "minimum": 73.65739399948855,
+            "maximum": 116.96798476753948
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 54.56427546234132,
+            "SD": 16.71534366645477,
+            "minimum": 30.37650092286286,
+            "maximum": 73.68709169091379
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 2.260701237512341,
+            "SD": 0.3862060710452871,
+            "minimum": 1.7018455203566032,
+            "maximum": 2.702531682062478
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 126.07012375123414,
+            "SD": 38.620607104528716,
+            "minimum": 70.18455203566032,
+            "maximum": 170.2531682062478
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -22.65693157426782,
+            "circular_SD_deg": 128.05854954001865,
+            "mean_absolute_error_deg": 87.79377544535635,
+            "maximum_absolute_error_deg": 174.5127835178074
+          },
+          "mean_bias_deg": -16.467904085132723,
+          "mean_absolute_error_deg": 30.598961618526644,
+          "maximum_absolute_error_deg": 89.82514847188214,
+          "mean_cycle_maximum_absolute_error_deg": 30.915529914600096,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 73.29013973518605,
+            "SD": 8.881195646760256,
+            "minimum": 65.35469301410475,
+            "maximum": 89.82514847188214
+          },
+          "worst_error_cycle_index": 4,
+          "worst_error_cycle_phase_percent": 12.0,
+          "waveform_RMSE_deg": 20.222338816079994,
+          "normalized_RMSE": 0.4672347860354408,
+          "cycle_variability_RMS_deg": 33.57574614909562,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 21.175120918712647,
+              "simulation_amplitude_deg": 8.506062321613477,
+              "usable": true,
+              "gain": 0.4017007673423291,
+              "gain_dB": -7.921946773271925,
+              "lag_deg": -19.923580224982825
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 4.335852005530965,
+              "simulation_amplitude_deg": 4.145103086703769,
+              "usable": true,
+              "gain": 0.956006589112389,
+              "gain_dB": -0.39078228825855155,
+              "lag_deg": -170.07414540568735
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 2.3960741245804096,
+              "simulation_amplitude_deg": 2.123533929307748,
+              "usable": true,
+              "gain": 0.8862555242023707,
+              "gain_dB": -1.0488208951760312,
+              "lag_deg": 154.23099545940025
+            }
+          ]
+        },
+        {
+          "joint": "knee_angle_r",
+          "reference_ROM_deg": 70.4324342385684,
+          "reference_minimum_deg": -69.68110776228107,
+          "reference_maximum_deg": 0.7513264762873323,
+          "simulation_ROM_deg": 42.01742227382426,
+          "ROM_gain": 0.5965635396258355,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 60.344309677570614,
+            "SD": 13.281245538750504,
+            "minimum": 42.329055026389156,
+            "maximum": 73.69239564573355
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": -10.088124560997793,
+            "SD": 13.281245538750504,
+            "minimum": -28.10337921217925,
+            "maximum": 3.25996140716515
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 0.8567687647025325,
+            "SD": 0.18856718048057705,
+            "minimum": 0.6009881027682841,
+            "maximum": 1.0462849458833556
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": -14.323123529746741,
+            "SD": 18.856718048057704,
+            "minimum": -39.90118972317159,
+            "maximum": 4.628494588335563
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -11.531634321831353,
+            "circular_SD_deg": 86.68962416256355,
+            "mean_absolute_error_deg": 64.39155407218969,
+            "maximum_absolute_error_deg": 165.558187435077
+          },
+          "mean_bias_deg": -9.412002794254684,
+          "mean_absolute_error_deg": 17.091384075492446,
+          "maximum_absolute_error_deg": 57.32623925206602,
+          "mean_cycle_maximum_absolute_error_deg": 26.76082015190026,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 44.40479689108626,
+            "SD": 11.761600739610389,
+            "minimum": 24.9648916831936,
+            "maximum": 57.32623925206602
+          },
+          "worst_error_cycle_index": 5,
+          "worst_error_cycle_phase_percent": 63.0,
+          "waveform_RMSE_deg": 15.43106477581537,
+          "normalized_RMSE": 0.21909032312510088,
+          "cycle_variability_RMS_deg": 15.671940920439763,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 21.133616804210895,
+              "simulation_amplitude_deg": 9.883095406503175,
+              "usable": true,
+              "gain": 0.4676480840011236,
+              "gain_dB": -6.601616813217884,
+              "lag_deg": -13.065130200246172
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 20.434592708617743,
+              "simulation_amplitude_deg": 11.282210128871371,
+              "usable": true,
+              "gain": 0.5521132860217666,
+              "gain_dB": -5.159436037942966,
+              "lag_deg": 19.100295348107455
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 6.950876872333199,
+              "simulation_amplitude_deg": 7.0434202226744365,
+              "usable": true,
+              "gain": 1.01331391017867,
+              "gain_dB": 0.11488008864231262,
+              "lag_deg": -52.331114403553734
+            }
+          ]
+        },
+        {
+          "joint": "ankle_angle_r",
+          "reference_ROM_deg": 23.101158648376128,
+          "reference_minimum_deg": -8.791444998181264,
+          "reference_maximum_deg": 14.309713650194864,
+          "simulation_ROM_deg": 25.325261819498525,
+          "ROM_gain": 1.096276693518952,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 42.19651994166836,
+            "SD": 3.9960493097643033,
+            "minimum": 37.11906371297664,
+            "maximum": 48.3670759326122
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 19.095361293292232,
+            "SD": 3.9960493097643033,
+            "minimum": 14.017905064600512,
+            "maximum": 25.265917284236075
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 1.8265975565963453,
+            "SD": 0.17298047126502905,
+            "minimum": 1.606805280980393,
+            "maximum": 2.0937077948690734
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 82.65975565963451,
+            "SD": 17.298047126502905,
+            "minimum": 60.6805280980393,
+            "maximum": 109.37077948690734
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": 63.94969397269101,
+            "circular_SD_deg": 115.14995594285074,
+            "mean_absolute_error_deg": 88.4277415973911,
+            "maximum_absolute_error_deg": 173.79003072655814
+          },
+          "mean_bias_deg": -18.627108798844223,
+          "mean_absolute_error_deg": 19.833307314343845,
+          "maximum_absolute_error_deg": 45.91273878629573,
+          "mean_cycle_maximum_absolute_error_deg": 39.428895895260865,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 42.44952927744065,
+            "SD": 2.131912661128356,
+            "minimum": 39.0432534793226,
+            "maximum": 45.91273878629573
+          },
+          "worst_error_cycle_index": 2,
+          "worst_error_cycle_phase_percent": 74.5,
+          "waveform_RMSE_deg": 21.11461757484037,
+          "normalized_RMSE": 0.9140068641675945,
+          "cycle_variability_RMS_deg": 9.999406636167427,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 5.800901173669958,
+              "simulation_amplitude_deg": 0.5939344553918388,
+              "usable": true,
+              "gain": 0.10238658401692514,
+              "gain_dB": -19.795138927581107,
+              "lag_deg": -143.35742594265108
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 3.6696726191596905,
+              "simulation_amplitude_deg": 8.009777807429604,
+              "usable": true,
+              "gain": 2.1826954714188496,
+              "gain_dB": 6.779862947732688,
+              "lag_deg": -109.14903358565529
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 3.2790433707962587,
+              "simulation_amplitude_deg": 4.251053333589303,
+              "usable": true,
+              "gain": 1.2964309564947925,
+              "gain_dB": 2.254987853472404,
+              "lag_deg": -126.07514905390836
+            }
+          ]
+        },
+        {
+          "joint": "hip_flexion_l",
+          "reference_ROM_deg": 44.109011203262426,
+          "reference_minimum_deg": -22.513040988970666,
+          "reference_maximum_deg": 21.595970214291757,
+          "simulation_ROM_deg": 37.41947236144165,
+          "ROM_gain": 0.8483407662213476,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 107.9202137615572,
+            "SD": 22.02915830032415,
+            "minimum": 77.2581955878505,
+            "maximum": 129.32414787687077
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 63.81120255829479,
+            "SD": 22.029158300324152,
+            "minimum": 33.14918438458807,
+            "maximum": 85.21513667360834
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 2.4466704380254876,
+            "SD": 0.49942534868464267,
+            "minimum": 1.7515286214835,
+            "maximum": 2.9319212639095746
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 144.66704380254876,
+            "SD": 49.94253486846427,
+            "minimum": 75.15286214835,
+            "maximum": 193.19212639095747
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -51.73114688553888,
+            "circular_SD_deg": 97.69741131231763,
+            "mean_absolute_error_deg": 82.56748762285112,
+            "maximum_absolute_error_deg": 179.72320397373272
+          },
+          "mean_bias_deg": -13.18837621359142,
+          "mean_absolute_error_deg": 35.24657675603542,
+          "maximum_absolute_error_deg": 91.3267923479518,
+          "mean_cycle_maximum_absolute_error_deg": 40.58347802788013,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 70.8558519814654,
+            "SD": 19.423560152149236,
+            "minimum": 32.1462937159143,
+            "maximum": 91.3267923479518
+          },
+          "worst_error_cycle_index": 4,
+          "worst_error_cycle_phase_percent": 85.0,
+          "waveform_RMSE_deg": 21.695495234257837,
+          "normalized_RMSE": 0.4918608384640728,
+          "cycle_variability_RMS_deg": 36.72176019091801,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 21.313766994400304,
+              "simulation_amplitude_deg": 15.858280953724295,
+              "usable": true,
+              "gain": 0.7440393318501927,
+              "gain_dB": -2.5680821182758464,
+              "lag_deg": -75.25065879390898
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 4.910585797200347,
+              "simulation_amplitude_deg": 3.7126449810490447,
+              "usable": true,
+              "gain": 0.7560493053936093,
+              "gain_dB": -2.428997625369093,
+              "lag_deg": 105.9489332555107
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 2.7236301444313473,
+              "simulation_amplitude_deg": 0.7607514572893743,
+              "usable": true,
+              "gain": 0.2793152582940764,
+              "gain_dB": -11.078106784589263,
+              "lag_deg": -91.54978541913052
+            }
+          ]
+        },
+        {
+          "joint": "knee_angle_l",
+          "reference_ROM_deg": 70.61814631691922,
+          "reference_minimum_deg": -70.61725178054326,
+          "reference_maximum_deg": 0.0008945363759642627,
+          "simulation_ROM_deg": 22.62671528966114,
+          "ROM_gain": 0.32040936317015817,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 52.3022331398829,
+            "SD": 10.501480321376302,
+            "minimum": 38.21572103033019,
+            "maximum": 66.87569684889611
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": -18.315913177036325,
+            "SD": 10.501480321376302,
+            "minimum": -32.402425286589036,
+            "maximum": -3.7424494680231106
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 0.7406344667440236,
+            "SD": 0.14870795778535298,
+            "minimum": 0.5411600703709519,
+            "maximum": 0.9470044221887701
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": -25.936553325597647,
+            "SD": 14.870795778535296,
+            "minimum": -45.883992962904806,
+            "maximum": -5.299557781122988
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": 170.99965673507305,
+            "circular_SD_deg": 110.79025876816989,
+            "mean_absolute_error_deg": 97.6822834826841,
+            "maximum_absolute_error_deg": 155.81407843801685
+          },
+          "mean_bias_deg": -9.230813017889124,
+          "mean_absolute_error_deg": 23.84658817933073,
+          "maximum_absolute_error_deg": 64.89973919717205,
+          "mean_cycle_maximum_absolute_error_deg": 37.86820039927658,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 49.013796460326716,
+            "SD": 10.316468643450095,
+            "minimum": 40.36223350807306,
+            "maximum": 64.89973919717205
+          },
+          "worst_error_cycle_index": 4,
+          "worst_error_cycle_phase_percent": 75.0,
+          "waveform_RMSE_deg": 23.183520869155466,
+          "normalized_RMSE": 0.32829410113815155,
+          "cycle_variability_RMS_deg": 15.686860019764794,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 22.978779909480203,
+              "simulation_amplitude_deg": 4.063578150470863,
+              "usable": true,
+              "gain": 0.17684046613782048,
+              "gain_dB": -15.048366979958374,
+              "lag_deg": 112.49654390821618
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 20.545371781646605,
+              "simulation_amplitude_deg": 6.6816350995811,
+              "usable": true,
+              "gain": 0.32521363792257457,
+              "gain_dB": -9.756625008771667,
+              "lag_deg": -27.37855506752037
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 6.731401801426537,
+              "simulation_amplitude_deg": 1.1363330980724424,
+              "usable": true,
+              "gain": 0.16881076655261132,
+              "gain_dB": -15.451997160691304,
+              "lag_deg": -171.79543672049198
+            }
+          ]
+        },
+        {
+          "joint": "ankle_angle_l",
+          "reference_ROM_deg": 23.937315866630676,
+          "reference_minimum_deg": -9.648463174859462,
+          "reference_maximum_deg": 14.288852691771213,
+          "simulation_ROM_deg": 19.76331773802205,
+          "ROM_gain": 0.8256279796839168,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 39.887746220503026,
+            "SD": 4.547139515682141,
+            "minimum": 31.320186260112198,
+            "maximum": 44.89950136799449
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 15.950430353872347,
+            "SD": 4.547139515682141,
+            "minimum": 7.382870393481522,
+            "maximum": 20.962185501363813
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 1.6663416417589123,
+            "SD": 0.18996029216546317,
+            "minimum": 1.3084251565470404,
+            "maximum": 1.8757116135391654
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 66.63416417589123,
+            "SD": 18.99602921654632,
+            "minimum": 30.842515654704037,
+            "maximum": 87.57116135391654
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -77.34186867129435,
+            "circular_SD_deg": 58.264038280300504,
+            "mean_absolute_error_deg": 76.57120533258012,
+            "maximum_absolute_error_deg": 126.09335647504747
+          },
+          "mean_bias_deg": -18.48884240241929,
+          "mean_absolute_error_deg": 19.665789155615744,
+          "maximum_absolute_error_deg": 50.317373626475664,
+          "mean_cycle_maximum_absolute_error_deg": 40.47920549457551,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 44.299667066697005,
+            "SD": 3.0310002785438663,
+            "minimum": 41.016949439568094,
+            "maximum": 50.317373626475664
+          },
+          "worst_error_cycle_index": 3,
+          "worst_error_cycle_phase_percent": 28.999999999999996,
+          "waveform_RMSE_deg": 20.61302166554536,
+          "normalized_RMSE": 0.8611250225544511,
+          "cycle_variability_RMS_deg": 10.874309934535876,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 6.483381160115726,
+              "simulation_amplitude_deg": 4.319240531593708,
+              "usable": true,
+              "gain": 0.6662018513063347,
+              "gain_dB": -3.5278832956705313,
+              "lag_deg": -93.93230568226336
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 3.8570152710379606,
+              "simulation_amplitude_deg": 4.207736760923128,
+              "usable": true,
+              "gain": 1.090930801471985,
+              "gain_dB": 0.7559440769917738,
+              "lag_deg": -135.02474937499608
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 3.2470540206578415,
+              "simulation_amplitude_deg": 1.594281671856466,
+              "usable": true,
+              "gain": 0.4909932701191926,
+              "gain_dB": -6.178489211313707,
+              "lag_deg": 114.44351472901116
+            }
+          ]
+        }
+      ],
+      "terms": {
+        "cadence_log_error": 0.5234407054224981,
+        "waveform_normalized_RMSE": 0.5469353225808019,
+        "ROM_log_gain_error": 0.45661975062038856,
+        "mean_bias_normalized": 0.42042397731436454,
+        "fundamental_phase_error": 0.4605870810676412,
+        "worst_cycle_max_error_normalized": 1.6613887990654366
+      },
+      "weights": {
+        "cadence_log_error": 2.0,
+        "waveform_normalized_RMSE": 1.0,
+        "ROM_log_gain_error": 0.5,
+        "mean_bias_normalized": 0.5,
+        "fundamental_phase_error": 0.5,
+        "worst_cycle_max_error_normalized": 0.5
+      },
+      "kinematic_loss": 3.0933265374597134
+    },
+    {
+      "identity": "ong_speed_125.npz",
+      "period_s": [
+        1.3760000000000001,
+        1.376
+      ],
+      "joints": [
+        {
+          "joint": "hip_flexion_r",
+          "reference_ROM_deg": 58.904785191271,
+          "reference_minimum_deg": -22.937856790400883,
+          "reference_maximum_deg": 35.96692840087012,
+          "simulation_ROM_deg": 22.89049169655916,
+          "ROM_gain": 0.3886015647494673,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 97.845168538967,
+            "SD": 16.715343666454775,
+            "minimum": 73.65739399948855,
+            "maximum": 116.96798476753948
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 38.940383347696006,
+            "SD": 16.71534366645477,
+            "minimum": 14.752608808217545,
+            "maximum": 58.063199576268474
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 1.6610733444023578,
+            "SD": 0.28376885871288754,
+            "minimum": 1.25044839328951,
+            "maximum": 1.985712780171088
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 66.10733444023579,
+            "SD": 28.376885871288756,
+            "minimum": 25.044839328951007,
+            "maximum": 98.57127801710881
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -15.193774012907411,
+            "circular_SD_deg": 128.05854954001865,
+            "mean_absolute_error_deg": 88.29538621721703,
+            "maximum_absolute_error_deg": 178.02405892083203
+          },
+          "mean_bias_deg": -22.91800942006193,
+          "mean_absolute_error_deg": 32.48315395540182,
+          "maximum_absolute_error_deg": 104.7257496549791,
+          "mean_cycle_maximum_absolute_error_deg": 45.32350511146426,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 82.48081115333835,
+            "SD": 11.574160517401657,
+            "minimum": 70.86537167456626,
+            "maximum": 104.7257496549791
+          },
+          "worst_error_cycle_index": 4,
+          "worst_error_cycle_phase_percent": 10.5,
+          "waveform_RMSE_deg": 27.41763146203231,
+          "normalized_RMSE": 0.46545677694951143,
+          "cycle_variability_RMS_deg": 33.57574614909562,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 25.196981705855787,
+              "simulation_amplitude_deg": 8.506062321613477,
+              "usable": true,
+              "gain": 0.3375825890938621,
+              "gain_dB": -9.432399206297875,
+              "lag_deg": -12.460422663622277
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 7.587124944776032,
+              "simulation_amplitude_deg": 4.145103086703769,
+              "usable": true,
+              "gain": 0.5463338375042578,
+              "gain_dB": -5.25083800741709,
+              "lag_deg": 160.45950191980202
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 3.0450215594769894,
+              "simulation_amplitude_deg": 2.123533929307748,
+              "usable": true,
+              "gain": 0.6973789471863328,
+              "gain_dB": -3.130623349089326,
+              "lag_deg": 169.43110234143867
+            }
+          ]
+        },
+        {
+          "joint": "knee_angle_r",
+          "reference_ROM_deg": 71.05810985838886,
+          "reference_minimum_deg": -70.45014434197554,
+          "reference_maximum_deg": 0.6079655164133165,
+          "simulation_ROM_deg": 42.01742227382426,
+          "ROM_gain": 0.5913107224152239,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 60.344309677570614,
+            "SD": 13.281245538750504,
+            "minimum": 42.329055026389156,
+            "maximum": 73.69239564573355
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": -10.713800180818248,
+            "SD": 13.281245538750504,
+            "minimum": -28.729054831999704,
+            "maximum": 2.6342857873446945
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 0.8492248076655896,
+            "SD": 0.18690682267257872,
+            "minimum": 0.5956963267211356,
+            "maximum": 1.0370722749675518
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": -15.077519233441041,
+            "SD": 18.690682267257873,
+            "minimum": -40.430367327886444,
+            "maximum": 3.7072274967551833
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -0.37642542202961005,
+            "circular_SD_deg": 86.68962416256356,
+            "mean_absolute_error_deg": 67.6191913203438,
+            "maximum_absolute_error_deg": 176.71339633487878
+          },
+          "mean_bias_deg": -12.02144480864408,
+          "mean_absolute_error_deg": 18.180671786486283,
+          "maximum_absolute_error_deg": 57.35917445496115,
+          "mean_cycle_maximum_absolute_error_deg": 28.69154318698225,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 47.49678874974798,
+            "SD": 11.027949778119527,
+            "minimum": 24.41254891344498,
+            "maximum": 57.35917445496115
+          },
+          "worst_error_cycle_index": 5,
+          "worst_error_cycle_phase_percent": 61.0,
+          "waveform_RMSE_deg": 17.753017300450676,
+          "normalized_RMSE": 0.24983801758631805,
+          "cycle_variability_RMS_deg": 15.671940920439763,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 25.955591173604162,
+              "simulation_amplitude_deg": 9.883095406503175,
+              "usable": true,
+              "gain": 0.38076942036881445,
+              "gain_dB": -8.386758742429311,
+              "lag_deg": -1.9099213004444187
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 17.713320142220955,
+              "simulation_amplitude_deg": 11.282210128871371,
+              "usable": true,
+              "gain": 0.6369336769327295,
+              "gain_dB": -3.918115756487162,
+              "lag_deg": 12.993619283537916
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 7.267698831850633,
+              "simulation_amplitude_deg": 7.0434202226744365,
+              "usable": true,
+              "gain": 0.969140354551664,
+              "gain_dB": -0.2722664446770899,
+              "lag_deg": -38.56959803107132
+            }
+          ]
+        },
+        {
+          "joint": "ankle_angle_r",
+          "reference_ROM_deg": 30.064641327495757,
+          "reference_minimum_deg": -11.227891778702418,
+          "reference_maximum_deg": 18.83674954879334,
+          "simulation_ROM_deg": 25.325261819498525,
+          "ROM_gain": 0.8423603509394669,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 42.19651994166836,
+            "SD": 3.9960493097643033,
+            "minimum": 37.11906371297664,
+            "maximum": 48.3670759326122
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 12.131878614172605,
+            "SD": 3.9960493097643037,
+            "minimum": 7.054422385480883,
+            "maximum": 18.302434605116446
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 1.4035264709137685,
+            "SD": 0.13291524971926727,
+            "minimum": 1.2346418275420845,
+            "maximum": 1.6087694313644736
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 40.35264709137687,
+            "SD": 13.291524971926728,
+            "minimum": 23.46418275420845,
+            "maximum": 60.87694313644736
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": 107.33930320704044,
+            "circular_SD_deg": 115.14995594285074,
+            "mean_absolute_error_deg": 87.71071938833157,
+            "maximum_absolute_error_deg": 146.17008497233257
+          },
+          "mean_bias_deg": -20.07510212717525,
+          "mean_absolute_error_deg": 21.088697608934208,
+          "maximum_absolute_error_deg": 48.12794668741856,
+          "mean_cycle_maximum_absolute_error_deg": 36.52503745112809,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 43.813876676622606,
+            "SD": 4.626883109272429,
+            "minimum": 37.3336092298438,
+            "maximum": 48.12794668741856
+          },
+          "worst_error_cycle_index": 2,
+          "worst_error_cycle_phase_percent": 72.0,
+          "waveform_RMSE_deg": 22.177630628652544,
+          "normalized_RMSE": 0.7376648996763481,
+          "cycle_variability_RMS_deg": 9.999406636167427,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 7.66585149951222,
+              "simulation_amplitude_deg": 0.5939344553918388,
+              "usable": true,
+              "gain": 0.07747794950497422,
+              "gain_dB": -22.216437632692706,
+              "lag_deg": -99.96781670830167
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 7.707229284341986,
+              "simulation_amplitude_deg": 8.009777807429604,
+              "usable": true,
+              "gain": 1.0392551605675304,
+              "gain_dB": 0.33444379467762736,
+              "lag_deg": -68.16274734846706
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 3.0632718250900868,
+              "simulation_amplitude_deg": 4.251053333589303,
+              "usable": true,
+              "gain": 1.3877493008522952,
+              "gain_dB": 2.8462203441303267,
+              "lag_deg": -65.41166490590446
+            }
+          ]
+        },
+        {
+          "joint": "hip_flexion_l",
+          "reference_ROM_deg": 59.30224672039447,
+          "reference_minimum_deg": -23.045730472342008,
+          "reference_maximum_deg": 36.25651624805246,
+          "simulation_ROM_deg": 37.41947236144165,
+          "ROM_gain": 0.6309958632405882,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 107.9202137615572,
+            "SD": 22.02915830032415,
+            "minimum": 77.2581955878505,
+            "maximum": 129.32414787687077
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 48.61796704116275,
+            "SD": 22.029158300324156,
+            "minimum": 17.955948867456023,
+            "maximum": 70.0219011564763
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 1.819833475625177,
+            "SD": 0.3714725751317642,
+            "minimum": 1.3027869913954009,
+            "maximum": 2.1807630406757466
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 81.98334756251768,
+            "SD": 37.14725751317641,
+            "minimum": 30.278699139540088,
+            "maximum": 118.07630406757465
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -45.903652935205834,
+            "circular_SD_deg": 97.69741131231764,
+            "mean_absolute_error_deg": 80.14907479449906,
+            "maximum_absolute_error_deg": 174.44930207593427
+          },
+          "mean_bias_deg": -20.617982773275234,
+          "mean_absolute_error_deg": 37.78376063636999,
+          "maximum_absolute_error_deg": 97.60953807326341,
+          "mean_cycle_maximum_absolute_error_deg": 45.305946377891054,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 77.29621278930922,
+            "SD": 18.76367776841,
+            "minimum": 38.25828465473758,
+            "maximum": 97.60953807326341
+          },
+          "worst_error_cycle_index": 4,
+          "worst_error_cycle_phase_percent": 84.5,
+          "waveform_RMSE_deg": 27.773385176278673,
+          "normalized_RMSE": 0.46833613753671166,
+          "cycle_variability_RMS_deg": 36.72176019091801,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 25.324489115180665,
+              "simulation_amplitude_deg": 15.858280953724295,
+              "usable": true,
+              "gain": 0.6262033907810645,
+              "gain_dB": -4.065691701692237,
+              "lag_deg": -69.42316484357596
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 7.5303284631833565,
+              "simulation_amplitude_deg": 3.7126449810490447,
+              "usable": true,
+              "gain": 0.4930256361592451,
+              "gain_dB": -6.142609957131632,
+              "lag_deg": 86.60455731110109
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 3.337147912972748,
+              "simulation_amplitude_deg": 0.7607514572893743,
+              "usable": true,
+              "gain": 0.22796456049552002,
+              "gain_dB": -12.842653268546723,
+              "lag_deg": -80.54148579344118
+            }
+          ]
+        },
+        {
+          "joint": "knee_angle_l",
+          "reference_ROM_deg": 72.10215335962097,
+          "reference_minimum_deg": -70.68287931382679,
+          "reference_maximum_deg": 1.4192740457941828,
+          "simulation_ROM_deg": 22.62671528966114,
+          "ROM_gain": 0.31381469533658435,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 52.3022331398829,
+            "SD": 10.501480321376302,
+            "minimum": 38.21572103033019,
+            "maximum": 66.87569684889611
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": -19.799920219738073,
+            "SD": 10.501480321376302,
+            "minimum": -33.886432329290784,
+            "maximum": -5.226456510724859
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 0.7253907227848962,
+            "SD": 0.14564724952108565,
+            "minimum": 0.5300219098828185,
+            "maximum": 0.9275131703118896
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": -27.460927721510366,
+            "SD": 14.564724952108566,
+            "minimum": -46.99780901171815,
+            "maximum": -7.248682968811037
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -172.36046167674158,
+            "circular_SD_deg": 110.79025876816992,
+            "mean_absolute_error_deg": 100.05940942385344,
+            "maximum_absolute_error_deg": 172.45396002620225
+          },
+          "mean_bias_deg": -10.422780796009503,
+          "mean_absolute_error_deg": 24.968441180685694,
+          "maximum_absolute_error_deg": 67.16580188530465,
+          "mean_cycle_maximum_absolute_error_deg": 37.757224614355806,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 52.44734029620531,
+            "SD": 8.874852771399988,
+            "minimum": 40.13991667108242,
+            "maximum": 67.16580188530465
+          },
+          "worst_error_cycle_index": 4,
+          "worst_error_cycle_phase_percent": 77.5,
+          "waveform_RMSE_deg": 25.35769799949075,
+          "normalized_RMSE": 0.3516912715909495,
+          "cycle_variability_RMS_deg": 15.686860019764794,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 26.3693789129414,
+              "simulation_amplitude_deg": 4.063578150470863,
+              "usable": true,
+              "gain": 0.15410215628842763,
+              "gain_dB": -16.243825686681102,
+              "lag_deg": 129.13642549640156
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 17.53567587057994,
+              "simulation_amplitude_deg": 6.6816350995811,
+              "usable": true,
+              "gain": 0.38103094222852585,
+              "gain_dB": -8.380795106253334,
+              "lag_deg": -26.019005449401373
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 7.641268554206117,
+              "simulation_amplitude_deg": 1.1363330980724424,
+              "usable": true,
+              "gain": 0.14871000672354998,
+              "gain_dB": -16.55319613479301,
+              "lag_deg": -158.67363022538092
+            }
+          ]
+        },
+        {
+          "joint": "ankle_angle_l",
+          "reference_ROM_deg": 30.43503240187468,
+          "reference_minimum_deg": -11.54004444423145,
+          "reference_maximum_deg": 18.89498795764323,
+          "simulation_ROM_deg": 19.76331773802205,
+          "ROM_gain": 0.6493608246267123,
+          "cycle_amplitude_deg": {
+            "n": 7,
+            "mean": 39.887746220503026,
+            "SD": 4.547139515682141,
+            "minimum": 31.320186260112198,
+            "maximum": 44.89950136799449
+          },
+          "cycle_amplitude_error_deg": {
+            "n": 7,
+            "mean": 9.452713818628345,
+            "SD": 4.547139515682141,
+            "minimum": 0.8851538582375191,
+            "maximum": 14.46446896611981
+          },
+          "cycle_amplitude_gain": {
+            "n": 7,
+            "mean": 1.3105866191897366,
+            "SD": 0.14940478641981184,
+            "minimum": 1.0290833880690398,
+            "maximum": 1.475257222503527
+          },
+          "cycle_amplitude_percent_error": {
+            "n": 7,
+            "mean": 31.05866191897366,
+            "SD": 14.940478641981183,
+            "minimum": 2.908338806903976,
+            "maximum": 47.5257222503527
+          },
+          "fundamental_phase_error": {
+            "n": 7,
+            "circular_mean_deg": -22.5698041202786,
+            "circular_SD_deg": 58.26403828030049,
+            "mean_absolute_error_deg": 53.0974633821448,
+            "maximum_absolute_error_deg": 76.79953339334901
+          },
+          "mean_bias_deg": -21.32800262042126,
+          "mean_absolute_error_deg": 22.026387600126483,
+          "maximum_absolute_error_deg": 52.46578699368136,
+          "mean_cycle_maximum_absolute_error_deg": 39.27719077131067,
+          "cycle_maximum_absolute_error_deg": {
+            "n": 7,
+            "mean": 43.81636605118437,
+            "SD": 7.372335026752883,
+            "minimum": 29.05829360828159,
+            "maximum": 52.46578699368136
+          },
+          "worst_error_cycle_index": 2,
+          "worst_error_cycle_phase_percent": 17.5,
+          "waveform_RMSE_deg": 22.899619180773787,
+          "normalized_RMSE": 0.7524098834001327,
+          "cycle_variability_RMS_deg": 10.874309934535876,
+          "harmonics": [
+            {
+              "order": 1,
+              "reference_amplitude_deg": 7.388599476979877,
+              "simulation_amplitude_deg": 4.319240531593708,
+              "usable": true,
+              "gain": 0.5845817661453774,
+              "gain_dB": -4.663094699378178,
+              "lag_deg": -39.16024113124763
+            },
+            {
+              "order": 2,
+              "reference_amplitude_deg": 7.8952013913667525,
+              "simulation_amplitude_deg": 4.207736760923128,
+              "usable": true,
+              "gain": 0.53294862947058,
+              "gain_dB": -5.466293005684101,
+              "lag_deg": -85.38585328541014
+            },
+            {
+              "order": 3,
+              "reference_amplitude_deg": 3.2117977152357717,
+              "simulation_amplitude_deg": 1.594281671856466,
+              "usable": true,
+              "gain": 0.4963829646847585,
+              "gain_dB": -6.083662628492622,
+              "lag_deg": 179.33261809503205
+            }
+          ]
+        }
+      ],
+      "terms": {
+        "cadence_log_error": 0.641062193108177,
+        "waveform_normalized_RMSE": 0.5042328311233285,
+        "ROM_log_gain_error": 0.6155561787735162,
+        "mean_bias_normalized": 0.40316352689856366,
+        "fundamental_phase_error": 0.4416030041911015,
+        "worst_cycle_max_error_normalized": 1.4145463089922201
+      },
+      "weights": {
+        "cadence_log_error": 2.0,
+        "waveform_normalized_RMSE": 1.0,
+        "ROM_log_gain_error": 0.5,
+        "mean_bias_normalized": 0.5,
+        "fundamental_phase_error": 0.5,
+        "worst_cycle_max_error_normalized": 0.5
+      },
+      "kinematic_loss": 3.223791726767383
+    }
+  ]
+}

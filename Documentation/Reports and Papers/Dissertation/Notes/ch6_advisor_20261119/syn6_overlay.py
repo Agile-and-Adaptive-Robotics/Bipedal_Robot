@@ -119,7 +119,7 @@ for column,(side,leg) in enumerate([("Left",1),("Right",0)]):
     panel.spines[["right","top","left"]].set_visible(False)
     panel.tick_params(axis="y",length=0)
     panel.tick_params(axis="x",length=2.6)
-fig.legend(handles=[Line2D([],[],color=blue,lw=1.7,label="Suspended syn6 mean"),
+fig.legend(handles=[Line2D([],[],color=blue,lw=1.7,label="syn6 mean, feet off ground"),
                     Line2D([],[],color=gray,ls="--",lw=1.5,label="Subject01 walking"),
                     Line2D([],[],color=orange,ls=":",lw=1.8,label="Ong simulated walking")],
            loc="upper center",bbox_to_anchor=(.5,1.005),ncol=2,frameon=False,fontsize=10.2,

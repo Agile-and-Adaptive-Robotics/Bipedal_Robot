@@ -1,0 +1,175 @@
+{
+  "original_full_trajectory_sha256": "80b2e20989061663de2fe621ebd0968ff13e0a96a138bd8981b8b2ece32d7c2a",
+  "observed_full_trajectory_sha256": "80b2e20989061663de2fe621ebd0968ff13e0a96a138bd8981b8b2ece32d7c2a",
+  "equal_samples": 8000,
+  "independent_audit": {
+    "normal_double_max_error_N": 0.0,
+    "vertical_minus_normal_max_N": 0.0,
+    "identified_contacts": [
+      [
+        [
+          "ground-plane",
+          "ground"
+        ],
+        [
+          "calcn_l_geom_1",
+          "calcn_l"
+        ]
+      ],
+      [
+        [
+          "ground-plane",
+          "ground"
+        ],
+        [
+          "calcn_r_geom_1",
+          "calcn_r"
+        ]
+      ],
+      [
+        [
+          "ground-plane",
+          "ground"
+        ],
+        [
+          "toes_l_geom_1",
+          "toes_l"
+        ]
+      ],
+      [
+        [
+          "ground-plane",
+          "ground"
+        ],
+        [
+          "toes_r_geom_1",
+          "toes_r"
+        ]
+      ]
+    ],
+    "nonzero_samples": 10701,
+    "trace_sha256": "80b2e20989061663de2fe621ebd0968ff13e0a96a138bd8981b8b2ece32d7c2a"
+  },
+  "recorder_maximum_error_N": 0.0,
+  "systems": [
+    "easteregg2",
+    "EB475WS4"
+  ],
+  "python": "3.10.21",
+  "versions": {
+    "mujoco": "2.3.7",
+    "numpy": "1.21.6",
+    "scipy": "1.11.2",
+    "optuna": "5.0.0",
+    "numba": "0.57.1",
+    "sns-toolbox": "1.5.2"
+  },
+  "reproduction_sources_sha256": {
+    "Code/MuJoCo_SNS/spinal/runner.py": "ca2b100ac20cba306f65de9a5a7fdb7c7307a35d118a8ba0bc587b67acfd743c",
+    "Code/MuJoCo_SNS/spinal/foot_loading.py": "1bfe79b7d71e0d34b50eb0046b3b17037f4d522a547301ba122ea66eabbf0baf",
+    "Code/MuJoCo_SNS/spinal/kine_ref.py": "6e9fbdbe6745a091276aa2a117609ddd2101737bef31d7eca91d16aeae243ea7",
+    "Code/MuJoCo_SNS/spinal/params.py": "a78c8e14011100fb0195c00e22c131fdf77ed6310c1096d38ce9e066f371d142",
+    "Code/MuJoCo_SNS/spinal/build_network.py": "f6c147ad2e8939e9065fa1ff25149478f376c4ccb678a8b3795139af8f4c0d99",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/thelen_dynamic.py": "d9d51e735389f41f222c99eb98667c6e70642aa0a4895ebb8b20a33f675c4abe",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/selective_force.py": "313fc3a4659cec84d7de5be0c98480e34c97561d81510f3dea4c86f54f61484f",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/coupled_muscle_context.py": "bd560ffd9e21d01f417e22297caf1485957300cfdd51f67fe0f09fbb0cb550af",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/pareto_feedback.py": "52a3bc16723667258c8da566bc7f0a84285b1a6621643405e4ef1d17f985dc92",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/refine_pareto_feedback.py": "125d4925b3d5b626bb893169fe4e7960ab09eb79d6bea38fe927cfe67085f711",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/refine_regional_feedback.py": "305c926eb0e493b869e106bf49806a23e35c3cff85ad4a69ded7536a12e27eb8",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/fit_swing_window.py": "a9d2a0c3847174490cf938aa3ba3cf2caa6fea9104b2e1fdbb8db9268d5951b3",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/fit_premotor_split.py": "60a5f016f115771d4a635f44da0dcc377c3ec1ac3214f820802a9549c32fb808",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/verify_pareto_feedback.py": "6791369d0c41dafcb031679e4269268ade95255562dc3fdef4c37d5603672b77",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_angle_errors.py": "de8335e6b1b6621b6ae86b749cffca4364b53c9a4b927242a94eea49a5cc5291",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/collect_pareto_feedback.py": "54cd29d4a7b546885ca4a3b1106b999d0f31ff77b012bd449a5ea79595a2be5f",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/pareto_reference/anchors.json": "d20a84bc6553f401b98d42f6580a729b2b09806e86ba2241d1ff28bbe778b82c",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/pareto_reference/split_parents.json": "a19f1101fceb774ca560f83948a42b2f922dfb739f1072133f1ba56f7e76ac6a",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/gait2392_simbody.osim": "477fffd1ee9cfbcb9d4c20c6b0fe6baf0958e6a640e7df7166b45156cf8cf5f2",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/mjc/gait2392_simbody/gait2392_simbody_cvt3.xml": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/subject01_walk1_ik.mot": "7380251a0e2434bea1ad62aa8ece037e3dc8ff014f8b747395b63c4c8a4d55e2",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/subject01_walk1_grf.mot": "69a5e8633f8666bc192abd8069e6812fe7b4c8bb8968dc3254d4824abf263662",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/bracket_hip_asymmetry.py": "ccf80783e8dcd68300325614a653af56722e1a9c399d4250422b9af7577f3afe",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/test_foot_loading.py": "153c1e09907bdeea8e3c13fdf55ba047800cb47d6e7e63489b663e4656a20095",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/fit_reference_feedback.py": "b207f029e872dfc0f9d9df23444cadf2265ffdae69eacfa90e007b0d38b33fa6",
+    "Code/MuJoCo_SNS/spinal/_curriculum.py": "b67f4651e3d4327eac0c4c6e7ac33b16441d7cf02a8660d2b26768d1caec51c5",
+    "Code/MuJoCo_SNS/spinal/wean_tune_20261016.py": "e55d7efd669f7a6f4385926e0e777cf05bb1933233313633a6e4fb21d11a678f",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/pareto_reference/bracket_parent.json": "ed463c3c41309e4ac3f0d3cc63f55b3df0ea4d8373282a989a6acf41c8c65c6d"
+  },
+  "independent_host_center": {
+    "reference": "physical_group_recruitment #17 on easteregg2",
+    "repeat": "physical_hip_drive_bracket #13 on EB475WS4",
+    "identical": [
+      "parameters",
+      "objective vector",
+      "stance fractions",
+      "cycle counts"
+    ],
+    "absolute_joint_RMSE_deg": 18.15987439682608,
+    "stance_RL": [
+      0.643,
+      0.6365714285714286
+    ],
+    "cycles_RL": [
+      8,
+      11
+    ]
+  },
+  "instantiated_circuits": {
+    "frozen": {
+      "AARL_NET": "",
+      "builder": "<class 'build_network.SpinalNetwork'>",
+      "neuron_count": 606,
+      "actual_inputs": 386,
+      "synapses": 6908,
+      "model_muscles": 92,
+      "compiled_spiking": false
+    },
+    "group recruitment #17": {
+      "AARL_NET": "",
+      "builder": "<class 'build_network.SpinalNetwork'>",
+      "neuron_count": 606,
+      "actual_inputs": 386,
+      "synapses": 6908,
+      "model_muscles": 92,
+      "compiled_spiking": false
+    },
+    "group recruitment #38": {
+      "AARL_NET": "",
+      "builder": "<class 'build_network.SpinalNetwork'>",
+      "neuron_count": 606,
+      "actual_inputs": 386,
+      "synapses": 6908,
+      "model_muscles": 92,
+      "compiled_spiking": false
+    },
+    "group recruitment #92": {
+      "AARL_NET": "",
+      "builder": "<class 'build_network.SpinalNetwork'>",
+      "neuron_count": 606,
+      "actual_inputs": 386,
+      "synapses": 6908,
+      "model_muscles": 92,
+      "compiled_spiking": false
+    },
+    "three-gain bracket #26": {
+      "AARL_NET": "",
+      "builder": "<class 'build_network.SpinalNetwork'>",
+      "neuron_count": 606,
+      "actual_inputs": 386,
+      "synapses": 6908,
+      "model_muscles": 92,
+      "compiled_spiking": false
+    }
+  },
+  "physical_general_sampler": {
+    "implementation": "Optuna TPESampler",
+    "multivariate": true,
+    "startup_trials": 24,
+    "seed": 241005,
+    "objectives": 3,
+    "constraints": [
+      "minimum six right cycles",
+      "minimum six left cycles",
+      "physical validity"
+    ]
+  }
+}

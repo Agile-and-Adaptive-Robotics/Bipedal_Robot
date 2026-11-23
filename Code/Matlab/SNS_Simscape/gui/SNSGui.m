@@ -411,7 +411,12 @@ methods
         if strcmp(app.selType, 'block'), P = app.blocks(app.selIdx).params;
         else, P = app.edges(app.selIdx).params; end
         for r = 1:size(P, 1)
-            h = uilabel(app.propPanel, 'Text', P{r, 1}, ...
+            label = P{r, 1};
+            switch label
+                case {'Thr','ThrPre'}, label = 'Ramp onset (mV)';
+                case {'Slope','SlopePre'}, label = 'Ramp span (mV)';
+            end
+            h = uilabel(app.propPanel, 'Text', label, ...
                 'FontName', 'Arial');
             app.place(h, r + 2, 1); app.track(h);
             h = uieditfield(app.propPanel, 'numeric', ...
@@ -471,8 +476,11 @@ methods
             else, c = 1; end
             P = {'Vrest' -52; 'Gm' 0.1; 'Cm' 5; 'Thr' -45; 'Slope' 5};
             if isfield(N, 'Vrest_mV'), P{1, 2} = N(k).Vrest_mV; end
+            if P{1,2} == 0, P{4,2} = 0; end % legacy rest-relative SNS-Toolbox export
             if isfield(N, 'Gm_uS'),    P{2, 2} = N(k).Gm_uS; end
             if isfield(N, 'Cm_nF'),    P{3, 2} = N(k).Cm_nF; end
+            if isfield(N, 'Thr_mV'),   P{4, 2} = N(k).Thr_mV; end
+            if isfield(N, 'Slope_mV'), P{5, 2} = N(k).Slope_mV; end
             app.blocks(end+1) = struct('name', nm, ...
                 'type', 'NonSpikingNeuron', ...
                 'x', 8 + 17 * c, 'y', 90 - 3.4 * mod(k, 24), ...
@@ -514,14 +522,16 @@ methods
         S = struct();
         S.meta = struct('source', 'SNSGui canvas circuit', 'app', 'SNSGui');
         neurons = struct('name', {}, 'Vrest_mV', {}, 'Gm_uS', {}, ...
-                         'Cm_nF', {});
+                         'Cm_nF', {}, 'Thr_mV', {}, 'Slope_mV', {});
         for k = 1:numel(app.blocks)
             b = app.blocks(k);
             if ~strcmp(b.type, 'NonSpikingNeuron'), continue; end
             neurons(end+1) = struct('name', b.name, ...
                 'Vrest_mV', app.paramValue(b.params, 'Vrest', -52), ...
                 'Gm_uS', app.paramValue(b.params, 'Gm', 0.1), ...
-                'Cm_nF', app.paramValue(b.params, 'Cm', 5)); %#ok<AGROW>
+                'Cm_nF', app.paramValue(b.params, 'Cm', 5), ...
+                'Thr_mV', app.paramValue(b.params, 'Thr', -45), ...
+                'Slope_mV', app.paramValue(b.params, 'Slope', 5)); %#ok<AGROW>
         end
         S.neurons = neurons;
         syn = struct('src', {}, 'dst', {}, 'g_uS', {}, 'Esyn_mV', {}, ...
@@ -554,9 +564,10 @@ methods
         fwrite(fid, jsonencode(S, 'PrettyPrint', true)); fclose(fid);
     end
 
-    function cbBuild(app, ~, ~)
+    function cbBuild(app, ~, ~, outputFolder)
         app.nClicks = app.nClicks + 1;
         here = fileparts(mfilename('fullpath'));
+        if nargin >= 4, here = outputFolder; end
         tmpJ = fullfile(here, 'circuit_last.json');
         app.saveJson(tmpJ);
         mdl = 'SNS_GuiCircuit';
@@ -610,7 +621,7 @@ methods
     end
 
     function fields = propFieldsByOrder(app)
-        fields = app.propChildren(arrayfun(@(h) isa(h, 'matlab.ui.control.NumericEditField'), ...
+        fields = app.propChildren(cellfun(@(h) isa(h, 'matlab.ui.control.NumericEditField'), ...
             app.propChildren));
     end
 

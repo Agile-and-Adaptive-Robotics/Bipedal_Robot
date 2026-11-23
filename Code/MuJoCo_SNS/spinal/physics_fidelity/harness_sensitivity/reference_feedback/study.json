@@ -1,0 +1,2212 @@
+{
+  "source_model": "Solid_Models/OpenSim/Gait2392_Robotbody/gait2392_simbody.osim",
+  "muscles": [
+    "rect_fem_r",
+    "rect_fem_l",
+    "bifemsh_r",
+    "bifemsh_l"
+  ],
+  "source_study": "Code/MuJoCo_SNS/spinal/wean_tune_20261016.py",
+  "net": "s3k",
+  "mode": "native 88 actuators plus four source-parameter compliant-tendon muscles",
+  "seeds": "Optuna TPE 61 + 10*round + worker; workers 0..3",
+  "trial_budgets": {
+    "5": 88,
+    "6": 80,
+    "7": 64,
+    "8": 48
+  },
+  "search_selection": "finite and at least three qualifying cycles on each side; rank by original objective",
+  "strict_drive_probe": "at least six cycles on each side and both stance fractions within [0.4,0.75]",
+  "basin": "8 perturbations of all scalar parameters by \u00b11%, seeds 3000 through 3007; finite and at least three cycles per leg",
+  "rounds": {
+    "5": {
+      "trials": 88,
+      "complete_force_audits": 88,
+      "coupled_steps_range": [
+        7700,
+        7700
+      ],
+      "eligible_bilateral": 46,
+      "strict_cycles_and_duty": 1,
+      "winners": [
+        {
+          "rank": 1,
+          "fit": {
+            "round": 5,
+            "study": "curr_s6d_feedback",
+            "trial": 83,
+            "score": -134.72948207915604,
+            "raw_kine_score": -134.72948207915604,
+            "scale": 1.0,
+            "knobs": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.49251470001584857,
+              "phase_reset_f": 0.5526207743300197,
+              "f1_kneext_inh": 0.9827466685964942,
+              "f1_anklepf_inh": 1.0947708972506076,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.07829795019106803,
+              "toe_rge": 0.320527969110396,
+              "ib_e_central": 0.08141357580392179,
+              "ia_f_central": 0.5468910157213179,
+              "ii_f_central": 0.31712583255989074,
+              "ii_e_central": 0.10474405657242306,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.03324277883118282,
+              "ia_in": 0.661859572925285,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.9071671554388631,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round5_best.json"
+        },
+        {
+          "rank": 2,
+          "fit": {
+            "round": 5,
+            "study": "curr_s6d_feedback",
+            "trial": 75,
+            "score": -144.29134839941403,
+            "raw_kine_score": -144.29134839941403,
+            "scale": 1.0,
+            "knobs": {
+              "gamma_l": 0.9047256060163644,
+              "gamma_r": 1.7984771533880402,
+              "alpha_l": 0.7418158985365221,
+              "alpha_r": 0.6267153664759485,
+              "alpha_to_mn": 0.4429510748639075
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.6529507076366015,
+              "phase_reset_f": 0.7581245831785877,
+              "f1_kneext_inh": 1.0495526633056738,
+              "f1_anklepf_inh": 0.9792541120348794,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.05311654740570922,
+              "toe_rge": 0.26829690147243584,
+              "ib_e_central": 0.05098521868204603,
+              "ia_f_central": 0.4963338206640041,
+              "ii_f_central": 0.3358459194547413,
+              "ii_e_central": 0.09805418837221933,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.08288246341617315,
+              "ia_in": 1.0307366169010994,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 1.0165382100940794,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "gamma_l": 0.9047256060163644,
+              "gamma_r": 1.7984771533880402,
+              "alpha_l": 0.7418158985365221,
+              "alpha_r": 0.6267153664759485,
+              "alpha_to_mn": 0.4429510748639075
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.9047256060163644,
+              "gamma_r": 1.7984771533880402,
+              "alpha_l": 0.7418158985365221,
+              "alpha_r": 0.6267153664759485
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round5_best2.json"
+        },
+        {
+          "rank": 3,
+          "fit": {
+            "round": 5,
+            "study": "curr_s6d_feedback",
+            "trial": 78,
+            "score": -149.8760655221097,
+            "raw_kine_score": -149.8760655221097,
+            "scale": 1.0,
+            "knobs": {
+              "gamma_l": 0.7761106707291331,
+              "gamma_r": 0.8549224797983046,
+              "alpha_l": 0.7866994750650973,
+              "alpha_r": 0.8930369667454784,
+              "alpha_to_mn": 0.31338311018261333
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.5104156794145184,
+              "phase_reset_f": 0.35811378280574524,
+              "f1_kneext_inh": 0.9001404044765096,
+              "f1_anklepf_inh": 0.8352892819644165,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.07184805248604258,
+              "toe_rge": 0.23265922910532913,
+              "ib_e_central": 0.030877141404385893,
+              "ia_f_central": 0.5108505028969988,
+              "ii_f_central": 0.17281512875419924,
+              "ii_e_central": 0.013456496321317554,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.11665344406999378,
+              "ia_in": 1.0146378244197753,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.9908510052468983,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "gamma_l": 0.7761106707291331,
+              "gamma_r": 0.8549224797983046,
+              "alpha_l": 0.7866994750650973,
+              "alpha_r": 0.8930369667454784,
+              "alpha_to_mn": 0.31338311018261333
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.7761106707291331,
+              "gamma_r": 0.8549224797983046,
+              "alpha_l": 0.7866994750650973,
+              "alpha_r": 0.8930369667454784
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round5_best3.json"
+        }
+      ],
+      "fresh": [
+        {
+          "round": 5,
+          "trial": 83,
+          "scale": 1.0,
+          "search_score": -134.72948207915604,
+          "production": false,
+          "kine_score": -134.72948207915604,
+          "cycles": [
+            3,
+            8
+          ],
+          "duty": [
+            0.8418571428571429,
+            0.45042857142857146
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        },
+        {
+          "round": 5,
+          "trial": 75,
+          "scale": 1.0,
+          "search_score": -144.29134839941403,
+          "production": false,
+          "kine_score": -144.29134839941403,
+          "cycles": [
+            5,
+            3
+          ],
+          "duty": [
+            0.7844285714285715,
+            0.7974285714285714
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        },
+        {
+          "round": 5,
+          "trial": 78,
+          "scale": 1.0,
+          "search_score": -149.8760655221097,
+          "production": false,
+          "kine_score": -149.8760655221097,
+          "cycles": [
+            5,
+            7
+          ],
+          "duty": [
+            0.9182857142857143,
+            0.6721428571428572
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        }
+      ]
+    },
+    "6": {
+      "trials": 80,
+      "complete_force_audits": 80,
+      "coupled_steps_range": [
+        7700,
+        7700
+      ],
+      "eligible_bilateral": 46,
+      "strict_cycles_and_duty": 1,
+      "winners": [
+        {
+          "rank": 1,
+          "fit": {
+            "round": 6,
+            "study": "curr_s7b_wean07",
+            "trial": 78,
+            "score": -135.39971025211682,
+            "raw_kine_score": -135.39971025211682,
+            "scale": 0.3645789537695999,
+            "knobs": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.3013993311605128,
+              "phase_reset_f": 0.7346616829303718,
+              "f1_kneext_inh": 0.4689071798531834,
+              "f1_anklepf_inh": 1.1360956957797528,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.03970901347234802,
+              "toe_rge": 0.09983740623648127,
+              "ib_e_central": 0.07206434406538312,
+              "ia_f_central": 0.4341050423687772,
+              "ii_f_central": 0.5436168845740044,
+              "ii_e_central": 0.11471645480529537,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.0197718875105382,
+              "ia_in": 0.9810862930937693,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.710469435441262,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "drive_scale": 0.3645789537695999
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.2742895628394592,
+              "gamma_r": 0.4929469071514262,
+              "alpha_l": 0.2758693668682994,
+              "alpha_r": 0.2914903926730027
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round6_best.json"
+        },
+        {
+          "rank": 2,
+          "fit": {
+            "round": 6,
+            "study": "curr_s7b_wean07",
+            "trial": 53,
+            "score": -137.51047881767707,
+            "raw_kine_score": -137.51047881767707,
+            "scale": 0.3337722101932364,
+            "knobs": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.18822812904419933,
+              "phase_reset_f": 0.7568529575517721,
+              "f1_kneext_inh": 1.393367389917816,
+              "f1_anklepf_inh": 1.5947346942083669,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.10967930319698908,
+              "toe_rge": 0.12852960593915214,
+              "ib_e_central": 0.09550575017025266,
+              "ia_f_central": 0.2813567843140482,
+              "ii_f_central": 0.46034498234809534,
+              "ii_e_central": 0.11133235497215702,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.008955834770888137,
+              "ia_in": 0.6135688138131933,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.8608086142129601,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "drive_scale": 0.3337722101932364
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.25111222871005107,
+              "gamma_r": 0.4512931341939984,
+              "alpha_l": 0.25255854006984335,
+              "alpha_r": 0.26685959682150756
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round6_best2.json"
+        },
+        {
+          "rank": 3,
+          "fit": {
+            "round": 6,
+            "study": "curr_s7b_wean07",
+            "trial": 40,
+            "score": -139.27289088800842,
+            "raw_kine_score": -139.27289088800842,
+            "scale": 0.33761691877273275,
+            "knobs": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.2811842510908022,
+              "phase_reset_f": 0.7880402190028882,
+              "f1_kneext_inh": 0.3174352339948243,
+              "f1_anklepf_inh": 1.229232226115503,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.05586417407495488,
+              "toe_rge": 0.0851743410560647,
+              "ib_e_central": 0.06421786975276404,
+              "ia_f_central": 0.4061246601357888,
+              "ii_f_central": 0.503535313370778,
+              "ii_e_central": 0.11163352726460239,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.014545403221539454,
+              "ia_in": 0.9770530201063724,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.6350208409614334,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "drive_scale": 0.33761691877273275
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.254004780308577,
+              "gamma_r": 0.4564915615402983,
+              "alpha_l": 0.25546775167038205,
+              "alpha_r": 0.269933541715921
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round6_best3.json"
+        }
+      ],
+      "fresh": [
+        {
+          "round": 6,
+          "trial": 78,
+          "scale": 0.3645789537695999,
+          "search_score": -135.39971025211682,
+          "production": false,
+          "kine_score": -135.39971025211682,
+          "cycles": [
+            3,
+            3
+          ],
+          "duty": [
+            0.7011428571428572,
+            0.7325714285714285
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        },
+        {
+          "round": 6,
+          "trial": 53,
+          "scale": 0.3337722101932364,
+          "search_score": -137.51047881767707,
+          "production": false,
+          "kine_score": -137.51047881767707,
+          "cycles": [
+            5,
+            4
+          ],
+          "duty": [
+            0.638,
+            0.7408571428571429
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        },
+        {
+          "round": 6,
+          "trial": 40,
+          "scale": 0.33761691877273275,
+          "search_score": -139.27289088800842,
+          "production": false,
+          "kine_score": -139.27289088800842,
+          "cycles": [
+            4,
+            3
+          ],
+          "duty": [
+            0.7194285714285714,
+            0.7444285714285714
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        }
+      ]
+    },
+    "7": {
+      "trials": 64,
+      "complete_force_audits": 64,
+      "coupled_steps_range": [
+        10700,
+        10700
+      ],
+      "eligible_bilateral": 32,
+      "strict_cycles_and_duty": 0,
+      "winners": [
+        {
+          "rank": 1,
+          "fit": {
+            "round": 7,
+            "study": "curr_s6e_prodwindow",
+            "trial": 57,
+            "score": -149.42630047335794,
+            "raw_kine_score": -149.42630047335794,
+            "scale": 1.0,
+            "knobs": {
+              "gamma_l": 0.8585426441537984,
+              "gamma_r": 1.7469226843245016,
+              "alpha_l": 0.7487487068275471,
+              "alpha_r": 1.1490641202982452,
+              "alpha_to_mn": 0.5565090140158546
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.17185128071871147,
+              "phase_reset_f": 0.8966588029586154,
+              "f1_kneext_inh": 1.597597058702777,
+              "f1_anklepf_inh": 0.9338586810468487,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.11088832475791784,
+              "toe_rge": 0.12614021749554089,
+              "ib_e_central": 0.12067909499859993,
+              "ia_f_central": 0.1408142423794642,
+              "ii_f_central": 0.4209864188134457,
+              "ii_e_central": 0.09963855205632519,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.057454667999430484,
+              "ia_in": 0.9353486346814875,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.9864323487068363,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "gamma_l": 0.8585426441537984,
+              "gamma_r": 1.7469226843245016,
+              "alpha_l": 0.7487487068275471,
+              "alpha_r": 1.1490641202982452,
+              "alpha_to_mn": 0.5565090140158546
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.8585426441537984,
+              "gamma_r": 1.7469226843245016,
+              "alpha_l": 0.7487487068275471,
+              "alpha_r": 1.1490641202982452
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round7_best.json"
+        },
+        {
+          "rank": 2,
+          "fit": {
+            "round": 7,
+            "study": "curr_s6e_prodwindow",
+            "trial": 53,
+            "score": -149.47203122779203,
+            "raw_kine_score": -149.47203122779203,
+            "scale": 1.0,
+            "knobs": {
+              "gamma_l": 1.0256481766938936,
+              "gamma_r": 2.036150483700681,
+              "alpha_l": 0.7803141213024252,
+              "alpha_r": 0.9647691942333885,
+              "alpha_to_mn": 0.4534659747193473
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.6181128786935493,
+              "phase_reset_f": 0.6502749404153604,
+              "f1_kneext_inh": 1.4795147316887673,
+              "f1_anklepf_inh": 0.8611211168463586,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.1100831281758017,
+              "toe_rge": 0.26496555231792085,
+              "ib_e_central": 0.1158618029488894,
+              "ia_f_central": 0.33685378386843134,
+              "ii_f_central": 0.32996440571074465,
+              "ii_e_central": 0.12503611162656894,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.053782566429470734,
+              "ia_in": 0.9518791568926652,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.8840309783089361,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "gamma_l": 1.0256481766938936,
+              "gamma_r": 2.036150483700681,
+              "alpha_l": 0.7803141213024252,
+              "alpha_r": 0.9647691942333885,
+              "alpha_to_mn": 0.4534659747193473
+            },
+            "eff_knob_currents": {
+              "gamma_l": 1.0256481766938936,
+              "gamma_r": 2.036150483700681,
+              "alpha_l": 0.7803141213024252,
+              "alpha_r": 0.9647691942333885
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round7_best2.json"
+        },
+        {
+          "rank": 3,
+          "fit": {
+            "round": 7,
+            "study": "curr_s6e_prodwindow",
+            "trial": 22,
+            "score": -155.92032524769473,
+            "raw_kine_score": -155.92032524769473,
+            "scale": 1.0,
+            "knobs": {
+              "gamma_l": 0.8771956923186508,
+              "gamma_r": 2.0243209734349095,
+              "alpha_l": 0.6825842550027453,
+              "alpha_r": 1.1297938102343252,
+              "alpha_to_mn": 0.5783204336841535
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.2851066440664626,
+              "phase_reset_f": 0.8716938323552973,
+              "f1_kneext_inh": 1.3955632207487914,
+              "f1_anklepf_inh": 0.9513144428673088,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.1227172409111354,
+              "toe_rge": 0.15520195484700836,
+              "ib_e_central": 0.10227696713487192,
+              "ia_f_central": 0.3309486289727875,
+              "ii_f_central": 0.3568475815511909,
+              "ii_e_central": 0.11485604014818163,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.05753410289870475,
+              "ia_in": 0.9352172504657755,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.814820508218303,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "gamma_l": 0.8771956923186508,
+              "gamma_r": 2.0243209734349095,
+              "alpha_l": 0.6825842550027453,
+              "alpha_r": 1.1297938102343252,
+              "alpha_to_mn": 0.5783204336841535
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.8771956923186508,
+              "gamma_r": 2.0243209734349095,
+              "alpha_l": 0.6825842550027453,
+              "alpha_r": 1.1297938102343252
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round7_best3.json"
+        }
+      ],
+      "fresh": [
+        {
+          "round": 7,
+          "trial": 57,
+          "scale": 1.0,
+          "search_score": -149.42630047335794,
+          "production": true,
+          "kine_score": -149.42630047335794,
+          "cycles": [
+            8,
+            8
+          ],
+          "duty": [
+            0.9185882352941176,
+            0.5958823529411764
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        },
+        {
+          "round": 7,
+          "trial": 53,
+          "scale": 1.0,
+          "search_score": -149.47203122779203,
+          "production": true,
+          "kine_score": -149.47203122779203,
+          "cycles": [
+            8,
+            5
+          ],
+          "duty": [
+            0.9544705882352941,
+            0.8332941176470589
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        },
+        {
+          "round": 7,
+          "trial": 22,
+          "scale": 1.0,
+          "search_score": -155.92032524769473,
+          "production": true,
+          "kine_score": -155.92032524769473,
+          "cycles": [
+            8,
+            5
+          ],
+          "duty": [
+            0.9183529411764706,
+            0.7656470588235295
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        }
+      ]
+    },
+    "8": {
+      "trials": 48,
+      "complete_force_audits": 48,
+      "coupled_steps_range": [
+        7700,
+        7700
+      ],
+      "eligible_bilateral": 28,
+      "strict_cycles_and_duty": 11,
+      "winners": [
+        {
+          "rank": 1,
+          "fit": {
+            "round": 8,
+            "study": "curr_s8b_wean04",
+            "trial": 38,
+            "score": -127.24253175022301,
+            "raw_kine_score": -127.24253175022301,
+            "scale": 0.2258142553667891,
+            "knobs": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.3191328489844331,
+              "phase_reset_f": 1.119844347513618,
+              "f1_kneext_inh": 0.2011082306313739,
+              "f1_anklepf_inh": 0.7322766217645612,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.035679439614560916,
+              "toe_rge": 0.0879841478642654,
+              "ib_e_central": 0.10734807527419762,
+              "ia_f_central": 0.411374206560188,
+              "ii_f_central": 0.5843648837775587,
+              "ii_e_central": 0.0783225799099983,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.027530939085762495,
+              "ia_in": 0.8759416268452892,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.5826972829296752,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "drive_scale": 0.2258142553667891
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.16989047981803515,
+              "gamma_r": 0.30532327119493446,
+              "alpha_l": 0.17086898465686204,
+              "alpha_r": 0.1805443931621585
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round8_best.json"
+        },
+        {
+          "rank": 2,
+          "fit": {
+            "round": 8,
+            "study": "curr_s8b_wean04",
+            "trial": 40,
+            "score": -127.66795989370604,
+            "raw_kine_score": -127.66795989370604,
+            "scale": 0.22429688398728476,
+            "knobs": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.31794937024655956,
+              "phase_reset_f": 1.2386313282093517,
+              "f1_kneext_inh": 0.16421642258991379,
+              "f1_anklepf_inh": 0.7223777182068865,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.029016600063391514,
+              "toe_rge": 0.05916934036526208,
+              "ib_e_central": 0.10280072040856822,
+              "ia_f_central": 0.3482722272605636,
+              "ii_f_central": 0.5461177020275289,
+              "ii_e_central": 0.06490168589721829,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.019829630140467125,
+              "ia_in": 0.897192577041097,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.24679927092133824,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "drive_scale": 0.22429688398728476
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.16874889134166804,
+              "gamma_r": 0.3032716345856543,
+              "alpha_l": 0.16972082106310596,
+              "alpha_r": 0.1793312151257708
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round8_best2.json"
+        },
+        {
+          "rank": 3,
+          "fit": {
+            "round": 8,
+            "study": "curr_s8b_wean04",
+            "trial": 28,
+            "score": -140.0831654282437,
+            "raw_kine_score": -140.0831654282437,
+            "scale": 0.29364281374534057,
+            "knobs": {
+              "gamma_l": 0.7523461242164841,
+              "gamma_r": 1.3520991874450052,
+              "alpha_l": 0.7566793530342906,
+              "alpha_r": 0.7995261099389012,
+              "alpha_to_mn": 0.3435095217902169
+            },
+            "params": {
+              "drive": 2.0773198435110425,
+              "rg_adapt": 1.2953682110177716,
+              "desc_e": 1.6987967868158145,
+              "desc_f": 0.9963926530754599,
+              "rg_to_pf": 2.6005147390334713,
+              "pf_gain": 0.3086648568525935,
+              "e2_pf": 1.9589627426813,
+              "f1_df": 1.523133550912121,
+              "f1_kf": 1.1382055010524683,
+              "e2_adapt": 2.56508042566242,
+              "post_kneext": 1.5030877247690067,
+              "post_hipext": 0.5189860424936555,
+              "kx": 268.6976067489714,
+              "phase_reset_e": 0.18973169540652388,
+              "phase_reset_f": 1.0050752577041842,
+              "f1_kneext_inh": 0.2768900421504786,
+              "f1_anklepf_inh": 1.079273242292933,
+              "ankle_post_walk_trim": 0.3308631104719715,
+              "renshaw": 0.5,
+              "rg_nap_h": 0.8420833189531531,
+              "heel_rge": 0.028623203602260356,
+              "toe_rge": 0.11058269661166237,
+              "ib_e_central": 0.09997231813816126,
+              "ia_f_central": 0.3355194149779294,
+              "ii_f_central": 0.4064202155009511,
+              "ii_e_central": 0.10005194303466834,
+              "c1_gain": 0.4978970446353496,
+              "v3_gain": 0.09483003906183418,
+              "ib_rge": 0.025301506609905752,
+              "ia_in": 1.2166662645864066,
+              "ia_f_contra_f": 0.797446189481382,
+              "v3_to_ibexc": 0.8784035043219222,
+              "contact_onset": 0.23485942465862525,
+              "pelvis_ty": 0.9215287157201333,
+              "contra_swing": 1.0216288985895503,
+              "contra_kinh": 1.4251105067452698,
+              "pm_gain": 0.365012382984079,
+              "pm_T": 1.7913470735158432,
+              "pm_ws": 0.1173317000347924,
+              "pm_add": 0.23542542543675268,
+              "pm_aff": 0.3519347361673837,
+              "full_rules": 0.0,
+              "no_cross": 1.0,
+              "ky_scale": 0.24695684826961126,
+              "drive_scale": 0.29364281374534057
+            },
+            "eff_knob_currents": {
+              "gamma_l": 0.22092103282532988,
+              "gamma_r": 0.39703420986414,
+              "alpha_l": 0.22219345432799298,
+              "alpha_r": 0.23477509658532544
+            },
+            "note": "wean round; loader recipe: base=dict(this params); set_stage(4, base); for k in (gamma_l,gamma_r,alpha_l,alpha_r): P.G[k]=knob*scale; P.G[alpha_to_mn]=knobs[alpha_to_mn]; or simply wean_tune_20261016.py one with spec {\"winner\": this file}"
+          },
+          "source_file": "round8_best3.json"
+        }
+      ],
+      "fresh": [
+        {
+          "round": 8,
+          "trial": 38,
+          "scale": 0.2258142553667891,
+          "search_score": -127.24253175022301,
+          "production": false,
+          "kine_score": -127.24253175022301,
+          "cycles": [
+            7,
+            8
+          ],
+          "duty": [
+            0.6267142857142857,
+            0.5857142857142857
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": true
+        },
+        {
+          "round": 8,
+          "trial": 40,
+          "scale": 0.22429688398728476,
+          "search_score": -127.66795989370604,
+          "production": false,
+          "kine_score": -127.66795989370604,
+          "cycles": [
+            7,
+            8
+          ],
+          "duty": [
+            0.6257142857142857,
+            0.5925714285714285
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": true
+        },
+        {
+          "round": 8,
+          "trial": 28,
+          "scale": 0.29364281374534057,
+          "search_score": -140.0831654282437,
+          "production": false,
+          "kine_score": -140.0831654282437,
+          "cycles": [
+            6,
+            3
+          ],
+          "duty": [
+            0.683,
+            0.7305714285714285
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": false
+        },
+        {
+          "round": 8,
+          "trial": 38,
+          "scale": 0.2258142553667891,
+          "search_score": -127.24253175022301,
+          "production": true,
+          "kine_score": -137.63332591684193,
+          "cycles": [
+            11,
+            7
+          ],
+          "duty": [
+            0.5583529411764706,
+            0.7102352941176471
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": true
+        },
+        {
+          "round": 8,
+          "trial": 40,
+          "scale": 0.22429688398728476,
+          "search_score": -127.66795989370604,
+          "production": true,
+          "kine_score": -137.33663109687393,
+          "cycles": [
+            11,
+            6
+          ],
+          "duty": [
+            0.5631764705882353,
+            0.709764705882353
+          ],
+          "bilateral": true,
+          "six_cycles_and_duty": true
+        },
+        {
+          "round": 8,
+          "trial": 28,
+          "scale": 0.29364281374534057,
+          "search_score": -140.0831654282437,
+          "production": true,
+          "kine_score": -219.8618762925153,
+          "cycles": [
+            6,
+            2
+          ],
+          "duty": [
+            0.6355294117647059,
+            0.8561176470588235
+          ],
+          "bilateral": false,
+          "six_cycles_and_duty": false
+        }
+      ]
+    }
+  },
+  "versions": {
+    "mujoco": "2.3.7",
+    "sns-toolbox": "1.5.2",
+    "optuna": "5.0.0",
+    "numpy": "1.21.6",
+    "scipy": "1.11.2",
+    "numba": "0.57.1"
+  },
+  "source_sha256": {
+    "Solid_Models/OpenSim/Gait2392_Robotbody/gait2392_simbody.osim": "477fffd1ee9cfbcb9d4c20c6b0fe6baf0958e6a640e7df7166b45156cf8cf5f2",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/mjc/gait2392_simbody/gait2392_simbody_cvt3.xml": "a21d3923332ac386775958e273d6938b1c99104bd09216db98213a253590c9ae",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/subject01_walk1_ik.mot": "7380251a0e2434bea1ad62aa8ece037e3dc8ff014f8b747395b63c4c8a4d55e2",
+    "Solid_Models/OpenSim/Gait2392_Robotbody/subject01_walk1_grf.mot": "69a5e8633f8666bc192abd8069e6812fe7b4c8bb8968dc3254d4824abf263662",
+    "Code/MuJoCo_SNS/spinal/runner.py": "f45615eea067bbb1c6097f721a14505a6435d19d169aa4f8f2d506881397e690",
+    "Code/MuJoCo_SNS/spinal/kine_ref.py": "6e9fbdbe6745a091276aa2a117609ddd2101737bef31d7eca91d16aeae243ea7",
+    "Code/MuJoCo_SNS/spinal/wean_tune_20261016.py": "e55d7efd669f7a6f4385926e0e777cf05bb1933233313633a6e4fb21d11a678f",
+    "Code/MuJoCo_SNS/spinal/basin_gate.py": "a6e965261ae6755ccf6d87209e3aa4459a4b95295f2865df10283803b96bfdda",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/thelen_dynamic.py": "d9d51e735389f41f222c99eb98667c6e70642aa0a4895ebb8b20a33f675c4abe",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/selective_force.py": "313fc3a4659cec84d7de5be0c98480e34c97561d81510f3dea4c86f54f61484f",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/coupled_muscle_context.py": "bd560ffd9e21d01f417e22297caf1485957300cfdd51f67fe0f09fbb0cb550af",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/fit_reference_feedback.py": "b207f029e872dfc0f9d9df23444cadf2265ffdae69eacfa90e007b0d38b33fa6",
+    "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/reference_angle_errors.py": "62254063cd3e46ed70c0178ea5f3466e44b0fe50488284d137528e0478c9b7c7"
+  },
+  "selected": {
+    "round": 8,
+    "trial": 38,
+    "scale": 0.2258142553667891,
+    "sha256": "1971e459666827ddea2dba14a3aac531a0103030f75b3f71f15bead43374ad65",
+    "fresh_evaluation": {
+      "round": 8,
+      "trial": 38,
+      "scale": 0.2258142553667891,
+      "search_score": -127.24253175022301,
+      "production": false,
+      "kine_score": -127.24253175022301,
+      "cycles": [
+        7,
+        8
+      ],
+      "duty": [
+        0.6267142857142857,
+        0.5857142857142857
+      ],
+      "bilateral": true,
+      "six_cycles_and_duty": true
+    }
+  },
+  "native_at_selected_scale": {
+    "metrics": {
+      "kine_score": null,
+      "onset_source": {
+        "r": "RG extensor threshold",
+        "l": "RG extensor threshold"
+      },
+      "shared_drive_nA": 2.0773198435110425,
+      "supplementary_scale": 0.2258142553667891,
+      "bilateral_basin_gate": false,
+      "right_cycles": 0,
+      "left_cycles": 0,
+      "kinematic_score_available": false,
+      "legacy_no_cycle_sentinel": -25.0
+    },
+    "compacted_file": "native_at_selected_scale.npz",
+    "full_trajectory_sha256": "d6f4b0f2ed7466a35ae3b9c0bdda8890fc27b0f22e690e44f6ec4c945b114cff",
+    "compact_sha256": "24c16d911fb1bf8d4ac05a87b4bbf6d6fe65b8234f1ae854f24cf8d175e0546f",
+    "samples": 8000,
+    "arrays_equal_original": [
+      "t",
+      "q",
+      "neuro",
+      "contact",
+      "com",
+      "footz",
+      "key_joints",
+      "neuro_names"
+    ],
+    "score_recomputed_from_delivered_arrays": null
+  },
+  "four_at_selected_scale": {
+    "metrics": {
+      "kine_score": -127.24253175022301,
+      "k_duty_r": 0.6267142857142857,
+      "k_duty_l": 0.5857142857142857,
+      "onset_source": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "shared_drive_nA": 2.0773198435110425,
+      "supplementary_scale": 0.2258142553667891,
+      "bilateral_basin_gate": true,
+      "right_cycles": 7,
+      "left_cycles": 8,
+      "kinematic_score_available": true
+    },
+    "compacted_file": "four_at_selected_scale.npz",
+    "full_trajectory_sha256": "80b2e20989061663de2fe621ebd0968ff13e0a96a138bd8981b8b2ece32d7c2a",
+    "compact_sha256": "bb8df43bd1b713e611e88cae56e02fc59a06212446fe3f76103514ca207e6dd6",
+    "samples": 8000,
+    "arrays_equal_original": [
+      "t",
+      "q",
+      "neuro",
+      "contact",
+      "com",
+      "footz",
+      "key_joints",
+      "neuro_names"
+    ],
+    "score_recomputed_from_delivered_arrays": -127.24253175022301
+  },
+  "matched_initial_state": {
+    "qpos": "335ff72c708e58d649dbb9cbe56cc66a2b0cb83d65f375286adc63827cae1e7f",
+    "qvel": "16d0edc8b7ad7705b23a14058f366ff1c0dfa16a0ad14f741924c308754cf8d1",
+    "act": "c6c9b8650bdf333e657353246bc6f5b02f61950d8990935e2f0e38a63197c80c",
+    "ctrl": "232296df57a392b6e9523cf1ceac52b1f6c455fe7321f5e2bdb92cb4ca177fe8",
+    "xfrc_applied": "8e7b9d1bcc26c42f6cc92f9222c9922ee30ecd2ad97cbbb633cf6ef8569f103a",
+    "actuator_gainprm": "90849845c87120213858376d76cd837bca150b1b0631258f58342953f59c3d80",
+    "actuator_biasprm": "fbd01377ccd74f355e70ab449fbac0131422ecb9d32bdd799fe4e25c3cc29ebb",
+    "actuator_gaintype": "7161960258923e597f07168b5651f1e089e8fcac8483232d58d14a1ba2de53ec",
+    "actuator_biastype": "7161960258923e597f07168b5651f1e089e8fcac8483232d58d14a1ba2de53ec",
+    "model_time": 0.0
+  },
+  "selected_fresh_full_trajectory_matches_original_finalist_replay": true,
+  "old_finalist_basin": {
+    "passed": 8,
+    "total": 8,
+    "also_met_strict_duty_and_cycles": 0,
+    "baseline_score": -171.90617339946607,
+    "rows": [
+      {
+        "arm": "four",
+        "basin_seed": 3000,
+        "kine_score": -169.66543695214094,
+        "k_n_cycles_r": 11,
+        "k_n_cycles_l": 10,
+        "k_duty_r": 0.8727142857142857,
+        "k_duty_l": 0.8437142857142857,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "b496cf93ddc20f276a35d80bfaaded493e5b0b8bc33f46a62004b4069b459c13"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3001,
+        "kine_score": -172.3177412146532,
+        "k_n_cycles_r": 11,
+        "k_n_cycles_l": 11,
+        "k_duty_r": 0.9305714285714286,
+        "k_duty_l": 0.6974285714285714,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "9b597d68753734d3db8c282fcf179bb9577f822c6bf04c40b21402d24fa9e814"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3002,
+        "kine_score": -174.9363707769072,
+        "k_n_cycles_r": 11,
+        "k_n_cycles_l": 10,
+        "k_duty_r": 0.8497142857142858,
+        "k_duty_l": 0.7928571428571428,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "eb001c2b3e43ff453ba027f446c6ec14a4433f75a40c50d4bf9a6a2c6ab9fba8"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3003,
+        "kine_score": -175.43409832611326,
+        "k_n_cycles_r": 10,
+        "k_n_cycles_l": 11,
+        "k_duty_r": 0.8707142857142857,
+        "k_duty_l": 0.784,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "b8addf2cbbd5cc7e7bbc9918a4467530ac8989ec009a311b1392a591e5e47558"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3004,
+        "kine_score": -168.38743568723933,
+        "k_n_cycles_r": 11,
+        "k_n_cycles_l": 9,
+        "k_duty_r": 0.9527142857142857,
+        "k_duty_l": 0.7694285714285715,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "a3d8501391c892d7ae0bd30592b8ad80ba4d55c90809d4da97507f35a3ba317f"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3005,
+        "kine_score": -167.71241973406086,
+        "k_n_cycles_r": 14,
+        "k_n_cycles_l": 7,
+        "k_duty_r": 0.9425714285714286,
+        "k_duty_l": 0.7377142857142858,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "902a6f4e423dbcb4852f5e9ee7be356afdda712d583e5cc0c073c88dd729d28d"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3006,
+        "kine_score": -173.2227597180211,
+        "k_n_cycles_r": 11,
+        "k_n_cycles_l": 4,
+        "k_duty_r": 0.8792857142857143,
+        "k_duty_l": 0.8307142857142857,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "f907c6c99af5b3d8ef9f2e35ed1010a44d38c5429798fe8ca459a4a10ee2ec01"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3007,
+        "kine_score": -161.94223398258237,
+        "k_n_cycles_r": 13,
+        "k_n_cycles_l": 9,
+        "k_duty_r": 0.943,
+        "k_duty_l": 0.8024285714285714,
+        "bilateral_basin_gate": true,
+        "trace_sha256": "ca4806a00b870b7132e98a83eb5dab492a475eca6eadc9c4778974f7150c7591"
+      }
+    ]
+  },
+  "new_finalist_basin": {
+    "passed": 8,
+    "total": 8,
+    "also_met_strict_duty_and_cycles": 7,
+    "baseline_score": -127.24253175022301,
+    "rows": [
+      {
+        "arm": "four",
+        "basin_seed": 3000,
+        "kine_score": -132.515891678705,
+        "k_n_cycles_r": 7,
+        "k_n_cycles_l": 7,
+        "k_duty_r": 0.6235714285714286,
+        "k_duty_l": 0.5974285714285714,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "c98208a1c2a64b87fe13ca59d91db919e207755d627457a035170efd16fdbb84"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3001,
+        "kine_score": -134.61740293215107,
+        "k_n_cycles_r": 7,
+        "k_n_cycles_l": 6,
+        "k_duty_r": 0.657,
+        "k_duty_l": 0.5661428571428572,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "63b79ce0b043f64a4461a9496269d417f7d6b1a562781830e7c41091cffc7a6c"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3002,
+        "kine_score": -130.7640670879493,
+        "k_n_cycles_r": 8,
+        "k_n_cycles_l": 8,
+        "k_duty_r": 0.6208571428571429,
+        "k_duty_l": 0.5851428571428572,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "42ace23e3ff53d4c27fe7648313cbb5a4208d06949ae28e729625d97988319b5"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3003,
+        "kine_score": -134.76785785060395,
+        "k_n_cycles_r": 6,
+        "k_n_cycles_l": 8,
+        "k_duty_r": 0.68,
+        "k_duty_l": 0.6188571428571429,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "9f36061b667fad80ffbda74bff4618e831d94e787da6751f85bc617d262f13d0"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3004,
+        "kine_score": -132.4148060013536,
+        "k_n_cycles_r": 6,
+        "k_n_cycles_l": 6,
+        "k_duty_r": 0.6468571428571429,
+        "k_duty_l": 0.5994285714285714,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "15625174162390dd251a69f19c6432d7216364dbc12f20f9f6f13ecbb548dbd7"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3005,
+        "kine_score": -132.49808117541394,
+        "k_n_cycles_r": 7,
+        "k_n_cycles_l": 6,
+        "k_duty_r": 0.6155714285714285,
+        "k_duty_l": 0.6407142857142857,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "d8e1f9141386510eb0fda3f82733b014d4776522d9299eda6268f989310d7a01"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3006,
+        "kine_score": -151.84868367399244,
+        "k_n_cycles_r": 5,
+        "k_n_cycles_l": 6,
+        "k_duty_r": 0.6642857142857143,
+        "k_duty_l": 0.6107142857142858,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "d3400762073b2f6831487d0a4195a898c77091ec27026ad10f60acb181e0476b"
+      },
+      {
+        "arm": "four",
+        "basin_seed": 3007,
+        "kine_score": -131.03107116872036,
+        "k_n_cycles_r": 7,
+        "k_n_cycles_l": 6,
+        "k_duty_r": 0.6181428571428571,
+        "k_duty_l": 0.6077142857142858,
+        "onset_source": {
+          "r": "foot loading",
+          "l": "foot loading"
+        },
+        "bilateral_basin_gate": true,
+        "trace_sha256": "53b245632f87dd53ffd03653ad626c9c8c46b716edbcb2a77f9e94237a82afca"
+      }
+    ]
+  },
+  "drive_probes": [
+    {
+      "label": "native_at_selected_scale",
+      "arm": "native",
+      "scale": 0.2258142553667891,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": null,
+      "cycles": [
+        0,
+        0
+      ],
+      "duty": [
+        null,
+        null
+      ],
+      "onsets": {
+        "r": "RG extensor threshold",
+        "l": "RG extensor threshold"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "d6f4b0f2ed7466a35ae3b9c0bdda8890fc27b0f22e690e44f6ec4c945b114cff",
+      "legacy_no_cycle_sentinel": -25.0
+    },
+    {
+      "label": "four_at_selected_scale",
+      "arm": "four",
+      "scale": 0.2258142553667891,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -127.24253175022301,
+      "cycles": [
+        7,
+        8
+      ],
+      "duty": [
+        0.6267142857142857,
+        0.5857142857142857
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": true,
+      "trace_sha256": "80b2e20989061663de2fe621ebd0968ff13e0a96a138bd8981b8b2ece32d7c2a"
+    },
+    {
+      "label": "1",
+      "arm": "four",
+      "scale": 1.0,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -173.07778319027403,
+      "cycles": [
+        8,
+        9
+      ],
+      "duty": [
+        0.8177142857142857,
+        0.5322857142857143
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "7f5fddeb0ac1b9717d8da5902b21c4928eaa53b8fd45bd0744cc8e285e050ef8"
+    },
+    {
+      "label": "0.85",
+      "arm": "four",
+      "scale": 0.85,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -173.5620303912306,
+      "cycles": [
+        8,
+        11
+      ],
+      "duty": [
+        0.82,
+        0.5338571428571428
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "9743ded9a9f93cc500551b238ebc0697738d6369c55d6677ce25885c5fbd8c57"
+    },
+    {
+      "label": "0.7",
+      "arm": "four",
+      "scale": 0.7,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -147.70033433265425,
+      "cycles": [
+        6,
+        10
+      ],
+      "duty": [
+        0.9245714285714286,
+        0.5401428571428571
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "260ac4789f001fa7825ee80e3f97fe88ce70e6d567e30a3c8ec6d8e47ee1a7aa"
+    },
+    {
+      "label": "0.55",
+      "arm": "four",
+      "scale": 0.55,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -147.3087686852557,
+      "cycles": [
+        9,
+        8
+      ],
+      "duty": [
+        0.9411428571428572,
+        0.6255714285714286
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "bba2eef712489f8bb75612f6a7f41e8f1c44eb0b625beb1194745b4458ebd95c"
+    },
+    {
+      "label": "0.45",
+      "arm": "four",
+      "scale": 0.45,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -153.76109844502406,
+      "cycles": [
+        8,
+        8
+      ],
+      "duty": [
+        0.893,
+        0.6174285714285714
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "5ffac3509918e52e27798762f8667d737b95bd835a22e53f480eeec3e2850d5c"
+    },
+    {
+      "label": "0.4",
+      "arm": "four",
+      "scale": 0.4,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -140.91254548726667,
+      "cycles": [
+        8,
+        8
+      ],
+      "duty": [
+        0.6385714285714286,
+        0.5518571428571428
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": true,
+      "trace_sha256": "0a23f8634f76d47a742d9a1807d63f7de9f49224259ffc97a651749cee36ed9f"
+    },
+    {
+      "label": "0.38",
+      "arm": "four",
+      "scale": 0.38,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -140.95773103200517,
+      "cycles": [
+        8,
+        8
+      ],
+      "duty": [
+        0.6324285714285715,
+        0.5952857142857143
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": true,
+      "trace_sha256": "a02c3dc70fee0c0e5a2b2c5a2e705bfae8f2b582b329acb0fb165691d98fed0b"
+    },
+    {
+      "label": "0.3",
+      "arm": "four",
+      "scale": 0.3,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -140.40244981583183,
+      "cycles": [
+        8,
+        7
+      ],
+      "duty": [
+        0.6232857142857143,
+        0.5951428571428572
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": true,
+      "trace_sha256": "1b1b50d0aec4b086502dfdfbcdd62f2c33b2ae589edeb7d9ea68dd73ffc89a87"
+    },
+    {
+      "label": "0.2",
+      "arm": "four",
+      "scale": 0.2,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -127.86571790494517,
+      "cycles": [
+        7,
+        7
+      ],
+      "duty": [
+        0.62,
+        0.6208571428571429
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": true,
+      "trace_sha256": "deca15eb5361795fce88badc16b15f89e69cab8e352a6072310839966e119335"
+    },
+    {
+      "label": "0.1",
+      "arm": "four",
+      "scale": 0.1,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -166.01306650445235,
+      "cycles": [
+        7,
+        7
+      ],
+      "duty": [
+        0.894,
+        0.599
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "964424e3d6f6a03c8b2cfdddaa42e05c100a2732cdc7083336144ead51111219"
+    },
+    {
+      "label": "0",
+      "arm": "four",
+      "scale": 0.0,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": false,
+      "score": -170.64406180148592,
+      "cycles": [
+        0,
+        5
+      ],
+      "duty": [
+        null,
+        0.7047142857142857
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": false,
+      "trace_sha256": "3c1c752be5a0c1b35786a48471fe2aa6567d1a6ca629966fe6d089a12ed32965"
+    },
+    {
+      "label": "production_0.3",
+      "arm": "four",
+      "scale": 0.3,
+      "shared_drive_nA": 2.0773198435110425,
+      "production": true,
+      "score": -148.7216472903012,
+      "cycles": [
+        13,
+        10
+      ],
+      "duty": [
+        0.6564705882352941,
+        0.6223529411764706
+      ],
+      "onsets": {
+        "r": "foot loading",
+        "l": "foot loading"
+      },
+      "six_cycles_and_duty": true,
+      "trace_sha256": "80939ceca61124ef3460c5f1169747182f3e6b5e27d3691d9784edba33fb679d"
+    }
+  ],
+  "highest_ranked_strict_candidates": {
+    "5": {
+      "total": 88,
+      "strict_count": 1,
+      "strict_trial_ids": [
+        54
+      ],
+      "highest_raw_ranking_strict": {
+        "trial": 54,
+        "original_objective_rank": 13,
+        "original_objective": -162.8457353218048,
+        "scale": 1.0,
+        "fresh": [
+          {
+            "production": false,
+            "score": -162.8457353218048,
+            "cycles": [
+              7,
+              8
+            ],
+            "duty": [
+              0.7271428571428571,
+              0.5657142857142857
+            ],
+            "onset_source": {
+              "r": "foot loading",
+              "l": "foot loading"
+            },
+            "meets_strict": true,
+            "trajectory_sha256": "f8828becaec9e2f4ca758ecbeae938962345f2e1a13c21ab01fbdf0e30ccee3e"
+          },
+          {
+            "production": true,
+            "score": -148.03459937099566,
+            "cycles": [
+              7,
+              5
+            ],
+            "duty": [
+              0.7118823529411765,
+              0.6274117647058823
+            ],
+            "onset_source": {
+              "r": "foot loading",
+              "l": "foot loading"
+            },
+            "meets_strict": false,
+            "trajectory_sha256": "f4190205e377795d39396f39361d96621ba81cbf95376924215c8f28524037b2"
+          }
+        ]
+      }
+    },
+    "6": {
+      "total": 80,
+      "strict_count": 1,
+      "strict_trial_ids": [
+        10
+      ],
+      "highest_raw_ranking_strict": {
+        "trial": 10,
+        "original_objective_rank": 43,
+        "original_objective": -182.3576828704086,
+        "scale": 0.30423242723767546,
+        "fresh": [
+          {
+            "production": false,
+            "score": -182.3576828704086,
+            "cycles": [
+              9,
+              8
+            ],
+            "duty": [
+              0.7334285714285714,
+              0.6367142857142857
+            ],
+            "onset_source": {
+              "r": "foot loading",
+              "l": "foot loading"
+            },
+            "meets_strict": true,
+            "trajectory_sha256": "a80e29bc7110240fa2b0caa6b886040a28c88dc27bdb7cb132dff1a20c277e91"
+          },
+          {
+            "production": true,
+            "score": -182.37792149256933,
+            "cycles": [
+              11,
+              6
+            ],
+            "duty": [
+              0.6054117647058823,
+              0.8012941176470588
+            ],
+            "onset_source": {
+              "r": "foot loading",
+              "l": "foot loading"
+            },
+            "meets_strict": false,
+            "trajectory_sha256": "65e132334451e11e881fb802c04fa36b16a5ddb044cb7fecd9af39b4fb0fe9ac"
+          }
+        ]
+      }
+    },
+    "7": {
+      "total": 64,
+      "strict_count": 0,
+      "strict_trial_ids": []
+    },
+    "8": {
+      "total": 48,
+      "strict_count": 11,
+      "strict_trial_ids": [
+        38,
+        40,
+        34,
+        14,
+        21,
+        23,
+        42,
+        45,
+        25,
+        1,
+        36
+      ],
+      "highest_raw_ranking_strict": {
+        "trial": 38,
+        "original_objective_rank": 1,
+        "original_objective": -127.24253175022301,
+        "scale": 0.2258142553667891,
+        "fresh": [
+          {
+            "production": false,
+            "score": -127.24253175022301,
+            "cycles": [
+              7,
+              8
+            ],
+            "duty": [
+              0.6267142857142857,
+              0.5857142857142857
+            ],
+            "onset_source": {
+              "r": "foot loading",
+              "l": "foot loading"
+            },
+            "meets_strict": true,
+            "trajectory_sha256": "80b2e20989061663de2fe621ebd0968ff13e0a96a138bd8981b8b2ece32d7c2a"
+          },
+          {
+            "production": true,
+            "score": -137.63332591684193,
+            "cycles": [
+              11,
+              7
+            ],
+            "duty": [
+              0.5583529411764706,
+              0.7102352941176471
+            ],
+            "onset_source": {
+              "r": "foot loading",
+              "l": "foot loading"
+            },
+            "meets_strict": true,
+            "trajectory_sha256": "fc04498de22069bfaf933462be28dab44b44f05ddd9594c6cee6178168424761"
+          }
+        ]
+      }
+    }
+  },
+  "independent_production_worker_replays": [
+    {
+      "trial": 0,
+      "original_score": -25.0,
+      "fresh_score_original_objective": -25.0,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 1,
+      "original_score": -182.37310981150608,
+      "fresh_score_original_objective": -182.37310981150608,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 5,
+      "original_score": -280.3712264329146,
+      "fresh_score_original_objective": -280.3712264329146,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 9,
+      "original_score": -244.40045405901714,
+      "fresh_score_original_objective": -244.40045405901714,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 13,
+      "original_score": -195.7534789744709,
+      "fresh_score_original_objective": -195.7534789744709,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 17,
+      "original_score": -189.76115093061074,
+      "fresh_score_original_objective": -189.76115093061074,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 21,
+      "original_score": -180.25434543779423,
+      "fresh_score_original_objective": -180.25434543779423,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 25,
+      "original_score": -151.87996266210385,
+      "fresh_score_original_objective": -151.87996266210385,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 29,
+      "original_score": -25.0,
+      "fresh_score_original_objective": -25.0,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 33,
+      "original_score": -172.87381719336113,
+      "fresh_score_original_objective": -172.87381719336113,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 37,
+      "original_score": -275.5726448223315,
+      "fresh_score_original_objective": -275.5726448223315,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 41,
+      "original_score": -25.0,
+      "fresh_score_original_objective": -25.0,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 45,
+      "original_score": -170.68893615532986,
+      "fresh_score_original_objective": -170.68893615532986,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 49,
+      "original_score": -336.35538754487555,
+      "fresh_score_original_objective": -336.35538754487555,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 53,
+      "original_score": -149.47203122779203,
+      "fresh_score_original_objective": -149.47203122779203,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    },
+    {
+      "trial": 57,
+      "original_score": -149.42630047335794,
+      "fresh_score_original_objective": -149.42630047335794,
+      "kz_equal": true,
+      "score_equal": true,
+      "time_equal": true
+    }
+  ],
+  "force_measurement_convention": {
+    "historical_stored_50": "The 280 search records and dose/perturbation summaries used a threshold of 50 on the original heel-plus-toe signal. Each level-ground contact was counted twice, so the physical model threshold was 25 N. The experimental reference threshold was 50 N.",
+    "single_counted_50_N": "physical_angle_comparison.json reports a matched-threshold reduction of the original trajectories. The later three-objective search is in pareto_reference."
+  }
+}

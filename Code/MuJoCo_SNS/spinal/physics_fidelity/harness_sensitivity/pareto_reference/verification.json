@@ -1,0 +1,1389 @@
+{
+  "selection_basis": "Use physical-50 N 16 s absolute angle and bilateral stance measurements only. The separate three-gain sampling grid was frozen before longer-run validation.",
+  "first_search_16s_roles": {
+    "best_angle_at_three_pp": "ade985d96524a0f437c05d245430ef3b13f217c6a166b8202e69817e20bf1c5c",
+    "minimum_angle": "2f32e6277d36b0b8750dbe018b925d7b89fbaff6cf89b3efbc3746aaeb2499e0",
+    "best_angle_at_two_pp": "ade985d96524a0f437c05d245430ef3b13f217c6a166b8202e69817e20bf1c5c",
+    "balanced": "06e494557e76b149dc281f65a237b3621b73d8875a01c8c059c05467c594640c"
+  },
+  "roles": {
+    "best_angle_at_three_pp": "e291139f2c908644369508949d5757de870980c8725eb40e2d28542f28643ae2",
+    "minimum_angle": "2f32e6277d36b0b8750dbe018b925d7b89fbaff6cf89b3efbc3746aaeb2499e0",
+    "best_angle_at_two_pp": "e291139f2c908644369508949d5757de870980c8725eb40e2d28542f28643ae2",
+    "balanced": "06e494557e76b149dc281f65a237b3621b73d8875a01c8c059c05467c594640c"
+  },
+  "candidates": {
+    "e291139f2c908644369508949d5757de870980c8725eb40e2d28542f28643ae2": {
+      "role": "best_angle_at_three_pp",
+      "run_directory": "early_bracket26",
+      "cases": {
+        "nominal_16s": {
+          "joint_RMSE_deg": 18.47773033466493,
+          "stance": [
+            0.623,
+            0.6144285714285714
+          ],
+          "cycles": [
+            10,
+            10
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 18.519778114565668,
+            "sides": {
+              "r": {
+                "cycles": 10,
+                "period_s": 0.873,
+                "stance": 0.7749090909090909,
+                "joint_RMSE_deg": {
+                  "hip": 18.511715876411042,
+                  "knee": 20.838800198449743,
+                  "ankle": 11.89550227141048
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.2280000000000002,
+                "stance": 0.7543636363636363,
+                "joint_RMSE_deg": {
+                  "hip": 19.38990273495275,
+                  "knee": 34.233445029063866,
+                  "ankle": 6.249302577106135
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8475655888771507,
+            "maximum_absolute_pelvis_tilt_deg": 13.583278869474084,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "c4c349e0c3f48e8cea7e1ea167f54c0a78fc4865e6ed7d58304835fef71eb705",
+          "original_compact_sha256": "6e61b7bbc1c43222e77969a0bbe5d6f4979c4ac180957fb580e29361e762a264"
+        },
+        "nominal_22s": {
+          "joint_RMSE_deg": 20.886035748140316,
+          "stance": [
+            0.6324705882352941,
+            0.5370588235294118
+          ],
+          "cycles": [
+            17,
+            7
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 21.870831970280367,
+            "sides": {
+              "r": {
+                "cycles": 6,
+                "period_s": 1.352666666666667,
+                "stance": 0.748,
+                "joint_RMSE_deg": {
+                  "hip": 26.607914964177613,
+                  "knee": 28.020072825333973,
+                  "ankle": 16.88070057324489
+                }
+              },
+              "l": {
+                "cycles": 5,
+                "period_s": 1.6991999999999998,
+                "stance": 0.8606,
+                "joint_RMSE_deg": {
+                  "hip": 25.23756116909262,
+                  "knee": 27.03568656058085,
+                  "ankle": 7.443055729252268
+                }
+              }
+            },
+            "interval_s": [
+              5.0,
+              15.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 21.998,
+            "minimum_COM_m": 0.8435511147076543,
+            "maximum_absolute_pelvis_tilt_deg": 14.430130225525259,
+            "active_steps": 10700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "423778af98e922d188e2e3bcf5f509cc2fc07274f14760077416081ab153bd29",
+          "original_compact_sha256": "77a3d4299241753e152e9cd9d8e3d7e7eafad7bffb693c51350f2882d7e49bb3"
+        },
+        "holdout_28s": {
+          "joint_RMSE_deg": 21.197289888597997,
+          "stance": [
+            0.6934782608695652,
+            0.6228695652173913
+          ],
+          "cycles": [
+            21,
+            12
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 22.62081468757931,
+            "sides": {
+              "r": {
+                "cycles": 10,
+                "period_s": 1.449,
+                "stance": 0.74225,
+                "joint_RMSE_deg": {
+                  "hip": 27.77782078134274,
+                  "knee": 31.363153040021977,
+                  "ankle": 16.637035116959254
+                }
+              },
+              "l": {
+                "cycles": 8,
+                "period_s": 1.72025,
+                "stance": 0.85975,
+                "joint_RMSE_deg": {
+                  "hip": 24.39852298771145,
+                  "knee": 27.938896824982635,
+                  "ankle": 7.609459374457798
+                }
+              }
+            },
+            "interval_s": [
+              5.0,
+              21.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 27.998,
+            "minimum_COM_m": 0.8435511147076543,
+            "maximum_absolute_pelvis_tilt_deg": 14.430130225525259,
+            "active_steps": 13700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "f3e9b81d034b69ecfb3a22e752e0e9d5d67d3addfd8d2a71af7692ee7ad6956b",
+          "original_compact_sha256": "855ac87ea6f1adee304a76dcbb14c1a798507c0be4a58e343e05e5bbe655f34b"
+        },
+        "perturbation_3000": {
+          "joint_RMSE_deg": 21.031901670032912,
+          "stance": [
+            0.7714285714285715,
+            0.6695714285714286
+          ],
+          "cycles": [
+            8,
+            8
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 20.567241746032938,
+            "sides": {
+              "r": {
+                "cycles": 7,
+                "period_s": 1.234,
+                "stance": 0.7883636363636364,
+                "joint_RMSE_deg": {
+                  "hip": 23.21117803462564,
+                  "knee": 28.60109552523673,
+                  "ankle": 12.829782075192107
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.4542857142857142,
+                "stance": 0.7883636363636364,
+                "joint_RMSE_deg": {
+                  "hip": 20.283519578918476,
+                  "knee": 31.722402848474438,
+                  "ankle": 6.755472413750239
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.846989784836029,
+            "maximum_absolute_pelvis_tilt_deg": 13.621666566172365,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "e2cc7d88a6e4b124ca46b5f8cabc9a061a56b31c9440476629438c5a9e426978",
+          "original_compact_sha256": "410a6fbfe4809d4ea72ff236cac9efdb71201a434dc52d6922db8a6699d77eca"
+        },
+        "perturbation_3001": {
+          "joint_RMSE_deg": 19.133748459557072,
+          "stance": [
+            0.7618571428571429,
+            0.6145714285714285
+          ],
+          "cycles": [
+            11,
+            8
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 18.86653829490864,
+            "sides": {
+              "r": {
+                "cycles": 10,
+                "period_s": 0.8032,
+                "stance": 0.7521818181818182,
+                "joint_RMSE_deg": {
+                  "hip": 18.0004528099416,
+                  "knee": 20.167979067396793,
+                  "ankle": 15.679239247701055
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.2125714285714284,
+                "stance": 0.7352727272727273,
+                "joint_RMSE_deg": {
+                  "hip": 21.068158980830805,
+                  "knee": 30.814622303332033,
+                  "ankle": 7.468777360249551
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8471883265030117,
+            "maximum_absolute_pelvis_tilt_deg": 13.464137189864028,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "fec14484ff0461b06cf065ea64ec6588ec2bd18f61ec2852ed4349e9c4280537",
+          "original_compact_sha256": "8a37f9656bbe85c4e3052a7b4df23bac5b9d4e010aa5bbc11bf784afe3f92f01"
+        },
+        "perturbation_3002": {
+          "joint_RMSE_deg": 19.784389055871006,
+          "stance": [
+            0.7558571428571429,
+            0.57
+          ],
+          "cycles": [
+            9,
+            9
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 19.483353043010748,
+            "sides": {
+              "r": {
+                "cycles": 8,
+                "period_s": 1.078,
+                "stance": 0.7656363636363637,
+                "joint_RMSE_deg": {
+                  "hip": 21.42511439168041,
+                  "knee": 24.923761270550184,
+                  "ankle": 11.945101437230104
+                }
+              },
+              "l": {
+                "cycles": 6,
+                "period_s": 1.5433333333333332,
+                "stance": 0.6803636363636364,
+                "joint_RMSE_deg": {
+                  "hip": 20.6371162195793,
+                  "knee": 31.647841093307964,
+                  "ankle": 6.321183845716513
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8486260037143815,
+            "maximum_absolute_pelvis_tilt_deg": 13.520681403789496,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "49b492fb3ab3b28f334a1bf48832126d97380791e381dd3da5b7f49bd165adbf",
+          "original_compact_sha256": "3d186d91f02f5a78d560fd989d0bf9b3edcb9ef9b492426dbb7911593450d063"
+        },
+        "perturbation_3003": {
+          "joint_RMSE_deg": 21.72290542113728,
+          "stance": [
+            0.7964285714285714,
+            0.5677142857142857
+          ],
+          "cycles": [
+            8,
+            8
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 22.77876681733737,
+            "sides": {
+              "r": {
+                "cycles": 5,
+                "period_s": 1.7408000000000001,
+                "stance": 0.788,
+                "joint_RMSE_deg": {
+                  "hip": 28.17198393127587,
+                  "knee": 35.953796322695304,
+                  "ankle": 14.54112375384468
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.310857142857143,
+                "stance": 0.7114545454545455,
+                "joint_RMSE_deg": {
+                  "hip": 19.883499064711376,
+                  "knee": 29.99225395439014,
+                  "ankle": 8.12994387710685
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8476069895576201,
+            "maximum_absolute_pelvis_tilt_deg": 13.595463798198596,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "23ab86318ded49c46e1722774c2b3b3f0c14dfc56a20fc0cbaf4bcec32c7489d",
+          "original_compact_sha256": "b90b2de763341a4e921c361800254a2a340163b52ca6c9b3fe763549cc60a4d3"
+        },
+        "perturbation_3004": {
+          "joint_RMSE_deg": 20.71339533562199,
+          "stance": [
+            0.6381428571428571,
+            0.6007142857142858
+          ],
+          "cycles": [
+            10,
+            7
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 21.35973903445074,
+            "sides": {
+              "r": {
+                "cycles": 7,
+                "period_s": 1.250857142857143,
+                "stance": 0.7465454545454545,
+                "joint_RMSE_deg": {
+                  "hip": 24.005446724950364,
+                  "knee": 29.284817857634177,
+                  "ankle": 14.240205918003696
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.2994285714285714,
+                "stance": 0.7132727272727273,
+                "joint_RMSE_deg": {
+                  "hip": 18.579275933590683,
+                  "knee": 34.47523565245047,
+                  "ankle": 7.573452120075035
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8478003907964561,
+            "maximum_absolute_pelvis_tilt_deg": 13.591153795318691,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "66234e9cfc3060188259bdf3274ebf50526ee26013e93c646713209afb767dcf",
+          "original_compact_sha256": "8ba53b96c1a2d41b23888a0a8405d8f30635b3db8e78edf7c6aca28a1c787058"
+        },
+        "perturbation_3005": {
+          "joint_RMSE_deg": 21.734786069722105,
+          "stance": [
+            0.7787142857142857,
+            0.5231428571428571
+          ],
+          "cycles": [
+            8,
+            7
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 22.32020571440796,
+            "sides": {
+              "r": {
+                "cycles": 6,
+                "period_s": 1.4190000000000003,
+                "stance": 0.7625454545454545,
+                "joint_RMSE_deg": {
+                  "hip": 25.537410924043176,
+                  "knee": 33.49085848024502,
+                  "ankle": 15.173777318934553
+                }
+              },
+              "l": {
+                "cycles": 6,
+                "period_s": 1.4773333333333334,
+                "stance": 0.6632727272727272,
+                "joint_RMSE_deg": {
+                  "hip": 20.738163837977176,
+                  "knee": 32.081774420713295,
+                  "ankle": 6.899249304534561
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8478606168847119,
+            "maximum_absolute_pelvis_tilt_deg": 13.646516274632567,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "b26d6805ab316da132b7fc8f877935e4e4f053e0bbd566ff15541bb3013a61ec",
+          "original_compact_sha256": "4531db36623a7c4acecf8cbb4d249281dff06feffc5676c347e77b0cd6401e7d"
+        },
+        "perturbation_3006": {
+          "joint_RMSE_deg": 22.35172660666039,
+          "stance": [
+            0.7954285714285714,
+            0.6407142857142857
+          ],
+          "cycles": [
+            7,
+            7
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 21.95602967438113,
+            "sides": {
+              "r": {
+                "cycles": 6,
+                "period_s": 1.3876666666666668,
+                "stance": 0.7745454545454545,
+                "joint_RMSE_deg": {
+                  "hip": 25.268914339100657,
+                  "knee": 30.550451885725785,
+                  "ankle": 16.75813950085005
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.4168571428571426,
+                "stance": 0.7696363636363637,
+                "joint_RMSE_deg": {
+                  "hip": 20.80299973445761,
+                  "knee": 29.35319291414689,
+                  "ankle": 9.00247967200581
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.848051343575737,
+            "maximum_absolute_pelvis_tilt_deg": 13.603796426734522,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "49716c9c005b8bbad185ed5ff6ff35acc80345b4b7bf0f3fb697bbd93d869406",
+          "original_compact_sha256": "5ec47f68f7460339a2ab01daf15590353ab64c3c3476f1809e9b23c3cdb82702"
+        },
+        "perturbation_3007": {
+          "joint_RMSE_deg": 19.062709813382103,
+          "stance": [
+            0.8008571428571428,
+            0.6537142857142857
+          ],
+          "cycles": [
+            10,
+            8
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 19.199554211037594,
+            "sides": {
+              "r": {
+                "cycles": 8,
+                "period_s": 1.0870000000000002,
+                "stance": 0.7776363636363637,
+                "joint_RMSE_deg": {
+                  "hip": 21.88842479269958,
+                  "knee": 24.42390313299998,
+                  "ankle": 11.81888793535037
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.4674285714285715,
+                "stance": 0.778,
+                "joint_RMSE_deg": {
+                  "hip": 21.789162298705772,
+                  "knee": 29.09565223728228,
+                  "ankle": 6.181294869187585
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8481474196275528,
+            "maximum_absolute_pelvis_tilt_deg": 13.621199745739812,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "76402832031b589a039b06dde6bae637b353412f307adc9d8e4345cb4cc22494",
+          "original_compact_sha256": "fb283dfb81647fab1a8b5b1d33cad554555aa3251d51443461d3084ce8b0998c"
+        }
+      },
+      "archived_16s": "best_angle_at_three_pp_trajectory.npz",
+      "bundled_sha256": "b8339376c2b84811a66c3d52d27c5829140c6e00da6fd9f11705428b7aa3edfe"
+    },
+    "2f32e6277d36b0b8750dbe018b925d7b89fbaff6cf89b3efbc3746aaeb2499e0": {
+      "role": "minimum_angle",
+      "run_directory": "minimum_angle",
+      "cases": {
+        "nominal_16s": {
+          "joint_RMSE_deg": 16.977981226961404,
+          "stance": [
+            0.8081428571428572,
+            0.6267142857142857
+          ],
+          "cycles": [
+            11,
+            6
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 17.27010827920128,
+            "sides": {
+              "r": {
+                "cycles": 10,
+                "period_s": 0.8029999999999999,
+                "stance": 0.802,
+                "joint_RMSE_deg": {
+                  "hip": 16.97872992950458,
+                  "knee": 21.195694088448022,
+                  "ankle": 10.16659655478293
+                }
+              },
+              "l": {
+                "cycles": 4,
+                "period_s": 1.2775,
+                "stance": 0.7454545454545455,
+                "joint_RMSE_deg": {
+                  "hip": 20.318720960637386,
+                  "knee": 27.01119170861612,
+                  "ankle": 7.949716433218652
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8475512158621475,
+            "maximum_absolute_pelvis_tilt_deg": 13.58169236872735,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "3bbd5bfec197d1f64c2624792a3347704bd0c6bd6e6857b5cff97132a750439b",
+          "original_compact_sha256": "0a755a08b27400ee3b2dd1b2185b9b532196de56dc0883fd67580603f409abb7"
+        },
+        "nominal_22s": {
+          "joint_RMSE_deg": 21.117038322919935,
+          "stance": [
+            0.8132941176470588,
+            0.5665882352941176
+          ],
+          "cycles": [
+            8,
+            7
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 21.75334153509478,
+            "sides": {
+              "r": {
+                "cycles": 6,
+                "period_s": 1.365,
+                "stance": 0.753,
+                "joint_RMSE_deg": {
+                  "hip": 26.365021770226846,
+                  "knee": 27.02841164757669,
+                  "ankle": 16.94998440724429
+                }
+              },
+              "l": {
+                "cycles": 5,
+                "period_s": 1.7312,
+                "stance": 0.8154,
+                "joint_RMSE_deg": {
+                  "hip": 24.027089787246396,
+                  "knee": 28.209236983837727,
+                  "ankle": 7.940304614436752
+                }
+              }
+            },
+            "interval_s": [
+              5.0,
+              15.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 21.998,
+            "minimum_COM_m": 0.8439055097818278,
+            "maximum_absolute_pelvis_tilt_deg": 14.471678871772962,
+            "active_steps": 10700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "f76374c6a46ed83b889e070fc6119e2c894d6861cdbe469f67906036f1473cb6",
+          "original_compact_sha256": "d9584b4da0043547de5a3669a5fc5c88f3e803c9dfb3673f07e00506779a9036"
+        },
+        "holdout_28s": {
+          "joint_RMSE_deg": 21.52984924141822,
+          "stance": [
+            0.7739130434782608,
+            0.5774782608695652
+          ],
+          "cycles": [
+            14,
+            13
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 22.36573676948804,
+            "sides": {
+              "r": {
+                "cycles": 10,
+                "period_s": 1.4638,
+                "stance": 0.735625,
+                "joint_RMSE_deg": {
+                  "hip": 26.52353399005281,
+                  "knee": 29.61805841701253,
+                  "ankle": 16.79102997980111
+                }
+              },
+              "l": {
+                "cycles": 9,
+                "period_s": 1.5384444444444447,
+                "stance": 0.787875,
+                "joint_RMSE_deg": {
+                  "hip": 22.122935871953636,
+                  "knee": 31.181633616630975,
+                  "ankle": 7.95722874147717
+                }
+              }
+            },
+            "interval_s": [
+              5.0,
+              21.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 27.998,
+            "minimum_COM_m": 0.8439055097818278,
+            "maximum_absolute_pelvis_tilt_deg": 14.471678871772962,
+            "active_steps": 13700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "4ce5c145631c61ec35e2d2099f38f5201703d071d3f7e8fea446bb78a084b385",
+          "original_compact_sha256": "54b82cccd1585a7535c57a369bc7ef7592058c5da55f1728b06a3c9e18f7aeb4"
+        },
+        "perturbation_3000": {
+          "joint_RMSE_deg": 19.793221937153643,
+          "stance": [
+            0.7762857142857142,
+            0.633
+          ],
+          "cycles": [
+            10,
+            7
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 19.519185474215266,
+            "sides": {
+              "r": {
+                "cycles": 7,
+                "period_s": 1.2711428571428571,
+                "stance": 0.7765454545454545,
+                "joint_RMSE_deg": {
+                  "hip": 21.970540657552498,
+                  "knee": 23.625419740180867,
+                  "ankle": 12.507046765923679
+                }
+              },
+              "l": {
+                "cycles": 6,
+                "period_s": 1.6173333333333335,
+                "stance": 0.7745454545454545,
+                "joint_RMSE_deg": {
+                  "hip": 21.958679219922118,
+                  "knee": 29.723520564069634,
+                  "ankle": 7.329905897642812
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8469524904992726,
+            "maximum_absolute_pelvis_tilt_deg": 13.620592431552373,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "d4cff0ab6b218c308537226d4ecbf6ab187854fc17e841d9f2abf3027b5d847d",
+          "original_compact_sha256": "f7eb149cee5d2a4c66a0d3d11f0e9e93e9dc44987ca97fae334f0b4b1fc0094a"
+        },
+        "perturbation_3001": {
+          "joint_RMSE_deg": 20.1601302535234,
+          "stance": [
+            0.6065714285714285,
+            0.6694285714285715
+          ],
+          "cycles": [
+            11,
+            3
+          ],
+          "six_and_finite": false,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 19.67203521771948,
+            "sides": {
+              "r": {
+                "cycles": 7,
+                "period_s": 1.1,
+                "stance": 0.6381818181818182,
+                "joint_RMSE_deg": {
+                  "hip": 20.26050977261261,
+                  "knee": 22.94078716129656,
+                  "ankle": 12.272224803431753
+                }
+              },
+              "l": {
+                "cycles": 3,
+                "period_s": 1.5440000000000003,
+                "stance": 0.8490909090909091,
+                "joint_RMSE_deg": {
+                  "hip": 20.838571895236853,
+                  "knee": 32.13883028272358,
+                  "ankle": 9.581287391015525
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8471536295411016,
+            "maximum_absolute_pelvis_tilt_deg": 13.4629287510961,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "adfc4ae1a34e9881c87819d21ebd5a14efecf2c34adf161afeb70570b646df7a",
+          "original_compact_sha256": "b75cb7092d355d72574b8d67fa75f1df0d53c4d6fef7e66ee23bba9bf50640b5"
+        },
+        "perturbation_3002": {
+          "joint_RMSE_deg": 21.459596006880968,
+          "stance": [
+            0.685,
+            0.5704285714285714
+          ],
+          "cycles": [
+            9,
+            9
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 22.22869836652526,
+            "sides": {
+              "r": {
+                "cycles": 6,
+                "period_s": 1.402666666666667,
+                "stance": 0.767090909090909,
+                "joint_RMSE_deg": {
+                  "hip": 24.38538304688643,
+                  "knee": 33.82522546868377,
+                  "ankle": 14.272110187343253
+                }
+              },
+              "l": {
+                "cycles": 8,
+                "period_s": 1.11925,
+                "stance": 0.7214545454545455,
+                "joint_RMSE_deg": {
+                  "hip": 19.15129424380677,
+                  "knee": 34.32455872141706,
+                  "ankle": 7.413618531014269
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.848610296703253,
+            "maximum_absolute_pelvis_tilt_deg": 13.52156086355617,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "bf5d61cdabc26b73c9f0ac4c9177500325fc37810a730e369221fe73d7530c97",
+          "original_compact_sha256": "e0f282e7cb8578467c65153655097a8a90feb2a82d9e1302db63d3e36ae5ee82"
+        },
+        "perturbation_3003": {
+          "joint_RMSE_deg": 19.878237556846596,
+          "stance": [
+            0.7422857142857143,
+            0.6088571428571429
+          ],
+          "cycles": [
+            12,
+            9
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 19.787038124378455,
+            "sides": {
+              "r": {
+                "cycles": 7,
+                "period_s": 1.2991428571428574,
+                "stance": 0.8367272727272728,
+                "joint_RMSE_deg": {
+                  "hip": 20.404174219355323,
+                  "knee": 24.879017265789308,
+                  "ankle": 10.504757275584078
+                }
+              },
+              "l": {
+                "cycles": 8,
+                "period_s": 1.2015,
+                "stance": 0.7378181818181818,
+                "joint_RMSE_deg": {
+                  "hip": 20.837144556367228,
+                  "knee": 33.06490564216033,
+                  "ankle": 9.032229787014474
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8475635056698442,
+            "maximum_absolute_pelvis_tilt_deg": 13.59570720997726,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "0464ce69ab449c306c8abde2c8cb480f56428f3305ac415b1db92e626d0d0c58",
+          "original_compact_sha256": "9d775651d71105a9b749ddccbf07353f099c14d07c39ac105a4fc4f977a28008"
+        },
+        "perturbation_3004": {
+          "joint_RMSE_deg": 20.759800714539995,
+          "stance": [
+            0.7954285714285714,
+            0.6227142857142857
+          ],
+          "cycles": [
+            7,
+            8
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 20.846246527351397,
+            "sides": {
+              "r": {
+                "cycles": 6,
+                "period_s": 1.3830000000000002,
+                "stance": 0.7969090909090909,
+                "joint_RMSE_deg": {
+                  "hip": 26.18452217449252,
+                  "knee": 25.430790058469846,
+                  "ankle": 13.282263014889535
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.4325714285714286,
+                "stance": 0.7383636363636363,
+                "joint_RMSE_deg": {
+                  "hip": 22.250777217988503,
+                  "knee": 29.5570623820973,
+                  "ankle": 8.372064316170686
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8477832882593083,
+            "maximum_absolute_pelvis_tilt_deg": 13.59031784426978,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "a9322eaf5205c70921352671819835ec7ab455199f56ef46ab3b4f1c2762dc69",
+          "original_compact_sha256": "c8972fe8c3e8b8263008b42d332619c5272733b10820608e1411135f7f0b0848"
+        },
+        "perturbation_3005": {
+          "joint_RMSE_deg": 20.584713238072354,
+          "stance": [
+            0.7937142857142857,
+            0.5637142857142857
+          ],
+          "cycles": [
+            9,
+            7
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 20.4955996852255,
+            "sides": {
+              "r": {
+                "cycles": 7,
+                "period_s": 1.2562857142857144,
+                "stance": 0.7865454545454545,
+                "joint_RMSE_deg": {
+                  "hip": 23.68138289989079,
+                  "knee": 28.368613157067273,
+                  "ankle": 12.339649466251762
+                }
+              },
+              "l": {
+                "cycles": 6,
+                "period_s": 1.5146666666666666,
+                "stance": 0.7141818181818181,
+                "joint_RMSE_deg": {
+                  "hip": 22.637931831711043,
+                  "knee": 30.029097833036733,
+                  "ankle": 5.916922923395406
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8478599790699809,
+            "maximum_absolute_pelvis_tilt_deg": 13.645520933405773,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "13f7a9fa8110464f229d32f411388419a838771b6445607cbb78af61c07b596e",
+          "original_compact_sha256": "03907a242dc17d6490dae212f8f95c1978c826269c2ecaa72171d155c9164609"
+        },
+        "perturbation_3006": {
+          "joint_RMSE_deg": 23.24825061916431,
+          "stance": [
+            0.6368571428571429,
+            0.6205714285714286
+          ],
+          "cycles": [
+            7,
+            9
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 24.183332096408787,
+            "sides": {
+              "r": {
+                "cycles": 5,
+                "period_s": 1.5828000000000002,
+                "stance": 0.7816363636363637,
+                "joint_RMSE_deg": {
+                  "hip": 27.583320500451805,
+                  "knee": 35.52003494131349,
+                  "ankle": 14.935108855373203
+                }
+              },
+              "l": {
+                "cycles": 8,
+                "period_s": 1.0942500000000002,
+                "stance": 0.7656363636363637,
+                "joint_RMSE_deg": {
+                  "hip": 19.32775549730555,
+                  "knee": 37.262035801951065,
+                  "ankle": 10.471736982057601
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8480205784265071,
+            "maximum_absolute_pelvis_tilt_deg": 13.602937424228285,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "6b8c8eaff71591f6a526029952d393fd2b2b376e3a7ac6034e5a9bb2fb91223d",
+          "original_compact_sha256": "ab03d6c5f23c3b9a5c4bc61c227996d720e875f900c8ca122e069a0cb861d08e"
+        },
+        "perturbation_3007": {
+          "joint_RMSE_deg": 17.81866054428774,
+          "stance": [
+            0.7128571428571429,
+            0.6351428571428571
+          ],
+          "cycles": [
+            9,
+            9
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 17.781536057018922,
+            "sides": {
+              "r": {
+                "cycles": 7,
+                "period_s": 1.2797142857142858,
+                "stance": 0.8143636363636364,
+                "joint_RMSE_deg": {
+                  "hip": 19.246920821327237,
+                  "knee": 23.503097936841954,
+                  "ankle": 12.061561244875437
+                }
+              },
+              "l": {
+                "cycles": 9,
+                "period_s": 1.1317777777777778,
+                "stance": 0.765090909090909,
+                "joint_RMSE_deg": {
+                  "hip": 19.779203546210198,
+                  "knee": 24.948146463904315,
+                  "ankle": 7.1502863289544125
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8481132406851173,
+            "maximum_absolute_pelvis_tilt_deg": 13.620233085528364,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "763148162fe78f76c601644818504ceb933eca2fa4d00ab3c77dba9fc776f754",
+          "original_compact_sha256": "7a0d95e45c886941e202be65438616a2e26f6c5ccc69e907c8293e359b6e53bd"
+        }
+      },
+      "archived_16s": "minimum_angle_trajectory.npz",
+      "bundled_sha256": "fa96837904672922582e156d1b6d9998b0cd593786c782b115d1cb757e18319b"
+    },
+    "06e494557e76b149dc281f65a237b3621b73d8875a01c8c059c05467c594640c": {
+      "role": "balanced",
+      "run_directory": "balanced",
+      "cases": {
+        "nominal_16s": {
+          "joint_RMSE_deg": 18.15987439682608,
+          "stance": [
+            0.643,
+            0.6365714285714286
+          ],
+          "cycles": [
+            8,
+            11
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 19.2420658332512,
+            "sides": {
+              "r": {
+                "cycles": 8,
+                "period_s": 1.0412499999999998,
+                "stance": 0.788,
+                "joint_RMSE_deg": {
+                  "hip": 20.564688576998673,
+                  "knee": 22.867772891470004,
+                  "ankle": 12.800670913281095
+                }
+              },
+              "l": {
+                "cycles": 7,
+                "period_s": 1.3874285714285715,
+                "stance": 0.7321818181818182,
+                "joint_RMSE_deg": {
+                  "hip": 21.631571764080093,
+                  "knee": 30.219271269566452,
+                  "ankle": 7.368419584110883
+                }
+              }
+            },
+            "interval_s": [
+              2.0,
+              13.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 15.998000000000001,
+            "minimum_COM_m": 0.8475657982255889,
+            "maximum_absolute_pelvis_tilt_deg": 13.582719704242548,
+            "active_steps": 7700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "553f8e554ba1f85975ecb073a66d9aa2e9c0f5e6ab687997c8a924cf35ef7f78",
+          "original_compact_sha256": "1fe87553c432ade9f8bfb6ac0110c978ab4bd65fc3975ab7b1ccbfd986c7eed1"
+        },
+        "nominal_22s": {
+          "joint_RMSE_deg": 21.782973021107406,
+          "stance": [
+            0.8055294117647058,
+            0.5748235294117647
+          ],
+          "cycles": [
+            9,
+            11
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 23.343437066680735,
+            "sides": {
+              "r": {
+                "cycles": 5,
+                "period_s": 1.6227999999999998,
+                "stance": 0.7602,
+                "joint_RMSE_deg": {
+                  "hip": 28.478205142355343,
+                  "knee": 34.7488349124749,
+                  "ankle": 16.970051332875208
+                }
+              },
+              "l": {
+                "cycles": 5,
+                "period_s": 1.7176000000000002,
+                "stance": 0.8636,
+                "joint_RMSE_deg": {
+                  "hip": 23.599696866899254,
+                  "knee": 28.073294029030095,
+                  "ankle": 8.1905401164496
+                }
+              }
+            },
+            "interval_s": [
+              5.0,
+              15.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 21.998,
+            "minimum_COM_m": 0.8436728274747354,
+            "maximum_absolute_pelvis_tilt_deg": 14.41196354802796,
+            "active_steps": 10700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "a4572fc90b1c6e2e23e8d12fdcc4ebb405b08221740390a1ea724c67db955ac6",
+          "original_compact_sha256": "989303101084ed7ce72ee36df405d3ac09bc38e21eda9ee67b243a668d9095dc"
+        },
+        "holdout_28s": {
+          "joint_RMSE_deg": 21.06917671972862,
+          "stance": [
+            0.7147826086956521,
+            0.6390434782608696
+          ],
+          "cycles": [
+            16,
+            13
+          ],
+          "six_and_finite": true,
+          "meets_3pp_and_angle": false,
+          "meets_2pp_and_angle": false,
+          "constant_drive": {
+            "mean_joint_RMSE_deg": 23.43576960966777,
+            "sides": {
+              "r": {
+                "cycles": 9,
+                "period_s": 1.6097777777777778,
+                "stance": 0.7505,
+                "joint_RMSE_deg": {
+                  "hip": 29.083702620488047,
+                  "knee": 34.65712634933696,
+                  "ankle": 17.16265915981843
+                }
+              },
+              "l": {
+                "cycles": 8,
+                "period_s": 1.65625,
+                "stance": 0.87,
+                "joint_RMSE_deg": {
+                  "hip": 24.37130923055861,
+                  "knee": 27.324153032519938,
+                  "ankle": 8.015667265284621
+                }
+              }
+            },
+            "interval_s": [
+              5.0,
+              21.0
+            ]
+          },
+          "force_and_physics": {
+            "finite": true,
+            "end_s": 27.998,
+            "minimum_COM_m": 0.8436728274747354,
+            "maximum_absolute_pelvis_tilt_deg": 14.41196354802796,
+            "active_steps": 13700,
+            "half_stored_minus_upward_max_N": 0.0,
+            "normal_minus_upward_max_N": 0.0
+          },
+          "full_trace_sha256": "855ba58f11a19b4ae5bf2e4b5f56228fe9e70608b13537cc88590261cdf8abaf",
+          "original_compact_sha256": "5fe48821f7beeee592ecd2b7ffeccbd49a5c2e53444b3b13103fec70f19140fc"
+        }
+      }
+    }
+  }
+}

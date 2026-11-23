@@ -1,0 +1,838 @@
+{
+  "scope": "Closed-loop supported Gait2392, original controller compared across native, bilateral rectus femoris, bilateral short-head biceps femoris, and both pairs changed. Source Thelen active and passive tension with compliant tendons. Original criterion is 3 qualifying swings per foot.",
+  "source_hashes": {
+    "runtime_zip": "NeuroCampaign_20261102_9h/reproducibility/selected_ground9_rc_runtime_20261102.zip",
+    "runtime_zip_sha256": "594b39b05d43eaf43f490b22d3ea372c7a0b17bb40c0bcb962737bbe33244425",
+    "validated_source_entries": 567,
+    "physical_eval_sha256": "494ff3dafa0e8a1b20d01de7167273468f9ac5088a82d8db133b9bb091141602",
+    "reference_directory": "ToolchainDefense_20261102/other_models/gait_hunt_rc",
+    "source_osim_sha256": "477fffd1ee9cfbcb9d4c20c6b0fe6baf0958e6a640e7df7166b45156cf8cf5f2",
+    "thelen_dynamic_sha256": "d9d51e735389f41f222c99eb98667c6e70642aa0a4895ebb8b20a33f675c4abe",
+    "campaign_gate_sha256": "b84497958fe23e7da7e65f4edffb3e7a04af82c1a5a776e8668e78284d1ea21a"
+  },
+  "force_models": {
+    "native": "Original 92 native MuJoCo actuators with archived shared force-law settings.",
+    "selective": "Four bilateral actuators use Thelen force\u2013length and force\u2013velocity behavior, passive fiber force, pennation, and compliant tendons. The other 88 use archived native gains. MuJoCo supplies activation dynamics for all 92.",
+    "changed_actuators": [
+      "rect_fem_r",
+      "rect_fem_l",
+      "bifemsh_r",
+      "bifemsh_l"
+    ],
+    "force_law_parameters_file": "shared_force_law_v3.json",
+    "force_law_parameters_sha256": "9dc7d7ba444a961e06fd6efd15210ea324a84ee70992b251994cb7d7ee7165cf"
+  },
+  "protocol": {
+    "physics_dt_s": 0.002,
+    "duration_s": 16,
+    "held_preparation_s": 0.6,
+    "same_prescribed_lift_N": 307.89509039999996,
+    "support_fraction_config": 0.4,
+    "balance": {
+      "kp": 5.0,
+      "ka": 0.0,
+      "kd": 2.0,
+      "max_current": 3.0,
+      "bilateral_recruitment": true,
+      "delay_s": 0.1,
+      "replace_inherited": true
+    },
+    "lowering_m": -0.04,
+    "vertical_stiffness_scale": 0.01,
+    "vertical_damping_multiplier": 4.2,
+    "start_hip_knee_ankle_degrees": [
+      -7.0,
+      -10.0,
+      0.0
+    ],
+    "standing_solver": "coupled_symmetric",
+    "knee_training_limits_deg": [
+      -90.0,
+      0.0
+    ],
+    "force_controlled_support": false,
+    "support_definition": "Pelvis subtree mass times9.81; excludes separate fixed ground/apparatus bodies.",
+    "support_denominator_N": 768.756726,
+    "support_sample_window": "Force interval end 5 through 13 s inclusive, 4001 samples; signed restraint plus prescribed upward lift.",
+    "original_objective_denominator_N": 769.7377259999998,
+    "original_objective_window": "5 <= t < 13 s; counts positive and negative support separately.",
+    "original_contact_and_clearance_criteria": "Entire visual foot mesh >1 mm over ground and foot load <2.5% BW for at least 80 ms, peak >=10 mm; at least 3 episodes per foot. Sampled at 20 ms.",
+    "starting_gain_checkpoint_sha256": "ef4fbb77d58d05273b5e096db8b63bb6ce1d6952c0e1ccca74701ac19ad4500c",
+    "physical_acceptance": "The archived evaluator uses measured_contact_gate (force counted once) with ground_load_verified, movement_gate, frontal_gate, knee_extension_gate, ground_tilt_gate, and foot_clearance_gate. Raw legacy_contact_gate/contact_gate values precede that replacement and are diagnostic; both independent fall flags must be false."
+  },
+  "family_results": {
+    "native": {
+      "coupled_steps": 7700,
+      "scored_force_intervals": 4001,
+      "body_weight_N": 768.756726,
+      "trace_sha256": "8617fd0db5083efbb7b7d224182eb0c06cfdc0bb99918d73222dc2eb13dee502",
+      "finite": true,
+      "complete": true,
+      "right_left_measured_contact_cycles": [
+        5,
+        4
+      ],
+      "right_left_knee_cycles": [
+        5,
+        5
+      ],
+      "right_left_clearance_episodes": [
+        5,
+        4
+      ],
+      "right_left_peak_clearance_mm": [
+        38.965605751188235,
+        30.485267002914615
+      ],
+      "mean_net_superior_percent_BW": 48.84835584895906,
+      "prescribed_superior_N": 307.89509039999996,
+      "horizontal_restraint_rms_N": 115.5608919082438
+    },
+    "rect_fem": {
+      "coupled_steps": 7700,
+      "scored_force_intervals": 4001,
+      "body_weight_N": 768.756726,
+      "trace_sha256": "4566214e9d37d6118546354fa24301bffee1aa225996c958735ae5b0d21cc134",
+      "finite": true,
+      "complete": true,
+      "right_left_measured_contact_cycles": [
+        5,
+        4
+      ],
+      "right_left_knee_cycles": [
+        5,
+        5
+      ],
+      "right_left_clearance_episodes": [
+        5,
+        2
+      ],
+      "right_left_peak_clearance_mm": [
+        38.04071964597629,
+        19.027111731768034
+      ],
+      "mean_net_superior_percent_BW": 47.49530881866361,
+      "prescribed_superior_N": 307.89509039999996,
+      "horizontal_restraint_rms_N": 115.25858138935247
+    },
+    "bifemsh": {
+      "coupled_steps": 7700,
+      "scored_force_intervals": 4001,
+      "body_weight_N": 768.756726,
+      "trace_sha256": "77b2ed90efbefd9a72929c1fad386cbf1df9ce8a8d3f4254aee3d255dfe33475",
+      "finite": true,
+      "complete": true,
+      "right_left_measured_contact_cycles": [
+        5,
+        4
+      ],
+      "right_left_knee_cycles": [
+        5,
+        5
+      ],
+      "right_left_clearance_episodes": [
+        3,
+        2
+      ],
+      "right_left_peak_clearance_mm": [
+        29.14593116282293,
+        17.130661914542344
+      ],
+      "mean_net_superior_percent_BW": 50.54520138129063,
+      "prescribed_superior_N": 307.89509039999996,
+      "horizontal_restraint_rms_N": 113.01114676475218
+    },
+    "selective": {
+      "coupled_steps": 7700,
+      "scored_force_intervals": 4001,
+      "body_weight_N": 768.756726,
+      "trace_sha256": "1cb10d6b9c080bd906f7a60975f5c2f5a5bf8186c7d3c3746493773f4a9f5e37",
+      "finite": true,
+      "complete": true,
+      "right_left_measured_contact_cycles": [
+        5,
+        4
+      ],
+      "right_left_knee_cycles": [
+        5,
+        5
+      ],
+      "right_left_clearance_episodes": [
+        2,
+        0
+      ],
+      "right_left_peak_clearance_mm": [
+        29.59073511050198,
+        6.7067849438518445
+      ],
+      "mean_net_superior_percent_BW": 50.002760227407315,
+      "prescribed_superior_N": 307.89509039999996,
+      "horizontal_restraint_rms_N": 113.69136855282882
+    }
+  },
+  "first_recovery": {
+    "selection": "First evaluated candidate to restore all five right and four left clearances and pass all original physical criteria. Search objective ranking is recorded separately.",
+    "trial": 1,
+    "group_multipliers": {
+      "knee_flexor": 1.55,
+      "rectus_femoris": 0.75,
+      "hip_flexors": 1.4,
+      "dorsiflexor": 1.12
+    },
+    "ten_recruitment_edges_uS": {
+      "1794": {
+        "source": "PF_KNEE-F_r",
+        "target": "MN_bifemsh_r",
+        "before": 0.44932237392096014,
+        "after": 0.6964496795774883
+      },
+      "5252": {
+        "source": "PF_KNEE-F_l",
+        "target": "MN_bifemsh_l",
+        "before": 0.44932237392096014,
+        "after": 0.6964496795774883
+      },
+      "3260": {
+        "source": "PF_BI_JOINT_RECT_r",
+        "target": "MN_rect_fem_r",
+        "before": 0.09603345669823227,
+        "after": 0.0720250925236742
+      },
+      "6718": {
+        "source": "PF_BI_JOINT_RECT_l",
+        "target": "MN_rect_fem_l",
+        "before": 0.09603345669823227,
+        "after": 0.0720250925236742
+      },
+      "2850": {
+        "source": "PF_HIP-F_r",
+        "target": "MN_iliacus_r",
+        "before": 0.10025903931952455,
+        "after": 0.14036265504733436
+      },
+      "6308": {
+        "source": "PF_HIP-F_l",
+        "target": "MN_iliacus_l",
+        "before": 0.10025903931952455,
+        "after": 0.14036265504733436
+      },
+      "2934": {
+        "source": "PF_HIP-F_r",
+        "target": "MN_psoas_r",
+        "before": 0.10293279943608659,
+        "after": 0.1441059192105212
+      },
+      "6392": {
+        "source": "PF_HIP-F_l",
+        "target": "MN_psoas_l",
+        "before": 0.10293279943608659,
+        "after": 0.1441059192105212
+      },
+      "4035": {
+        "source": "PF_FUNC_ANKLE_Z_N_r",
+        "target": "MN_tib_ant_r",
+        "before": 0.5161055046045403,
+        "after": 0.5780381651570852
+      },
+      "7493": {
+        "source": "PF_FUNC_ANKLE_Z_N_l",
+        "target": "MN_tib_ant_l",
+        "before": 0.5161055046045403,
+        "after": 0.5780381651570852
+      }
+    },
+    "checkpoint_sha256": "62ad9d2b772d5179eb90c5dc4fafd39c5f9532bbd2f427a2472c3ba4854cf2dc",
+    "original_objective": {
+      "value": 8.24050277607729,
+      "terms": {
+        "missing_clearance": 0.0,
+        "movement_contact": 0.0,
+        "phase": 2.5583243513627325,
+        "upward_assistance": 5.4076016075139774,
+        "horizontal_force": 0.26882681209091264,
+        "activation_effort": 0.005750005109668755
+      },
+      "unsafe": false,
+      "strict_accepted": true,
+      "clearance_swings": [
+        5,
+        4
+      ],
+      "missing_swings": 0,
+      "movement_contact_failures": [],
+      "phase_error": 0.025583243513627323,
+      "upward_support_bw": 0.5407601607513978,
+      "downward_support_bw": 0.018870341274433083,
+      "net_support_bw": 0.5218898194769647,
+      "horizontal_harness_rms_bw": 0.13441340604545632,
+      "activation_squared": 0.005750005109668755,
+      "window_s": [
+        5.0,
+        13.0
+      ],
+      "end_exclusive": true
+    },
+    "gates": {
+      "accepted": true,
+      "finite": true,
+      "complete": true,
+      "contact_gate": false,
+      "frontal_gate": true,
+      "knee_extension_gate": true,
+      "ground_load_verified": true,
+      "legacy_contact_gate": false,
+      "measured_contact_gate": true,
+      "movement_gate": true,
+      "ground_tilt_gate": true,
+      "foot_clearance_gate": true
+    },
+    "physics": {
+      "coupled_steps": 7700,
+      "scored_force_intervals": 4001,
+      "body_weight_N": 768.756726,
+      "trace_sha256": "e68d1f547ae4ea048d4603de35faae549bb431c9377969b6f16f19f2e73b5c92",
+      "finite": true,
+      "complete": true,
+      "right_left_measured_contact_cycles": [
+        5,
+        4
+      ],
+      "right_left_knee_cycles": [
+        5,
+        5
+      ],
+      "right_left_clearance_episodes": [
+        5,
+        4
+      ],
+      "right_left_peak_clearance_mm": [
+        47.732844542044305,
+        54.70226926052502
+      ],
+      "mean_net_superior_percent_BW": 52.26319348475721,
+      "prescribed_superior_N": 307.89509039999996,
+      "horizontal_restraint_rms_N": 103.45078070278086
+    },
+    "fresh_repeat_trace_sha256": "e68d1f547ae4ea048d4603de35faae549bb431c9377969b6f16f19f2e73b5c92",
+    "matched_all_7700_aligned_samples": true,
+    "fall": false,
+    "balance_fall": false
+  },
+  "search_protocol": {
+    "optimizer": "Rustuna TPE",
+    "version": "0.2.1",
+    "seed": 823419,
+    "workers_and_batch_width": 3,
+    "startup_trials": 6,
+    "bounds": {
+      "knee_flexor": [
+        0.7,
+        2.4
+      ],
+      "rectus_femoris": [
+        0.45,
+        1.6
+      ],
+      "hip_flexors": [
+        0.85,
+        2.15
+      ],
+      "dorsiflexor": [
+        0.8,
+        1.36
+      ]
+    },
+    "initial_candidates": [
+      {
+        "knee_flexor": 1.0,
+        "rectus_femoris": 1.0,
+        "hip_flexors": 1.0,
+        "dorsiflexor": 1.0
+      },
+      {
+        "knee_flexor": 1.55,
+        "rectus_femoris": 0.75,
+        "hip_flexors": 1.4,
+        "dorsiflexor": 1.12
+      },
+      {
+        "knee_flexor": 2.15,
+        "rectus_femoris": 0.55,
+        "hip_flexors": 1.7,
+        "dorsiflexor": 1.24
+      },
+      {
+        "knee_flexor": 1.75,
+        "rectus_femoris": 1.15,
+        "hip_flexors": 1.35,
+        "dorsiflexor": 1.0
+      },
+      {
+        "knee_flexor": 1.0,
+        "rectus_femoris": 1.0,
+        "hip_flexors": 1.65,
+        "dorsiflexor": 1.16
+      },
+      {
+        "knee_flexor": 1.3,
+        "rectus_femoris": 0.7,
+        "hip_flexors": 1.45,
+        "dorsiflexor": 0.91
+      }
+    ],
+    "reference_configuration_sha256": "f1e1bec6aecfb7e61a59939973a7e9502bdc2c5b3913fc50551d61bdf33b155d",
+    "frozen_evaluator_sha256": "494ff3dafa0e8a1b20d01de7167273468f9ac5088a82d8db133b9bb091141602",
+    "original_objective_sha256": "a7781c676531396b6179a0de5ea32835ecf52c7e1fbd8a35c21ce90dca62bbe1",
+    "projection_sha256": "dc640a50753c5de11a0610a05fed8f92e274f691f5bd53611c38dad27df81def",
+    "four_actuator_law_sha256": "d9d51e735389f41f222c99eb98667c6e70642aa0a4895ebb8b20a33f675c4abe"
+  },
+  "bounded_search": {
+    "number_scheduled": 12,
+    "number_completed": 12,
+    "lowest_objective_trial": 3,
+    "trials": [
+      {
+        "trial": 0,
+        "multipliers": {
+          "knee_flexor": 1.0,
+          "rectus_femoris": 1.0,
+          "hip_flexors": 1.0,
+          "dorsiflexor": 1.0
+        },
+        "value": 4006.3367672591457,
+        "all_original_physical_criteria": false,
+        "unloaded_clearances_R_L": [
+          2,
+          0
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 50.002760227407315,
+        "trace_sha256": "1cb10d6b9c080bd906f7a60975f5c2f5a5bf8186c7d3c3746493773f4a9f5e37"
+      },
+      {
+        "trial": 1,
+        "multipliers": {
+          "knee_flexor": 1.55,
+          "rectus_femoris": 0.75,
+          "hip_flexors": 1.4,
+          "dorsiflexor": 1.12
+        },
+        "value": 8.24050277607729,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          4
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 52.26319348475721,
+        "trace_sha256": "e68d1f547ae4ea048d4603de35faae549bb431c9377969b6f16f19f2e73b5c92"
+      },
+      {
+        "trial": 2,
+        "multipliers": {
+          "knee_flexor": 2.15,
+          "rectus_femoris": 0.55,
+          "hip_flexors": 1.7,
+          "dorsiflexor": 1.24
+        },
+        "value": 9.91396118062325,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          4
+        ],
+        "measured_contacts_R_L": [
+          4,
+          4
+        ],
+        "signed_net_superior_percent_BW": 58.61092077447879,
+        "trace_sha256": "c2ac65221126cd465a01bf0bcc416afdf8876d9301f6e06fe873f4d1a4fa8869"
+      },
+      {
+        "trial": 3,
+        "multipliers": {
+          "knee_flexor": 1.75,
+          "rectus_femoris": 1.15,
+          "hip_flexors": 1.35,
+          "dorsiflexor": 1.0
+        },
+        "value": 6.355881038015651,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          3
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 51.31582812833553,
+        "trace_sha256": "6067164f6b3f6286bbab98e306cc025ae295a8d49ce6ab9c88c522c61797340b"
+      },
+      {
+        "trial": 4,
+        "multipliers": {
+          "knee_flexor": 1.0,
+          "rectus_femoris": 1.0,
+          "hip_flexors": 1.65,
+          "dorsiflexor": 1.16
+        },
+        "value": 2008.0297812961667,
+        "all_original_physical_criteria": false,
+        "unloaded_clearances_R_L": [
+          2,
+          2
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 56.93215127970452,
+        "trace_sha256": "3649a99320fae1a89d2fcdee0619be102be7bd2c2746ef4e150a46e2e5b3e174"
+      },
+      {
+        "trial": 5,
+        "multipliers": {
+          "knee_flexor": 1.3,
+          "rectus_femoris": 0.7,
+          "hip_flexors": 1.45,
+          "dorsiflexor": 0.91
+        },
+        "value": 3007.342400225923,
+        "all_original_physical_criteria": false,
+        "unloaded_clearances_R_L": [
+          1,
+          2
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 56.028270150969625,
+        "trace_sha256": "8287e8c76e610548131eea04443a4eb15c07819aa6e9a3ca4f50d425dc85246a"
+      },
+      {
+        "trial": 6,
+        "multipliers": {
+          "knee_flexor": 2.3751996990061635,
+          "rectus_femoris": 1.549821110150758,
+          "hip_flexors": 2.0567888176377,
+          "dorsiflexor": 1.3432649789370543
+        },
+        "value": 10.386336014314507,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          4
+        ],
+        "measured_contacts_R_L": [
+          4,
+          4
+        ],
+        "signed_net_superior_percent_BW": 57.57617956623702,
+        "trace_sha256": "25450915d9e1aa1276bfbccfb439dbb1479774e0082cd0c7c23fbda641d7328e"
+      },
+      {
+        "trial": 7,
+        "multipliers": {
+          "knee_flexor": 2.292224195680043,
+          "rectus_femoris": 1.544361896160519,
+          "hip_flexors": 2.119571498580174,
+          "dorsiflexor": 0.8421660106528247
+        },
+        "value": 6.782679361272908,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          4
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 48.27857357444335,
+        "trace_sha256": "c191d32d9c958ee661c13a171952c554416cbd16959df1d48e019f1757ec9cf3"
+      },
+      {
+        "trial": 8,
+        "multipliers": {
+          "knee_flexor": 2.3454593984810272,
+          "rectus_femoris": 1.5218552012814732,
+          "hip_flexors": 2.145616830629309,
+          "dorsiflexor": 1.3513585765854303
+        },
+        "value": 12.249660080403986,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          4
+        ],
+        "measured_contacts_R_L": [
+          4,
+          4
+        ],
+        "signed_net_superior_percent_BW": 56.917470923237204,
+        "trace_sha256": "02fd307abb99f6741f978527a7d14f1f3641e016dbffb67a3664d0358e7cebbd"
+      },
+      {
+        "trial": 9,
+        "multipliers": {
+          "knee_flexor": 1.807040761288188,
+          "rectus_femoris": 1.2072478757632916,
+          "hip_flexors": 0.8784751501465546,
+          "dorsiflexor": 1.008456963689028
+        },
+        "value": 6.532766903822219,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          3
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 54.623695462288026,
+        "trace_sha256": "9c497e5c63d40c521516059678f976b3c1f83616587baa7b10e5a283eb7085d7"
+      },
+      {
+        "trial": 10,
+        "multipliers": {
+          "knee_flexor": 1.8745889771966946,
+          "rectus_femoris": 1.1089412381153598,
+          "hip_flexors": 0.8943578123222925,
+          "dorsiflexor": 1.0329052932710032
+        },
+        "value": 6.788090683319728,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          3
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 54.4186932816509,
+        "trace_sha256": "5d36f79ef85c6bc32d85f3fd9ec21f2ec485ba24b38374297343b958781ae150"
+      },
+      {
+        "trial": 11,
+        "multipliers": {
+          "knee_flexor": 1.781883068373971,
+          "rectus_femoris": 1.2438846785032258,
+          "hip_flexors": 0.9574232270907415,
+          "dorsiflexor": 1.0164105964329753
+        },
+        "value": 6.521314214649904,
+        "all_original_physical_criteria": true,
+        "unloaded_clearances_R_L": [
+          5,
+          3
+        ],
+        "measured_contacts_R_L": [
+          5,
+          4
+        ],
+        "signed_net_superior_percent_BW": 53.90496526418442,
+        "trace_sha256": "72a1196f47d61584fdaace855cedd6af0338d8e23f6c469304fa2ca525200ff1"
+      }
+    ]
+  },
+  "adaptive_matched_support_recovery": {
+    "selection": "First adaptively proposed Rustuna case restoring five right and four left qualifying swings at or below the native control mean upward support. The physical gate and search objective were unchanged.",
+    "trial": 7,
+    "group_multipliers": {
+      "knee_flexor": 2.292224195680043,
+      "rectus_femoris": 1.544361896160519,
+      "hip_flexors": 2.119571498580174,
+      "dorsiflexor": 0.8421660106528247
+    },
+    "ten_recruitment_edges_uS": {
+      "1794": {
+        "source": "PF_KNEE-F_r",
+        "target": "MN_bifemsh_r",
+        "before": 0.44932237392096014,
+        "after": 1.0299476171620203
+      },
+      "5252": {
+        "source": "PF_KNEE-F_l",
+        "target": "MN_bifemsh_l",
+        "before": 0.44932237392096014,
+        "after": 1.0299476171620203
+      },
+      "3260": {
+        "source": "PF_BI_JOINT_RECT_r",
+        "target": "MN_rect_fem_r",
+        "before": 0.09603345669823227,
+        "after": 0.14831041128133107
+      },
+      "6718": {
+        "source": "PF_BI_JOINT_RECT_l",
+        "target": "MN_rect_fem_l",
+        "before": 0.09603345669823227,
+        "after": 0.14831041128133107
+      },
+      "2850": {
+        "source": "PF_HIP-F_r",
+        "target": "MN_iliacus_r",
+        "before": 0.10025903931952455,
+        "after": 0.21250620221669325
+      },
+      "6308": {
+        "source": "PF_HIP-F_l",
+        "target": "MN_iliacus_l",
+        "before": 0.10025903931952455,
+        "after": 0.21250620221669325
+      },
+      "2934": {
+        "source": "PF_HIP-F_r",
+        "target": "MN_psoas_r",
+        "before": 0.10293279943608659,
+        "after": 0.21817342795379854
+      },
+      "6392": {
+        "source": "PF_HIP-F_l",
+        "target": "MN_psoas_l",
+        "before": 0.10293279943608659,
+        "after": 0.21817342795379854
+      },
+      "4035": {
+        "source": "PF_FUNC_ANKLE_Z_N_r",
+        "target": "MN_tib_ant_r",
+        "before": 0.5161055046045403,
+        "after": 0.43464651388876874
+      },
+      "7493": {
+        "source": "PF_FUNC_ANKLE_Z_N_l",
+        "target": "MN_tib_ant_l",
+        "before": 0.5161055046045403,
+        "after": 0.43464651388876874
+      }
+    },
+    "checkpoint_sha256": "42e6492a0c305f01883948d020d6e5601f2df92f8a8be1cda85331a7ed6fd035",
+    "original_objective": {
+      "value": 6.782679361272908,
+      "terms": {
+        "missing_clearance": 0.0,
+        "movement_contact": 0.0,
+        "phase": 1.505658578470333,
+        "upward_assistance": 5.00145980273957,
+        "horizontal_force": 0.2688310804919687,
+        "activation_effort": 0.006729899571036627
+      },
+      "unsafe": false,
+      "strict_accepted": true,
+      "clearance_swings": [
+        5,
+        4
+      ],
+      "missing_swings": 0,
+      "movement_contact_failures": [],
+      "phase_error": 0.01505658578470333,
+      "upward_support_bw": 0.500145980273957,
+      "downward_support_bw": 0.018056152494988893,
+      "net_support_bw": 0.4820898277789681,
+      "horizontal_harness_rms_bw": 0.13441554024598434,
+      "activation_squared": 0.006729899571036627,
+      "window_s": [
+        5.0,
+        13.0
+      ],
+      "end_exclusive": true
+    },
+    "gates": {
+      "accepted": true,
+      "finite": true,
+      "complete": true,
+      "contact_gate": false,
+      "frontal_gate": true,
+      "knee_extension_gate": true,
+      "ground_load_verified": true,
+      "legacy_contact_gate": false,
+      "measured_contact_gate": true,
+      "movement_gate": true,
+      "ground_tilt_gate": true,
+      "foot_clearance_gate": true
+    },
+    "physics": {
+      "coupled_steps": 7700,
+      "scored_force_intervals": 4001,
+      "body_weight_N": 768.756726,
+      "trace_sha256": "c191d32d9c958ee661c13a171952c554416cbd16959df1d48e019f1757ec9cf3",
+      "finite": true,
+      "complete": true,
+      "right_left_measured_contact_cycles": [
+        5,
+        4
+      ],
+      "right_left_knee_cycles": [
+        5,
+        5
+      ],
+      "right_left_clearance_episodes": [
+        5,
+        4
+      ],
+      "right_left_peak_clearance_mm": [
+        36.3422634393773,
+        53.5875261395879
+      ],
+      "mean_net_superior_percent_BW": 48.27857357444335,
+      "prescribed_superior_N": 307.89509039999996,
+      "horizontal_restraint_rms_N": 103.45201426500495
+    },
+    "fall": false,
+    "balance_fall": false,
+    "fresh_repeat_trace_sha256": "c191d32d9c958ee661c13a171952c554416cbd16959df1d48e019f1757ec9cf3",
+    "matched_all_7700_aligned_samples": true
+  },
+  "additional_checks": {
+    "verify_03/native_transfer": {
+      "multipliers": {
+        "knee_flexor": 1.75,
+        "rectus_femoris": 1.15,
+        "hip_flexors": 1.35,
+        "dorsiflexor": 1.0
+      },
+      "arm": "native",
+      "accepted": true,
+      "clearances_R_L": [
+        5,
+        4
+      ],
+      "measured_contacts_R_L": [
+        5,
+        4
+      ],
+      "signed_net_superior_percent_BW": 51.80445172160394,
+      "aligned_trace_sha256": "8d8dd215e547b73c1ceefe88a91076f1cef3e8f434bbd3e45b0bae5506c2295a"
+    },
+    "verify_03/nominal": {
+      "multipliers": {
+        "knee_flexor": 1.75,
+        "rectus_femoris": 1.15,
+        "hip_flexors": 1.35,
+        "dorsiflexor": 1.0
+      },
+      "arm": "selective",
+      "accepted": true,
+      "clearances_R_L": [
+        5,
+        3
+      ],
+      "measured_contacts_R_L": [
+        5,
+        4
+      ],
+      "signed_net_superior_percent_BW": 51.31582812833553,
+      "aligned_trace_sha256": "6067164f6b3f6286bbab98e306cc025ae295a8d49ce6ab9c88c522c61797340b"
+    }
+  }
+}

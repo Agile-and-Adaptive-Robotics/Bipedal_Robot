@@ -29,7 +29,9 @@ Outputs (in this folder):
     bsolve_groups.png       functional-group activation vs gait cycle
     bsolve_report.txt       per-muscle verdict table
     bsolve_osim.log         raw opensim-cmd output
-Usage: python bsolve_ik.py [--skip-osim] [--subsample N]
+Usage: python bsolve_ik.py [--skip-osim] [--subsample N] [--fk-signs] [--output-dir DIR]
+Use --fk-signs on the human Gait2392 model to apply the axis measurements
+from the forward-kinematics audit to both legs and the lumbar joints.
 (cwd must be Code/MuJoCo_SNS/spinal; myo env)
 """
 from __future__ import annotations
@@ -43,6 +45,7 @@ from pathlib import Path
 import numpy as np
 
 import runner  # provides MODEL + the full patch/repair stack
+from joint_projection import project_joint_followers as apply_eq_followers
 from muscle_map import classify, GROUPS
 
 import mujoco
@@ -124,27 +127,11 @@ def build_air_model(id_mode=False):
             model.dof_armature[adr] = 0.005
             n += 1
         model.opt.disableflags |= int(mujoco.mjtDisableBit.mjDSBL_EQUALITY)
-        print(f"ID model: {n} follower armatures zeroed, equalities "
+        print(f"ID model: {n} follower armatures set to 0.005, equalities "
               f"disabled")
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model, data, 0)
     return model, data
-
-
-def apply_eq_followers(model, data):
-    """Project equality-coupled pathpoint dofs exactly onto their drivers
-    (mjEQ_JOINT: y = y0 + poly(x - x0), model.qpos0 offsets)."""
-    for i in range(model.neq):
-        if model.eq_type[i] != mujoco.mjtEq.mjEQ_JOINT:
-            continue
-        j_dep = int(model.eq_obj1id[i])
-        j_ind = int(model.eq_obj2id[i])
-        adr_d = model.jnt_qposadr[j_ind]
-        adr_p = model.jnt_qposadr[j_dep]
-        x = data.qpos[adr_d] - float(model.qpos0[adr_d])
-        c = model.eq_data[i][:4]
-        data.qpos[adr_p] = float(model.qpos0[adr_p]) + c[0] + c[1] * x \
-            + c[2] * x * x + c[3] * x * x * x
 
 
 def set_frame(model, data, signs, values):
@@ -216,7 +203,7 @@ def act_names_of(model):
             for i in range(model.nu)]
 
 
-def _run_osim_tool(t_ik):
+def _run_osim_tool(t_ik, output_dir=HERE):
     """Write the AnalyzeTool XML (MuscleAnalysis + StaticOptimization as an
     ANALYSIS - 4.x has no standalone SO tool) and run it via opensim-cmd."""
     t0, t1 = float(t_ik[0]), float(t_ik[-1])
@@ -271,7 +258,7 @@ def _run_osim_tool(t_ik):
     print("opensim-cmd run-tool zz_bsolve_analyze.xml ...", flush=True)
     p = subprocess.run([OSIM_CMD, "run-tool", an.name], cwd=str(OSIM_DIR),
                        capture_output=True, text=True, timeout=1800)
-    (HERE / "bsolve_osim.log").write_text(
+    (output_dir / "bsolve_osim.log").write_text(
         f"=== zz_bsolve_analyze rc={p.returncode}\n{p.stdout}\n{p.stderr}",
         encoding="utf-8")
     if p.returncode != 0:
@@ -279,14 +266,14 @@ def _run_osim_tool(t_ik):
         print("\n".join((p.stdout + p.stderr).splitlines()[-15:]))
 
 
-def run_osim_reference(t_ik, reuse=False):
+def run_osim_reference(t_ik, reuse=False, output_dir=HERE):
     """MuscleAnalysis + StaticOptimization reference outputs, parsed."""
     out = OSIM_DIR / "ResultsBSolve"
     if reuse and sorted(out.glob("*MuscleAnalysis_Length.sto")) \
             and sorted(out.glob("*StaticOptimization_activation.sto")):
         print("reusing existing ResultsBSolve outputs")
     else:
-        _run_osim_tool(t_ik)
+        _run_osim_tool(t_ik, output_dir)
     L_os = acts_os = None
     MA_os = {}
     lens = sorted(out.glob("*MuscleAnalysis_Length.sto"))
@@ -385,6 +372,8 @@ def smooth_derivs(qd, dt):
 
 
 def main(argv):
+    output_dir = Path(argv[argv.index("--output-dir") + 1]) if "--output-dir" in argv else HERE
+    output_dir.mkdir(parents=True, exist_ok=True)
     skip_osim = "--skip-osim" in argv
     subsample = 5
     if "--subsample" in argv:
@@ -427,7 +416,7 @@ def main(argv):
     L_os = acts_os = MA_os = None
     if not skip_osim:
         L_os, acts_os, MA_os = run_osim_reference(
-            t_ik, reuse="--reuse-osim" in argv)
+            t_ik, reuse="--reuse-osim" in argv, output_dir=output_dir)
 
     # ------------------------------------------------------- sign discovery
     signs = {n: 1.0 for n in ROT_DRIVERS}
@@ -478,16 +467,25 @@ def main(argv):
         # 2026-09-18: at the retargeted (lower) pelvis the muscle-length
         # signatures vs the SCALED-subject reference are weak (~0.62) and
         # the sagittal search flipped hip_flexion/tilt into a MIRRORED
-        # motion (corr -1.00 vs the validated replay). The original sign
-        # set is the one validated by the dynamic sign audits + moment-arm
-        # comparisons - pin it.
+        # motion (corr -1.00 vs the prior replay). Pin this option to the
+        # archived convention for repeatability. --fk-signs then replaces
+        # the fitted leg and lumbar signs with the measured axis directions.
         ref = json.loads(str(np.load(
             HERE / "bsolve_out_unscaled_backup.npz",
             allow_pickle=True)["signs"]))
         signs.update(ref)
-        print(f"signs PINNED to validated original set "
+        print(f"signs pinned to archived coordinate convention "
               f"(frontal residual would have been {best_cost:.1f})",
               flush=True)
+
+    if "--fk-signs" in argv:
+        audit = Path(__file__).parent / "hunt_training/runs/ik_audit/fk_signs.json"
+        measurements = json.loads(audit.read_text())
+        audited = {row["coordinate"]: row["sign"] for row in measurements}
+        if set(audited) != set(FIT_JOINTS) or any(sign not in (-1, 1) for sign in audited.values()):
+            raise ValueError("Gait2392 axis audit must specify a sign for every fitted coordinate")
+        signs.update(audited)
+        print("Using measured human Gait2392 coordinate signs for the legs and lumbar joints.")
 
     # ----------------------------------------------- full MuJoCo kinematics
     L_mj = np.zeros((T, model.nu))
@@ -603,7 +601,7 @@ def main(argv):
                     [a_sol[keep][bins == b][:, lm].mean() for b in range(20)])
 
     np.savez_compressed(
-        HERE / out_name,
+        output_dir / out_name,
         t=t_ik, qpos=qd, signs=json.dumps(signs),
         acts=a_sol, act_names=np.array(acts), Fmax=Fmax,
         tau_fit=tau_fit, fit_joints=np.array(FIT_JOINTS),
@@ -620,15 +618,15 @@ def main(argv):
         grp_prof_l_names=np.array(list(grp_prof_l)),
         duty_r=duty_r, duty_l=duty_l, hs_r=hs_r,
     )
-    print("saved bsolve_out.npz")
+    print(f"saved {output_dir / out_name}")
 
     if L_os is not None:
         compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax,
-                         t_ik, grp_prof, grp_prof_l, A_fd, MA_os, signs)
+                         t_ik, grp_prof, grp_prof_l, A_fd, MA_os, signs, output_dir)
 
 
 def compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax, t_ik,
-                     grp_prof, grp_prof_l, A_fd=None, MA_os=None, signs=None):
+                     grp_prof, grp_prof_l, A_fd=None, MA_os=None, signs=None, output_dir=HERE):
     FIT_ROW_IDX = {j: i for i, j in enumerate(FIT_JOINTS)}
     import matplotlib
     matplotlib.use("Agg")
@@ -748,7 +746,7 @@ def compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax, t_ik,
         # transient Windows Errno 22 opening an existing png - figures are
         # decorations, the npz is the product. Never let them kill a run.
         try:
-            fig.savefig(HERE / name, dpi=130)
+            fig.savefig(output_dir / name, dpi=130)
         except OSError as _e:
             print(f"figure save skipped (Windows lock): {_e}")
 
@@ -791,7 +789,7 @@ def compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax, t_ik,
     _safe_save(fig, "bsolve_groups.png")
     plt.close(fig)
 
-    (HERE / "bsolve_report.txt").write_text("\n".join(report),
+    (output_dir / "bsolve_report.txt").write_text("\n".join(report),
                                             encoding="utf-8")
     print("\n".join(report))
 

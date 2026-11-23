@@ -330,8 +330,8 @@ def compare(t, q_deg, neuro, walk_start, ref=None, contact=None):
 
     out["kine_score"] = float(-total)
     # legacy keys (right leg) so older readers keep working
-    if "n_cycles_r" in out:
-        out["n_cycles"] = out["n_cycles_r"]
+    out["n_cycles"] = n_r
+    if n_r > 0:
         out["duty"] = out["duty_r"]
         out["duty_ref"] = out["duty_r_ref"]
         out["knee_min"] = out["knee_min_r"]

@@ -1,0 +1,183 @@
+{
+  "frozen": {
+    "controller": {
+      "mix": 0.0,
+      "right_drive": 1.0,
+      "left_drive": 1.0,
+      "plantar_flexion": 1.0,
+      "dorsiflexion": 1.0,
+      "knee_flexion": 1.0,
+      "knee_extension": 1.0,
+      "hip_extension": 1.0,
+      "ankle_tone": 1.0,
+      "premotor_period": 1.0,
+      "anchor": "stance",
+      "regional_synapses": {
+        "ankle_pf/r/ii_to_mn": 1.0,
+        "ankle_pf/r/ia_to_mn": 1.0,
+        "ankle_pf/r/ib_to_mn_inh": 1.0,
+        "ankle_pf/r/posture_to_mn": 1.0,
+        "ankle_df/r/ii_to_mn": 1.0,
+        "ankle_df/r/ia_to_mn": 1.0,
+        "ankle_df/r/ib_to_mn_inh": 1.0,
+        "ankle_df/r/posture_to_mn": 1.0,
+        "knee_ext/r/ii_to_mn": 1.0,
+        "knee_ext/r/ia_to_mn": 1.0,
+        "knee_ext/r/ib_to_mn_inh": 1.0,
+        "knee_ext/r/posture_to_mn": 1.0,
+        "knee_flex/r/ii_to_mn": 1.0,
+        "knee_flex/r/ia_to_mn": 1.0,
+        "knee_flex/r/ib_to_mn_inh": 1.0,
+        "knee_flex/r/posture_to_mn": 1.0,
+        "ankle_pf/l/ii_to_mn": 1.0,
+        "ankle_pf/l/ia_to_mn": 1.0,
+        "ankle_pf/l/ib_to_mn_inh": 1.0,
+        "ankle_pf/l/posture_to_mn": 1.0,
+        "ankle_df/l/ii_to_mn": 1.0,
+        "ankle_df/l/ia_to_mn": 1.0,
+        "ankle_df/l/ib_to_mn_inh": 1.0,
+        "ankle_df/l/posture_to_mn": 1.0,
+        "knee_ext/l/ii_to_mn": 1.0,
+        "knee_ext/l/ia_to_mn": 1.0,
+        "knee_ext/l/ib_to_mn_inh": 1.0,
+        "knee_ext/l/posture_to_mn": 1.0,
+        "knee_flex/l/ii_to_mn": 1.0,
+        "knee_flex/l/ia_to_mn": 1.0,
+        "knee_flex/l/ib_to_mn_inh": 1.0,
+        "knee_flex/l/posture_to_mn": 1.0,
+        "hip_abd/both/ii_to_mn": 1.0,
+        "hip_add/both/ii_to_mn": 1.0
+      },
+      "force_convention": "physical_50_N"
+    },
+    "condition": "original three objectives evaluated with single-counted 50 N",
+    "historical_input": {
+      "angle_RMSE_deg": 17.777920236828237,
+      "stance": [
+        0.7615714285714286,
+        0.6685714285714286
+      ],
+      "cycles": [
+        11,
+        10
+      ]
+    },
+    "anatomical_input": {
+      "angle_RMSE_deg": null,
+      "stance": [
+        0.6267142857142857,
+        0.8062857142857143
+      ],
+      "cycles": [
+        4,
+        0
+      ],
+      "physical_checks": {
+        "finite": true,
+        "end_s": 15.998000000000001,
+        "minimum_COM_m": 0.8453122742245747,
+        "maximum_absolute_pelvis_tilt_deg": 14.127973078235586,
+        "active_steps": 7700,
+        "half_stored_minus_upward_max_N": 2.2737367544323206e-13,
+        "normal_minus_upward_max_N": 0.0
+      },
+      "full_recording_sha256": "a291c4e884deb4dd4b7787bb16d78fdf8e19d6f72b88a57d71035cca35b15831"
+    }
+  },
+  "split17": {
+    "controller": {
+      "mix": 0.0,
+      "right_drive": 0.4832719883708367,
+      "left_drive": 0.5252956395335181,
+      "plantar_flexion": 1.0,
+      "dorsiflexion": 1.0,
+      "knee_flexion": 1.0,
+      "knee_extension": 1.0,
+      "hip_extension": 1.0,
+      "ankle_tone": 1.0,
+      "premotor_period": 1.1403367701015834,
+      "anchor": "stance",
+      "force_convention": "physical_50_N",
+      "regional_synapses": {
+        "ankle_pf/r/ii_to_mn": 0.8417079719344543,
+        "ankle_pf/r/ia_to_mn": 0.9174464409078354,
+        "ankle_pf/r/ib_to_mn_inh": 1.1089274544533727,
+        "ankle_pf/r/posture_to_mn": 0.8417079719344543,
+        "ankle_df/r/ii_to_mn": 1.1880605071397283,
+        "ankle_df/r/ia_to_mn": 1.0899818838585018,
+        "ankle_df/r/ib_to_mn_inh": 0.901772244869646,
+        "ankle_df/r/posture_to_mn": 1.1880605071397283,
+        "knee_ext/r/ii_to_mn": 1.2803169239394465,
+        "knee_ext/r/ia_to_mn": 1.131510903146517,
+        "knee_ext/r/ib_to_mn_inh": 0.8622029575250587,
+        "knee_ext/r/posture_to_mn": 1.2803169239394465,
+        "knee_flex/r/ii_to_mn": 0.7810566128604074,
+        "knee_flex/r/ia_to_mn": 0.883774073426239,
+        "knee_flex/r/ib_to_mn_inh": 1.1598197283740315,
+        "knee_flex/r/posture_to_mn": 0.7810566128604074,
+        "ankle_pf/l/ii_to_mn": 1.1880605071397283,
+        "ankle_pf/l/ia_to_mn": 1.0899818838585018,
+        "ankle_pf/l/ib_to_mn_inh": 0.901772244869646,
+        "ankle_pf/l/posture_to_mn": 1.1880605071397283,
+        "ankle_df/l/ii_to_mn": 0.8417079719344543,
+        "ankle_df/l/ia_to_mn": 0.9174464409078354,
+        "ankle_df/l/ib_to_mn_inh": 1.1089274544533727,
+        "ankle_df/l/posture_to_mn": 0.8417079719344543,
+        "knee_ext/l/ii_to_mn": 1.2803169239394465,
+        "knee_ext/l/ia_to_mn": 1.131510903146517,
+        "knee_ext/l/ib_to_mn_inh": 0.8622029575250587,
+        "knee_ext/l/posture_to_mn": 1.2803169239394465,
+        "knee_flex/l/ii_to_mn": 0.7810566128604074,
+        "knee_flex/l/ia_to_mn": 0.883774073426239,
+        "knee_flex/l/ib_to_mn_inh": 1.1598197283740315,
+        "knee_flex/l/posture_to_mn": 0.7810566128604074,
+        "hip_abd/both/ii_to_mn": 1.0,
+        "hip_add/both/ii_to_mn": 1.0,
+        "hip_abd/r/ii_to_mn": 0.75,
+        "hip_add/r/ii_to_mn": 1.3333333333333333
+      },
+      "premotor_group_gains": {
+        "knee_flex": 1.0,
+        "ankle_df": 1.0,
+        "hip_flex": 1.0,
+        "ankle_pf": 1.0
+      },
+      "pattern_weights": {
+        "E2/hip_ext": 1.0
+      }
+    },
+    "condition": "original three objectives evaluated with single-counted 50 N",
+    "historical_input": {
+      "angle_RMSE_deg": 18.15987439682608,
+      "stance": [
+        0.643,
+        0.6365714285714286
+      ],
+      "cycles": [
+        8,
+        11
+      ]
+    },
+    "anatomical_input": {
+      "angle_RMSE_deg": null,
+      "stance": [
+        0.8122857142857143,
+        0.7551428571428571
+      ],
+      "cycles": [
+        6,
+        0
+      ],
+      "physical_checks": {
+        "finite": true,
+        "end_s": 15.998000000000001,
+        "minimum_COM_m": 0.8449906772202758,
+        "maximum_absolute_pelvis_tilt_deg": 13.661065726366063,
+        "active_steps": 7700,
+        "half_stored_minus_upward_max_N": 2.2737367544323206e-13,
+        "normal_minus_upward_max_N": 0.0
+      },
+      "full_recording_sha256": "9cd7646ca070abfd052fdd61c127d6de5dafed4d857b27eb1013b64ed8653883"
+    }
+  }
+}

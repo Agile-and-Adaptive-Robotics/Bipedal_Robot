@@ -60,6 +60,27 @@ def ownership_cues(passage):
             if (found := re.findall(pattern, passage, flags=re.IGNORECASE))}
 
 
+def evidence_cues(passage):
+    """Flag sentences that leave a reader looking for an outcome or a contribution."""
+    checks = re.findall(r"\b(?:checks?|checked|checking|verified|verification)\b", passage, re.I)
+    cues = []
+    if len(checks) >= 2 or re.search(
+            r"\bI checked\b|\b(?:a separate|another) check\b", passage, re.I):
+        cues.append("Read the check in context. What changed, or what measured agreement supports the claim?")
+    if re.search(r"\bcan (?:also )?be (?:imported|converted|assembled|implemented|exported)\b",
+                 passage, re.I):
+        cues.append("Does the passage identify the completed work, the source format, and the receiving program?")
+    first = re.split(r"(?<=[.!?])\s+", passage.strip(), maxsplit=1)[0]
+    if (re.search(r"\b(?:supported (?:walkers?|stepping)|assisted treadmill model)\b", passage, re.I)
+            and not re.search(r"\b(?:harness|rails?|guides?|suspension)\b", passage, re.I)):
+        cues.append("Which physical apparatus carried weight or constrained motion in this trial?")
+    if (re.search(r"\b(?:I|we) (?:set|applied|used|selected|prescribed)\b", first, re.I)
+            and re.search(r"\d|\\qty", first)
+            and not re.search(r"\b(?:because|in order to|to (?:test|measure|separate|determine|isolate))\b", first, re.I)):
+        cues.append("An experimental setting leads. Can the reader tell what behavior the test explains?")
+    return cues
+
+
 def dated_signal(row, batch):
     if row.get("date"):
         return row["date"]
@@ -179,14 +200,18 @@ def review_results_openings(path, units):
             results_level = None
         if re.search(r"\bresults?\b", match[2], re.IGNORECASE):
             results_level = level
-        headings.append((n, match[2], results_level is not None))
+        # Chapter 6 and Appendix D organize experiments by task rather than under Results.
+        named_experiments = path.name in {"60-sns.tex", "95-AppendixD.tex"}
+        headings.append((n, match[2], results_level is not None or named_experiments, level))
     openings = []
-    for i, (start, heading, in_results) in enumerate(headings):
+    for i, (start, heading, in_results, level) in enumerate(headings):
         if not in_results:
             continue
         end = headings[i + 1][0] if i + 1 < len(headings) else float("inf")
         lead = next((u for u in units if start < u["start"] < end and u["kind"] == "prose"), None)
         if not lead:
+            if i + 1 < len(headings) and headings[i + 1][3] > level:
+                continue
             openings.append({"file": path.name, "heading": heading, "start": start,
                              "source": "", "cues": ["no opening prose before the next heading"]})
             continue
@@ -199,6 +224,11 @@ def review_results_openings(path, units):
                                         r"compris(?:es|ed)|includ(?:es|ed)|collected|recorded)\b",
                                         first_statement, re.IGNORECASE)
         cues = []
+        if (re.search(r"\b(?:was|were|reached|averaged)\s+\$?[-−]?\d", first_statement)
+                and len(re.findall(r"(?<![A-Za-z])\d+(?:\.\d+)?", first_statement)) >= 2
+                and not re.search(r"\b(?:half|twice|closer|exceed\w*|improv\w*|worse|"
+                                  r"better|recover\w*|remain\w*|below|above|within|outside)\b", first_statement, re.I)):
+            cues.append("Do the opening measurements tell the reader what happened in the experiment?")
         if count_lead and inventory and describes_inventory:
             cues.append("inventory leads the result")
         if re.search(r"^(?:open|click|choose|select|navigate)\b|"
@@ -350,6 +380,8 @@ def make_review(paths, rows, decisions=None):
                 outputs.append(output)
                 continue
             output["historical_examples"] = index.nearest(content)
+            if kind == "prose" and (questions := evidence_cues(content)):
+                output["evidence_questions_for_contextual_reading"] = questions
             if cues := ownership_cues(content):
                 output["ownership_phrases_for_contextual_reading"] = cues
             if case:

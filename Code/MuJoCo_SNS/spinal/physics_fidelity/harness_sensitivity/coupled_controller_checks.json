@@ -1,0 +1,6560 @@
+{
+  "schema": 1,
+  "mechanics": "Bilateral source rectus femoris and biceps femoris short head. All other muscles retain their native MuJoCo gains and biases.",
+  "pairing": "Archived and rerun controls use separate, named published configurations; each row has its own controller, support, and criteria.",
+  "evidence": {
+    "fixed_coupled": {
+      "biw_air1": {
+        "four_steps": 7700,
+        "native": {
+          "score": 42.965741126346416,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            7,
+            7
+          ],
+          "period_s": 1.2329999999999997,
+          "period_cv": 0.46061423320485784,
+          "cycle_phase_error": 0.5,
+          "knee_ranges_deg": [
+            73.90590676595717,
+            72.98174757903891
+          ],
+          "maximum_knee_extension_deg": [
+            -1.2999601752155698,
+            -1.3259688611489067
+          ],
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              4,
+              4
+            ],
+            "period_s": 2.4659999999999997,
+            "period_cv": 0.10600945407707325,
+            "bilateral_phase_error": 0.03366668252850866,
+            "knee_ranges_deg": [
+              73.90590676595717,
+              72.98174757903891
+            ],
+            "reason": null
+          },
+          "spring_N": 768.6444059942947,
+          "spring_BW_includes_ground": 0.9985796200851599,
+          "spring_BW_moving_mass": 0.9998538939538264
+        },
+        "four": {
+          "score": 109.49438028447084,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            3,
+            4
+          ],
+          "period_s": 2.4659999999999993,
+          "period_cv": 0.0003244646333550367,
+          "cycle_phase_error": 0.004542558009711095,
+          "knee_ranges_deg": [
+            65.77007462858408,
+            64.56797073602917
+          ],
+          "maximum_knee_extension_deg": [
+            -1.42754559876993,
+            -1.4224914459645204
+          ],
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.4659999999999993,
+            "period_cv": 0.00032446463335492856,
+            "bilateral_phase_error": 0.004542558009711151,
+            "knee_ranges_deg": [
+              65.77007462858408,
+              64.56797073602917
+            ],
+            "reason": null
+          },
+          "spring_N": 768.6904930931081,
+          "spring_BW_includes_ground": 0.998639493854181,
+          "spring_BW_moving_mass": 0.9999138441269496
+        }
+      },
+      "biw_air2": {
+        "four_steps": 7700,
+        "native": {
+          "score": 99.66966848539896,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            7,
+            7
+          ],
+          "period_s": 1.3000000000000003,
+          "period_cv": 0.008536696131938784,
+          "cycle_phase_error": 0.09327680150520919,
+          "knee_ranges_deg": [
+            41.46576937126136,
+            39.66646727014467
+          ],
+          "maximum_knee_extension_deg": [
+            -1.7179745408236142,
+            -1.8008293752985627
+          ],
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09327680150520916,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.66646727014467
+            ],
+            "reason": null
+          },
+          "spring_N": 768.6619824496157,
+          "spring_BW_includes_ground": 0.9986024544282449,
+          "spring_BW_moving_mass": 0.999876757435506
+        },
+        "four": {
+          "score": 98.64649261772404,
+          "accepted": true,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            7,
+            7
+          ],
+          "period_s": 1.3050000000000002,
+          "period_cv": 0.009066013418910312,
+          "cycle_phase_error": 0.09425240352823279,
+          "knee_ranges_deg": [
+            36.56939592749884,
+            34.566099297492734
+          ],
+          "maximum_knee_extension_deg": [
+            -1.6947820739200972,
+            -1.7241471184744723
+          ],
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910317,
+            "bilateral_phase_error": 0.09425240352823272,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.566099297492734
+            ],
+            "reason": null
+          },
+          "spring_N": 768.7849109152498,
+          "spring_BW_includes_ground": 0.9987621561831179,
+          "spring_BW_moving_mass": 1.0000366629836157
+        }
+      },
+      "syn6_air": {
+        "four_steps": 7700,
+        "native": {
+          "score": 18.243448525104906,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            12,
+            11
+          ],
+          "period_s": 0.7520000000000007,
+          "period_cv": 0.23530148250789534,
+          "cycle_phase_error": 0.20265776970606073,
+          "knee_ranges_deg": [
+            76.563544156022,
+            86.24006255691648
+          ],
+          "maximum_knee_extension_deg": [
+            -1.4839559694412663,
+            -1.4483482416267297
+          ],
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          },
+          "spring_N": 768.7022974225686,
+          "spring_BW_includes_ground": 0.9986548293756993,
+          "spring_BW_moving_mass": 0.9999291992179182
+        },
+        "four": {
+          "score": 19.23393095573884,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "knee_cycles": [
+            13,
+            12
+          ],
+          "period_s": 0.702,
+          "period_cv": 0.28432411291177007,
+          "cycle_phase_error": 0.15571080177039104,
+          "knee_ranges_deg": [
+            74.49301215372543,
+            80.89065659721939
+          ],
+          "maximum_knee_extension_deg": [
+            -1.684577719695874,
+            -1.5800399481584495
+          ],
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          },
+          "spring_N": 766.6078765253241,
+          "spring_BW_includes_ground": 0.9959338754371047,
+          "spring_BW_moving_mass": 0.9972047731070182
+        }
+      },
+      "graded": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -161.89843749480883,
+          "k_n_cycles_r": 7,
+          "k_n_cycles_l": 0,
+          "k_duty_r": 0.531,
+          "k_duty_l": null,
+          "k_contact_frac_r": 0.6305714285714286,
+          "k_contact_frac_l": 1.0,
+          "k_knee_min_r": -71.87276768226893,
+          "tilt_max": 26.268309348166625,
+          "kz": 0.8294528055707374,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": -0.05782569307611664
+        },
+        "native": {
+          "kine_score": -161.3473347403876,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 0,
+          "k_duty_r": 0.4695714285714286,
+          "k_duty_l": null,
+          "k_contact_frac_r": 0.6351428571428571,
+          "k_contact_frac_l": 0.9848571428571429,
+          "k_knee_min_r": -64.40372635725033,
+          "tilt_max": 22.09756787655339,
+          "kz": 0.8495582040051087,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": -0.04834387219113283
+        }
+      },
+      "spike": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -229.88272268163473,
+          "k_n_cycles_r": 15,
+          "k_n_cycles_l": 15,
+          "k_duty_r": 0.9272857142857143,
+          "k_duty_l": 0.8634285714285714,
+          "k_contact_frac_r": 0.95,
+          "k_contact_frac_l": 0.9127142857142857,
+          "k_knee_min_r": -66.26657521842095,
+          "tilt_max": 18.065189107867415,
+          "kz": 0.886221473218408,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.019523561888380045
+        },
+        "native": {
+          "kine_score": -235.207934303974,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 10,
+          "k_duty_r": 0.7934285714285715,
+          "k_duty_l": 0.7992857142857143,
+          "k_contact_frac_r": 0.7987142857142857,
+          "k_contact_frac_l": 0.8642857142857143,
+          "k_knee_min_r": -79.80380995442522,
+          "tilt_max": 19.2202342402192,
+          "kz": 0.8814457408699665,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.009373310992528916
+        }
+      },
+      "fitted": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -171.90617339946607,
+          "k_n_cycles_r": 12,
+          "k_n_cycles_l": 11,
+          "k_duty_r": 0.8662857142857143,
+          "k_duty_l": 0.7748571428571429,
+          "k_contact_frac_r": 0.9087142857142857,
+          "k_contact_frac_l": 0.8621428571428571,
+          "k_knee_min_r": -28.377707717047297,
+          "tilt_max": 14.345868841480684,
+          "kz": 0.851163947722036,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.03912511548438474
+        },
+        "native": {
+          "kine_score": -145.02938053190474,
+          "k_n_cycles_r": 10,
+          "k_n_cycles_l": 9,
+          "k_duty_r": 0.7798571428571428,
+          "k_duty_l": 0.632,
+          "k_contact_frac_r": 0.8224285714285714,
+          "k_contact_frac_l": 0.8048571428571428,
+          "k_knee_min_r": -55.44567544887381,
+          "tilt_max": 17.713841085114314,
+          "kz": 0.8483498324708583,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04367521547800038
+        }
+      },
+      "dirusso_source": {
+        "four_steps": 2000,
+        "native": {
+          "fall_time_s": 0.428
+        },
+        "four": {
+          "fall_time_s": 0.45
+        }
+      },
+      "dirusso_fitted": {
+        "four_steps": 2000,
+        "native": {
+          "fall_time_s": 0.47600000000000003
+        },
+        "four": {
+          "fall_time_s": 0.47200000000000003
+        }
+      },
+      "wean_0": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -159.16913269353495,
+          "k_n_cycles_r": 6,
+          "k_n_cycles_l": 7,
+          "k_duty_r": 0.7848571428571428,
+          "k_duty_l": 0.8075714285714286,
+          "k_contact_frac_r": 0.801,
+          "k_contact_frac_l": 0.8318571428571429,
+          "k_knee_min_r": -69.29311318824593,
+          "tilt_max": 13.994487169105662,
+          "kz": 0.8513584156915635,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.03263537615941295
+        },
+        "native": {
+          "kine_score": -178.31816857678533,
+          "k_n_cycles_r": 7,
+          "k_n_cycles_l": 9,
+          "k_duty_r": 0.865,
+          "k_duty_l": 0.5817142857142857,
+          "k_contact_frac_r": 0.881,
+          "k_contact_frac_l": 0.8464285714285714,
+          "k_knee_min_r": -59.39572643681729,
+          "tilt_max": 17.63098346447253,
+          "kz": 0.8488528961084241,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.05044092428210359
+        }
+      },
+      "wean_0.1": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -157.30924412705542,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 9,
+          "k_duty_r": 0.8497142857142858,
+          "k_duty_l": 0.6305714285714286,
+          "k_contact_frac_r": 0.8671428571428571,
+          "k_contact_frac_l": 0.7121428571428572,
+          "k_knee_min_r": -57.311038293459944,
+          "tilt_max": 14.700260653820152,
+          "kz": 0.8512894661232261,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.0448117763580104
+        },
+        "native": {
+          "kine_score": -25.0,
+          "k_n_cycles_r": null,
+          "k_n_cycles_l": null,
+          "k_duty_r": null,
+          "k_duty_l": null,
+          "k_contact_frac_r": null,
+          "k_contact_frac_l": null,
+          "k_knee_min_r": null,
+          "tilt_max": 17.654842519851027,
+          "kz": 0.8487198210598483,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04049232260438479
+        }
+      },
+      "wean_0.2": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -163.445258612949,
+          "k_n_cycles_r": 10,
+          "k_n_cycles_l": 8,
+          "k_duty_r": 0.7895714285714286,
+          "k_duty_l": 0.7461428571428571,
+          "k_contact_frac_r": 0.8582857142857143,
+          "k_contact_frac_l": 0.7532857142857143,
+          "k_knee_min_r": -40.950640404804204,
+          "tilt_max": 14.803771756794264,
+          "kz": 0.8512396124572443,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.05994528606623739
+        },
+        "native": {
+          "kine_score": -217.1920461284119,
+          "k_n_cycles_r": 2,
+          "k_n_cycles_l": 2,
+          "k_duty_r": 0.732,
+          "k_duty_l": 0.7595714285714286,
+          "k_contact_frac_r": 0.9168571428571428,
+          "k_contact_frac_l": 0.9594285714285714,
+          "k_knee_min_r": -56.76580909800066,
+          "tilt_max": 17.6685514158272,
+          "kz": 0.848607792952987,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.02997163857107435
+        }
+      },
+      "wean_0.3": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -164.1329900427525,
+          "k_n_cycles_r": 11,
+          "k_n_cycles_l": 9,
+          "k_duty_r": 0.8377142857142857,
+          "k_duty_l": 0.7947142857142857,
+          "k_contact_frac_r": 0.8907142857142857,
+          "k_contact_frac_l": 0.838,
+          "k_knee_min_r": -33.56674113061769,
+          "tilt_max": 14.565238908175914,
+          "kz": 0.851197299514865,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04674258417178559
+        },
+        "native": {
+          "kine_score": -142.38315998612475,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 11,
+          "k_duty_r": 0.7414285714285714,
+          "k_duty_l": 0.5905714285714285,
+          "k_contact_frac_r": 0.7995714285714286,
+          "k_contact_frac_l": 0.7572857142857143,
+          "k_knee_min_r": -66.74914929201353,
+          "tilt_max": 17.700935122419825,
+          "kz": 0.8484253526136285,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04408189566739967
+        }
+      },
+      "wean_0.38": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -171.88033258583147,
+          "k_n_cycles_r": 14,
+          "k_n_cycles_l": 10,
+          "k_duty_r": 0.931,
+          "k_duty_l": 0.8082857142857143,
+          "k_contact_frac_r": 0.9661428571428572,
+          "k_contact_frac_l": 0.8634285714285714,
+          "k_knee_min_r": -24.184257386919473,
+          "tilt_max": 14.065990201072136,
+          "kz": 0.8511618306398459,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04281116100493826
+        },
+        "native": {
+          "kine_score": -143.6331394787314,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 12,
+          "k_duty_r": 0.7317142857142858,
+          "k_duty_l": 0.6278571428571429,
+          "k_contact_frac_r": 0.7868571428571428,
+          "k_contact_frac_l": 0.7834285714285715,
+          "k_knee_min_r": -67.27822324840216,
+          "tilt_max": 17.71191174039207,
+          "kz": 0.8483359517464063,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04442351677214487
+        }
+      },
+      "wean_0.4": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -159.26711494921838,
+          "k_n_cycles_r": 3,
+          "k_n_cycles_l": 4,
+          "k_duty_r": 0.7732857142857142,
+          "k_duty_l": 0.8101428571428572,
+          "k_contact_frac_r": 0.8012857142857143,
+          "k_contact_frac_l": 0.8344285714285714,
+          "k_knee_min_r": -57.43176763104515,
+          "tilt_max": 24.59615555780824,
+          "kz": 0.8286069425521951,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": -0.03946736446479519
+        },
+        "native": {
+          "kine_score": -175.39784222621938,
+          "k_n_cycles_r": 7,
+          "k_n_cycles_l": 0,
+          "k_duty_r": 0.5074285714285715,
+          "k_duty_l": null,
+          "k_contact_frac_r": 0.599,
+          "k_contact_frac_l": 0.9981428571428571,
+          "k_knee_min_r": -82.08025024979852,
+          "tilt_max": 20.0390428737257,
+          "kz": 0.8775746029773652,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.0034405673336147385
+        }
+      },
+      "wean_0.45": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -168.9225395921152,
+          "k_n_cycles_r": 11,
+          "k_n_cycles_l": 3,
+          "k_duty_r": 0.8967142857142857,
+          "k_duty_l": 0.9465714285714286,
+          "k_contact_frac_r": 0.9321428571428572,
+          "k_contact_frac_l": 0.9495714285714286,
+          "k_knee_min_r": -31.30094005525575,
+          "tilt_max": 14.077175631113128,
+          "kz": 0.8511451892609481,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.051978357619057614
+        },
+        "native": {
+          "kine_score": -160.45303072308008,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 11,
+          "k_duty_r": 0.8314285714285714,
+          "k_duty_l": 0.7717142857142857,
+          "k_contact_frac_r": 0.84,
+          "k_contact_frac_l": 0.9114285714285715,
+          "k_knee_min_r": -65.14525658849756,
+          "tilt_max": 17.72857809311156,
+          "kz": 0.8482612761468976,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.07400729474713764
+        }
+      },
+      "wean_0.55": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -177.5998495240787,
+          "k_n_cycles_r": 11,
+          "k_n_cycles_l": 11,
+          "k_duty_r": 0.9155714285714286,
+          "k_duty_l": 0.8414285714285714,
+          "k_contact_frac_r": 0.986,
+          "k_contact_frac_l": 0.9185714285714286,
+          "k_knee_min_r": -28.629640415359816,
+          "tilt_max": 16.264758648283223,
+          "kz": 0.8511217430601634,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04486833652739536
+        },
+        "native": {
+          "kine_score": -175.35814182423766,
+          "k_n_cycles_r": 11,
+          "k_n_cycles_l": 7,
+          "k_duty_r": 0.7191428571428572,
+          "k_duty_l": 0.9687142857142857,
+          "k_contact_frac_r": 0.7685714285714286,
+          "k_contact_frac_l": 0.9828571428571429,
+          "k_knee_min_r": -53.48028716265049,
+          "tilt_max": 17.751769148325003,
+          "kz": 0.8481603529362214,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.05811349282847675
+        }
+      },
+      "wean_0.7": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -189.74128956322795,
+          "k_n_cycles_r": 10,
+          "k_n_cycles_l": 4,
+          "k_duty_r": 0.9155714285714286,
+          "k_duty_l": 0.9722857142857143,
+          "k_contact_frac_r": 0.9597142857142857,
+          "k_contact_frac_l": 0.9877142857142858,
+          "k_knee_min_r": -19.581481100444332,
+          "tilt_max": 14.098977021992015,
+          "kz": 0.8510991393444668,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.085922212370943
+        },
+        "native": {
+          "kine_score": -158.19253877256713,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 5,
+          "k_duty_r": 0.7932857142857143,
+          "k_duty_l": 0.8757142857142857,
+          "k_contact_frac_r": 0.9197142857142857,
+          "k_contact_frac_l": 0.934,
+          "k_knee_min_r": -59.53230674330114,
+          "tilt_max": 17.782924086601728,
+          "kz": 0.8480186903040271,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.04487241605675377
+        }
+      },
+      "wean_0.85": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -139.28629985893545,
+          "k_n_cycles_r": 5,
+          "k_n_cycles_l": 6,
+          "k_duty_r": 0.7362857142857143,
+          "k_duty_l": 0.6612857142857143,
+          "k_contact_frac_r": 0.7722857142857142,
+          "k_contact_frac_l": 0.6945714285714286,
+          "k_knee_min_r": -61.48606157682933,
+          "tilt_max": 25.929572077100335,
+          "kz": 0.8279345190858248,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": -0.05964364384051479
+        },
+        "native": {
+          "kine_score": -221.567503226396,
+          "k_n_cycles_r": 2,
+          "k_n_cycles_l": 2,
+          "k_duty_r": 0.6704285714285714,
+          "k_duty_l": 0.6948571428571428,
+          "k_contact_frac_r": 0.8701428571428571,
+          "k_contact_frac_l": 0.8774285714285714,
+          "k_knee_min_r": -68.42992550226862,
+          "tilt_max": 21.36876603044749,
+          "kz": 0.8718000473668416,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": -0.054197013285823964
+        }
+      },
+      "wean_1": {
+        "four_steps": 7700,
+        "four": {
+          "kine_score": -225.29179643723472,
+          "k_n_cycles_r": 2,
+          "k_n_cycles_l": 0,
+          "k_duty_r": 0.9801428571428571,
+          "k_duty_l": null,
+          "k_contact_frac_r": 0.9961428571428571,
+          "k_contact_frac_l": 0.9445714285714286,
+          "k_knee_min_r": -8.479086663844903,
+          "tilt_max": 17.045986942089726,
+          "kz": 0.8510638594527838,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.060668071956767766
+        },
+        "native": {
+          "kine_score": -215.14265128553217,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 0,
+          "k_duty_r": 0.7917142857142857,
+          "k_duty_l": null,
+          "k_contact_frac_r": 0.8848571428571429,
+          "k_contact_frac_l": 1.0,
+          "k_knee_min_r": -50.41355625917144,
+          "tilt_max": 17.849698483959624,
+          "kz": 0.8477971699129094,
+          "t_end": 15.998000000000001,
+          "nan": false,
+          "bal_fell": false,
+          "dx": 0.0666809358019276
+        }
+      },
+      "prod_0.3": {
+        "four_steps": 10700,
+        "four": {
+          "kine_score": -179.23908662645124,
+          "k_n_cycles_r": 17,
+          "k_n_cycles_l": 9,
+          "k_duty_r": 0.786235294117647,
+          "k_duty_l": 0.7858823529411765,
+          "k_contact_frac_r": 0.8607058823529412,
+          "k_contact_frac_l": 0.8496470588235294,
+          "k_knee_min_r": -22.016933782470552,
+          "tilt_max": null,
+          "kz": null,
+          "t_end": 21.998,
+          "nan": null,
+          "bal_fell": null,
+          "dx": null
+        },
+        "native": {
+          "kine_score": -168.26834396486163,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 11,
+          "k_duty_r": 0.7904705882352941,
+          "k_duty_l": 0.5898823529411765,
+          "k_contact_frac_r": 0.8475294117647059,
+          "k_contact_frac_l": 0.8690588235294118,
+          "k_knee_min_r": -49.469956103701264,
+          "tilt_max": null,
+          "kz": null,
+          "t_end": 21.998,
+          "nan": null,
+          "bal_fell": null,
+          "dx": null
+        }
+      },
+      "standing_baseline": {
+        "four_steps": 3700,
+        "native": {
+          "score": 71.20555331676574,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.6915587631929763,
+            -1.7091656691838621
+          ],
+          "normal_force_bw": 0.3242379017481954,
+          "sway_m": 0.06494259259593436,
+          "tilt_deg": 10.28717730668073,
+          "mean_spring_support_bw": 0.28471722773398994,
+          "explicit_support_bw": 0.45
+        },
+        "four": {
+          "score": 67.49963955328897,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.7484474330020525,
+            -1.6228722069900257
+          ],
+          "normal_force_bw": 0.08972133752718832,
+          "sway_m": 0.06592607576076034,
+          "tilt_deg": 10.031887452296466,
+          "mean_spring_support_bw": 0.46704452017171555,
+          "explicit_support_bw": 0.45
+        }
+      },
+      "standing_baseline_reduced": {
+        "four_steps": 3700,
+        "native": {
+          "score": 64.7409940543237,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.6816040708131859,
+            -1.7132506355282189
+          ],
+          "normal_force_bw": 0.3254201552818133,
+          "sway_m": 0.07454189990986475,
+          "tilt_deg": 12.482539457661481,
+          "mean_spring_support_bw": 0.5380088750314411,
+          "explicit_support_bw": 0.2
+        },
+        "four": {
+          "score": 69.61240725685771,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.8672646056141742,
+            -1.5925489972745106
+          ],
+          "normal_force_bw": 0.10608919807831864,
+          "sway_m": 0.07477957621351534,
+          "tilt_deg": 8.618376112473465,
+          "mean_spring_support_bw": 0.707313050881819,
+          "explicit_support_bw": 0.2
+        }
+      },
+      "standing_premotor": {
+        "four_steps": 3700,
+        "native": {
+          "score": 69.96931306078011,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.6863942104953367,
+            -1.7039119019293192
+          ],
+          "normal_force_bw": 0.3304465258256837,
+          "sway_m": 0.06935246609888722,
+          "tilt_deg": 10.636766812890482,
+          "mean_spring_support_bw": 0.2746445611848812,
+          "explicit_support_bw": 0.45
+        },
+        "four": {
+          "score": 66.61969161749427,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.7468291581492064,
+            -1.6200265019605227
+          ],
+          "normal_force_bw": 0.10936080094056255,
+          "sway_m": 0.06730893729497396,
+          "tilt_deg": 10.4542837592997,
+          "mean_spring_support_bw": 0.44572869954234795,
+          "explicit_support_bw": 0.45
+        }
+      },
+      "standing_premotor_reduced": {
+        "four_steps": 3700,
+        "native": {
+          "score": 63.31190213067084,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.67824859679404,
+            -1.7080670327233523
+          ],
+          "normal_force_bw": 0.32758041076029204,
+          "sway_m": 0.07928678902157239,
+          "tilt_deg": 12.837759610007202,
+          "mean_spring_support_bw": 0.5311251627043695,
+          "explicit_support_bw": 0.2
+        },
+        "four": {
+          "score": 68.99423287083968,
+          "accepted": false,
+          "finite": true,
+          "complete": true,
+          "fall": false,
+          "maximum_knee_extension_deg": [
+            -1.866309752347619,
+            -1.5896570299145372
+          ],
+          "normal_force_bw": 0.12525498228757376,
+          "sway_m": 0.07620277870322523,
+          "tilt_deg": 9.02433707068936,
+          "mean_spring_support_bw": 0.680845468843979,
+          "explicit_support_bw": 0.2
+        }
+      }
+    },
+    "perturbations": {
+      "hunt_active_phase_stimulus_v3/MN": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.47689380188262,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3090000000000006,
+            "period_cv": 0.012228608849479801,
+            "cycle_phase_error": 0.08068217353790139,
+            "knee_ranges_deg": [
+              45.085906551393975,
+              34.57818770096396
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.7120587150032478
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3090000000000006,
+            "period_cv": 0.012228608849479726,
+            "bilateral_phase_error": 0.08068217353790133,
+            "knee_ranges_deg": [
+              45.085906551393975,
+              34.57818770096396
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.20088308693218,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3049999999999997,
+            "period_cv": 0.015455538072470354,
+            "cycle_phase_error": 0.08529680752468334,
+            "knee_ranges_deg": [
+              50.00284152978492,
+              39.660141106601756
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7045882419458338,
+              -1.8008293752985627
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3049999999999997,
+            "period_cv": 0.015455538072470205,
+            "bilateral_phase_error": 0.08529680752468327,
+            "knee_ranges_deg": [
+              50.00284152978492,
+              39.660141106601756
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_active_phase_stimulus_v3/PF": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.53461535566461,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3060000000000005,
+            "period_cv": 0.009575246812692964,
+            "cycle_phase_error": 0.09154719267797513,
+            "knee_ranges_deg": [
+              38.303865651538516,
+              34.53668637529244
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.741542256302447
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3060000000000005,
+            "period_cv": 0.009575246812692924,
+            "bilateral_phase_error": 0.09154719267797506,
+            "knee_ranges_deg": [
+              38.303865651538516,
+              34.53668637529244
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.44933291188526,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3010000000000006,
+            "period_cv": 0.009544814138851828,
+            "cycle_phase_error": 0.09270372315168018,
+            "knee_ranges_deg": [
+              43.1563143266402,
+              39.630028474437495
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.8008293752985627
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3010000000000006,
+            "period_cv": 0.00954481413885175,
+            "bilateral_phase_error": 0.09270372315168011,
+            "knee_ranges_deg": [
+              43.1563143266402,
+              39.630028474437495
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_active_phase_stimulus_v3/PF_inhibition": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.43712725051392,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.008852759736495235,
+            "cycle_phase_error": 0.09740040109459096,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.58794896789043
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.7022974480767687
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.008852759736495243,
+            "bilateral_phase_error": 0.09740040109459087,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.58794896789043
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.64388079082853,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3039999999999998,
+            "period_cv": 0.0091605067342761,
+            "cycle_phase_error": 0.09352972198896618,
+            "knee_ranges_deg": [
+              41.51920795650185,
+              39.694639384725676
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.7793963158730033
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3040000000000003,
+            "period_cv": 0.009160506734276154,
+            "bilateral_phase_error": 0.0935297219889661,
+            "knee_ranges_deg": [
+              41.51920795650185,
+              39.694639384725676
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_active_phase_stimulus_v3/RG": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.64649263897351,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910312,
+            "cycle_phase_error": 0.09425240352823279,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.566099357050746
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.7241470589164576
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910317,
+            "bilateral_phase_error": 0.09425240352823272,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.566099357050746
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.66966725892127,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938784,
+            "cycle_phase_error": 0.09327680150520919,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.666463490507034
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.8008293752985627
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09327680150520916,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.666463490507034
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_air_expression_ladder_v1/expression_0.1/stage1": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 109.500987655731,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.4659999999999993,
+            "period_cv": 0.0003974508750256514,
+            "cycle_phase_error": 0.004462113312478133,
+            "knee_ranges_deg": [
+              63.275554080044536,
+              62.13214805441443
+            ],
+            "maximum_knee_extension_deg": [
+              -1.537736172599843,
+              -1.4338332141703969
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.4659999999999993,
+            "period_cv": 0.000397450875025622,
+            "bilateral_phase_error": 0.0044621133124782,
+            "knee_ranges_deg": [
+              63.275554080044536,
+              62.13214805441443
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 42.851972204176526,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.233,
+            "period_cv": 0.46359095093133024,
+            "cycle_phase_error": 0.5,
+            "knee_ranges_deg": [
+              71.93350029060933,
+              70.53681404310824
+            ],
+            "maximum_knee_extension_deg": [
+              -1.2831978136862325,
+              -1.59863915139397
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              4,
+              4
+            ],
+            "period_s": 2.4659999999999997,
+            "period_cv": 0.10534635447380897,
+            "bilateral_phase_error": 0.033415094637722326,
+            "knee_ranges_deg": [
+              71.93350029060933,
+              70.53681404310824
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_air_expression_ladder_v1/expression_0.2/stage1": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 66.43283986306298,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              6,
+              4
+            ],
+            "period_s": 1.8680000000000003,
+            "period_cv": 0.5084884346547482,
+            "cycle_phase_error": 0.1514989293361886,
+            "knee_ranges_deg": [
+              86.4003685025468,
+              83.50674617172734
+            ],
+            "maximum_knee_extension_deg": [
+              -1.0847724058753476,
+              -1.4151833515207204
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.466,
+            "period_cv": 0.0003244646333549645,
+            "bilateral_phase_error": 0.006489293350607106,
+            "knee_ranges_deg": [
+              86.4003685025468,
+              83.50674617172734
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 1.1680000000000008,
+            "angle_deg": -1.0743217946794725,
+            "velocity_deg_s": 518.8097651346357,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "hunt_air_expression_ladder_v1/expression_0.35/stage1": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 109.12185882323215,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.4659999999999993,
+            "period_cv": 0.0003974508750254455,
+            "cycle_phase_error": 0.012412708945555639,
+            "knee_ranges_deg": [
+              87.03597620135506,
+              87.06461861035055
+            ],
+            "maximum_knee_extension_deg": [
+              -1.2906773188907497,
+              -1.2415792454452763
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.4659999999999993,
+            "period_cv": 0.0003974508750255631,
+            "bilateral_phase_error": 0.012412708945555694,
+            "knee_ranges_deg": [
+              87.03597620135506,
+              87.06461861035055
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "r",
+            "time_s": 2.437999999999953,
+            "angle_deg": -1.0289290071265846,
+            "velocity_deg_s": 540.2252423443398,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "hunt_air_expression_ladder_v1/expression_0.5/stage1": {
+        "four": {
+          "complete": false,
+          "physical_steps": 4293,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 8.585999999999537,
+            "angle_deg": -1.14061584395053,
+            "velocity_deg_s": 529.4656264466331,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 1.1200000000000008,
+            "angle_deg": -0.9589752368747846,
+            "velocity_deg_s": 537.6463938372515,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "hunt_air_expression_ladder_v1/expression_0.7/stage1": {
+        "four": {
+          "complete": false,
+          "physical_steps": 5527,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 11.05400000000036,
+            "angle_deg": -1.116948537694075,
+            "velocity_deg_s": 560.1565461225979,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "r",
+            "time_s": 4.9079999999996815,
+            "angle_deg": -0.9636807543978982,
+            "velocity_deg_s": 605.1083233989248,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "hunt_layer_stimulus_2nA_v2/Baseline": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.64649261772404,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910312,
+            "cycle_phase_error": 0.09425240352823279,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.566099297492734
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.7241471184744723
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910317,
+            "bilateral_phase_error": 0.09425240352823272,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.566099297492734
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.66966848539896,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938784,
+            "cycle_phase_error": 0.09327680150520919,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.66646727014467
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.8008293752985627
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09327680150520916,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.66646727014467
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_layer_stimulus_2nA_v2/MN": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 97.54066074295403,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.314,
+            "period_cv": 0.01761816987810062,
+            "cycle_phase_error": 0.10549326696119443,
+            "knee_ranges_deg": [
+              37.64273616521898,
+              34.53568152501699
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.7447125115042006
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3140000000000005,
+            "period_cv": 0.017618169878100515,
+            "bilateral_phase_error": 0.10549326696119436,
+            "knee_ranges_deg": [
+              37.64273616521898,
+              34.53568152501699
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 98.74532303470326,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3080000000000003,
+            "period_cv": 0.017875307751726573,
+            "cycle_phase_error": 0.10439852962505906,
+            "knee_ranges_deg": [
+              41.595724801388755,
+              39.70758598088064
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.7664497197180415
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3080000000000007,
+            "period_cv": 0.017875307751726473,
+            "bilateral_phase_error": 0.10439852962505898,
+            "knee_ranges_deg": [
+              41.595724801388755,
+              39.70758598088064
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_layer_stimulus_2nA_v2/PF": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.64649261817613,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910312,
+            "cycle_phase_error": 0.09425240352823279,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.56609929875981
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.724147117207393
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910317,
+            "bilateral_phase_error": 0.09425240352823272,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.56609929875981
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.66966849854258,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938784,
+            "cycle_phase_error": 0.09327680150520919,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.666467310649345
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.8008293752985627
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09327680150520916,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.666467310649345
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_layer_stimulus_2nA_v2/PF_inhibition": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.64649261727114,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910312,
+            "cycle_phase_error": 0.09425240352823279,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.56609929622332
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.724147119743881
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910317,
+            "bilateral_phase_error": 0.09425240352823272,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.56609929622332
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.66966847225538,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938784,
+            "cycle_phase_error": 0.09327680150520919,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.666467229640084
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.8008293752985627
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09327680150520916,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.666467229640084
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_layer_stimulus_2nA_v2/RG": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.72922537093996,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.0093058565670525,
+            "cycle_phase_error": 0.09306201527684159,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.57451673139551
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.71572968457169
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009305856567052505,
+            "bilateral_phase_error": 0.0930620152768415,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.57451673139551
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 100.26448625101693,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3039999999999998,
+            "period_cv": 0.012690445917417343,
+            "cycle_phase_error": 0.07953084925128182,
+            "knee_ranges_deg": [
+              43.82636629387733,
+              39.70962372739865
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.7644119732000294
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3040000000000003,
+            "period_cv": 0.012690445917417399,
+            "bilateral_phase_error": 0.07953084925128175,
+            "knee_ranges_deg": [
+              43.82636629387733,
+              39.70962372739865
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/0.01_41001": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.66413638901018,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009109057048054817,
+            "cycle_phase_error": 0.09425716061552214,
+            "knee_ranges_deg": [
+              36.46578657410814,
+              34.56721867491047
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7790920590697672,
+              -1.7174699537731746
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009109057048054812,
+            "bilateral_phase_error": 0.0942571606155221,
+            "knee_ranges_deg": [
+              36.46578657410814,
+              34.56721867491047
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.64709203183408,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938784,
+            "cycle_phase_error": 0.09327680150520919,
+            "knee_ranges_deg": [
+              41.525127719773046,
+              39.623744337026174
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7146115716485637,
+              -1.7316598983607678
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09327680150520916,
+            "knee_ranges_deg": [
+              41.525127719773046,
+              39.623744337026174
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/0.01_41002": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.64346091157915,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910312,
+            "cycle_phase_error": 0.09425240352823279,
+            "knee_ranges_deg": [
+              36.55188552944142,
+              34.54900670989491
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7044001584596822,
+              -1.7432588687559003
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910317,
+            "bilateral_phase_error": 0.09425240352823272,
+            "knee_ranges_deg": [
+              36.55188552944142,
+              34.54900670989491
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.70055577983861,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008559757937484685,
+            "cycle_phase_error": 0.09301924841317305,
+            "knee_ranges_deg": [
+              41.46092253963221,
+              39.70495474862549
+            ],
+            "maximum_knee_extension_deg": [
+              -1.630350487802023,
+              -1.770055315630253
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008559757937484681,
+            "bilateral_phase_error": 0.09301924841317301,
+            "knee_ranges_deg": [
+              41.46092253963221,
+              39.70495474862549
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/0.01_41003": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.6041040732438,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.306,
+            "period_cv": 0.009165852984945806,
+            "cycle_phase_error": 0.09468599827885338,
+            "knee_ranges_deg": [
+              36.56498375349288,
+              34.534396386961596
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6879006649477046,
+              -1.7202137538824775
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.306,
+            "period_cv": 0.009165852984945797,
+            "bilateral_phase_error": 0.09468599827885331,
+            "knee_ranges_deg": [
+              36.56498375349288,
+              34.534396386961596
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.6271129720448,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938784,
+            "cycle_phase_error": 0.09353476651744419,
+            "knee_ranges_deg": [
+              41.59385042970784,
+              39.64881707602389
+            ],
+            "maximum_knee_extension_deg": [
+              -1.742049642919305,
+              -1.77533588242813
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09353476651744415,
+            "knee_ranges_deg": [
+              41.59385042970784,
+              39.64881707602389
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/0.025_41001": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.6432958368339,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009109057048054817,
+            "cycle_phase_error": 0.09425716061552214,
+            "knee_ranges_deg": [
+              36.52264953144022,
+              34.53692068785705
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7389147189643717,
+              -1.7064514138633269
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009109057048054812,
+            "bilateral_phase_error": 0.0942571606155221,
+            "knee_ranges_deg": [
+              36.52264953144022,
+              34.53692068785705
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.67384758910379,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.2990000000000004,
+            "period_cv": 0.008482760290509218,
+            "cycle_phase_error": 0.09309963208196292,
+            "knee_ranges_deg": [
+              41.558262872891284,
+              39.68051533262938
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7111323247530161,
+              -1.6343024665261185
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.2990000000000004,
+            "period_cv": 0.008482760290509215,
+            "bilateral_phase_error": 0.09309963208196285,
+            "knee_ranges_deg": [
+              41.558262872891284,
+              39.68051533262938
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/0.025_41002": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.62676216366751,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.306,
+            "period_cv": 0.009144495628579231,
+            "cycle_phase_error": 0.09442840104017902,
+            "knee_ranges_deg": [
+              36.534248445042905,
+              34.531376215761526
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7223459997238284,
+              -1.7206618893125452
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.306,
+            "period_cv": 0.009144495628579233,
+            "bilateral_phase_error": 0.09442840104017895,
+            "knee_ranges_deg": [
+              36.534248445042905,
+              34.531376215761526
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.6776225331782,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008559757937484685,
+            "cycle_phase_error": 0.09301924841317305,
+            "knee_ranges_deg": [
+              41.589144350582366,
+              39.69231177760834
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6846456821768094,
+              -1.7853498329123092
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008559757937484681,
+            "bilateral_phase_error": 0.09301924841317301,
+            "knee_ranges_deg": [
+              41.589144350582366,
+              39.69231177760834
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/0.025_41003": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.58873414772567,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009087560718272441,
+            "cycle_phase_error": 0.09501343015920544,
+            "knee_ranges_deg": [
+              36.55966223201759,
+              34.549653522469555
+            ],
+            "maximum_knee_extension_deg": [
+              -1.693161568617986,
+              -1.6515382607654212
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009087560718272445,
+            "bilateral_phase_error": 0.09501343015920537,
+            "knee_ranges_deg": [
+              36.55966223201759,
+              34.549653522469555
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.63690074043181,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.299,
+            "period_cv": 0.008605696145395783,
+            "cycle_phase_error": 0.09379407395037724,
+            "knee_ranges_deg": [
+              41.581759333670945,
+              39.73284456580118
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7551832518461024,
+              -1.7236459322074928
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.299,
+            "period_cv": 0.008605696145395789,
+            "bilateral_phase_error": 0.09379407395037716,
+            "knee_ranges_deg": [
+              41.581759333670945,
+              39.73284456580118
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/repeat": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.6432958368339,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009109057048054817,
+            "cycle_phase_error": 0.09425716061552214,
+            "knee_ranges_deg": [
+              36.52264953144022,
+              34.53692068785705
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7389147189643717,
+              -1.7064514138633269
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009109057048054812,
+            "bilateral_phase_error": 0.0942571606155221,
+            "knee_ranges_deg": [
+              36.52264953144022,
+              34.53692068785705
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.67384758910379,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.2990000000000004,
+            "period_cv": 0.008482760290509218,
+            "cycle_phase_error": 0.09309963208196292,
+            "knee_ranges_deg": [
+              41.558262872891284,
+              39.68051533262938
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7111323247530161,
+              -1.6343024665261185
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.2990000000000004,
+            "period_cv": 0.008482760290509215,
+            "bilateral_phase_error": 0.09309963208196285,
+            "knee_ranges_deg": [
+              41.558262872891284,
+              39.68051533262938
+            ],
+            "reason": null
+          }
+        }
+      },
+      "hunt_rg_noise_v1/zero": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 98.64649261772404,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910312,
+            "cycle_phase_error": 0.09425240352823279,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.566099297492734
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6947820739200972,
+              -1.7241471184744723
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3050000000000002,
+            "period_cv": 0.009066013418910317,
+            "bilateral_phase_error": 0.09425240352823272,
+            "knee_ranges_deg": [
+              36.56939592749884,
+              34.566099297492734
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 99.66966848539896,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938784,
+            "cycle_phase_error": 0.09327680150520919,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.66646727014467
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7179745408236142,
+              -1.8008293752985627
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "period_s": 1.3000000000000003,
+            "period_cv": 0.008536696131938783,
+            "bilateral_phase_error": 0.09327680150520916,
+            "knee_ranges_deg": [
+              41.46576937126136,
+              39.66646727014467
+            ],
+            "reason": null
+          }
+        }
+      },
+      "syn6_adaptive_20261105/body_slow_handover": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2070,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 4.139999999999766,
+            "angle_deg": -1.0465452103383828,
+            "velocity_deg_s": 586.6136087812064,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 9.813999999999947,
+            "angle_deg": -1.1730462235776593,
+            "velocity_deg_s": 634.4729170271431,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_ankle_selected_repeat_20261104/stage1": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 107.23594198028336,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.466000000000001,
+            "period_cv": 0.0003243593902043107,
+            "cycle_phase_error": 0.0006486925591613679,
+            "knee_ranges_deg": [
+              44.70232100167832,
+              45.92365529028069
+            ],
+            "maximum_knee_extension_deg": [
+              -1.8784737844374064,
+              -1.9080202558851451
+            ]
+          },
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.466000000000001,
+            "period_cv": 0.00032435939020441867,
+            "bilateral_phase_error": 0.0006486925591614456,
+            "knee_ranges_deg": [
+              44.70232100167832,
+              45.92365529028069
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 108.03093702132989,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.466,
+            "period_cv": 0.0003243593902043467,
+            "cycle_phase_error": 0.0011353105640271699,
+            "knee_ranges_deg": [
+              49.53537772809095,
+              50.77301230326007
+            ],
+            "maximum_knee_extension_deg": [
+              -1.7036947752120246,
+              -1.7462001297414145
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "period_s": 2.466000000000001,
+            "period_cv": 0.0003243593902044547,
+            "bilateral_phase_error": 0.0011353105640272477,
+            "knee_ranges_deg": [
+              49.53537772809095,
+              50.77301230326007
+            ],
+            "reason": null
+          }
+        }
+      },
+      "syn6_ankle_selected_repeat_20261104/stage2": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 85.70635122337657,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              4,
+              3
+            ],
+            "period_s": 2.0280000000000005,
+            "period_cv": 0.05172183029386284,
+            "cycle_phase_error": 0.18207058153263997,
+            "knee_ranges_deg": [
+              18.72910673644472,
+              22.46491194195483
+            ],
+            "maximum_knee_extension_deg": [
+              -1.9264445694484786,
+              -1.9275917916709735
+            ]
+          },
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": [
+              4,
+              3
+            ],
+            "period_s": 2.0280000000000014,
+            "period_cv": 0.051721830293862917,
+            "bilateral_phase_error": 0.18207058153264005,
+            "knee_ranges_deg": [
+              18.72910673644472,
+              22.46491194195483
+            ],
+            "reason": null
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 98.71879581859909,
+            "accepted": true,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              4,
+              4
+            ],
+            "period_s": 2.005000000000001,
+            "period_cv": 0.0008949916581575116,
+            "cycle_phase_error": 0.01786640572645244,
+            "knee_ranges_deg": [
+              20.449564988142985,
+              22.839899184625963
+            ],
+            "maximum_knee_extension_deg": [
+              -1.909939006991164,
+              -1.9367795992598666
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              4,
+              4
+            ],
+            "period_s": 2.005000000000001,
+            "period_cv": 0.0008949916581575387,
+            "bilateral_phase_error": 0.01786640572645251,
+            "knee_ranges_deg": [
+              20.449564988142985,
+              22.839899184625963
+            ],
+            "reason": null
+          }
+        }
+      },
+      "syn6_flexor_handover_20261105/early_stage2": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 10.18765386085004,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              11,
+              10
+            ],
+            "period_s": 0.9560000000000013,
+            "period_cv": 0.29300218573806047,
+            "cycle_phase_error": 0.16863656877116362,
+            "knee_ranges_deg": [
+              73.20736825204656,
+              65.85837878268796
+            ],
+            "maximum_knee_extension_deg": [
+              -1.550646063479158,
+              -1.5804832924683998
+            ]
+          },
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 12.002000000000677,
+            "angle_deg": -1.0449594467163772,
+            "velocity_deg_s": 502.7001044889407,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_flexor_handover_20261105/early_stage3": {
+        "four": {
+          "complete": true,
+          "physical_steps": 3700,
+          "assessment": {
+            "score": 37.48903339991751,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "fall": false,
+            "maximum_knee_extension_deg": [
+              -1.6932602057663115,
+              -1.6809719807999306
+            ],
+            "normal_force_bw": 0.23589174652875944,
+            "sway_m": 0.14020233801458137,
+            "tilt_deg": 17.57389007523239
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.535999999999612,
+            "angle_deg": -1.163099930180397,
+            "velocity_deg_s": 576.3867264520745,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_flexor_handover_20261105/early_stage4": {
+        "four": {
+          "complete": false,
+          "physical_steps": 4635,
+          "knee_guard": {
+            "side": "r",
+            "time_s": 9.269999999999765,
+            "angle_deg": -0.9244352486798889,
+            "velocity_deg_s": 558.5809102482763,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "r",
+            "time_s": 13.126000000001053,
+            "angle_deg": -0.7384375281389527,
+            "velocity_deg_s": 631.113751675946,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_flexor_handover_20261105/predict150_stage2": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 6.297550682710746,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              13,
+              13
+            ],
+            "period_s": 0.6349999999999993,
+            "period_cv": 0.2638194936274698,
+            "cycle_phase_error": 0.19140843423440076,
+            "knee_ranges_deg": [
+              79.0635676327178,
+              80.79997476343353
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6617810920256362,
+              -1.5800399481584495
+            ]
+          },
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": -18.903542784480994,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              12,
+              11
+            ],
+            "period_s": 0.7959999999999994,
+            "period_cv": 0.2865119409136925,
+            "cycle_phase_error": 0.13806497353102454,
+            "knee_ranges_deg": [
+              76.73794448196936,
+              86.62020224786775
+            ],
+            "maximum_knee_extension_deg": [
+              -1.4041674388426155,
+              -1.4522289797069896
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          }
+        }
+      },
+      "syn6_flexor_handover_20261105/predict150_stage2_repeat": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 6.297550682710746,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              13,
+              13
+            ],
+            "period_s": 0.6349999999999993,
+            "period_cv": 0.2638194936274698,
+            "cycle_phase_error": 0.19140843423440076,
+            "knee_ranges_deg": [
+              79.0635676327178,
+              80.79997476343353
+            ],
+            "maximum_knee_extension_deg": [
+              -1.6617810920256362,
+              -1.5800399481584495
+            ]
+          },
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": -18.903542784480994,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              12,
+              11
+            ],
+            "period_s": 0.7959999999999994,
+            "period_cv": 0.2865119409136925,
+            "cycle_phase_error": 0.13806497353102454,
+            "knee_ranges_deg": [
+              76.73794448196936,
+              86.62020224786775
+            ],
+            "maximum_knee_extension_deg": [
+              -1.4041674388426155,
+              -1.4522289797069896
+            ]
+          },
+          "complete": true,
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          }
+        }
+      },
+      "syn6_flexor_handover_20261105/predict150_stage3": {
+        "four": {
+          "complete": false,
+          "physical_steps": 3535,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 7.069999999999443,
+            "angle_deg": -1.1631136714273718,
+            "velocity_deg_s": 532.5948759475053,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 37.895876758410644,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "fall": false,
+            "maximum_knee_extension_deg": [
+              -1.7248739087322937,
+              -1.1478425596030608
+            ],
+            "normal_force_bw": 0.2390061454349992,
+            "sway_m": 0.1398485871826354,
+            "tilt_deg": 17.66242764561307
+          },
+          "complete": true
+        }
+      },
+      "syn6_flexor_handover_20261105/predict150_stage4": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 57.723509468135504,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              9,
+              11
+            ],
+            "period_s": 0.7440000000000007,
+            "period_cv": 0.2671394799054374,
+            "cycle_phase_error": 0.32085376976934904,
+            "knee_ranges_deg": [
+              65.5067056551789,
+              73.55342955493082
+            ],
+            "maximum_knee_extension_deg": [
+              -1.5578513736805073,
+              -1.3369479482105386
+            ]
+          },
+          "force_threshold": {
+            "cycles": [
+              7,
+              10
+            ],
+            "mean_foot_bw": [
+              0.0830415020039662,
+              0.07977074618609357
+            ],
+            "phase_error": 0.2247298987557782,
+            "mean_harness_vertical_bw": 0.8354122718650603,
+            "accepted": false
+          },
+          "mesh_clearance": [
+            {
+              "swings": 2,
+              "max_m": 0.010262078928156008
+            },
+            {
+              "swings": 6,
+              "max_m": 0.05204948915817158
+            }
+          ]
+        },
+        "native": {
+          "assessment": {
+            "score": 63.65151142742936,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              11,
+              12
+            ],
+            "period_s": 0.7220000000000013,
+            "period_cv": 0.19771578183142657,
+            "cycle_phase_error": 0.17878958844101728,
+            "knee_ranges_deg": [
+              70.50735921067495,
+              78.39569789622074
+            ],
+            "maximum_knee_extension_deg": [
+              -1.5348409783808847,
+              -1.478308489596639
+            ]
+          },
+          "complete": true,
+          "force_threshold": {
+            "cycles": [
+              6,
+              8
+            ],
+            "mean_foot_bw": [
+              0.07829237949087185,
+              0.08554422668233166
+            ],
+            "phase_error": 0.21330694277038736,
+            "mean_harness_vertical_bw": 0.8329658536812147,
+            "accepted": false
+          },
+          "mesh_clearance": [
+            {
+              "swings": 3,
+              "max_m": 0.02671264577076954
+            },
+            {
+              "swings": 5,
+              "max_m": 0.05426043886973557
+            }
+          ]
+        }
+      },
+      "syn6_flexor_handover_20261105/stage2": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2070,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 4.139999999999766,
+            "angle_deg": -1.0465457209400013,
+            "velocity_deg_s": 586.6136079395004,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 4.911999999999681,
+            "angle_deg": -1.1878664124490192,
+            "velocity_deg_s": 629.2812671281231,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_flexor_handover_20261105/stage3": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2944,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.887999999999574,
+            "angle_deg": -1.0910060177002083,
+            "velocity_deg_s": 567.4621948520646,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "assessment": {
+            "score": 34.921702581781815,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "fall": false,
+            "maximum_knee_extension_deg": [
+              -1.3324506009418704,
+              -1.1827976877408124
+            ],
+            "normal_force_bw": 0.15928459138739087,
+            "sway_m": 0.1398485871826354,
+            "tilt_deg": 17.66242764561307
+          },
+          "complete": true
+        }
+      },
+      "syn6_flexor_handover_20261105/stage4": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2631,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.2619999999996425,
+            "angle_deg": -1.2821313542646868,
+            "velocity_deg_s": 632.0195823242525,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 7.927999999999349,
+            "angle_deg": -1.2415776026821683,
+            "velocity_deg_s": 673.1558490657648,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_flexor_handover_20261105/state_gated_stage2": {
+        "four": {
+          "complete": false,
+          "physical_steps": 3254,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 6.507999999999505,
+            "angle_deg": -1.0177190307202129,
+            "velocity_deg_s": 533.4987483248968,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "r",
+            "time_s": 5.415999999999626,
+            "angle_deg": -1.025055997192315,
+            "velocity_deg_s": 515.8778877387687,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_flexor_handover_20261105/state_gated_stage3": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2863,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.725999999999591,
+            "angle_deg": -1.131003610549407,
+            "velocity_deg_s": 624.6389066838511,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.585999999999607,
+            "angle_deg": -0.9968097612379767,
+            "velocity_deg_s": 610.9909148315063,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_flexor_handover_20261105/state_gated_stage4": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2688,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.37599999999963,
+            "angle_deg": -1.053583007840707,
+            "velocity_deg_s": 625.4966201519962,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "r",
+            "time_s": 6.357999999999522,
+            "angle_deg": -1.140463689092941,
+            "velocity_deg_s": 878.2933498655741,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_s3_single_20261105/late": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2923,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.845999999999578,
+            "angle_deg": -1.3494096637248258,
+            "velocity_deg_s": 654.868499999534,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 6.889999999999463,
+            "angle_deg": -1.194086594392418,
+            "velocity_deg_s": 897.0900890343698,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_s3_single_20261105/overlap": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2923,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.845999999999578,
+            "angle_deg": -1.3494096637248258,
+            "velocity_deg_s": 654.868499999534,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "l",
+            "time_s": 8.049999999999358,
+            "angle_deg": -0.903079865597513,
+            "velocity_deg_s": 696.9319945109228,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_s3_single_20261105/target": {
+        "four": {
+          "complete": false,
+          "physical_steps": 2923,
+          "knee_guard": {
+            "side": "l",
+            "time_s": 5.845999999999578,
+            "angle_deg": -1.2933519371698918,
+            "velocity_deg_s": 652.8226674147571,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "r",
+            "time_s": 6.449999999999512,
+            "angle_deg": -0.7476523985412458,
+            "velocity_deg_s": 778.6886436260336,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      },
+      "syn6_s3_single_20261105/wide": {
+        "four": {
+          "complete": true,
+          "physical_steps": 7700,
+          "assessment": {
+            "score": 70.64618921600206,
+            "accepted": false,
+            "finite": true,
+            "complete": true,
+            "knee_cycles": [
+              16,
+              15
+            ],
+            "period_s": 0.5259999999999998,
+            "period_cv": 0.12010015917855867,
+            "cycle_phase_error": 0.26174580271547987,
+            "knee_ranges_deg": [
+              80.06046275756243,
+              86.78702368744254
+            ],
+            "maximum_knee_extension_deg": [
+              -1.1819481372147151,
+              -1.4201903896024852
+            ]
+          },
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": null,
+            "period_s": null,
+            "period_cv": null,
+            "bilateral_phase_error": null,
+            "knee_ranges_deg": null,
+            "reason": "dominant_frequency_outside_walking_window"
+          }
+        },
+        "native": {
+          "knee_guard": {
+            "side": "r",
+            "time_s": 9.083999999999703,
+            "angle_deg": -1.036703729795575,
+            "velocity_deg_s": 581.388231463355,
+            "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+          },
+          "complete": false
+        }
+      }
+    },
+    "live_timing": {
+      "s2_latch": {
+        "full_native_s": 6.3059999999995275,
+        "end_neural_s": 16.00000000000201,
+        "motor_digest": "41fbe663292846161c97852f2e2b0fdc6c30daaac231193f1648c439466c3a1e",
+        "live": {
+          "l": [
+            7,
+            24
+          ],
+          "r": [
+            8,
+            24
+          ]
+        }
+      },
+      "syn6_adaptive_20261105_body_slow_handover": {
+        "full_native_s": null,
+        "end_neural_s": 4.7419999999997,
+        "motor_digest": "41fbe663292846161c97852f2e2b0fdc6c30daaac231193f1648c439466c3a1e"
+      },
+      "syn6_flexor_handover_20261105_predict150_stage2": {
+        "full_native_s": 6.3059999999995275,
+        "end_neural_s": 16.00000000000201,
+        "motor_digest": "41fbe663292846161c97852f2e2b0fdc6c30daaac231193f1648c439466c3a1e",
+        "live": {
+          "l": [
+            8,
+            24
+          ],
+          "r": [
+            8,
+            24
+          ]
+        }
+      },
+      "syn6_flexor_handover_20261105_predict150_stage2_repeat": {
+        "full_native_s": 6.3059999999995275,
+        "end_neural_s": 16.00000000000201,
+        "motor_digest": "41fbe663292846161c97852f2e2b0fdc6c30daaac231193f1648c439466c3a1e",
+        "live": {
+          "l": [
+            8,
+            24
+          ],
+          "r": [
+            8,
+            24
+          ]
+        }
+      },
+      "syn6_flexor_handover_20261105_predict150_stage3": {
+        "full_native_s": 6.757999999999478,
+        "end_neural_s": 7.671999999999377,
+        "motor_digest": "41fbe663292846161c97852f2e2b0fdc6c30daaac231193f1648c439466c3a1e",
+        "live": {
+          "l": [
+            0,
+            0
+          ],
+          "r": [
+            0,
+            0
+          ]
+        }
+      },
+      "syn6_flexor_handover_20261105_predict150_stage4": {
+        "full_native_s": 6.383999999999519,
+        "end_neural_s": 16.00000000000201,
+        "motor_digest": "41fbe663292846161c97852f2e2b0fdc6c30daaac231193f1648c439466c3a1e",
+        "live": {
+          "l": [
+            6,
+            24
+          ],
+          "r": [
+            15,
+            24
+          ]
+        }
+      }
+    },
+    "fixed_replay_timing": {
+      "1.0": {
+        "l": [
+          24,
+          24
+        ],
+        "r": [
+          24,
+          24
+        ]
+      },
+      "0.85": {
+        "l": [
+          12,
+          24
+        ],
+        "r": [
+          4,
+          24
+        ]
+      },
+      "1.15": {
+        "l": [
+          4,
+          24
+        ],
+        "r": [
+          4,
+          24
+        ]
+      }
+    },
+    "adaptive_replay_timing": {
+      "0.7": {
+        "l": [
+          24,
+          24
+        ],
+        "r": [
+          24,
+          24
+        ]
+      },
+      "0.75": {
+        "l": [
+          24,
+          24
+        ],
+        "r": [
+          24,
+          24
+        ]
+      },
+      "0.8": {
+        "l": [
+          24,
+          24
+        ],
+        "r": [
+          24,
+          24
+        ]
+      },
+      "0.85": {
+        "l": [
+          24,
+          24
+        ],
+        "r": [
+          24,
+          24
+        ]
+      },
+      "1.0": {
+        "l": [
+          24,
+          24
+        ],
+        "r": [
+          24,
+          24
+        ]
+      },
+      "1.15": {
+        "l": [
+          24,
+          24
+        ],
+        "r": [
+          24,
+          24
+        ]
+      }
+    },
+    "noise_zero": {
+      "qpos": {
+        "finite_pairs": 808500,
+        "max_abs": 0.0,
+        "matching_missing": true
+      },
+      "neural_voltage": {
+        "finite_pairs": 246400,
+        "max_abs": 0.0,
+        "matching_missing": true
+      },
+      "stimulus_nA": {
+        "finite_pairs": 0,
+        "max_abs": null,
+        "matching_missing": true
+      }
+    },
+    "noise_repeat": {
+      "qpos": {
+        "finite_pairs": 808500,
+        "max_abs": 0.0,
+        "matching_missing": true
+      },
+      "neural_voltage": {
+        "finite_pairs": 246400,
+        "max_abs": 0.0,
+        "matching_missing": true
+      },
+      "stimulus_nA": {
+        "finite_pairs": 246400,
+        "max_abs": 0.0,
+        "matching_missing": true
+      }
+    },
+    "frozen_search": {
+      "accepted": false,
+      "original_study": "syn6_body_fit_v6",
+      "original_budget": 12,
+      "seed": 61204,
+      "rows": [
+        {
+          "trial": 0,
+          "parameters": {
+            "expression": 0.15,
+            "local_II_scale": 0.1
+          },
+          "value": 119.26979508839977,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.8442822384428224,
+            "period_s": 2.274,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 1,
+          "parameters": {
+            "expression": 0.2,
+            "local_II_scale": 0.1
+          },
+          "value": 113.19839928943404,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.7315490673154907,
+            "period_s": 2.1350000000000002,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 2,
+          "parameters": {
+            "expression": 0.25,
+            "local_II_scale": 0.1
+          },
+          "value": 107.52072427890738,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6853203568532045,
+            "period_s": 2.078000000000001,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 3,
+          "parameters": {
+            "expression": 0.15,
+            "local_II_scale": 0.2
+          },
+          "value": 112.34377949173388,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6739659367396593,
+            "period_s": 2.064,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 4,
+          "parameters": {
+            "expression": 0.2,
+            "local_II_scale": 0.2
+          },
+          "value": 107.7057116488152,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6885644768856451,
+            "period_s": 2.0820000000000007,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 5,
+          "parameters": {
+            "expression": 0.25,
+            "local_II_scale": 0.2
+          },
+          "value": 106.95676822858672,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6820762368207629,
+            "period_s": 2.0740000000000007,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 6,
+          "parameters": {
+            "expression": 0.2907871831981387,
+            "local_II_scale": 0.30945171351583967
+          },
+          "value": 106.12680071682512,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6545012165450113,
+            "period_s": 2.039999999999999,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 7,
+          "parameters": {
+            "expression": 0.2509572495490508,
+            "local_II_scale": 0.34475252005232926
+          },
+          "value": 108.29651579814296,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.7047850770478494,
+            "period_s": 2.1019999999999985,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 8,
+          "parameters": {
+            "expression": 0.10252942596540357,
+            "local_II_scale": 0.34324852454011157
+          },
+          "value": 130.40561871730358,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 1.0,
+            "period_s": null,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 9,
+          "parameters": {
+            "expression": 0.29526975538008926,
+            "local_II_scale": 0.2599396560722633
+          },
+          "value": 105.07245949054901,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6512570965125712,
+            "period_s": 2.0360000000000005,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 10,
+          "parameters": {
+            "expression": 0.12502455587408098,
+            "local_II_scale": 0.252506525707584
+          },
+          "value": 126.10518844178394,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.8767234387672347,
+            "period_s": 2.3140000000000005,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 11,
+          "parameters": {
+            "expression": 0.28310596420361916,
+            "local_II_scale": 0.2813375304852341
+          },
+          "value": 105.92363383656905,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6642335766423364,
+            "period_s": 2.052000000000001,
+            "original_motion_safety_gate": false
+          }
+        }
+      ],
+      "best": {
+        "trial": 9,
+        "parameters": {
+          "expression": 0.29526975538008926,
+          "local_II_scale": 0.2599396560722633
+        },
+        "value": 105.07245949054901,
+        "diagnostics": {
+          "accepted": false,
+          "period_error": 0.6512570965125712,
+          "period_s": 2.0360000000000005,
+          "original_motion_safety_gate": false
+        }
+      },
+      "fresh_stages": []
+    },
+    "retrained_search": {
+      "accepted": false,
+      "original_study": "syn6_body_fit_v6",
+      "original_budget": 12,
+      "seed": 61204,
+      "rows": [
+        {
+          "trial": 0,
+          "parameters": {
+            "expression": 0.15,
+            "local_II_scale": 0.1
+          },
+          "value": 104.77742744313973,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6674776966747775,
+            "period_s": 2.056000000000001,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 1,
+          "parameters": {
+            "expression": 0.2,
+            "local_II_scale": 0.1
+          },
+          "value": 104.02512973451952,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6480129764801301,
+            "period_s": 2.0320000000000005,
+            "original_motion_safety_gate": true
+          }
+        },
+        {
+          "trial": 2,
+          "parameters": {
+            "expression": 0.25,
+            "local_II_scale": 0.1
+          },
+          "value": 103.48033597207534,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6155717761557176,
+            "period_s": 1.992,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 3,
+          "parameters": {
+            "expression": 0.15,
+            "local_II_scale": 0.2
+          },
+          "value": 106.41108620812068,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.7591240875912408,
+            "period_s": 2.169,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 4,
+          "parameters": {
+            "expression": 0.2,
+            "local_II_scale": 0.2
+          },
+          "value": 104.35633709026915,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.7347931873479328,
+            "period_s": 2.139000000000001,
+            "original_motion_safety_gate": true
+          }
+        },
+        {
+          "trial": 5,
+          "parameters": {
+            "expression": 0.25,
+            "local_II_scale": 0.2
+          },
+          "value": 103.96226303931344,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.6950527169505283,
+            "period_s": 2.0900000000000016,
+            "original_motion_safety_gate": true
+          }
+        },
+        {
+          "trial": 6,
+          "parameters": {
+            "expression": 0.2907871831981387,
+            "local_II_scale": 0.30945171351583967
+          },
+          "value": 702.0535789721603,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 1.0,
+            "period_s": null,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 7,
+          "parameters": {
+            "expression": 0.10604758396326569,
+            "local_II_scale": 0.33934656687003434
+          },
+          "value": 719.7451287705309,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 1.0,
+            "period_s": null,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 8,
+          "parameters": {
+            "expression": 0.21764552741887325,
+            "local_II_scale": 0.3069035009533811
+          },
+          "value": 724.4112924338622,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 1.0,
+            "period_s": null,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 9,
+          "parameters": {
+            "expression": 0.2812961298364264,
+            "local_II_scale": 0.0559641127111864
+          },
+          "value": 103.13151780625691,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.5620437956204387,
+            "period_s": 1.926000000000001,
+            "original_motion_safety_gate": true
+          }
+        },
+        {
+          "trial": 10,
+          "parameters": {
+            "expression": 0.12213512502826089,
+            "local_II_scale": 0.1767565848430032
+          },
+          "value": 115.70457794324894,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.779399837793999,
+            "period_s": 2.194000000000001,
+            "original_motion_safety_gate": false
+          }
+        },
+        {
+          "trial": 11,
+          "parameters": {
+            "expression": 0.27849967753136096,
+            "local_II_scale": 0.08762531146565045
+          },
+          "value": 103.10540032467617,
+          "diagnostics": {
+            "accepted": false,
+            "period_error": 0.5669099756690998,
+            "period_s": 1.9320000000000004,
+            "original_motion_safety_gate": true
+          }
+        }
+      ],
+      "best": {
+        "trial": 11,
+        "parameters": {
+          "expression": 0.27849967753136096,
+          "local_II_scale": 0.08762531146565045
+        },
+        "value": 103.10540032467617,
+        "diagnostics": {
+          "accepted": false,
+          "period_error": 0.5669099756690998,
+          "period_s": 1.9320000000000004,
+          "original_motion_safety_gate": true
+        }
+      },
+      "fresh_stages": []
+    },
+    "retrained_forward_checks": {
+      "hunt/training/D/hunt_active_phase_stimulus_v3/MN": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.926,
+                9.214,
+                10.520000000000001,
+                11.818000000000001,
+                13.112
+              ],
+              [
+                6.026,
+                7.318,
+                8.610000000000001,
+                9.902000000000001,
+                11.196000000000002,
+                12.49,
+                13.782000000000002
+              ]
+            ],
+            "period_s": 1.2920000000000016,
+            "period_cv": 0.008832508911019775,
+            "bilateral_phase_error": 0.019871003406251652,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              50.12131112482212,
+              41.3773405123698
+            ],
+            "hip_ranges_deg": [
+              62.85731053939489,
+              55.104773446083485
+            ],
+            "autocorrelation": [
+              0.9893244903886806,
+              0.9997764508076441
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_active_phase_stimulus_v3/PF": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.95,
+                9.246,
+                10.540000000000001,
+                11.834000000000001,
+                13.126000000000001
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2939999999999996,
+            "period_cv": 0.0033119591415284003,
+            "bilateral_phase_error": 0.0077996112557675535,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              42.907492001229905,
+              41.378482225494245
+            ],
+            "hip_ranges_deg": [
+              56.46103207548423,
+              54.87158806461905
+            ],
+            "autocorrelation": [
+              0.9994133556434283,
+              0.9998462055160411
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_active_phase_stimulus_v3/PF_inhibition": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.9719999999999995,
+                9.252,
+                10.540000000000001,
+                11.83,
+                13.122000000000002
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2920000000000016,
+            "period_cv": 0.003954459529240856,
+            "bilateral_phase_error": 0.0063821816409802695,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70325561547072,
+              41.36055351002447
+            ],
+            "hip_ranges_deg": [
+              54.22452866148288,
+              54.81909471509428
+            ],
+            "autocorrelation": [
+              0.9995257414276946,
+              0.9998372146556922
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_active_phase_stimulus_v3/RG": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70325561547072,
+              41.349729751611974
+            ],
+            "hip_ranges_deg": [
+              54.25907195568185,
+              54.83255321955588
+            ],
+            "autocorrelation": [
+              0.9998940416939015,
+              0.999845137346882
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_layer_stimulus_2nA_v2/Baseline": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70325561547072,
+              41.34973012196066
+            ],
+            "hip_ranges_deg": [
+              54.259073273177506,
+              54.83255276087155
+            ],
+            "autocorrelation": [
+              0.9998940443753498,
+              0.9998451368582467
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_layer_stimulus_2nA_v2/MN": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                8.010000000000002,
+                9.258000000000001,
+                10.536000000000001,
+                11.822000000000001,
+                13.114
+              ],
+              [
+                6.026,
+                7.316,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.49,
+                13.784
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.015028240212785628,
+            "bilateral_phase_error": 0.01302159293816589,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              42.3755879641912,
+              41.324949801419514
+            ],
+            "hip_ranges_deg": [
+              54.12252126071491,
+              54.76772269088728
+            ],
+            "autocorrelation": [
+              0.9912829311039999,
+              0.999783136044047
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_layer_stimulus_2nA_v2/PF": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70325561547072,
+              41.349730139829276
+            ],
+            "hip_ranges_deg": [
+              54.25907329339304,
+              54.83255276153253
+            ],
+            "autocorrelation": [
+              0.9998940443457208,
+              0.9998451368518216
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_layer_stimulus_2nA_v2/PF_inhibition": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70325561547072,
+              41.3497301040913
+            ],
+            "hip_ranges_deg": [
+              54.25907325296493,
+              54.83255276021197
+            ],
+            "autocorrelation": [
+              0.9998940444049782,
+              0.9998451368646727
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_layer_stimulus_2nA_v2/RG": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.928,
+                9.234,
+                10.524000000000001,
+                11.816,
+                13.108
+              ],
+              [
+                6.026,
+                7.318,
+                8.610000000000001,
+                9.904000000000002,
+                11.196000000000002,
+                12.488000000000001,
+                13.782000000000002
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.008228260117876331,
+            "bilateral_phase_error": 0.017167749367019147,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              42.184365601094655,
+              41.330790161457095
+            ],
+            "hip_ranges_deg": [
+              54.230936843481125,
+              54.79723818168391
+            ],
+            "autocorrelation": [
+              0.9964867366636389,
+              0.9997802001698394
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_pose_air_validation_v3/stage1": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "principal_peak_times_s": [
+              [
+                7.064,
+                9.530000000000001,
+                11.994000000000002
+              ],
+              [
+                5.834,
+                8.3,
+                10.766,
+                13.23
+              ]
+            ],
+            "period_s": 2.4659999999999993,
+            "period_cv": 0.0003974508750256807,
+            "bilateral_phase_error": 0.0013792776566496578,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              70.07646548948023,
+              70.05690889111531
+            ],
+            "hip_ranges_deg": [
+              30.279513060488707,
+              30.009045904101328
+            ],
+            "autocorrelation": [
+              0.9999502295422349,
+              0.9998688519485361
+            ],
+            "dominant_spectral_Hz": [
+              0.4444444444444934,
+              0.4444444444444934
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 3,
+                "principal_peaks": 3
+              },
+              {
+                "all_prominent_peaks": 4,
+                "principal_peaks": 4
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_pose_air_validation_v3/stage2": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70325561547072,
+              41.34973012196066
+            ],
+            "hip_ranges_deg": [
+              54.259073273177506,
+              54.83255276087155
+            ],
+            "autocorrelation": [
+              0.9998940443753498,
+              0.9998451368582467
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/0.01_41001": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.69626241948761,
+              41.37510468789892
+            ],
+            "hip_ranges_deg": [
+              54.26100972668847,
+              54.83534202072977
+            ],
+            "autocorrelation": [
+              0.9998821515287689,
+              0.9998439261390303
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/0.01_41002": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.610000000000001,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432389,
+            "bilateral_phase_error": 0.0064473648159181956,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.67870383211725,
+              41.34692677315915
+            ],
+            "hip_ranges_deg": [
+              54.27423055943602,
+              54.82890311263728
+            ],
+            "autocorrelation": [
+              0.9998613769869679,
+              0.9998412271342838
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/0.01_41003": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70209494437203,
+              41.354767839027666
+            ],
+            "hip_ranges_deg": [
+              54.2590162261293,
+              54.842837443074615
+            ],
+            "autocorrelation": [
+              0.9998812369987838,
+              0.9998443792150601
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/0.025_41001": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.248000000000001,
+                10.540000000000001,
+                11.83,
+                13.122000000000002
+              ],
+              [
+                6.026,
+                7.318,
+                8.610000000000001,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2920000000000007,
+            "period_cv": 0.0019097494627627267,
+            "bilateral_phase_error": 0.007157360990662702,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.68376559283288,
+              41.34565336101556
+            ],
+            "hip_ranges_deg": [
+              54.25143599638385,
+              54.842372536450725
+            ],
+            "autocorrelation": [
+              0.9998662863815342,
+              0.9998330634208741
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/0.025_41002": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.248000000000001,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.610000000000001,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.784
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018020699501571536,
+            "bilateral_phase_error": 0.006641959240615498,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.710800734791995,
+              41.364749852262875
+            ],
+            "hip_ranges_deg": [
+              54.30801010295499,
+              54.82457460215362
+            ],
+            "autocorrelation": [
+              0.9998596672692852,
+              0.9998517699343134
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/0.025_41003": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.028,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0019097494627626685,
+            "bilateral_phase_error": 0.006770162233538703,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.6991549917036,
+              41.331512508063476
+            ],
+            "hip_ranges_deg": [
+              54.26629433778305,
+              54.851780386926656
+            ],
+            "autocorrelation": [
+              0.9998793732779524,
+              0.9998322537390256
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/repeat": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.248000000000001,
+                10.540000000000001,
+                11.83,
+                13.122000000000002
+              ],
+              [
+                6.026,
+                7.318,
+                8.610000000000001,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2920000000000007,
+            "period_cv": 0.0019097494627627267,
+            "bilateral_phase_error": 0.007157360990662702,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.68376559283288,
+              41.34565336101556
+            ],
+            "hip_ranges_deg": [
+              54.25143599638385,
+              54.842372536450725
+            ],
+            "autocorrelation": [
+              0.9998662863815342,
+              0.9998330634208741
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "hunt/training/D/hunt_rg_noise_v1/zero": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              7,
+              7
+            ],
+            "principal_peak_times_s": [
+              [
+                5.3839999999999995,
+                6.67,
+                7.958,
+                9.25,
+                10.540000000000001,
+                11.832,
+                13.124
+              ],
+              [
+                6.026,
+                7.318,
+                8.612,
+                9.904000000000002,
+                11.198,
+                12.492,
+                13.786000000000001
+              ]
+            ],
+            "period_s": 1.2919999999999998,
+            "period_cv": 0.0018787380359432393,
+            "bilateral_phase_error": 0.006705362751934563,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              41.70325561547072,
+              41.34973012196066
+            ],
+            "hip_ranges_deg": [
+              54.259073273177506,
+              54.83255276087155
+            ],
+            "autocorrelation": [
+              0.9998940443753498,
+              0.9998451368582467
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 7
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "syn6/training/D/syn6_air_validation_v3/stage1": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": true,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              3,
+              4
+            ],
+            "principal_peak_times_s": [
+              [
+                7.186,
+                9.646,
+                12.112
+              ],
+              [
+                5.922,
+                8.404000000000002,
+                10.870000000000001,
+                13.334000000000001
+              ]
+            ],
+            "period_s": 2.4659999999999993,
+            "period_cv": 0.003049908854308363,
+            "bilateral_phase_error": 0.005100496159741052,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              24.575855281487417,
+              26.832814822695507
+            ],
+            "hip_ranges_deg": [
+              23.4661944691482,
+              23.935916980609168
+            ],
+            "autocorrelation": [
+              0.9986754734706413,
+              0.9978984240233749
+            ],
+            "dominant_spectral_Hz": [
+              0.4444444444444934,
+              0.4444444444444934
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 3,
+                "principal_peaks": 3
+              },
+              {
+                "all_prominent_peaks": 4,
+                "principal_peaks": 4
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "syn6/training/D/syn6_air_validation_v3/stage2": {
+        "complete": false,
+        "steps": 382,
+        "assessment_accepted": null,
+        "physical_args": {},
+        "knee_guard": {
+          "side": "l",
+          "time_s": 0.7640000000000006,
+          "angle_deg": -1.1420840321162071,
+          "velocity_deg_s": 542.8760046473624,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        }
+      },
+      "syn6/training/D/syn6_ankle_selected_repeat_20261104/stage1": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": false,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": true,
+          "principal": {
+            "accepted": true,
+            "principal_knee_cycles": [
+              4,
+              4
+            ],
+            "principal_peak_times_s": [
+              [
+                7.1,
+                9.566,
+                12.032000000000002,
+                13.708
+              ],
+              [
+                5.862,
+                8.328000000000001,
+                10.796000000000001,
+                13.262
+              ]
+            ],
+            "period_s": 2.466000000000001,
+            "period_cv": 0.12617029991087714,
+            "bilateral_phase_error": 0.040333200067494586,
+            "cycle_coverage": 1.0,
+            "knee_ranges_deg": [
+              50.26149840033653,
+              51.48259734009456
+            ],
+            "hip_ranges_deg": [
+              60.21902434709604,
+              60.479529849478745
+            ],
+            "autocorrelation": [
+              0.9999637334655286,
+              0.9999154187447147
+            ],
+            "dominant_spectral_Hz": [
+              0.7777777777778634,
+              0.7777777777778634
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 4
+              },
+              {
+                "all_prominent_peaks": 7,
+                "principal_peaks": 4
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "syn6/training/D/syn6_ankle_selected_repeat_20261104/stage2": {
+        "complete": true,
+        "steps": 7700,
+        "assessment_accepted": false,
+        "physical_args": {},
+        "principal_knee_flexion": {
+          "original_stage_criteria_pass": false,
+          "principal": {
+            "accepted": false,
+            "principal_knee_cycles": [
+              4,
+              4
+            ],
+            "principal_peak_times_s": [
+              [
+                5.9319999999999995,
+                7.998,
+                10.064,
+                12.128
+              ],
+              [
+                6.65,
+                8.46,
+                10.268,
+                12.074000000000002
+              ]
+            ],
+            "period_s": 1.9370000000000003,
+            "period_cv": 0.06644074437732003,
+            "bilateral_phase_error": 0.26519188457431403,
+            "cycle_coverage": 0.6666666666666666,
+            "knee_ranges_deg": [
+              26.318902053895535,
+              32.14170884099723
+            ],
+            "hip_ranges_deg": [
+              33.49304413105025,
+              35.923545522992185
+            ],
+            "autocorrelation": [
+              0.9990388062306024,
+              0.9993819034360268
+            ],
+            "dominant_spectral_Hz": [
+              1.0000000000001101,
+              1.1111111111112335
+            ],
+            "peak_counts": [
+              {
+                "all_prominent_peaks": 8,
+                "principal_peaks": 4
+              },
+              {
+                "all_prominent_peaks": 9,
+                "principal_peaks": 4
+              }
+            ]
+          },
+          "physical": {
+            "finite": true,
+            "complete": true,
+            "frontal_gate": true,
+            "knee_extension_gate": true
+          }
+        }
+      },
+      "syn6/waveform_D/syn6_adaptive_20261105/body_slow_handover": {
+        "complete": false,
+        "steps": 1181,
+        "assessment_accepted": null,
+        "physical_args": {},
+        "knee_guard": {
+          "side": "l",
+          "time_s": 2.3619999999999615,
+          "angle_deg": -0.9736706886652492,
+          "velocity_deg_s": 547.5259494400913,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        }
+      },
+      "syn6/waveform_D/syn6_flexor_handover_20261105/predict150_stage2": {
+        "complete": false,
+        "steps": 3642,
+        "assessment_accepted": null,
+        "physical_args": {},
+        "knee_guard": {
+          "side": "l",
+          "time_s": 7.28399999999942,
+          "angle_deg": -1.7118340441175814,
+          "velocity_deg_s": 828.0194057436692,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        }
+      },
+      "syn6/waveform_D/syn6_flexor_handover_20261105/predict150_stage2_repeat": {
+        "complete": false,
+        "steps": 3642,
+        "assessment_accepted": null,
+        "physical_args": {},
+        "knee_guard": {
+          "side": "l",
+          "time_s": 7.28399999999942,
+          "angle_deg": -1.7118340441175814,
+          "velocity_deg_s": 828.0194057436692,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        }
+      },
+      "syn6/waveform_D/syn6_flexor_handover_20261105/predict150_stage3": {
+        "complete": false,
+        "steps": 669,
+        "assessment_accepted": null,
+        "physical_args": {},
+        "knee_guard": {
+          "side": "l",
+          "time_s": 1.338000000000001,
+          "angle_deg": -1.1420643982272152,
+          "velocity_deg_s": 588.4516628886805,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        }
+      },
+      "syn6/waveform_D/syn6_flexor_handover_20261105/predict150_stage4": {
+        "complete": false,
+        "steps": 1105,
+        "assessment_accepted": null,
+        "physical_args": {},
+        "knee_guard": {
+          "side": "r",
+          "time_s": 2.209999999999978,
+          "angle_deg": -1.0300533368229565,
+          "velocity_deg_s": 559.8652618004636,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        }
+      },
+      "syn6/waveform_D/syn6_stage2_regularize_20261105/s2_latch": {
+        "complete": false,
+        "steps": 3634,
+        "assessment_accepted": null,
+        "physical_args": {},
+        "knee_guard": {
+          "side": "l",
+          "time_s": 7.267999999999422,
+          "angle_deg": -1.1916872557488136,
+          "velocity_deg_s": 657.9196799722329,
+          "rule": "Stop before predicted extension reaches -0.1 degree; no state clipping"
+        }
+      }
+    },
+    "quasistatic_actuators": {
+      "maximum_native_activation_difference": 0.0,
+      "maximum_fiber_equilibrium_error_N": 1.908420088625462e-10,
+      "maximum_projected_first_order_residual": 3.614303216437076e-06,
+      "alternate_solver_frames": [
+        54
+      ],
+      "rms_change_in_activation": 0.035144186558026265,
+      "mean_inverse_residual": 0.04125277950304764,
+      "muscles": [
+        "rect_fem_r",
+        "rect_fem_l",
+        "bifemsh_r",
+        "bifemsh_l"
+      ],
+      "frame_count": 121,
+      "muscle_velocity": "zero, as in the original static force step",
+      "geometry": "Anatomically signed input poses, same inverse torques, same dependent-joint finite differences",
+      "four_muscle_activation_bounds": [
+        0.01,
+        1.0
+      ],
+      "remaining_activation_bounds": [
+        0.0,
+        1.0
+      ]
+    },
+    "rank_convergence": [
+      {
+        "side": "r",
+        "rank": 4,
+        "iterations": 197,
+        "long_vaf": 0.864995141913833,
+        "source_vaf": 0.864995141913833
+      },
+      {
+        "side": "r",
+        "rank": 5,
+        "iterations": 391,
+        "long_vaf": 0.8962978127611179,
+        "source_vaf": 0.8962978127611179
+      },
+      {
+        "side": "r",
+        "rank": 6,
+        "iterations": 663,
+        "long_vaf": 0.9212856537584522,
+        "source_vaf": 0.9212856537584522
+      },
+      {
+        "side": "l",
+        "rank": 4,
+        "iterations": 133,
+        "long_vaf": 0.8362304594091063,
+        "source_vaf": 0.8362304594091063
+      },
+      {
+        "side": "l",
+        "rank": 5,
+        "iterations": 140,
+        "long_vaf": 0.8898795598976807,
+        "source_vaf": 0.8898795598976807
+      },
+      {
+        "side": "l",
+        "rank": 6,
+        "iterations": 112,
+        "long_vaf": 0.9311912577725725,
+        "source_vaf": 0.9311912577725725
+      }
+    ],
+    "feedback_finalist_external_IK": {
+      "earlier_archived": {
+        "trajectory_sha256": "f4db5c68545bdc6cf1611e75e6ad38f31839296107a840dd2253bb0c2c888d65",
+        "training_subject": -186.41420708638907,
+        "reference_groups": {
+          "Ong_walking": {
+            "count": 9,
+            "minimum": -224.42413877050842,
+            "maximum": -203.32483406877563,
+            "median": -211.914013094604
+          },
+          "Arnold_running": {
+            "count": 32,
+            "minimum": -332.2168285273915,
+            "maximum": -188.1532324362079,
+            "median": -254.18105844348725
+          },
+          "Falisse_prediction": {
+            "count": 1,
+            "minimum": -200.45678058907487,
+            "maximum": -200.45678058907487,
+            "median": -200.45678058907487
+          },
+          "max_external_delta_to_archived_rounded_score": 0.0048386559483617475,
+          "default_subject_score_with_current_reference": -186.41420708638907,
+          "default_subject_score_in_historical_table": -189.45
+        }
+      },
+      "recent_native": {
+        "trajectory_sha256": "a0f9b12035dd3487b403f85395123616ea62fbf5018e0c428406e774b14336ca",
+        "training_subject": -145.02938053190474,
+        "reference_groups": {
+          "Ong_walking": {
+            "count": 9,
+            "minimum": -218.6271125197497,
+            "maximum": -149.55038142286548,
+            "median": -182.98315259437092
+          },
+          "Arnold_running": {
+            "count": 32,
+            "minimum": -381.9946202261797,
+            "maximum": -130.5592385435883,
+            "median": -249.63529013504524
+          },
+          "Falisse_prediction": {
+            "count": 1,
+            "minimum": -134.90752565021322,
+            "maximum": -134.90752565021322,
+            "median": -134.90752565021322
+          }
+        }
+      },
+      "four_frozen": {
+        "trajectory_sha256": "c1c7080acd5d7bbe2ed317826a1efd9022752fb8d7cc9ca70bccf9c41005af88",
+        "training_subject": -171.90617339946607,
+        "reference_groups": {
+          "Ong_walking": {
+            "count": 9,
+            "minimum": -240.21022119179247,
+            "maximum": -173.15759399613287,
+            "median": -205.11765948263306
+          },
+          "Arnold_running": {
+            "count": 32,
+            "minimum": -410.2228132321259,
+            "maximum": -183.8037611691365,
+            "median": -302.38610509662533
+          },
+          "Falisse_prediction": {
+            "count": 1,
+            "minimum": -154.04055611441493,
+            "maximum": -154.04055611441493,
+            "median": -154.04055611441493
+          }
+        }
+      }
+    },
+    "original_controller_layout_library": {
+      "s3k": {
+        "archived": {
+          "score": -186.41420708638907,
+          "cycles": [
+            11,
+            0
+          ],
+          "duty": [
+            0.24985714285714286,
+            null
+          ],
+          "sha256": "f4db5c68545bdc6cf1611e75e6ad38f31839296107a840dd2253bb0c2c888d65",
+          "walking": -211.914013094604,
+          "running": -254.18105844348725,
+          "predicted": -200.45678058907487,
+          "valid_bilateral_records": 42,
+          "historical_csv_excess_degree_conversion_mean": -8774.69014652193
+        },
+        "native": {
+          "score": null,
+          "cycles": [
+            0,
+            0
+          ],
+          "duty": [
+            null,
+            null
+          ],
+          "sha256": "3feeb1a19717cd7a5f8316959bda032b8fd5794407e5ece9ce4de74e7fe176fd",
+          "walking": null,
+          "running": null,
+          "predicted": null,
+          "valid_bilateral_records": 42
+        },
+        "four": {
+          "score": -246.78525366923404,
+          "cycles": [
+            2,
+            5
+          ],
+          "duty": [
+            0.9227142857142857,
+            0.993
+          ],
+          "sha256": "d88e9b91be141bd2ba5cefee41d65c01c3b35247580b79389b181506af598950",
+          "walking": -279.5821132935466,
+          "running": -370.0198538037132,
+          "predicted": -238.80116552630108,
+          "valid_bilateral_records": 42
+        }
+      },
+      "s3kpruned": {
+        "archived": {
+          "score": -176.08919108631918,
+          "cycles": [
+            10,
+            0
+          ],
+          "duty": [
+            0.3212857142857143,
+            null
+          ],
+          "sha256": "e5c63dd3b0030957b543985271aed65c7ea142e2fde9370134ab045af0b5c7d0",
+          "walking": -203.33067981868967,
+          "running": -268.37236036643,
+          "predicted": -174.49044733532858,
+          "valid_bilateral_records": 42,
+          "historical_csv_excess_degree_conversion_mean": -6922.880697677944
+        },
+        "native": {
+          "score": null,
+          "cycles": [
+            0,
+            0
+          ],
+          "duty": [
+            null,
+            null
+          ],
+          "sha256": "904e66a4410d114ededf84a3baf601e0a6ff7f7d73585e31f3e8731a4bfd1e8a",
+          "walking": null,
+          "running": null,
+          "predicted": null,
+          "valid_bilateral_records": 42
+        },
+        "four": {
+          "score": -182.84099376485977,
+          "cycles": [
+            0,
+            3
+          ],
+          "duty": [
+            null,
+            0.8931428571428571
+          ],
+          "sha256": "f37f7a4ea7a58e3e65c944bb9cfa50321e6db9b202da7697a9163b51f1d0a3ef",
+          "walking": -189.88360705599524,
+          "running": -236.26412262260504,
+          "predicted": -182.96212927524417,
+          "valid_bilateral_records": 42
+        }
+      },
+      "w2lvar": {
+        "archived": {
+          "score": -144.46440311078322,
+          "cycles": [
+            4,
+            6
+          ],
+          "duty": [
+            0.5887142857142857,
+            0.843
+          ],
+          "sha256": "888ed99f30a28d1c558cda1304a5c7cb19540c7d82b6eecdc924471c1d89d165",
+          "walking": -178.488051338991,
+          "running": -309.83709607541215,
+          "predicted": -161.06540119341477,
+          "valid_bilateral_records": 42,
+          "historical_csv_excess_degree_conversion_mean": -5806.391747783045
+        },
+        "native": {
+          "score": -210.82962269759767,
+          "cycles": [
+            8,
+            6
+          ],
+          "duty": [
+            0.8608571428571429,
+            0.8295714285714286
+          ],
+          "sha256": "67afba92ff91ed62b160644758e4da01dc8e6e140ef8d6f868dc00a9ca512e30",
+          "walking": -248.32907944048463,
+          "running": -339.3812388278996,
+          "predicted": -207.91922505282542,
+          "valid_bilateral_records": 42
+        },
+        "four": {
+          "score": null,
+          "cycles": [
+            0,
+            0
+          ],
+          "duty": [
+            null,
+            null
+          ],
+          "sha256": "2fa976116cbed4d5457dcfedabe3b394d086470bbb6c0042b369767d7884dc33",
+          "walking": null,
+          "running": null,
+          "predicted": null,
+          "valid_bilateral_records": 42
+        }
+      },
+      "syn6": {
+        "archived": {
+          "score": -200.37955834081458,
+          "cycles": [
+            4,
+            0
+          ],
+          "duty": [
+            0.7445714285714286,
+            null
+          ],
+          "sha256": "e26bfb429df50952454de1962dfa3223342d0ef045e27eeacc7cc3aad5667500",
+          "walking": -225.91519043484024,
+          "running": -278.3953469053786,
+          "predicted": -198.8859595414291,
+          "valid_bilateral_records": 42,
+          "historical_csv_excess_degree_conversion_mean": -9959.002075337758
+        },
+        "native": {
+          "score": -203.56671658497672,
+          "cycles": [
+            6,
+            0
+          ],
+          "duty": [
+            0.7494285714285714,
+            null
+          ],
+          "sha256": "43d15b6fccdac9f0b8770cdfc30df85a709ac52aef2f5e9b7d08b0e0d8c5177c",
+          "walking": -230.34503114921532,
+          "running": -280.0719167253595,
+          "predicted": -203.41473591569405,
+          "valid_bilateral_records": 42
+        },
+        "four": {
+          "score": -215.3245152356643,
+          "cycles": [
+            5,
+            0
+          ],
+          "duty": [
+            0.9361428571428572,
+            null
+          ],
+          "sha256": "eafc1c5073f4951a0651ad2f0c5ee002aab92ef2e28407ef0dea646753b2d534",
+          "walking": -240.76637370605405,
+          "running": -292.6932201041873,
+          "predicted": -214.64090466885781,
+          "valid_bilateral_records": 42
+        }
+      }
+    },
+    "earlier_pathway_removals": {
+      "s3k/full": {
+        "four": {
+          "raw_score": -246.78525366923404,
+          "current_score": -246.78525366923404,
+          "cycles": [
+            2,
+            5
+          ],
+          "duty": [
+            0.9227142857142857,
+            0.993
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {}
+          },
+          "archived_score": -186.41420708638907,
+          "archive_counts_if_available": [
+            11,
+            0
+          ],
+          "trajectory_sha256": "d88e9b91be141bd2ba5cefee41d65c01c3b35247580b79389b181506af598950"
+        },
+        "native": {
+          "raw_score": -25.0,
+          "current_score": null,
+          "cycles": [
+            0,
+            0
+          ],
+          "duty": [
+            null,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {}
+          },
+          "archived_score": -186.41420708638907,
+          "archive_counts_if_available": [
+            11,
+            0
+          ],
+          "trajectory_sha256": "3feeb1a19717cd7a5f8316959bda032b8fd5794407e5ece9ce4de74e7fe176fd"
+        }
+      },
+      "s3k/ia": {
+        "four": {
+          "raw_score": -25.0,
+          "current_score": null,
+          "cycles": [
+            0,
+            0
+          ],
+          "duty": [
+            null,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {
+              "ia_f_central": 0.0,
+              "ia_in": 0.0,
+              "ia_f_contra_f": 0.0
+            }
+          },
+          "archived_score": -25.0,
+          "archive_counts_if_available": [
+            null,
+            null
+          ],
+          "trajectory_sha256": "7c7dffb493ce53fe3d31dd7f2ef8514cea2279cd12d4e17d3d98343d99ce4a8d"
+        },
+        "native": {
+          "raw_score": -25.0,
+          "current_score": null,
+          "cycles": [
+            0,
+            0
+          ],
+          "duty": [
+            null,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {
+              "ia_f_central": 0.0,
+              "ia_in": 0.0,
+              "ia_f_contra_f": 0.0
+            }
+          },
+          "archived_score": -25.0,
+          "archive_counts_if_available": [
+            null,
+            null
+          ],
+          "trajectory_sha256": "72d9a49022bddaa9a2331a780968c6145779585916c85f2389261dc402e7fd97"
+        }
+      },
+      "s3k/noaff": {
+        "four": {
+          "raw_score": -268.8447629531017,
+          "current_score": -268.8447629531017,
+          "cycles": [
+            8,
+            0
+          ],
+          "duty": [
+            0.9855714285714285,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [
+              "--no-afferents"
+            ],
+            "keys": {}
+          },
+          "archived_score": -267.7950941728577,
+          "archive_counts_if_available": [
+            7,
+            0
+          ],
+          "trajectory_sha256": "d4ba37ba945dcdb81fe615d82103c9969eff8e6e390a4b895a30e7598b8b183c"
+        },
+        "native": {
+          "raw_score": -267.82166178576983,
+          "current_score": -267.82166178576983,
+          "cycles": [
+            8,
+            0
+          ],
+          "duty": [
+            0.9887142857142858,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [
+              "--no-afferents"
+            ],
+            "keys": {}
+          },
+          "archived_score": -267.7950941728577,
+          "archive_counts_if_available": [
+            7,
+            0
+          ],
+          "trajectory_sha256": "136412e6551739ee233b2183571d46253169b2b6507ad490eb8d5439dd052f61"
+        }
+      },
+      "syn6/full": {
+        "four": {
+          "raw_score": -215.3245152356643,
+          "current_score": -215.3245152356643,
+          "cycles": [
+            5,
+            0
+          ],
+          "duty": [
+            0.9361428571428572,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {}
+          },
+          "archived_score": -200.37955834081458,
+          "archive_counts_if_available": [
+            4,
+            0
+          ],
+          "trajectory_sha256": "eafc1c5073f4951a0651ad2f0c5ee002aab92ef2e28407ef0dea646753b2d534"
+        },
+        "native": {
+          "raw_score": -203.56671658497672,
+          "current_score": -203.56671658497672,
+          "cycles": [
+            6,
+            0
+          ],
+          "duty": [
+            0.7494285714285714,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {}
+          },
+          "archived_score": -200.37955834081458,
+          "archive_counts_if_available": [
+            4,
+            0
+          ],
+          "trajectory_sha256": "43d15b6fccdac9f0b8770cdfc30df85a709ac52aef2f5e9b7d08b0e0d8c5177c"
+        }
+      },
+      "syn6/noaff": {
+        "four": {
+          "raw_score": -205.55695513717723,
+          "current_score": -205.55695513717723,
+          "cycles": [
+            9,
+            10
+          ],
+          "duty": [
+            0.47885714285714287,
+            0.6867142857142857
+          ],
+          "gains_and_flags": {
+            "argv": [
+              "--no-afferents"
+            ],
+            "keys": {}
+          },
+          "archived_score": -190.53284873247821,
+          "archive_counts_if_available": [
+            10,
+            10
+          ],
+          "trajectory_sha256": "45df91d14c1964b6bf8b3554b2071957338ce45fd1a9c3eecaad7f9791803e9b"
+        },
+        "native": {
+          "raw_score": -197.31230918515118,
+          "current_score": -197.31230918515118,
+          "cycles": [
+            10,
+            10
+          ],
+          "duty": [
+            0.4155714285714286,
+            0.5118571428571429
+          ],
+          "gains_and_flags": {
+            "argv": [
+              "--no-afferents"
+            ],
+            "keys": {}
+          },
+          "archived_score": -190.53284873247821,
+          "archive_counts_if_available": [
+            10,
+            10
+          ],
+          "trajectory_sha256": "e6eef02504e05c08aef72c29b3488e29ade2f22fbea586c59f048da05c1ec705"
+        }
+      },
+      "w2lvar/full": {
+        "four": {
+          "raw_score": -25.0,
+          "current_score": null,
+          "cycles": [
+            0,
+            0
+          ],
+          "duty": [
+            null,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {}
+          },
+          "archived_score": -144.46440311078322,
+          "archive_counts_if_available": [
+            4,
+            6
+          ],
+          "trajectory_sha256": "2fa976116cbed4d5457dcfedabe3b394d086470bbb6c0042b369767d7884dc33"
+        },
+        "native": {
+          "raw_score": -210.82962269759767,
+          "current_score": -210.82962269759767,
+          "cycles": [
+            8,
+            6
+          ],
+          "duty": [
+            0.8608571428571429,
+            0.8295714285714286
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {}
+          },
+          "archived_score": -144.46440311078322,
+          "archive_counts_if_available": [
+            4,
+            6
+          ],
+          "trajectory_sha256": "67afba92ff91ed62b160644758e4da01dc8e6e140ef8d6f868dc00a9ca512e30"
+        }
+      },
+      "w2lvar/ia": {
+        "four": {
+          "raw_score": -192.77528088346523,
+          "current_score": -192.77528088346523,
+          "cycles": [
+            5,
+            2
+          ],
+          "duty": [
+            0.5644285714285714,
+            0.7811428571428571
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {
+              "ia_to_mn": 0.0,
+              "ia_to_antagonist": 0.0
+            }
+          },
+          "archived_score": -273.52188178789595,
+          "archive_counts_if_available": [
+            8,
+            2
+          ],
+          "trajectory_sha256": "142a64d29a84874360bf2da2f1366a057f40d2a256cfc1b7d4a760bf96f8c2cd"
+        },
+        "native": {
+          "raw_score": -185.7344442096901,
+          "current_score": -185.7344442096901,
+          "cycles": [
+            8,
+            4
+          ],
+          "duty": [
+            0.6311428571428571,
+            0.7127142857142857
+          ],
+          "gains_and_flags": {
+            "argv": [],
+            "keys": {
+              "ia_to_mn": 0.0,
+              "ia_to_antagonist": 0.0
+            }
+          },
+          "archived_score": -273.52188178789595,
+          "archive_counts_if_available": [
+            8,
+            2
+          ],
+          "trajectory_sha256": "402f17e44b9eade55a688ccafe886833c1aca99fab8a955d2b6da6a921cce39c"
+        }
+      },
+      "w2lvar/noaff": {
+        "four": {
+          "raw_score": -269.14475204814573,
+          "current_score": -269.14475204814573,
+          "cycles": [
+            4,
+            0
+          ],
+          "duty": [
+            0.7337142857142858,
+            null
+          ],
+          "gains_and_flags": {
+            "argv": [
+              "--no-afferents"
+            ],
+            "keys": {}
+          },
+          "archived_score": -224.46772910540034,
+          "archive_counts_if_available": [
+            2,
+            3
+          ],
+          "trajectory_sha256": "1f7c22a17245302179f4f946878fd03b96ddcfee4063dda484cdf8e06d3dcae0"
+        },
+        "native": {
+          "raw_score": -274.30361794570626,
+          "current_score": -274.30361794570626,
+          "cycles": [
+            3,
+            2
+          ],
+          "duty": [
+            0.7844285714285715,
+            0.799
+          ],
+          "gains_and_flags": {
+            "argv": [
+              "--no-afferents"
+            ],
+            "keys": {}
+          },
+          "archived_score": -224.46772910540034,
+          "archive_counts_if_available": [
+            2,
+            3
+          ],
+          "trajectory_sha256": "01db928d776cfa7570c3a41a05591dd60ce3a2efd5d24dbba151d43c8a7282ca"
+        }
+      }
+    },
+    "di_russo": {
+      "signed_native": {
+        "right_validation": {
+          "available": true,
+          "samples": 15,
+          "muscle_order": [
+            "ILPSO",
+            "GMAX",
+            "HAMS",
+            "BFSH",
+            "RF",
+            "VAS",
+            "GAS",
+            "SOL",
+            "TA"
+          ],
+          "RMSE": [
+            0.09578680487397047,
+            0.10239489042892427,
+            0.06021550160429742,
+            0.15443753729423734,
+            0.24534973859275316,
+            0.038975173312598456,
+            0.057256645354727916,
+            0.06640388772166657,
+            0.16468036810904443
+          ],
+          "correlation": [
+            0.8377471122009718,
+            0.7398326658538683,
+            0.6002603175484478,
+            0.775688827569258,
+            0.5314963111679759,
+            0.7687972862766107,
+            0.9531165725012056,
+            0.9795871618535896,
+            0.8761157224304346
+          ],
+          "pass_reconstruction": false
+        },
+        "left_mirror_validation": {
+          "available": true,
+          "samples": 73,
+          "muscle_order": [
+            "ILPSO",
+            "GMAX",
+            "HAMS",
+            "BFSH",
+            "RF",
+            "VAS",
+            "GAS",
+            "SOL",
+            "TA"
+          ],
+          "RMSE": [
+            0.1987483654961207,
+            0.14500036450625478,
+            0.0918177458878713,
+            0.2037377762500301,
+            0.2878002646134663,
+            0.058250201204660915,
+            0.166587527203688,
+            0.2313333772156892,
+            0.2695670407351626
+          ],
+          "correlation": [
+            0.7700669090992421,
+            0.5885696585148702,
+            0.5970390833564712,
+            0.6662895192313891,
+            -0.06267030458837904,
+            0.7334595125576703,
+            0.6983345715274148,
+            0.8331706202565399,
+            0.6865939167185336
+          ],
+          "pass_reconstruction": false
+        },
+        "weights_sha256": "60afc05db834307088937dc33b5cb7bad1cf9f1a5c4bfd16d80c03077afd8b02",
+        "registered_rule": false,
+        "body": {
+          "fall_time_s": 0.746,
+          "actuator_formulation": "four source RF/BFSH, diagnostic, progression gates unchanged",
+          "trace_sha256": "0a83882300f51b7d60908af1755ade352b79c0a15141dd7ee714a503aaccba61"
+        }
+      },
+      "four": {
+        "right_validation": {
+          "available": true,
+          "samples": 15,
+          "muscle_order": [
+            "ILPSO",
+            "GMAX",
+            "HAMS",
+            "BFSH",
+            "RF",
+            "VAS",
+            "GAS",
+            "SOL",
+            "TA"
+          ],
+          "RMSE": [
+            0.08067500158460347,
+            0.07776900723193546,
+            0.05691983024068519,
+            0.1866916485905963,
+            0.1698639490427532,
+            0.04004078925119062,
+            0.056044099451011915,
+            0.062083372138775676,
+            0.17620080419457548
+          ],
+          "correlation": [
+            0.8821844992196185,
+            0.8042574661803266,
+            0.6106342378022805,
+            0.7620384208044145,
+            0.49240872484293174,
+            0.6658494997876356,
+            0.9544751466510595,
+            0.9820494619385906,
+            0.8564842886925981
+          ],
+          "pass_reconstruction": false
+        },
+        "left_mirror_validation": {
+          "available": true,
+          "samples": 73,
+          "muscle_order": [
+            "ILPSO",
+            "GMAX",
+            "HAMS",
+            "BFSH",
+            "RF",
+            "VAS",
+            "GAS",
+            "SOL",
+            "TA"
+          ],
+          "RMSE": [
+            0.18915335744722286,
+            0.135515185056688,
+            0.09589543722569328,
+            0.23209925026385617,
+            0.2232200061112925,
+            0.05477429201766609,
+            0.17521006243307846,
+            0.23110798498009116,
+            0.2726754675333391
+          ],
+          "correlation": [
+            0.796298857293797,
+            0.5951282594561496,
+            0.6678245100311095,
+            0.7345949387078524,
+            -0.11568322483971956,
+            0.7043422531611434,
+            0.6886047945142882,
+            0.8204301766101728,
+            0.6808509185390473
+          ],
+          "pass_reconstruction": false
+        },
+        "weights_sha256": "85bfdfe359523e4745d058519906caebb065f8165a1b98cd40b9dcb1e0d44ce2",
+        "registered_rule": false,
+        "body": {
+          "fall_time_s": 0.74,
+          "actuator_formulation": "four source RF/BFSH, diagnostic, progression gates unchanged",
+          "trace_sha256": "c8c1a043b8353c57dd4684e81996b07da22f40fb05869f0c89a2e03444f31559"
+        }
+      },
+      "earlier_tumble": {
+        "native": {
+          "fall_time_s_under_archived_rule": 6.982,
+          "com_below_80_percent_s": 6.982,
+          "signed_tilt_range_deg": [
+            0.13069672431353666,
+            222.90374787517823
+          ],
+          "total_pitch_excursion_turns": 0.6188140309746242,
+          "ninety_percent_support": true,
+          "bit_identical_native_archive_arrays": {
+            "t": true,
+            "q": true,
+            "com": true,
+            "heel": true,
+            "ctrl": true,
+            "support": true,
+            "phi": true,
+            "tilt": true
+          }
+        },
+        "four": {
+          "fall_time_s_under_archived_rule": 2.306,
+          "com_below_80_percent_s": 2.306,
+          "signed_tilt_range_deg": [
+            -0.07067451077649105,
+            219.98174471858235
+          ],
+          "total_pitch_excursion_turns": 0.6112567200815523,
+          "ninety_percent_support": true
+        }
+      }
+    },
+    "neural_backends": {
+      "production": {
+        "numeric_records": 63,
+        "numeric_identical": 63,
+        "equal_model_bytes": true
+      }
+    },
+    "native_and_repeat_array_checks": {
+      "biw_early_config_native": {
+        "checked_arrays": 12,
+        "exact_arrays": 12
+      },
+      "frozen_relay_repeat": {
+        "checked_arrays": 28,
+        "exact_arrays": 28
+      },
+      "refit_relay_repeat": {
+        "checked_arrays": 19,
+        "exact_arrays": 19
+      }
+    }
+  }
+}

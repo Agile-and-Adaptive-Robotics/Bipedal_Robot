@@ -242,7 +242,7 @@ def cmd_round():
         inc_knobs = {k: float(prev["knobs"][k]) for k in DRIVE_KEYS}
     seed_scale = 1.0 if SCALE_RANGE[r] is None else SCALE_RANGE[r][1]
 
-    npz = os.path.join(OUT, f"trial_w{worker}.npz")
+    npz = os.path.join(OUT, f"round{r}_trial_w{worker}.npz")
     jsonl = os.path.join(OUT, f"round{r}_w{worker}.jsonl")
 
     if mode == "prod":

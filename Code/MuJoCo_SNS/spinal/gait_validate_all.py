@@ -1,10 +1,13 @@
 """Literature validation, all walkers (2026-09-30): record a WALK run
 for each variant (s3k, s3kpruned combo, w2lvar, syn6) through its
 authoritative config, then score it against EVERY gait_refs reference
-via kine_ref.compare. Writes gait_validation_20260930.{md,csv}.
+via kine_ref.compare. Writes the underlying trajectories and scores to the
+selected output directory. The runner stores angles in degrees in its NPZ.
 
-Usage: python gait_validate_all.py [variant ...]   (default: all four)
+Usage: python gait_validate_all.py [variant ...] [--output DIRECTORY]
 """
+import argparse
+import csv
 import io
 import json
 import os
@@ -26,6 +29,7 @@ import numpy as np
 import kine_ref as KR
 import params as P
 import runner as R
+from gait_lib_score_all import load_npz_ref
 
 
 def _jload(fn):
@@ -71,21 +75,6 @@ def config_variant(v):
         return repr(float(W["drive"])), []
 
 
-def load_npz_ref(p: Path):
-    z = np.load(p, allow_pickle=True)
-    ref = {s: {j: z[f"{s}_{j}"] for j in ("hip", "knee", "ankle")}
-           for s in ("r", "l")}
-    for k in z.files:
-        if "_" not in k[:2] or k.startswith(("duty_", "T_", "mean_", "ds",
-                                             "hip_", "knee_", "ankle_")):
-            v = z[k]
-            ref[k] = v.item() if v.shape == () else v
-    for s in ("r", "l"):
-        for j in ("hip", "knee", "ankle"):
-            ref.pop(f"{s}_{j}", None)
-    return ref
-
-
 def _ensure_stdout():
     """The curriculum loaders each wrap sys.stdout; after several R.main
     calls an inner wrapper gets GC'd and closes the stream ("I/O
@@ -99,57 +88,60 @@ def _ensure_stdout():
                                       errors="replace")
 
 
-def main():
-    variants = sys.argv[1:] or ["s3k", "s3kpruned", "w2lvar", "syn6"]
-    refs = sorted((HERE / "gait_refs").glob("*.npz"))
-    import csv
-    csv_path = HERE / "gait_validation_20260930.csv"
-    new_file = not csv_path.exists()
-    f_csv = open(csv_path, "a", encoding="utf-8", newline="")
-    w = csv.writer(f_csv)
-    if new_file:
-        w.writerow(["variant", "reference", "kine_score"])
-    for v in variants:
-        _ensure_stdout()
-        # crash-safety: skip variants already fully scored in the csv
-        done_refs = set()
-        if not new_file:
-            with open(csv_path, encoding="utf-8") as fr:
-                for row in csv.reader(fr):
-                    if row and row[0] == v:
-                        done_refs.add(row[1])
-        if len(done_refs) >= len(refs) + 1:
-            print(f"[val:{v}] already scored, skipping", flush=True)
+def score_trace(trajectory, references):
+    """Return one bilateral result per library record using the actual run interval."""
+    rows = []
+    with np.load(trajectory, allow_pickle=False) as trace:
+        stop = int(np.count_nonzero(trace["t"] > 0)) + 1
+        t, degrees, neuro, contact = [trace[key][:stop] for key in ("t", "q", "neuro", "contact")]
+    for reference in references:
+        if reference.stem == "ong_selfsel_Init200":
+            rows.append((reference.stem, None, "degenerate left reference cycle"))
             continue
-        npz = HERE / f"spinal_run_val_{v}.npz"
-        os.environ["AARL_NPZ"] = npz.name
-        drive, argv = config_variant(v)
+        result = KR.compare(t, degrees, neuro, 2.0, ref=load_npz_ref(reference), contact=contact)
+        rows.append((reference.stem, result["kine_score"] if result else None,
+                     "scored" if result else "no qualifying model cycles"))
+    return rows
+
+
+def main():
+    names = ("s3k", "s3kpruned", "w2lvar", "syn6")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("variants", nargs="*", metavar="VARIANT")
+    parser.add_argument("--output", type=Path, default=HERE / "gait_validation_results")
+    args = parser.parse_args()
+    if set(args.variants).difference(names):
+        parser.error("Known variants are " + ", ".join(names))
+    output = args.output.resolve()
+    output.mkdir(parents=True, exist_ok=True)
+    references = sorted((HERE / "gait_refs").glob("*.npz"))
+    path = output / "scores.csv"
+    old_rows = []
+    if path.exists():
+        with path.open(encoding="utf-8", newline="") as stream:
+            old_rows = list(csv.DictReader(stream))
+    fields = ("variant", "reference", "kine_score", "status")
+    for name in args.variants or names:
+        completed = {row["reference"] for row in old_rows if row["variant"] == name}
+        if completed == {"kine_score", *(ref.stem for ref in references)}:
+            continue
+        trajectory = output / f"{name}.npz"
+        os.environ["AARL_NPZ"] = str(trajectory)
+        drive, extra = config_variant(name)
+        metrics = R.main(["--eval", "--drive", drive, *extra]) or {}
         _ensure_stdout()
-        print(f"[val:{v}] running walk eval...", flush=True)
-        m = R.main(["--eval", "--drive", drive] + argv) or {}
-        _ensure_stdout()
-        z = np.load(npz, allow_pickle=True)
-        t, q, neuro, contact = z["t"], z["q"], z["neuro"], z["contact"]
-        w.writerow([v, "kine_score",
-                    float(m.get("kine_score") or -25.0)])
-        f_csv.flush()
-        for p in refs:
-            try:
-                ref = load_npz_ref(p)
-                s = KR.compare(t, np.degrees(q), neuro, 2.0, ref=ref,
-                               contact=contact)
-                w.writerow([v, p.stem,
-                            float(s["kine_score"]) if s else None])
-            except Exception as ex:
-                w.writerow([v, p.stem, None])
-                _ensure_stdout()
-                print(f"[val:{v}] {p.stem}: {ex!r}", flush=True)
-            f_csv.flush()
-        _ensure_stdout()
-        print(f"[val:{v}] scored vs {len(refs)} refs", flush=True)
-    f_csv.close()
-    _ensure_stdout()
-    print(f"wrote {csv_path.name}", flush=True)
+        primary = metrics.get("kine_score")
+        rows = [("kine_score", primary, "scored" if primary is not None else "no qualifying model cycles")]
+        rows.extend(score_trace(trajectory, references))
+        old_rows = [row for row in old_rows if row["variant"] != name]
+        old_rows.extend(dict(zip(fields, (name, *row))) for row in rows)
+        temporary = path.with_suffix(".tmp")
+        with temporary.open("w", encoding="utf-8", newline="") as stream:
+            writer = csv.DictWriter(stream, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows(old_rows)
+        temporary.replace(path)
+        print(f"[{name}] wrote {len(references)} library records to {path}", flush=True)
 
 
 if __name__ == "__main__":

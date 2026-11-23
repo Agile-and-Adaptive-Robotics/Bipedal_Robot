@@ -1,0 +1,111 @@
+{
+  "coverage": "All ten active source files from Chapter 4 through Appendix E.",
+  "advisor_events": 486,
+  "units": 909,
+  "result_openings": 12,
+  "automatic_flags": [
+    {
+      "file": "30-torque.tex",
+      "line": 781,
+      "source": "As a proof of concept for the whole tool chain, I applied the actuator and tackle search to the robot-leg muscle routing of my master's model \\citep{bolen_determination_2019}: the expanded design selects the best transmission configuration at each of the 27 actuator sites (Table~\\ref{tab:survey_dofs_sizes}) and re-solves actuator and tendon lengths on the inherited routing.\\label{sec:masters_updated} Each site is evaluated against its same-named Gait2392 muscle \\citep{delp_opensim_2007,seth_opensim_2018} on a $5\\times5$ grid sampling combinations of two joint coordinates at \\qty{620}{\\kPa} \\citep{bolen_2026}: a sampled configuration meets the requirement when the taut BPA's torque has the human torque's sign and at least its magnitude, and the reported coverage is the equal-site mean of angular-domain fractions, estimated with trapezoidal area weights (Appendix~\\ref{app:model_geometry}). The baseline substitutes four parallel \\qty{20}{\\mm} BPAs at the eight nominal \\qty{40}{\\mm} sites. Under matched ideal pressure, braid geometry, and contraction, maximum force scales with diameter squared, giving this parallel group the same theoretical maximum force as one \\qty{40}{\\mm} BPA. The comparison combines transmission, actuator sizing, and the diameter substitution; it does not isolate any one contribution.",
+      "flags": [
+        "An experimental setting leads. Can the reader tell what behavior the test explains?"
+      ],
+      "disposition": "Retain. The opening states the purpose of the 27-site design experiment; the following coverage measure defines its result."
+    },
+    {
+      "file": "50-database.tex",
+      "line": 16,
+      "source": "Manually curated models and reviews provided a benchmark for testing AI-assisted literature discovery, summarization, and classification. I checked the AI tools' summaries and classifications against my reading of a broader set of papers, assessing their accuracy and the time required for a usable entry \\citep{bolen_using_2024}.",
+      "flags": [
+        "Read the check in context. What changed, or what measured agreement supports the claim?"
+      ],
+      "disposition": "Retain. Comparing generated classifications against the curated reference is the method being described; the paragraph names what the curator assessed."
+    },
+    {
+      "file": "95-AppendixD.tex",
+      "line": 191,
+      "source": "For our course project, Morrow and I used Li's bipedal mechanics with a circuit adapted from the rat hindlimb model of \\citet{deng_neuromechanical_2019}. One shared rhythm generator supplied both legs. Pattern-formation and motor pathways on each side recruited opposing muscles at the hip, knee, and ankle. The legs made stepping-like movements while the model was suspended in air. The model fell over when it was lowered to the ground and its support was removed (Figure~\\ref{fig:animatlab_model_architecture}). In the later W2L108 circuit, each leg has its own rhythm generator, the two sides communicate through commissural connections, and sensory inputs reach the pattern and motor pathways. This arrangement makes it possible to alter the timing of one leg in response to the other leg's contact.",
+      "flags": [
+        "An experimental setting leads. Can the reader tell what behavior the test explains?"
+      ],
+      "disposition": "Retain. The course attribution distinguishes two sources of the model before describing the resulting circuit."
+    },
+    {
+      "file": "95-AppendixD.tex",
+      "line": 270,
+      "source": "The later timing gate scores each of the last four complete ipsilateral RG-E intervals separately, at 200 phase samples per interval. Six channels on two sides give 48 channel-cycle checks. RG-E intervals begin at a \\qty{3.5}{\\milli\\volt} crossing after arming below \\qty{1.5}{\\milli\\volt}. In addition to the original lag, duty, burst-count, and excursion requirements, each onset and offset must lie within 0.05 cycles of its target. This differs from the original twelve checks on cycle-averaged channels. Table~\\ref{tab:app_pf_progression} separates the resulting levels of verification. Cadence stress tests scale the legacy-cell integration and RG inactivation constants with the afferent replay cadence, while retaining native relay settings and MN synapses; they do not demonstrate spontaneous cadence adaptation by a freely moving model.",
+      "flags": [
+        "Read the check in context. What changed, or what measured agreement supports the claim?"
+      ],
+      "disposition": "Retain. The preceding section gives the failure and repair. This paragraph defines the quantitative decision criteria needed to reproduce the channel assessment."
+    }
+  ],
+  "cases": [
+    {
+      "file": "50-database.tex",
+      "old_line": 50,
+      "revised_line": 50,
+      "question": "Why return to McCrea in Results?",
+      "old": "The study by \\citet{mccrea_disynaptic_1995} appears under both \\emph{Ib disynaptic inhibition} and \\emph{Ib disynaptic excitation} in the app (Figure~\\ref{fig:sadb_explorer}). Their Figure~3 shows why. The same plantaris nerve stimulus inhibited a medial gastrocnemius motor neuron at rest and excited it during extension in midbrain-evoked fictive locomotion.",
+      "revised": "The record curated in Section~\\ref{sec:sadb_classification_example} illustrates how a researcher can use an experimental observation to choose the sign of a sensory connection in a controller. The study by \\citet{mccrea_disynaptic_1995} appears under both \\emph{Ib disynaptic inhibition} and \\emph{Ib disynaptic excitation} in the app (Figure~\\ref{fig:sadb_explorer}). Their Figure~3 shows why. The same plantaris nerve stimulus inhibited a medial gastrocnemius motor neuron at rest and excited it during extension in midbrain-evoked fictive locomotion.",
+      "old_cues": [],
+      "revised_cues": [],
+      "reader_answer": "The same experiment supplies the condition and sign of a controller input. Reader review is necessary to recognize a repeated example without that purpose."
+    },
+    {
+      "file": "60-sns.tex",
+      "old_line": 64,
+      "revised_line": 64,
+      "question": "What did the author repair after conversion?",
+      "old": "MyoConverter is a (open-source?) program that translates OpenSim muscle paths and joint geometry into a model for MuJoCo \\citep{caggiano_myosuite_2022,wang_myosim_2022}. I used it to convert the human reference, \\path{gait2392_simbody.osim}, restored missing maximum-force scales from the OpenSim source, and checked the direction of each tested muscle's joint action. The model retains 92 actuator entries, including six disabled small hip rotators, and the OpenSim convention of negative knee flexion. Moving the joints through their ranges exposed changes in moment arm at moving points and wrap surfaces. A separate check verified that foot contact produced ground forces (Appendix~\\ref{sec:app_conversion_repairs}).",
+      "revised": "MyoConverter is an open-source program that translates OpenSim joints and muscle paths into MuJoCo format \\citep{caggiano_myosuite_2022,wang_myosim_2022}. I used it to convert the Gait2392 human model. The converted model reversed two hip actions and assigned eight muscles a maximum active force of only \\qty{1}{\\newton}. I reversed the affected hinge axes and restored the force scales from OpenSim. At the knee, a misplaced path point prevented the rectus femoris from following the patella as the joint extended. I replaced it with a patella-tracking point from the vastus medialis. These repairs matter because a change in the path can change the torque produced by a given muscle force. Foot contact was set separately. I retained the six foot--ground contact pairs for loaded trials and removed all ground pairs for suspension. Appendix~\\ref{sec:app_conversion_repairs} identifies the repaired muscles, the disabled hip rotators, and the joint constraints.",
+      "old_cues": [
+        "Read the check in context. What changed, or what measured agreement supports the claim?"
+      ],
+      "revised_cues": [],
+      "reader_answer": "Hinge directions, force scales, patella tracking, and contact pairs have separate consequences."
+    },
+    {
+      "file": "60-sns.tex",
+      "old_line": 66,
+      "revised_line": 66,
+      "question": "What force was compared and what differed?",
+      "old": "To check whether the converted muscles pulled as strongly as their OpenSim counterparts, I compared their forces at 121 poses from a reference walk using the same joint positions and muscle activations. The reference forces and activations came from OpenSim static optimization, which estimates how muscles share the load at each pose \\citep{opensim_static_optimization_docs}. For eight of twelve right-side muscles, MuJoCo reproduced the variation in force across poses and the mean force agreed within \\qty{10}{\\percent}. Two muscles illustrate why both checks matter. For the rectus femoris muscle, the mean forces were close, about \\qty{48}{\\newton} in OpenSim and \\qty{52}{\\newton} in MuJoCo. At one pose, however, OpenSim estimated \\qty{96}{\\newton} and MuJoCo estimated \\qty{416}{\\newton}. For the short head of the biceps femoris muscle, the forces rose and fell in a similar pattern, but MuJoCo's mean was about \\qty{85}{\\percent} higher. For both muscles, using the mean OpenSim force at every pose gave a smaller squared error than using the converted model's forces. These two muscles therefore require a separate check before using their forces to interpret a controller test. Appendix~\\ref{sec:muscle-models-compare} gives the calculation and all twelve results.",
+      "revised": "How closely did the converted muscles reproduce the forces estimated in OpenSim? I took 121 poses from a reference walk and applied the OpenSim joint angles and estimated muscle activations to the MuJoCo model, one pose at a time \\citep{opensim_static_optimization_docs}. At each pose, MuJoCo used the routed length and prescribed activation to calculate active and passive tension with its rigid-tendon muscle model. Eight of twelve right-side muscles followed the OpenSim force pattern with mean forces within \\qty{10}{\\percent}. For rectus femoris, similar means (\\qty{48}{\\newton} in OpenSim and \\qty{52}{\\newton} in MuJoCo) concealed a large error at one pose (\\qty{96}{\\newton} versus \\qty{416}{\\newton}). For the short head of biceps femoris, the forces rose and fell together, but the MuJoCo mean was about \\qty{85}{\\percent} higher. For these two muscles a constant equal to the OpenSim mean gave a smaller squared error than the MuJoCo estimates. The reference used a subject-scaled OpenSim model, whereas the conversion began with the generic model. Muscle dimensions, routing, and the force calculations therefore all affect this comparison. No neural controller supplied the activations. Appendix~\\ref{sec:muscle-models} describes the force equations and Appendix~\\ref{sec:muscle-models-compare} gives the results for each muscle.",
+      "old_cues": [
+        "Read the check in context. What changed, or what measured agreement supports the claim?"
+      ],
+      "revised_cues": [],
+      "reader_answer": "OpenSim supplied postures and activations. The replay distinguishes the size and timing of a force discrepancy."
+    },
+    {
+      "file": "60-sns.tex",
+      "old_line": 76,
+      "revised_line": 76,
+      "question": "Why build a CAD model?",
+      "old": "Moving muscle attachments on the OpenSim counterpart changes where an artificial muscle pulls. Testing our robot's four-bar knee and mass distribution also requires the geometry of the mechanism we designed (Chapters~\\ref{ch:background} and~\\ref{ch:torque}). I assembled the mechanical model in MuJoCo from the CAD links and attachment locations. The mechanism can also be imported into Simscape Multibody, the Simulink library for rigid bodies and joints. Experiments using the MathWorks bridge require an executable MuJoCo model.",
+      "revised": "The goal was to run a neural controller on a model of the robot we intend to build. Gait2392 provided a human reference and a skeleton on which to design muscle routes, but our robot has its own segment geometry, joints, and attachments. I therefore built a MuJoCo model directly from our SOLIDWORKS assembly. The STL files supplied the shapes of the rigid parts. In the MuJoCo XML model I specified how the parts move relative to one another, their masses and inertias, and where the actuators attach. The resulting model gives a controller the joint motion and muscle paths of our design, including the four-bar linkage at each knee (Chapters~\\ref{ch:background} and~\\ref{ch:torque}).",
+      "old_cues": [
+        "Does the passage identify the completed work, the source format, and the receiving program?"
+      ],
+      "revised_cues": [],
+      "reader_answer": "Control of the intended physical robot motivates the new body. The chapter identifies STL shapes and MuJoCo joints and attachments."
+    },
+    {
+      "file": "95-AppendixD.tex",
+      "old_line": 343,
+      "revised_line": 349,
+      "question": "Which pathways mattered to alternating foot contact?",
+      "old": "For the sensory intervention I set nominal weight support to 0.25 and compared the intact controller with deletions at the same drive, mechanical support, and remaining fitted parameters. The evaluator applies a common \\qty{40}{\\newton} forward push at $8\\leq t<8.15$\\,s, including in the intact condition. The separately named forward-push file reproduces all of the control's saved arrays and thus supplies no unforced comparison. Each new neural input is held for \\qty{2}{\\milli\\second}, spanning two \\qty{1}{\\milli\\second} physics steps.",
+      "revised": "The supported W2L walker retained alternating heel strikes when I removed pooled extensor-force feedback through group Ib. When I also removed contact feedback and the other tested sensory projections, the legs continued moving and the walker advanced, but the heel strikes lost their half-cycle spacing. This comparison tests whether the pathways help set the relative timing of the legs beyond producing rhythmic movement. The intact and deletion runs had the same drive, nominal \\qty{25}{\\percent} weight support, and remaining fitted parameters. The evaluator applies a common \\qty{40}{\\newton} forward push at $8\\leq t<8.15$\\,s, including in the intact condition. The separately named forward-push file reproduces all of the control's saved arrays and thus supplies no unforced comparison. Each new neural input is held for \\qty{2}{\\milli\\second}, spanning two \\qty{1}{\\milli\\second} physics steps.",
+      "old_cues": [
+        "An experimental setting leads. Can the reader tell what behavior the test explains?"
+      ],
+      "revised_cues": [],
+      "reader_answer": "Both selective and combined interventions preserved forward movement. Only the broader removal disrupted heel-strike timing."
+    }
+  ],
+  "prior_judgment": "SUBMISSION-02 on the previous McCrea Results lead is superseded by the actual November 20 objection. The older ledger is preserved.",
+  "limits": "The flags prompt review. They missed the original McCrea transition and cannot verify force direction, byline credit, or causality. The change updates a rule-based reviewer and its evidence, without updating language-model weights."
+}

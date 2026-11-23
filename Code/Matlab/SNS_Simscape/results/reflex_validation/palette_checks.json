@@ -1,0 +1,161 @@
+{
+  "conditions": {
+    "activation": 0.5,
+    "optimal_fiber_length_m": 0.1,
+    "tendon_slack_length_m": 0.05,
+    "musculotendon_length_m": 0.15,
+    "pennation_degrees": 0,
+    "Fmax_N": 1000
+  },
+  "signed_velocity_source": "https://github.com/opensim-org/opensim-core/blob/4.4/OpenSim/Simulation/Model/Muscle.h#L243-L247",
+  "rigid_palette_law": "Original palette approximation at positive normalized velocity v in optimal lengths per second: 1.4 - 0.4*exp(-v/0.2). Signed lengthening versus shortening selects the curve; its magnitude drives each branch.",
+  "original_samples": {
+    "velocity_m_s": [
+      -0.02,
+      0,
+      0.02,
+      0.04
+    ],
+    "force_N": [
+      453.7037037037037,
+      500,
+      156.34363430819087,
+      0
+    ]
+  },
+  "original_plus_0.25_m_s": "The shortening branch produced an infinite intermediate when Inf and NaN diagnostics were set to error. No valid strict-run force was recorded.",
+  "corrected_outputs": {
+    "velocity_m_s": [
+      -0.02,
+      0,
+      0.02,
+      0.04,
+      0.25
+    ],
+    "voltage_mV": [
+      -50,
+      -45,
+      -40,
+      -35,
+      -30
+    ],
+    "force_N": [
+      453.7037037037037,
+      500,
+      626.4241117657115,
+      672.9329433526774,
+      699.9992546693655
+    ],
+    "neuron_drive": [
+      0,
+      0,
+      0.5,
+      1,
+      1
+    ],
+    "synapse_conductance_uS": [
+      0,
+      0,
+      0.5,
+      1,
+      1
+    ],
+    "prompts": [
+      "Output ramp onset (mV)",
+      "Output ramp voltage span (mV)",
+      "Presynaptic ramp onset (mV)",
+      "Presynaptic ramp voltage span (mV)"
+    ],
+    "eccentric_rate_source": "speedMagnitude"
+  },
+  "verified_in": [
+    "SNS_Library.slx",
+    "SNS_Library_R2025a.slx",
+    "Independent fresh build from sns_build_library.m and sns_build_actuators.m"
+  ],
+  "native_actuator_suite_max_reference_difference_N": {
+    "rigid_biological": 1.421e-14,
+    "pneumatic": 4.929e-10
+  },
+  "manual_property_control_save_reload_build": {
+    "neurons": 6,
+    "synapses": 6,
+    "edited_neuron": "SNS_GuiCircuit/MN_ext",
+    "Thr_mV": -46.25,
+    "Slope_mV": 11.25,
+    "edited_synapse": "SNS_GuiCircuit/syn_1_SN_Ia_ext_to_MN_ext",
+    "ThrPre_mV": -47.75,
+    "SlopePre_mV": 7.25
+  },
+  "usage_audit": {
+    "local_saved_files_examined": 67,
+    "files_containing_only_a_library_definition": [
+      "Code/Matlab/SNS_Simscape/dev/backup_pre_20261024/SNS_Library.slx",
+      "Code/Matlab/SNS_Simscape/results/knee_transient_reflex_20261028/original_snapshot/SNS_Library.slx",
+      "Code/Matlab/SNS_Simscape/SNS_Library.slx",
+      "Code/Matlab/SNS_Simscape/SNS_Library_R2025a.slx",
+      "Neuromechanical_Models/AH001_Simscape_Repair/lib/SNS_Library.slx",
+      "tmp/audit_gate2/SNS_Library_HEAD.slx"
+    ],
+    "saved_simulations_instantiating_block": 0,
+    "printed_result_source_review": {
+      "Chapter 4 torque targets": "OpenSim human isometric targets and experimental robot joint data",
+      "Gait2392 and W2L movement, including harness and spiking comparisons": "MuJoCo with native, specialized compliant-tendon, or pneumatic actuators as specified by the individual run",
+      "Chapter 6 biological knee": "Specialized two-muscle compliant-tendon Thelen equations in KneeReflexHuman.slx",
+      "Chapter 6 loaded arm and its spiking derivative; alternative pneumatic knee": "Pressure–contraction BPA_20mm blocks",
+      "Single-motor-neuron right vastus medialis bridge case": "Actuator in the coupled MuJoCo model",
+      "Appendix D library check": "sns_test_actuators.m instantiates BioMuscle in a temporary model. The earlier test used shortening and isometry. Its expanded regression now includes three lengthening speeds."
+    }
+  },
+  "unchanged_full_signal_replays": {
+    "runs": 13,
+    "channel_samples": 13932234,
+    "max_absolute_change": 0.0,
+    "sample_keys": [
+      "control",
+      "fine_control",
+      "fine_ia",
+      "half_ia",
+      "ia_pulse",
+      "off_control",
+      "off_ia",
+      "off_torque",
+      "torque_pulse",
+      "arm_gui_0",
+      "arm_gui_1",
+      "arm_source_0",
+      "arm_source_1"
+    ]
+  },
+  "native_models": {
+    "SNS_Library.slx": {
+      "old_sha256": "8347dfe854316220ff18311c0020b9a36c30e2c1b82a865b250ecff77a4cb3ef",
+      "new_sha256": "67c52e86e055a4dd23f3cdb3847aabc92237bf0977fd08ec899c1dc1ae3b1ee2",
+      "changed_native_members": [
+        "simulink/systems/system_338.xml",
+        "simulink/systems/system_root.xml"
+      ],
+      "bytes_before": 195243,
+      "bytes_after": 195698
+    },
+    "SNS_Library_R2025a.slx": {
+      "old_sha256": "57d103969419e15f206b5af164f892691bdef6670e0b317c65066b219eee2a3e",
+      "new_sha256": "22d0badc612ce164e104df31c9c9ae9df948173ff0e2e4450874e64be56cb641",
+      "changed_native_members": [
+        "simulink/systems/system_338.xml",
+        "simulink/systems/system_root.xml"
+      ],
+      "bytes_before": 55784,
+      "bytes_after": 55861
+    },
+    "demos\\SNS_WinnerSlice_R8.slx": {
+      "old_sha256": "c886f2535605186b2bdc763953b27ddeb86640cfaee5d0fb74fc37b381feaebd",
+      "new_sha256": "76937975a0604d62af5c4a5c44d35256585fe1cb22a0d8aa987d119423c0b10d",
+      "changed_native_members": [
+        "simulink/systems/system_root.xml"
+      ],
+      "bytes_before": 426419,
+      "bytes_after": 426415
+    }
+  }
+}

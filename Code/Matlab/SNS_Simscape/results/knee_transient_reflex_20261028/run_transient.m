@@ -4,7 +4,11 @@ if nargin<1, tag='primary'; end
 here=fileparts(mfilename('fullpath')); root=fileparts(fileparts(here));
 cd(here); diary(fullfile(here,[tag '_console.txt']));
 disp(version); addpath(root); addpath(fullfile(root,'demos'));
-load_system(fullfile(root,'demos','KneeReflexDemo.slx'));
+% This driver reproduces the historical simple-actuator experiment.
+% Use demos/run_knee_pressure_trials for the current characterized BPAs.
+sourceModel=fullfile(here,'original_snapshot','KneeReflexDemo.slx');
+if ~isfile(sourceModel),sourceModel=fullfile(root,'demos','KneeReflexDemo.slx');end
+load_system(sourceModel);
 evalin('base',get_param('KneeReflexDemo','PreLoadFcn'));
 audit=dumpModel('KneeReflexDemo'); save('loaded_audit.mat','audit');
 fid=fopen('loaded_audit.txt','w'); fprintf(fid,'%s',jsonencode(audit,PrettyPrint=true)); fclose(fid);

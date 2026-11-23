@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "source": "SNSGui canvas circuit",
+    "app": "SNSGui"
+  },
+  "neurons": [
+    {
+      "name": "MN_biceps",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.5,
+      "Cm_nF": 5,
+      "Thr_mV": -45,
+      "Slope_mV": 1
+    },
+    {
+      "name": "MN_triceps",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.5,
+      "Cm_nF": 5,
+      "Thr_mV": -45,
+      "Slope_mV": 1
+    },
+    {
+      "name": "SN_Ia_bi",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.12,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    },
+    {
+      "name": "SN_Ia_tri",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.12,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    },
+    {
+      "name": "SN_Ib_bi",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.4,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    },
+    {
+      "name": "SN_Ib_tri",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.4,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    }
+  ],
+  "synapses": [
+    {
+      "src": "SN_Ia_bi",
+      "dst": "MN_biceps",
+      "g_uS": 0.0005,
+      "Esyn_mV": 0,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 0.5
+    },
+    {
+      "src": "SN_Ia_bi",
+      "dst": "MN_triceps",
+      "g_uS": 0.0025,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 0.5
+    },
+    {
+      "src": "SN_Ia_tri",
+      "dst": "MN_triceps",
+      "g_uS": 0.001,
+      "Esyn_mV": 0,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 0.5
+    },
+    {
+      "src": "SN_Ia_tri",
+      "dst": "MN_biceps",
+      "g_uS": 0.0008,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 0.5
+    },
+    {
+      "src": "SN_Ib_bi",
+      "dst": "MN_biceps",
+      "g_uS": 0.0006,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 0.5
+    },
+    {
+      "src": "SN_Ib_tri",
+      "dst": "MN_triceps",
+      "g_uS": 0.0004,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 0.5
+    }
+  ],
+  "inputs": []
+}

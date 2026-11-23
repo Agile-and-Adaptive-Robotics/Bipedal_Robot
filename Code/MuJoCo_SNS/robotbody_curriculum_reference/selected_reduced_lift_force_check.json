@@ -1,0 +1,53 @@
+{
+  "samples": 8000,
+  "routes": 54,
+  "minimum_tension_N": 0.0,
+  "maximum_tension_N": 3137.894287109375,
+  "pressure_range_kPa": [
+    4.860445271086256e-13,
+    619.999755859375
+  ],
+  "nonzero_neural_channels": 54,
+  "slack_sample_fraction": 0.17723842592592592,
+  "force_domain_violations": 0,
+  "shortened_stop_fraction": 0.001101851851851852,
+  "max_independent_surface_residual_N": 0.002084770358123933,
+  "worst_route": "soleus_r",
+  "float32_force_snapshots": true,
+  "scalar_bank_max_pressure_error_kPa": 1.1368683772161603e-13,
+  "scalar_bank_max_force_error_N": 1.5901946426311042e-11,
+  "max_generalized_force_sign_error": 9.094947017729282e-13,
+  "passed": true,
+  "right_stance_capacity": {
+    "vas_med_r": {
+      "samples": 3375,
+      "chamber_pressure_median_max_kPa": [
+        49.53776168823242,
+        131.4823760986328
+      ],
+      "output_tension_median_max_N": [
+        0.0,
+        47.834617614746094
+      ],
+      "capacity_at_620_kPa_median_max_N": [
+        1943.0690602661512,
+        2212.48861761686
+      ]
+    },
+    "med_gas_r": {
+      "samples": 3375,
+      "chamber_pressure_median_max_kPa": [
+        0.09577658772468567,
+        173.83367919921875
+      ],
+      "output_tension_median_max_N": [
+        0.0,
+        0.0
+      ],
+      "capacity_at_620_kPa_median_max_N": [
+        0.0,
+        0.0
+      ]
+    }
+  }
+}

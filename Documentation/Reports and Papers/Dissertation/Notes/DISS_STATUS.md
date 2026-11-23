@@ -1,6 +1,6 @@
 ## Current manuscript
 
-The working [manuscript](../Final/main.tex) and [Overleaf project](https://www.overleaf.com/project/644dc82bcd6a5481e3c3a8bb) compile to 327 pages. Chapter 5 Results open on printed page 125. The paper record and its controller rule face each other on pages 126–127. The cam figures appear on pages 115, 253, and 254. [Full dissertation](../Bolen_Dissertation.pdf) · [Source ZIP](../Bolen_Dissertation.zip) · [November 20 edits by chapter and source line](submission_review_20261120/LINE_EDITS.md)
+The current [355-page dissertation](../Bolen_Dissertation.pdf) and [source ZIP](../Bolen_Dissertation.zip) include the connectome design scripts, Appendix C actuator configurations, and the human-model reruns. [Changes and reproducible comparisons](advisor_feedback_20261120/FSA_AND_ACTUATOR_REVISION.md) and [build checks, source hashes, and printed pages](advisor_feedback_20261120/FSA_DELIVERY.json) are available. The previous [chapter and model-figure review](advisor_feedback_20261120/REVIEW.md) and its [source changes](advisor_feedback_20261120/FOLLOWUP_CHANGES.diff) remain available.
 
 `ProofFinal` preserves the 23 LaTeX source and support files from the [dissertation submission draft](../Bolen_Dissertation-Draft_Submission.zip). That ZIP contains the original figures for reproducing the draft.
 
@@ -203,3 +203,8 @@ Full record — verdicts, checks run/not run, figure QC, Ben queue, Overleaf gat
 ## Targeted author annotations - 31 October 2026
 
 Rebuilt local dissertation: 304 pages, no compile errors or undefined references. Delivery: output/pdf/Bolen_Dissertation_Reviewed_Corrections_20261031.pdf (also Submission alias). All 28 latest author annotations have individual dispositions in figure_polish_20261030/BEN_28_COMMENT_DISPOSITIONS_20261031.md and output/pdf/Dissertation_28_Comment_Responses_20261031.pdf. Pending audit v10 has three remaining groups. Author abstract, background, and published muscle chapter unchanged. No source changes to the torque paper. No Overleaf upload or commit.
+
+
+## Coupled-model reruns and graphical reflex validation, November 20, 2026
+
+The complete revised dissertation is in Final and in the root PDF and source ZIP. The 352-page local build and the live Overleaf compile were verified. The 54-route pressure-driven robotbody and four-muscle human studies, graphical knee and arm controls, figure changes, and remaining limitations are documented in [the revision record](advisor_feedback_20261120/FULL_CURRICULUM_AND_GUI.md).

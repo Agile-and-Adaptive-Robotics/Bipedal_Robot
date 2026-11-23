@@ -1,0 +1,169 @@
+{
+  "experiment": "Gait2392 pelvic-harness trial with matched controller and bilateral rectus femoris and short-head biceps femoris substitution.",
+  "replay": "python replay.py --bundle <selected_ground9_rc_runtime_20261102.zip> --reference <other_models/gait_hunt_rc> --out <scratch-directory>",
+  "sources": {
+    "runtime_zip": "NeuroCampaign_20261102_9h/reproducibility/selected_ground9_rc_runtime_20261102.zip",
+    "runtime_zip_sha256": "594b39b05d43eaf43f490b22d3ea372c7a0b17bb40c0bcb962737bbe33244425",
+    "validated_source_entries": 567,
+    "physical_eval_sha256": "494ff3dafa0e8a1b20d01de7167273468f9ac5088a82d8db133b9bb091141602",
+    "reference_directory": "ToolchainDefense_20261102/other_models/gait_hunt_rc",
+    "source_osim_sha256": "477fffd1ee9cfbcb9d4c20c6b0fe6baf0958e6a640e7df7166b45156cf8cf5f2",
+    "thelen_dynamic_sha256": "d9d51e735389f41f222c99eb98667c6e70642aa0a4895ebb8b20a33f675c4abe",
+    "campaign_gate_sha256": "b84497958fe23e7da7e65f4edffb3e7a04af82c1a5a776e8668e78284d1ea21a"
+  },
+  "protocol": {
+    "actuators": [
+      "rect_fem_r",
+      "rect_fem_l",
+      "bifemsh_r",
+      "bifemsh_l"
+    ],
+    "activation": "Native MuJoCo activation dynamics for all 92 muscles.",
+    "tension": "Compliant tendon, active fibers, passive fibers and pennation from the source Thelen model. Unchanged native forces for the other 88 muscles.",
+    "world_step_s": 0.002,
+    "held_preparation_s": 0.6,
+    "complete_trial_s": 16,
+    "scored_interval_s": [
+      5,
+      13
+    ],
+    "clearance_criterion": "Entire visual foot mesh >1 mm over ground and foot load <2.5% BW for at least 80 ms, peak >=10 mm; at least 3 episodes per foot. Sampled at 20 ms.",
+    "physical_contact": "Ground-contact force 5% / 2.5% BW hysteresis after 80 ms of unloading and 100 ms of stance."
+  },
+  "native": {
+    "coupled_steps": 7700,
+    "scored_force_intervals": 4001,
+    "body_weight_N": 768.756726,
+    "trace_sha256": "8617fd0db5083efbb7b7d224182eb0c06cfdc0bb99918d73222dc2eb13dee502",
+    "finite": true,
+    "complete": true,
+    "right_left_measured_contact_cycles": [
+      5,
+      4
+    ],
+    "right_left_knee_cycles": [
+      5,
+      5
+    ],
+    "right_left_clearance_episodes": [
+      5,
+      4
+    ],
+    "right_left_peak_clearance_mm": [
+      38.965605751188235,
+      30.485267002914615
+    ],
+    "mean_net_superior_percent_BW": 48.84835584895906,
+    "prescribed_superior_N": 307.89509039999996,
+    "horizontal_restraint_rms_N": 115.5608919082438
+  },
+  "selective": {
+    "coupled_steps": 7700,
+    "scored_force_intervals": 4001,
+    "body_weight_N": 768.756726,
+    "trace_sha256": "1cb10d6b9c080bd906f7a60975f5c2f5a5bf8186c7d3c3746493773f4a9f5e37",
+    "finite": true,
+    "complete": true,
+    "right_left_measured_contact_cycles": [
+      5,
+      4
+    ],
+    "right_left_knee_cycles": [
+      5,
+      5
+    ],
+    "right_left_clearance_episodes": [
+      2,
+      0
+    ],
+    "right_left_peak_clearance_mm": [
+      29.59073511050198,
+      6.7067849438518445
+    ],
+    "mean_net_superior_percent_BW": 50.002760227407315,
+    "prescribed_superior_N": 307.89509039999996,
+    "horizontal_restraint_rms_N": 113.69136855282882
+  },
+  "verification": {
+    "native_equals_archived_full_trace": true,
+    "native_with_corrected_startup_helper_equals_archived_full_trace": true,
+    "selective_fresh_repeat_equal_full_trace": true,
+    "selective_force_trace_repeat_sha256": "72fa58c3bba2511528d2a43cde596f1e1c114360ee048936fa5869e5f9f9e546",
+    "first_model_state_and_applied_harness_equal": true,
+    "other_88_actuator_parameters_equal": true,
+    "fiber_bound_violations": 0,
+    "max_sampled_abs_equilibrium_residual_N": 1.9202350265423718e-09,
+    "max_sampled_abs_components_vs_committed_force_N": 1.9202843759558164e-09,
+    "force_tangent_applied_vs_committed_at_sampled_scored_times": {
+      "max_abs_per_muscle_N": [
+        2.345795135125959,
+        2.9372519556912273,
+        4.769943627141796,
+        6.27665943654716
+      ],
+      "rms_per_muscle_N": [
+        0.11268164934409408,
+        0.12208667538727441,
+        0.31909552267461216,
+        0.33427361463497945
+      ]
+    },
+    "bilateral_single_group_runs_use_corrected_startup": true,
+    "shared_start_for_both_single_group_runs": true
+  },
+  "interpretation": "With the original controller, both bilateral substitutions independently reduced left-foot clearance. The two-group trial retained physical contact cycles on both sides but lost qualifying left swings.",
+  "rect_fem": {
+    "coupled_steps": 7700,
+    "scored_force_intervals": 4001,
+    "body_weight_N": 768.756726,
+    "trace_sha256": "4566214e9d37d6118546354fa24301bffee1aa225996c958735ae5b0d21cc134",
+    "finite": true,
+    "complete": true,
+    "right_left_measured_contact_cycles": [
+      5,
+      4
+    ],
+    "right_left_knee_cycles": [
+      5,
+      5
+    ],
+    "right_left_clearance_episodes": [
+      5,
+      2
+    ],
+    "right_left_peak_clearance_mm": [
+      38.04071964597629,
+      19.027111731768034
+    ],
+    "mean_net_superior_percent_BW": 47.49530881866361,
+    "prescribed_superior_N": 307.89509039999996,
+    "horizontal_restraint_rms_N": 115.25858138935247
+  },
+  "bifemsh": {
+    "coupled_steps": 7700,
+    "scored_force_intervals": 4001,
+    "body_weight_N": 768.756726,
+    "trace_sha256": "77b2ed90efbefd9a72929c1fad386cbf1df9ce8a8d3f4254aee3d255dfe33475",
+    "finite": true,
+    "complete": true,
+    "right_left_measured_contact_cycles": [
+      5,
+      4
+    ],
+    "right_left_knee_cycles": [
+      5,
+      5
+    ],
+    "right_left_clearance_episodes": [
+      3,
+      2
+    ],
+    "right_left_peak_clearance_mm": [
+      29.14593116282293,
+      17.130661914542344
+    ],
+    "mean_net_superior_percent_BW": 50.54520138129063,
+    "prescribed_superior_N": 307.89509039999996,
+    "horizontal_restraint_rms_N": 113.01114676475218
+  }
+}

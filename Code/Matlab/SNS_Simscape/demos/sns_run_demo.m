@@ -4,14 +4,11 @@ cdto = fileparts(mfilename('fullpath'));
 cd(cdto);
 addpath(cdto);
 
-% model params (same as PreLoadFcn)
-I_knee = 0.06; b_knee = 0.5; K_knee = 0.5; th0 = 0.26; ROM = 1.5708;
-r_arm = 0.035; Tload = 0.5; desc_ext = 4.2; desc_flex = 2.5;
-Fmax_ext = 500; Fmax_flex = 450; epsScale = 0.15;
-
+% Parameters, initial states, characterized BPA blocks, and the extensor
+% sensory pulse are stored with the model. Its default trial lasts 50 s.
+addpath(fileparts(cdto));
 load_system('SNS_Library');
 load_system('KneeReflexDemo');
-set_param('KneeReflexDemo', 'StopTime', '5');
 out = sim('KneeReflexDemo');
 
 th   = out.log_th;    thd  = out.log_thd;

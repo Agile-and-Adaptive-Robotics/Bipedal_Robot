@@ -1,0 +1,108 @@
+{
+  "native_at_selected_scale": {
+    "mean_of_six_joint_RMSE_deg": null,
+    "sides": {
+      "r": {
+        "cycles": 0,
+        "period_s": null,
+        "reference_period_s": 1.2334,
+        "stance_fraction": 0.024857142857142855,
+        "reference_stance_fraction": 0.61,
+        "joint_RMSE_deg": null
+      },
+      "l": {
+        "cycles": 0,
+        "period_s": null,
+        "reference_period_s": 1.2133000000000003,
+        "stance_fraction": 0.01757142857142857,
+        "reference_stance_fraction": 0.61,
+        "joint_RMSE_deg": null
+      }
+    },
+    "reference": "subject01_walk1_ik.mot, subject01_walk1_grf.mot",
+    "window_start_s": 2.0,
+    "load_threshold_after_scaling": 50.0,
+    "recorded_force_scale": 0.5,
+    "force_source": "stored contact channels times recorded_force_scale",
+    "cycle_interval_s": [
+      0.35,
+      2.5
+    ]
+  },
+  "four_at_selected_scale": {
+    "mean_of_six_joint_RMSE_deg": 21.540224961771617,
+    "sides": {
+      "r": {
+        "cycles": 12,
+        "period_s": 0.9279999999999999,
+        "reference_period_s": 1.2334,
+        "stance_fraction": 0.5054285714285714,
+        "reference_stance_fraction": 0.61,
+        "joint_RMSE_deg": {
+          "hip": 18.4099399596962,
+          "knee": 18.958697703967264,
+          "ankle": 17.233456098701375
+        }
+      },
+      "l": {
+        "cycles": 13,
+        "period_s": 0.8953846153846154,
+        "reference_period_s": 1.2133000000000003,
+        "stance_fraction": 0.4481428571428571,
+        "reference_stance_fraction": 0.61,
+        "joint_RMSE_deg": {
+          "hip": 17.79858082078482,
+          "knee": 31.13300468120993,
+          "ankle": 25.70767050627014
+        }
+      }
+    },
+    "reference": "subject01_walk1_ik.mot, subject01_walk1_grf.mot",
+    "window_start_s": 2.0,
+    "load_threshold_after_scaling": 50.0,
+    "recorded_force_scale": 0.5,
+    "force_source": "stored contact channels times recorded_force_scale",
+    "cycle_interval_s": [
+      0.35,
+      2.5
+    ]
+  },
+  "frozen_four": {
+    "mean_of_six_joint_RMSE_deg": 17.777920236828237,
+    "sides": {
+      "r": {
+        "cycles": 11,
+        "period_s": 1.0134545454545454,
+        "reference_period_s": 1.2334,
+        "stance_fraction": 0.7615714285714286,
+        "reference_stance_fraction": 0.61,
+        "joint_RMSE_deg": {
+          "hip": 21.93719083747059,
+          "knee": 22.7623858189201,
+          "ankle": 7.325322309605354
+        }
+      },
+      "l": {
+        "cycles": 10,
+        "period_s": 1.2728000000000002,
+        "reference_period_s": 1.2133000000000003,
+        "stance_fraction": 0.6685714285714286,
+        "reference_stance_fraction": 0.61,
+        "joint_RMSE_deg": {
+          "hip": 20.12850184123715,
+          "knee": 24.713301688305997,
+          "ankle": 9.800818925430232
+        }
+      }
+    },
+    "reference": "subject01_walk1_ik.mot, subject01_walk1_grf.mot",
+    "window_start_s": 2.0,
+    "load_threshold_after_scaling": 50.0,
+    "recorded_force_scale": 0.5,
+    "force_source": "stored contact channels times recorded_force_scale",
+    "cycle_interval_s": [
+      0.35,
+      2.5
+    ]
+  }
+}

@@ -3,14 +3,17 @@
 % 1) BPA blocks: ramp actuator length at 620 kPa, compare block force with
 %    festo4(dia, rel, P) * Fmax reference (Functions\festo4.m, on path).
 % 2) BPA blocks: pressure sweep at fixed length, same reference.
-% 3) BioMuscle: constant-input spot checks vs inline Thelen equations.
+% 3) BioMuscle: shortening, isometric, lengthening, and passive force against
+%    the palette's rigid-tendon equations.
 cdto = fileparts(mfilename('fullpath'));
 cd(cdto);
 addpath(cdto);
 addpath(fullfile(cdto, '..', 'Functions'));   % festo4.m + FestoLookup.mat
 
-sns_build_actuators;
-load_system('SNS_Library');
+load_system(fullfile(cdto, 'SNS_Library.slx'));
+if getSimulinkBlockHandle('SNS_Library/BioMuscle') < 0
+    sns_build_actuators;  % A freshly generated base library still needs its actuators.
+end
 
 mdl = 'actTest';
 if bdIsLoaded(mdl), close_system(mdl, 0); end
@@ -96,7 +99,7 @@ end
 close_system(mdl, 0);
 if exist([mdl '.slx'], 'file'), delete([mdl '.slx']); end
 new_system(mdl); load_system(mdl);
-set_param(mdl, 'Solver', 'ode45', 'StopTime', '0.5');
+set_param(mdl, 'Solver', 'ode45', 'StopTime', '0.5', 'SignalInfNanChecking', 'error');
 add_block('simulink/Sources/Constant', [mdl '/A_c'], 'Value', '1', 'Position', [50 100 80 130]);
 add_block('simulink/Sources/Constant', [mdl '/L_c'], 'Value', '0.15', 'Position', [50 160 80 190]);
 add_block('simulink/Sources/Constant', [mdl '/V_c'], 'Value', '0', 'Position', [50 220 80 250]);
@@ -123,6 +126,22 @@ fv = b*(1+A)/(sHat + b) - A;
 Fref = 1000*fv;
 fprintf('BioMuscle concentric (v=5 l_opt/s): F = %.2f N (expect %.2f)\n', Fshort, Fref);
 bmaxErr = max(bmaxErr, abs(Fshort - Fref));
+
+% At optimal length, positive dLmt/dt must raise force toward the 1.4 plateau.
+% OpenSim 4.4, Muscle::getFiberVelocity: positive for muscle lengthening.
+lastForce = Fbio;
+for lengtheningRate = [0.02, 0.04, 0.25]
+    set_param([mdl '/V_c'], 'Value', num2str(lengtheningRate));
+    out = sim(mdl);
+    measuredForce = out.log_F.Data(end);
+    expectedForce = 1000 * (1.4 - 0.4 * exp(-(lengtheningRate / 0.10) / 0.2));
+    fprintf('BioMuscle lengthening at %g m/s: %.5f N (expect %.5f)\n', ...
+        lengtheningRate, measuredForce, expectedForce);
+    assert(measuredForce > lastForce && measuredForce < 1400 && ...
+        abs(measuredForce - expectedForce) < 1e-7, 'Wrong eccentric force response');
+    lastForce = measuredForce;
+    bmaxErr = max(bmaxErr, abs(measuredForce - expectedForce));
+end
 
 % passive stretch check: Lmt = 0.05 + 1.3*0.10 = 0.18 -> lambda = 1.3
 set_param([mdl '/V_c'], 'Value', '0');

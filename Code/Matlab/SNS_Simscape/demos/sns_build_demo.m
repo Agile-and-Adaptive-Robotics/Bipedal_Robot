@@ -14,7 +14,7 @@
 %   Ia spindle (ext) -> SN_Ia_ext --Inh(E=-72) --->  MN_flex syn3   (reciprocal inhibition)
 %
 % Sensory neurons (SN_*) convert afferent currents into graded presynaptic voltage.
-% Synapse saturation: ThrPre=-45 mV (above rest -52), SlopePre=0.5/mV -> graded, off at rest.
+% Synapse saturation: ThrPre=-45 mV (above rest -52), a 10 mV presynaptic voltage range, off at rest.
 %
 % APPEARANCE (Ben 2026-09-09 + 2026-09-22):
 %   neurons = circles with GRADED-POTENTIAL waveform; afferents = spindle capsules
@@ -25,7 +25,7 @@
 % Knee model (reduced-order 1-DOF, stand-in for the Simscape Multibody import):
 %   I*thdd = Tflex - Text + Tload - b*thd - K*(th - th0)
 %   theta = 0 deg full extension, +90 deg full flexion.
-% Muscle strain over ROM: eps_ext = 0.15*th/ROM, eps_flex = 0.15*(1 - th/ROM).
+% L_ext=L_ref+r*(th-th_ref), L_flex=L_ref-r*(th-th_ref), torque=-F*dL/dth.
 
 cdto = fileparts(mfilename('fullpath'));
 cd(cdto);
@@ -35,25 +35,18 @@ if bdIsLoaded(mdl), close_system(mdl, 0); end
 if exist([mdl '.slx'], 'file'), delete([mdl '.slx']); end
 new_system(mdl);
 load_system(mdl);
-set_param(mdl, 'Solver', 'ode45', 'StopTime', '5', 'ScreenColor', 'white', ...
+set_param(mdl, 'Solver', 'ode45', 'StopTime', '50', 'RelTol','1e-7','AbsTol','1e-9','MaxStep','0.001','ScreenColor', 'white', ...
     'UnconnectedInputMsg', 'none');   % unused neuron syn ports auto-ground
 
 %% ---- parameters stored in model PreLoadFcn (so the model opens runnable) ----
-paramCmd = strjoin({ ...
-    'I_knee = 0.06;      % kg*m^2 below-knee inertia (rig estimate)' ...
-    'b_knee = 0.5;        % N*m*s/rad joint damping' ...
-    'K_knee = 0.5;       % N*m/rad return spring' ...
-    'th0    = 0.26;      % rad spring rest angle (~15 deg)' ...
-    'ROM    = 1.5708;    % rad (90 deg) normalizing range' ...
-    'r_arm  = 0.035;     % m BPA moment arm' ...
-    'Tload  = 0.5;       % N*m constant flexion load torque' ...
-    'desc_ext = 4.2;     % nA descending drive to extensor MN' ...
-    'desc_flex = 2.5;    % nA descending drive to flexor MN' ...
-    'Fmax_ext = 500;     % N' ...
-    'Fmax_flex = 450;    % N' ...
-    'epsScale = 0.15;    % muscle strain span over full joint ROM' ...
-    }, newline);
-set_param(mdl, 'PreLoadFcn', paramCmd);
+p = knee_pressure_parameters();
+fields = fieldnames(p);
+values = cell(size(fields));
+for n = 1:numel(fields)
+    values{n} = sprintf('%s = %.17g;',fields{n},p.(fields{n}));
+end
+paramCmd = strjoin(values,newline);
+set_param(mdl,'PreLoadFcn',paramCmd);
 eval(paramCmd);
 
 %% ---- knee model subsystem: [T_flex, T_ext] -> [theta, thd, normalized signals]
@@ -93,17 +86,21 @@ set_param([knee '/dampG'],   'Gain', 'b_knee');
 set_param([knee '/springG'], 'Gain', 'K_knee');
 set_param([knee '/thn_g'],   'Gain', '1/ROM');
 set_param([knee '/thdn_g'],  'Gain', '1/ROM');
-set_param([knee '/velflp'],  'Gain', '-1/ROM');
-set_param([knee '/strx_g'],  'Gain', 'epsScale');
-set_param([knee '/strf_g'],  'Gain', 'epsScale');
+set_param([knee '/velflp'],  'Gain', '-1');   % input already equals thd/ROM
+set_param([knee '/strx_g'],  'Gain', 'r_arm*ROM');
+set_param([knee '/strf_g'],  'Gain', 'r_arm*ROM');
+KB('LengthExt', 'simulink/Math Operations/Bias', [492 335 525 360]);
+KB('LengthFlex','simulink/Math Operations/Bias', [492 385 525 410]);
+set_param([knee '/LengthExt'],'Bias','referenceLength-r_arm*referenceAngle');
+set_param([knee '/LengthFlex'],'Bias','referenceLength-r_arm*(ROM-referenceAngle)');
 set_param([knee '/th0_c'],   'Value', 'th0');
 set_param([knee '/Tload_c'], 'Value', 'Tload');
 set_param([knee '/one_c'],   'Value', '1');
-set_param([knee '/th_i'],    'InitialCondition', '0.26');
+set_param([knee '/th_i'],    'InitialCondition', 'referenceAngle');
 outs = {'O_th',1,'theta (rad)'; 'O_thd',2,'thd (rad/s)'; 'O_thn',3,'th/ROM'; ...
         'O_thdn',4,'thd/ROM'; 'O_flxstr',5,'flexor stretch (norm)'; ...
-        'O_flxvel',6,'flexor velocity (norm)'; 'O_strx',7,'extensor strain'; ...
-        'O_strf',8,'flexor strain'};
+        'O_flxvel',6,'flexor velocity (norm)'; 'O_strx',7,'extensor sleeve length (m)'; ...
+        'O_strf',8,'flexor sleeve length (m)'};
 for k = 1:size(outs, 1)
     add_block('simulink/Sinks/Out1', [knee '/' outs{k,1}], 'Port', num2str(outs{k,2}), ...
         'Position', [540 33+46*(k-1) 570 47+46*(k-1)]);
@@ -136,13 +133,15 @@ kl('thdn_g/1', 'velflp/1');
 kl('velflp/1', 'O_flxvel/1');
 kl('thn_g/1', 'strx_g/1');
 kl('flxstr/1', 'strf_g/1');
-kl('strx_g/1', 'O_strx/1');
-kl('strf_g/1', 'O_strf/1');
+kl('strx_g/1', 'LengthExt/1');
+kl('LengthExt/1','O_strx/1');
+kl('strf_g/1', 'LengthFlex/1');
+kl('LengthFlex/1','O_strf/1');
 m = Simulink.Mask.create(knee);
 m.Type = 'SNS Knee Model (1-DOF)';
 m.Description = ['Reduced-order 1-DOF knee: I*thdd = Tflex - Text + Tload - b*thd - ' ...
     'K*(th-th0). theta = 0 deg full extension, +90 deg full flexion. Outputs theta, ' ...
-    'thd, and the normalized stretch/velocity/strain signals for the afferents.'];
+    'thd, and the normalized sensory kinematics and the two clamp-to-clamp lengths.'];
 m.Display = kneeIconCode();
 set_param(knee, 'MaskIconFrame', 'off', 'MaskIconUnits', 'autoscale', ...
     'MaskIconOpaque', 'on', 'MaskIconRotate', 'none');
@@ -162,14 +161,22 @@ snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ia_ext',  [180 40 260 120], 'Vr
 snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ia_flex', [180 190 260 270], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
 snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ib_ext',  [180 340 260 420], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
 snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ib_flex', [180 440 260 520], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
-add_line(mdl, 'Ia_ext/1', 'SN_Ia_ext/1', 'autorouting', 'on');
+add_block('simulink/Sources/Step',[mdl '/PulseOn'],'Time','tapOnset','Before','0','After','tapAmplitude','Position',[38 5 63 27]);
+add_block('simulink/Sources/Step',[mdl '/PulseOff'],'Time','tapOnset+tapDuration','Before','0','After','-tapAmplitude','Position',[76 5 101 27]);
+add_block('simulink/Math Operations/Sum',[mdl '/IaPulse'],'Inputs','++','Position',[111 5 130 30]);
+add_block('simulink/Math Operations/Sum',[mdl '/IaInput'],'Inputs','++','Position',[135 54 157 81]);
+add_line(mdl,'PulseOn/1','IaPulse/1','autorouting','on');
+add_line(mdl,'PulseOff/1','IaPulse/2','autorouting','on');
+add_line(mdl,'IaPulse/1','IaInput/1','autorouting','on');
+add_line(mdl,'Ia_ext/1','IaInput/2','autorouting','on');
+add_line(mdl,'IaInput/1','SN_Ia_ext/1','autorouting','on');
 add_line(mdl, 'Ia_flex/1', 'SN_Ia_flex/1', 'autorouting', 'on');
 add_line(mdl, 'Ib_ext/1', 'SN_Ib_ext/1', 'autorouting', 'on');
 add_line(mdl, 'Ib_flex/1', 'SN_Ib_flex/1', 'autorouting', 'on');
 
 %% ---- motoneurons (graded-waveform non-spiking neurons) ----
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_ext',  [660 40 760 200], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', '-45', 'Slope', '1');
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_flex', [660 320 760 480], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', '-45', 'Slope', '1');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_ext',  [660 40 760 200], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', 'motorThreshold', 'Slope', 'motorWidth');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_flex', [660 320 760 480], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', 'motorThreshold', 'Slope', 'motorWidth');
 add_block('simulink/Sources/Constant', [mdl '/desc_ext_c'], 'Value', 'desc_ext', 'Position', [560 -10 600 14]);
 add_block('simulink/Sources/Constant', [mdl '/desc_flex_c'], 'Value', 'desc_flex', 'Position', [560 270 600 294]);
 add_line(mdl, 'desc_ext_c/1', 'MN_ext/1', 'autorouting', 'on');
@@ -177,13 +184,13 @@ add_line(mdl, 'desc_flex_c/1', 'MN_flex/1', 'autorouting', 'on');
 
 %% ---- synapses: small, ONE input (Vpre), placed against their postsynaptic MN ----
 % MN_ext syn ports (block ports 2,3,4 = syn1..syn3)
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_exc',         [580 58 620 90],  'gmax', '0.18', 'Esyn', '0',   'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibext_inh',         [580 100 620 132], 'gmax', '0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_inh_on_ext', [580 142 620 174], 'gmax', '0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_exc',         [580 58 620 90],  'gmax', 'feedbackGain*connectionScale*0.18', 'Esyn', '0',   'ThrPre', '-45', 'SlopePre', '10');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibext_inh',         [580 100 620 132], 'gmax', 'feedbackGain*connectionScale*0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '10');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_inh_on_ext', [580 142 620 174], 'gmax', 'feedbackGain*connectionScale*0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '10');
 % MN_flex syn ports
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_exc',        [580 338 620 370], 'gmax', '0.18', 'Esyn', '0',   'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibflex_inh',        [580 380 620 412], 'gmax', '0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_inh_on_flex', [580 422 620 454], 'gmax', '0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_exc',        [580 338 620 370], 'gmax', 'feedbackGain*connectionScale*0.18', 'Esyn', '0',   'ThrPre', '-45', 'SlopePre', '10');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibflex_inh',        [580 380 620 412], 'gmax', 'feedbackGain*connectionScale*0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '10');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_inh_on_flex', [580 422 620 454], 'gmax', 'feedbackGain*connectionScale*0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '10');
 % presynaptic: sensory neuron V -> synapse Vpre
 add_line(mdl, 'SN_Ia_ext/1', 'syn_Iaext_exc/1', 'autorouting', 'on');
 add_line(mdl, 'SN_Ib_ext/1', 'syn_Ibext_inh/1', 'autorouting', 'on');
@@ -200,16 +207,21 @@ add_line(mdl, 'syn_Ibflex_inh/1', 'MN_flex/3', 'autorouting', 'on');
 add_line(mdl, 'syn_Iaext_inh_on_flex/1', 'MN_flex/4', 'autorouting', 'on');
 
 %% ---- muscles: MN S -> pentagon activation -> striated BPA -> torque ----
-snsInst(mdl, 'SNS_Library/MuscleActivation', 'Act_ext',  [820 100 880 160], 'tauAct', '50');
-snsInst(mdl, 'SNS_Library/MuscleActivation', 'Act_flex', [820 380 880 440], 'tauAct', '50');
-snsInst(mdl, 'SNS_Library/BPAForce', 'BPA_ext',  [930 100 1000 160], 'Fmax', 'Fmax_ext', 'epsMax', '0.25');
-snsInst(mdl, 'SNS_Library/BPAForce', 'BPA_flex', [930 380 1000 440], 'Fmax', 'Fmax_flex', 'epsMax', '0.25');
+add_knee_activation(mdl,'Act_ext','initialActivationExt',[818 100 881 161]);
+add_knee_activation(mdl,'Act_flex','initialActivationFlex',[818 380 881 441]);
+for side = {'ext','flex'}
+    nm = side{1}; y = 103 + 280*strcmp(nm,'flex');
+    add_block('simulink/Math Operations/Gain',[mdl '/Pressure_' nm], ...
+        'Gain','pressureSupply','Position',[895 y 935 y+33]);
+    snsInst(mdl,'SNS_Library/BPA_20mm',['BPA_' nm],[950 y 1024 y+62], ...
+        'Rest','restingLength','Kmax','freeLength620','TendonL','0','FittingL','0');
+    add_line(mdl,['Act_' nm '/1'],['Pressure_' nm '/1'],'autorouting','on');
+    add_line(mdl,['Pressure_' nm '/1'],['BPA_' nm '/1'],'autorouting','on');
+end
 add_block('simulink/Math Operations/Gain', [mdl '/r_ext'], 'Gain', 'r_arm', 'Position', [1040 115 1070 145]);
 add_block('simulink/Math Operations/Gain', [mdl '/r_flex'], 'Gain', 'r_arm', 'Position', [1040 395 1070 425]);
 add_line(mdl, 'MN_ext/2', 'Act_ext/1', 'autorouting', 'on');
 add_line(mdl, 'MN_flex/2', 'Act_flex/1', 'autorouting', 'on');
-add_line(mdl, 'Act_ext/1', 'BPA_ext/1', 'autorouting', 'on');
-add_line(mdl, 'Act_flex/1', 'BPA_flex/1', 'autorouting', 'on');
 add_line(mdl, 'KneeModel/7', 'BPA_ext/2', 'autorouting', 'on');
 add_line(mdl, 'KneeModel/8', 'BPA_flex/2', 'autorouting', 'on');
 add_line(mdl, 'BPA_ext/1', 'Ib_ext/1', 'autorouting', 'on');
@@ -220,7 +232,7 @@ add_line(mdl, 'r_flex/1', 'KneeModel/1', 'autorouting', 'on');
 add_line(mdl, 'r_ext/1', 'KneeModel/2', 'autorouting', 'on');
 
 %% ---- logging ----
-logNames = {'th', 'thd', 'A_ext', 'A_flex', 'V_MN_ext', 'V_MN_flex', 'F_ext', 'F_flex', 'Ia_ext_c', 'Ib_ext_c'};
+logNames = {'th', 'thd', 'A_ext', 'A_flex', 'V_MN_ext', 'V_MN_flex', 'F_ext', 'F_flex', 'Ia_ext_c', 'Ib_ext_c', 'stim', 'P_ext', 'P_flex', 'L_ext', 'L_flex', 'T_ext', 'T_flex', 'u_ext', 'u_flex'};
 for k = 1:numel(logNames)
     y = 60 + 55*(k-1);
     add_block('simulink/Sinks/To Workspace', [mdl '/log_' logNames{k}], ...
@@ -237,6 +249,13 @@ add_line(mdl, 'BPA_ext/1', 'log_F_ext/1', 'autorouting', 'on');
 add_line(mdl, 'BPA_flex/1', 'log_F_flex/1', 'autorouting', 'on');
 add_line(mdl, 'Ia_ext/1', 'log_Ia_ext_c/1', 'autorouting', 'on');
 add_line(mdl, 'Ib_ext/1', 'log_Ib_ext_c/1', 'autorouting', 'on');
+
+routes={'IaPulse/1','stim';'Pressure_ext/1','P_ext';'Pressure_flex/1','P_flex'; ...
+    'KneeModel/7','L_ext';'KneeModel/8','L_flex';'r_ext/1','T_ext';'r_flex/1','T_flex'; ...
+    'MN_ext/2','u_ext';'MN_flex/2','u_flex'};
+for k=1:size(routes,1)
+    add_line(mdl,routes{k,1},['log_' routes{k,2} '/1'],'autorouting','on');
+end
 
 %% ---- annotations: title + diagram-language legend ----
 try
@@ -265,7 +284,7 @@ for nm = {'syn_Iaext_exc', 'syn_Ibext_inh', 'syn_Iaflex_inh_on_ext', ...
 end
 
 save_system(mdl);
-fprintf('KneeReflexDemo.slx built (2026-09-22 architecture).\n');
+fprintf('KneeReflexDemo.slx built with Chapter 3 pressure-driven antagonists.\n');
 
 function h = snsInst(mdl, libPath, name, pos, varargin)
     h = add_block(libPath, [mdl '/' name], 'Position', pos, varargin{:});

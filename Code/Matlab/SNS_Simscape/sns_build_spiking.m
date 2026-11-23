@@ -54,7 +54,11 @@
 %    external IC + rising reset -> port 1 = xdot, port 2 = RESET,
 %    port 3 = external INITIAL CONDITION.
 
-lib = 'SNS_Library';
+if exist('snsDestinationLibrary','var') && bdIsLoaded(snsDestinationLibrary)
+    lib = snsDestinationLibrary;
+else
+    lib = 'SNS_Library';
+end
 here = fileparts(mfilename('fullpath'));
 if ~bdIsLoaded(lib)
     load_system(fullfile(here, [lib '.slx']));

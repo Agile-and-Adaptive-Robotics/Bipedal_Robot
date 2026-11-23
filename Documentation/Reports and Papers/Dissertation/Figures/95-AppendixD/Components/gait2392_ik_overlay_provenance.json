@@ -1,5 +1,24 @@
 {
-  "source": "D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261028_publication_flow\\human_ik\\gait2392_ik_overlay.csv",
-  "sha256": "64925c1d6544b13f5687baf4cd0ae61f9bdb378f88fea7f3f0a6b345fe995d7f",
-  "operation": "Replot saved mean, standard deviation, reference, and stance columns only; no simulation or alignment changes."
+  "sources": {
+    "model": {
+      "trajectory_sha256": "c1c7080acd5d7bbe2ed317826a1efd9022752fb8d7cc9ca70bccf9c41005af88",
+      "force_source": "half the archived sum of heel and toe channels"
+    },
+    "fitted": {
+      "trajectory_sha256": "6e61b7bbc1c43222e77969a0bbe5d6f4979c4ac180957fb580e29361e762a264",
+      "force_source": "independent upward ground force",
+      "independent_force_sha256": "23435ac277442e8e71877924de8261d3059265f87f8d5d62987bc47aeed2194f"
+    }
+  },
+  "normal_force_fraction_of_legacy_channel_sum": 0.5,
+  "foot_load_threshold_N": 50.0,
+  "start_s": 2.0,
+  "cycle_interval_s": [
+    0.35,
+    2.5
+  ],
+  "reference_files": [
+    "subject01_walk1_ik.mot",
+    "subject01_walk1_grf.mot"
+  ]
 }

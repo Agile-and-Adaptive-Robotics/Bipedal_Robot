@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "source": "SNSGui canvas circuit",
+    "app": "SNSGui"
+  },
+  "neurons": [
+    {
+      "name": "MN_ext",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.5,
+      "Cm_nF": 2.5,
+      "Thr_mV": -45,
+      "Slope_mV": 10
+    },
+    {
+      "name": "MN_flex",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.5,
+      "Cm_nF": 2.5,
+      "Thr_mV": -45,
+      "Slope_mV": 10
+    },
+    {
+      "name": "SN_Ia_ext",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.4,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    },
+    {
+      "name": "SN_Ia_flex",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.4,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    },
+    {
+      "name": "SN_Ib_ext",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.4,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    },
+    {
+      "name": "SN_Ib_flex",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.4,
+      "Cm_nF": 2,
+      "Thr_mV": -55,
+      "Slope_mV": 1
+    }
+  ],
+  "synapses": [
+    {
+      "src": "SN_Ia_ext",
+      "dst": "MN_ext",
+      "g_uS": 0.009,
+      "Esyn_mV": 0,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 10
+    },
+    {
+      "src": "SN_Ia_ext",
+      "dst": "MN_flex",
+      "g_uS": 0.0075,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 10
+    },
+    {
+      "src": "SN_Ia_flex",
+      "dst": "MN_flex",
+      "g_uS": 0.009,
+      "Esyn_mV": 0,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 10
+    },
+    {
+      "src": "SN_Ia_flex",
+      "dst": "MN_ext",
+      "g_uS": 0.0075,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 10
+    },
+    {
+      "src": "SN_Ib_ext",
+      "dst": "MN_ext",
+      "g_uS": 0.010000000000000002,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 10
+    },
+    {
+      "src": "SN_Ib_flex",
+      "dst": "MN_flex",
+      "g_uS": 0.010000000000000002,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -45,
+      "SlopePre_mV": 10
+    }
+  ],
+  "inputs": []
+}

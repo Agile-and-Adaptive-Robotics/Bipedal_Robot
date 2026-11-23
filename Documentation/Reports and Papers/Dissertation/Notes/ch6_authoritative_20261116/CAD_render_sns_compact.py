@@ -62,8 +62,8 @@ def style(ax):
     ax.grid(True, color="0.88", lw=.55)
     ax.set_axisbelow(True)
 
-def panel(ax,letter):
-    ax.text(-.185,1.03,letter,transform=ax.transAxes,fontsize=11,fontweight='bold',va='bottom')
+def panel(ax,letter,x=-.185):
+    ax.text(x,1.03,letter,transform=ax.transAxes,fontsize=11,fontweight='bold',va='bottom')
 
 def glyph(ax, items):
     for p in items:
@@ -200,18 +200,18 @@ def cup():
     def a(k,key): return np.array(r[k][key]["t"]), np.array(r[k][key]["y"])
     on=np.rad2deg(a(0,"th")[1][-1]); off=np.rad2deg(a(1,"th")[1][-1])
     fig=figure(14,15)
-    circuit(fig.add_axes([.04,.724,.92,.258]),["Biceps","Triceps"],"A  Implemented loaded-arm feedback")
-    ax=fig.add_axes([.055,.47,.405,.21]); arm(ax,on,off); ax.set_title("B  Arm geometry",loc='left',pad=4)
+    circuit(fig.add_axes([.04,.724,.92,.258]),["Biceps","Triceps"],"(A)  Implemented loaded-arm feedback")
+    ax=fig.add_axes([.055,.47,.405,.21]); arm(ax,on,off); ax.set_title("(B)  Arm geometry",loc='left',pad=4,fontweight='bold')
     ax=fig.add_axes([.61,.535,.32,.15]); ax.plot(*a(0,"mCup"),color=".2",lw=1.5)
-    ax.set(xlim=(0,10),ylim=(0,.66),ylabel="Added mass (kg)"); panel(ax,'C'); style(ax)
+    ax.set(xlim=(0,10),ylim=(0,.66),ylabel="Added mass (kg)"); panel(ax,'(C)'); style(ax)
     ax=fig.add_axes([.17,.285,.77,.155])
     for k,col,ls,lab in [(0,BLUE,"-","Feedback on"),(1,RED,"--","Feedback off")]:
         t,y=a(k,"th"); ax.plot(t,-np.rad2deg(y),ls,color=col,lw=1.5,label=lab)
     ax.set(xlim=(0,10),ylim=(-9,.5),ylabel="Forearm elevation\n(deg)")
-    panel(ax,'D'); ax.legend(loc="lower left",frameon=False,fontsize=10); style(ax)
+    panel(ax,'(D)',x=-.205); ax.legend(loc="lower left",frameon=False,fontsize=10); style(ax)
     ax=fig.add_axes([.17,.075,.77,.13]); ax.plot(*a(0,"A"),color=BLUE,lw=1.5,label="Biceps"); ax.plot(*a(0,"At"),"--",color=RED,lw=1.5,label="Triceps")
     ax.set(xlim=(0,10),ylim=(0,.55),ylabel="Pressure command\n(normalized)",xlabel="Time (s)")
-    panel(ax,'E'); ax.legend(loc="lower left",frameon=False,fontsize=10); style(ax)
+    panel(ax,'(E)',x=-.205); ax.legend(loc="lower left",frameon=False,fontsize=10); style(ax)
     save(fig,"sns_cup_reflex_authoritative","All six actual feedback connections are shown, with separate biceps and triceps Ib autogenic inhibition. Added mass rises at 0.0625 kg/s throughout the recorded 10-second trial, ending at 0.625 kg. The feedback-on arm sags 2.00 degrees compared with 7.85 degrees for feedback off. Side-view actuator glyphs use current shared vertices. The last panel shows normalized pressure commands for the antagonist Festo 20 mm force blocks; valve/air-flow dynamics are not modeled.")
     return {"cup_final_on_deg":on,"cup_final_off_deg":off,"cup_final_load_kg":a(0,"mCup")[1][-1]}
 

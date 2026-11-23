@@ -103,7 +103,7 @@ def main():
     lines = ["# s3k production walker vs the full thumb-drive library "
              "(2026-09-24)", "",
              f"Run: `{NPZ.name}`, walk window from t={WALK_START} s. "
-             f"{len(rows)} scored references (lower kine_score = better).",
+             f"{len(rows)} scored references (higher kine_score = better).",
              "",
              "| ref | kine_score | sim duty/T/knee | ref duty/T/knee |",
              "|---|---|---|---|"]

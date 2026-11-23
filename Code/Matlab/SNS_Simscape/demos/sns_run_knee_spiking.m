@@ -1,12 +1,8 @@
 %% sns_run_knee_spiking.m — run KneeReflexDemo_Spiking, compare vs baseline
 %
-% Computes the SAME metrics as the committed KneeReflexDemo baseline (see
-% reports_spiking_20261002/goal2_run_baselines.m, values recorded
-% 2026-10-02 on this machine from the committed demo):
-%   baseline: theta(0.05 s) 15.79 deg | settle mean 43.5 deg
-%             (range 41.6-44.9, last 2 s) | A_ext 0.53 / A_flex 0.53
-% plus the spiking-layer observables (IN firing rates, ripple).
-% Saves goal2_knee_spiking.{mat,png} into the campaign report folder.
+% The saved model uses the same measured pressure-driven antagonists as
+% the nonspiking knee. Compare the common-grid pulse and control trials
+% with run_knee_pressure_trials. This entry plots the spiking knee directly.
 
 cdto = fileparts(mfilename('fullpath'));
 cd(cdto);
@@ -22,7 +18,6 @@ rep = fullfile(rep, 'Code', 'MuJoCo_SNS', 'spinal', 'reports_spiking_20261002');
 
 load_system('SNS_Library');
 load_system('KneeReflexDemo_Spiking');
-set_param('KneeReflexDemo_Spiking', 'StopTime', '5');
 out = sim('KneeReflexDemo_Spiking');
 
 th  = out.log_th;    thd = out.log_thd;

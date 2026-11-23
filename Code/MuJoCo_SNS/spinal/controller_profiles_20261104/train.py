@@ -24,6 +24,8 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--family', choices=('hunt', 's3k', 'w2lvar', 'syn6'), required=True)
     p.add_argument('--prepared', type=Path, required=True)
+    p.add_argument('--targets', type=Path, default=S/'hunt_training/runs/targets/targets.npz',
+                   help='Inverse-mechanics recruitment and afferent targets for this fit')
     p.add_argument('--phase', choices=tuple(SPACES), required=True)
     p.add_argument('--trials', type=int, default=16)
     p.add_argument('--budget-s', type=float, default=900.)
@@ -63,7 +65,7 @@ def main():
     if folder.exists():
         raise FileExistsError('Keep the completed/interrupted study; choose a separate prepared candidate for a new run')
     folder.mkdir(parents=True)
-    target = S / 'hunt_training/runs/targets/targets.npz'
+    target = a.targets.resolve(strict=True)
     options = json.loads((a.prepared / 'HUNT_OPTIONS.json').read_text()) if (a.prepared / 'HUNT_OPTIONS.json').exists() else None
     cfg = dict(family=a.family, phase=a.phase, targets=str(target),
                targets_sha256=hashlib.sha256(target.read_bytes()).hexdigest(),

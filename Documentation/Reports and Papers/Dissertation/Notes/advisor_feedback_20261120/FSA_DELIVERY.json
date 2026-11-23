@@ -1,0 +1,1667 @@
+{
+  "changed_files": [
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short.pdf",
+    "figs/95-AppendixD/spiking_ground_neuromechanics_short_alt.txt",
+    "chapters/95-AppendixD.tex",
+    "chapters/70-overall.tex",
+    "chapters/60-sns.tex",
+    "chapters/93-AppendixB.tex",
+    "chapters/92-AppendixA.tex",
+    "thesis.bib"
+  ],
+  "source_archive_sha256": "898e1abd5fc9bb91c421c53d9448cb80fc485e6f8d26c5ab49fc61b884f37fa2",
+  "source_pdf_sha256": "511279403d9c766a761d2d8980a4171f97c5dc784c98d18e16ce77bb884425d0",
+  "new_archive_sha256": "a882e922a349e945e09d8c9b540c1e5a7669b71cc2581b4715e64351e6e1e728",
+  "new_pdf_sha256": "1f98eeb64d0c0dbc9f49ca962e54d3fd6369eda3c79e9d4294d7b25076339d85",
+  "pages": 355,
+  "sections": {
+    "FSA": {
+      "section_or_equation": "D.1.4",
+      "printed_page": 279,
+      "pdf_page": 299
+    },
+    "chapter_FSA": {
+      "section_or_equation": "6.5.1",
+      "printed_page": 155,
+      "pdf_page": 175
+    },
+    "equation": {
+      "section_or_equation": "A12",
+      "printed_page": 216,
+      "pdf_page": 236
+    },
+    "CAD": {
+      "section_or_equation": "D.4.4",
+      "printed_page": 312,
+      "pdf_page": 332
+    },
+    "pressure": {
+      "section_or_equation": "D.1.5",
+      "printed_page": 281,
+      "pdf_page": 301
+    },
+    "stepping": {
+      "section_or_equation": "D.4.1",
+      "printed_page": 308,
+      "pdf_page": 328
+    },
+    "spiking": {
+      "section_or_equation": "D7",
+      "printed_page": 319,
+      "pdf_page": 339
+    }
+  },
+  "compiler_warnings": [],
+  "overfull": 0,
+  "underfull": 12,
+  "unembedded_fonts": [],
+  "bib_warnings": 0,
+  "fsa": {
+    "recruitment": {
+      "r": {
+        "nmf_vaf_centered": 0.9183966155186556,
+        "dynamic_fsa_vaf_centered": 0.8422875548484211,
+        "dynamic_fsa_rmse_activation": 0.10450714598876085
+      },
+      "l": {
+        "nmf_vaf_centered": 0.9293225533115164,
+        "dynamic_fsa_vaf_centered": 0.8395507728860074,
+        "dynamic_fsa_rmse_activation": 0.1047227084769251
+      }
+    },
+    "rank": {
+      "r": 6,
+      "l": 6
+    },
+    "phase_normalization": {
+      "r": 1,
+      "l": 1
+    },
+    "basis_fit_convergence": [
+      {
+        "side": "r",
+        "rank": 4,
+        "iterations": 258,
+        "long_vaf": 0.8598752845991622,
+        "source_vaf": 0.8598752845991622
+      },
+      {
+        "side": "r",
+        "rank": 5,
+        "iterations": 216,
+        "long_vaf": 0.89300877667171,
+        "source_vaf": 0.89300877667171
+      },
+      {
+        "side": "r",
+        "rank": 6,
+        "iterations": 1918,
+        "long_vaf": 0.9183966155186556,
+        "source_vaf": 0.9183966155186556
+      },
+      {
+        "side": "l",
+        "rank": 4,
+        "iterations": 93,
+        "long_vaf": 0.8341774294381259,
+        "source_vaf": 0.8341774294381259
+      },
+      {
+        "side": "l",
+        "rank": 5,
+        "iterations": 224,
+        "long_vaf": 0.888137208333468,
+        "source_vaf": 0.888137208333468
+      },
+      {
+        "side": "l",
+        "rank": 6,
+        "iterations": 122,
+        "long_vaf": 0.9293225533115164,
+        "source_vaf": 0.9293225533115164
+      }
+    ],
+    "independent_replay_all_arrays_equal": true,
+    "graded_pathways": {
+      "s3k": {
+        "family": "s3k",
+        "default_off_exact": true,
+        "census": [
+          410,
+          376,
+          1186
+        ],
+        "tau_s": 0.003896228836664684,
+        "pools": 368,
+        "maximum_pool_error_mV": 4.440892098500626e-16,
+        "final_consumed": true
+      },
+      "w2lvar": {
+        "family": "w2lvar",
+        "default_off_exact": true,
+        "census": [
+          888,
+          382,
+          7866
+        ],
+        "tau_s": 0.003896228836664684,
+        "pools": 368,
+        "maximum_pool_error_mV": 4.440892098500626e-16,
+        "final_consumed": true
+      },
+      "syn6": {
+        "family": "syn6",
+        "default_off_exact": true,
+        "census": [
+          794,
+          382,
+          3033
+        ],
+        "tau_s": 0.003896228836664684,
+        "pools": 368,
+        "maximum_pool_error_mV": 4.440892098500626e-16,
+        "final_consumed": true
+      }
+    },
+    "spiking_literal_gain": 1.121477770820288,
+    "spiking_rate_matched_gain": 0.9937382592360676,
+    "spiking_paper_domain_pass": true,
+    "spiking_gait_like_domain_pass": true,
+    "script_hashes": {
+      "bsolve_ik.py": "feadc0f85c47eb2e6b569f4e7a366201343852df1f8afb8df06cffbd5d284f65",
+      "fsa_backsolve.py": "594722c7649b79879f97e8f4d11526f3f2e197d5dfeaf82a56e2e75da077cfb5",
+      "graded_profile.py": "f3198f3d6fb9c724da15c28a232ab05585b58220328ac3e0cde4022ec8cc87c4",
+      "table2_glif.py": "23e6ab8a02310f132fd6970e6ec194fb7d1e55cd98f142e8689d4a654c45693d"
+    }
+  },
+  "human_forward_comparisons": {
+    "biw_air1": {
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage1",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\arch_biw_air1",
+      "compiled_model_identical": true,
+      "qpos_identical": true,
+      "reference": {
+        "score": 42.965741126346416,
+        "accepted": false,
+        "knee_cycles": [
+          7,
+          7
+        ],
+        "knee_ranges_deg": [
+          73.90590676595717,
+          72.98174757903891
+        ],
+        "period_s": 1.2329999999999997,
+        "cycle_phase_error": 0.5
+      },
+      "corrected": {
+        "score": 42.965741126346416,
+        "accepted": false,
+        "knee_cycles": [
+          7,
+          7
+        ],
+        "knee_ranges_deg": [
+          73.90590676595717,
+          72.98174757903891
+        ],
+        "period_s": 1.2329999999999997,
+        "cycle_phase_error": 0.5
+      },
+      "body_data_identical": true,
+      "archived_channel_count": 24,
+      "new_channel_count": 32,
+      "positive_time_step_s": 0.0019999999999988916,
+      "matched_all_original_named_voltage_samples": true,
+      "matched_all_original_pulse_samples": false
+    },
+    "biw_air2": {
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\hunt_pose_air_validation_v3\\stage2",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\arch_biw_air2",
+      "compiled_model_identical": true,
+      "qpos_identical": true,
+      "reference": {
+        "score": 99.66966848539896,
+        "accepted": true,
+        "knee_cycles": [
+          7,
+          7
+        ],
+        "knee_ranges_deg": [
+          41.46576937126136,
+          39.66646727014467
+        ],
+        "period_s": 1.3000000000000003,
+        "cycle_phase_error": 0.09327680150520919
+      },
+      "corrected": {
+        "score": 99.66966848539896,
+        "accepted": true,
+        "knee_cycles": [
+          7,
+          7
+        ],
+        "knee_ranges_deg": [
+          41.46576937126136,
+          39.66646727014467
+        ],
+        "period_s": 1.3000000000000003,
+        "cycle_phase_error": 0.09327680150520919
+      },
+      "body_data_identical": true,
+      "archived_channel_count": 24,
+      "new_channel_count": 32,
+      "positive_time_step_s": 0.0019999999999988916,
+      "matched_all_original_named_voltage_samples": true,
+      "matched_all_original_pulse_samples": false
+    },
+    "syn6_air": {
+      "source": "D:\\Users\\Ben Bolen\\ControllerTraining_20261104\\syn6_stage2_regularize_20261105\\s2_latch",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\arch_syn6_air",
+      "compiled_model_identical": true,
+      "qpos_identical": true,
+      "reference": {
+        "score": 18.243448525104906,
+        "accepted": false,
+        "knee_cycles": [
+          12,
+          11
+        ],
+        "knee_ranges_deg": [
+          76.563544156022,
+          86.24006255691648
+        ],
+        "period_s": 0.7520000000000007,
+        "cycle_phase_error": 0.20265776970606073
+      },
+      "corrected": {
+        "score": 18.243448525104906,
+        "accepted": false,
+        "knee_cycles": [
+          12,
+          11
+        ],
+        "knee_ranges_deg": [
+          76.563544156022,
+          86.24006255691648
+        ],
+        "period_s": 0.7520000000000007,
+        "cycle_phase_error": 0.20265776970606073
+      },
+      "body_data_identical": true,
+      "archived_channel_count": 30,
+      "new_channel_count": 30,
+      "positive_time_step_s": 0.0019999999999988916,
+      "matched_all_original_named_voltage_samples": true,
+      "matched_all_original_pulse_samples": false
+    },
+    "syn6_timing_all": {
+      "scope": "All 12 PF outputs driven simultaneously by hybrid RG-triggered relays in offline D replay",
+      "passed": true,
+      "exact_repeat": true,
+      "mn_weights_exact": true,
+      "rg_trace_exact": true,
+      "mn_waveform_rmse": 0.1555564003734772
+    },
+    "syn6_timing_S5_bundle": {
+      "scope": "Hybrid RG-triggered relay prototype coupled to one bilateral PF channel during offline D replay",
+      "passed": true,
+      "exact_repeat": true,
+      "mn_weights_exact": true,
+      "rg_trace_exact": true,
+      "mn_waveform_rmse": 0.1630554925735339
+    },
+    "dirusso_source": {
+      "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\literature\\dirusso_input_event_v1\\diagnostic_registered_weights\\old_source_W",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\dirusso_registered_source",
+      "fall_s": 0.428,
+      "compiled_model_identical": true,
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 26,
+        "differences": {}
+      }
+    },
+    "dirusso_fitted": {
+      "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\literature\\dirusso_input_event_v1\\diagnostic_registered_weights\\new_bounded_W",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\dirusso_registered_fitted",
+      "fall_s": 0.47600000000000003,
+      "compiled_model_identical": true,
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 26,
+        "differences": {}
+      }
+    },
+    "standing_baseline": {
+      "source": "D:\\Users\\Ben Bolen\\PosturalPilot_20261104\\gait2392_stage3_baseline_20261110",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\standing_baseline",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 20,
+        "differences": {}
+      },
+      "model_identical": true,
+      "score_old": 71.20555331676574,
+      "score_new": 71.20555331676574,
+      "wrench_data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 2,
+        "differences": {}
+      }
+    },
+    "standing_premotor": {
+      "source": "D:\\Users\\Ben Bolen\\PosturalPilot_20261104\\gait2392_stage3_premotor_20261110",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\standing_premotor",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 20,
+        "differences": {}
+      },
+      "model_identical": true,
+      "score_old": 69.96931306078011,
+      "score_new": 69.96931306078011,
+      "wrench_data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 2,
+        "differences": {}
+      }
+    },
+    "standing_baseline_reduced": {
+      "source": "D:\\Users\\Ben Bolen\\PosturalPilot_20261104\\gait2392_stage3_baseline_reduced_20261110",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\standing_baseline_reduced",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 20,
+        "differences": {}
+      },
+      "model_identical": true,
+      "score_old": 64.7409940543237,
+      "score_new": 64.7409940543237,
+      "wrench_data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 2,
+        "differences": {}
+      }
+    },
+    "standing_premotor_reduced": {
+      "source": "D:\\Users\\Ben Bolen\\PosturalPilot_20261104\\gait2392_stage3_premotor_reduced_20261110",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\standing_premotor_reduced",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 20,
+        "differences": {}
+      },
+      "model_identical": true,
+      "score_old": 63.31190213067084,
+      "score_new": 63.31190213067084,
+      "wrench_data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 2,
+        "differences": {}
+      }
+    },
+    "speed_source_baseline_s1": {
+      "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.json",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\speed_source_baseline_s1",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 20,
+        "differences": {}
+      },
+      "all_associated_arrays": {
+        "sim.assistance.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 2,
+          "differences": {}
+        },
+        "sim.contact_events.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        },
+        "sim.mechanics.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 18,
+          "differences": {}
+        },
+        "sim.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 13,
+          "differences": {}
+        },
+        "sim.regional_contacts.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        }
+      },
+      "model_identical": true,
+      "timing": {
+        "external_s": 88.98776500002714,
+        "rc": 0,
+        "contention_untimed_comparison": true,
+        "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_baseline_s1.json"
+      }
+    },
+    "speed_source_native_s1": {
+      "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.json",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\speed_source_native_s1",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 20,
+        "differences": {}
+      },
+      "all_associated_arrays": {
+        "sim.assistance.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 2,
+          "differences": {}
+        },
+        "sim.contact_events.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        },
+        "sim.mechanics.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 18,
+          "differences": {}
+        },
+        "sim.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 13,
+          "differences": {}
+        },
+        "sim.regional_contacts.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        }
+      },
+      "model_identical": true,
+      "timing": {
+        "external_s": 1014.6221853999887,
+        "rc": 0,
+        "contention_untimed_comparison": true,
+        "source": "D:\\Users\\Ben Bolen\\NeuroCampaign_20261102_9h\\configurations\\source_native_s1.json"
+      }
+    },
+    "speed_sparse_final": {
+      "source": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.json",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\speed_sparse_final",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 35,
+        "differences": {}
+      },
+      "all_associated_arrays": {
+        "sim.assistance.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 2,
+          "differences": {}
+        },
+        "sim.balance.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 2,
+          "differences": {}
+        },
+        "sim.contact_events.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        },
+        "sim.mechanics.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 18,
+          "differences": {}
+        },
+        "sim.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 13,
+          "differences": {}
+        },
+        "sim.regional_contacts.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        }
+      },
+      "model_identical": true,
+      "timing": {
+        "external_s": 397.1732300000149,
+        "rc": 0,
+        "contention_untimed_comparison": true,
+        "source": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\sparse_final.json"
+      }
+    },
+    "speed_compact_final": {
+      "source": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.json",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\speed_compact_final",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 35,
+        "differences": {}
+      },
+      "all_associated_arrays": {
+        "sim.assistance.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 2,
+          "differences": {}
+        },
+        "sim.balance.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 2,
+          "differences": {}
+        },
+        "sim.contact_events.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        },
+        "sim.mechanics.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 18,
+          "differences": {}
+        },
+        "sim.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 13,
+          "differences": {}
+        },
+        "sim.regional_contacts.npz": {
+          "keys_missing": [],
+          "keys_added": [],
+          "identical_arrays": 3,
+          "differences": {}
+        }
+      },
+      "model_identical": true,
+      "timing": {
+        "external_s": 341.07136870000977,
+        "rc": 0,
+        "contention_untimed_comparison": true,
+        "source": "D:\\Users\\Ben Bolen\\NeuroAcceleration_20261104\\body\\compact_final.json"
+      }
+    },
+    "spike_ground_s3k": {
+      "corrected": {
+        "kine_score": -161.3473347403876,
+        "k_n_cycles_r": 9,
+        "k_n_cycles_l": 0,
+        "k_contact_frac_r": 0.6351428571428571,
+        "k_contact_frac_l": 0.9848571428571429,
+        "k_duty_r": 0.4695714285714286,
+        "k_duty_l": null,
+        "k_knee_min_r": -64.40372635725033,
+        "tilt_max": 22.09756787655339,
+        "nan": false,
+        "t_end": 15.998000000000001,
+        "bal_fell": false
+      },
+      "original": {
+        "kine_score": -161.56754173676563,
+        "k_n_cycles_r": 9,
+        "k_n_cycles_l": 0,
+        "k_contact_frac_r": 0.6367142857142857,
+        "k_contact_frac_l": 0.9847142857142858,
+        "k_duty_r": 0.47114285714285714,
+        "k_duty_l": null,
+        "k_knee_min_r": -64.29205155222364,
+        "tilt_max": 22.0975375424625,
+        "nan": false,
+        "t_end": 15.998000000000001,
+        "bal_fell": false
+      },
+      "original_trace_comparison": {
+        "keys_missing": [],
+        "keys_added": [
+          "ctrl"
+        ],
+        "identical_arrays": 12,
+        "differences": {}
+      }
+    },
+    "spike_ground_spiking": {
+      "corrected": {
+        "kine_score": -235.207934303974,
+        "k_n_cycles_r": 8,
+        "k_n_cycles_l": 10,
+        "k_contact_frac_r": 0.7987142857142857,
+        "k_contact_frac_l": 0.8642857142857143,
+        "k_duty_r": 0.7934285714285715,
+        "k_duty_l": 0.7992857142857143,
+        "k_knee_min_r": -79.80380995442522,
+        "tilt_max": 19.2202342402192,
+        "nan": false,
+        "t_end": 15.998000000000001,
+        "bal_fell": false
+      },
+      "original": null
+    },
+    "wean_ladder": [
+      {
+        "source": "wean_0",
+        "result": {
+          "kine_score": -178.31816857678533,
+          "k_n_cycles_r": 7,
+          "k_n_cycles_l": 9,
+          "k_contact_frac_r": 0.881,
+          "k_contact_frac_l": 0.8464285714285714,
+          "k_duty_r": 0.865,
+          "k_duty_l": 0.5817142857142857,
+          "k_knee_min_r": -59.39572643681729,
+          "tilt_max": 17.63098346447253,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.0,
+        "historical": {
+          "kine_score": -157.07000434968433,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 11,
+          "k_contact_frac_r": 0.8228571428571428,
+          "k_contact_frac_l": 0.7871428571428571,
+          "k_duty_r": 0.8027142857142857,
+          "k_duty_l": 0.5164285714285715,
+          "k_knee_min_r": -68.80737767442777,
+          "tilt_max": 17.6383286105815,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_0.1",
+        "result": {
+          "kine_score": null,
+          "k_n_cycles_r": 0,
+          "k_n_cycles_l": 0,
+          "k_contact_frac_r": 0.9755714285714285,
+          "k_contact_frac_l": 0.9531428571428572,
+          "k_duty_r": null,
+          "k_duty_l": null,
+          "k_knee_min_r": null,
+          "tilt_max": 17.654842519851027,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false,
+          "original_diagnostic_sentinel": -25.0,
+          "optimization_penalty": -320.0
+        },
+        "scale": 0.1,
+        "historical": {
+          "kine_score": -156.74177820634011,
+          "k_n_cycles_r": 10,
+          "k_n_cycles_l": 8,
+          "k_contact_frac_r": 0.8075714285714286,
+          "k_contact_frac_l": 0.7615714285714286,
+          "k_duty_r": 0.7758571428571429,
+          "k_duty_l": 0.5621428571428572,
+          "k_knee_min_r": -61.32834908958856,
+          "tilt_max": 17.64958480689423,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_0.2",
+        "result": {
+          "kine_score": -217.1920461284119,
+          "k_n_cycles_r": 2,
+          "k_n_cycles_l": 2,
+          "k_contact_frac_r": 0.9168571428571428,
+          "k_contact_frac_l": 0.9594285714285714,
+          "k_duty_r": 0.732,
+          "k_duty_l": 0.7595714285714286,
+          "k_knee_min_r": -56.76580909800066,
+          "tilt_max": 17.6685514158272,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.2,
+        "historical": {
+          "kine_score": -149.2723778434431,
+          "k_n_cycles_r": 6,
+          "k_n_cycles_l": 8,
+          "k_contact_frac_r": 0.7705714285714286,
+          "k_contact_frac_l": 0.7991428571428572,
+          "k_duty_r": 0.7207142857142858,
+          "k_duty_l": 0.6125714285714285,
+          "k_knee_min_r": -65.33407871486693,
+          "tilt_max": 17.677087484575686,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_0.3",
+        "result": {
+          "kine_score": -142.38315998612475,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 11,
+          "k_contact_frac_r": 0.7995714285714286,
+          "k_contact_frac_l": 0.7572857142857143,
+          "k_duty_r": 0.7414285714285714,
+          "k_duty_l": 0.5905714285714285,
+          "k_knee_min_r": -66.74914929201353,
+          "tilt_max": 17.700935122419825,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.3,
+        "historical": {
+          "kine_score": -138.9257410025478,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 9,
+          "k_contact_frac_r": 0.8071428571428572,
+          "k_contact_frac_l": 0.807,
+          "k_duty_r": 0.7878571428571428,
+          "k_duty_l": 0.6014285714285714,
+          "k_knee_min_r": -63.90963638234326,
+          "tilt_max": 17.69460959240696,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": true
+      },
+      {
+        "source": "wean_0.38",
+        "result": {
+          "kine_score": -143.6331394787314,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 12,
+          "k_contact_frac_r": 0.7868571428571428,
+          "k_contact_frac_l": 0.7834285714285715,
+          "k_duty_r": 0.7317142857142858,
+          "k_duty_l": 0.6278571428571429,
+          "k_knee_min_r": -67.27822324840216,
+          "tilt_max": 17.71191174039207,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.38,
+        "historical": {
+          "kine_score": -152.82208866862297,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 8,
+          "k_contact_frac_r": 0.8772857142857143,
+          "k_contact_frac_l": 0.8218571428571428,
+          "k_duty_r": 0.8562857142857143,
+          "k_duty_l": 0.643,
+          "k_knee_min_r": -58.549012552709755,
+          "tilt_max": 17.71793124873509,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": true
+      },
+      {
+        "source": "wean_0.4",
+        "result": {
+          "kine_score": -175.39784222621938,
+          "k_n_cycles_r": 7,
+          "k_n_cycles_l": 0,
+          "k_contact_frac_r": 0.599,
+          "k_contact_frac_l": 0.9981428571428571,
+          "k_duty_r": 0.5074285714285715,
+          "k_duty_l": null,
+          "k_knee_min_r": -82.08025024979852,
+          "tilt_max": 20.0390428737257,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.4,
+        "historical": null,
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_0.45",
+        "result": {
+          "kine_score": -160.45303072308008,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 11,
+          "k_contact_frac_r": 0.84,
+          "k_contact_frac_l": 0.9114285714285715,
+          "k_duty_r": 0.8314285714285714,
+          "k_duty_l": 0.7717142857142857,
+          "k_knee_min_r": -65.14525658849756,
+          "tilt_max": 17.72857809311156,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.45,
+        "historical": {
+          "kine_score": -157.88328246273065,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 8,
+          "k_contact_frac_r": 0.82,
+          "k_contact_frac_l": 0.8955714285714286,
+          "k_duty_r": 0.7865714285714286,
+          "k_duty_l": 0.7205714285714285,
+          "k_knee_min_r": -58.74452564777718,
+          "tilt_max": 17.735052945376356,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_0.55",
+        "result": {
+          "kine_score": -175.35814182423766,
+          "k_n_cycles_r": 11,
+          "k_n_cycles_l": 7,
+          "k_contact_frac_r": 0.7685714285714286,
+          "k_contact_frac_l": 0.9828571428571429,
+          "k_duty_r": 0.7191428571428572,
+          "k_duty_l": 0.9687142857142857,
+          "k_knee_min_r": -53.48028716265049,
+          "tilt_max": 17.751769148325003,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.55,
+        "historical": {
+          "kine_score": -169.86606883716658,
+          "k_n_cycles_r": 11,
+          "k_n_cycles_l": 6,
+          "k_contact_frac_r": 0.805,
+          "k_contact_frac_l": 0.985,
+          "k_duty_r": 0.7745714285714286,
+          "k_duty_l": 0.9751428571428571,
+          "k_knee_min_r": -49.33881426014224,
+          "tilt_max": 17.754460336119806,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_0.7",
+        "result": {
+          "kine_score": -158.19253877256713,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 5,
+          "k_contact_frac_r": 0.9197142857142857,
+          "k_contact_frac_l": 0.934,
+          "k_duty_r": 0.7932857142857143,
+          "k_duty_l": 0.8757142857142857,
+          "k_knee_min_r": -59.53230674330114,
+          "tilt_max": 17.782924086601728,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.7,
+        "historical": {
+          "kine_score": -178.66959587749477,
+          "k_n_cycles_r": 10,
+          "k_n_cycles_l": 4,
+          "k_contact_frac_r": 0.8738571428571429,
+          "k_contact_frac_l": 0.9317142857142857,
+          "k_duty_r": 0.7725714285714286,
+          "k_duty_l": 0.9247142857142857,
+          "k_knee_min_r": -57.61476001307376,
+          "tilt_max": 17.792339352739692,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_0.85",
+        "result": {
+          "kine_score": -221.567503226396,
+          "k_n_cycles_r": 2,
+          "k_n_cycles_l": 2,
+          "k_contact_frac_r": 0.8701428571428571,
+          "k_contact_frac_l": 0.8774285714285714,
+          "k_duty_r": 0.6704285714285714,
+          "k_duty_l": 0.6948571428571428,
+          "k_knee_min_r": -68.42992550226862,
+          "tilt_max": 21.36876603044749,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.85,
+        "historical": null,
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_1",
+        "result": {
+          "kine_score": -215.14265128553217,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 0,
+          "k_contact_frac_r": 0.8848571428571429,
+          "k_contact_frac_l": 1.0,
+          "k_duty_r": 0.7917142857142857,
+          "k_duty_l": null,
+          "k_knee_min_r": -50.41355625917144,
+          "tilt_max": 17.849698483959624,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 1.0,
+        "historical": {
+          "kine_score": -215.11790698772595,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 0,
+          "k_contact_frac_r": 0.8845714285714286,
+          "k_contact_frac_l": 1.0,
+          "k_duty_r": 0.7904285714285715,
+          "k_duty_l": null,
+          "k_knee_min_r": -50.496092257424124,
+          "tilt_max": 17.85412147640539,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_prod_0.3",
+        "result": {
+          "kine_score": -168.26834396486163,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 11,
+          "k_contact_frac_r": 0.8475294117647059,
+          "k_contact_frac_l": 0.8690588235294118,
+          "k_duty_r": 0.7904705882352941,
+          "k_duty_l": 0.5898823529411765,
+          "k_knee_min_r": -49.469956103701264,
+          "tilt_max": null,
+          "nan": null,
+          "t_end": 21.998,
+          "bal_fell": null
+        },
+        "scale": 0.3,
+        "historical": {
+          "kine_score": -138.9257410025478,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 9,
+          "k_contact_frac_r": 0.8071428571428572,
+          "k_contact_frac_l": 0.807,
+          "k_duty_r": 0.7878571428571428,
+          "k_duty_l": 0.6014285714285714,
+          "k_knee_min_r": -63.90963638234326,
+          "tilt_max": 17.69460959240696,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": false
+      },
+      {
+        "source": "wean_repeat_0.3",
+        "result": {
+          "kine_score": -142.38315998612475,
+          "k_n_cycles_r": 9,
+          "k_n_cycles_l": 11,
+          "k_contact_frac_r": 0.7995714285714286,
+          "k_contact_frac_l": 0.7572857142857143,
+          "k_duty_r": 0.7414285714285714,
+          "k_duty_l": 0.5905714285714285,
+          "k_knee_min_r": -66.74914929201353,
+          "tilt_max": 17.700935122419825,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.3,
+        "historical": {
+          "kine_score": -138.9257410025478,
+          "k_n_cycles_r": 8,
+          "k_n_cycles_l": 9,
+          "k_contact_frac_r": 0.8071428571428572,
+          "k_contact_frac_l": 0.807,
+          "k_duty_r": 0.7878571428571428,
+          "k_duty_l": 0.6014285714285714,
+          "k_knee_min_r": -63.90963638234326,
+          "tilt_max": 17.69460959240696,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "passes_original_16s_thresholds": true
+      },
+      {
+        "source": "wean_winner_round8_best",
+        "result": {
+          "kine_score": -147.27285558764075,
+          "k_n_cycles_r": 15,
+          "k_n_cycles_l": 12,
+          "k_contact_frac_r": 0.9722857142857143,
+          "k_contact_frac_l": 0.8981428571428571,
+          "k_duty_r": 0.9185714285714286,
+          "k_duty_l": 0.8358571428571429,
+          "k_knee_min_r": -36.18217631148981,
+          "tilt_max": 17.767923603392013,
+          "nan": false,
+          "t_end": 15.998000000000001,
+          "bal_fell": false
+        },
+        "scale": 0.3999758510662065,
+        "historical": null,
+        "passes_original_16s_thresholds": false
+      }
+    ],
+    "spiking_constant_drive": {
+      "archive": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_spiking_20261002\\goal4_gate2_traces.npz",
+      "replay": "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\neural_rhythm_gate.npz",
+      "data": {
+        "keys_missing": [],
+        "keys_added": [],
+        "identical_arrays": 4,
+        "differences": {}
+      },
+      "reported_period_s": {
+        "nonspiking": 0.399224,
+        "spiking": 0.621067
+      },
+      "source": "goal4_dump_gate2_traces.py"
+    },
+    "scale_0p3_independent_repeat": {
+      "keys_missing": [],
+      "keys_added": [],
+      "identical_arrays": 13,
+      "differences": {}
+    }
+  },
+  "four_muscle_tuning": {
+    "record": "Code/MuJoCo_SNS/spinal/physics_fidelity/harness_sensitivity/tuning_result.json",
+    "sha256": "0b101016f5f5bea9c5ad055be7fcfcd19ca4a516f01ea7d28bba00b2ecb73955"
+  },
+  "robotbody": {
+    "commands": "54 bilateral neural motor outputs acting on 27 paired actuator sites",
+    "comparisons": {
+      "mujoco_baseline_distal_step": {
+        "control": {
+          "worst_stop_excursion_deg": 1.067544244762441,
+          "first_stop_time_ms": 29.500000000000004,
+          "first_stop_joints": [
+            "ankle_angle_r",
+            "ankle_angle_l"
+          ],
+          "right_knee_first_stop_ms": null,
+          "end_right_knee_deg": -69.95066203972414,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 901.5192901379136,
+          "peak_chamber_kPa": 350.0
+        },
+        "vas_med_r": {
+          "worst_stop_excursion_deg": 1.0675053439361293,
+          "first_stop_time_ms": 29.500000000000004,
+          "first_stop_joints": [
+            "ankle_angle_r",
+            "ankle_angle_l"
+          ],
+          "right_knee_first_stop_ms": null,
+          "end_right_knee_deg": -66.5116968534094,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 901.5192901379136,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": 0.011583935281170072,
+            "15": 0.05332041694898404,
+            "20": 0.06890863060693896,
+            "25": 0.017787729679027066,
+            "30": -0.12386597917222923,
+            "40": -0.598370404655582,
+            "50": -0.7422561284859684,
+            "100": 1.3763947958031078,
+            "150": 3.438965186314724
+          },
+          "changed_commands": [
+            "vas_med_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 901.5192901379136
+        },
+        "bifemsh_r": {
+          "worst_stop_excursion_deg": 1.06750534315141,
+          "first_stop_time_ms": 29.500000000000004,
+          "first_stop_joints": [
+            "ankle_angle_r",
+            "ankle_angle_l"
+          ],
+          "right_knee_first_stop_ms": null,
+          "end_right_knee_deg": -83.30385172381804,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 901.5192901379136,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": -0.003067010742351535,
+            "15": -0.022739007427675553,
+            "20": -0.07572895420807152,
+            "25": -0.17779088000529342,
+            "30": -0.3310748062293909,
+            "40": -0.6242188294113118,
+            "50": -1.288504916979394,
+            "100": -7.993314300571958,
+            "150": -13.353189684093914
+          },
+          "changed_commands": [
+            "bifemsh_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 500.13817825492737
+        }
+      },
+      "mujoco_selected_distal_step": {
+        "control": {
+          "worst_stop_excursion_deg": 1.5391439830834492,
+          "first_stop_time_ms": 20.75,
+          "first_stop_joints": [
+            "ankle_angle_r",
+            "ankle_angle_l"
+          ],
+          "right_knee_first_stop_ms": null,
+          "end_right_knee_deg": -96.05637351084779,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 2734.2463444920004,
+          "peak_chamber_kPa": 350.0
+        },
+        "vas_med_r": {
+          "worst_stop_excursion_deg": 1.5391202435629079,
+          "first_stop_time_ms": 20.75,
+          "first_stop_joints": [
+            "ankle_angle_r",
+            "ankle_angle_l"
+          ],
+          "right_knee_first_stop_ms": null,
+          "end_right_knee_deg": -94.73195299361099,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 2734.2463444920004,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": 0.005340053461118552,
+            "15": 0.02558974019332793,
+            "20": 0.01754525949244468,
+            "25": -0.01153165475777496,
+            "30": -0.12097479582742111,
+            "40": -0.6011789722593482,
+            "50": -0.5646256288274049,
+            "100": 0.5606383671743969,
+            "150": 1.324420517236805
+          },
+          "changed_commands": [
+            "vas_med_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 850.0885015073763
+        },
+        "bifemsh_r": {
+          "worst_stop_excursion_deg": 1.5391202431449194,
+          "first_stop_time_ms": 20.75,
+          "first_stop_joints": [
+            "ankle_angle_r",
+            "ankle_angle_l"
+          ],
+          "right_knee_first_stop_ms": null,
+          "end_right_knee_deg": -110.05560647707651,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 2734.2463444920004,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": -0.005020133428173864,
+            "15": -0.03810352428885137,
+            "20": -0.12706327949327575,
+            "25": -0.22523600644292274,
+            "30": -0.4016910546453911,
+            "40": -1.0738121307948283,
+            "50": -2.0783641180942034,
+            "100": -8.553464073708348,
+            "150": -13.99923296622872
+          },
+          "changed_commands": [
+            "bifemsh_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 711.8717640623177
+        }
+      },
+      "opensim_baseline_distal_step": {
+        "control": {
+          "worst_stop_excursion_deg": 2.0267385879293784,
+          "first_stop_time_ms": 13.5,
+          "first_stop_joints": [
+            "mtp_angle_r",
+            "mtp_angle_l"
+          ],
+          "right_knee_first_stop_ms": 49.0,
+          "end_right_knee_deg": 8.707269098638314,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 901.5192901379136,
+          "peak_chamber_kPa": 350.0
+        },
+        "vas_med_r": {
+          "worst_stop_excursion_deg": 2.3150704665952206,
+          "first_stop_time_ms": 13.25,
+          "first_stop_joints": [
+            "mtp_angle_r"
+          ],
+          "right_knee_first_stop_ms": 45.0,
+          "end_right_knee_deg": 9.73199991014481,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 1393.0979162737813,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": 0.013396286244805872,
+            "15": 0.1025070602473094,
+            "20": 0.35395370963656453,
+            "25": 0.8277351919371988,
+            "30": 1.3117646424095426,
+            "40": 3.548196024315197,
+            "50": 0.17890376216571593,
+            "100": 0.28023811410919575,
+            "150": 1.024730811506496
+          },
+          "changed_commands": [
+            "vas_med_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 1393.0979162737813
+        },
+        "bifemsh_r": {
+          "worst_stop_excursion_deg": 2.026738519605846,
+          "first_stop_time_ms": 13.5,
+          "first_stop_joints": [
+            "mtp_angle_r",
+            "mtp_angle_l"
+          ],
+          "right_knee_first_stop_ms": 50.5,
+          "end_right_knee_deg": 11.127750154447941,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 941.0813627896761,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": -0.0030207034140667926,
+            "15": -0.023445279916627083,
+            "20": -0.08224793692577798,
+            "25": -0.20375614961264013,
+            "30": -0.3145961593801303,
+            "40": -0.8724194731484526,
+            "50": -1.5361544464571184,
+            "100": 0.842705440281976,
+            "150": 2.4204810558096277
+          },
+          "changed_commands": [
+            "bifemsh_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 941.0813627896761
+        }
+      },
+      "opensim_selected_distal_step": {
+        "control": {
+          "worst_stop_excursion_deg": 1.5583552025342902,
+          "first_stop_time_ms": 9.000000000000002,
+          "first_stop_joints": [
+            "mtp_angle_r",
+            "mtp_angle_l"
+          ],
+          "right_knee_first_stop_ms": 63.75,
+          "end_right_knee_deg": 2.721133770726474,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 2734.2463444920004,
+          "peak_chamber_kPa": 350.0
+        },
+        "vas_med_r": {
+          "worst_stop_excursion_deg": 1.7600327716762587,
+          "first_stop_time_ms": 9.000000000000002,
+          "first_stop_joints": [
+            "mtp_angle_r",
+            "mtp_angle_l"
+          ],
+          "right_knee_first_stop_ms": 58.5,
+          "end_right_knee_deg": 10.447892819740648,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 2734.2463444920004,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": 0.00611964933783278,
+            "15": 0.04887958880650967,
+            "20": 0.13032297283514965,
+            "25": 0.312423515407096,
+            "30": 0.6198084434210851,
+            "40": 1.367562293606178,
+            "50": 2.8450225638836293,
+            "100": -0.6139662901016129,
+            "150": 7.726759049014175
+          },
+          "changed_commands": [
+            "vas_med_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 920.7324723097336
+        },
+        "bifemsh_r": {
+          "worst_stop_excursion_deg": 1.5583545064536168,
+          "first_stop_time_ms": 9.000000000000002,
+          "first_stop_joints": [
+            "mtp_angle_r",
+            "mtp_angle_l"
+          ],
+          "right_knee_first_stop_ms": 70.5,
+          "end_right_knee_deg": -10.645993468382573,
+          "initially_taut": 52,
+          "tension_routes": 54,
+          "peak_tension_N": 2734.2463444920004,
+          "peak_chamber_kPa": 593.3377256659111,
+          "knee_diff_deg_at_ms": {
+            "10": -0.004884352570369491,
+            "15": -0.03968304455098718,
+            "20": -0.10727895740211284,
+            "25": -0.2610947750498988,
+            "30": -0.5250303919613176,
+            "40": -1.2828519135165533,
+            "50": -2.500011171732669,
+            "100": -1.1047842934147072,
+            "150": -13.367127239109047
+          },
+          "changed_commands": [
+            "bifemsh_r"
+          ],
+          "end_stimulated_pressure_kpa": 593.3377256659111,
+          "peak_pulsed_force_N": 1114.2426906598005
+        }
+      }
+    },
+    "matched_sensory_feedback_on_off": {
+      "opensim_baseline": {
+        "Ia_II_Ib_max_abs_current_off_nA": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Ia_II_Ib_max_abs_current_on_nA": [
+          0.6756997806317457,
+          0.20621693088312965,
+          0.02466042603474215
+        ],
+        "largest_motor_command_difference_kPa": -37.90030816660192,
+        "command_time_s": 0.124,
+        "route": "per_long_r",
+        "peak_force_difference_N": 70.49597554980095,
+        "knee_difference_at_100ms_deg": -0.007955788127342718,
+        "knee_difference_at_125ms_deg": -0.21923041421679396
+      },
+      "opensim_selected": {
+        "Ia_II_Ib_max_abs_current_off_nA": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Ia_II_Ib_max_abs_current_on_nA": [
+          1.0929913052284852,
+          0.23080094676940976,
+          0.016750125902840102
+        ],
+        "largest_motor_command_difference_kPa": -47.225133670116634,
+        "command_time_s": 0.124,
+        "route": "tib_post_r",
+        "peak_force_difference_N": 84.93969721863635,
+        "knee_difference_at_100ms_deg": -0.036941616993310146,
+        "knee_difference_at_125ms_deg": -0.6293057202328954
+      },
+      "mujoco_baseline": {
+        "Ia_II_Ib_max_abs_current_off_nA": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Ia_II_Ib_max_abs_current_on_nA": [
+          0.7258954477754779,
+          0.162024848827526,
+          0.0208984037594916
+        ],
+        "largest_motor_command_difference_kPa": -30.947018385818296,
+        "command_time_s": 0.124,
+        "route": "per_long_r",
+        "peak_force_difference_N": 61.75224813360322,
+        "knee_difference_at_100ms_deg": -0.0045719938092978266,
+        "knee_difference_at_125ms_deg": -0.09916941719623266
+      },
+      "mujoco_selected": {
+        "Ia_II_Ib_max_abs_current_off_nA": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Ia_II_Ib_max_abs_current_on_nA": [
+          0.735033727442039,
+          0.18094558998290783,
+          0.016169247811525227
+        ],
+        "largest_motor_command_difference_kPa": -36.389035271828845,
+        "command_time_s": 0.124,
+        "route": "tib_post_r",
+        "peak_force_difference_N": 70.82205852084613,
+        "knee_difference_at_100ms_deg": -0.021389695158625363,
+        "knee_difference_at_125ms_deg": -0.2830130266661433
+      }
+    },
+    "cad_capacity_at_peak_demand": {
+      "route": "vas_med_l",
+      "time_s": 21.61,
+      "window_s": [
+        16.0,
+        28.0
+      ],
+      "route_m": 0.2390569385978159,
+      "recorded_request_N": 2528.0843890247875,
+      "recorded_filtered_force_N": 2087.7317782392665,
+      "pressure_kPa": 620.0,
+      "earlier_specimen_N": {
+        "one": 1142.4424892123368,
+        "four_shared_compliance": 3596.094858888879,
+        "four_independent_compliances": 4569.769956849347
+      },
+      "baseline": {
+        "count": 4,
+        "diameter_mm": 20,
+        "resting_m": 0.794294253415756,
+        "free_m": 0.595720690061817,
+        "maximum_force_N": 5491.164752460668,
+        "equivalent_stiffness_N_m": 50575.45276752398,
+        "capacities": {
+          "direct": {
+            "extra_fixed_span_m": 0.0,
+            "available_N": 0.0
+          },
+          "centered_transfer": {
+            "extra_fixed_span_m": 0.5288921928669628,
+            "available_N": 1625.3919521019595
+          },
+          "earlier_span": {
+            "extra_fixed_span_m": 0.31678096478212175,
+            "available_N": 0.0
+          }
+        }
+      },
+      "selected": {
+        "count": 1,
+        "diameter_mm": 40,
+        "resting_m": 0.794294253415756,
+        "free_m": 0.595720690061817,
+        "maximum_force_N": 6398.4,
+        "equivalent_stiffness_N_m": 18888.920450585334,
+        "capacities": {
+          "direct": {
+            "extra_fixed_span_m": 0.0,
+            "available_N": 0.0
+          },
+          "centered_transfer": {
+            "extra_fixed_span_m": 0.5288921928669628,
+            "available_N": 1040.3682288608481
+          },
+          "earlier_span": {
+            "extra_fixed_span_m": 0.31678096478212175,
+            "available_N": 0.0
+          }
+        }
+      }
+    },
+    "runner_sha256": "f86b904a5f1b7e808b8d06836c810b3375d92a896001b05a56dfca4bb305162f",
+    "cad_calculation_sha256": "a91b9b86050d529d4b31d0716773f38205b7c11bfcaf1ca25d6a07b6ffb3e907"
+  },
+  "spiking_activation_figure": {
+    "s3k": {
+      "sources": {
+        "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\figpair_s3k\\output.npz": "61246be04100df1b0624c3a18f7032f6fc8a36f7b78927b32f2a7aeb369bbf91",
+        "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\figpair_s3k\\true_activation.npz": "ea6f6fa06c0d6a6282ccde941a4e958f59510c6289220920dd13144f97961ba7",
+        "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\figpair_s3k\\result.json": "286d6daeb248bf010292dfbfa0c1db90a6eef26227aec0852c6829ee405d2a8c"
+      },
+      "sample_count": 1251,
+      "start_s": 10.0,
+      "end_s": 12.500000000000002,
+      "channels": {
+        "rg": [
+          "RG_E_r",
+          "RG_F_r"
+        ],
+        "pf": [
+          "PF_E1_r",
+          "PF_F1_r"
+        ],
+        "activation": [
+          "vas_lat_r",
+          "semimem_r"
+        ]
+      }
+    },
+    "spiking": {
+      "sources": {
+        "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\figpair_spiking\\output.npz": "5e5a1dcf4f05b421cb697f14e2e22ab59cfc5997898e2aada4d386ac2e5cc9ff",
+        "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\figpair_spiking\\true_activation.npz": "c2c1bf82fe02aca8b3ea7daa3002e1e5708b4a276270550b0291ed7177bc9248",
+        "D:\\temp\\dissertation_muscle_repair\\dependent_runs\\figpair_spiking\\result.json": "d46e531cfac38b61d46f11be3d986710aa1ee2dd0c1c10705db84d56e8ecea06"
+      },
+      "sample_count": 1251,
+      "start_s": 10.0,
+      "end_s": 12.500000000000002,
+      "channels": {
+        "rg": [
+          "RG_E_r",
+          "RG_F_r"
+        ],
+        "pf": [
+          "PF_E1_r",
+          "PF_F1_r"
+        ],
+        "activation": [
+          "vas_lat_r",
+          "semimem_r"
+        ]
+      }
+    },
+    "activation_verification": {
+      "nonspiking_full_forward_direct_recording_maximum_differences": {
+        "activation": 0.0,
+        "state_time": 1.8118839761882555e-12,
+        "time_label": 0.0
+      },
+      "source": "Native MuJoCo activation integrated using stored commands, matched muscle dynamics, and the complete saved pose series. The first 0.60 s are held without advancing muscle activation. New recorded activation from an independently repeated full coupled trial was compared against the replay.",
+      "spiking_scalar_vs_native_step": 0.0
+    }
+  },
+  "matched_spiking_trials": {
+    "s3k": {
+      "nan": false,
+      "bal_fell": false,
+      "tilt_max": 22.09756787655339,
+      "kine_score": -161.3473347403876,
+      "k_n_cycles_r": 9,
+      "k_n_cycles_l": 0,
+      "k_knee_min_r": -64.40372635725033,
+      "k_contact_frac_r": 0.6351428571428571,
+      "k_contact_frac_l": 0.9848571428571429
+    },
+    "spiking": {
+      "nan": false,
+      "bal_fell": false,
+      "tilt_max": 19.2202342402192,
+      "kine_score": -235.207934303974,
+      "k_n_cycles_r": 8,
+      "k_n_cycles_l": 10,
+      "k_knee_min_r": -79.80380995442522,
+      "k_contact_frac_r": 0.7987142857142857,
+      "k_contact_frac_l": 0.8642857142857143
+    }
+  },
+  "overleaf": {
+    "pages": 355,
+    "errors": 0,
+    "warnings": 0,
+    "informational_messages": 9,
+    "uploaded_files": 8,
+    "overleaf_downloads_in_this_revision": 0,
+    "verification_image": "D:/temp/dissertation_fsa_revision/overleaf-verification.jpg"
+  }
+}

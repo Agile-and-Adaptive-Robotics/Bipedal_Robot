@@ -29,7 +29,7 @@ def finish(fig,axes,stem,labels):
         ax.axvspan(7.65,7.75,color='#DDCC77',alpha=.26,lw=0)
         ax.set_xlim(*window)
         ax.spines[['right','top']].set_visible(False)
-        ax.text(-.205,1.01,chr(65+i),transform=ax.transAxes,ha='left',va='bottom',weight='bold',fontsize=10.2)
+        ax.text(-.205,1.01,f'({chr(65+i)})',transform=ax.transAxes,ha='left',va='bottom',weight='bold',fontsize=10.2)
         ax.tick_params(width=1,length=3)
     axes[-1].set_xlabel('Recorded time (s)')
     axes[-1].set_xticks([7.5,8.,9.,10.,11.])

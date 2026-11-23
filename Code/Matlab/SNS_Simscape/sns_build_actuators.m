@@ -175,7 +175,7 @@ delete_block([blk '/Out1']);
 B = @(n, p, v) add_block(p, [blk '/' n], 'Position', v);
 B('Act',     'simulink/Sources/In1',                        [25 28 55 42]);   % activation 0..1
 B('Lmt',     'simulink/Sources/In1',                        [25 93 55 107]);  % musculotendon length m
-B('Vmt',     'simulink/Sources/In1',                        [25 158 55 172]); % musculotendon velocity m/s
+B('Vmt',     'simulink/Sources/In1',                        [25 158 55 172]); % dLmt/dt, positive for lengthening (m/s)
 % --- fiber length (rigid tendon) ---
 B('lslack',  'simulink/Sources/Constant',                   [90 100 130 130]); % l_slack
 B('lsub',    'simulink/Math Operations/Sum',                [170 88 200 122]);% Lmt - l_slack
@@ -196,6 +196,7 @@ B('cosV',    'simulink/Math Operations/Gain',               [230 158 260 188]); 
 B('lOpt_c',  'simulink/Sources/Constant',                   [290 200 330 230]); % l_opt
 B('vDiv',    'simulink/Math Operations/Divide',             [290 155 320 190]); % /l_opt -> v_tilde
 B('vNeg',    'simulink/Math Operations/Gain',               [350 158 380 188]); % s = -v_tilde
+B('speedMagnitude','simulink/Math Operations/Abs',          [350 225 380 255]); % both curves use a nonnegative speed
 B('vSwitch', 'simulink/Signal Routing/Switch',              [440 155 470 205]); % s>=0 ? conc : ecc
 B('concB',   'simulink/Sources/Constant',                   [400 155 430 185]); % b = A*v_max
 B('bSum',    'simulink/Math Operations/Sum',                [470 250 500 280]); % s + b
@@ -284,10 +285,11 @@ L('cosV/1', 'vDiv/1');
 L('lOpt_c/1', 'vDiv/2');
 L('vDiv/1', 'vNeg/1');
 L('vNeg/1', 'vSwitch/2');    % control: s >= 0 -> concentric branch
-L('vNeg/1', 'eccT/1');
+L('vDiv/1', 'speedMagnitude/1');
+L('speedMagnitude/1', 'eccT/1');
 % concentric: fv = b(1+A)/(s+b) - A
 L('concB/1', 'bSum/2');
-L('vNeg/1', 'bSum/1');
+L('speedMagnitude/1', 'bSum/1');  % keeps the unselected shortening branch finite during lengthening
 L('bAb/1', 'concDiv/1');
 L('bSum/1', 'concDiv/2');
 L('concDiv/1', 'concA/1');
@@ -327,7 +329,7 @@ m.Description = ['OpenSim Thelen2003-style Hill-type biological muscle, rigid te
     'F = Fmax*(Act*fl(lambda)*fv(v) + fpas(lambda))*cos(alpha). Active FL = ' ...
     'exp(-(lambda-1)^2/0.45); Hill force-velocity (A=0.25, v_max in l_opt/s); ' ...
     'exponential passive FL (kpe, e_pas); fiber length = (Lmt-l_slack)/cos(alpha). ' ...
-    'Inputs: Act [0..1], Lmt [m], Vmt [m/s]. Output: F [N].'];
+    'Inputs: Act [0..1], Lmt [m], Vmt [m/s, positive for lengthening]. Output: F [N].'];
 m.Display = sns_icon_muscle('BIO');
 m.addParameter('Name', 'Fmax', 'Type', 'edit', 'Prompt', 'Max isometric force Fmax (N)', 'Value', '1000');
 m.addParameter('Name', 'l_opt', 'Type', 'edit', 'Prompt', 'Optimal fiber length l_opt (m)', 'Value', '0.10');

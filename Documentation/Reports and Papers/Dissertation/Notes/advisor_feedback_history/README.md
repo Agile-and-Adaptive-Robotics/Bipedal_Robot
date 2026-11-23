@@ -31,7 +31,7 @@ Ben’s November 19 toolchain corrections reopen the names and uses of the biped
 | Evidence | Accounting |
 |---|---|
 | Attributable advisor tracked change | −1 against the original wording for each distinct insertion, deletion, or replacement. |
-| Attributable advisor comment | 0 for pure praise, −1 for wording or clarification, −2 for a substantive revision, or −3 for a factual or interpretive error. Mixed praise and a request receive the severity of the request. |
+| Attributable advisor comment | historically 0 for pure praise, −1 for wording or clarification, −2 for a substantive revision, or −3 for a factual or interpretive error. Mixed praise and a request receive the severity of the request. |
 | Several edits or messages on one concern | Preserve every distinct signal and link the underlying issue. Recapturing an event earns no further deduction. |
 | Present draft resembles a historical criticism | A reviewer may assign an inspection priority and explain the parallel. This adds zero observed advisor events. Silence leaves a passage unlabeled. |
 | A specific revision has been checked | Use the October 0–4 scale. A repeated failure reopens the prior judgment. A 3 requires source and contextual verification. A 4 requires Ben’s or the advisor’s confirmation. |
@@ -51,3 +51,10 @@ The November 19 Overleaf review added six Chapter 6 comments and five tracked ed
 Ben’s November 18 readback added four author examples to the teaching ledger. For a stimulus and response, compare their time coordinates in the printed figure. For a model table, check row order against first introduction. At the end of a chapter, name the experiment a future researcher can run. For Chapter 6, start with the AnimatLab hand-tuning problem and identify the specific timed implementation when discussing the gain in speed. The model retrieves these examples on every pass. [Author feedback and independent reread](../ch6_sequence_20261118/REVIEW_TABLE.html)
 
 An October revision spelled out Walker Two-Layer at first use. A later rewrite lost the definition, and Ben raised the same problem in November. For each new chapter draft, read the model and program names in printed order, including figure and table labels. Ask what each name denotes and what distinguishes each variant. The Chapter 6 check records the source line and printed page for 36 terms, including W2L, W2Lvar, BiW2Lvar+, W2L108, s3k, and syn6. [Revision and evidence](../ch6_first_use_20261118/FIRST_USE_REVIEW.md) · [Chapter 6 first-use check](../ch6_first_use_20261118/verify_first_use.py)
+
+
+## November 20 afternoon review
+
+At Ben’s direction, explicit praise of an identifiable revision now earns +1. The earlier mixed comment on the Motivation paragraph and its deduction remain in the historical ledger. Hunt’s subsequent “Much better” earns +1 on the revised paragraph. Ben’s positive assessment of the amount of Chapter 5 retained is recorded separately. No passage acquires advisor approval solely because it remained in the document.
+
+The reviewer now flags three questions across prose in methods, results, and appendices. Does a statement about checking name the correction or measured agreement? Does a possible import identify who performed it and which program received the model? Does an experiment introduce its scientific purpose before numerical settings? The flags direct a reader to the surrounding evidence. On five documented before-and-after pairs, the checks caught four original problems; the unexplained return to McCrea still required a reader. Seven short, separately worded examples exercise these distinctions in the regression suite. [Attributed scoring events](../advisor_scoring_20261120/CLASSIFIER_RESULTS.json) · [Before-and-after cases, missed example, and remaining flags](../advisor_feedback_20261120/VERIFICATION.json)

@@ -4,6 +4,26 @@ Machine: easteregg2. Python: `D:\Anaconda\envs\myo\python.exe`.
 MuJoCo: 2.3.7, implicitfast, 2 ms. OpenSim Python: 4.4.1.
 No production runner, neural controller, model, timestep, or trained winner was changed.
 
+The [four-muscle pelvic-harness replay](harness_sensitivity/replay.py) reruns
+the archived supported Gait2392 experiment with its native actuator forces and
+with compliant Thelen forces for rectus femoris and biceps femoris short head
+on both legs. The [results and source hashes](harness_sensitivity/reference_result.json)
+include physical contact cycles, unloaded foot clearances, and measured apparatus forces.
+Pass `--families` to the replay to isolate each bilateral muscle group with the
+corrected joint initialization. The [local Rustuna search](harness_sensitivity/tune.py)
+uses the archived controller, pelvic support, and physical acceptance criteria.
+It changes four bilateral recruitment multipliers. The `--verify-winner` option
+repeats the selected trial and perturbs each multiplier by one percent in either
+direction. It also tests that controller on the native muscle model with the same
+harness. The simulator runs in the myo environment for each trial.
+The [recorded recruitment changes and model outcomes](harness_sensitivity/tuning_result.json)
+include the five-right, four-left recovery. To replay it directly, run
+`tuning_trial.py --recorded-recovery --keep-trace` with the original `--reference`,
+the verified `--replay` output, and a new `--out` directory under the myo interpreter.
+Use `--recorded-recovery matched-support` to reproduce the adaptive candidate
+that regained five right and four left clearances with mean upward assistance
+below the original native-muscle trial.
+
 The new [full-Gait2392 replay experiment record](EXPERIMENT_RECORD.md) advances
 the prototype to a bounded full-model mechanics comparison. It records matched
 saved neural excitation, rigid/compliant controls, bilateral physical ties,
