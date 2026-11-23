@@ -196,7 +196,7 @@ The frame's $x$ axis follows the nominal load path. The adopted pinned-flexor fi
 \begin{table}[htbp]
 \caption{Bracket reference points (mm, as coded; divided by 1000 in code). All are author-set CAD interpretation points; frame denotes the frame the vector is expressed in.}
 \label{tab:app_bracket_points}
-\begin{tabularx}{\textwidth}{@{}lrrrX@{}}
+\begin{tabularx}{\textwidth}{@{}lrrr>{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Point} & $x$ & $y$ & $z$ & \textbf{Configuration / meaning} \\
 \midrule
@@ -221,7 +221,7 @@ Table~\ref{tab:app_stiffness_arrays} assigns the fitted variables $X_1$ and $X_2
 \begin{table}[htbp]
 \caption{Bracket-frame stiffness arrays by configuration, in \unit{\newton\per\meter}. The fitted variables $X_1$ and $X_2$ are assigned to the axes shown.}
 \label{tab:app_stiffness_arrays}
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.22\textwidth}X@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.30\textwidth}p{0.22\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Configuration} & $\boldsymbol{K}$ array & \textbf{Stiffness-array source} \\
 \midrule
@@ -398,7 +398,7 @@ The attachment-route redesign was extended separately from the knee to all 27 mu
 
 The restructured pass encountered a route-builder concatenation error for twelve actuators, leaving fifteen finalized routes. Eight were constraint-feasible: semimembranosus, biceps femoris long head, tensor fasciae latae, soleus, lateral gastrocnemius, tibialis anterior, iliacus, and psoas. Six also met the torque requirement at every angle, with worst-angle margins from $+0.25\,\%$ for biceps femoris long head to $+250.7\,\%$ for tensor fasciae latae. Semimembranosus and soleus satisfied the geometry but remained below their torque targets. Completing the extension requires the route-builder repair and sufficient actuator capacity or relaxed routing corridors for these two routes.
 
-The unadjusted cam optimizer solution had $s_{\mathrm{req}}=+31.30$\,\% and $m_h=+42.34$\,\%; the adjusted design in Chapter~\ref{ch:torque} has $+30.83$\,\% and $+39.77$\,\%, respectively. Equation~\eqref{eq:cam_summary_definitions} distinguishes surplus normalized by peak human torque from the pointwise human-reference margin.
+Both the optimized cam and the adjusted design in Chapter~\ref{ch:torque} exceeded the required knee torque over the modeled range. The minimum surplus above the requirement, normalized by peak human torque ($s_{\mathrm{req}}$), decreased from $+31.30$\,\% to $+30.83$\,\% after adjustment. The minimum margin relative to the human torque at each angle ($m_h$) decreased from $+42.34$\,\% to $+39.77$\,\% (Equation~\eqref{eq:cam_summary_definitions}).
 
 Figure~\ref{fig:PulleySurfaces} compares predicted insertion-torque magnitudes at five constant pressures with the maximum-isometric OpenSim reference. The model uses two BPAs and a two-part tackle (force gain 1, travel gain 2) with actuator sizes re-solved. The five muscles retain their original test conditions, including zero ankle angle for medial gastrocnemius and evaluation at the hip for rectus femoris.
 
@@ -475,7 +475,7 @@ psoas\_r & hip flex. & hip add. & 20 & 1$\times$20 \\
 
 \subsection{Torque and Active-Force Coverage}
 
-Table~\ref{tab:capability_by_site} expands the means reported in Table~\ref{tab:CapabilitySurvey}. Torque coverage requires the reference torque direction and magnitude; active-force coverage requires positive insertion tension. Both exclude configurations outside the evaluated joint-coordinate domain, and slack or infeasible configurations do not count as active. For each site, domain coverage is estimated from the saved grid by
+Table~\ref{tab:capability_by_site} expands the means reported in Table~\ref{tab:CapabilitySurvey}. Torque coverage improved at 23 actuator sites and was unchanged at the remaining four. Torque coverage requires the reference torque direction and magnitude. Active-force coverage requires positive insertion tension. Both exclude configurations outside the evaluated joint-coordinate domain, and slack or infeasible configurations do not count as active. For each site, domain coverage is estimated from the saved grid by
 \begin{equation}
 C=100\,\frac{\sum_{i,j} w_iw_j D_{ij}M_{ij}}{\sum_{i,j}w_iw_jD_{ij}},
 \label{eq:angular_domain_coverage}

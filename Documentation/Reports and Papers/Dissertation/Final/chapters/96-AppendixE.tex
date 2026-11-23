@@ -5,7 +5,7 @@ Chapter~\ref{ch:database} follows a researcher from one pathway search to a cand
 
 \section{Record Sets and Coverage}
 
-The SADb Explorer app contains 1,393 records across five tables. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. At the time of curation the Airtable working base had a 1,000-record limit. I retained 957 records there, comprising 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The app marks the other 436 records as archived. They can still be read in the app after removal from Airtable. They comprise 382 Papers and 54 records from the other tables whose paper links had been removed. The Table view includes all five record types. The Pivot and citation views use the Papers category.
+A search in the SADb Explorer app can retrieve papers that no longer fit in the Airtable working base. The full app contains 1,393 records across five tables. These comprise 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. At the time of curation the Airtable working base had a 1,000-record limit. I retained 957 records there, comprising 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The app marks the other 436 records as archived. The archived records comprise 382 Papers and 54 records from the other tables whose paper links had been removed. The Table view includes all five record types. The Pivot and citation views use the Papers category.
 
 Table~\ref{tab:sadb_field_coverage} compares the searchable fields in the full app with those retained in Airtable. One paper can contribute to several rows. An empty field means that the curator did not record that classification.
 
@@ -31,7 +31,9 @@ PDF attachment recorded in Airtable & 318 & 231 \\
 
 For a single paper, use Table to check the record type and archive status. For a group of papers, start in Pivot and open a cell to read the underlying records. Tagged groups overlap. For example, a Paper tagged with both Ia and Ib can appear in both afferent rows for the same animal. Adding those rows would count that Paper twice. The citation neighborhood in Figure~\ref{fig:sadb_clusters} answers a separate question about which papers cite one another.
 
-The \emph{Ib disynaptic excitation} pathway links six papers. The collection also links 12 papers to fictive locomotion without sensory feedback and one paper apiece to the somatosensory, vestibular, and visual contributions to postural control. In the citation map, 730 papers cite another paper in the collection. Counting the papers they cite brings the connected set to 816. The 18 named citation communities group papers by their citation links.
+The \emph{Ib disynaptic excitation} pathway links six papers. The collection also links 12 papers to fictive locomotion without sensory feedback and one paper apiece to the somatosensory, vestibular, and visual contributions to postural control.
+
+Citation links can connect papers with different pathway tags. In the citation map, 730 papers cite another paper in the collection. Counting the papers they cite brings the connected set to 816. The 18 named citation communities group papers by their citation links. For the review by \citet{grillner_neurobiological_1985} in Figure~\ref{fig:sadb_clusters}, the app links to 13 of its references and to 57 papers that cite it. Following the references and citing papers of those immediate neighbors expands the map to 555 distinct papers in total.
 
 \section{Afferent Classes and Linked Pathways}
 

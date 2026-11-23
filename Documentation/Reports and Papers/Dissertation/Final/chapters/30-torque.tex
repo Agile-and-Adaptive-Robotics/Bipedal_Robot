@@ -341,7 +341,7 @@ g_{3,i}(\boldsymbol{\chi})/g_{3,i}^{(0)}
 \end{equation}
 where $g_{1,i}$, $g_{2,i}$, and $g_{3,i}$ are the RMSE, FVU, and maximum absolute residual of Equations~\eqref{eq:gof_components}--\eqref{eq:gof_max}, the superscript $(0)$ marks the value for the baseline model, which uses the same kinematics and actuator force model with the design factors disabled, and $\mathcal{T}$ is the set of tests used for training. The mean of the baseline-normalized components makes the three objectives dimensionless and the training tests commensurate. The search carried no constraints beyond the parameter bounds of each stage, and the returned Pareto fronts (the candidate parameter sets for which improving one objective requires worsening another) were filtered to members scoring at or below this baseline on every component of every test in that stage's identification pool.
 
-MATLAB \texttt{gamultiobj} uses NSGA-II to return the Pareto front \citep{deb_nsga2_2002, mathworks_optimization_2025}. Candidate predictions are checked on the training and validation tests. The search uses bounded, normalized parameters, with logarithmic stiffness coordinates. Population, mutation, crossover, and stopping settings are retained with the archived run records.
+MATLAB \texttt{gamultiobj} uses NSGA-II to return the Pareto front \citep{deb_nsga2_2002, mathworks_optimization_2025}. Tables~\ref{tab:FlxPinGof} and~\ref{tab:ExtPinGof} compare the fitted and baseline errors on the training tests and on the actuator configurations held out of each fit. The search uses bounded, normalized parameters, with logarithmic stiffness coordinates. Population, mutation, crossover, and stopping settings are retained with the archived run records.
 
 \subsection{Actuator Placement and Route Redesign}\label{sec:mesh_opt}\label{sec:optimization}
 
@@ -407,7 +407,7 @@ Tables~\ref{tab:mesh_penalties}--\ref{tab:mesh_cam_penalties} define the normali
 \begin{table}[htbp]
 \caption{Torque penalties in the constrained knee-route search. FLEX and EXT identify configuration-specific terms.}\label{tab:mesh_penalties}
 \small\singlespacing
-\begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}p{0.16\textwidth}X@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}p{0.16\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Term} & \textbf{Weight} & \textbf{Meaning} \\
 \midrule
@@ -423,7 +423,7 @@ $J_{\text{off}}$ off-axis excess (FLEX) & $10^{3}$ & Worst and mean squared exce
 \begin{table}[htbp]
 \caption{Feasibility and geometric penalties in the constrained knee-route search.}\label{tab:mesh_geometry_penalties}
 \small\singlespacing
-\begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}p{0.16\textwidth}X@{}}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.27\textwidth}p{0.16\textwidth}>{\raggedright\arraybackslash}X@{}}
 \toprule
 \textbf{Term} & \textbf{Weight} & \textbf{Meaning} \\
 \midrule
@@ -654,7 +654,7 @@ Wrapping a BPA around the knee remains an approximation with inherent error (Fig
 
 \subsection{Design-Factor Optimization}\label{sec:ongoing}
 
-The results figures use the two-stage identification of Section~\ref{sec:identification}. Relative to the baseline model without the design factors, the optimized model reduces mean RMSE by 81\,\% on the flexor training tests and 80\,\% on the flexor validation tests (Table~\ref{tab:FlxPinGof}), and by 60\,\% on the extensor training tests and 57\,\% on the extensor validation tests (Table~\ref{tab:ExtPinGof}); on the biomimetic extensor it reduces FVU by 85\,\% (Table~\ref{tab:BioTorqueGof}). Table~\ref{tab:AdoptedXi} records the identified terms: the stiffness pair is shared, and the wrapping factor was identified on the extensor and applied to wrapping in the redesigned flexor. The genetic multiobjective solver is retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline serves the route redesign (Section~\ref{sec:mesh_opt}); the search bounds are recorded in Appendix~\ref{app:model_geometry} (Table~\ref{tab:app_opt_bounds}).
+The design factors identified in the two-stage fit (Section~\ref{sec:identification}) reduced torque-prediction error even on the pinned-knee tests held out of each fit. Relative to the baseline model without the design factors, the optimized model reduces mean RMSE by 81\,\% on the flexor training tests and 80\,\% on the flexor validation tests (Table~\ref{tab:FlxPinGof}), and by 60\,\% on the extensor training tests and 57\,\% on the extensor validation tests (Table~\ref{tab:ExtPinGof}); on the biomimetic extensor it reduces FVU by 85\,\% (Table~\ref{tab:BioTorqueGof}). Table~\ref{tab:AdoptedXi} records the identified terms: the stiffness pair is shared, and the wrapping factor was identified on the extensor and applied to wrapping in the redesigned flexor. The genetic multiobjective solver is retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline serves the route redesign (Section~\ref{sec:mesh_opt}); the search bounds are recorded in Appendix~\ref{app:model_geometry} (Table~\ref{tab:app_opt_bounds}).
 
 \begin{table}[htbp]
 \centering\small
@@ -780,7 +780,7 @@ This trade can extend the RoM over which a route meets its torque requirement. A
 
 As a proof of concept for the whole tool chain, I applied the actuator and tackle search to the robot-leg muscle routing of my master's model \citep{bolen_determination_2019}: the expanded design selects the best transmission configuration at each of the 27 actuator sites (Table~\ref{tab:survey_dofs_sizes}) and re-solves actuator and tendon lengths on the inherited routing.\label{sec:masters_updated} Each site is evaluated against its same-named Gait2392 muscle \citep{delp_opensim_2007,seth_opensim_2018} on a $5\times5$ grid sampling combinations of two joint coordinates at \qty{620}{\kPa} \citep{bolen_2026}: a sampled configuration meets the requirement when the taut BPA's torque has the human torque's sign and at least its magnitude, and the reported coverage is the equal-site mean of angular-domain fractions, estimated with trapezoidal area weights (Appendix~\ref{app:model_geometry}). The baseline substitutes four parallel \qty{20}{\mm} BPAs at the eight nominal \qty{40}{\mm} sites. Under matched ideal pressure, braid geometry, and contraction, maximum force scales with diameter squared, giving this parallel group the same theoretical maximum force as one \qty{40}{\mm} BPA. The comparison combines transmission, actuator sizing, and the diameter substitution; it does not isolate any one contribution.
 
-Mean area-weighted human-torque coverage improves from \qty{37.35}{\percent} to \qty{65.81}{\percent}, improving at 23 sites and tying at four, while mean active-force coverage (positive insertion tension, regardless of torque) rises from \qty{93.00}{\percent} to \qty{99.31}{\percent}; positive tension alone does not meet the torque requirement. Table~\ref{tab:CapabilitySurvey} summarizes the means, and Table~\ref{tab:capability_by_site} gives the per-site coverage.
+The predicted torque of the routes with the selected transmissions and actuator sizes met the corresponding human-muscle targets over a larger range of joint positions. Mean torque coverage increased from \qty{37.35}{\percent} to \qty{65.81}{\percent} (Table~\ref{tab:CapabilitySurvey}). The selected actuators produced tension over nearly the entire modeled range, yet at some positions they still could not match the magnitude and direction of the human torque. Table~\ref{tab:capability_by_site} gives the coverage for each route.
 
 \begin{table}[htbp]
 \centering

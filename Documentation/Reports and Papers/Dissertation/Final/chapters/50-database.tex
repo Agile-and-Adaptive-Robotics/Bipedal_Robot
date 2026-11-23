@@ -1,9 +1,9 @@
 \chapter{The Sensory Afferent Database}\label{ch:database}
 \graphicspath{{../Figures/50-database/}{figs/50-database/}}
 
-Choosing a sensory connection for a locomotor controller requires more than the name of a receptor. A researcher needs to know which nerve was stimulated, which motor neurons responded, and whether the animal was at rest or moving. Those details are scattered across studies that used different species, experimental conditions, and tasks. I developed the Sensory Afferent Database (SADb) to keep a proposed feedback pathway linked to the experiment that supports it. The collection also links to computational models so that a researcher can compare an experimental finding with the assumptions used to represent it. This work forms part of the AARL's NeuroNex Communication, Coordination, and Control in Nervous Systems (C3NS) effort.
+Choosing a sensory connection for a locomotor controller requires more than the name of a receptor. A researcher needs to know which nerve was stimulated, which motor neurons responded, and whether the animal was at rest or moving. Those details are scattered across studies that used different species, experimental conditions, and tasks. I developed the Sensory Afferent Database (SADb) to keep a proposed feedback pathway linked to the experiment that supports it. The collection also links to computational models so that a researcher can compare an experimental finding with the assumptions used to represent it. This work forms part of the AARL's NeuroNex Communication, Coordination, and Control in Neuromechanical Systems (C3NS) effort.
 
-The first version of SADb used Airtable, a website for organizing records in linked tables. The Neuroscience 2023 abstract and poster introduced the collection \citep{bolen_sensory_2023}. The Neuroscience 2024 abstract and poster examined whether artificial intelligence (AI) tools could help expand it \citep{bolen_using_2024}. I later built the SADb Explorer application so researchers could search the collection and follow its sources outside Airtable. The app lets researchers compare the evidence for a pathway across species and tasks.
+The first version of SADb used Airtable, a website for organizing records in linked tables. A Neuroscience 2023 abstract and poster introduced the collection \citep{bolen_sensory_2023}. A Neuroscience 2024 abstract and poster examined whether artificial intelligence (AI) tools could help expand it \citep{bolen_using_2024}. I later built the SADb Explorer application so researchers could search the collection and follow its sources outside Airtable. The app lets researchers compare the evidence for a pathway across species and tasks.
 
 \section{Curation Methods}\label{sec:sadb_methods}
 
@@ -13,7 +13,7 @@ Before building the app, I screened the candidate list locally to prepare the re
 
 To find later publications, I implemented a monthly search of OpenAlex, an index of scholarly publications and their citations, and Crossref, a registry of publication identifiers and metadata. The search follows selected authors and terms such as ``Ia afferent,'' ``Ib afferent,'' ``muscle spindle,'' ``proprioceptive feedback,'' and ``central pattern generator.'' A local script removes duplicate versions, checks each DOI against Crossref, and saves a shortlist with any source-access limitations for manual review.
 
-Manually curated models and reviews provided a benchmark for testing AI-assisted literature discovery, summarization, and classification. I checked the tools' summaries and classifications against my reading of a broader set of papers, assessing their accuracy and the time required for a usable entry \citep{bolen_using_2024}.
+Manually curated models and reviews provided a benchmark for testing AI-assisted literature discovery, summarization, and classification. I checked the AI tools' summaries and classifications against my reading of a broader set of papers, assessing their accuracy and the time required for a usable entry \citep{bolen_using_2024}.
 
 \begin{figure}[htbp]
 \centering
@@ -31,13 +31,15 @@ Manually curated models and reviews provided a benchmark for testing AI-assisted
 \label{fig:sadb_curation_workflow}
 \end{figure}
 
-\subsection{Classifying a Feedback Experiment}
+The following example shows how I recorded two different motor responses to the same sensory input and preserved the experimental conditions that distinguished them.
 
-I added the study by \citet{mccrea_disynaptic_1995} to SADb. The authors stimulated the plantaris nerve and recorded from motor neurons supplying another ankle extensor, the medial gastrocnemius. They compared the response at rest and during extension in immobilized cats. Midbrain stimulation evoked the neural rhythm of stepping without leg movement, a pattern of neural activity called fictive locomotion (Section~\ref{sec:bg_sensory}). The nerve stimulus recruited group~I afferents from muscle spindles (Ia) and tendon organs (Ib).
+\subsection{Classifying a Feedback Experiment}\label{sec:sadb_classification_example}
+
+In an ankle-extensor study that I added to SADb, \citet{mccrea_disynaptic_1995} stimulated the plantaris nerve and recorded from motor neurons supplying another ankle extensor, the medial gastrocnemius. They compared the response at rest and during extension in immobilized cats. Midbrain stimulation evoked the neural rhythm of stepping without leg movement, a pattern of neural activity called fictive locomotion (Section~\ref{sec:bg_sensory}). The nerve stimulus recruited group~I afferents from muscle spindles (Ia) and tendon organs (Ib).
 
 I recorded the experimental conditions and response in the \emph{Curation note} and linked the paper to the applicable afferent and pathway records. A separate field, \emph{Robot / sim translation}, describes a test a modeler could run. For this paper, the proposed test applies the same brief input at rest and during extension, then repeats it with the controller's phase switch disabled. The comparison tests whether the switch accounts for the change in the motor pool's response.
 
-To repeat the lookup, download \href{https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/KneeTestSetup_BenBo_stw/SADb_audit/app/sadb_app.html}{the SADb Explorer app} and open the HTML file in a browser. In \emph{Table}, filter by the pathway \emph{Ib disynaptic excitation}. Select the McCrea record to read both notes and follow its DOI to the experiment (Figure~\ref{fig:sadb_explorer}).
+To follow this example, download \href{https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot/blob/KneeTestSetup_BenBo_stw/SADb_audit/app/sadb_app.html}{the SADb Explorer app} and open the HTML file in a browser. In \emph{Table}, filter by the pathway \emph{Ib disynaptic excitation}. Select the McCrea record to read both notes and follow its DOI to the experiment (Figure~\ref{fig:sadb_explorer}).
 
 \section{Results}\label{sec:sadb_corpus}
 
@@ -47,9 +49,9 @@ All three views work offline. The \emph{Search (online)} tab retrieves publicati
 
 \subsection{Evidence for a Phase-Dependent Feedback Rule}\label{sec:sadb_worked_rule}
 
-The study by \citet{mccrea_disynaptic_1995} appears under both \emph{Ib disynaptic inhibition} and \emph{Ib disynaptic excitation} in the app (Figure~\ref{fig:sadb_explorer}). Their Figure~3 shows why. The same plantaris nerve stimulus inhibited a medial gastrocnemius motor neuron at rest and excited it during extension in midbrain-evoked fictive locomotion.
+The record curated in Section~\ref{sec:sadb_classification_example} illustrates how a researcher can use an experimental observation to choose the sign of a sensory connection in a controller. The study by \citet{mccrea_disynaptic_1995} appears under both \emph{Ib disynaptic inhibition} and \emph{Ib disynaptic excitation} in the app (Figure~\ref{fig:sadb_explorer}). Their Figure~3 shows why. The same plantaris nerve stimulus inhibited a medial gastrocnemius motor neuron at rest and excited it during extension in midbrain-evoked fictive locomotion.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{sadb_table_record_guide.pdf}
 
@@ -57,9 +59,9 @@ The study by \citet{mccrea_disynaptic_1995} appears under both \emph{Ib disynapt
 \label{fig:sadb_explorer}
 \end{figure}
 
-The response constrains what a controller must reproduce. The same input to the same motor pool must have opposite net effects at rest and during extension (Figure~\ref{fig:sadb_group_i_rule}). A separate tendon-stretch experiment isolated an excitatory contribution from Ia fibers (Figure~4 of \citet{mccrea_disynaptic_1995}). The authors included Ib input in their proposed circuit (their Figure~8), but did not stimulate Ib fibers alone. A modeler must still choose the interneurons, gains, and delays in a circuit such as those in Figures~\ref{fig:rybak_cpg_circuit} and~\ref{fig:afferent_connectomes}. Appendix~\ref{app:sadb_records} compares these results with those from cats whose spinal cords had been transected.
+The response constrains what a controller must reproduce. The same input to the same motor pool must have opposite net effects at rest and during extension (Figure~\ref{fig:sadb_group_i_rule}). A separate tendon-stretch experiment isolated an excitatory contribution from Ia fibers (Figure~4 of \citet{mccrea_disynaptic_1995}). The authors included Ib input in their proposed circuit (their Figure~8), but did not stimulate Ib fibers alone. A modeler who wishes to implement this pathway must still choose the interneurons, gains, and delays in a circuit such as those in Figures~\ref{fig:rybak_cpg_circuit} and~\ref{fig:afferent_connectomes}. Appendix~\ref{app:sadb_records} compares these results with those from cats whose spinal cords had been transected.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{sadb_group_i_rule.pdf}
 \caption[An experimental constraint on a sensory feedback rule]{The plantaris nerve stimulus and recorded medial gastrocnemius motor pool were the same in both conditions. Stimulation inhibited the motor neurons at rest and excited them during the extensor phase of midbrain-evoked fictive locomotion \citep{mccrea_disynaptic_1995}. The two signed connections represent a candidate model's net response through spinal circuitry.}
@@ -70,30 +72,29 @@ The response constrains what a controller must reproduce. The same input to the 
 
 The \emph{Pivot} table identifies which papers support a comparison across afferents or species. For example, the intersection of Ib afferents and cats contains 21 papers (Figure~\ref{fig:sadb_pivot}). Opening that cell displays the individual studies, including \citet{mccrea_disynaptic_1995}. That study also appears in the Ia row because its nerve stimulus recruited both classes. The shared record shows why adding the two row counts would count some studies twice.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\textwidth]{sadb_pivot_guide.pdf}
 \caption[The SADb Explorer app pivot table]{With afferent type and animal selected \textbf{(A)}, the Ib row and Cat column intersect at 21 \textbf{(B)}. Selecting the cell opens the matching papers in \emph{Table}. The return control restores the pivot \textbf{(C)}.}
 \label{fig:sadb_pivot}
 \end{figure}
 
-The same classification extends beyond mammalian ankle extensors. Paired pathway records distinguish excitation and inhibition from the chordotonal organs and trochanteral hair plates of insect legs. Another record covers load feedback from campaniform sensilla. The collection also includes studies of group~III/IV afferents and fatigue, fictive locomotion without sensory feedback, and somatosensory, vestibular, and visual contributions to postural control.
+The same classification extends beyond mammalian ankle extensors. Paired pathway records distinguish excitation and inhibition from the chordotonal organs and trochanteral hair plates of insect legs. Another record covers load feedback from campaniform sensilla, sensory organs that detect strain in the insect cuticle. The collection also includes studies of group~III/IV afferents and fatigue, fictive locomotion without sensory feedback, and somatosensory, vestibular, and visual contributions to postural control.
 
 \subsection{Following Citations in the Bubble Map}
 
-A researcher can use the citation map to trace a claim in a model paper back to the experiment it cites or to find later studies that used that experiment (Figure~\ref{fig:sadb_clusters}). In the \emph{Year $\times$ citations} layout, publication year is on the horizontal axis and citation count is on a logarithmic vertical axis. The \emph{Topic landscape} instead places papers joined by citations near one another. Its spring layout balances attraction along citation links with repulsion between papers. The Louvain algorithm groups papers that cite one another relatively often. The color key names these groups to help readers identify related work.
+To find evidence for how a leg controller should respond when the foot strikes an obstacle, a researcher can start with the review of vertebrate locomotion by \citet{grillner_neurobiological_1985} and follow its references to the original experiments (Figure~\ref{fig:sadb_clusters}). In the \emph{Year $\times$ citations} layout, publication year is on the horizontal axis and citation count is on a logarithmic vertical axis. The \emph{Topic landscape} instead places papers joined by citations near one another. Its spring layout balances attraction along citation links with repulsion between papers. The Louvain algorithm groups papers that cite one another relatively often. The color key names these groups to help readers identify related work.
 
-Figure~\ref{fig:sadb_clusters} shows the map centered on Grillner (1985). The tabs \textbf{(A)} and map controls \textbf{(B)} select the view, layout, and number of links to follow. The selected paper's record \textbf{(C)} and its curation and translation notes \textbf{(D)} stay visible beside the citation neighborhood \textbf{(E)}. The connection list \textbf{(F)} separates references from papers that cite Grillner. Selecting a title brings that paper and its notes into focus. The topic key \textbf{(G)} identifies its citation community.
+With the review selected, the tabs \textbf{(A)} and map controls \textbf{(B)} select the view, layout, and number of links to follow. The selected paper's record \textbf{(C)} and its curation and translation notes \textbf{(D)} stay visible beside the citation neighborhood \textbf{(E)}. The connection list \textbf{(F)} separates references from papers that cite Grillner. Selecting a title brings that paper and its notes into focus. The topic key \textbf{(G)} identifies its citation community.
 
-In this example Grillner cites 13 papers in SADb, and 57 papers in SADb cite Grillner. Following a second link brings the neighborhood to 555 papers, including Grillner. Green triangles mark papers that cite the selected paper, red circles mark its references, and gray marks identify more distant connections. Following a reference leads the reader to the source where the experimental support for a proposed connection can be checked.
+One of the references linked to the review is the stumbling experiment by \citet{forssberg_stumbling_1979}. Stimulating the top of a walking cat's paw during swing recruited flexor muscles and lifted the paw over the obstacle. During stance, the same stimulus briefly inhibited and then excited the extensor muscles. A controller that models this response must therefore account for the phase in which the paw encounters the obstacle. Appendix~\ref{app:sadb_records} gives the extent of the review's citation neighborhood.
 
 \begin{sidewaysfigure}[p]
 \centering
 \includegraphics[width=\linewidth]{sadb_bubble.pdf}
-\caption[Citation map in the SADb Explorer app]{Citation map of the 943 papers in the SADb Explorer app, with Grillner (1985) selected. \textbf{(A)} Navigation tabs. \textbf{(B)} Map controls. \textbf{(C)} Selected paper. \textbf{(D)} Curation and translation notes. \textbf{(E)} Citation neighborhood. \textbf{(F)} Citing and cited papers. \textbf{(G)} Topic-cluster color key.}
+\caption[Citation map in the SADb Explorer app]{Citation map of the 943 paper records in the SADb Explorer app, with the review by \citet{grillner_neurobiological_1985} selected. \textbf{(A)} Navigation tabs. \textbf{(B)} Map controls. \textbf{(C)} Selected paper. \textbf{(D)} Curation and translation notes. \textbf{(E)} Citation neighborhood. Red circles mark references, green triangles mark papers citing the review, and gray marks indicate more distant connections. \textbf{(F)} Citing and cited papers. \textbf{(G)} Topic-cluster color key.}
 \label{fig:sadb_clusters}
 \end{sidewaysfigure}
-\FloatBarrier
 
 \subsection{Coverage of the Curated Collection}\label{sec:sadb_coverage}
 

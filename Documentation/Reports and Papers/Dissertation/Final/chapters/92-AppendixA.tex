@@ -1,12 +1,12 @@
 \chapter{Appendix A: Muscle Force and Joint Torque Calculations}\label{app:muscle_calcs}
 \graphicspath{{../Figures/92-AppendixA/}{figs/92-AppendixA/}}
 
-This appendix gives the force, torque, and compliance equations used in Chapters~\ref{ch:muscles} and~\ref{ch:torque} and identifies the MATLAB functions that implement them.
+Chapter~\ref{ch:torque} uses isometric muscle force to define human knee-torque targets. In Chapter~\ref{ch:sns}, the model must also determine how force changes as a muscle shortens or lengthens under neural control. This appendix describes the human muscle formulation in Gait2392, the tension law used after conversion to MuJoCo, and the separate pressure-dependent force and compliance calculations used for the robot actuators in Chapters~\ref{ch:muscles} and~\ref{ch:torque}.
 
-\section{Human muscle force calculations}
-\subsection{OpenSim Thelen2003 and Millard2012 Formulations}
+\section{Human Muscle Force Calculations}
+\subsection{OpenSim Thelen2003 and Millard2012 Formulations}\label{sec:app_opensim_curves}
 
-The Thelen2003 and Millard2012 equilibrium muscle models describe active and passive fiber force, pennation, and a series tendon \citep{thelen_adjustment_2003,millard_flexing_2013}. Their common force balance is
+The OpenSim Gait2392 human model, its subject01 version used for static optimization, and the rerouted robot counterpart each specify \texttt{Thelen2003Muscle} for all 92 muscles. The Millard equilibrium muscle provides a comparison with another way of representing active fibers, passive tissue, and a tendon in series \citep{thelen_adjustment_2003,millard_flexing_2013}. For either formulation, the force and length balances are
 \begin{equation}
  F_T(l_T)=F_M(l_M,\dot l_M,a)\cos\alpha,
  \qquad l_{MT}=l_T+l_M\cos\alpha,
@@ -20,11 +20,11 @@ In the damped Millard formulation, fiber force has the form
  + f_{PE}(\tilde l_M)+\beta\tilde v_M\right],
  \label{eq:app_millard_force}
 \end{equation}
-with normalized fiber length $\tilde l_M$, normalized velocity $\tilde v_M$, maximum isometric force $F_0$, and damping coefficient $\beta$. The active, passive, and tendon curves and the treatment of singular configurations differ between the Thelen and Millard models. The OpenSim implementation can also disable tendon compliance or activation dynamics, so the model class alone does not establish which dynamics were exercised in an analysis \citep{millard_flexing_2013}.
+where $F_0$ is maximum isometric fiber force, $\tilde l_M$ is fiber length divided by optimal length, and $\tilde v_M$ is fiber velocity divided by maximum shortening speed. The dimensionless coefficient $\beta$ scales the velocity-dependent damping force. The next two sections give the characteristic curves that turn these quantities into active and passive tension. A forward simulation can advance activation and fiber length in time. The static-optimization forces used in Section~\ref{sec:muscle-models-compare} were estimated separately at each sampled pose \citep{opensim_static_optimization_docs}.
 
 \subsubsection{Thelen activation and contraction dynamics}
 
-The following seven relations correspond, in order, to Equations~(1)--(7) of \citet{thelen_adjustment_2003}. They specify the activation state, passive and active force--length curves, tendon force, and fiber velocity. Bars denote normalization by maximum isometric fiber force $F_0^M$ or optimal fiber length $L_0^M$, as appropriate.
+A change in neural excitation first changes activation. Fiber length and shortening or lengthening speed then determine how much tension that activation can produce \citep{thelen_adjustment_2003}. The equations below follow the Thelen formulation with the tensile branches used in OpenSim \citep{opensim_muscle_curves_44}. A bar denotes normalization by maximum isometric fiber force $F_0^M$ or by optimal fiber length $L_0^M$, as appropriate.
 
 Activation follows
 \begin{equation}
@@ -43,8 +43,11 @@ Here $u\in[0,1]$ is neural excitation, $a$ is muscle activation, and $\tau_{\mat
 
 The normalized passive fiber force and active force--length multiplier are
 \begin{equation}
- \bar F^{PE}=\frac{\exp\!\left[k^{PE}(\bar L^M-1)/\varepsilon_0^M\right]-1}
- {\exp(k^{PE})-1},
+ \bar F^{PE}=\begin{cases}
+ 0,&\bar L^M\leq1,\\[2pt]
+ \dfrac{\exp\!\left[k^{PE}(\bar L^M-1)/\varepsilon_0^M\right]-1}
+ {\exp(k^{PE})-1},&\bar L^M>1,
+ \end{cases}
  \label{eq:app_thelen3}
 \end{equation}
 \begin{equation}
@@ -54,15 +57,16 @@ The normalized passive fiber force and active force--length multiplier are
 The tendon relation is
 \begin{equation}
  \bar F^T=\begin{cases}
+ 0,&\varepsilon^T\leq0,\\[2pt]
  \displaystyle\frac{\bar F^T_{\mathrm{toe}}}{\exp(k_{\mathrm{toe}})-1}
  \left[\exp\!\left(\frac{k_{\mathrm{toe}}\varepsilon^T}{\varepsilon^T_{\mathrm{toe}}}\right)-1\right],
- &\varepsilon^T\leq\varepsilon^T_{\mathrm{toe}},\\[6pt]
+ &0<\varepsilon^T\leq\varepsilon^T_{\mathrm{toe}},\\[6pt]
  k_{\mathrm{lin}}(\varepsilon^T-\varepsilon^T_{\mathrm{toe}})+\bar F^T_{\mathrm{toe}},
  &\varepsilon^T>\varepsilon^T_{\mathrm{toe}}.
  \end{cases}
  \label{eq:app_thelen5}
 \end{equation}
-The fiber-velocity relation and its shortening/lengthening denominator are
+For a given tendon force, the required normalized active fiber force is $\bar F^M=\bar F^T/\cos\alpha-\bar F^{PE}$. Thelen expresses the corresponding fiber velocity as
 \begin{equation}
  V^M=(0.25+0.75a)V^M_{\max}\frac{\bar F^M-a f_l}{b},
  \label{eq:app_thelen6}
@@ -92,7 +96,7 @@ $k^{PE}$ & Passive force--length exponential shape factor (5 in the paper). \\
 $\gamma$ & Active force--length width parameter (0.45 in the paper). \\
 $\varepsilon^T$ & Tendon strain relative to tendon slack length. \\
 $\varepsilon_0^T$ & Tendon strain at force $F_0^M$. \\
-$\varepsilon^T_{\mathrm{toe}}$ & Strain at the end of the nonlinear tendon region; $0.609\varepsilon_0^T$. \\
+$\varepsilon^T_{\mathrm{toe}}$ & Strain at the end of the nonlinear tendon region, approximately $0.609\varepsilon_0^T$. \\
 $\bar F^T_{\mathrm{toe}}$ & Normalized force at that transition; 0.33. \\
 $k_{\mathrm{toe}},\ k_{\mathrm{lin}}$ & Tendon exponential shape factor (3) and linear slope ($1.712/\varepsilon_0^T$). \\
 $A_f$ & Force--velocity shape factor (0.25 in the paper). \\
@@ -101,18 +105,52 @@ $\bar F^M_{\mathrm{len}}$ & Maximum normalized lengthening-force factor. \\
 \end{tabularx}
 \end{table}
 
-The passive expressions describe tensile loading; they do not imply that a slack muscle or tendon transmits compression. These are the original paper's constitutive relations. Numerical implementations must also handle slack states, minimum activation, pennation limits, and the inversion of the force--velocity relation. Consequently, the original equations alone do not specify every numerical safeguard in an OpenSim implementation.
+The force--velocity multiplier also follows directly from Equations~\eqref{eq:app_thelen6} and~\eqref{eq:app_thelen7}. Let $w=V^M/[(0.25+0.75a)V^M_{\max}]$ and $c=(2+2/A_f)/(\bar F^M_{\mathrm{len}}-1)$. On the shortening and lengthening branches, respectively,
+\begin{equation}
+ f_V=\frac{\bar F^M}{a f_l}=\begin{cases}
+ (1+w)/(1-w/A_f),&-1\leq w\leq0,\\
+ (1+c\bar F^M_{\mathrm{len}}w)/(1+cw),&w>0.
+ \end{cases}
+ \label{eq:app_thelen_velocity_multiplier}
+\end{equation}
+Both branches give $f_V=1$ at zero velocity. Shortening reduces tension, whereas lengthening increases it toward $\bar F^M_{\mathrm{len}}$. The OpenSim implementation uses linear continuation outside its regular force range so that the velocity relation remains invertible \citep{opensim_muscle_curves_44}. The Gait2392 files specify $\gamma=0.5$, $k^{PE}=4$, $A_f=0.3$, $\bar F^M_{\mathrm{len}}=1.8$, $\varepsilon_0^M=0.6$, and $\varepsilon_0^T=0.033$. For these parameters the tendon carries $F_0^M$ at 3.3\,\% elongation. Table~\ref{tab:app_thelen_symbols} also identifies the values used in the original publication.
 
 \subsubsection{Millard equilibrium and damping}
 
-The equilibrium relation of \citet{millard_flexing_2013} can be written in normalized form as
+In the model of \citet{millard_flexing_2013}, the fiber velocity must satisfy the series force balance
 \begin{equation}
- \left[a f_L(\tilde l_M)f_V(\tilde v_M)+f_{PE}(\tilde l_M)\right]\cos\alpha
- -f_T(\tilde l_T)=0.
+ \big[a f_L(x)f_V(v)+f_{PE}(x)+\beta v\big]\cos\alpha=f_T(y),
+ \qquad x=\frac{l_M}{l_{\mathrm{opt}}},\quad
+ y=\frac{l_T}{l_{\mathrm{slack}}},\quad v=\frac{\dot l_M}{v_{\mathrm{max}}^M}.
  \label{eq:app_millard_equilibrium}
 \end{equation}
-The damped formulation adds $\beta\tilde v_M$ inside the brackets, as in Equation~\ref{eq:app_millard_force}. The functions $f_L$, $f_V$, $f_{PE}$, and $f_T$ describe active force--length, force--velocity, passive fiber force, and tendon force. Millard's smooth characteristic curves and damping address numerical behavior while retaining the series force balance. Figure~3 of that paper illustrates the equilibrium, damped-equilibrium, and rigid-tendon formulations. A rigid-tendon model removes tendon stretch as a state; it does not simply set the passive fiber force to zero.
+Here $v_{\mathrm{max}}^M$ is the maximum shortening speed in units of length per second, and $v<0$ denotes shortening. Activation scales the active fiber force. Passive fibers can develop tension at zero activation, and the tendon stretches until its tension equals the component of fiber force along the tendon. The damping term, $\beta v$, makes fiber velocity affect equilibrium even at low activation. The undamped formulation sets $\beta=0$.
 
+OpenSim represents each of the four characteristic curves with joined quintic B\'ezier segments \citep{millard_flexing_2013,opensim_muscle_curves_44}. On one segment the dimensionless input $s$ and normalized force $f$ are
+\begin{equation}
+ (s(u),f(u))=\sum_{i=0}^{5}\binom{5}{i}(1-u)^{5-i}u^i(X_i,Y_i),
+ \qquad 0\leq u\leq1.
+ \label{eq:app_millard_bezier}
+\end{equation}
+The six control points $(X_i,Y_i)$ on each segment are set by the curve's lengths or speeds, force levels, slopes, and curvature settings. To evaluate a curve at a given length or speed, OpenSim locates its segment, solves $s(u)$ for $u$, and evaluates $f(u)$. The segments meet with continuous first and second derivatives. Table~\ref{tab:app_millard_curves} gives the values from the default damped equilibrium muscle in OpenSim~4.4. Its dimensionless damping coefficient is $\beta=0.1$.
+
+\begin{table}[htbp]
+\centering\small
+\caption{Characteristic curves of the default damped Millard muscle. Force is normalized by maximum isometric fiber force. Shortening velocity is negative.}
+\label{tab:app_millard_curves}
+\begin{tabularx}{\textwidth}{@{}p{0.23\textwidth}X@{}}
+\toprule
+Curve & Values and mechanical interpretation \\
+\midrule
+Active fiber, $f_L(x)$ & Peaks at $f_L(1)=1$. At $x=0.75$ and $1.20$, the multipliers are 0.826 and 0.824. The curve reaches zero at the short and long shoulders, $x=0.4441$ and $1.8123$. \\
+Passive fiber, $f_{PE}(x)$ & Tension begins beyond optimal length. At $x=1.40$ it is 0.263, and at $x=1.70$ it reaches one. Further stretch follows the terminal slope. \\
+Fiber velocity, $f_V(v)$ & At $v=-0.5$, 0, and $+0.5$, the multipliers are 0.158, 1, and 1.331. At $v=-1$ the active fiber produces zero force, and at $v=+1$ the multiplier is 1.4. \\
+Tendon, $f_T(y)$ & The slack tendon carries zero tension. At 2\,\% elongation ($y=1.02$), tension is 0.261. It reaches one at 4.9\,\% elongation and then increases linearly. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+At fixed total path length, series elasticity allows the tendon to lengthen as active fibers shorten. That change moves the fibers along both their force--length and force--velocity curves. Thelen and Millard give different curves for these effects. The Gait2392 analyses in this dissertation used Thelen muscles. The Millard curves provide a reference for interpreting what changes when another equilibrium formulation is used.
 
 \subsection{OpenSim Moment Arms and Human Torque Targets}
 \label{sec:app_opensim_targets}
@@ -131,14 +169,45 @@ OpenSim evaluates the human muscle paths with their moving points and couplings.
 \section{Converted MuJoCo Muscle Formulation}
 \label{sec:muscle-models}
 
-\subsection{MuJoCo Muscle Actuator}
+The converted model represents each muscle by its routed musculotendon path but changes the calculation of tension. MuJoCo's built-in muscle assigns a constant length to the tendon and has no pennation angle. Once the path length and speed are known, the force calculation has no separate fiber-length state to solve \citep{mujoco_muscle_docs_237}.
 
-The converted model uses MuJoCo muscle actuators, which combine activation-dependent active force with passive tensile force. Let $L$ denote the routed musculotendon length, $L_T$ the constant biological-tendon length, and $L_0$ the optimal fiber length inferred from the actual and normalized operating ranges. The normalized muscle length is $\bar L=(L-L_T)/L_0$. The signed actuator force is
+Let $L$ denote the routed path length in meters. The conversion supplies the path-length interval $[L_-,L_+]$ and the corresponding normalized muscle lengths $[r_-,r_+]$. The effective optimal length $L_0$, constant tendon length $L_T$, normalized fiber length $x$, and normalized speed $v$ follow from
 \begin{equation}
- F_{\mathrm{act}}=-F_0\left[a f_L(\bar L)f_V(\dot L/(L_0v_{\max}))+f_P(\bar L)\right].
+ L_0=\frac{L_+-L_-}{r_+-r_-},\qquad L_T=L_- -r_-L_0,\qquad
+ x=\frac{L-L_T}{L_0},\qquad v=\frac{\dot L}{L_0 v_{\max}}.
+ \label{eq:app_mj_normalize}
+\end{equation}
+Here $v_{\max}$ is the maximum shortening speed in optimal fiber lengths per second. MuJoCo combines an activation-dependent tensile force and a passive tensile force. Its signed actuator force, with pulling negative, is
+\begin{equation}
+ F_{\mathrm{act}}=-a F_A g_L(x)g_V(v)-F_P g_P(x).
  \label{eq:mj-muscle}
 \end{equation}
-Here $v_{\max}$ is the maximum shortening speed in optimal fiber lengths per second. The negative sign denotes a pulling actuator force; both active and passive terms contribute to tension. The rigid tendon has a constant length, but no elastic state. MuJoCo also omits pennation, so its differences from the OpenSim equilibrium formulations are not limited to tendon compliance \citep{mujoco_muscle_docs_237}.
+The active and passive force scales, $F_A$ and $F_P$, are stored separately and have units of newtons. Each term uses its own saved actuator parameters \citep{mujoco_muscle_source_237}.
+
+On the active length interval $x_{\min}\leq x\leq x_{\max}$, the normalized active force rises from zero to one at $x=1$ and returns to zero at the other end. Its quadratic segments are
+\begin{equation}
+ \begin{aligned}
+ z&=\begin{cases}(x-x_{\min})/(1-x_{\min}),&x\leq1,\\
+ (x_{\max}-x)/(x_{\max}-1),&x>1,\end{cases} &
+ g_L(x)&=\begin{cases}2z^2,&z\leq\tfrac12,\\
+ 1-2(1-z)^2,&z>\tfrac12.\end{cases}
+ \end{aligned}
+ \label{eq:app_mj_length}
+\end{equation}
+For velocity, let $h$ be the maximum lengthening-force multiplier minus one. For passive stretch, let $b=(1+x_{\max})/2$, and let $p$ be the passive-force parameter that sets the slope and scale. The two remaining curves are
+\begin{align}
+ g_V(v)&=\begin{cases}
+ 0,&v\leq-1,\\ (1+v)^2,&-1<v\leq0,\\
+ 1+h-(h-v)^2/h,&0<v\leq h,\\ 1+h,&v>h,
+ \end{cases}\label{eq:app_mj_velocity}\\[3pt]
+ g_P(x)&=p\begin{cases}
+ 0,&x\leq1,\\ \tfrac12[(x-1)/(b-1)]^2,&1<x\leq b,\\
+ \tfrac12+(x-b)/(b-1),&x>b.
+ \end{cases}\label{eq:app_mj_passive}
+\end{align}
+The converted right biceps femoris short head, for example, has $x_{\min}=0$, $x_{\max}=2$, and $h=0.4$. At optimal length and zero speed it produces its active force scale at full activation. At half its maximum shortening speed the velocity multiplier falls to 0.25. In the default Millard comparison the corresponding multiplier is 0.158 (Table~\ref{tab:app_millard_curves}). Equal activation and equal normalized speed can therefore produce different tensile forces even before tendon stretch or pennation is considered.
+
+In the walking comparison (Appendix~\ref{sec:muscle-models-compare}), the prescribed joint speeds determine the rate of change of each muscle path. The native MuJoCo and OpenSim active-force calculations use those speeds and the same activations. In a forward simulation, passive tension also contributes to the joint torque and the force available to load receptors. The pressure-dependent calculations below apply to the artificial actuators.
 
 \section{BPA Force Model Implementation}
 
@@ -148,7 +217,7 @@ The musculotendon path length $l_{LMT}$ is the sum of straight segments between 
     \varepsilon \;=\; \frac{l_{0} - \left(l_{LMT} - l_{ten} - 2\,l_{fitting} - \chi_{0}\right)}{l_{0}},
     \label{eq:app_strain}
 \end{equation}
-where $\chi_{0}$ is the constant length offset of Section~\ref{sec:improved_model} (zero in the baseline model). [Provenance: \texttt{MonoPamDataExplicit.m} get.Contraction, lines 210--217; \texttt{minimizeFlxPin.m} lines 415--426. End-cap fitting length $l_{fitting}=\qty{25.4}{\mm}$ is a constructor default, \texttt{MonoPamDataExplicit.m} line 69.]
+where $\chi_{0}$ is the constant length offset of Section~\ref{sec:improved_model} (zero in the baseline model). The tendon and the two end fittings occupy part of the origin-to-insertion path. Only the remaining BPA length enters the strain calculation. The constructor in \nolinkurl{MonoPamDataExplicit.m} sets each fitting to \qty{25.4}{\mm} by default. Its \texttt{get.Contraction} method and the pinned-flexor evaluator \nolinkurl{minimizeFlxPin.m} implement this subtraction.
 
 The maximum free-load contraction at \qty{620}{\kPa} is $\varepsilon_{620} = (l_{0}-l_{620})/l_{0}$, where $l_{620}$ is the BPA length at \qty{620}{\kPa} with no external load (code variable \texttt{KMAX}; \texttt{MonoPamDataExplicit.m} line 278). The relative strain is $\varepsilon^{*} = \varepsilon / \varepsilon_{620}$ (line 281).
 
@@ -181,7 +250,7 @@ The force $\mathbf{f}=F\hat{\mathbf{u}}$ produces the moment vector $\mathbf{m}=
 
 \section{Compliance Model Implementation}
 
-Before the attachments deflect, Equation~(\ref{eq:Lm}) gives the muscle length as $l_{m} = l_{LMT} - \chi_{0} - l_{ten} - 2\,l_{fitting}$ (\texttt{minimizeFlxPin.m} lines 415--426; identically \texttt{minimizeExtX3.m} line 345). In the two-bracket fit of record, the insertion-bracket stiffness matrix and the projected scalar stiffness along the force direction are
+Before the attachments deflect, Equation~(\ref{eq:Lm}) gives the muscle length as $l_{m} = l_{LMT} - \chi_{0} - l_{ten} - 2\,l_{fitting}$ (\texttt{minimizeFlxPin.m} lines 415--426; identically \texttt{minimizeExtX3.m} line 348). For the fitted two-bracket model, the insertion-bracket stiffness matrix and the projected scalar stiffness along the force direction are
 \begin{equation}
     \mathbf{K}_{br} = \mathrm{diag}(\chi_{1},\,\chi_{2},\,\chi_{1}),
     \qquad
@@ -195,7 +264,7 @@ The artificial tendon is modeled as an axial spring with stiffness
     k_{ten} \;=\; \frac{n\,A_{c}\,E}{L_{ten}},
     \label{eq:app_tendon}
 \end{equation}
-where $n$ counts the parallel cables. The \qty{10}{\mm} assembly uses $n=2$, and the \qty{20}{\mm} assembly uses $n=6$. Each 19-strand cable has $A_c=\qty{1.51e-6}{\metre\squared}$ and $E=\qty{193e9}{\pascal}$ (\nolinkurl{MonoPam_mult.m}, function \texttt{Spr()}, lines 628--637). The evaluators obtain the spring rate through \nolinkurl{Spr(bpa_i)} (\texttt{minimizeFlxPin.m}, line 156). Series combination with the projected bracket compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1} + c_{b2}\right)^{-1}$ (\texttt{minimizeFlxPin.m}, lines 394--409).
+where $n$ is the number of parallel cable segments represented in the stiffness calculation. The model uses $n=2$ for the \qty{10}{\mm} actuator and $n=6$ for the \qty{20}{\mm} actuator. Each 19-strand cable has $A_c=\qty{1.51e-6}{\metre\squared}$ and $E=\qty{193e9}{\pascal}$ (\nolinkurl{MonoPam_mult.m}, function \texttt{Spr()}, lines 628--637). The evaluators obtain the spring rate through \nolinkurl{Spr(bpa_i)} (\texttt{minimizeFlxPin.m}, line 156). Series combination with the projected bracket compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1} + c_{b2}\right)^{-1}$ (\texttt{minimizeFlxPin.m}, lines 394--409).
 
 The scalar compliance displacement $\delta$ of Equation~(\ref{eq:complianceforcebalance}) is found numerically with \texttt{fzero} on the bracket $[0,\, l_{m}-l_{620}]$,
 \begin{equation}
